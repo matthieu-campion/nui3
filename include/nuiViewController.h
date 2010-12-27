@@ -9,6 +9,7 @@
 #pragma once
 #include "nui.h"
 #include "nuiNavigationController.h"
+#include "nuiNavigationBar.h"
 
 
 class nuiNavigationBar;

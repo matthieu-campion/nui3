@@ -201,6 +201,11 @@ void nglKernel::Init()
 void nglKernel::Exit()
 {
   CallOnExit(0);
+  
+  mKernelEventSink.DisconnectAll();
+  nglVolume::UnmountAll();
+  nuiAnimation::ReleaseTimer();
+
   ExitFuncList::iterator func_i;
   
   for (func_i = mExitFuncs.begin(); func_i != mExitFuncs.end(); ++func_i)
@@ -320,11 +325,7 @@ void nglKernel::CallOnInit()
 void nglKernel::CallOnExit(int Code)
 {
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Exit (code: %d)"), Code); )
-  mKernelEventSink.DisconnectAll();
-  nglVolume::UnmountAll();
-  nuiAnimation::ReleaseTimer();
   OnExit (Code);
-  Exit();
 }
 
 void nglKernel::CallOnWillExit()

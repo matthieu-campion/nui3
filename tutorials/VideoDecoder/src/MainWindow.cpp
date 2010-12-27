@@ -61,6 +61,7 @@ void MainWindow::OnCreation()
     mpMainVBox->AddCell(pOpenBox);
     
     nuiButton* pOpenBtn = new nuiButton(_T("open"));
+    pOpenBtn->SetUserHeight(100);
     mEventSink.Connect(pOpenBtn->Activated, &MainWindow::OnBrowse);
     pOpenBox->AddCell(pOpenBtn);
     
@@ -121,11 +122,12 @@ void MainWindow::OnCreation()
     mEventSink.Connect(pBtn->Activated, &MainWindow::OnPlayBtnClicked);
   }
 
+  LoadVideo(_T("/Users/meeloo/Movies/Films/Fenetre sur Cour - Hitchcock 1954.mp4"));
 }
 
 
 
-bool MainWindow::OnBrowse(const nuiEvent& rEvent)
+void MainWindow::OnBrowse(const nuiEvent& rEvent)
 {    
   nglPath browsedPath             = nglPath(ePathUser);
   nglPath rootPath                = nglPath(_T("/"));
@@ -145,12 +147,9 @@ bool MainWindow::OnBrowse(const nuiEvent& rEvent)
   
     // we wish this dialog box to be modal
   mpDialog->DoModal();
-  
-  
-  return true; // means the event is caught and not broadcasted
 }
 
-bool MainWindow::OnDialogDone(const nuiEvent& event)
+void MainWindow::OnDialogDone(const nuiEvent& event)
 {
   nuiDialog::DialogResult result = mpDialog->GetResult();
   
@@ -159,7 +158,7 @@ bool MainWindow::OnDialogDone(const nuiEvent& event)
   
   if (result == nuiDialog::eDialogCanceled)
   {
-    return false;
+    return;
   }
   
   if (result == nuiDialog::eDialogAccepted)
@@ -180,8 +179,6 @@ bool MainWindow::OnDialogDone(const nuiEvent& event)
       // - delete manually the dialog when your main process exits
       // this solution is a bit ugly, and using an asynchrone message to get out of the dialog process is much better.
   }
-  
-  return false;
 }
 
 void MainWindow::OnNotification(const nuiNotification& rNotif)
@@ -191,7 +188,7 @@ void MainWindow::OnNotification(const nuiNotification& rNotif)
     // notification receiver
   if (!rName.Compare(NOTIF_FILEBROWSE_DONE))
   {
-    bool loaded = LoadVideo();
+    bool loaded = LoadVideo(mBrowsedFile);
     if (loaded)
     {
       UpdateVideoName();
@@ -238,9 +235,9 @@ bool MainWindow::LoadCSS(const nglPath& rPath)
   return false;
 }
 
-bool MainWindow::LoadVideo()
+bool MainWindow::LoadVideo(const nglPath& rPath)
 {
-  nuiVideoDecoder* pVideoDecoder = new nuiVideoDecoder(mBrowsedFile);
+  nuiVideoDecoder* pVideoDecoder = new nuiVideoDecoder(rPath);
   if (!pVideoDecoder->IsValid())
   {
     return false;
@@ -316,77 +313,91 @@ void MainWindow::UpdateVideoImage()
   if (!mpVideoDecoder)
     return;
   
-  mpNglImage = mpVideoDecoder->GetCurrentImage();
-  UpdateVideoInfos();
+//  mpNglImage = mpVideoDecoder->GetCurrentImage();
+//  UpdateVideoInfos();
+//  
+//  if (!mpTexture)
+//  {
+//    mpTexture = nuiTexture::GetTexture(mpNglImage, false);
+//    mpTexture->SetRetainBuffer(true);
+//    mpImage->SetTexture(mpTexture);
+//  }
+//  
+//  mpTexture->ForceReload(false);
+//  mpImage->Invalidate();
+
   
-  if (!mpTexture)
+  // with texture:
+  
+//  if (mpTexture)
+//  {
+//    mpTexture->Release();
+//    mpTexture = NULL;
+//  }
+    
+  
+
+//  if (!mpTexture)
   {
-    mpTexture = nuiTexture::GetTexture(mpNglImage, false);
-    mpTexture->SetRetainBuffer(true);
+    mpTexture = mpVideoDecoder->GetCurrentTexture();
+    if (!mpTexture)
+      return;
     mpImage->SetTexture(mpTexture);
   }
   
-  mpTexture->ForceReload(false);
+//  mpTexture->ForceReload(false);
   mpImage->Invalidate();
 }
 
-bool MainWindow::OnBackBtnClicked(const nuiEvent& rEvent)
+void MainWindow::OnBackBtnClicked(const nuiEvent& rEvent)
 {
   if (!mpVideoDecoder)
-    return true;
+    return;
   
   mpVideoDecoder->GoToPrevFrame();
   UpdateVideoImage();
-  return true;
 }
 
-bool MainWindow::OnFastBackBtnClicked(const nuiEvent& rEvent)
+void MainWindow::OnFastBackBtnClicked(const nuiEvent& rEvent)
 {
   if (!mpVideoDecoder)
-    return true;
+    return;
   
   for (uint32 i = 0; i < 25; i++)
     mpVideoDecoder->GoToPrevFrame();
   UpdateVideoImage();
-  return true;
 }
 
-bool MainWindow::OnForwardBtnClicked(const nuiEvent& rEvent)
+void MainWindow::OnForwardBtnClicked(const nuiEvent& rEvent)
 {
   if (!mpVideoDecoder)
-    return true;
+    return;
   
   mpVideoDecoder->GoToNextFrame();
 
   UpdateVideoImage();
-  return true;
 }
 
-bool MainWindow::OnFastForwardBtnClicked(const nuiEvent& rEvent)
+void MainWindow::OnFastForwardBtnClicked(const nuiEvent& rEvent)
 {
   if (!mpVideoDecoder)
-    return true;
+    return;
   
   for (uint32 i = 0; i < 25; i++)
     mpVideoDecoder->GoToNextFrame();
   UpdateVideoImage();
-  return true;
 }
 
-bool MainWindow::OnPlayBtnClicked(const nuiEvent& rEvent)
+void MainWindow::OnPlayBtnClicked(const nuiEvent& rEvent)
 {
   if (mTimer.IsRunning())
     mTimer.Stop();
   else
     mTimer.Start(true, true);
-  
-  return true;
 }
 
-bool MainWindow::OnTimerTick(const nuiEvent& rEvent)
+void MainWindow::OnTimerTick(const nuiEvent& rEvent)
 {
   mpVideoDecoder->GoToNextFrame();
   UpdateVideoImage();
-  
-  return true;
 }

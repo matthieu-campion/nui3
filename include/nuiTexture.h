@@ -33,6 +33,7 @@ public:
   static nuiTexture* GetTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
   static nuiTexture* GetTexture(const nglString& rName); ///< Get a texture from its ID only
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
+  static nuiTexture* BindTexture(GLuint TextureID, GLenum Target); ///< Returns a texture that will use an existing OpenGL Texture.
   
   static void ClearAll();
   static void ForceReloadAll(bool Rebind = false);
@@ -102,6 +103,12 @@ public:
 
   
   nglImagePixelFormat GetPixelFormat() const;
+  
+  GLuint GetTextureID() const;
+  GLenum GetTarget() const;
+  
+  void SetTextureIdAndTarget(GLuint textureID, GLenum target);
+  
 protected:
   friend class nuiSurface;
   static nuiTexture* GetTexture(nuiSurface* pSurface); ///< Create a texture from an existing nuiSurface.
@@ -112,6 +119,7 @@ protected:
   nuiTexture(nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
   nuiTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
   nuiTexture(nuiSurface* pSurface); ///< Create an image for rendering to surface
+  nuiTexture(GLuint TextureID, GLenum Target); ///< Create an nuiTexture from an existing OpenGL texture ID
   
   virtual ~nuiTexture();
   void Init();
@@ -135,6 +143,11 @@ protected:
   GLuint mWrapT;
   GLuint mEnvMode;
   bool mAutoMipMap;
+  
+  /// Beware, those two members are only used when a texture is created from an existing Texture ID/Target pair.
+  GLuint mTextureID;
+  GLenum mTarget;
+  /// Beware, the two members above are only used when a texture is created from an existing Texture ID/Target pair.
   
   float mScale;
 

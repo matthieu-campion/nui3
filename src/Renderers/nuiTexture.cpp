@@ -156,6 +156,22 @@ nuiTexture* nuiTexture::GetTexture(const nglString& rName)
   return pTexture;
 }
 
+nuiTexture* nuiTexture::BindTexture(GLuint TextureID, GLenum Target)
+{
+  nuiTexture* pTexture = NULL;
+  nglString name;
+  name.Format(_T("TextureID %d %d"), TextureID, Target);
+  nuiTextureMap::iterator it = mpTextures.find(name);
+  if (it == mpTextures.end())
+    pTexture = new nuiTexture(TextureID, Target);
+  else
+    pTexture = it->second;
+  
+  LOG_GETTEXTURE(pTexture);
+  return pTexture;  
+}
+
+
 //#TODO remove this and do something to have more general AAPrimitives.*
 #define psz (phf * 2)
 #define psm (psz - 1)
@@ -244,7 +260,7 @@ void nuiTexture::ForceReloadAll(bool Rebind)
 
 //--------------------------------
 nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
-  : nuiObject()
+  : nuiObject(), mTextureID(0), mTarget(0)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -266,7 +282,7 @@ nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
 extern float NUI_SCALE_FACTOR;
 
 nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
-  : nuiObject()
+: nuiObject(), mTextureID(0), mTarget(0)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -274,10 +290,10 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   mpImage = NULL;
   
   float scale = 1.0f;
+  nglPath p(rPath);
+  nglString path(p.GetRemovedExtension());
   if (NUI_SCALE_FACTOR > 1)
   {
-    nglPath p(rPath);
-    nglString path(p.GetRemovedExtension());
     nglString ext(p.GetExtension());
     nglString res(path);
     res.Add(_T("@2x.")).Add(ext);
@@ -293,6 +309,11 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
       mpImage = NULL;
     }
   }
+  else if (path.GetRight(3) == _T("@2x"))
+  {
+    scale = 2.0;
+  }
+
   
   if (!mpImage)
   {
@@ -312,7 +333,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
 }
 
 nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
-  : nuiObject()
+: nuiObject(), mTextureID(0), mTarget(0)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -335,7 +356,7 @@ nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
 }
 
 nuiTexture::nuiTexture (const nglImage& rImage)
-  : nuiObject()
+: nuiObject(), mTextureID(0), mTarget(0)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -354,7 +375,7 @@ nuiTexture::nuiTexture (const nglImage& rImage)
 }
 
 nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
-  : nuiObject()
+: nuiObject(), mTextureID(0), mTarget(0)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -373,6 +394,7 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
 }
 
 nuiTexture::nuiTexture(const nuiXMLNode* pNode)
+: nuiObject(), mTextureID(0), mTarget(0)
 {
   nuiObject::Load(pNode);
   if (SetObjectClass(_T("nuiTexture")))
@@ -393,6 +415,7 @@ nuiTexture::nuiTexture(const nuiXMLNode* pNode)
 }
 
 nuiTexture::nuiTexture(nuiSurface* pSurface)
+: nuiObject(), mTextureID(0), mTarget(0)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -408,6 +431,26 @@ nuiTexture::nuiTexture(nuiSurface* pSurface)
   SetProperty(_T("Source"), name);
   mpTextures[name] = this;
 
+  Init();
+}
+
+nuiTexture::nuiTexture(GLuint TextureID, GLenum Target)
+: nuiObject(), mTextureID(TextureID), mTarget(Target)
+{
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
+  
+  mpImage = NULL;
+  mpSurface = NULL;
+  mOwnImage = false;
+  mForceReload = false;
+  mRetainBuffer = false;
+  
+  nglString name;
+  name.Format(_T("TextureID %d %d"), mTextureID, mTarget);
+  SetProperty(_T("Source"), name);
+  mpTextures[name] = this;
+ 
   Init();
 }
 
@@ -431,6 +474,42 @@ void nuiTexture::Init()
     
     mPixelFormat = eImagePixelRGBA;
   }
+  else if (mTextureID)
+  {
+#ifndef _OPENGL_ES_
+    glPushAttrib(GL_TEXTURE_BIT);
+    
+    glBindTexture(mTarget, mTextureID);
+    
+    GLint width = 0;
+    GLint height = 0;
+    GLint pixelformat;
+    GLint minfilter;
+    GLint magfilter;
+    GLint wraps;
+    GLint wrapt;
+    glGetTexLevelParameteriv(mTarget, 0, GL_TEXTURE_WIDTH, &width);
+    glGetTexLevelParameteriv(mTarget, 0, GL_TEXTURE_HEIGHT, &height);
+    glGetTexLevelParameteriv(mTarget, 0, GL_TEXTURE_INTERNAL_FORMAT, &pixelformat);
+    glGetTexParameteriv(mTarget, GL_TEXTURE_MIN_FILTER, &minfilter);
+    glGetTexParameteriv(mTarget, GL_TEXTURE_MAG_FILTER, &magfilter);
+    glGetTexParameteriv(mTarget, GL_TEXTURE_WRAP_S, &wraps);
+    glGetTexParameteriv(mTarget, GL_TEXTURE_WRAP_T, &wrapt);
+    mEnvMode = GL_MODULATE;
+    mAutoMipMap = false;
+    
+    mRealWidth = width;
+    mRealHeight = height;
+    mPixelFormat = (nglImagePixelFormat)pixelformat;
+    mMinFilter = minfilter;
+    mMagFilter = magfilter;
+    mWrapS = wraps;
+    mWrapT = wrapt;
+    
+    glPopAttrib();
+#endif
+  }
+  
   mRealWidthPOT = mRealWidth;
   mRealHeightPOT = mRealHeight;
 
@@ -463,19 +542,22 @@ void nuiTexture::Init()
     }
   }
 
-  mMinFilter = GL_LINEAR;
-  mMagFilter = GL_LINEAR;
-//   mMinFilter = GL_NEAREST;
-//   mMagFilter = GL_NEAREST;
+  if (!mTextureID)
+  {
+    mMinFilter = GL_LINEAR;
+    mMagFilter = GL_LINEAR;
+    //   mMinFilter = GL_NEAREST;
+    //   mMagFilter = GL_NEAREST;
 #ifdef _OPENGL_ES_
-  mWrapS = GL_CLAMP_TO_EDGE;
-  mWrapT = GL_CLAMP_TO_EDGE;
+    mWrapS = GL_CLAMP_TO_EDGE;
+    mWrapT = GL_CLAMP_TO_EDGE;
 #else
-  mWrapS = GL_CLAMP;
-  mWrapT = GL_CLAMP;
+    mWrapS = GL_CLAMP;
+    mWrapT = GL_CLAMP;
 #endif
-  mEnvMode = GL_MODULATE;
-  mAutoMipMap = false;
+    mEnvMode = GL_MODULATE;
+    mAutoMipMap = false;
+  }
   
   nuiTextureCacheSet::iterator it = mTextureCaches.begin();
   nuiTextureCacheSet::iterator end = mTextureCaches.end();
@@ -601,13 +683,13 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
   if (mRealWidth)
     x /= GetWidth();
-  else  if (mpImage)
+  else  if (mpImage && mpImage->GetWidth())
     x /= mpImage->GetWidth();
 
 
   if (mRealHeight)
     y /= GetHeight();
-  else if (mpImage)
+  else if (mpImage && mpImage->GetHeight())
     y /= mpImage->GetHeight();
 }
 
@@ -615,12 +697,12 @@ void nuiTexture::TextureToImageCoord(nuiSize& x, nuiSize& y) const
 {
   if (mRealWidth)
     x *= GetWidth();
-  else if (mpImage)
+  else if (mpImage && mpImage->GetWidth())
     x *= mpImage->GetWidth();
 
   if (mRealHeight)
     y *= GetHeight();
-  else if (mpImage)
+  else if (mpImage && mpImage->GetHeight())
     y *= mpImage->GetHeight();
 }
 
@@ -894,6 +976,23 @@ bool nuiTexture::mRetainBuffers = false;
 void nuiTexture::RetainBuffers(bool Set)
 {
   mRetainBuffers = Set;
+}
+
+GLuint nuiTexture::GetTextureID() const
+{
+  return mTextureID;
+}
+
+GLenum nuiTexture::GetTarget() const
+{
+  return mTarget;
+}
+
+void nuiTexture::SetTextureIdAndTarget(GLuint textureID, GLenum target)
+{
+  mTextureID = textureID;
+  mTarget = target;
+  Init();
 }
 
 nuiSimpleEventSource<0> nuiTexture::TexturesChanged;

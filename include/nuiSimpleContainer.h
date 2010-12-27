@@ -27,12 +27,15 @@ public:
   virtual bool AddChild(nuiWidgetPtr pChild);
   virtual bool DelChild(nuiWidgetPtr pChild); ///< Remove this child from the object. If Delete is true then the child will be deleted too. Returns true if success.
   virtual uint GetChildrenCount() const;
+  virtual nuiWidgetPtr GetChild(int index);
+  virtual nuiWidgetPtr GetChild(nuiSize X, nuiSize Y);
+  virtual nuiWidgetPtr GetChild(const nglString& rName, bool deepsearch = true); ///< Find a child by its name property. Try to resolve path names like /window/fixed/toto or ../../tata if deepsearch is true
   virtual bool Clear();
   
-  virtual nuiContainer::Iterator* GetFirstChild();
-  virtual nuiContainer::ConstIterator* GetFirstChild() const;
-  virtual nuiContainer::Iterator* GetLastChild();
-  virtual nuiContainer::ConstIterator* GetLastChild() const;
+  virtual nuiContainer::Iterator* GetFirstChild(bool DoRefCounting = false);
+  virtual nuiContainer::ConstIterator* GetFirstChild(bool DoRefCounting = false) const;
+  virtual nuiContainer::Iterator* GetLastChild(bool DoRefCounting = false);
+  virtual nuiContainer::ConstIterator* GetLastChild(bool DoRefCounting = false) const;
   virtual bool GetNextChild(nuiContainer::IteratorPtr pIterator);
   virtual bool GetNextChild(nuiContainer::ConstIteratorPtr pIterator) const;
   virtual bool GetPreviousChild(nuiContainer::IteratorPtr pIterator);

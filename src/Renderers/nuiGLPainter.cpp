@@ -539,6 +539,8 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
     if (mFinalState.mpTexture)
     {      
       outtarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
+      if (mFinalState.mpTexture->GetTextureID())
+        outtarget = mFinalState.mpTexture->GetTarget();
 
       //mFinalState.mpTexture->UnapplyGL(this); #TODO Un apply the texture
       nuiCheckForGLErrors();
@@ -551,7 +553,10 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 
     if (mFinalState.mpTexture)
     {
-      intarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
+      if (mFinalState.mpTexture->GetTextureID())
+        intarget = mFinalState.mpTexture->GetTarget();
+      else
+        intarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
 
       mFinalState.mpTexture->Acquire();
   
@@ -1317,6 +1322,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   float Width = pTexture->GetUnscaledWidth();
   float Height = pTexture->GetUnscaledHeight();
   GLenum target = GetTextureTarget(pTexture->IsPowerOfTwo());
+
   bool changedctx = false;
 
   std::map<nuiTexture*, TextureInfo>::iterator it = mTextures.find(pTexture);
@@ -1326,6 +1332,15 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   
   TextureInfo& info(it->second);
 
+  GLuint id = pTexture->GetTextureID();
+  if (id)
+  {
+    info.mReload = false;
+    info.mTexture = id;
+    target = pTexture->GetTarget();
+    printf("upload texture %d %x\n", id, target);
+  }
+  
   nuiCheckForGLErrors();
   
   if (!pTexture->IsPowerOfTwo())
@@ -1348,7 +1363,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   {
     bool firstload = false;
     bool reload = info.mReload;
-    if (!pSurface && !(pImage && pImage->GetPixelSize()))
+    if (!pSurface && !(pImage && pImage->GetPixelSize()) && !id)
       return;
 
     uint i;
@@ -1571,7 +1586,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 
   double rx = 1;
   double ry = 1;
-  if (rectangle != 1)
+  if (rectangle != 1 || pTexture->GetTextureID())
   {
     rx = pTexture->GetUnscaledWidth() / Width;
     ry = pTexture->GetUnscaledHeight() / Height;

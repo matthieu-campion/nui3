@@ -6,6 +6,7 @@
  */
 
 
+#include "nui.h"
 #include "nuiNavigationButton.h"
 
 

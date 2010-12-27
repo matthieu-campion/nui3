@@ -8,6 +8,7 @@
 
 #pragma once
 #include "nui.h"
+#include "nglCriticalSection.h"
 
 class nuiVideoDecoder
 {
@@ -26,14 +27,15 @@ public:
   bool GoToPrevFrame();
   
   nglImage* GetCurrentImage();
-  
-  
+  nuiTexture* GetCurrentTexture();
+  void UpdateTexture();
   
 private:
   bool Init();
   
   nglPath mPath;
   nglImage* mpImage;
+  nuiTexture* mpTexture;
   class nuiVideoDecoderPrivate* mpPrivate;
   
 };

@@ -8,6 +8,65 @@
 #include "nui.h"
 #include "nuiSimpleContainer.h"
 
+class nuiSimpleContainerIterator : public nuiContainer::Iterator
+{
+public:
+  nuiSimpleContainerIterator(nuiSimpleContainer* pSource, bool DoRefCounting);
+  nuiSimpleContainerIterator(const nuiSimpleContainerIterator& rIterator);
+  virtual ~nuiSimpleContainerIterator();
+  
+  virtual nuiWidgetPtr GetWidget() const;
+
+  nuiSimpleContainerIterator& operator = (const nuiSimpleContainerIterator& rIterator);
+  
+  void Increment()
+  {
+    mIndex++;
+  }
+
+  void Decrement()
+  {
+    mIndex--;
+  }
+protected:
+  int32 mIndex;
+private:
+  friend class nuiSimpleContainer;
+  bool SetIndex(int32 index);
+  int32 GetIndex() const;
+};
+
+class nuiSimpleContainerConstIterator : public nuiContainer::ConstIterator
+{
+public:
+  nuiSimpleContainerConstIterator(const nuiSimpleContainer* pSource, bool DoRefCounting);
+  nuiSimpleContainerConstIterator(const nuiSimpleContainerConstIterator& rIterator);
+  virtual ~nuiSimpleContainerConstIterator();
+  
+  virtual nuiWidgetPtr GetWidget() const;
+
+  nuiSimpleContainerConstIterator& operator = (const nuiSimpleContainerConstIterator& rIterator);
+  
+  void Increment()
+  {
+    mIndex++;
+  }
+  
+  void Decrement()
+  {
+    mIndex--;
+  }
+protected:
+  int32 mIndex;
+private:
+  friend class nuiSimpleContainer;
+  bool SetIndex(int32 index);
+  int32 GetIndex() const;
+};
+
+typedef nuiSimpleContainerIterator* nuiSimpleContainerIteratorPtr;
+typedef nuiSimpleContainerConstIterator* nuiSimpleContainerConstIteratorPtr;
+
 nuiSimpleContainer::nuiSimpleContainer()
 : nuiContainer()
 {
@@ -62,7 +121,7 @@ nuiSimpleContainer::~nuiSimpleContainer()
   CheckValid();
   // Delete all children:
   IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
+  for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem)
@@ -167,6 +226,23 @@ uint nuiSimpleContainer::GetChildrenCount() const
   return mpChildren.size();
 }
 
+nuiWidgetPtr nuiSimpleContainer::GetChild(int index)
+{
+  CheckValid();
+  NGL_ASSERT(index >= 0);
+  NGL_ASSERT(index < mpChildren.size());
+  return mpChildren[index];
+}
+
+nuiWidgetPtr nuiSimpleContainer::GetChild(nuiSize X, nuiSize Y)
+{
+  return nuiContainer::GetChild(X, Y);
+}
+
+nuiWidgetPtr nuiSimpleContainer::GetChild(const nglString& rName, bool deepsearch)
+{
+  return nuiContainer::GetChild(rName, deepsearch);
+}
 
 bool nuiSimpleContainer::Clear()
 {
@@ -191,40 +267,38 @@ bool nuiSimpleContainer::Clear()
 }
 
 
-nuiContainer::Iterator* nuiSimpleContainer::GetFirstChild()
+nuiContainer::Iterator* nuiSimpleContainer::GetFirstChild(bool DoRefCounting)
 {
   CheckValid();
   IteratorPtr pIt;
-  pIt = new Iterator();
+  pIt = new nuiSimpleContainerIterator(this, DoRefCounting);
   bool valid = !mpChildren.empty();
   pIt->SetValid(valid);
   if (valid)
-    pIt->SetElement(mpChildren.begin());
+    ((nuiSimpleContainerIterator*)pIt)->SetIndex(0);
   return pIt;
 }
 
-nuiContainer::ConstIterator* nuiSimpleContainer::GetFirstChild() const
+nuiContainer::ConstIterator* nuiSimpleContainer::GetFirstChild(bool DoRefCounting) const
 {
   CheckValid();
-  ConstIteratorPtr pIt;
-  pIt = new ConstIterator();
+  nuiSimpleContainerConstIteratorPtr pIt;
+  pIt = new nuiSimpleContainerConstIterator(this, DoRefCounting);
   bool valid = !mpChildren.empty();
   pIt->SetValid(valid);
   if (valid)
-    pIt->SetElement(mpChildren.begin());
+    pIt->SetIndex(0);
   return pIt;
 }
 
-nuiContainer::Iterator* nuiSimpleContainer::GetLastChild()
+nuiContainer::Iterator* nuiSimpleContainer::GetLastChild(bool DoRefCounting)
 {
   CheckValid();
-  nuiWidgetList::iterator it = mpChildren.end();
   IteratorPtr pIt;
-  pIt = new Iterator();
+  pIt = new nuiSimpleContainerIterator(this, DoRefCounting);
   if (!mpChildren.empty())
   {
-    it--;
-    pIt->SetElement(it);
+    ((nuiSimpleContainerIterator*)pIt)->SetIndex(mpChildren.size() - 1);
     pIt->SetValid(true);
   }
   else
@@ -234,16 +308,14 @@ nuiContainer::Iterator* nuiSimpleContainer::GetLastChild()
   return pIt;
 }
 
-nuiContainer::ConstIterator* nuiSimpleContainer::GetLastChild() const
+nuiContainer::ConstIterator* nuiSimpleContainer::GetLastChild(bool DoRefCounting) const
 {
   CheckValid();
-  nuiWidgetList::const_iterator it = mpChildren.end();
-  ConstIteratorPtr pIt;
-  pIt = new ConstIterator();
+  nuiSimpleContainerConstIteratorPtr pIt;
+  pIt = new nuiSimpleContainerConstIterator(this, DoRefCounting);
   if (!mpChildren.empty())
   {
-    it--;
-    pIt->SetElement(it);
+    pIt->SetIndex(mpChildren.size() - 1);
     pIt->SetValid(true);
   }
   else
@@ -260,8 +332,8 @@ bool nuiSimpleContainer::GetNextChild(nuiContainer::IteratorPtr pIterator)
     return false;
   if (!pIterator->IsValid())
     return false;
-  pIterator->GetElement()++;
-  if (pIterator->GetElement() == mpChildren.end())
+  ((nuiSimpleContainerIterator*)pIterator)->Increment();
+  if (((nuiSimpleContainerIterator*)pIterator)->GetIndex() >= mpChildren.size())
   {
     pIterator->SetValid(false);
     return false;
@@ -277,8 +349,8 @@ bool nuiSimpleContainer::GetNextChild(nuiContainer::ConstIteratorPtr pIterator) 
     return false;
   if (!pIterator->IsValid())
     return false;
-  pIterator->GetElement()++;
-  if (pIterator->GetElement() == mpChildren.end())
+  ((nuiSimpleContainerConstIterator*)pIterator)->Increment();
+  if (((nuiSimpleContainerConstIterator*)pIterator)->GetIndex() >= mpChildren.size())
   {
     pIterator->SetValid(false);
     return false;
@@ -294,13 +366,13 @@ bool nuiSimpleContainer::GetPreviousChild(nuiContainer::IteratorPtr pIterator)
     return false;  
   if (!pIterator->IsValid())
     return false;
-  if (pIterator->GetElement() == mpChildren.begin())
+  if (((nuiSimpleContainerIterator*)pIterator)->GetIndex() <= 0)
   {
     pIterator->SetValid(false);
     return false;
   }
   
-  pIterator->GetElement()--;
+  ((nuiSimpleContainerIterator*)pIterator)->Decrement();
   
   pIterator->SetValid(true);
   return true;
@@ -313,13 +385,13 @@ bool nuiSimpleContainer::GetPreviousChild(nuiContainer::ConstIteratorPtr pIterat
     return false;  
   if (!pIterator->IsValid())
     return false;
-  if (pIterator->GetElement() == mpChildren.begin())
+  if (((nuiSimpleContainerConstIterator*)pIterator)->GetIndex() <= 0)
   {
     pIterator->SetValid(false);
     return false;
   }
   
-  pIterator->GetElement()--;
+  ((nuiSimpleContainerConstIterator*)pIterator)->Decrement();
   
   pIterator->SetValid(true);
   return true;
@@ -412,5 +484,86 @@ void nuiSimpleContainer::LowerChildToBack(nuiWidgetPtr pChild)
     }
   }
   DebugRefreshInfo();
+}
+
+///////////////////////
+////// nuiContainer::Iterator
+
+nuiSimpleContainerIterator::nuiSimpleContainerIterator(nuiSimpleContainer* pSource, bool DoRefCounting)
+: nuiContainer::Iterator(pSource, DoRefCounting), mIndex(-1)
+{
+  mValid = false;
+}
+
+nuiSimpleContainerConstIterator::nuiSimpleContainerConstIterator(const nuiSimpleContainer* pSource, bool DoRefCounting)
+: nuiContainer::ConstIterator(pSource, DoRefCounting), mIndex(-1)
+{
+  mValid = false;
+}
+
+nuiSimpleContainerIterator::nuiSimpleContainerIterator(const nuiSimpleContainerIterator& rIterator)
+: nuiContainer::Iterator(rIterator)
+{
+  mIndex = rIterator.mIndex;
+}
+
+nuiSimpleContainerConstIterator::nuiSimpleContainerConstIterator(const nuiSimpleContainerConstIterator& rIterator)
+: nuiContainer::ConstIterator(rIterator)
+{
+  mIndex = rIterator.mIndex;
+}
+
+nuiSimpleContainerIterator& nuiSimpleContainerIterator::operator = (const nuiSimpleContainerIterator& rIterator)
+{
+  *((nuiContainer::Iterator*)this) = rIterator;
+  mIndex = rIterator.mIndex;
+  return *this;
+}
+
+nuiSimpleContainerConstIterator& nuiSimpleContainerConstIterator::operator = (const nuiSimpleContainerConstIterator& rIterator)
+{
+  *((nuiContainer::ConstIterator*)this) = rIterator;
+  mIndex = rIterator.mIndex;
+  return *this;
+}
+
+bool nuiSimpleContainerIterator::SetIndex(int32 index)
+{
+  mIndex = index;
+  return true;
+}
+
+bool nuiSimpleContainerConstIterator::SetIndex(int32 index)
+{
+  mIndex = index;
+  return true;
+}
+
+int32 nuiSimpleContainerIterator::GetIndex() const
+{
+  return mIndex; 
+}
+
+int32 nuiSimpleContainerConstIterator::GetIndex() const
+{
+  return mIndex; 
+}
+
+nuiSimpleContainerIterator::~nuiSimpleContainerIterator()
+{
+}
+
+nuiSimpleContainerConstIterator::~nuiSimpleContainerConstIterator()
+{
+}
+
+nuiWidgetPtr nuiSimpleContainerIterator::GetWidget() const
+{
+  return IsValid() ? (nuiSimpleContainer*)mpSource->GetChild(mIndex) : NULL;
+}
+
+nuiWidgetPtr nuiSimpleContainerConstIterator::GetWidget() const
+{
+  return IsValid() ? const_cast<nuiSimpleContainer*>((nuiSimpleContainer*)mpSource)->GetChild(mIndex) : NULL;
 }
 

@@ -52,6 +52,8 @@ ValueView* ValueView::CreateView(nuiJson::Value& rValue)
   {
     pView = new ObjectView(rValue);
   }
+
+  return pView;
 }
 
 

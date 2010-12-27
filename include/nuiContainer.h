@@ -20,79 +20,46 @@ class NUI_API nuiContainer : public nuiWidget
   friend class nuiWidget;
   friend class nuiTopLevel;
 public:
-  class NUI_API ChildIteratorBase : public nuiRefCount
-  {
-  public:
-    ChildIteratorBase()
-    {
-    }
-
-    virtual ~ChildIteratorBase()
-    {
-    }
-
-    bool IsValid() const
-    {
-      return mValid;
-    }
-        
-  protected:
-    void SetValid(bool set)
-    {
-      mValid = set;
-    }
-    
-  private:
-    bool mValid;
-    
-  };
-
   class NUI_API Iterator
   {
   public:
-    Iterator();
+    Iterator(nuiContainer* pContainer, bool DoRefCounting = false);
     Iterator(const Iterator& rIterator);
-    Iterator& operator = (const Iterator& rIterator);
+    virtual Iterator& operator = (const Iterator& rIterator);
     virtual ~Iterator();
 
-    virtual bool IsValid() const;
-    virtual nuiWidgetPtr GetWidget() const;
-    virtual nuiWidgetPtr operator*() const
+    bool IsValid() const;
+    void SetValid(bool set);
+    virtual nuiWidgetPtr GetWidget() const = 0;
+    nuiWidgetPtr operator*() const
     {
       return GetWidget();
     }
   protected:
-    nuiWidgetList::iterator mIterator;
+    nuiContainer* mpSource;
     bool mValid;
-  private:
-    friend class nuiSimpleContainer;
-    bool SetElement(const nuiWidgetList::iterator& rIterator);
-    void SetValid(bool Valid);
-    nuiWidgetList::iterator& GetElement();
+    bool mRefCounting;
   };
 
   class NUI_API ConstIterator
   {
   public:
-    ConstIterator();
+    ConstIterator(const nuiContainer* pContainer, bool DoRefCounting = false);
     ConstIterator(const ConstIterator& rIterator);
-    ConstIterator& operator = (const ConstIterator& rIterator);
+    virtual ConstIterator& operator = (const ConstIterator& rIterator);
     virtual ~ConstIterator();
 
-    virtual bool IsValid() const;
-    virtual nuiWidgetPtr GetWidget() const;
-    virtual nuiWidgetPtr operator*() const
+    bool IsValid() const;
+    void SetValid(bool set);
+    virtual nuiWidgetPtr GetWidget() const = 0;
+    nuiWidgetPtr operator*() const
     {
       return GetWidget();
     }
   protected:
-    nuiWidgetList::const_iterator mIterator;
+    const nuiContainer* mpSource;
     bool mValid;
-  private:
-    friend class nuiSimpleContainer;
-    bool SetElement(const nuiWidgetList::const_iterator& rIterator);
-    void SetValid(bool Valid);
-    nuiWidgetList::const_iterator& GetElement();
+    bool mRefCounting;
   };
 
   typedef Iterator* IteratorPtr;
@@ -129,17 +96,17 @@ public:
   nuiWidgetPtr Find (const nglString& rName); ///< Finds a node given its full path relative to the current node. Eg. Find("background/color/red").
 
   virtual uint GetChildrenCount() const = 0; ///< Returns the number of children this object has.
-  virtual IteratorPtr GetFirstChild() = 0; 
-  virtual IteratorPtr GetLastChild() = 0; 
+  virtual IteratorPtr GetFirstChild(bool DoRefCounting = false) = 0; 
+  virtual IteratorPtr GetLastChild(bool DoRefCounting = false) = 0; 
   virtual bool GetNextChild(IteratorPtr pIterator) = 0;
   virtual bool GetPreviousChild(IteratorPtr pIterator) = 0;
-  virtual ConstIteratorPtr GetFirstChild() const = 0;
-  virtual ConstIteratorPtr GetLastChild() const = 0;
+  virtual ConstIteratorPtr GetFirstChild(bool DoRefCounting = false) const = 0;
+  virtual ConstIteratorPtr GetLastChild(bool DoRefCounting = false) const = 0;
   virtual bool GetNextChild(ConstIteratorPtr pIterator) const = 0;
   virtual bool GetPreviousChild(ConstIteratorPtr pIterator) const = 0;
 
-  virtual IteratorPtr GetChildIterator(nuiWidgetPtr pChild);
-  virtual ConstIteratorPtr GetChildIterator(nuiWidgetPtr pChild) const;
+  virtual IteratorPtr GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting = false);
+  virtual ConstIteratorPtr GetChildIterator(nuiWidgetPtr pChild, bool DoRefCounting = false) const;
   virtual nuiWidgetPtr GetNextFocussableChild(nuiWidgetPtr pChild) const;
   virtual nuiWidgetPtr GetPreviousFocussableChild(nuiWidgetPtr pChild) const;
   virtual nuiWidgetPtr GetNextSibling(nuiWidgetPtr pChild) const;
