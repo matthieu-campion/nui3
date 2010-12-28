@@ -46,17 +46,52 @@ class nuiVideoDecoderPrivate
 {
 public:
 	nglVideoWindowsMediaIStream* mpWMStream;
-    IWMSyncReader* mpWMReader;
+  IWMSyncReader* mpWMReader;
 	nglIStream* mpStream;
 	WORD mStreamNumber;
-	DWORD mWidth;
-	DWORD mHeight;
+  QWORD mPosition;
+  BYTE* mpBuffer;
 };
 
 nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
-: mPath(path),
+: mDuration(0),
+  mWidth(0),
+  mHeight(0),
+  mRate(0),
+  mPath(path),
   mpImage(NULL),
   mpTexture(NULL)
+{
+  Init();
+}
+
+nuiVideoDecoder::~nuiVideoDecoder()
+{
+  if (mpPrivate->mpWMReader)
+  {
+    mpPrivate->mpWMReader->Close();
+    mpPrivate->mpWMReader->Release();
+    mpPrivate->mpWMReader = NULL;
+  }
+  
+  if (mpPrivate->mpWMStream)
+  {
+    mpPrivate->mpWMStream->Release();
+    mpPrivate->mpWMStream = NULL;
+  }
+
+  if (mpPrivate->mpStream)
+	  delete mpPrivate->mpStream;
+  
+  CoUninitialize();
+
+  delete[] mpPrivate->mpBuffer;
+  
+  if (mpPrivate)
+    delete mpPrivate;
+}
+
+bool nuiVideoDecoder::Init()
 {
   CoInitialize(NULL);
   HRESULT hr = S_OK;
@@ -65,10 +100,11 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
   mpPrivate->mpStream = NULL;
   mpPrivate->mpWMStream = NULL;
   mpPrivate->mpWMReader = NULL;
+  mpPrivate->mpBuffer = NULL;
 
   mpPrivate->mpStream = mPath.OpenRead();
   if (!mpPrivate->mpStream)
-	return;
+	  return false;
   mpPrivate->mpWMStream = new nglVideoWindowsMediaIStream(*(mpPrivate->mpStream));
 
   hr = WMCreateSyncReader(NULL, WMT_RIGHT_PLAYBACK, &(mpPrivate->mpWMReader));
@@ -85,7 +121,7 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 		mpPrivate->mpWMReader->Release();
 		mpPrivate->mpWMReader = NULL;
 	  }
-	  return;
+	  return false;
   }
 
   bool ok = false;
@@ -118,8 +154,8 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 		  WMVIDEOINFOHEADER* pVideoInfo = (WMVIDEOINFOHEADER*)pType->pbFormat;
 
 		  BITMAPINFOHEADER& rBitmapInfo = pVideoInfo->bmiHeader;
-		  mpPrivate->mWidth = rBitmapInfo.biWidth;
-		  mpPrivate->mHeight = rBitmapInfo.biHeight;
+		  mWidth = rBitmapInfo.biWidth;
+		  mHeight = rBitmapInfo.biHeight;
 		  DWORD compression = rBitmapInfo.biCompression;
 		  WORD bitCount = rBitmapInfo.biBitCount;
 
@@ -128,44 +164,35 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 
 		  hr = pReader->SetOutputProps(output, pMediaProps);			
 		  if (FAILED(hr))
+      {
 			  printf("can't set output props\n");
+        continue;
+      }
 
 		  hr = pReader->GetStreamNumberForOutput(output, &mpPrivate->mStreamNumber);
 		  WMT_STREAM_SELECTION streamSelection= WMT_ON;
 		  hr = pReader->SetStreamsSelected(1, &mpPrivate->mStreamNumber, &streamSelection);
 		  if (FAILED(hr))
+      {
 			  printf("can't set stream selected\n");
+        continue;
+      }
 
 		  hr = pReader->SetReadStreamSamples(mpPrivate->mStreamNumber, FALSE);
 		  if (FAILED(hr))
+      {
 			  printf("can't set read stream samples\n");
+        continue;
+      }
 		  ok = true;
 	  }
   }
-}
 
-nuiVideoDecoder::~nuiVideoDecoder()
-{
-  if (mpPrivate->mpWMReader)
-  {
-    mpPrivate->mpWMReader->Close();
-    mpPrivate->mpWMReader->Release();
-    mpPrivate->mpWMReader = NULL;
-  }
-  
-  if (mpPrivate->mpWMStream)
-  {
-    mpPrivate->mpWMStream->Release();
-    mpPrivate->mpWMStream = NULL;
-  }
+  mpPrivate->mpBuffer = new BYTE[mWidth * mHeight * 3];
+  memset(mpPrivate->mpBuffer, 0, mWidth * mHeight * 3 * sizeof(BYTE));
+  GoToNextFrame();
 
-  if (mpPrivate->mpStream)
-	  delete mpPrivate->mpStream;
-  
-  CoUninitialize();
-  
-  if (mpPrivate)
-    delete mpPrivate;
+  return ok;
 }
   
 bool nuiVideoDecoder::IsValid() const
@@ -182,14 +209,9 @@ bool nuiVideoDecoder::IsValid() const
 	return true;
 }
 
-double nuiVideoDecoder::GetDuration() const
-{
-	return 0;
-}
-
 double nuiVideoDecoder::GetPosition() const
 {
-	return 0;
+  return mpPrivate->mPosition;
 }
 
 void nuiVideoDecoder::SetPosition(double TimePosition)
@@ -199,47 +221,38 @@ void nuiVideoDecoder::SetPosition(double TimePosition)
 	HRESULT hr = mpPrivate->mpWMReader->SetRange(StartTime, 0/*no duration set*/);
 	if (FAILED(hr))
 		printf("can't set position");
-}
 
-  
-double nuiVideoDecoder::GetTimeTillNextFrame() const
-{
-	return 0;
+  mpPrivate->mPosition = TimePosition;
 }
   
 bool nuiVideoDecoder::GoToNextFrame()
 {
-	return true;
-}
-
-bool nuiVideoDecoder::GoToPrevFrame()
-{
-	return true;
-}
-  
-nglImage* nuiVideoDecoder::GetCurrentImage()
-{
-	return NULL;
-}
-
-nuiTexture* nuiVideoDecoder::GetCurrentTexture()
-{
   HRESULT hr = S_OK;
   INSSBuffer* pTempBuffer = NULL;
-  QWORD SampleTime = 0;
   QWORD SampleDuration = 0;
   DWORD flags = 0;
-  hr = mpPrivate->mpWMReader->GetNextSample(mpPrivate->mStreamNumber, &pTempBuffer, &SampleTime, &SampleDuration, &flags, NULL, NULL);
+  hr = mpPrivate->mpWMReader->GetNextSample(mpPrivate->mStreamNumber, &pTempBuffer, &mpPrivate->mPosition, &SampleDuration, &flags, NULL, NULL);
+  if (FAILED(hr))
+    return false;
 
   BYTE* pBuffer = NULL;
   DWORD length = 0;
   pTempBuffer->GetBufferAndLength(&pBuffer, &length);
 
-  if (!mpTexture)
+  NGL_ASSERT(length == (mWidth * mHeight * 3));
+  memcpy(mpPrivate->mpBuffer, pBuffer, length);
+
+  pTempBuffer->Release();
+	return true;
+}
+  
+nglImage* nuiVideoDecoder::UpdateImage()
+{
+  if (!mpImage)
   {
-	  nglImageInfo info(false/*buffer not managed*/);
-	  info.mWidth = mpPrivate->mWidth;
-	  info.mHeight = mpPrivate->mHeight;
+    nglImageInfo info(false/*buffer not managed*/);
+	  info.mWidth = mWidth;
+	  info.mHeight = mHeight;
 
 	  info.mBitDepth = 24;
 	  info.mPixelFormat = eImagePixelBGR;
@@ -248,17 +261,43 @@ nuiTexture* nuiVideoDecoder::GetCurrentTexture()
 
 	  info.mBytesPerPixel = (info.mBitDepth + 1) / 8;
 	  info.mBytesPerLine = info.mWidth * info.mBytesPerPixel;	
-	  info.mpBuffer = (char*)(pBuffer);
+    info.mpBuffer = (char*)(mpPrivate->mpBuffer);
+	  
+    mpImage = new nglImage(info);
+  }
+  else
+  {
+    char* pImgInfoBuffer = mpImage->GetBuffer();
+    memcpy(pImgInfoBuffer, mpPrivate->mpBuffer, mWidth * mHeight * 3 * sizeof(BYTE));
+  }
+
+	return mpImage;
+}
+
+nuiTexture* nuiVideoDecoder::UpdateTexture()
+{
+  if (!mpTexture)
+  {
+	  nglImageInfo info(false/*buffer not managed*/);
+	  info.mWidth = mWidth;
+	  info.mHeight = mHeight;
+
+	  info.mBitDepth = 24;
+	  info.mPixelFormat = eImagePixelBGR;
+
+	  info.mBufferFormat = eImageFormatRaw;
+
+	  info.mBytesPerPixel = (info.mBitDepth + 1) / 8;
+	  info.mBytesPerLine = info.mWidth * info.mBytesPerPixel;	
+    info.mpBuffer = (char*)(mpPrivate->mpBuffer);
 	  mpTexture = nuiTexture::GetTexture(info);
   }
   else
   {
 	  char* pImgInfoBuffer = mpTexture->GetImage()->GetBuffer();
-	  memcpy(pImgInfoBuffer, pBuffer, length);
+    memcpy(pImgInfoBuffer, mpPrivate->mpBuffer, mWidth * mHeight * 3 * sizeof(BYTE));
 	  mpTexture->ForceReload();
   }
-
-  pTempBuffer->Release();
 
   return mpTexture;
 }

@@ -3252,6 +3252,10 @@
 				Name="Video"
 				>
 				<File
+					RelativePath=".\src\Video\nuiVideoDecoder.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\include\nuiVideoDecoder.h"
 					>
 				</File>
@@ -13485,11 +13489,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\errors.h"
+						RelativePath=".\deps\libcss\include\parserutils\errors.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\errors.h"
+						RelativePath=".\deps\libcss\include\libcss\errors.h"
 						>
 					</File>
 					<File
@@ -13497,11 +13501,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
+						RelativePath=".\deps\libcss\include\libcss\functypes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\functypes.h"
+						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
 						>
 					</File>
 					<File
@@ -13545,11 +13549,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\types.h"
+						RelativePath=".\deps\libcss\include\parserutils\types.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\types.h"
+						RelativePath=".\deps\libcss\include\libcss\types.h"
 						>
 					</File>
 					<File
@@ -15892,11 +15896,11 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
+							RelativePath=".\deps\libcss\src\select\properties.h"
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\select\properties.h"
+							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
 							>
 						</File>
 						<File
@@ -15920,15 +15924,15 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
-							>
-						</File>
-						<File
 							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
 							>
 						</File>
 						<File
 							RelativePath=".\deps\libcss\src\utils\utils.h"
+							>
+						</File>
+						<File
+							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
 							>
 						</File>
 					</Filter>

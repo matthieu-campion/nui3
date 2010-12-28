@@ -6,7 +6,7 @@
  *  Copyright 2010 libNUI. All rights reserved.
  *
  */
-
+#include "nui.h"
 
 #include "nuiVideoDecoder.h"
 
