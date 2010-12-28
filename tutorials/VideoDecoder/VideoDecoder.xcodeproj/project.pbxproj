@@ -105,7 +105,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE /* nui3CocoaD */;
+			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 /* End PBXContainerItemProxy section */
@@ -146,8 +146,6 @@
 				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
 				408D9C1410975F2E00AEE78A /* Cocoa.framework in Frameworks */,
 				408D9C1610975F3A00AEE78A /* QTKit.framework in Frameworks */,
-				E5D816DF12BD85C8008DAB9F /* QuickTime.framework in Frameworks */,
-				E5D816E212BD8608008DAB9F /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

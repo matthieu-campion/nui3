@@ -23,7 +23,11 @@ public:
 };
 
 nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
-: mPath(path),
+: mDuration(0),
+  mWidth(0),
+  mHeight(0),
+  mRate(0),
+  mPath(path),
   mpImage(NULL),
   mpTexture(NULL)
 {
@@ -46,44 +50,9 @@ nuiVideoDecoder::~nuiVideoDecoder()
     delete mpImage;
 }
 
-CVReturn MyDisplayLinkCallback (
-                                CVDisplayLinkRef displayLink,
-                                const CVTimeStamp *inNow,
-                                const CVTimeStamp *inOutputTime,
-                                CVOptionFlags flagsIn,
-                                CVOptionFlags *flagsOut,
-                                void *displayLinkContext)
-{
-  //CVReturn error =
-  //[(MyVideoView*) displayLinkContext displayFrame:inOutputTime];
-  //  ((nuiVideoDecoder*)displayLinkContext)->UpdateTexture();
-  return 0;
-}
-
 bool nuiVideoDecoder::Init()
 {
-  CVReturn            error = kCVReturnSuccess;
-//  CGDirectDisplayID   displayID = CGMainDisplayID();// 1
-//  CVDisplayLinkRef        displayLink;
-  
-//  error = CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink);// 2
-//  if(error)
-//  {
-//    NGL_OUT("DisplayLink created with error:%d", error);
-//    displayLink = NULL;
-//    return false;
-//  }
-//  error = CVDisplayLinkSetOutputCallback(displayLink,// 3
-//                                         MyDisplayLinkCallback, this);
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  CVReturn error = kCVReturnSuccess;
   
   nglString pathStr = mPath.GetPathName();
   char* pStr = pathStr.Export();
@@ -114,9 +83,15 @@ bool nuiVideoDecoder::Init()
   MoviesTask([mpPrivate->mpMovie quickTimeMovie], 0); 
 #endif
   
-//  [mpPrivate->mpMovie play];
+  QTTime qtDuration = [mpPrivate->mpMovie duration];
+  mDuration = (double)(qtDuration.timeValue) / (double)(qtDuration.timeScale);
   
-//  CVDisplayLinkStart(displayLink);
+  NSImage* img = [mpPrivate->mpMovie currentFrameImage];
+  mWidth = [img size].width;
+  mHeight = [img size].height;
+  
+  mRate = [mpPrivate->mpMovie rate];
+
   return true;
 }
 
@@ -129,13 +104,22 @@ bool nuiVideoDecoder::IsValid() const
 
 double nuiVideoDecoder::GetDuration() const
 {
-  if (!IsValid())
-    return -1.0;
-  
-  QTTime qtDuration = [mpPrivate->mpMovie duration];
-  
-  double seconds = (double)(qtDuration.timeValue) / (double)(qtDuration.timeScale);
-  return seconds;
+  return mDuration;
+}
+
+uint32 nuiVideoDecoder::GetWidth() const
+{
+  return mWidth;
+}
+
+uint32 nuiVideoDecoder::GetHeight() const
+{
+  return mHeight;
+}
+
+float nuiVideoDecoder::GetRate() const
+{
+  return mRate;
 }
 
 double nuiVideoDecoder::GetPosition() const
@@ -161,14 +145,6 @@ void nuiVideoDecoder::SetPosition(double TimePosition)
   [mpPrivate->mpMovie setCurrentTime:time];
 }
 
-double nuiVideoDecoder::GetTimeTillNextFrame() const
-{
-  if (!IsValid())
-    return -1.0;
-  
-  return 0;
-}
-
 bool nuiVideoDecoder::GoToNextFrame()
 {
   if (!IsValid())
@@ -178,17 +154,7 @@ bool nuiVideoDecoder::GoToNextFrame()
   return true;
 }
 
-bool nuiVideoDecoder::GoToPrevFrame()
-{
-  if (!IsValid())
-    return false;
-  
-  [mpPrivate->mpMovie stepBackward];
-  
-  return true;
-}
-
-nglImage* nuiVideoDecoder::GetCurrentImage()
+nglImage* nuiVideoDecoder::UpdateImage()
 {
   if (!IsValid())
     return NULL;
@@ -252,33 +218,15 @@ nglImage* nuiVideoDecoder::GetCurrentImage()
 }
 
 
-nuiTexture* nuiVideoDecoder::GetCurrentTexture()
-{
-  if (!IsValid())// || !mpPrivate->mCurrentTexture)
-    return NULL;
-
-  UpdateTexture();
-
-  GLuint texID = CVOpenGLTextureGetName(mpPrivate->mCurrentTexture);
-  GLenum target = CVOpenGLTextureGetTarget(mpPrivate->mCurrentTexture);
-  
-  if (!mpTexture)
-    mpTexture = nuiTexture::BindTexture(texID, target);
-  else
-    mpTexture->SetTextureIdAndTarget(texID, target);
-
-  return mpTexture;
-}
-
-
-void nuiVideoDecoder::UpdateTexture()
+nuiTexture* nuiVideoDecoder::UpdateTexture()
 {
   if (!IsValid())
-    return;
-  
+    return NULL;
+
+  //
 #ifndef __NUI64__
   if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
-    return;
+    return NULL;
 #endif
   
   if (mpPrivate->mCurrentTexture)
@@ -297,5 +245,15 @@ void nuiVideoDecoder::UpdateTexture()
   
   mpPrivate->mCurrentTexture = (CVOpenGLTextureRef)[mpPrivate->mpMovie frameImageAtTime:time withAttributes:dict error:NULL];
 #endif
+  //
+
+  GLuint texID = CVOpenGLTextureGetName(mpPrivate->mCurrentTexture);
+  GLenum target = CVOpenGLTextureGetTarget(mpPrivate->mCurrentTexture);
   
+  if (!mpTexture)
+    mpTexture = nuiTexture::BindTexture(texID, target);
+  else
+    mpTexture->SetTextureIdAndTarget(texID, target);
+
+  return mpTexture;
 }

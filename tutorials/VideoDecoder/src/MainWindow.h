@@ -26,9 +26,6 @@ protected:
   void OnBrowse(const nuiEvent& rEvent);
   void OnDialogDone(const nuiEvent& event);
   virtual void OnNotification(const nuiNotification& rNotif);
- 
-  void OnBackBtnClicked(const nuiEvent& rEvent);
-  void OnFastBackBtnClicked(const nuiEvent& rEvent);
   void OnForwardBtnClicked(const nuiEvent& rEvent);
   void OnFastForwardBtnClicked(const nuiEvent& rEvent);
   
@@ -51,7 +48,7 @@ private:
   nuiLabel* mpDurationLabel;
   nuiLabel* mpWidthLabel;
   nuiLabel* mpHeightLabel;
-  nuiLabel* mpBitsPerPixelLabel;
+  nuiLabel* mpRateLabel;
   
   nuiDialogSelectFile* mpDialog;
   
