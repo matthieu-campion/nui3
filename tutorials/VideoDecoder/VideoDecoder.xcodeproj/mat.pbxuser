@@ -251,9 +251,9 @@
 		path = /Users/mat/work/dev/nui3/src/Renderers/nuiRenderState.cpp;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {996, 1599}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1247, 1521}}";
 			sepNavSelRange = "{1757, 0}";
-			sepNavVisRange = "{1078, 1150}";
+			sepNavVisRange = "{0, 0}";
 		};
 	};
 	4021D47112CA2966006EA9E2 /* PBXBookmark */ = {
@@ -509,6 +509,26 @@
 		rType = 0;
 		vrLen = 2638;
 		vrLoc = 808;
+	};
+	4021D4A512CA33FB006EA9E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4021D47012CA2961006EA9E2 /* nuiRenderState.cpp */;
+		name = "nuiRenderState.cpp: 81";
+		rLen = 0;
+		rLoc = 1757;
+		rType = 0;
+		vrLen = 1150;
+		vrLoc = 1078;
+	};
+	4021D4BD12CA3458006EA9E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4021D47012CA2961006EA9E2 /* nuiRenderState.cpp */;
+		name = "nuiRenderState.cpp: 81";
+		rLen = 0;
+		rLoc = 1757;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
 	};
 	4053B5FA12B7BDD700F07124 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -874,6 +894,8 @@
 			4021D4A112CA2B0F006EA9E2 /* PBXTextBookmark */ = 4021D4A112CA2B0F006EA9E2 /* PBXTextBookmark */;
 			4021D4A212CA2B0F006EA9E2 /* PBXTextBookmark */ = 4021D4A212CA2B0F006EA9E2 /* PBXTextBookmark */;
 			4021D4A312CA2B0F006EA9E2 /* PBXTextBookmark */ = 4021D4A312CA2B0F006EA9E2 /* PBXTextBookmark */;
+			4021D4A512CA33FB006EA9E2 /* PBXTextBookmark */ = 4021D4A512CA33FB006EA9E2 /* PBXTextBookmark */;
+			4021D4BD12CA3458006EA9E2 /* PBXTextBookmark */ = 4021D4BD12CA3458006EA9E2 /* PBXTextBookmark */;
 			4053B5FA12B7BDD700F07124 = 4053B5FA12B7BDD700F07124 /* PBXTextBookmark */;
 			4053B5FD12B7BDD700F07124 = 4053B5FD12B7BDD700F07124 /* PBXTextBookmark */;
 			4053B67912B7C8C800F07124 = 4053B67912B7C8C800F07124 /* PBXTextBookmark */;

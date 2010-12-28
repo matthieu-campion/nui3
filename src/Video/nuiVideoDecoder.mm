@@ -102,25 +102,7 @@ bool nuiVideoDecoder::IsValid() const
   return (mpPrivate->mpMovie != NULL);
 }
 
-double nuiVideoDecoder::GetDuration() const
-{
-  return mDuration;
-}
 
-uint32 nuiVideoDecoder::GetWidth() const
-{
-  return mWidth;
-}
-
-uint32 nuiVideoDecoder::GetHeight() const
-{
-  return mHeight;
-}
-
-float nuiVideoDecoder::GetRate() const
-{
-  return mRate;
-}
 
 double nuiVideoDecoder::GetPosition() const
 {
