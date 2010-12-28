@@ -342,8 +342,6 @@ void MainWindow::UpdateVideoImage()
       return;
     mpImage->SetTexture(mpTexture);
   }
-  
-//  mpTexture->ForceReload(false);
   mpImage->Invalidate();
 }
 

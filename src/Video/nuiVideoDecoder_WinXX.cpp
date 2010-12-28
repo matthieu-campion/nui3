@@ -112,6 +112,9 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 		  if ((pType->majortype != WMMEDIATYPE_Video) || (pType->formattype != WMFORMAT_VideoInfo))
 			  continue;
 
+		  if (pType->subtype != WMMEDIASUBTYPE_RGB24)
+			  continue;
+
 		  WMVIDEOINFOHEADER* pVideoInfo = (WMVIDEOINFOHEADER*)pType->pbFormat;
 
 		  BITMAPINFOHEADER& rBitmapInfo = pVideoInfo->bmiHeader;
@@ -139,8 +142,6 @@ nuiVideoDecoder::nuiVideoDecoder(const nglPath& path)
 		  ok = true;
 	  }
   }
-
-  
 }
 
 nuiVideoDecoder::~nuiVideoDecoder()
@@ -193,6 +194,11 @@ double nuiVideoDecoder::GetPosition() const
 
 void nuiVideoDecoder::SetPosition(double TimePosition)
 {
+	double onesecond = 10000000; // unit is 100 nanoseconds
+	double StartTime = TimePosition * onesecond;
+	HRESULT hr = mpPrivate->mpWMReader->SetRange(StartTime, 0/*no duration set*/);
+	if (FAILED(hr))
+		printf("can't set position");
 }
 
   
@@ -229,22 +235,32 @@ nuiTexture* nuiVideoDecoder::GetCurrentTexture()
   DWORD length = 0;
   pTempBuffer->GetBufferAndLength(&pBuffer, &length);
 
-	
-  nglImageInfo info(false);
-  info.mWidth = mpPrivate->mWidth;
-  info.mHeight = mpPrivate->mHeight;
+  if (!mpTexture)
+  {
+	  nglImageInfo info(false/*buffer not managed*/);
+	  info.mWidth = mpPrivate->mWidth;
+	  info.mHeight = mpPrivate->mHeight;
 
-  info.mBitDepth = 24;
-  info.mPixelFormat = eImagePixelRGB;
+	  info.mBitDepth = 24;
+	  info.mPixelFormat = eImagePixelBGR;
 
-  info.mBufferFormat = eImageFormatRaw;
+	  info.mBufferFormat = eImageFormatRaw;
 
-  info.mBytesPerPixel = (info.mBitDepth + 1) / 8;
-  info.mBytesPerLine = info.mWidth * info.mBytesPerPixel;	
-  info.mpBuffer = (char*)(pBuffer);
-  nuiTexture* pTexture = nuiTexture::GetTexture(info);
+	  info.mBytesPerPixel = (info.mBitDepth + 1) / 8;
+	  info.mBytesPerLine = info.mWidth * info.mBytesPerPixel;	
+	  info.mpBuffer = (char*)(pBuffer);
+	  mpTexture = nuiTexture::GetTexture(info);
+  }
+  else
+  {
+	  char* pImgInfoBuffer = mpTexture->GetImage()->GetBuffer();
+	  memcpy(pImgInfoBuffer, pBuffer, length);
+	  mpTexture->ForceReload();
+  }
 
-  return pTexture;
+  pTempBuffer->Release();
+
+  return mpTexture;
 }
 
 
