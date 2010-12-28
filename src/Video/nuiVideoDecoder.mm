@@ -120,6 +120,7 @@ bool nuiVideoDecoder::IsValid() const
   return (mpPrivate->mpMovie != NULL);
 }
 
+<<<<<<< HEAD
 double nuiVideoDecoder::GetDuration() const
 {
   if (!IsValid())
@@ -130,6 +131,9 @@ double nuiVideoDecoder::GetDuration() const
   double seconds = (double)(qtDuration.timeValue) / (double)(qtDuration.timeScale);
   return seconds;
 }
+=======
+
+>>>>>>> da51d5c4182c9d2a551959604c44dbf89966cc12
 
 double nuiVideoDecoder::GetPosition() const
 {

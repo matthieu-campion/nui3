@@ -87,6 +87,12 @@
 		40182AD50F24F09500F11401 /* nuiAiffReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182AD30F24F09500F11401 /* nuiAiffReader.h */; };
 		40182AD60F24F09500F11401 /* nuiAiffReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40182AD20F24F09500F11401 /* nuiAiffReader.cpp */; };
 		40182AD70F24F09500F11401 /* nuiAiffReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182AD30F24F09500F11401 /* nuiAiffReader.h */; };
+		4021D4A812CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */; };
+		4021D4A912CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */; };
+		4021D4AA12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */; };
+		4021D4AB12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */; };
+		4021D4AC12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */; };
+		4021D4AD12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */; };
 		4024358F10568E550089BA0B /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4024358E10568E550089BA0B /* nuiStopWatch.h */; };
 		4024359010568E550089BA0B /* nuiStopWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4024358E10568E550089BA0B /* nuiStopWatch.h */; };
 		4024359410568E6F0089BA0B /* nuiStopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4024359210568E6F0089BA0B /* nuiStopWatch.cpp */; };
@@ -8384,6 +8390,7 @@
 		40182A6D0F24C74A00F11401 /* nuiChunkSampleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiChunkSampleReader.cpp; path = AudioSamples/nuiChunkSampleReader.cpp; sourceTree = "<group>"; };
 		40182AD20F24F09500F11401 /* nuiAiffReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAiffReader.cpp; path = AudioSamples/nuiAiffReader.cpp; sourceTree = "<group>"; };
 		40182AD30F24F09500F11401 /* nuiAiffReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAiffReader.h; path = ../include/nuiAiffReader.h; sourceTree = "<group>"; };
+		4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiVideoDecoder.cpp; path = Video/nuiVideoDecoder.cpp; sourceTree = "<group>"; };
 		4024358E10568E550089BA0B /* nuiStopWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiStopWatch.h; path = include/nuiStopWatch.h; sourceTree = SOURCE_ROOT; };
 		4024359210568E6F0089BA0B /* nuiStopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiStopWatch.cpp; sourceTree = "<group>"; };
 		408D9BA21097436800AEE78A /* nuiVideoDecoder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = nuiVideoDecoder.h; path = ../include/nuiVideoDecoder.h; sourceTree = "<group>"; };
@@ -10136,6 +10143,7 @@
 				408D9BA31097436800AEE78A /* nuiVideoDecoder.mm */,
 				BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */,
 				BCF1A85911BE67EE00806A7A /* nuiAVIwriter.h */,
+				4021D4A712CA3423006EA9E2 /* nuiVideoDecoder.cpp */,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -18403,6 +18411,7 @@
 				E52FB48E12B6D7B300984B17 /* hb-ot-tag.c in Sources */,
 				E52FB49212B6D7B300984B17 /* hb-shape.cc in Sources */,
 				E52FB49512B6D7B300984B17 /* hb-unicode.c in Sources */,
+				4021D4A812CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19001,6 +19010,7 @@
 				E52FB45D12B6D7B300984B17 /* hb-ot-tag.c in Sources */,
 				E52FB46112B6D7B300984B17 /* hb-shape.cc in Sources */,
 				E52FB46412B6D7B300984B17 /* hb-unicode.c in Sources */,
+				4021D4AB12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19592,6 +19602,7 @@
 				E52FB3FB12B6D7B300984B17 /* hb-ot-tag.c in Sources */,
 				E52FB3FF12B6D7B300984B17 /* hb-shape.cc in Sources */,
 				E52FB40212B6D7B300984B17 /* hb-unicode.c in Sources */,
+				4021D4AA12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20182,6 +20193,7 @@
 				E52FB3CA12B6D7B300984B17 /* hb-ot-tag.c in Sources */,
 				E52FB3CE12B6D7B300984B17 /* hb-shape.cc in Sources */,
 				E52FB3D112B6D7B300984B17 /* hb-unicode.c in Sources */,
+				4021D4A912CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20773,6 +20785,11 @@
 				E52FB42C12B6D7B300984B17 /* hb-ot-tag.c in Sources */,
 				E52FB43012B6D7B300984B17 /* hb-shape.cc in Sources */,
 				E52FB43312B6D7B300984B17 /* hb-unicode.c in Sources */,
+<<<<<<< HEAD
+=======
+				E5E4B1EB12BFA853001AC13D /* nuiNavigationViewDecoration.cpp in Sources */,
+				4021D4AD12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */,
+>>>>>>> da51d5c4182c9d2a551959604c44dbf89966cc12
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -21364,6 +21381,7 @@
 				E52FB4BF12B6D7B300984B17 /* hb-ot-tag.c in Sources */,
 				E52FB4C312B6D7B300984B17 /* hb-shape.cc in Sources */,
 				E52FB4C612B6D7B300984B17 /* hb-unicode.c in Sources */,
+				4021D4AC12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
