@@ -19,7 +19,12 @@ public:
   void OnCreation();
   void OnClose();
   
+  virtual nglDropEffect OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y);
+  virtual void OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual void OnDropLeave();
+  
 private:
+  nuiScrollView* mpScrollView;
   
   void Load(const nglPath& p);
   

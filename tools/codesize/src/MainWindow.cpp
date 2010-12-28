@@ -70,14 +70,74 @@ bool cmp(const std::pair<nglString, Node*>& rLeft, const std::pair<nglString, No
 
 void MainWindow::OnCreation()
 {
-  nuiScrollView* pScroll = new nuiScrollView();
-  AddChild(pScroll);
-    
+  //Load(_T("/Users/meeloo/Desktop/nm.txt"));
+  mpScrollView = new nuiScrollView();
+  AddChild(mpScrollView);
+}
+
+nglDropEffect MainWindow::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y)
+{
+  if (!pDragObject->IsTypeSupported(_T("ngl/Files")) && !pDragObject->IsTypeSupported(_T("ngl/PromiseFiles")))
+    return eDropEffectNone;
+  
+  nglDataFilesObject* pFiles;
+  if (pDragObject->IsTypeSupported(_T("ngl/Files")))
+    pFiles =  (nglDataFilesObject*)(pDragObject->GetType(_T("ngl/Files")));
+  else if (pDragObject->IsTypeSupported(_T("ngl/PromiseFiles")))
+    pFiles =  (nglDataFilesObject*)(pDragObject->GetType(_T("ngl/PromiseFiles")));
+  
+  nglPath path = *(pFiles->GetFiles().begin());
+  if (!path.Exists() || !path.IsLeaf())
+    return eDropEffectNone;
+  
+  return eDropEffectLink;
+}
+
+
+// virtual 
+void MainWindow::OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  nglDataFilesObject* pFiles;
+  if (pDragObject->IsTypeSupported(_T("ngl/Files")))
+    pFiles =  (nglDataFilesObject*)(pDragObject->GetType(_T("ngl/Files")));
+  else if (pDragObject->IsTypeSupported(_T("ngl/PromiseFiles")))
+    pFiles =  (nglDataFilesObject*)(pDragObject->GetType(_T("ngl/PromiseFiles")));
+  
+  nglPath path = *(pFiles->GetFiles().begin());
+  
+  NGL_OUT(_T("dropped file : %ls\n"), path.GetChars());
+  
+
+  Load(path);
+}
+
+void MainWindow::OnDropLeave()
+{
+}
+
+void MainWindow::Load(const nglPath& p)
+{    
+  mpScrollView->Clear();
   ///////////////////////////////
+
+  nglString cmdline;
+  cmdline.Add("/usr/bin/nm -n -U -arch i386 ").Add(p.GetPathName()).Add(" | c++filt | c++filt -n");
+  printf("Launching\n%ls\n", cmdline.GetChars());
+  FILE * file = popen(cmdline.GetStdString().c_str(), "r");
+  nglOMemory omem;
+  uint32 res = 0;
+  do
+  {
+    char buf[1025];
+    memset(buf, 0, 1025);
+    uint32 res = fread(buf, 1024, 1, file);
+    //printf("%s", buf);
+    omem.Write(buf, 1024, 1);
+  } while (!feof(file));
+  pclose(file);
   
-  
-  nglPath p(_T("/Users/meeloo/Desktop/nm.txt"));
-  nglIStream* pStream = p.OpenRead();
+  printf("redirection done\n");
+  nglIStream* pStream = new nglIMemory(omem.GetBufferData(), omem.GetBufferSize());;
   
   nglString line;
   
@@ -87,6 +147,7 @@ void MainWindow::OnCreation()
   std::map<nglString, Node*> methods;
   std::map<nglString, Node*> classes;
   
+  printf("read result\n");
   while (pStream->ReadLine(line))
   {
     // Read address
@@ -161,7 +222,9 @@ void MainWindow::OnCreation()
       lastsymbol = line.GetRight(line.GetLength() - c);
     }
   }
+  printf("done\n");
   
+  printf("build tree\n");
   delete pStream;
   
   std::list<std::pair<nglString, Node*> > sorted;
@@ -194,7 +257,8 @@ void MainWindow::OnCreation()
   }
   
   nuiTreeView* pTreeView = new nuiTreeView(pTree);
-  pScroll->AddChild(pTreeView);
+  mpScrollView->AddChild(pTreeView);
+  printf("done\n");
 }
 
 
