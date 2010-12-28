@@ -20785,11 +20785,7 @@
 				E52FB42C12B6D7B300984B17 /* hb-ot-tag.c in Sources */,
 				E52FB43012B6D7B300984B17 /* hb-shape.cc in Sources */,
 				E52FB43312B6D7B300984B17 /* hb-unicode.c in Sources */,
-<<<<<<< HEAD
-=======
-				E5E4B1EB12BFA853001AC13D /* nuiNavigationViewDecoration.cpp in Sources */,
 				4021D4AD12CA3423006EA9E2 /* nuiVideoDecoder.cpp in Sources */,
->>>>>>> da51d5c4182c9d2a551959604c44dbf89966cc12
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

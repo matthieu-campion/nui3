@@ -44,45 +44,11 @@ nuiVideoDecoder::~nuiVideoDecoder()
     delete mpImage;
 }
 
-CVReturn MyDisplayLinkCallback (
-                                CVDisplayLinkRef displayLink,
-                                const CVTimeStamp *inNow,
-                                const CVTimeStamp *inOutputTime,
-                                CVOptionFlags flagsIn,
-                                CVOptionFlags *flagsOut,
-                                void *displayLinkContext)
-{
-  //CVReturn error =
-  //[(MyVideoView*) displayLinkContext displayFrame:inOutputTime];
-  //  ((nuiVideoDecoder*)displayLinkContext)->UpdateTexture();
-  return 0;
-}
 
 bool nuiVideoDecoder::Init()
 {
-  CVReturn            error = kCVReturnSuccess;
-//  CGDirectDisplayID   displayID = CGMainDisplayID();// 1
-//  CVDisplayLinkRef        displayLink;
-  
-//  error = CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink);// 2
-//  if(error)
-//  {
-//    NGL_OUT("DisplayLink created with error:%d", error);
-//    displayLink = NULL;
-//    return false;
-//  }
-//  error = CVDisplayLinkSetOutputCallback(displayLink,// 3
-//                                         MyDisplayLinkCallback, this);
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  CVReturn error = kCVReturnSuccess;
+
   nglString pathStr = mPath.GetPathName();
   char* pStr = pathStr.Export();
   NSString* pNSStr = [NSString stringWithCString:pStr encoding:NSUTF8StringEncoding];
@@ -107,9 +73,16 @@ bool nuiVideoDecoder::Init()
   
   [mpPrivate->mpMovie gotoBeginning];
   MoviesTask([mpPrivate->mpMovie quickTimeMovie], 0); 
-//  [mpPrivate->mpMovie play];
+
+  QTTime qtDuration = [mpPrivate->mpMovie duration];  
+  mDuration = (double)(qtDuration.timeValue) / (double)(qtDuration.timeScale);
   
-//  CVDisplayLinkStart(displayLink);
+  NSImage* img = [mpPrivate->mpMovie currentFrameImage];
+  mWidth = [img size].width;
+  mHeight = [img size].height;
+  
+  mRate = [mpPrivate->mpMovie rate];
+  
   return true;
 }
 
@@ -119,21 +92,6 @@ bool nuiVideoDecoder::IsValid() const
 {
   return (mpPrivate->mpMovie != NULL);
 }
-
-<<<<<<< HEAD
-double nuiVideoDecoder::GetDuration() const
-{
-  if (!IsValid())
-    return -1.0;
-  
-  QTTime qtDuration = [mpPrivate->mpMovie duration];
-  
-  double seconds = (double)(qtDuration.timeValue) / (double)(qtDuration.timeScale);
-  return seconds;
-}
-=======
-
->>>>>>> da51d5c4182c9d2a551959604c44dbf89966cc12
 
 double nuiVideoDecoder::GetPosition() const
 {
@@ -158,14 +116,6 @@ void nuiVideoDecoder::SetPosition(double TimePosition)
   [mpPrivate->mpMovie setCurrentTime:time];
 }
 
-double nuiVideoDecoder::GetTimeTillNextFrame() const
-{
-  if (!IsValid())
-    return -1.0;
-  
-  return 0;
-}
-
 bool nuiVideoDecoder::GoToNextFrame()
 {
   if (!IsValid())
@@ -175,17 +125,7 @@ bool nuiVideoDecoder::GoToNextFrame()
   return true;
 }
 
-bool nuiVideoDecoder::GoToPrevFrame()
-{
-  if (!IsValid())
-    return false;
-  
-  [mpPrivate->mpMovie stepBackward];
-  
-  return true;
-}
-
-nglImage* nuiVideoDecoder::GetCurrentImage()
+nglImage* nuiVideoDecoder::UpdateImage()
 {
   if (!IsValid())
     return NULL;
@@ -249,12 +189,19 @@ nglImage* nuiVideoDecoder::GetCurrentImage()
 }
 
 
-nuiTexture* nuiVideoDecoder::GetCurrentTexture()
+nuiTexture* nuiVideoDecoder::UpdateTexture()
 {
-  if (!IsValid())// || !mpPrivate->mCurrentTexture)
+  if (!IsValid())
     return NULL;
 
-  UpdateTexture();
+  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
+    return NULL;
+  
+  if (mpPrivate->mCurrentTexture)
+    CVOpenGLTextureRelease(mpPrivate->mCurrentTexture);
+  QTVisualContextTask(mpPrivate->mVisualContext);
+  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &(mpPrivate->mCurrentTexture));
+  NGL_ASSERT(!status);
 
   GLuint texID = CVOpenGLTextureGetName(mpPrivate->mCurrentTexture);
   GLenum target = CVOpenGLTextureGetTarget(mpPrivate->mCurrentTexture);
@@ -267,18 +214,3 @@ nuiTexture* nuiVideoDecoder::GetCurrentTexture()
   return mpTexture;
 }
 
-
-void nuiVideoDecoder::UpdateTexture()
-{
-  if (!IsValid())
-    return;
-  
-  if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
-    return;
-  
-  if (mpPrivate->mCurrentTexture)
-    CVOpenGLTextureRelease(mpPrivate->mCurrentTexture);
-  QTVisualContextTask(mpPrivate->mVisualContext);
-  OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &(mpPrivate->mCurrentTexture));
-  NGL_ASSERT(!status);
-}
