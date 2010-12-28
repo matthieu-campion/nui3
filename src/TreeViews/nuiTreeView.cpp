@@ -285,9 +285,12 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
   mpDraggedObject = NULL;
 
   mpTree = pTree;
-  mpTree->Acquire();
+  if (mpTree)
+  {
+    mpTree->Acquire();
+    ReparentTree(mpTree);
+  }
 
-  ReparentTree(mpTree);
 
   AddEvent(_T("TreeViewClicked"), Clicked);
   NUI_ADD_EVENT(Activated);

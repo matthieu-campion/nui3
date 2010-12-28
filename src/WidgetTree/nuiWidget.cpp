@@ -2457,7 +2457,6 @@ void nuiWidget::SetVisible(bool Visible)
     if (pHideAnim && pHideAnim->IsPlaying())
     {
       // Do nothing
-      NGL_ASSERT(mVisible == false);
       return;
     }
     else if (pShowAnim && pShowAnim->IsPlaying())
