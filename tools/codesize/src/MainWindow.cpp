@@ -106,19 +106,38 @@ void MainWindow::OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, ng
   NGL_OUT(_T("dropped file : %ls\n"), path.GetChars());
   if (!path.Exists())
     return;
+
+  // Try iPhone flat executable
   if (!path.IsLeaf())
   {
     nglPath p = path.GetRemovedExtension();
     nglString name(p.GetNodeName());
-    path += "Contents";
-    path += "MacOS";
-    path += name;
+    p = path;
+    p += name;
     
-    if (!path.Exists() || !path.IsLeaf())
-      return;
+    if (!p.Exists() || !p.IsLeaf())
+    {
+      p = path;
+      p += "Contents";
+      p += "MacOS";
+      p += name;
+      
+      if (!p.Exists() || !p.IsLeaf())
+      {
+        printf("no iOS or MacOS executable found...\n");
+        return;
+      }
+      
+      printf("MacOS executable found:\n%ls\n\n", p.GetChars());
+    }
+    else
+    {
+      printf("iOS executable found:\n%ls\n\n", p.GetChars());
+    }
+
+    path = p;
   }
   
-
   Load(path);
 }
 
@@ -132,7 +151,8 @@ void MainWindow::Load(const nglPath& p)
   ///////////////////////////////
 
   nglString cmdline;
-  cmdline.Add("/usr/bin/nm -n -U -arch i386 ").Add(p.GetPathName()).Add(" | c++filt | c++filt -n");
+  //cmdline.Add("/usr/bin/nm -n -U -arch i386 ").Add(p.GetPathName()).Add(" | c++filt | c++filt -n");
+  cmdline.Add("/usr/bin/nm -n -U ").Add(p.GetPathName()).Add(" | c++filt | c++filt -n");
   printf("Launching\n%ls\n", cmdline.GetChars());
   FILE * file = popen(cmdline.GetStdString().c_str(), "r");
   nglOMemory omem;
