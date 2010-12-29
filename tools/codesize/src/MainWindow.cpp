@@ -87,8 +87,6 @@ nglDropEffect MainWindow::OnCanDrop(nglDragAndDrop* pDragObject, nuiSize X, nuiS
     pFiles =  (nglDataFilesObject*)(pDragObject->GetType(_T("ngl/PromiseFiles")));
   
   nglPath path = *(pFiles->GetFiles().begin());
-  if (!path.Exists() || !path.IsLeaf())
-    return eDropEffectNone;
   
   return eDropEffectLink;
 }
@@ -106,6 +104,19 @@ void MainWindow::OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize Y, ng
   nglPath path = *(pFiles->GetFiles().begin());
   
   NGL_OUT(_T("dropped file : %ls\n"), path.GetChars());
+  if (!path.Exists())
+    return;
+  if (!path.IsLeaf())
+  {
+    nglPath p = path.GetRemovedExtension();
+    nglString name(p.GetNodeName());
+    path += "Contents";
+    path += "MacOS";
+    path += name;
+    
+    if (!path.Exists() || !path.IsLeaf())
+      return;
+  }
   
 
   Load(path);
