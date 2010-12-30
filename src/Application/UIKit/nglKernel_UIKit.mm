@@ -88,6 +88,17 @@ void objCCallOnInit(void* pUIApplication)
   NGL_ASSERT(App);
   App->mpUIApplication = pUIApplication;
   App->CallOnInit();
+
+  uint32 i = 0;
+  NSArray* array = [[UIApplication sharedApplication] windows];
+  for (uint32 i = 0; i < [array count]; i++)
+  {
+    UIWindow* next = [array objectAtIndex:i];
+    if ([next respondsToSelector:@selector(Paint)])
+      [next Paint];
+  }
+  
+  nuiAnimation::GetTimer()->Tick();
 }
 
 void objCCallOnInitWithURL(void* pUIApplication, const nglString &url)
