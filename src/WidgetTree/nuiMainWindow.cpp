@@ -739,6 +739,7 @@ bool nuiMainWindow::GetAutoRotation() const
 
 bool nuiMainWindow::ShowWidgetInspector()
 {
+#ifndef NUI_IOS
   mLastEventTime = nglTime();
   mLastInteractiveEventTime = nglTime();
 
@@ -764,7 +765,7 @@ bool nuiMainWindow::ShowWidgetInspector()
     mpInspectorWindow->SetState(nglWindow::eShow);
     mMainWinSink.Connect(mpInspectorWindow->Destroyed, &nuiMainWindow::OnInspectorDeath);
   }
-
+#endif
   return false;
 }
 

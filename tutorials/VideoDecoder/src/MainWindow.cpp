@@ -61,6 +61,7 @@ void MainWindow::OnCreation()
     mpMainVBox->AddCell(pOpenBox);
     
     nuiButton* pOpenBtn = new nuiButton(_T("open"));
+    pOpenBtn->SetUserHeight(100);
     mEventSink.Connect(pOpenBtn->Activated, &MainWindow::OnBrowse);
     pOpenBox->AddCell(pOpenBtn);
     
@@ -121,6 +122,7 @@ void MainWindow::OnCreation()
     mEventSink.Connect(pBtn->Activated, &MainWindow::OnPlayBtnClicked);
   }
 
+  LoadVideo(_T("/Users/meeloo/Movies/Films/Fenetre sur Cour - Hitchcock 1954.mp4"));
 }
 
 
@@ -186,7 +188,7 @@ void MainWindow::OnNotification(const nuiNotification& rNotif)
     // notification receiver
   if (!rName.Compare(NOTIF_FILEBROWSE_DONE))
   {
-    bool loaded = LoadVideo();
+    bool loaded = LoadVideo(mBrowsedFile);
     if (loaded)
     {
       UpdateVideoName();
@@ -233,9 +235,9 @@ bool MainWindow::LoadCSS(const nglPath& rPath)
   return false;
 }
 
-bool MainWindow::LoadVideo()
+bool MainWindow::LoadVideo(const nglPath& rPath)
 {
-  nuiVideoDecoder* pVideoDecoder = new nuiVideoDecoder(mBrowsedFile);
+  nuiVideoDecoder* pVideoDecoder = new nuiVideoDecoder(rPath);
   if (!pVideoDecoder->IsValid())
   {
     return false;

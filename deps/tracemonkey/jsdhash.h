@@ -46,7 +46,7 @@
 JS_BEGIN_EXTERN_C
 
 #if defined(__GNUC__) && defined(__i386__) && (__GNUC__ >= 3) && !defined(XP_OS2)
-  #ifndef NUI_IPHONE
+  #ifndef NUI_IOS
   #define JS_DHASH_FASTCALL __attribute__ ((regparm (3),stdcall))
   #else
   #define JS_DHASH_FASTCALL
