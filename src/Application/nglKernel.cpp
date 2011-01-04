@@ -198,9 +198,9 @@ void nglKernel::Init()
   
 }
 
-void nglKernel::Exit()
+void nglKernel::Exit(int32 ExitCode)
 {
-  CallOnExit(0);
+  CallOnExit(ExitCode);
   
   mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
