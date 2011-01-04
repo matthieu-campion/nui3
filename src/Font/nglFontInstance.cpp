@@ -61,12 +61,12 @@ nglFontInstance::nglFontInstance (const nglFontInstance& rInstance)
   mOwnMemory = !mStatic;
   
   Acquire();
-  //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::nglFontInstance COPY CTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::nglFontInstance COPY CTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
 }
 
 nglFontInstance::~nglFontInstance()
 {
-  //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::~nglFontInstance DTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::~nglFontInstance DTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
   if (mOwnMemory)
     delete[] mpMemBase;
 }
@@ -199,12 +199,12 @@ void nglFontInstance::Dump()
   
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Dumping font instances (%d)\n"), s);)
     
-    for (i = gFontList.begin(); i != gFontList.end(); ++i)
-    {
-      pFontInstance = *i;
-      NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("installed font instance %d/%d: 0x%x\n"), c, s, pFontInstance);)
-      c++;
-    }
+  for (i = gFontList.begin(); i != gFontList.end(); ++i)
+  {
+    pFontInstance = *i;
+    NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("installed font instance %d/%d: 0x%x\n"), c, s, pFontInstance);)
+    c++;
+  }
 }
 
 void nglDumpFontInstances()
@@ -223,8 +223,9 @@ void nglFontInstance::OnExit()
   for (i = gFontList.begin(); i != gFontList.end(); ++i)
   {
     pFontInstance = *i;
-    if (pFontInstance)
-      delete pFontInstance;
+    pFontInstance->Release();
+//     if (pFontInstance)
+//       delete pFontInstance;
     c++;
   }
 

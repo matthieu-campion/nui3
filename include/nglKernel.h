@@ -313,7 +313,7 @@ protected:
   void IncRef();
   void DecRef();
   void Init();
-  void Exit();
+  void Exit(int32 ExitCode);
 
   void ProcessMessages(const nuiEvent& rEvent);
   nuiEventSink<nglKernel> mKernelEventSink;

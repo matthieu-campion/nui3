@@ -281,7 +281,7 @@ void nuiAudioConvert_FloatTo32bits(float* pInBuffer, int32* pOutBuffer, uint64 S
   uint64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
-    float value = nuiClamp(value, -1.0f, 1.0f);
+    float value = nuiClamp(pInBuffer[i], -1.0f, 1.0f);
     if (value < 0 )
       pOutBuffer[i] = ToZero(value * mult1);
     else
