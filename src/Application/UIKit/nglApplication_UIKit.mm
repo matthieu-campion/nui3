@@ -56,7 +56,7 @@ void objCCallOnMemoryWarning();
 
 - (void) applicationDidFinishLaunching:       (UIApplication*) pUIApplication
 {
-  //NGL_OUT(_T("[nglUIApplicationDelegate applicationDidFinishLaunching]\n"));
+  NGL_OUT(_T("[nglUIApplicationDelegate applicationDidFinishLaunching]\n"));
   NGL_ASSERT(App);
 
   objCCallOnInit(pUIApplication);
@@ -77,8 +77,6 @@ void objCCallOnMemoryWarning();
 		
 		objCCallOnInit(pUIApplication);
 	}
-	 
-	
 }
 
 - (void) applicationDidBecomeActive:          (UIApplication*) pUIApplication

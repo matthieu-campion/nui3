@@ -484,13 +484,13 @@ operator TYPE() const\
         || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<double>::mTypeId)\
     {\
       if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
-        return (TYPE)mData.mFloat;\
+        return static_cast<TYPE>(mData.mFloat);\
       else if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId) \
-        return (double)mData.mUInt; \
+        return static_cast<TYPE>(mData.mUInt); \
       else if (mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId) \
-        return (double)mData.mInt; \
+        return static_cast<TYPE>(mData.mInt); \
       else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
-        return (TYPE)mString.GetCDouble();\
+        return static_cast<TYPE>(mString.GetCDouble());\
     }\
     else if (nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int8>::mTypeId \
              || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<int16>::mTypeId\
@@ -499,11 +499,11 @@ operator TYPE() const\
     {\
       if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId\
           || mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId)\
-        return (TYPE)mData.mInt;\
+        return static_cast<TYPE>(mData.mInt);\
       if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
-        return (TYPE)ToBelow(mData.mFloat);\
+        return static_cast<TYPE>(ToBelow(mData.mFloat));\
       else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
-          return (TYPE)mString.GetCInt64();\
+          return static_cast<TYPE>(mString.GetCInt64());\
     }\
     else if (nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint8>::mTypeId\
              || nuiAttributeTypeTrait<TYPE>::mTypeId == nuiAttributeTypeTrait<uint16>::mTypeId\
@@ -512,14 +512,14 @@ operator TYPE() const\
     {\
       if (mType == nuiAttributeTypeTrait<uint8>::mTypeId || mType == nuiAttributeTypeTrait<uint16>::mTypeId ||mType == nuiAttributeTypeTrait<uint32>::mTypeId || mType == nuiAttributeTypeTrait<uint64>::mTypeId\
           || mType == nuiAttributeTypeTrait<int8>::mTypeId || mType == nuiAttributeTypeTrait<int16>::mTypeId ||mType == nuiAttributeTypeTrait<int32>::mTypeId || mType == nuiAttributeTypeTrait<int64>::mTypeId)\
-        return (TYPE)mData.mUInt;\
+        return static_cast<TYPE>(mData.mUInt);\
       if (mType == nuiAttributeTypeTrait<float>::mTypeId || mType == nuiAttributeTypeTrait<double>::mTypeId)\
-        return (TYPE)ToBelow(mData.mFloat);\
+        return static_cast<TYPE>(ToBelow(mData.mFloat));\
       else if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)\
-        return (TYPE)mString.GetCUInt64();\
+        return static_cast<TYPE>(mString.GetCUInt64());\
     }\
     NGL_ASSERT(0);\
-    return 0;\
+    return static_cast<TYPE>(0);\
   }
   
   CAST(int8);

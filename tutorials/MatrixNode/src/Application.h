@@ -19,7 +19,7 @@ public:
   ~Application();
   
   void OnInit();
-  void OnExit (int Code);
+  void OnExit(int Code);
   
   MainWindow* GetMainWindow();
   

@@ -432,7 +432,7 @@ public:
     Getter.SetMemento(mGetter);
     if (!IsInstanceAttribute())
       Getter.SetThis(pTarget);
-    int32 range = GetIndexRange(pTarget, 0);
+    uint32 range = GetIndexRange(pTarget, 0);
     NGL_ASSERT(range > index);
     return Getter(index);
   }

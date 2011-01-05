@@ -19,7 +19,14 @@
 nuiHTTPResponse* nuiHTTPRequest::SendRequest()
 {
   char* pUrl = mUrl.Export();
-  CFStringRef urlString = CFStringCreateWithCString(kCFAllocatorDefault, pUrl, kCFStringEncodingUTF8);
+	
+  CFStringRef originalURLString = CFStringCreateWithCString(kCFAllocatorDefault, pUrl, kCFStringEncodingUTF8);
+	
+  CFStringRef preprocessedString =
+  CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault, originalURLString, CFSTR(""), kCFStringEncodingUTF8);
+  CFStringRef urlString =
+  CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, preprocessedString, NULL, NULL, kCFStringEncodingUTF8);
+	
   free(pUrl);
   CFURLRef url = CFURLCreateWithString(kCFAllocatorDefault, urlString, NULL);
   CFRelease(urlString);

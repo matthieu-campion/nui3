@@ -36,7 +36,7 @@ private:
   
   bool LoadCSS(const nglPath& rPath);
   
-  bool LoadVideo();
+  bool LoadVideo(const nglPath& rPath);
   
   void UpdateVideoName();
   void UpdateVideoInfos();
