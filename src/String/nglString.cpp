@@ -1319,7 +1319,7 @@ nglString& nglString::ToLower(int32 Index, int32 Length)
   if (Index + Length <= len)
     len = Length;
   for (int32 i = Index; i < len; i++)
-    mString[i] = towupper(mString[i]);
+    mString[i] = towlower(mString[i]);
   return *this;
 }
 
