@@ -212,9 +212,9 @@ NGL_API void nglCopyLineL8To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   if (Invert)
   {
     int32 i;
-    unsigned char src_val;
-    unsigned char* pSource = (unsigned char*) pSrc;
-    unsigned char* pDest   = (unsigned char*) pDst + 4 * (PixelCount - 1) - 1;
+    uint8 src_val;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst + 4 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       src_val = *pSource++;
@@ -226,8 +226,8 @@ NGL_API void nglCopyLineL8To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   }
   else
   {
-    char* pSource = (char*) pSrc;
-    char* pDest   = (char*) pDst;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst;
     for (int32 i=0; i<PixelCount; ++i)
     {
       pDest[i*4+0] = pSource[i];
@@ -243,9 +243,9 @@ NGL_API void nglCopyLineA8To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   if (Invert)
   {
     int32 i;
-    unsigned char src_val;
-    unsigned char* pSource = (unsigned char*) pSrc;
-    unsigned char* pDest   = (unsigned char*) pDst + 4 * (PixelCount - 1) - 1;
+    uint8 src_val;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst + 4 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       src_val = *pSource++;
@@ -257,8 +257,8 @@ NGL_API void nglCopyLineA8To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   }
   else
   {
-    char* pSource = (char*) pSrc;
-    char* pDest   = (char*) pDst;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst;
     for (int32 i=0; i<PixelCount; ++i)
     {
       pDest[i*4+0] = 0;
@@ -276,12 +276,12 @@ NGL_API void nglCopyLine15To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
 {
   int32 i;
   unsigned short temp;
-  char* pDest = (char*)pDst;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (((temp >> 7) & 0xF8) + ((temp >> 2) & 0xF8) + ((temp << 3) & 0xF8)) / 3;
     }
   }
@@ -289,7 +289,7 @@ NGL_API void nglCopyLine15To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (((temp >> 7) & 0xF8) + ((temp >> 2) & 0xF8) + ((temp << 3) & 0xF8)) / 3;
     }
   }
@@ -301,7 +301,7 @@ NGL_API void nglCopyLine15To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
   {
     int32 i;
     for (i=0; i<PixelCount; i++)
-      ((short*)pDst)[i] = ((short*)pSrc)[PixelCount-i-1];
+      ((int16*)pDst)[i] = ((int16*)pSrc)[PixelCount-i-1];
   }
   else
   {
@@ -312,18 +312,18 @@ NGL_API void nglCopyLine15To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine15To16 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned char r,g,b;
-  unsigned short temp;
+  uint8 r,g,b;
+  int16 temp;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       r = (temp >> 10) & 0x1F;
       g = (temp >> 5 ) & 0x1F;
       b = (temp >> 0 ) & 0x1F;
       temp = (r << 11) + (g <<6) + b;
-      ((short*)pDst)[PixelCount - i -1] = temp;
+      ((int16*)pDst)[PixelCount - i -1] = temp;
     }
   }
   else
@@ -343,13 +343,13 @@ NGL_API void nglCopyLine15To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine15To24 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pDest = (char*)pDst;
+  int16 temp;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (temp >> 7) & 0xF8;
       *pDest++ = (temp >> 2) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -359,7 +359,7 @@ NGL_API void nglCopyLine15To24 (void* pDst, void* pSrc, int32 PixelCount, bool I
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (temp >> 7) & 0xF8;
       *pDest++ = (temp >> 2) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -370,13 +370,13 @@ NGL_API void nglCopyLine15To24 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine15To32 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pDest = (char*)pDst;
+  int16 temp;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (temp >> 7) & 0xF8;
       *pDest++ = (temp >> 2) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -387,7 +387,7 @@ NGL_API void nglCopyLine15To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (temp >> 7) & 0xF8;
       *pDest++ = (temp >> 2) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -400,13 +400,13 @@ NGL_API void nglCopyLine15To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine15To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pDest = (char*)pDst;
+  int16 temp;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (temp << 3) & 0xF8;
       *pDest++ = (temp >> 2) & 0xF8;
       *pDest++ = (temp >> 7) & 0xF8;
@@ -417,7 +417,7 @@ NGL_API void nglCopyLine15To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (temp << 3) & 0xF8;
       *pDest++ = (temp >> 2) & 0xF8;
       *pDest++ = (temp >> 7) & 0xF8;
@@ -430,13 +430,13 @@ NGL_API void nglCopyLine15To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
 NGL_API void nglCopyLine16To8 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pDest = (char*)pDst;
+  uint16 temp;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (((temp >> 8) & 0xF8) + ((temp >> 3) & 0xF8) + ((temp << 3) & 0xF8)) / 3;
     }
   }
@@ -444,7 +444,7 @@ NGL_API void nglCopyLine16To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (((temp >> 8) & 0xF8) + ((temp >> 3) & 0xF8) + ((temp << 3) & 0xF8)) / 3;
     }
   }
@@ -454,30 +454,30 @@ NGL_API void nglCopyLine16To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
 NGL_API void nglCopyLine16To15 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned char r,g,b;
-  unsigned short temp;
+  uint8 r,g,b;
+  int16 temp;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       r = (temp >> 11) & 0x1F;
       g = (temp >> 6 ) & 0x1F;
       b = (temp >> 0 ) & 0x1F;
       temp = (r << 10) + (g <<5) + b;
-      ((short*)pDst)[PixelCount - i -1] = temp;
+      ((int16*)pDst)[PixelCount - i -1] = temp;
     }
   }
   else
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       r = (temp >> 11) & 0x1F;
       g = (temp >> 6 ) & 0x1F;
       b = (temp >> 0 ) & 0x1F;
       temp = (r << 10) + (g <<5) + b;
-      ((short*)pDst)[i] = temp;
+      ((int16*)pDst)[i] = temp;
     }
   }
 }
@@ -488,7 +488,7 @@ NGL_API void nglCopyLine16To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
   {
     int32 i;
     for (i=0; i<PixelCount; i++)
-      ((short*)pDst)[i] = ((short*)pSrc)[PixelCount-i-1];
+      ((int16*)pDst)[i] = ((int16*)pSrc)[PixelCount-i-1];
   }
   else
   {
@@ -499,13 +499,13 @@ NGL_API void nglCopyLine16To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine16To24 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pDest = (char*)pDst;
+  int16 temp;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (temp >> 8) & 0xF8;
       *pDest++ = (temp >> 3) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -515,7 +515,7 @@ NGL_API void nglCopyLine16To24 (void* pDst, void* pSrc, int32 PixelCount, bool I
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (temp >> 8) & 0xF8;
       *pDest++ = (temp >> 3) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -526,13 +526,13 @@ NGL_API void nglCopyLine16To24 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine16To32 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pDest = (char*)pDst;
+  int16 temp;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
-    for (i=0; i<PixelCount; i++)
+    for (i = 0; i < PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (temp << 3) & 0xF8;
       *pDest++ = (temp >> 3) & 0xF8;
       *pDest++ = (temp >> 8) & 0xF8;
@@ -543,7 +543,7 @@ NGL_API void nglCopyLine16To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (temp << 3) & 0xF8;
       *pDest++ = (temp >> 3) & 0xF8;
       *pDest++ = (temp >> 8) & 0xF8;
@@ -556,13 +556,13 @@ NGL_API void nglCopyLine16To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine16To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pDest = (char*)pDst;
+  int16 temp;
+  uint8* pDest = (uint8*)pDst;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[PixelCount - i -1];
+      temp = ((int16*)pSrc)[PixelCount - i -1];
       *pDest++ = (temp >> 8) & 0xF8;
       *pDest++ = (temp >> 3) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -573,7 +573,7 @@ NGL_API void nglCopyLine16To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   {
     for (i=0; i<PixelCount; i++)
     {
-      temp = ((short*)pSrc)[i];
+      temp = ((int16*)pSrc)[i];
       *pDest++ = (temp >> 8) & 0xF8;
       *pDest++ = (temp >> 3) & 0xF8;
       *pDest++ = (temp << 3) & 0xF8;
@@ -588,10 +588,10 @@ NGL_API void nglCopyLine24To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
 {                                          
   char r,g,b;
   int32 i;
-  char* pSource = (char*) pSrc;
+  uint8* pSource = (uint8*) pSrc;
   if (Invert)
   {
-    char* pDest   = (char*) pDst + (PixelCount - 1) - 1;
+    uint8* pDest   = (uint8*) pDst + (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -602,7 +602,7 @@ NGL_API void nglCopyLine24To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
   }
   else
   {
-    char* pDest   = (char*) pDst;
+    uint8* pDest   = (uint8*) pDst;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -616,8 +616,8 @@ NGL_API void nglCopyLine24To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
 NGL_API void nglCopyLine24To15 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {                                          
   int32 i;
-  unsigned short temp;
-  char* pSource = (char*)pSrc;
+  int16 temp;
+  uint8* pSource = (uint8*)pSrc;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
@@ -625,7 +625,7 @@ NGL_API void nglCopyLine24To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp  = ((*pSource++) & 0xF8) >> 3;
       temp |= ((*pSource++) & 0xF8) << 2;
       temp |= ((*pSource++) & 0xF8) << 7;
-      ((short*)pDst)[PixelCount-i-1] = temp;
+      ((int16*)pDst)[PixelCount-i-1] = temp;
     }
   }
   else
@@ -635,7 +635,7 @@ NGL_API void nglCopyLine24To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp  = ((*pSource++) & 0xF8) >> 3;
       temp |= ((*pSource++) & 0xF8) << 2;
       temp |= ((*pSource++) & 0xF8) << 7;
-      ((short*)pDst)[i] = temp;
+      ((int16*)pDst)[i] = temp;
     }
   }
 }                                          
@@ -643,8 +643,8 @@ NGL_API void nglCopyLine24To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine24To16 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pSource = (char*)pSrc;
+  int16 temp;
+  uint8* pSource = (uint8*)pSrc;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
@@ -652,7 +652,7 @@ NGL_API void nglCopyLine24To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp  = ((*pSource++)&0xF8) << 8;
       temp |= ((*pSource++)&0xF8) << 3;
       temp |= ((*pSource++)&0xF8) >> 3;
-      ((short*)pDst)[PixelCount-i-1] = temp;
+      ((int16*)pDst)[PixelCount-i-1] = temp;
     }
   }
   else
@@ -662,7 +662,7 @@ NGL_API void nglCopyLine24To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp  = ((*pSource++)&0xF8) << 8;
       temp |= ((*pSource++)&0xF8) << 3;
       temp |= ((*pSource++)&0xF8) >> 3;
-      ((short*)pDst)[i] = temp;
+      ((int16*)pDst)[i] = temp;
     }
   }
 }
@@ -672,9 +672,9 @@ NGL_API void nglCopyLine24To24 (void* pDst, void* pSrc, int32 PixelCount, bool I
   if (Invert)
   {
     int32 i;
-    char r,g,b;
-    char* pSource = (char*) pSrc;
-    char* pDest   = (char*) pDst + 3 * (PixelCount - 1) - 1;
+    uint8 r,g,b;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst + 3 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -694,11 +694,11 @@ NGL_API void nglCopyLine24To24 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine24To32 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {                                          
   int32 i;
-  char* pSource = (char*) pSrc;
+  uint8* pSource = (uint8*) pSrc;
   if (Invert)
   {
-    char r,g,b;
-    char* pDest   = (char*) pDst + 4 * (PixelCount - 1) - 1;
+    uint8 r,g,b;
+    uint8* pDest   = (uint8*) pDst + 4 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -712,7 +712,7 @@ NGL_API void nglCopyLine24To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
   }
   else
   {
-    char* pDest   = (char*) pDst;
+    uint8* pDest   = (uint8*) pDst;
     for (i=0; i<PixelCount; i++)
     {
       *pDest++ = *pSource++;
@@ -726,11 +726,11 @@ NGL_API void nglCopyLine24To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine24To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {                                          
   int32 i;
-  char* pSource = (char*) pSrc;
+  uint8* pSource = (uint8*) pSrc;
   if (Invert)
   {
-    char r,g,b;
-    char* pDest   = (char*) pDst + 4 * (PixelCount - 1) - 1;
+    uint8 r,g,b;
+    uint8* pDest   = (uint8*) pDst + 4 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -744,8 +744,8 @@ NGL_API void nglCopyLine24To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   }
   else
   {
-    char* pSource = (char*) pSrc;
-    char* pDest   = (char*) pDst;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst;
     //memcpy(pDst,pSrc,PixelCount*4);
     for (int32 i=0; i<PixelCount; ++i)
     {
@@ -762,11 +762,11 @@ NGL_API void nglCopyLine24To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
 NGL_API void nglCopyLine32To8 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {                                          
   int32 i;
-  char* pSource = (char*) pSrc;
+  uint8* pSource = (uint8*) pSrc;
   if (Invert)
   {
-    char r,g,b;
-    char* pDest   = (char*) pDst + (PixelCount - 1) - 1;
+    uint8 r,g,b;
+    uint8* pDest   = (uint8*) pDst + (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -778,7 +778,7 @@ NGL_API void nglCopyLine32To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
   }
   else
   {
-    char* pDest   = (char*) pDst;
+    uint8* pDest   = (uint8*) pDst;
     for (i=0; i<PixelCount; i++)
     {
       int32 average;
@@ -795,8 +795,8 @@ NGL_API void nglCopyLine32To8 (void* pDst, void* pSrc, int32 PixelCount, bool In
 NGL_API void nglCopyLine32To15 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {                                          
   int32 i;
-  unsigned short temp;
-  char* pSource = (char*)pSrc;
+  int16 temp;
+  uint8* pSource = (uint8*)pSrc;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
@@ -805,7 +805,7 @@ NGL_API void nglCopyLine32To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp |= ((*pSource++) & 0xF8) << 2;
       temp |= ((*pSource++) & 0xF8) << 7;
       pSource++;
-      ((short*)pDst)[PixelCount-i-1] = temp;
+      ((int16*)pDst)[PixelCount-i-1] = temp;
     }
   }
   else
@@ -816,7 +816,7 @@ NGL_API void nglCopyLine32To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp |= ((*pSource++) & 0xF8) << 2;
       temp |= ((*pSource++) & 0xF8) << 7;
       pSource++;
-      ((short*)pDst)[i] = temp;
+      ((int16*)pDst)[i] = temp;
     }
   }
 }                                          
@@ -824,8 +824,8 @@ NGL_API void nglCopyLine32To15 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine32To16 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {
   int32 i;
-  unsigned short temp;
-  char* pSource = (char*)pSrc;
+  int16 temp;
+  uint8* pSource = (uint8*)pSrc;
   if (Invert)
   {
     for (i=0; i<PixelCount; i++)
@@ -834,7 +834,7 @@ NGL_API void nglCopyLine32To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp |= ((*pSource++)&0xF8) << 3;
       temp |= ((*pSource++)&0xF8) << 8;
       pSource++;
-      ((short*)pDst)[PixelCount-i-1] = temp;
+      ((int16*)pDst)[PixelCount-i-1] = temp;
     }
   }
   else
@@ -845,7 +845,7 @@ NGL_API void nglCopyLine32To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
       temp |= ((*pSource++) & 0xF8) << 3;
       temp |= ((*pSource++) & 0xF8) << 8;
       pSource++;
-      ((short*)pDst)[i] = temp;
+      ((int16*)pDst)[i] = temp;
     }
   }
 }
@@ -853,11 +853,11 @@ NGL_API void nglCopyLine32To16 (void* pDst, void* pSrc, int32 PixelCount, bool I
 NGL_API void nglCopyLine32To24 (void* pDst, void* pSrc, int32 PixelCount, bool Invert)
 {                                          
   int32 i;
-  char* pSource = (char*) pSrc;
+  uint8* pSource = (uint8*) pSrc;
   if (Invert)
   {
-    char r,g,b;
-    char* pDest   = (char*) pDst + 3 * (PixelCount - 1) - 1;
+    uint8 r,g,b;
+    uint8* pDest   = (uint8*) pDst + 3 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -871,7 +871,7 @@ NGL_API void nglCopyLine32To24 (void* pDst, void* pSrc, int32 PixelCount, bool I
   }
   else
   {
-    char* pDest   = (char*) pDst;
+    uint8* pDest   = (uint8*) pDst;
     for (i=0; i<PixelCount; i++)
     {
       *pDest++ = *pSource++;
@@ -887,9 +887,9 @@ NGL_API void nglCopyLine32To32 (void* pDst, void* pSrc, int32 PixelCount, bool I
   if (Invert)
   {
     int32 i;
-    char r,g,b,a;
-    char* pSource = (char*) pSrc;
-    char* pDest   = (char*) pDst + 4 * (PixelCount - 1) - 1;
+    uint8 r,g,b,a;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst + 4 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -913,9 +913,9 @@ NGL_API void nglCopyLine32To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   if (Invert)
   {
     int32 i;
-    char r,g,b,a;
-    char* pSource = (char*) pSrc;
-    char* pDest   = (char*) pDst + 4 * (PixelCount - 1) - 1;
+    uint8 r,g,b,a;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst + 4 * (PixelCount - 1) - 1;
     for (i=0; i<PixelCount; i++)
     {
       r = *pSource++;
@@ -930,8 +930,8 @@ NGL_API void nglCopyLine32To32ARGB (void* pDst, void* pSrc, int32 PixelCount, bo
   }
   else
   {
-    char* pSource = (char*) pSrc;
-    char* pDest   = (char*) pDst;
+    uint8* pSource = (uint8*) pSrc;
+    uint8* pDest   = (uint8*) pDst;
     //memcpy(pDst,pSrc,PixelCount*4);
     for (int32 i=0; i<PixelCount; ++i)
     {
@@ -1080,8 +1080,8 @@ NGL_API void nglCopyImage(void* pDst, int32 dstwidth, int32 dstheight, int32 dst
   else
     sizey = dstheight;
 
-  char* pSource = (char*) pSrc;
-  char* pDest = (char*) pDst;
+  uint8* pSource = (uint8*) pSrc;
+  uint8* pDest = (uint8*) pDst;
   if (vmirror)
   {
     pSource += slinesize * (sizey-1);

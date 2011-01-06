@@ -768,7 +768,36 @@ bool nuiFontDesc::CheckPath()
   if (mPath.Exists())
   {
     printf("found '%ls' instead of '%ls'\n", p.GetChars(), pp.GetChars());
+    return true;
   }
+
+#ifdef NUI_IOS
+  // try to find a filename prefixed with '_H_' (iOS)
+  {
+    nglPath base(pp);
+    nglString node("_H_");
+    node += base.GetNodeName();
+    base = base.GetParent();
+    mPath = base + node;
+    
+    if (mPath.Exists())
+    {
+      printf("found '%ls' instead of '%ls'\n", p.GetChars(), pp.GetChars());
+      return true;
+    }
+    
+    p = mPath.GetPathName();
+
+    // try to find a .ttc instead of a .ttf... (again)
+    p[p.GetLength() - 1] = 'c';
+    mPath = p;
+    if (mPath.Exists())
+    {
+      printf("found '%ls' instead of '%ls'\n", p.GetChars(), pp.GetChars());
+      return true;
+    }
+  }
+#endif
   return mPath.Exists();
 }
 
@@ -1051,6 +1080,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   //rFolders[_T("System1")] = _T("/Library/Fonts/");
 #elif (defined _UIKIT_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
+  rFolders[_T("System1")] = _T("/System/Library/Fonts/Cache/");
 #elif (defined _WIN32_)
   nglChar p[MAX_PATH];
   HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
@@ -1607,6 +1637,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
+      NGL_OUT(_T("FontManager: scanning font folder '%ls' '%ls' for font files\n"), str.GetChars(), pth.GetChars());
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
@@ -1616,7 +1647,14 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
       {
         const nglPath& path = *itc;
         if (path.IsLeaf())
+        {
           fontFiles.insert(path);
+          NGL_OUT(_T("FontManager: font file found '%ls'\n"), path.GetChars());
+        }
+        else
+        {
+          NGL_OUT(_T("FontManager: skip '%ls'\n"), path.GetChars());
+        }
       }
     }
   }
@@ -1657,8 +1695,12 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
   for (itf = fontFiles.begin(); itf != fontFiles.end(); ++itf)
   {
     const nglPath& path = *itf;
-    
+   
+#ifndef NUI_IOS // On iOS the db is never saved so we need to scan every times...
     if (path.GetLastMod() > lastscantime)
+#else
+    if (1)
+#endif
     {
       bool cont = true;
       int32 face = 0;

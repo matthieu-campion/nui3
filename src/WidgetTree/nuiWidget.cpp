@@ -770,6 +770,7 @@ nuiWidget::~nuiWidget()
     mpSurface->Release();
   }
   delete mpRenderCache;
+  delete mpMatrixNodes;
 }
 
 bool nuiWidget::IsTrashed(bool combined) const 
@@ -2377,21 +2378,194 @@ void nuiWidget::UnlockState()
 void nuiWidget::SetVisible(bool Visible)
 {
   CheckValid();
+  //NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
   
   nuiAnimation* pHideAnim = GetAnimation(_T("HIDE"));
   nuiAnimation* pShowAnim = GetAnimation(_T("SHOW"));
 
-  if (mVisible == Visible)
+  if (Visible)
   {
-    if (Visible && (!pHideAnim || !pHideAnim->IsPlaying()))
-      return;
-    else if (!Visible && (!pShowAnim || !pShowAnim->IsPlaying()))
-      return;
-    if (pHideAnim)
+    // Show
+    if (pHideAnim && pHideAnim->IsPlaying())
+    {
+      // Stop hiding anim
       pHideAnim->Stop();
-    if (pShowAnim)
-      pShowAnim->Stop();
+      // Start Show Anim if there is one
+      if (pShowAnim)
+      {
+        Invalidate();
+        mVisible = true;
+        InvalidateLayout();
+        VisibilityChanged();
+        //pShowAnim->SetTime(0, eAnimFromStart);
+        StartAnimation(_T("SHOW"));
+//        pShowAnim->SilentSetTime(0, eAnimFromStart);
+//        pShowAnim->Play();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+      else // otherwise set visible = true
+      {
+        Invalidate();
+        mVisible = true;
+        InvalidateLayout();
+        VisibilityChanged();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+    }
+    else if (pShowAnim && pShowAnim->IsPlaying())
+    {
+      //  Do nothing (return)
+      NGL_ASSERT(mVisible == true);
+      return;
+    }
+    else if (mVisible)
+    {
+      // Do nothing (return)
+      NGL_ASSERT(mVisible == true);
+      return;
+    }
+    else // !mVisible
+    {
+      // Start Show Anim if there is one
+      if (pShowAnim)
+      {
+        Invalidate();
+        mVisible = true;
+        InvalidateLayout();
+        VisibilityChanged();
+        //pShowAnim->SetTime(0, eAnimFromStart);
+        StartAnimation(_T("SHOW"));
+//        pShowAnim->SilentSetTime(0, eAnimFromStart);
+//        pShowAnim->Play();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+      else // otherwise set visible = true
+      {
+        Invalidate();
+        mVisible = true;
+        InvalidateLayout();
+        VisibilityChanged();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+    }
   }
+  else // !Visible
+  {
+    if (pHideAnim && pHideAnim->IsPlaying())
+    {
+      // Do nothing
+      return;
+    }
+    else if (pShowAnim && pShowAnim->IsPlaying())
+    {
+      // Stop Showing
+      pShowAnim->Stop();
+      // Start Hiding anim if there is one
+      if (pHideAnim)
+      {
+        Invalidate();
+        mVisible = true;
+        InvalidateLayout();
+        VisibilityChanged();
+//        pHideAnim->SetTime(0, eAnimFromStart);
+        StartAnimation(_T("HIDE"));
+//        pHideAnim->SilentSetTime(0, eAnimFromStart);
+//        pHideAnim->Play();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+      else // Otherwise set visible = false
+      {
+        Invalidate();
+        mVisible = false;
+        InvalidateLayout();
+        VisibilityChanged();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+    }
+    else if (mVisible)
+    {
+      // Start Hiding anim if there is one
+      if (pHideAnim)
+      {
+        Invalidate();
+        mVisible = true;
+        InvalidateLayout();
+        VisibilityChanged();
+//        pHideAnim->SetTime(0, eAnimFromStart);
+        StartAnimation(_T("HIDE"));
+//pHideAnim->SilentSetTime(0, eAnimFromStart);
+//       pHideAnim->Play();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+      else // Otherwise set visible = false
+      {
+        Invalidate();
+        mVisible = false;
+        InvalidateLayout();
+        VisibilityChanged();
+        DebugRefreshInfo();
+        ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
+      }
+    }
+    else // !mVisible
+    {
+      // Do nothing
+      NGL_ASSERT(mVisible == false);
+      return;
+    }
+  }
+
+#if 0
+  if (Visible == mVisible)
+  {
+    // Are we already in the process of being hidden?
+    if (!Visible)
+    {
+      if (!pHideAnim)
+      {
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN1\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        return; // No
+      }
+      else if (!pHideAnim->IsPlaying())
+      {
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN2\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        return; // No
+      }
+      
+      // Yes, let's continue as we'll handle this case later
+    }
+    else
+    {
+      if (!pHideAnim)
+      {
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN1\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        return; // No
+      }
+      else if (!pHideAnim->IsPlaying())
+      {
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN2\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        return; // No
+      }
+    }
+
+  }
+  
+  if (pShowAnim && pHideAnim)
+  {
+    NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+  }
+  
+  if (pHideAnim)
+    pHideAnim->SilentStop();
+  if (pShowAnim)
+    pShowAnim->SilentStop();
 
   if (pHideAnim && !Visible && (pHideAnim->GetPosition()==0 && pHideAnim->GetDuration()>0))
   {
@@ -2413,6 +2587,7 @@ void nuiWidget::SetVisible(bool Visible)
     if (Visible)
       StartAnimation(_T("SHOW"));
   }
+#endif
 }
 
 void nuiWidget::SilentSetVisible(bool Visible)
@@ -2421,7 +2596,19 @@ void nuiWidget::SilentSetVisible(bool Visible)
   if (mVisible == Visible)
     return;
   
+  nuiAnimation* pAnimHide = GetAnimation(_T("HIDE"));
+  nuiAnimation* pAnimShow = GetAnimation(_T("SHOW"));
+  
+  if (pAnimHide && pAnimHide->IsPlaying())
+    pAnimHide->Stop();
+  if (pAnimShow && pAnimShow->IsPlaying())
+    pAnimShow->Stop();
+
   mVisible = Visible;
+
+  nuiContainer* pContainer = dynamic_cast<nuiContainer*> (this);
+  if (pContainer)
+    pContainer->BroadcastVisible();
 }
 
 
@@ -3487,9 +3674,15 @@ void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim, bool T
   mAnimations[rName] = pAnim;
   pAnim->SetDeleteOnStop(false); /// Cancel anim delete on stop or we'll crash as soon as the widget is destroyed or the user starts to play the anim once more.
   if (rName == _T("TRASH"))
+  {
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoTrash);
+    TransitionAnimation = true;
+  }
   if (rName == _T("HIDE"))
+  {
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoHide);
+    TransitionAnimation = true;
+  }
   
   if (TransitionAnimation)
   {
@@ -3922,7 +4115,8 @@ void nuiWidget::AutoTrash(const nuiEvent& rEvent)
 void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
-  SetVisible(false);
+  SilentSetVisible(false);
+  InvalidateLayout();
 }
 
 void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
@@ -4718,7 +4912,8 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
       pContext->SetBlendFunc(nuiBlendTransp);
       pContext->EnableBlending(true);
       //pContext->EnableTexturing(false);
-      pContext->SetStrokeColor(nuiColor(64, 64, 255, 128));
+      nuiColor c(64, 64, 255, ToNearest(128 * GetAlpha()));
+      pContext->SetStrokeColor(c);
       
       nuiShape shp;
       shp.AddRect(rect);

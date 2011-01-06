@@ -56,8 +56,6 @@ nglKernel::nglKernel()
 
 nglKernel::~nglKernel()
 {
-  Exit();
-
   SelectFont(mHDC, NULL);
   if (mSystemFont)
     DeleteFont(mSystemFont);

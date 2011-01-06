@@ -198,9 +198,9 @@ void nglKernel::Init()
   
 }
 
-void nglKernel::Exit()
+void nglKernel::Exit(int32 ExitCode)
 {
-  CallOnExit(0);
+  CallOnExit(ExitCode);
   
   mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
@@ -383,7 +383,7 @@ void nglKernel::ProcessMessages(const nuiEvent& rEvent)
   {
     nuiCommand* pCommand = NULL;
     nuiGetTokenValue<nuiCommand*>(pNotif->GetToken(), pCommand);
-    if (pCommand);
+    if (pCommand)
       pCommand->Do();
     delete pNotif;
   }

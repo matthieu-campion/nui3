@@ -1048,7 +1048,6 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
 
   if (mpDSOutputBuffer && FAILED(mpDSOutputBuffer->Lock(pos *bufferBytes /* offset */,bufferBytes /*size*/, (LPVOID*)&pBuf1, &size1, (LPVOID*)&pBuf2, &size2, 0)))
   {
-    TCHAR szBuf[80]; 
     LPVOID lpMsgBuf;
     DWORD dw = GetLastError(); 
 
