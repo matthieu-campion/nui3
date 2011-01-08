@@ -28,9 +28,9 @@ extern void* hInstance;
 //-------------------------------------------------------------------------------------------------------
 AudioEffect* createEffectInstance (audioMasterCallback audioMaster)
 {
-   nuiInit(hInstance, NULL);
-   nuiUninit();
-  return NULL;
+//    nuiInit(hInstance, NULL);
+//    nuiUninit();
+//   return NULL;
 	return new SurroundDelay (audioMaster);
 }
 
