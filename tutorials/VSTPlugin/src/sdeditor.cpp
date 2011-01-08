@@ -57,6 +57,7 @@ void OutFormater(nglString& rString, float value)
 SDEditor::SDEditor (AudioEffect *effect)
  : AEffEditor (effect), mpWin(NULL), mLock(false)
 {
+  nuiInit(NULL, NULL);
   SetObjectClass(_T("SDEditor"));
 
   nuiAttribute<float>* pDelayAttrib = new nuiValueAttribute<float>(_T("Delay"), effect->getParameter(kDelay));
@@ -90,6 +91,7 @@ SDEditor::SDEditor (AudioEffect *effect)
 //-----------------------------------------------------------------------------
 SDEditor::~SDEditor ()
 {
+  nuiUninit();
 }
 
 //-----------------------------------------------------------------------------

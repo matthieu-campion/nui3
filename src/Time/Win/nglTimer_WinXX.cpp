@@ -13,6 +13,7 @@
 
 #define NGL_MAX_QUEUED_TIMER_EVENTS 1
 uint32 WM_NGLTIMER = 0;
+static volatile bool working = false;
 
 HANDLE nglTimer::mTimerQueueHandle = NULL;
 HANDLE nglTimer::mTimerHandle = NULL;
@@ -38,7 +39,16 @@ void nglTimer::FreeMainTimer()
   if (mTimers.empty())
   {
     DeleteTimerQueueTimer(mTimerQueueHandle, mTimerHandle, NULL);
-    DeleteTimerQueue(mTimerQueueHandle);
+//    DeleteTimerQueueEx(mTimerQueueHandle, NULL);
+    while (working)
+    {
+      MSG msg;
+      HWND hwnd = App->GetHWnd();
+
+      PeekMessage(&msg, hwnd, WM_NGLTIMER, WM_NGLTIMER, PM_REMOVE);
+      Sleep(2);
+    }
+   DeleteTimerQueueEx(mTimerQueueHandle, INVALID_HANDLE_VALUE);
     mTimerHandle = NULL;
     mTimerQueueHandle = NULL;
   }
@@ -177,12 +187,15 @@ LRESULT nglTimer::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void nglTimer::PostMessage()
 {
-  static volatile bool working = false;
   if (App && !working)
   {
+    OutputDebugString(_T("TimerIn\n"));
     working = true;
-    ::SendMessage(App->GetHWnd(), WM_NGLTIMER, 0, 0);
+    HWND hwnd = App->GetHWnd();
+    if (hwnd)
+      ::SendMessage(hwnd, WM_NGLTIMER, 0, 0);
     working = false;
+    OutputDebugString(_T("TimerOut\n"));
   }
 }
 
