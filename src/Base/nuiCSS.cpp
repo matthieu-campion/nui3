@@ -359,8 +359,9 @@ public:
       mAccumulator.push_back(mChar);
       GetChar();
     }
-    
-    rResult.Copy(&mAccumulator[0], mAccumulator.size());
+
+    if (!mAccumulator.empty())
+      rResult.Copy(&mAccumulator[0], mAccumulator.size());
     return !rResult.IsEmpty();
   }
   
