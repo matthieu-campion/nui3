@@ -189,13 +189,11 @@ void nglTimer::PostMessage()
 {
   if (App && !working)
   {
-    OutputDebugString(_T("TimerIn\n"));
     working = true;
     HWND hwnd = App->GetHWnd();
     if (hwnd)
       ::SendMessage(hwnd, WM_NGLTIMER, 0, 0);
     working = false;
-    OutputDebugString(_T("TimerOut\n"));
   }
 }
 
