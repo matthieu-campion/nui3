@@ -53,7 +53,7 @@ bool nuiVideoDecoder::Init()
   char* pStr = pathStr.Export();
   NSString* pNSStr = [NSString stringWithCString:pStr encoding:NSUTF8StringEncoding];
   NSURL* pUrl = [NSURL fileURLWithPath:pNSStr];
-  mpPrivate->mpMovie = [QTMovie movieWithFile:pNSStr error:nil];
+  mpPrivate->mpMovie = [QTMovie movieWithFile:pNSStr error:NULL];
   
   if (!mpPrivate->mpMovie)
     return false;

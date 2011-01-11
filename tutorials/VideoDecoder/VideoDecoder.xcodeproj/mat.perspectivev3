@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Project</string>
+	<string>Debug</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -222,7 +222,88 @@
 		</dict>
 	</array>
 	<key>OpenEditors</key>
-	<array/>
+	<array>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
+				<string>401E7E7812DB7EEC00893CDB</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>nuiVideoDecoder.mm</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>401E7E7912DB7EEC00893CDB</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>nuiVideoDecoder.mm</string>
+						<key>_historyCapacity</key>
+						<integer>0</integer>
+						<key>bookmark</key>
+						<string>401E7E8512DB7F3E00893CDB</string>
+						<key>history</key>
+						<array>
+							<string>401E7E7412DB7EBC00893CDB</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {1227, 1248}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>15 124 1227 1289 0 0 2560 1418 </string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
+				<string>401E7E6212DB7E4E00893CDB</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>MainWindow.cpp</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>401E7E6312DB7E4E00893CDB</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>MainWindow.cpp</string>
+						<key>_historyCapacity</key>
+						<integer>0</integer>
+						<key>bookmark</key>
+						<string>401E7E8712DB7F3E00893CDB</string>
+						<key>history</key>
+						<array>
+							<string>401E7E6412DB7E4E00893CDB</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {1333, 1235}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>1070 142 1333 1276 0 0 2560 1418 </string>
+			</dict>
+		</dict>
+	</array>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>1564</integer>
@@ -304,9 +385,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>2</integer>
-									<integer>1</integer>
-									<integer>0</integer>
+									<integer>33</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
@@ -326,8 +405,6 @@
 							<string>MainColumn</string>
 							<real>234</real>
 						</array>
-						<key>RubberWindowFrame</key>
-						<string>361 455 1564 963 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -343,7 +420,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>408D9C4A1097603600AEE78A</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>nuiRenderState.cpp</string>
+								<string>nuiVideoDecoder.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -351,11 +428,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>408D9C4B1097603600AEE78A</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>nuiRenderState.cpp</string>
+										<string>nuiVideoDecoder.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>4021D4BF12CA3AFC006EA9E2</string>
+										<string>401E7E8312DB7F3E00893CDB</string>
 										<key>history</key>
 										<array>
 											<string>4053B5FA12B7BDD700F07124</string>
@@ -365,8 +442,8 @@
 											<string>4053B68212B7C8C800F07124</string>
 											<string>40FC577212B92DDD0008A4D4</string>
 											<string>4021D46C12CA2961006EA9E2</string>
-											<string>4021D47412CA29A4006EA9E2</string>
 											<string>4021D4A512CA33FB006EA9E2</string>
+											<string>401E7E7312DB7EAE00893CDB</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -381,8 +458,6 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {1308, 0}}</string>
-								<key>RubberWindowFrame</key>
-								<string>361 455 1564 963 0 0 2560 1418 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -406,8 +481,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1308, 890}}</string>
-										<key>RubberWindowFrame</key>
-										<string>361 455 1564 963 0 0 2560 1418 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -489,11 +562,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>4021D42B12CA2194006EA9E2</string>
+				<string>401E7E5912DB7E4E00893CDB</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>4021D42C12CA2194006EA9E2</string>
+				<string>401E7E5A12DB7E4E00893CDB</string>
 				<string>408D9C4A1097603600AEE78A</string>
-				<string>4021D42D12CA2194006EA9E2</string>
+				<string>401E7E5B12DB7E4E00893CDB</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -545,6 +618,8 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1564, 275}}</string>
+						<key>RubberWindowFrame</key>
+						<string>361 455 1564 963 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -619,7 +694,11 @@
 							</array>
 							<key>Frame</key>
 							<string>{{0, 338}, {507, 304}}</string>
+							<key>RubberWindowFrame</key>
+							<string>361 455 1564 963 0 0 2560 1418 </string>
 						</dict>
+						<key>RubberWindowFrame</key>
+						<string>361 455 1564 963 0 0 2560 1418 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
@@ -642,14 +721,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>4021D42E12CA2194006EA9E2</string>
+				<string>401E7E5C12DB7E4E00893CDB</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>4021D42F12CA2194006EA9E2</string>
-				<string>4021D43012CA2194006EA9E2</string>
-				<string>4021D43112CA2194006EA9E2</string>
-				<string>4021D43212CA2194006EA9E2</string>
-				<string>4021D43312CA2194006EA9E2</string>
+				<string>401E7E5D12DB7E4E00893CDB</string>
+				<string>401E7E5E12DB7E4E00893CDB</string>
+				<string>401E7E5F12DB7E4E00893CDB</string>
+				<string>401E7E6012DB7E4E00893CDB</string>
+				<string>401E7E6112DB7E4E00893CDB</string>
 			</array>
 			<key>ToolbarConfigUserDefaultsMinorVersion</key>
 			<string>2</string>
@@ -666,7 +745,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>315243260.94400603</real>
+	<real>316374846.97746003</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -683,8 +762,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>4021D43812CA2194006EA9E2</string>
-		<string>4021D43912CA2194006EA9E2</string>
+		<string>401E7E6712DB7E4E00893CDB</string>
+		<string>401E7E6812DB7E4E00893CDB</string>
+		<string>401E7E6212DB7E4E00893CDB</string>
+		<string>401E7E7812DB7EEC00893CDB</string>
 		<string>/Users/mat/work/dev/nui3/tutorials/VideoDecoder/VideoDecoder.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
