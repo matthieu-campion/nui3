@@ -900,7 +900,8 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   float hackY;
   if (NeedTranslateHack)
   {
-    const float ratio=0.5f;
+//    const float ratio=0.5f;
+    const float ratio= NUI_INV_SCALE_FACTOR/2.f;
 #ifdef _UIKIT_
     hackX = ratio;
     hackY = ratio;
