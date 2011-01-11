@@ -112,7 +112,11 @@ public: // overridden from ValueArrayAllocator
          newIndexCount = minNewIndexCount;
       void *newIndexes = realloc( indexes, sizeof(Value*) * newIndexCount );
       if ( !newIndexes )
-         throw std::bad_alloc();
+      {
+        //throw std::bad_alloc();
+        assert(0);
+        return;
+      }
       indexCount = newIndexCount;
       indexes = static_cast<Value **>( newIndexes );
    }

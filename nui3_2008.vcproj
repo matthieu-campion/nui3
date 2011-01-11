@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="nui3"
 	ProjectGUID="{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}"
 	RootNamespace="nui3"
@@ -52,6 +52,7 @@
 				AdditionalIncludeDirectories="include;deps/expat/lib;deps/freetype2/include;deps/zlib;deps/libjpeg;deps/gameswf;deps/ungif;deps/libpng;deps/asio/common;deps/asio/host;deps/asio/host/pc;.;src\Text\HTML;src\Stream\Zip;src\Application\Win;deps/harfbuzz;deps/tidy;deps/ucdata;deps/tracemonkey;deps/libcss/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;NGL_STATIC_BUILD;NGL_USE_WIN32_MMTIMER;FT_CONFIG_OPTION_SYSTEM_ZLIB;HAVE_MEMMOVE;_CRT_SECURE_NO_WARNINGS;D3D_DEBUG_INFO"
 				MinimalRebuild="false"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="1"
 				FloatingPointExceptions="true"
@@ -13481,11 +13482,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\errors.h"
+						RelativePath=".\deps\libcss\include\libcss\errors.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\errors.h"
+						RelativePath=".\deps\libcss\include\parserutils\errors.h"
 						>
 					</File>
 					<File
@@ -13493,11 +13494,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\functypes.h"
+						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
+						RelativePath=".\deps\libcss\include\libcss\functypes.h"
 						>
 					</File>
 					<File
@@ -13541,11 +13542,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\types.h"
+						RelativePath=".\deps\libcss\include\libcss\types.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\types.h"
+						RelativePath=".\deps\libcss\include\parserutils\types.h"
 						>
 					</File>
 					<File
@@ -15888,11 +15889,11 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\select\properties.h"
+							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
+							RelativePath=".\deps\libcss\src\select\properties.h"
 							>
 						</File>
 						<File
@@ -15916,15 +15917,15 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\utils\utils.h"
-							>
-						</File>
-						<File
 							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
 							>
 						</File>
 						<File
 							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
+							>
+						</File>
+						<File
+							RelativePath=".\deps\libcss\src\utils\utils.h"
 							>
 						</File>
 					</Filter>
