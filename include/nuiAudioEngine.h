@@ -13,9 +13,10 @@
 #include "nuiAudioDecoder.h"
 #include "nglRingBuffer.h"
 
+#include "nuiSound.h"
+
 
 class nuiVoice;
-class nuiSound;
 
 class nuiAudioEngine : public nuiObject
 {
@@ -23,7 +24,7 @@ public:
   nuiAudioEngine(double SampleRate, uint32 BufferSize);
   virtual ~nuiAudioEngine();
 
-  nuiVoice* PlaySound(const nglPath& path);
+  nuiVoice* PlaySound(const nglPath& path, nuiSound::Type type = nuiSound::eStream);
   nuiVoice* PlaySound(nuiSound* pSound);
   void StopSound(nuiVoice* pnuiVoice);
   

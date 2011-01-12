@@ -8,16 +8,15 @@
 #pragma once
 
 #include "nui.h"
-#include "nuiSampleReader.h"
+
 
 class nuiVoice : public nuiObject
 {
-public: 
-  friend class nuiSound;
-  
+public:   
+  nuiVoice(const nuiVoice& rVoice);
   nuiVoice& operator=(const nuiVoice& rVoice);
   
-  bool IsValid() const;
+  virtual bool IsValid() const = 0;
   bool IsDone() const;
   
   void Process(const std::vector<float*>& rOutput, uint32 SampleFrames);
@@ -32,7 +31,8 @@ public:
   void SetLoop(bool loop);
   bool IsLooping();
   
-  uint64 GetSampleFrames() const;
+  virtual uint64 GetSampleFrames() const = 0;
+  virtual uint32 GetChannels() const = 0;
   
   int64 GetPosition() const;
   void SetPosition(int64 position);
@@ -48,22 +48,18 @@ public:
   float GetPan() const;
   void SetPan(float pan);
   
-private:
-  nuiVoice(nuiSound* pSound = NULL);
-  nuiVoice(const nuiVoice& rVoice);
-  
+protected:
+  virtual uint32 ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames) = 0;
+
+  nuiVoice(nuiSound* pSound = NULL);  
   virtual ~nuiVoice();
   
   void InitAttributes();
-  
-  bool Load();
   
   void SetPlay(bool play);
   
   nuiSound* mpSound;
   
-  nglIStream* mpStream;
-  nuiSampleReader* mpReader;
   nuiSampleInfo mInfo;
   
   bool mPlay;

@@ -16,14 +16,23 @@ class nuiSampleReader;
 class nuiSound : public nuiRefCount
 {
 public:
-  nuiSound(const nglPath& rPath);
-  virtual ~nuiSound();
+  
+  enum Type 
+  {
+    eStream = 0,
+    eMemory,
+    eUnknown
+  };
   
   const nglPath& GetPath() const;
   
-  virtual nuiVoice* GetVoice(); // get an alredy acquired Voice object
+  virtual nuiVoice* GetVoice() = 0;
   
-private:
-    nglPath mInPath;
+protected:
+  nuiSound(const nglPath& rPath);
+  virtual ~nuiSound();
+  
+  nglPath mInPath;
+  Type mType;  
 };
 

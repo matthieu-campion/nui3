@@ -14,8 +14,6 @@
 
 nuiVoice::nuiVoice(nuiSound* pSound)
 : mpSound(pSound),
-  mpStream(NULL),
-  mpReader(NULL),
   mPlay(true),
   mDone(false),
   mLoop(false),
@@ -35,13 +33,10 @@ nuiVoice::nuiVoice(nuiSound* pSound)
   
   if (mpSound)
     mpSound->Acquire();
-  Load();
 }
 
 nuiVoice::nuiVoice(const nuiVoice& rVoice)
-: mpSound(NULL),
-  mpStream(NULL),
-  mpReader(NULL)
+: mpSound(NULL)
 {
   *this = rVoice;
 }
@@ -59,7 +54,6 @@ nuiVoice& nuiVoice::operator=(const nuiVoice& rVoice)
   
   mpSound = rVoice.mpSound;
   mpSound->Acquire();
-  Load();
   
   mPlay = rVoice.mPlay;
   mDone = rVoice.mDone;
@@ -117,66 +111,7 @@ void nuiVoice::InitAttributes()
   AddAttribute(pPosAttrib);
 }
 
-bool nuiVoice::Load()
-{
-  if (mpStream)
-    delete mpStream;
-  if (mpReader)
-    delete mpReader;
-  mpStream = NULL;
-  mpReader = NULL;
-  
-  if (!mpSound)
-    return false;
-  
-  nglPath path = mpSound->GetPath();
-  
-  if (!path.Exists())
-  {
-    NGL_OUT(_T("Can't load this audio file: %ls (file does not exist)\n"), path.GetNodeName().GetChars());
-    return false;
-  }
-  
-  nglIStream* pStream = path.OpenRead();
-  if (!pStream)
-  {
-    NGL_OUT(_T("Can't load this audio file: %ls (stream can't be open)\n"), path.GetNodeName().GetChars());
-    return false;
-  }
-  
-  nuiSampleReader* pReader = NULL;
-  nuiSampleInfo info;
-  
-  pReader = new nuiWaveReader(*pStream);
-  if (!pReader->GetInfo(info))
-  {
-    delete pReader;
-    pReader = new nuiAiffReader(*pStream);
-    if (!pReader->GetInfo(info))
-    {
-      delete pReader;
-      pReader = new nuiAudioDecoder(*pStream);
-      if (!pReader->GetInfo(info))
-      {
-        NGL_OUT(_T("Can't load this audio file: %ls (reader can't be created)\n"), path.GetNodeName().GetChars());
-        delete pReader;
-        delete pStream;
-        return false;
-      }
-    }
-  }
 
-  mpStream = pStream;
-  mpReader = pReader;
-  mInfo = info;
-  NGL_OUT(_T("audio file loaded: %ls\n"), path.GetNodeName().GetChars());
-  return true;
-}
-
-bool nuiVoice::IsValid() const
-{
-  return mpSound && mpStream && mpReader;
-}
 
 bool nuiVoice::IsDone() const
 {
@@ -189,7 +124,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
     return;
   
   uint32 outChannels = rOutput.size();
-  uint32 inChannels = mInfo.GetChannels();
+  uint32 inChannels = GetChannels();
   
   // if the input and output have not the same channel configuration, we only support mono input with stereo output
   if ((inChannels != outChannels) && (inChannels != 1 || outChannels != 2))
@@ -214,14 +149,13 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
   uint32 toread = SampleFrames;
   while (toread && !mDone)
   {    
-    std::vector<void*> temp;
+    std::vector<float*> temp;
     for (uint32 c = 0; c < inChannels; c++)
       temp.push_back(buffers[c] + done);
    
     NGL_ASSERT(mPosition <= (int64)GetSampleFrames());
     uint32 todo = MIN(toread, (int64)GetSampleFrames() - mPosition);
-    mpReader->SetPosition(mPosition);
-    uint32 read = mpReader->ReadDE(temp, todo, eSampleFloat32);
+    uint32 read = ReadSamples(temp, mPosition, todo);
     
     mPosition += read;
     done += read;
@@ -381,11 +315,6 @@ bool nuiVoice::IsLooping()
   return mLoop;
 }
 
-uint64 nuiVoice::GetSampleFrames() const
-{
-  return mInfo.GetSampleFrames();
-}
-
 int64 nuiVoice::GetPosition() const
 {
   return mPosition;
@@ -395,8 +324,6 @@ void nuiVoice::SetPosition(int64 position)
 {
   nglCriticalSectionGuard guard(mCs);
   mPosition = position;
-  if (mpReader)
-    mpReader->SetPosition(mPosition);
 }
 
 float nuiVoice::GetGainDb() const

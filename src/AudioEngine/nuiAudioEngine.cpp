@@ -180,9 +180,9 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     delete[] buffers[c];
 }
 
-nuiVoice* nuiAudioEngine::PlaySound(const nglPath& path)
+nuiVoice* nuiAudioEngine::PlaySound(const nglPath& path, nuiSound::Type type)
 {
-  nuiSound* pSound = nuiSoundManager::Instance.GetSound(path);  
+  nuiSound* pSound = nuiSoundManager::Instance.GetSound(path, type);  
   nuiVoice* pVoice = PlaySound(pSound);
   
   return pVoice;
