@@ -27,13 +27,28 @@ public:
   nuiVoice* PlaySound(nuiSound* pSound);
   void StopSound(nuiVoice* pnuiVoice);
   
+  float GetGain();
+  void SetGain(float gain);
+  float GetGainDb();
+  void SetGainDb(float Db);
+
+  bool IsMuted();
+  void SetMute(bool mute);
+  
+  float GetPan();
+  void SetPan(float pan);
+  
+  bool IsPlaying();
+  void Play();
+  void Pause();
+  
     
 protected:
   void ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames);
-  
   bool AudioInit();
+  
+  void SetPlay(bool play);
 
-  //void Process(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames);
   void InitAttributes();
   
   double mSampleRate;
@@ -41,6 +56,9 @@ protected:
 
   float mGain;
   bool mMute;
+  float mPan;
+  
+  bool mPlaying;
   
   nuiAudioDevice* mpOutAudioDevice;
   

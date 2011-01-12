@@ -73,7 +73,7 @@ nglConsole::nglConsole(bool IsVisible)
   //NGL_OUT(_T("Create console window hwnd = 0x%x"), mHWnd);
   DWORD err = GetLastError();
 
-  HMENU hmenu=GetSystemMenu(mHWnd,FALSE);
+  HMENU hmenu = GetSystemMenu(mHWnd,FALSE);
   if (hmenu)
   {
     AppendMenu(hmenu,MF_SEPARATOR,0,NULL);

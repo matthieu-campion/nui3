@@ -11,7 +11,6 @@
 #include "nuiAiffReader.h"
 #include "nuiAudioDecoder.h"
 
-#define FADE_LENGTH 44100
 
 nuiVoice::nuiVoice(nuiSound* pSound)
 : mpSound(pSound),
@@ -26,9 +25,14 @@ nuiVoice::nuiVoice(nuiSound* pSound)
   mPosition(0),
   mFadingIn(false),
   mFadeInPosition(0),
+  mFadeInLength(0),
   mFadingOut(false),
-  mFadeOutPosition(0)
+  mFadeOutPosition(0),
+  mFadeOutLength(0)
 {
+  if (SetObjectClass(_T("nuiVoice")))
+    InitAttributes();
+  
   if (mpSound)
     mpSound->Acquire();
   Load();
@@ -66,6 +70,51 @@ nuiVoice& nuiVoice::operator=(const nuiVoice& rVoice)
   mPosition = rVoice.mPosition;
   
   return *this;
+}
+
+void nuiVoice::InitAttributes()
+{
+  nuiAttribute<float>* pGainAttrib = new nuiAttribute<float>
+  (nglString(_T("gain")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiVoice::GetGain),
+   nuiMakeDelegate(this, &nuiVoice::SetGain));  
+  AddAttribute(pGainAttrib);
+  
+  nuiAttribute<float>* pGainDbAttrib = new nuiAttribute<float>
+  (nglString(_T("gainDb")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiVoice::GetGainDb),
+   nuiMakeDelegate(this, &nuiVoice::SetGainDb));  
+  AddAttribute(pGainDbAttrib);
+  
+  nuiAttribute<bool>* pMuteAttrib = new nuiAttribute<bool>
+  (nglString(_T("mute")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiVoice::IsMute),
+   nuiMakeDelegate(this, &nuiVoice::SetMute));
+  AddAttribute(pMuteAttrib);
+  
+  nuiAttribute<float>* pPanAttrib = new nuiAttribute<float>
+  (nglString(_T("pan")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiVoice::GetPan),
+   nuiMakeDelegate(this, &nuiVoice::SetPan));  
+  AddAttribute(pPanAttrib);
+  
+  nuiAttribute<bool>* pPlayAttrib = new nuiAttribute<bool>
+  (nglString(_T("play")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiVoice::IsPlaying),
+   nuiMakeDelegate(this, &nuiVoice::SetPlay));
+  AddAttribute(pPlayAttrib);
+  
+  nuiAttribute<bool>* pLoopAttrib = new nuiAttribute<bool>
+  (nglString(_T("loop")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiVoice::IsLooping),
+   nuiMakeDelegate(this, &nuiVoice::SetLoop));
+  AddAttribute(pLoopAttrib);
+  
+  nuiAttribute<int64>* pPosAttrib = new nuiAttribute<int64>
+  (nglString(_T("position")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiVoice::GetPosition),
+   nuiMakeDelegate(this, &nuiVoice::SetPosition));
+  AddAttribute(pPosAttrib);
 }
 
 bool nuiVoice::Load()
@@ -190,12 +239,12 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
   // Fades
   if (mFadingIn)
   {
-    uint32 todo = MIN(SampleFrames, FADE_LENGTH - mFadeInPosition);
+    uint32 todo = MIN(SampleFrames, mFadeInLength - mFadeInPosition);
     
     float* pFade = new float[todo];
     float* pTempFade = pFade;
     for (uint32 i = 0; i < todo; i++)
-      *pTempFade++ = (float)(mFadeInPosition + i) / (float)FADE_LENGTH;
+      *pTempFade++ = (float)(mFadeInPosition + i) / (float)mFadeInLength;
     
     for (uint32 c = 0; c < outChannels; c++)
     {
@@ -208,7 +257,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
     delete[] pFade;
     
     mFadeInPosition += todo;
-    if (mFadeInPosition == FADE_LENGTH)
+    if (mFadeInPosition == mFadeInLength)
     {
       mFadingIn = false;
       mFadeInPosition = 0;
@@ -216,12 +265,12 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
   }
   else if (mFadingOut)
   {
-    uint32 todo = MIN(SampleFrames, FADE_LENGTH - mFadeOutPosition);
+    uint32 todo = MIN(SampleFrames, mFadeOutLength - mFadeOutPosition);
     
     float* pFade = new float[todo];
     float* pTempFade = pFade;
     for (uint32 i = 0; i < todo; i++)
-      *pTempFade++ = 1.f - ((float)(mFadeOutPosition + i) / (float)FADE_LENGTH);
+      *pTempFade++ = 1.f - ((float)(mFadeOutPosition + i) / (float)mFadeOutLength);
     
     for (uint32 c = 0; c < outChannels; c++)
     {
@@ -234,7 +283,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
     delete[] pFade;
     
     mFadeOutPosition += todo;
-    if (mFadeOutPosition == FADE_LENGTH)
+    if (mFadeOutPosition == mFadeOutLength)
     {
       mFadingOut = false;
       mFadeOutPosition = 0;
@@ -251,7 +300,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
   
   
   // copy temp buffers to output and apply gain
-  if (!mMute && mGain >= 0.f)
+  if (!mMute && mGain > 0.f)
   {
     float pan = mPan;
     pan = MIN(pan, 1.0);
@@ -275,14 +324,12 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
 
 void nuiVoice::Play()
 {
-  nglCriticalSectionGuard guard(mCs);
-  mPlay = true;
+  SetPlay(true);
 }
 
 void nuiVoice::Pause()
 {
-  nglCriticalSectionGuard guard(mCs);
-  mPlay = false;
+  SetPlay(false);
 }
 
 bool nuiVoice::IsPlaying() const
@@ -290,7 +337,13 @@ bool nuiVoice::IsPlaying() const
   return mPlay;
 }
 
-void nuiVoice::FadeIn()
+void nuiVoice::SetPlay(bool play)
+{
+  nglCriticalSectionGuard guard(mCs);
+  mPlay = play;
+}
+
+void nuiVoice::FadeIn(uint32 length)
 {
   if (mPlay)
     return;
@@ -299,11 +352,12 @@ void nuiVoice::FadeIn()
   mFadingIn = true;
   mFadingOut = false;
   
+  mFadeInLength = length;
   mFadeInPosition = 0;
   mPlay = true;
 }
 
-void nuiVoice::FadeOut()
+void nuiVoice::FadeOut(uint32 length)
 {
   if (!mPlay)
     return;
@@ -312,6 +366,7 @@ void nuiVoice::FadeOut()
   mFadingOut = true;
   mFadingIn = false;
   
+  mFadeOutLength = length;
   mFadeOutPosition = 0;
 }
 
@@ -346,14 +401,13 @@ void nuiVoice::SetPosition(int64 position)
 
 float nuiVoice::GetGainDb() const
 {
-  float Db = GainToDB(mGain);
+  float Db = GainToDB(GetGain());
   return Db;
 }
 
 void nuiVoice::SetGainDb(float Db)
 {
-  nglCriticalSectionGuard guard(mCs);
-  mGain = DBToGain(Db);
+  SetGain(DBToGain(Db));
 }
 
 float nuiVoice::GetGain() const

@@ -21,9 +21,16 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef WIN32
+extern void* hInstance;
+#endif
+
 //-------------------------------------------------------------------------------------------------------
 AudioEffect* createEffectInstance (audioMasterCallback audioMaster)
 {
+//    nuiInit(hInstance, NULL);
+//    nuiUninit();
+//   return NULL;
 	return new SurroundDelay (audioMaster);
 }
 

@@ -821,6 +821,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
         (bounds[4] < mClip.Top())
         )
     {
+      pArray->Release();
       skipped_ops++;
       
 //      #ifdef _DEBUG

@@ -1531,11 +1531,11 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
     break;
   }
   pC->SetPainter(pPainter);
-  if (pContext)
-    pContext->BeginSession();
+//  if (pContext)
+//    pContext->BeginSession();
   pC->Set2DProjectionMatrix(rRect);
-  if (pContext)
-    pContext->EndSession();
+//  if (pContext)
+//    pContext->EndSession();
   return pC;
 }
 

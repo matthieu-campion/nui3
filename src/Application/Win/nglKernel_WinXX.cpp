@@ -56,8 +56,7 @@ nglKernel::nglKernel()
 
 nglKernel::~nglKernel()
 {
-  Exit();
-
+  Exit(0);
   SelectFont(mHDC, NULL);
   if (mSystemFont)
     DeleteFont(mSystemFont);
@@ -66,7 +65,11 @@ nglKernel::~nglKernel()
     mpDirect3D->Release();
 
   if (mHWnd) 
+  {
     DestroyWindow(mHWnd);
+  }
+  mHWnd = NULL;
+  mHDC = NULL;
 
   if (mHInstance)
   {

@@ -14,12 +14,12 @@ nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize)
   mBufferSize(BufferSize),
   mGain(1.f),
   mMute(false),
+  mPan(0),
+  mPlaying(true),
   mCs(_T("nuiAudioEngineCriticalSection"))
 {  
   if (SetObjectClass(_T("nuiAudioEngine")))
-  {
     InitAttributes();
-  }
   
   mpOutAudioDevice = NULL;
   AudioInit();
@@ -35,18 +35,36 @@ nuiAudioEngine::~nuiAudioEngine()
 }
 
 void nuiAudioEngine::InitAttributes()
-{  
-//  nuiAttribute<float>* pGainAttrib = new nuiAttribute<float>
-//               (nglString(_T("gain")), nuiUnitCustom,
-//                nuiMakeDelegate(this, &nuiAudioEngine::GetGainDb),
-//                nuiMakeDelegate(this, &nuiAudioEngine::SetGainDb));  
-//  AddAttribute(pGainAttrib);
-//  
-//  nuiAttribute<bool>* pMuteAttrib = new nuiAttribute<bool>
-//               (nglString(_T("mute")), nuiUnitCustom,
-//                nuiMakeDelegate(this, &nuiAudioEngine::IsMute),
-//                nuiMakeDelegate(this, &nuiAudioEngine::SetMute));
-//  AddAttribute(pMuteAttrib);
+{ 
+  nuiAttribute<float>* pGainAttrib = new nuiAttribute<float>
+  (nglString(_T("gain")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiAudioEngine::GetGain),
+   nuiMakeDelegate(this, &nuiAudioEngine::SetGain));  
+  AddAttribute(pGainAttrib);
+  
+  nuiAttribute<float>* pGainDbAttrib = new nuiAttribute<float>
+               (nglString(_T("gainDb")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiAudioEngine::GetGainDb),
+                nuiMakeDelegate(this, &nuiAudioEngine::SetGainDb));  
+  AddAttribute(pGainDbAttrib);
+  
+  nuiAttribute<bool>* pMuteAttrib = new nuiAttribute<bool>
+               (nglString(_T("mute")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiAudioEngine::IsMuted),
+                nuiMakeDelegate(this, &nuiAudioEngine::SetMute));
+  AddAttribute(pMuteAttrib);
+  
+  nuiAttribute<float>* pPanAttrib = new nuiAttribute<float>
+  (nglString(_T("pan")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiAudioEngine::GetPan),
+   nuiMakeDelegate(this, &nuiAudioEngine::SetPan));  
+  AddAttribute(pPanAttrib);
+  
+  nuiAttribute<bool>* pPlayAttrib = new nuiAttribute<bool>
+  (nglString(_T("play")), nuiUnitCustom,
+   nuiMakeDelegate(this, &nuiAudioEngine::IsPlaying),
+   nuiMakeDelegate(this, &nuiAudioEngine::SetPlay));
+  AddAttribute(pPlayAttrib);
 }
 
 
@@ -98,16 +116,49 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   for (uint32 i = 0; i < voicesToAdd.size(); i++)
     mVoices.push_back(voicesToAdd[i]);
   
+  uint32 channels = rOutput.size();
+  for (uint32 c = 0; c < channels; c++)
+  {
+    memset(&rOutput[c][0], 0, sizeof(float) * SampleFrames);
+  }
+    
   
-  uint32 i = 0;
-  for (i = 0; i < rOutput.size(); i++)
-    memset(&rOutput[i][0], 0, sizeof(float) * SampleFrames);
+  if (!mPlaying)
+    return;
+  
+  std::vector<float*> buffers;
+  for (uint32 c = 0; c < channels; c++)
+  {
+    float* pBuffer = new float[SampleFrames];
+    memset(pBuffer, 0, SampleFrames * sizeof(float));
+    buffers.push_back(pBuffer);
+  }
+    
   
   for (uint32 i = 0 ; i < mVoices.size(); i++)
   {
     nuiVoice* pVoice = mVoices[i];
-    pVoice->Process(rOutput, SampleFrames);
+    pVoice->Process(buffers, SampleFrames);
   }
+  
+  
+  if (!mMute && mGain > 0)
+  {
+    float pan = mPan;
+    pan = MIN(pan, 1.0);
+    pan = MAX(pan, -1.0);
+    float panLeft = MIN(1.0, 1.0 - pan);
+    float panRight = MIN(1.0, 1.0 + pan);
+    for (uint32 c = 0; c < channels; c++)
+    {
+      float* pDst = rOutput[c];
+      float* pSrc = buffers[c];
+      float mult = mGain * (c == 0 ? panLeft : panRight);
+      for (uint32 i = 0; i < SampleFrames; i++)
+        *pDst++ += (*pSrc++) * mult;
+    }
+  }
+  
 
   std::vector<nuiVoice*>::iterator it = mVoices.begin();
   std::vector<nuiVoice*>::iterator end = mVoices.end();
@@ -123,6 +174,10 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
       
     ++it;
   }
+  
+  
+  for (uint32 c = 0; c < channels; c++)
+    delete[] buffers[c];
 }
 
 nuiVoice* nuiAudioEngine::PlaySound(const nglPath& path)
@@ -148,4 +203,70 @@ void nuiAudioEngine::StopSound(nuiVoice* pVoice)
   nglCriticalSectionGuard guard(mCs);
   
   mRemoveVoicesQueue.push_back(pVoice);
+}
+
+
+
+
+
+
+float nuiAudioEngine::GetGain()
+{
+  return mGain;
+}
+
+void nuiAudioEngine::SetGain(float gain)
+{
+  mGain = gain;
+}
+
+float nuiAudioEngine::GetGainDb()
+{
+  float db = GainToDB(GetGain());
+  return db;
+}
+
+void nuiAudioEngine::SetGainDb(float Db)
+{
+  SetGain(DBToGain(Db));
+}
+
+bool nuiAudioEngine::IsMuted()
+{
+  return mMute;
+}
+
+void nuiAudioEngine::SetMute(bool mute)
+{
+  mMute = mute;
+}
+
+float nuiAudioEngine::GetPan()
+{
+  return mPan;
+}
+
+void nuiAudioEngine::SetPan(float pan)
+{
+  mPan = pan;
+}
+
+bool nuiAudioEngine::IsPlaying()
+{
+  return mPlaying;
+}
+
+void nuiAudioEngine::SetPlay(bool play)
+{
+  mPlaying = play;
+}
+
+void nuiAudioEngine::Play()
+{
+  SetPlay(true);
+}
+
+void nuiAudioEngine::Pause()
+{
+  SetPlay(false);
 }

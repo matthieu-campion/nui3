@@ -198,10 +198,8 @@ void nglKernel::Init()
   
 }
 
-void nglKernel::Exit()
+void nglKernel::Exit(int32 ExitCode)
 {
-  CallOnExit(0);
-  
   mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
   nuiAnimation::ReleaseTimer();
@@ -326,6 +324,7 @@ void nglKernel::CallOnExit(int Code)
 {
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Exit (code: %d)"), Code); )
   OnExit (Code);
+  nuiAnimation::ReleaseTimer();
 }
 
 void nglKernel::CallOnWillExit()
@@ -383,7 +382,7 @@ void nglKernel::ProcessMessages(const nuiEvent& rEvent)
   {
     nuiCommand* pCommand = NULL;
     nuiGetTokenValue<nuiCommand*>(pNotif->GetToken(), pCommand);
-    if (pCommand);
+    if (pCommand)
       pCommand->Do();
     delete pNotif;
   }

@@ -10,9 +10,7 @@
 #include "nui.h"
 #include "nuiSampleReader.h"
 
-class nuiSound;
-
-class nuiVoice : public nuiRefCount
+class nuiVoice : public nuiObject
 {
 public: 
   friend class nuiSound;
@@ -28,8 +26,8 @@ public:
   void Pause();
   bool IsPlaying() const;
   
-  void FadeIn();
-  void FadeOut();
+  void FadeIn(uint32 length);
+  void FadeOut(uint32 length);
   
   void SetLoop(bool loop);
   bool IsLooping();
@@ -56,7 +54,11 @@ private:
   
   virtual ~nuiVoice();
   
+  void InitAttributes();
+  
   bool Load();
+  
+  void SetPlay(bool play);
   
   nuiSound* mpSound;
   
@@ -74,9 +76,11 @@ private:
   
   bool mFadingIn;
   uint32 mFadeInPosition;
+  uint32 mFadeInLength;
   
   bool mFadingOut;
   uint32 mFadeOutPosition;
+  uint32 mFadeOutLength;
   
   nglCriticalSection mCs;
 };

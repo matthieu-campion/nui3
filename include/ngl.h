@@ -76,6 +76,7 @@ and in NGL user application code.
 
 	// Using UIKit for iPhone and iPhone simulator
 	#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
+    #define NUI_IOS
     #define _UIKIT_
     #define _CORE_FOUNDATION_
 

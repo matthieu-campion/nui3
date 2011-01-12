@@ -78,7 +78,7 @@ bool nglNativeVolume::GetChildren(const nglPath& rPath, std::list<nglPath>& rChi
   nglPath volumeless(rPath.GetVolumeLessPath());
   nglPath pp = p + volumeless;
   
-  bool res = pp.GetChildren(rChildren);
+  bool res = pp.GetChildren(rChildren) != 0;
   
   if (!res)
     return false;
