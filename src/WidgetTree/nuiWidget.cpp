@@ -1491,8 +1491,8 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     
     _self.Intersect(_self, mVisibleRect);
     _self_and_decorations.Intersect(_self_and_decorations, mVisibleRect);
-    if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
-      return false;
+//    if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
+//      return false;
     
     nuiDrawContext* pSavedCtx = pContext;
     
