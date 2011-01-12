@@ -1,0 +1,28 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nui3", "../../nui3_2008.vcproj", "{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AudioEngine", "AudioEngine.2008.vcproj", "{D87858E8-0145-4B03-889A-3186371799DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4} = {A287CB70-6835-4961-BEF5-E2DCDBE2CED4}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}.Debug|Win32.Build.0 = Debug|Win32
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}.Release|Win32.ActiveCfg = Release|Win32
+		{A287CB70-6835-4961-BEF5-E2DCDBE2CED4}.Release|Win32.Build.0 = Release|Win32
+		{D87858E8-0145-4B03-889A-3186371799DC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D87858E8-0145-4B03-889A-3186371799DC}.Debug|Win32.Build.0 = Debug|Win32
+		{D87858E8-0145-4B03-889A-3186371799DC}.Release|Win32.ActiveCfg = Release|Win32
+		{D87858E8-0145-4B03-889A-3186371799DC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
