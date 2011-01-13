@@ -51,7 +51,7 @@ private:
   nuiLabel* mpDurationLabel;
   nuiLabel* mpWidthLabel;
   nuiLabel* mpHeightLabel;
-  nuiLabel* mpBitsPerPixelLabel;
+  nuiLabel* mpRateLabel;
   
   nuiDialogSelectFile* mpDialog;
   

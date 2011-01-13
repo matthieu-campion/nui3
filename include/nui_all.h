@@ -84,5 +84,10 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiAttribute.h"
 #include "nuiAttributeEditor.h"
 #include "nuiTranslator.h"
+#include "nuiAudioDb.h"
+#include "nuiAudioEngine.h"
+#include "nuiSoundManager.h"
+#include "nuiSound.h"
+#include "nuiVoice.h"
 
 #endif // __nui_all_h__
