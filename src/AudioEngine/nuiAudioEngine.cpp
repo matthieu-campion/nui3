@@ -1,17 +1,19 @@
 /*
- *  nuiAudioEngine.cpp
- *
- *  Copyright 2010 blumug. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
  */
 
 
 #include "nuiAudioEngine.h"
 
 
-nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize)
+nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize, ChannelConfig inputConfig)
 : mSampleRate(SampleRate),
   mBufferSize(BufferSize),
+  mInputDelegateSet(false),
+  mOutputDelegateSet(false),
   mGain(1.f),
   mMute(false),
   mPan(0),
@@ -22,7 +24,8 @@ nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize)
     InitAttributes();
   
   mpOutAudioDevice = NULL;
-  AudioInit();
+  mpInAudioDevice = NULL;
+  AudioInit(inputConfig);
 }
 
 nuiAudioEngine::~nuiAudioEngine()
@@ -68,7 +71,7 @@ void nuiAudioEngine::InitAttributes()
 }
 
 
-bool nuiAudioEngine::AudioInit()
+bool nuiAudioEngine::AudioInit(ChannelConfig inputConfig)
 {
   mpOutAudioDevice = nuiAudioDeviceManager::Get().GetDefaultOutputDevice();
 
@@ -80,7 +83,56 @@ bool nuiAudioEngine::AudioInit()
   OutputChannels.push_back(1);
   
   bool res = mpOutAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioOutput));
+  
+  
+  if (inputConfig == eNone)
+    return res;
+  
+  InputChannels.clear();
+  OutputChannels.clear();
+  if (inputConfig == eMono)
+    InputChannels.push_back(0);
+  else if (inputConfig == eStereo)
+  {
+    InputChannels.push_back(0);
+    InputChannels.push_back(1);
+  }
+  mpInAudioDevice = nuiAudioDeviceManager::Get().GetDefaultInputDevice();
+  res &= mpInAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioInput));
+  
   return res;
+}
+
+double nuiAudioEngine::GetSampleRate() const
+{
+  return mSampleRate;
+}
+
+uint32 nuiAudioEngine::GetBufferSize() const
+{
+  return mBufferSize;
+}
+
+void nuiAudioEngine::SetInputProcessDelegate(const nuiAudioEngine::InputDelegate& rDelegate)
+{
+  mInputDelegateSet = true;
+  mInputDelegate = rDelegate;
+}
+
+void nuiAudioEngine::SetOutputProcessDelegate(const nuiAudioEngine::OutputDelegate& rDelegate)
+{
+  mOutputDelegateSet = true;
+  mOutputDelegate = rDelegate;
+}
+
+void nuiAudioEngine::UnsetInputProcessDelegate()
+{
+  mInputDelegateSet = false;
+}
+
+void nuiAudioEngine::UnsetOutputProcessDelegate()
+{
+  mOutputDelegateSet = false;
 }
 
 
@@ -159,6 +211,9 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     }
   }
   
+  if (mOutputDelegateSet)
+    mOutputDelegate(rOutput, SampleFrames);
+  
 
   std::vector<nuiVoice*>::iterator it = mVoices.begin();
   std::vector<nuiVoice*>::iterator end = mVoices.end();
@@ -178,6 +233,12 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   
   for (uint32 c = 0; c < channels; c++)
     delete[] buffers[c];
+}
+
+void nuiAudioEngine::ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
+{
+  if (mInputDelegateSet)
+    mInputDelegate(rInput, SampleFrames);
 }
 
 nuiVoice* nuiAudioEngine::PlaySound(const nglPath& path, nuiSound::Type type)
