@@ -15925,17 +15925,6 @@
 							>
 						</File>
 						<File
-<<<<<<< HEAD
-							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
-							>
-						</File>
-						<File
-							RelativePath=".\deps\libcss\src\utils\utils.h"
-							>
-						</File>
-						<File
-							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
-=======
 							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
 							>
 						</File>
@@ -15945,7 +15934,6 @@
 						</File>
 						<File
 							RelativePath=".\deps\libcss\src\utils\utils.h"
->>>>>>> f4f06a9c7bea466fb3b6053a492383ad5423fc1c
 							>
 						</File>
 					</Filter>
