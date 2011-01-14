@@ -56,6 +56,7 @@ enum nglImagePixelFormat
   eImagePixelIndex = GL_COLOR_INDEX,      ///< The pixel is a palette cell index
   eImagePixelRGB   = GL_RGB,              ///< Red, green and blue
   eImagePixelRGBA  = GL_RGBA,             ///< Red, green, blue and alpha
+  eImagePixelBGR   = GL_BGR,			  ///< Blue, green and red
   eImagePixelLum   = GL_LUMINANCE,        ///< Luminance (gray level)
   eImagePixelAlpha = GL_ALPHA,            ///< Alpha (transparency level)
   eImagePixelLumA  = GL_LUMINANCE_ALPHA   ///< Luminance and alpha

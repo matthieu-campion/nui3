@@ -2382,7 +2382,7 @@ void nuiWidget::SetVisible(bool Visible)
   
   nuiAnimation* pHideAnim = GetAnimation(_T("HIDE"));
   nuiAnimation* pShowAnim = GetAnimation(_T("SHOW"));
-
+  
   if (Visible)
   {
     // Show
@@ -2399,8 +2399,8 @@ void nuiWidget::SetVisible(bool Visible)
         VisibilityChanged();
         //pShowAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("SHOW"));
-//        pShowAnim->SilentSetTime(0, eAnimFromStart);
-//        pShowAnim->Play();
+        //        pShowAnim->SilentSetTime(0, eAnimFromStart);
+        //        pShowAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -2437,8 +2437,8 @@ void nuiWidget::SetVisible(bool Visible)
         VisibilityChanged();
         //pShowAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("SHOW"));
-//        pShowAnim->SilentSetTime(0, eAnimFromStart);
-//        pShowAnim->Play();
+        //        pShowAnim->SilentSetTime(0, eAnimFromStart);
+        //        pShowAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -2471,10 +2471,10 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
-//        pHideAnim->SetTime(0, eAnimFromStart);
+        //        pHideAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("HIDE"));
-//        pHideAnim->SilentSetTime(0, eAnimFromStart);
-//        pHideAnim->Play();
+        //        pHideAnim->SilentSetTime(0, eAnimFromStart);
+        //        pHideAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -2497,10 +2497,10 @@ void nuiWidget::SetVisible(bool Visible)
         mVisible = true;
         InvalidateLayout();
         VisibilityChanged();
-//        pHideAnim->SetTime(0, eAnimFromStart);
+        //        pHideAnim->SetTime(0, eAnimFromStart);
         StartAnimation(_T("HIDE"));
-//pHideAnim->SilentSetTime(0, eAnimFromStart);
-//       pHideAnim->Play();
+        //pHideAnim->SilentSetTime(0, eAnimFromStart);
+        //       pHideAnim->Play();
         DebugRefreshInfo();
         ApplyCSSForStateChange(NUI_WIDGET_MATCHTAG_STATE);
       }
@@ -2521,7 +2521,7 @@ void nuiWidget::SetVisible(bool Visible)
       return;
     }
   }
-
+  
 #if 0
   if (Visible == mVisible)
   {
@@ -2554,7 +2554,7 @@ void nuiWidget::SetVisible(bool Visible)
         return; // No
       }
     }
-
+    
   }
   
   if (pShowAnim && pHideAnim)
@@ -2566,7 +2566,7 @@ void nuiWidget::SetVisible(bool Visible)
     pHideAnim->SilentStop();
   if (pShowAnim)
     pShowAnim->SilentStop();
-
+  
   if (pHideAnim && !Visible && (pHideAnim->GetPosition()==0 && pHideAnim->GetDuration()>0))
   {
     StartAnimation(_T("HIDE"));
@@ -2589,26 +2589,13 @@ void nuiWidget::SetVisible(bool Visible)
   }
 #endif
 }
-
 void nuiWidget::SilentSetVisible(bool Visible)
 {
   CheckValid();
   if (mVisible == Visible)
     return;
   
-  nuiAnimation* pAnimHide = GetAnimation(_T("HIDE"));
-  nuiAnimation* pAnimShow = GetAnimation(_T("SHOW"));
-  
-  if (pAnimHide && pAnimHide->IsPlaying())
-    pAnimHide->Stop();
-  if (pAnimShow && pAnimShow->IsPlaying())
-    pAnimShow->Stop();
-
   mVisible = Visible;
-
-  nuiContainer* pContainer = dynamic_cast<nuiContainer*> (this);
-  if (pContainer)
-    pContainer->BroadcastVisible();
 }
 
 
@@ -3674,15 +3661,9 @@ void nuiWidget::AddAnimation(const nglString& rName, nuiAnimation* pAnim, bool T
   mAnimations[rName] = pAnim;
   pAnim->SetDeleteOnStop(false); /// Cancel anim delete on stop or we'll crash as soon as the widget is destroyed or the user starts to play the anim once more.
   if (rName == _T("TRASH"))
-  {
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoTrash);
-    TransitionAnimation = true;
-  }
   if (rName == _T("HIDE"))
-  {
     mGenericWidgetSink.Connect(pAnim->AnimStop, &nuiWidget::AutoHide);
-    TransitionAnimation = true;
-  }
   
   if (TransitionAnimation)
   {
@@ -4115,8 +4096,7 @@ void nuiWidget::AutoTrash(const nuiEvent& rEvent)
 void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
-  SilentSetVisible(false);
-  InvalidateLayout();
+  SetVisible(false);
 }
 
 void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
@@ -4912,8 +4892,7 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
       pContext->SetBlendFunc(nuiBlendTransp);
       pContext->EnableBlending(true);
       //pContext->EnableTexturing(false);
-      nuiColor c(64, 64, 255, ToNearest(128 * GetAlpha()));
-      pContext->SetStrokeColor(c);
+      pContext->SetStrokeColor(nuiColor(64, 64, 255, 128));
       
       nuiShape shp;
       shp.AddRect(rect);

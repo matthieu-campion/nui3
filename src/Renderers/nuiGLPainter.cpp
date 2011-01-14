@@ -1402,6 +1402,9 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         pixelformat = pImage->GetPixelFormat();
         internalPixelformat = pImage->GetPixelFormat();
         pBuffer = (GLbyte*)pImage->GetBuffer();
+
+		if (pixelformat == GL_BGR)
+			internalPixelformat = GL_RGB;
         
         if (!GetRectangleTextureSupport())
         {
