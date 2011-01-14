@@ -2109,6 +2109,7 @@ bool nuiWidget::Trash()
   if (!mTrashed)
     CallOnTrash();
 
+  TrashRequested();
   nuiAnimation* pAnim = GetAnimation(_T("TRASH"));
   if (pAnim && (pAnim->GetTime()==0 && pAnim->GetDuration()>0))
   {
