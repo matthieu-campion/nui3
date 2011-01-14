@@ -4097,7 +4097,7 @@ void nuiWidget::AutoTrash(const nuiEvent& rEvent)
 void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
-  SetVisible(false);
+  SilentSetVisible(false);
 }
 
 void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)
