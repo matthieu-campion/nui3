@@ -5,6 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
+#include "nui.h"
 #include "nuiFileVoice.h"
 #include "nuiFileSound.h"
 #include "nuiWaveReader.h"
