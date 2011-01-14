@@ -6,6 +6,7 @@
  */
 
 
+#include "nui.h"
 #include "nuiAudioEngine.h"
 
 //#define AUDIO_LOG
@@ -217,18 +218,21 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   
 
   std::vector<nuiVoice*>::iterator it = mVoices.begin();
-  std::vector<nuiVoice*>::iterator end = mVoices.end();
-  while (it != end)
+  uint32 index = 0;
+  while (it != mVoices.end())
   {
     nuiVoice* pVoice = *it;
     if (pVoice->IsDone() == pVoice->GetRefCount() == 1)
     {
-      mVoices.erase(it++);
+      mVoices.erase(it);
+      it = mVoices.begin() + index;
+      index++;
       pVoice->Release();
       continue;
     }
       
     ++it;
+    ++index;
   }
   
 #ifdef AUDIO_LOG

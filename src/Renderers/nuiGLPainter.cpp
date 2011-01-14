@@ -900,7 +900,8 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   float hackY;
   if (NeedTranslateHack)
   {
-    const float ratio=0.5f;
+//    const float ratio=0.5f;
+    const float ratio= NUI_INV_SCALE_FACTOR/2.f;
 #ifdef _UIKIT_
     hackX = ratio;
     hackY = ratio;
@@ -1402,8 +1403,10 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         internalPixelformat = pImage->GetPixelFormat();
         pBuffer = (GLbyte*)pImage->GetBuffer();
 
-		if (pixelformat == GL_BGR)
-			internalPixelformat = GL_RGB;
+#ifndef NUI_IOS
+        if (pixelformat == GL_BGR)
+          internalPixelformat = GL_RGB;
+#endif
         
         if (!GetRectangleTextureSupport())
         {
