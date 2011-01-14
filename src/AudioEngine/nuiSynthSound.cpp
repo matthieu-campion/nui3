@@ -1,12 +1,11 @@
 /*
- *  nuiSynthSound.cpp
- *  nui3
- *
- *  Created by  mat on 1/14/11.
- *  Copyright 2011 libNUI. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
  */
 
+#include "nui.h"
 #include "nuiSynthSound.h"
 #include "nuiSynthVoice.h"
 

@@ -1,12 +1,11 @@
 /*
- *  nuiSynthVoice.cpp
- *  nui3
- *
- *  Created by  mat on 1/14/11.
- *  Copyright 2011 libNUI. All rights reserved.
- *
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
  */
 
+#include "nui.h"
 #include "nuiSynthVoice.h"
 
 nuiSynthVoice::nuiSynthVoice(double SampleRate, double releaseTime, nuiSynthSound* pSound)
@@ -24,7 +23,7 @@ nuiSynthVoice::nuiSynthVoice(double SampleRate, double releaseTime, nuiSynthSoun
   mWavePosition = mPhase * (float)SYNTH_SOUND_TABLE_SIZE;
   
   mLevel = 1;
-  mLevelCoeff = (log(0.001) - log(1)) / (float)mLength;
+  mLevelCoeff = (log(0.001f) - log(1.f)) / (float)mLength;
 }
 
 nuiSynthVoice::~nuiSynthVoice()
