@@ -13,10 +13,14 @@ class nuiFileSound : public nuiSound
 public:
   friend class nuiSoundManager;
   
-  virtual nuiVoice* GetVoice();
+  const nglPath& GetPath() const;
   
 protected:
   nuiFileSound(const nglPath& rPath);
   virtual ~nuiFileSound();
+  
+  virtual nuiVoice* GetVoiceInternal();
+  
+  nglPath mPath;
   
 };

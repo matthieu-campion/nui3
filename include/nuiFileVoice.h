@@ -20,7 +20,6 @@ public:
   nuiFileVoice& operator=(const nuiFileVoice& rVoice);
   
   virtual bool IsValid() const;
-  virtual uint64 GetSampleFrames() const;
   virtual uint32 GetChannels() const;
   
 protected:

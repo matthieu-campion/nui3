@@ -13,8 +13,8 @@
 #include "nuiMemoryVoice.h"
 
 nuiMemorySound::nuiMemorySound(const nglPath& rPath)
-: nuiSound(rPath),
-  mLength(0)
+: mLength(0),
+  mPath(rPath)
 {
   mType = eMemory;
   LoadSamples();
@@ -28,10 +28,10 @@ nuiMemorySound::~nuiMemorySound()
 
 bool nuiMemorySound::LoadSamples()
 {
-  if (!mInPath.Exists())
+  if (!mPath.Exists())
     return false;
   
-  nglIStream* pStream = mInPath.OpenRead();
+  nglIStream* pStream = mPath.OpenRead();
   if (!pStream)
     return false;
   
@@ -49,7 +49,7 @@ bool nuiMemorySound::LoadSamples()
       pReader = new nuiAudioDecoder(*pStream);
       if (!pReader->GetInfo(info))
       {
-        NGL_OUT(_T("Can't load this audio file: %ls (reader can't be created)\n"), mInPath.GetNodeName().GetChars());
+        NGL_OUT(_T("Can't load this audio file: %ls (reader can't be created)\n"), mPath.GetNodeName().GetChars());
         delete pReader;
         delete pStream;
         return false;
@@ -71,7 +71,7 @@ bool nuiMemorySound::LoadSamples()
   mLength = pReader->ReadDE(temp, length, eSampleFloat32);
 }
 
-nuiVoice* nuiMemorySound::GetVoice()
+nuiVoice* nuiMemorySound::GetVoiceInternal()
 {
   nuiVoice* pVoice = new nuiMemoryVoice(this);
   return pVoice;

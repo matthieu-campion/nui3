@@ -127,6 +127,30 @@
 		400C2F9B12DE09DA007472C4 /* nuiFileVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 400C2F7D12DE09DA007472C4 /* nuiFileVoice.cpp */; };
 		400C2F9C12DE09DA007472C4 /* nuiFileVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 400C2F7E12DE09DA007472C4 /* nuiFileVoice.h */; };
 		400C2F9D12DE09DA007472C4 /* nuiMemorySound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 400C2F7F12DE09DA007472C4 /* nuiMemorySound.cpp */; };
+		4017059612E06460008769D5 /* nuiSynthSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4017059412E06460008769D5 /* nuiSynthSound.h */; };
+		4017059712E06460008769D5 /* nuiSynthSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4017059512E06460008769D5 /* nuiSynthSound.cpp */; };
+		4017059812E06460008769D5 /* nuiSynthSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4017059412E06460008769D5 /* nuiSynthSound.h */; };
+		4017059912E06460008769D5 /* nuiSynthSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4017059512E06460008769D5 /* nuiSynthSound.cpp */; };
+		4017059A12E06460008769D5 /* nuiSynthSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4017059412E06460008769D5 /* nuiSynthSound.h */; };
+		4017059B12E06460008769D5 /* nuiSynthSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4017059512E06460008769D5 /* nuiSynthSound.cpp */; };
+		4017059C12E06460008769D5 /* nuiSynthSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4017059412E06460008769D5 /* nuiSynthSound.h */; };
+		4017059D12E06460008769D5 /* nuiSynthSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4017059512E06460008769D5 /* nuiSynthSound.cpp */; };
+		4017059E12E06460008769D5 /* nuiSynthSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4017059412E06460008769D5 /* nuiSynthSound.h */; };
+		4017059F12E06460008769D5 /* nuiSynthSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4017059512E06460008769D5 /* nuiSynthSound.cpp */; };
+		401705A012E06460008769D5 /* nuiSynthSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4017059412E06460008769D5 /* nuiSynthSound.h */; };
+		401705A112E06460008769D5 /* nuiSynthSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4017059512E06460008769D5 /* nuiSynthSound.cpp */; };
+		401705C612E06878008769D5 /* nuiSynthVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 401705C412E06878008769D5 /* nuiSynthVoice.h */; };
+		401705C712E06878008769D5 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
+		401705C812E06878008769D5 /* nuiSynthVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 401705C412E06878008769D5 /* nuiSynthVoice.h */; };
+		401705C912E06878008769D5 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
+		401705CA12E06878008769D5 /* nuiSynthVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 401705C412E06878008769D5 /* nuiSynthVoice.h */; };
+		401705CB12E06878008769D5 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
+		401705CC12E06878008769D5 /* nuiSynthVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 401705C412E06878008769D5 /* nuiSynthVoice.h */; };
+		401705CD12E06878008769D5 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
+		401705CE12E06878008769D5 /* nuiSynthVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 401705C412E06878008769D5 /* nuiSynthVoice.h */; };
+		401705CF12E06878008769D5 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
+		401705D012E06878008769D5 /* nuiSynthVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = 401705C412E06878008769D5 /* nuiSynthVoice.h */; };
+		401705D112E06878008769D5 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
 		40182A6E0F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182A6C0F24C74A00F11401 /* nuiChunkSampleReader.h */; };
 		40182A6F0F24C74A00F11401 /* nuiChunkSampleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40182A6D0F24C74A00F11401 /* nuiChunkSampleReader.cpp */; };
 		40182A700F24C74A00F11401 /* nuiChunkSampleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40182A6C0F24C74A00F11401 /* nuiChunkSampleReader.h */; };
@@ -8502,6 +8526,10 @@
 		400C2F7D12DE09DA007472C4 /* nuiFileVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFileVoice.cpp; path = src/AudioEngine/nuiFileVoice.cpp; sourceTree = SOURCE_ROOT; };
 		400C2F7E12DE09DA007472C4 /* nuiFileVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFileVoice.h; path = include/nuiFileVoice.h; sourceTree = SOURCE_ROOT; };
 		400C2F7F12DE09DA007472C4 /* nuiMemorySound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMemorySound.cpp; path = src/AudioEngine/nuiMemorySound.cpp; sourceTree = SOURCE_ROOT; };
+		4017059412E06460008769D5 /* nuiSynthSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSynthSound.h; path = ../include/nuiSynthSound.h; sourceTree = "<group>"; };
+		4017059512E06460008769D5 /* nuiSynthSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSynthSound.cpp; path = AudioEngine/nuiSynthSound.cpp; sourceTree = "<group>"; };
+		401705C412E06878008769D5 /* nuiSynthVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSynthVoice.h; path = ../include/nuiSynthVoice.h; sourceTree = "<group>"; };
+		401705C512E06878008769D5 /* nuiSynthVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSynthVoice.cpp; path = AudioEngine/nuiSynthVoice.cpp; sourceTree = "<group>"; };
 		40182A6C0F24C74A00F11401 /* nuiChunkSampleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiChunkSampleReader.h; path = ../include/nuiChunkSampleReader.h; sourceTree = "<group>"; };
 		40182A6D0F24C74A00F11401 /* nuiChunkSampleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiChunkSampleReader.cpp; path = AudioSamples/nuiChunkSampleReader.cpp; sourceTree = "<group>"; };
 		40182AD20F24F09500F11401 /* nuiAiffReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAiffReader.cpp; path = AudioSamples/nuiAiffReader.cpp; sourceTree = "<group>"; };
@@ -10283,6 +10311,10 @@
 				400C2F7B12DE09DA007472C4 /* nuiFileSound.cpp */,
 				400C2F7E12DE09DA007472C4 /* nuiFileVoice.h */,
 				400C2F7D12DE09DA007472C4 /* nuiFileVoice.cpp */,
+				4017059412E06460008769D5 /* nuiSynthSound.h */,
+				4017059512E06460008769D5 /* nuiSynthSound.cpp */,
+				401705C412E06878008769D5 /* nuiSynthVoice.h */,
+				401705C512E06878008769D5 /* nuiSynthVoice.cpp */,
 			);
 			name = AudioEngine;
 			sourceTree = "<group>";
@@ -13818,6 +13850,8 @@
 				400C2F5512DE0995007472C4 /* nuiMemoryVoice.h in Headers */,
 				400C2F8112DE09DA007472C4 /* nuiFileSound.h in Headers */,
 				400C2F8312DE09DA007472C4 /* nuiFileVoice.h in Headers */,
+				4017059812E06460008769D5 /* nuiSynthSound.h in Headers */,
+				401705C812E06878008769D5 /* nuiSynthVoice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14642,6 +14676,8 @@
 				400C2F6112DE0995007472C4 /* nuiMemoryVoice.h in Headers */,
 				400C2F8B12DE09DA007472C4 /* nuiFileSound.h in Headers */,
 				400C2F8D12DE09DA007472C4 /* nuiFileVoice.h in Headers */,
+				4017059612E06460008769D5 /* nuiSynthSound.h in Headers */,
+				401705C612E06878008769D5 /* nuiSynthVoice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15452,6 +15488,8 @@
 				400C2F5B12DE0995007472C4 /* nuiMemoryVoice.h in Headers */,
 				400C2F8612DE09DA007472C4 /* nuiFileSound.h in Headers */,
 				400C2F8812DE09DA007472C4 /* nuiFileVoice.h in Headers */,
+				4017059A12E06460008769D5 /* nuiSynthSound.h in Headers */,
+				401705CA12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16262,6 +16300,8 @@
 				400C2F6D12DE0995007472C4 /* nuiMemoryVoice.h in Headers */,
 				400C2F9512DE09DA007472C4 /* nuiFileSound.h in Headers */,
 				400C2F9712DE09DA007472C4 /* nuiFileVoice.h in Headers */,
+				4017059E12E06460008769D5 /* nuiSynthSound.h in Headers */,
+				401705CE12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17072,6 +17112,8 @@
 				400C2F7312DE0995007472C4 /* nuiMemoryVoice.h in Headers */,
 				400C2F9A12DE09DA007472C4 /* nuiFileSound.h in Headers */,
 				400C2F9C12DE09DA007472C4 /* nuiFileVoice.h in Headers */,
+				401705A012E06460008769D5 /* nuiSynthSound.h in Headers */,
+				401705D012E06878008769D5 /* nuiSynthVoice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17882,6 +17924,8 @@
 				400C2F6712DE0995007472C4 /* nuiMemoryVoice.h in Headers */,
 				400C2F9012DE09DA007472C4 /* nuiFileSound.h in Headers */,
 				400C2F9212DE09DA007472C4 /* nuiFileVoice.h in Headers */,
+				4017059C12E06460008769D5 /* nuiSynthSound.h in Headers */,
+				401705CC12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18627,6 +18671,8 @@
 				400C2F8012DE09DA007472C4 /* nuiFileSound.cpp in Sources */,
 				400C2F8212DE09DA007472C4 /* nuiFileVoice.cpp in Sources */,
 				400C2F8412DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
+				4017059912E06460008769D5 /* nuiSynthSound.cpp in Sources */,
+				401705C912E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19235,6 +19281,8 @@
 				400C2F8A12DE09DA007472C4 /* nuiFileSound.cpp in Sources */,
 				400C2F8C12DE09DA007472C4 /* nuiFileVoice.cpp in Sources */,
 				400C2F8E12DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
+				4017059712E06460008769D5 /* nuiSynthSound.cpp in Sources */,
+				401705C712E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19836,6 +19884,8 @@
 				400C2F8512DE09DA007472C4 /* nuiFileSound.cpp in Sources */,
 				400C2F8712DE09DA007472C4 /* nuiFileVoice.cpp in Sources */,
 				400C2F8912DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
+				4017059B12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
+				401705CB12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20436,6 +20486,8 @@
 				400C2F9412DE09DA007472C4 /* nuiFileSound.cpp in Sources */,
 				400C2F9612DE09DA007472C4 /* nuiFileVoice.cpp in Sources */,
 				400C2F9812DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
+				4017059F12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
+				401705CF12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -21037,6 +21089,8 @@
 				400C2F9912DE09DA007472C4 /* nuiFileSound.cpp in Sources */,
 				400C2F9B12DE09DA007472C4 /* nuiFileVoice.cpp in Sources */,
 				400C2F9D12DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
+				401705A112E06460008769D5 /* nuiSynthSound.cpp in Sources */,
+				401705D112E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -21638,6 +21692,8 @@
 				400C2F8F12DE09DA007472C4 /* nuiFileSound.cpp in Sources */,
 				400C2F9112DE09DA007472C4 /* nuiFileVoice.cpp in Sources */,
 				400C2F9312DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
+				4017059D12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
+				401705CD12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

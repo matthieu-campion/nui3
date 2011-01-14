@@ -8,6 +8,7 @@
 
 #include "nuiAudioEngine.h"
 
+//#define AUDIO_LOG
 
 nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize, ChannelConfig inputConfig)
 : mSampleRate(SampleRate),
@@ -229,6 +230,23 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
       
     ++it;
   }
+  
+#ifdef AUDIO_LOG
+  nglPath path(ePathUserDesktop);
+  path+= nglString(_T("AudioLog"));
+  nglOFile* pFile = new nglOFile(path, eOFileAppend);
+  if (pFile)
+  {
+    for (uint32 c =  0; c < rOutput.size(); c++)
+    {
+      for (uint32 i = 0; i < SampleFrames; i++)
+      {
+        pFile->WriteFloat(rOutput[c] + i, 1);
+      }
+    }
+    delete pFile;
+  }
+#endif
   
   
   for (uint32 c = 0; c < channels; c++)

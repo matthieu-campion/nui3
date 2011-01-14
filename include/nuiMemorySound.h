@@ -13,7 +13,6 @@ class nuiMemorySound : public nuiSound
 public:
   friend class nuiSoundManager;
   
-  virtual nuiVoice* GetVoice();
   uint32 GetSampleFrames() const;
   uint32 GetChannels()const;
   
@@ -23,7 +22,10 @@ protected:
   nuiMemorySound(const nglPath& rPath);
   virtual ~nuiMemorySound();
   
+  virtual nuiVoice* GetVoiceInternal();
+  
   bool LoadSamples();
   std::vector<float*> mSamples;
   int64 mLength;
+  nglPath mPath;
 };

@@ -9,7 +9,7 @@
 #include "nuiFileVoice.h"
 
 nuiFileSound::nuiFileSound(const nglPath& rPath)
-: nuiSound(rPath)
+: mPath(rPath)
 {
   mType = eStream;
 }
@@ -18,8 +18,13 @@ nuiFileSound::~nuiFileSound()
   
 }
 
-nuiVoice* nuiFileSound::GetVoice()
+nuiVoice* nuiFileSound::GetVoiceInternal()
 {
   nuiVoice* pVoice = new nuiFileVoice(this);
   return pVoice;
+}
+
+const nglPath& nuiFileSound::GetPath() const
+{
+  return mPath;
 }
