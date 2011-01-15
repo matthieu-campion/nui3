@@ -114,6 +114,22 @@ float NUI_INV_SCALE_FACTOR = 1.0f / NUI_SCALE_FACTOR;
 //#error "bleh"
 #endif
 
+void nuiGLLoadMatrix(const float* pMatrix)
+{
+  glLoadMatrixf(pMatrix);
+}
+
+void nuiGLLoadMatrix(const double* pMatrix)
+{
+#ifndef _OPENGL_ES_
+  glLoadMatrixd(pMatrix);
+#else
+  NGL_ASSERT(!"no glLoadMatrixd in gles");
+#endif
+}
+
+
+
 void nuiGLPainter::BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha, GLenum dstalpha)
 {
   mSrcColor = src;
@@ -200,6 +216,10 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   mDefaultFramebuffer = 0;
   mDefaultRenderbuffer = 0;
   mForceApply = false;
+  mClientVertex = false;
+  mClientColor = false;
+  mClientTexCoord = false;
+  mMatrixChanged = true;
   
   mpContext = pContext;
   if (mpContext)
@@ -895,6 +915,13 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
   NUI_RETURN_IF_RENDERING_DISABLED;
 
+  if (mMatrixChanged)
+  {
+    nuiGLLoadMatrix(mMatrixStack.top().Array);
+    mMatrixChanged = false;
+  }
+
+  
   bool NeedTranslateHack = pArray->IsShape() || ((mode == GL_POINTS || mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !pArray->Is3DMesh());
   float hackX;
   float hackY;
@@ -949,22 +976,33 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
   if (pArray->IsArrayEnabled(nuiRenderArray::eVertex))
   {
-    glEnableClientState(GL_VERTEX_ARRAY);
+    if (!mClientVertex)
+      glEnableClientState(GL_VERTEX_ARRAY);
+    mClientVertex = true;
     glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mX);
     nuiCheckForGLErrors();
   }
   else
-    glDisableClientState(GL_VERTEX_ARRAY);
+  {
+    if (mClientVertex)
+      glDisableClientState(GL_VERTEX_ARRAY);
+    mClientVertex = false;
+  }
 
   if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
-    glEnableClientState(GL_COLOR_ARRAY);
+    if (!mClientColor)
+      glEnableClientState(GL_COLOR_ARRAY);
+    mClientColor = true;
     glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mR);
     nuiCheckForGLErrors();
   }
   else
   {
-    glDisableClientState(GL_COLOR_ARRAY);
+    if (mClientColor)
+      glDisableClientState(GL_COLOR_ARRAY);
+    mClientColor = false;
+
     nuiColor c;
     switch (pArray->GetMode())
     {
@@ -992,13 +1030,17 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
   if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    if (!mClientTexCoord)
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    mClientTexCoord = true;
     glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mTX);
     nuiCheckForGLErrors();
   }
   else
   {
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    if (mClientTexCoord)
+      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    mClientTexCoord = false;
   }
   //glDisableClientState(GL_COLOR_ARRAY);
   //glColor4f(0.5,0.5,0.5,0.5);
@@ -1173,26 +1215,15 @@ void nuiGLPainter::EndSession()
   //printf("min = %d max = %d total in frame = %d total = %d\n", mins, maxs, totalinframe, total);
 }
 
-void nuiGLLoadMatrix(const float* pMatrix)
-{
-  glLoadMatrixf(pMatrix);
-}
-
-void nuiGLLoadMatrix(const double* pMatrix)
-{
-#ifndef _OPENGL_ES_
-  glLoadMatrixd(pMatrix);
-#else
-  NGL_ASSERT(!"no glLoadMatrixd in gles");
-#endif
-}
-
 void nuiGLPainter::LoadMatrix(const nuiMatrix& rMatrix)
 {
   NUI_RETURN_IF_RENDERING_DISABLED;
 
   nuiPainter::LoadMatrix(rMatrix);
-  nuiGLLoadMatrix(rMatrix.Array);
+  //nuiGLLoadMatrix(rMatrix.Array);
+  //nuiGLLoadMatrix(mMatrixStack.top().Array);
+
+  mMatrixChanged = true;
 
   nuiCheckForGLErrors();
 }

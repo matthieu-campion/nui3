@@ -108,6 +108,11 @@ protected:
   GLenum mDstColor;
   GLenum mSrcAlpha;
   GLenum mDstAlpha;
+  
+  bool mClientVertex;
+  bool mClientColor;
+  bool mClientTexCoord;
+  bool mMatrixChanged;
 };
 
 void nuiCheckForGLErrors();

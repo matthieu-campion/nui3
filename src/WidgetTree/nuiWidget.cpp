@@ -25,13 +25,8 @@
 #include "nuiMatrixNode.h"
 #include "nuiCSS.h"
 
-#ifdef _UIKIT_
 //const bool gGlobalUseRenderCache = false;
 const bool gGlobalUseRenderCache = true;
-#else
-//const bool gGlobalUseRenderCache = false;
-const bool gGlobalUseRenderCache = true;
-#endif
 
 //#define NUI_LOG_GETIDEALRECT
 
