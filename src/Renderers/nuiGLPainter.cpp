@@ -220,6 +220,11 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   mClientColor = false;
   mClientTexCoord = false;
   mMatrixChanged = true;
+  mR = -1;
+  mG = -1;
+  mB = -1;
+  mA = -1;
+  
   
   mpContext = pContext;
   if (mpContext)
@@ -989,6 +994,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     mClientVertex = false;
   }
 
+  float r = mR, g = mG, b = mB, a = mA;
   if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
     if (!mClientColor)
@@ -1024,10 +1030,23 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       c = mFinalState.mFillColor;
       break;
     }
-    glColor4f(c.Red(), c.Green(), c.Blue(), c.Alpha());
+    
+    r = c.Red();
+    g = c.Green();
+    b = c.Blue();
+    a = c.Alpha();
     nuiCheckForGLErrors();
   }
 
+  if (mR != r || mG != g || mB != b || mA != a)
+  {
+    glColor4f(r, g, b, a);
+    mR = r;
+    mG = g;
+    mB = b;
+    mA = a;
+  }
+  
   if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
     if (!mClientTexCoord)
@@ -1042,8 +1061,6 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     mClientTexCoord = false;
   }
-  //glDisableClientState(GL_COLOR_ARRAY);
-  //glColor4f(0.5,0.5,0.5,0.5);
   
 /*
   if (pArray->IsArrayEnabled(nuiRenderArray::eNormal))
@@ -1192,8 +1209,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       glTranslatef(-hackX, -hackY, 0);
   }
 
-//  glColor3f(1.0f, 1.0f, 1.0f);
-  glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+  //glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
   pArray->Release();
   nuiCheckForGLErrors();
