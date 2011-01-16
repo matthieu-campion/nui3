@@ -118,6 +118,7 @@ protected:
   float mG;
   float mB;
   float mA;
+  GLenum mTexEnvMode;
 };
 
 void nuiCheckForGLErrors();
