@@ -478,6 +478,8 @@ protected:
   friend void objCCallOnInit(void* pNSApplication);
   friend void objCCallOnExit(int Code);
   friend void objCCallOnWillExit();
+  
+  void CallOnWillExit();
 	
   void* mpNSApplication;
   

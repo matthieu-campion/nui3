@@ -623,10 +623,15 @@ nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
 
 nuiFontBase::~nuiFontBase()
 {
+  NGL_OUT(_T("DestroyFont: %p\n"), this);
   Textures::iterator it;
   Textures::iterator end = mTextures.end();
   for(it = mTextures.begin(); it != end; ++it)
-    (*it)->Release();
+  {
+    nuiTexture* pTexture = *it;
+    NGL_OUT(_T("DestroyFontTexture: %p / %p\n"), this, pTexture);
+    pTexture->Release();
+  }
   mTextures.clear();
   mGlyphLocationLookupTable.clear();
 }

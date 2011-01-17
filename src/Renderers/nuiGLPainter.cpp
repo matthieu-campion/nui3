@@ -114,6 +114,22 @@ float NUI_INV_SCALE_FACTOR = 1.0f / NUI_SCALE_FACTOR;
 //#error "bleh"
 #endif
 
+void nuiGLLoadMatrix(const float* pMatrix)
+{
+  glLoadMatrixf(pMatrix);
+}
+
+void nuiGLLoadMatrix(const double* pMatrix)
+{
+#ifndef _OPENGL_ES_
+  glLoadMatrixd(pMatrix);
+#else
+  NGL_ASSERT(!"no glLoadMatrixd in gles");
+#endif
+}
+
+
+
 void nuiGLPainter::BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha, GLenum dstalpha)
 {
   mSrcColor = src;
@@ -200,6 +216,16 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   mDefaultFramebuffer = 0;
   mDefaultRenderbuffer = 0;
   mForceApply = false;
+  mClientVertex = false;
+  mClientColor = false;
+  mClientTexCoord = false;
+  mMatrixChanged = true;
+  mR = -1;
+  mG = -1;
+  mB = -1;
+  mA = -1;
+  mTexEnvMode = 0;
+  
   
   mpContext = pContext;
   if (mpContext)
@@ -895,12 +921,20 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
   NUI_RETURN_IF_RENDERING_DISABLED;
 
+  if (mMatrixChanged)
+  {
+    nuiGLLoadMatrix(mMatrixStack.top().Array);
+    mMatrixChanged = false;
+  }
+
+  
   bool NeedTranslateHack = pArray->IsShape() || ((mode == GL_POINTS || mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !pArray->Is3DMesh());
   float hackX;
   float hackY;
   if (NeedTranslateHack)
   {
-    const float ratio=0.5f;
+//    const float ratio=0.5f;
+    const float ratio= NUI_INV_SCALE_FACTOR/2.f;
 #ifdef _UIKIT_
     hackX = ratio;
     hackY = ratio;
@@ -948,22 +982,34 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 
   if (pArray->IsArrayEnabled(nuiRenderArray::eVertex))
   {
-    glEnableClientState(GL_VERTEX_ARRAY);
+    if (!mClientVertex)
+      glEnableClientState(GL_VERTEX_ARRAY);
+    mClientVertex = true;
     glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mX);
     nuiCheckForGLErrors();
   }
   else
-    glDisableClientState(GL_VERTEX_ARRAY);
+  {
+    if (mClientVertex)
+      glDisableClientState(GL_VERTEX_ARRAY);
+    mClientVertex = false;
+  }
 
+  float r = mR, g = mG, b = mB, a = mA;
   if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
-    glEnableClientState(GL_COLOR_ARRAY);
+    if (!mClientColor)
+      glEnableClientState(GL_COLOR_ARRAY);
+    mClientColor = true;
     glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mR);
     nuiCheckForGLErrors();
   }
   else
   {
-    glDisableClientState(GL_COLOR_ARRAY);
+    if (mClientColor)
+      glDisableClientState(GL_COLOR_ARRAY);
+    mClientColor = false;
+
     nuiColor c;
     switch (pArray->GetMode())
     {
@@ -985,22 +1031,37 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       c = mFinalState.mFillColor;
       break;
     }
-    glColor4f(c.Red(), c.Green(), c.Blue(), c.Alpha());
+    
+    r = c.Red();
+    g = c.Green();
+    b = c.Blue();
+    a = c.Alpha();
     nuiCheckForGLErrors();
   }
 
+  if (mR != r || mG != g || mB != b || mA != a)
+  {
+    glColor4f(r, g, b, a);
+    mR = r;
+    mG = g;
+    mB = b;
+    mA = a;
+  }
+  
   if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    if (!mClientTexCoord)
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    mClientTexCoord = true;
     glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mTX);
     nuiCheckForGLErrors();
   }
   else
   {
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    if (mClientTexCoord)
+      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    mClientTexCoord = false;
   }
-  //glDisableClientState(GL_COLOR_ARRAY);
-  //glColor4f(0.5,0.5,0.5,0.5);
   
 /*
   if (pArray->IsArrayEnabled(nuiRenderArray::eNormal))
@@ -1149,8 +1210,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       glTranslatef(-hackX, -hackY, 0);
   }
 
-//  glColor3f(1.0f, 1.0f, 1.0f);
-  glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+  //glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
   pArray->Release();
   nuiCheckForGLErrors();
@@ -1172,26 +1232,15 @@ void nuiGLPainter::EndSession()
   //printf("min = %d max = %d total in frame = %d total = %d\n", mins, maxs, totalinframe, total);
 }
 
-void nuiGLLoadMatrix(const float* pMatrix)
-{
-  glLoadMatrixf(pMatrix);
-}
-
-void nuiGLLoadMatrix(const double* pMatrix)
-{
-#ifndef _OPENGL_ES_
-  glLoadMatrixd(pMatrix);
-#else
-  NGL_ASSERT(!"no glLoadMatrixd in gles");
-#endif
-}
-
 void nuiGLPainter::LoadMatrix(const nuiMatrix& rMatrix)
 {
   NUI_RETURN_IF_RENDERING_DISABLED;
 
   nuiPainter::LoadMatrix(rMatrix);
-  nuiGLLoadMatrix(rMatrix.Array);
+  //nuiGLLoadMatrix(rMatrix.Array);
+  //nuiGLLoadMatrix(mMatrixStack.top().Array);
+
+  mMatrixChanged = true;
 
   nuiCheckForGLErrors();
 }
@@ -1401,6 +1450,11 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         pixelformat = pImage->GetPixelFormat();
         internalPixelformat = pImage->GetPixelFormat();
         pBuffer = (GLbyte*)pImage->GetBuffer();
+
+#ifndef NUI_IOS
+        if (pixelformat == GL_BGR)
+          internalPixelformat = GL_RGB;
+#endif
         
         if (!GetRectangleTextureSupport())
         {
@@ -1540,27 +1594,34 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 
   if (pTexture->GetPixelFormat() == eImagePixelAlpha)
   {
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
-    
-    glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
-    glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_MODULATE);
-    
-    glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_TEXTURE);
-    glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_ALPHA, GL_TEXTURE);
-    
-    glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_PRIMARY_COLOR);
-    glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_ALPHA, GL_PRIMARY_COLOR);
-    
-    glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_ALPHA);
-    glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
-    
-    glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
-    glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA);
-    
+    if (mTexEnvMode != GL_COMBINE)
+    {
+      glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+      
+      glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
+      glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_MODULATE);
+      
+      glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_TEXTURE);
+      glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_ALPHA, GL_TEXTURE);
+      
+      glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_PRIMARY_COLOR);
+      glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_ALPHA, GL_PRIMARY_COLOR);
+      
+      glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_ALPHA);
+      glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
+      
+      glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
+      glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA);
+      mTexEnvMode = GL_COMBINE;
+    }
   }
   else
   {
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, pTexture->GetEnvMode());
+    if (mTexEnvMode != pTexture->GetEnvMode())
+    {
+      glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, pTexture->GetEnvMode());
+      mTexEnvMode = pTexture->GetEnvMode();
+    }
   }
   
   

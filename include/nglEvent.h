@@ -45,6 +45,9 @@ protected:
 
 private:
   nglEvent(const nglEvent&) {} // Undefined copy constructor
+#else
+public:
+  virtual ~nglEvent() {}
 #endif // _UNIX_
 };
 

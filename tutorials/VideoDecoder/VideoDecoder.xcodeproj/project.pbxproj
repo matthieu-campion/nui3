@@ -30,18 +30,6 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
-		E5E4B1C712BFA6B0001AC13D /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
-		E5E4B1C812BFA6B0001AC13D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
-		E5E4B1CA12BFA6B0001AC13D /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
-		E5E4B1CB12BFA6B0001AC13D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
-		E5E4B1CC12BFA6B0001AC13D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
-		E5E4B1CD12BFA6B0001AC13D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
-		E5E4B1CE12BFA6B0001AC13D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
-		E5E4B1D012BFA6B0001AC13D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D9C1310975F2E00AEE78A /* Cocoa.framework */; };
-		E5E4B1D112BFA6B0001AC13D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D9C1510975F3A00AEE78A /* QTKit.framework */; };
-		E5E4B1D212BFA6B0001AC13D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404D57BD12B690F40004F0FA /* QuartzCore.framework */; };
-		E5E4B1D312BFA6B0001AC13D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4053B72012B7D9A000F07124 /* QuickTime.framework */; };
-		E5E4B1E712BFA772001AC13D /* libnui3CocoaD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C065AE122B11A700F52C24 /* libnui3CocoaD.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,13 +89,6 @@
 			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
-		E5E4B1E512BFA74C001AC13D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE /* nui3CocoaD */;
-			remoteInfo = nui3CocoaD;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -129,8 +110,6 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
-		E5E4B1D712BFA6B0001AC13D /* VideoDecoderD Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VideoDecoderD Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5E4B1D912BFA6B1001AC13D /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,8 +125,6 @@
 				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
 				408D9C1410975F2E00AEE78A /* Cocoa.framework in Frameworks */,
 				408D9C1610975F3A00AEE78A /* QTKit.framework in Frameworks */,
-				E5D816DF12BD85C8008DAB9F /* QuickTime.framework in Frameworks */,
-				E5D816E212BD8608008DAB9F /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,23 +145,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E5E4B1C912BFA6B0001AC13D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E5E4B1CA12BFA6B0001AC13D /* AGL.framework in Frameworks */,
-				E5E4B1CB12BFA6B0001AC13D /* CoreFoundation.framework in Frameworks */,
-				E5E4B1CC12BFA6B0001AC13D /* CoreServices.framework in Frameworks */,
-				E5E4B1CD12BFA6B0001AC13D /* Carbon.framework in Frameworks */,
-				E5E4B1CE12BFA6B0001AC13D /* OpenGL.framework in Frameworks */,
-				E5E4B1D012BFA6B0001AC13D /* Cocoa.framework in Frameworks */,
-				E5E4B1D112BFA6B0001AC13D /* QTKit.framework in Frameworks */,
-				E5E4B1D212BFA6B0001AC13D /* QuartzCore.framework in Frameworks */,
-				E5E4B1D312BFA6B0001AC13D /* QuickTime.framework in Frameworks */,
-				E5E4B1E712BFA772001AC13D /* libnui3CocoaD.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -196,13 +156,13 @@
 				61A9DE4A0B833CD000BC506C /* sources */,
 				61A9DE490B833CB000BC506C /* dependencies */,
 				61A9DFB50B833DE500BC506C /* Products */,
+				404D57BD12B690F40004F0FA /* QuartzCore.framework */,
 			);
 			sourceTree = "<group>";
 		};
 		61A9DE490B833CB000BC506C /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				404D57BD12B690F40004F0FA /* QuartzCore.framework */,
 				408D9C1510975F3A00AEE78A /* QTKit.framework */,
 				408D9C1310975F2E00AEE78A /* Cocoa.framework */,
 				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
@@ -232,7 +192,6 @@
 			children = (
 				61A9DFBF0B833E9600BC506C /* VideoDecoder.app */,
 				61A9DFC90B833EF200BC506C /* VideoDecoderD.app */,
-				E5E4B1D712BFA6B0001AC13D /* VideoDecoderD Cocoa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -241,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				BC6A09AB0EF92BAB00881ACF /* Info.plist */,
-				E5E4B1D912BFA6B1001AC13D /* Info copy.plist */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -307,24 +265,6 @@
 			productReference = 61A9DFC90B833EF200BC506C /* VideoDecoderD.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E5E4B1C312BFA6B0001AC13D /* VideoDecoderD Cocoa */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E5E4B1D512BFA6B0001AC13D /* Build configuration list for PBXNativeTarget "VideoDecoderD Cocoa" */;
-			buildPhases = (
-				E5E4B1C612BFA6B0001AC13D /* Sources */,
-				E5E4B1C912BFA6B0001AC13D /* Frameworks */,
-				E5E4B1D412BFA6B0001AC13D /* Copy Resources Script */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E5E4B1E612BFA74C001AC13D /* PBXTargetDependency */,
-			);
-			name = "VideoDecoderD Cocoa";
-			productName = Tempd;
-			productReference = E5E4B1D712BFA6B0001AC13D /* VideoDecoderD Cocoa.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -353,7 +293,6 @@
 			targets = (
 				61A9DFBE0B833E9600BC506C /* VideoDecoder */,
 				61A9DFC80B833EF200BC506C /* VideoDecoderD */,
-				E5E4B1C312BFA6B0001AC13D /* VideoDecoderD Cocoa */,
 			);
 		};
 /* End PBXProject section */
@@ -443,20 +382,6 @@
 			shellPath = /bin/sh;
 			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
-		E5E4B1D412BFA6B0001AC13D /* Copy Resources Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Resources Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -478,15 +403,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E5E4B1C612BFA6B0001AC13D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E5E4B1C712BFA6B0001AC13D /* Application.cpp in Sources */,
-				E5E4B1C812BFA6B0001AC13D /* MainWindow.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -499,11 +415,6 @@
 			isa = PBXTargetDependency;
 			name = nui3D;
 			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
-		};
-		E5E4B1E612BFA74C001AC13D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = nui3CocoaD;
-			targetProxy = E5E4B1E512BFA74C001AC13D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -578,39 +489,6 @@
 			};
 			name = Default;
 		};
-		E5E4B1D612BFA6B0001AC13D /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = i386;
-				COPY_PHASE_STRIP = NO;
-				GCC_DEBUGGING_SYMBOLS = used;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					_COCOA_,
-				);
-				INFOPLIST_FILE = "Info copy.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-liconv",
-					"-lz",
-				);
-				PREBINDING = YES;
-				PRODUCT_NAME = "VideoDecoderD Cocoa";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = Default;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -634,14 +512,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFCD0B833EF300BC506C /* Default */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
-		};
-		E5E4B1D512BFA6B0001AC13D /* Build configuration list for PBXNativeTarget "VideoDecoderD Cocoa" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E5E4B1D612BFA6B0001AC13D /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;

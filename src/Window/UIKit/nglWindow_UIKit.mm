@@ -1030,11 +1030,6 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	
 	SetSize(w, h);
 	
-//  glClearColor(0, 0, 0, 1);
-//  glClear(GL_COLOR_BUFFER_BIT);
-  
-//  [pUIWindow UpdateOrientation];
-
 /* Ultra basic UIKit view integration on top of nuiWidgets
   UIWebView* pWebView = [[UIWebView alloc] initWithFrame: CGRectMake(50, 50, 200, 200)];
 	[pUIWindow addSubview: pWebView];

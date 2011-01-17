@@ -406,6 +406,7 @@ void nuiDecoration::ExitDecorationEngine()
   {
     DecorationMap::iterator it = mDecorations.begin();
     nuiDecoration* pDeco = it->second;
+    NGL_OUT(_T("Releasing decoration %p '%ls'\n"), pDeco, pDeco->GetObjectName().GetChars());
     pDeco->Release();
   }
   mDecorationCreators.clear();

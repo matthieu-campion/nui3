@@ -1528,22 +1528,25 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
       //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
       pContext->ResetState();
       pContext->ResetClipRect();
-      pContext->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
-      pContext->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f, 0.5f));
       pContext->Clip(mDirtyRects[i]);
       pContext->EnableClipping(true);
 
       nuiColor clearColor(GetColor(eActiveWindowBg));
-      pContext->SetClearColor(clearColor);
+      //pContext->SetClearColor(clearColor);
       if (mClearBackground)
       {
-        pContext->Clear();
+        //pContext->Clear();
+        pContext->SetFillColor(clearColor);
+        pContext->DrawRect(mDirtyRects[i], eFillShape);
       }
       else
       {
         // Force the initial render state anyway!
         pContext->DrawRect(nuiRect(0,0,0,0), eStrokeShape);
       }
+
+      pContext->SetStrokeColor(nuiColor(1.0f, 0.0f, 0.0f, 0.0f));
+      pContext->SetFillColor(nuiColor(1.0f, 0.0f, 0.0f, 0.5f));
 
       DrawWidget(pContext);
 
