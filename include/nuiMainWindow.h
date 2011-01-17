@@ -171,6 +171,7 @@ protected:
   nglTime mLastRendering;
   void InvalidateTimer(const nuiEvent& rEvent);
   bool mPaintEnabled;
+  bool mDebugSlowRedraw;
 
   nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation
   nuiWidget*      mpWidgetCanDrop; ///< if not NULL, this is the last widget that return true to an OnCanDrop call (used for DragLeave)

@@ -17,6 +17,7 @@
 
 
 class nuiVoice;
+class nuiAudioDevice;
 
 class nuiAudioEngine : public nuiObject
 {
