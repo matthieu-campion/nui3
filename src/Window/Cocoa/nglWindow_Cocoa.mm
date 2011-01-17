@@ -792,9 +792,6 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
 	SetSize(rect.size.width, rect.size.height);
-	
-  glClearColor(0, 0, 0, 1);
-  glClear(GL_COLOR_BUFFER_BIT);
   
 //  [pNSWindow UpdateOrientation];
   

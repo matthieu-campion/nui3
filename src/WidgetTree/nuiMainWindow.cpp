@@ -97,6 +97,7 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   mpInfoLabel->SetVisible(false);
 
   mDebugMode = false;
+  mDebugSlowRedraw = false;
   mInvalidatePosted = false;
   mpInspectorWindow = NULL;
   
@@ -139,6 +140,7 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   mpInfoLabel->SetVisible(false);
 
   mDebugMode = false;
+  mDebugSlowRedraw = false;
   mInvalidatePosted = false;
   mpInspectorWindow = NULL;
   mpWidgetCanDrop = NULL;
@@ -407,6 +409,12 @@ void nuiMainWindow::Paint()
   //printf("Frame stats | RenderOps: %d | Vertices %d | Batches %d\n", rops, verts, batches);
   
   //Invalidate();
+  
+  
+  if (mDebugSlowRedraw)
+  {
+    nglThread::Sleep(1);
+  }
 }
 
 void nuiMainWindow::OnResize(uint Width, uint Height)
@@ -701,6 +709,14 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
       nuiPainter* pPainter = pCtx->GetPainter();
       pPainter->DEBUG_EnableDrawArray(!pPainter->DEBUG_GetEnableDrawArray());
       
+      InvalidateLayout();
+    }
+    else if (rEvent.mKey == NK_W && 
+             (IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL)) && 
+             (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
+             )
+    {
+      mDebugSlowRedraw = !mDebugSlowRedraw;
       InvalidateLayout();
     }
 #ifndef _UIKIT_

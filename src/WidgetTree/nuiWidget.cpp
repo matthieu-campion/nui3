@@ -25,13 +25,8 @@
 #include "nuiMatrixNode.h"
 #include "nuiCSS.h"
 
-#ifdef _UIKIT_
 //const bool gGlobalUseRenderCache = false;
 const bool gGlobalUseRenderCache = true;
-#else
-//const bool gGlobalUseRenderCache = false;
-const bool gGlobalUseRenderCache = true;
-#endif
 
 //#define NUI_LOG_GETIDEALRECT
 
@@ -1491,8 +1486,8 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     
     _self.Intersect(_self, mVisibleRect);
     _self_and_decorations.Intersect(_self_and_decorations, mVisibleRect);
-    if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
-      return false;
+//    if (!inter.Intersect(_self_and_decorations, clip)) // Only render at the last needed moment. As we are currently offscreen or clipped entirely we will redraw another day.
+//      return false;
     
     nuiDrawContext* pSavedCtx = pContext;
     
@@ -2109,6 +2104,7 @@ bool nuiWidget::Trash()
   if (!mTrashed)
     CallOnTrash();
 
+  TrashRequested();
   nuiAnimation* pAnim = GetAnimation(_T("TRASH"));
   if (pAnim && (pAnim->GetTime()==0 && pAnim->GetDuration()>0))
   {
@@ -4096,7 +4092,7 @@ void nuiWidget::AutoTrash(const nuiEvent& rEvent)
 void nuiWidget::AutoHide(const nuiEvent& rEvent)
 {
   CheckValid();
-  SetVisible(false);
+  SilentSetVisible(false);
 }
 
 void nuiWidget::AutoStartTransition(const nuiEvent& rEvent)

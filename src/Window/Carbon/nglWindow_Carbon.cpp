@@ -1547,9 +1547,6 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
       //  swap = 1;
       //  aglEnable(mCtx, AGL_SWAP_LIMIT);
       //  aglSetInteger(mCtx, AGL_SWAP_LIMIT, &swap);
-      
-      glClearColor(0,0,0,0);
-      glClear(GL_COLOR_BUFFER_BIT);
 #endif
     }
   }

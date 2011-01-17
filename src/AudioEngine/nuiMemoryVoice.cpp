@@ -5,6 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
+#include "nui.h"
 #include "nuiMemoryVoice.h"
 
 nuiMemoryVoice::nuiMemoryVoice(nuiMemorySound* pSound)
@@ -30,6 +31,7 @@ nuiMemoryVoice& nuiMemoryVoice::operator=(const nuiMemoryVoice& rVoice)
   this->nuiVoice::operator=(rVoice);
   
   mpMemorySound = rVoice.mpMemorySound;
+  return *this;
 }
 
 bool nuiMemoryVoice::IsValid() const
