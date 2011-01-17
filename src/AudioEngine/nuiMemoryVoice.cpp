@@ -39,14 +39,6 @@ bool nuiMemoryVoice::IsValid() const
   return (mpMemorySound != NULL);
 }
 
-uint64 nuiMemoryVoice::GetSampleFrames() const
-{
-  if (!IsValid())
-    return 0;
-  
-  return mpMemorySound->GetSampleFrames();
-}
-
 uint32 nuiMemoryVoice::GetChannels() const
 {
   if (!IsValid())
@@ -60,7 +52,11 @@ uint32 nuiMemoryVoice::ReadSamples(const std::vector<float*>& rOutput, int64 pos
   if (!IsValid())
     return 0;
   
-  uint32 read = mpMemorySound->ReadSamples(rOutput, position, SampleFrames);
+  if (position > mpMemorySound->GetSampleFrames())
+    return 0;
+  
+  uint32 todo = MIN(SampleFrames, mpMemorySound->GetSampleFrames() - position);
+  uint32 read = mpMemorySound->ReadSamples(rOutput, position, todo);
   return read;
 }
 

@@ -64,7 +64,7 @@ bool nuiFileVoice::Init()
   if (!mpSound)
     return false;
   
-  nglPath path = mpSound->GetPath();
+  nglPath path = mpFileSound->GetPath();
   
   if (!path.Exists())
   {
@@ -108,11 +108,6 @@ bool nuiFileVoice::Init()
   return true;
 }
 
-uint64 nuiFileVoice::GetSampleFrames() const
-{
-  return mInfo.GetSampleFrames();
-}
-
 uint32 nuiFileVoice::GetChannels() const
 {
   return mInfo.GetChannels();
@@ -124,11 +119,15 @@ uint32 nuiFileVoice::ReadSamples(const std::vector<float*>& rOutput, int64 posit
   if (!IsValid())
     return 0;
   
+  if (position >= mInfo.GetSampleFrames())
+    return 0;
+  uint32 todo = MIN(SampleFrames, (int64)mInfo.GetSampleFrames() - position);
+  
   std::vector<void*> temp;
   for (uint32 i = 0; i < rOutput.size(); i++)
     temp.push_back((void*)rOutput[i]);
   
   mpReader->SetPosition(position);
-  uint32 read = mpReader->ReadDE(temp, SampleFrames, eSampleFloat32);
+  uint32 read = mpReader->ReadDE(temp, todo, eSampleFloat32);
   return read;
 }

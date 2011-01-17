@@ -31,7 +31,7 @@ public:
   void SetLoop(bool loop);
   bool IsLooping();
   
-  virtual uint64 GetSampleFrames() const = 0;
+//  virtual uint64 GetSampleFrames() const = 0;
   virtual uint32 GetChannels() const = 0;
   
   int64 GetPosition() const;
@@ -57,6 +57,8 @@ protected:
   void InitAttributes();
   
   void SetPlay(bool play);
+  
+  virtual void SetPositionInternal(int64 position);
   
   nuiSound* mpSound;
   
