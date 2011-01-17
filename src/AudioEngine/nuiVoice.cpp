@@ -154,9 +154,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
     for (uint32 c = 0; c < inChannels; c++)
       temp.push_back(buffers[c] + done);
    
-    NGL_ASSERT(mPosition <= (int64)GetSampleFrames());
-    uint32 todo = MIN(toread, (int64)GetSampleFrames() - mPosition);
-    uint32 read = ReadSamples(temp, mPosition, todo);
+    uint32 read = ReadSamples(temp, mPosition, toread);
     
     mPosition += read;
     done += read;
@@ -181,7 +179,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
     for (uint32 i = 0; i < todo; i++)
       *pTempFade++ = (float)(mFadeInPosition + i) / (float)mFadeInLength;
     
-    for (uint32 c = 0; c < outChannels; c++)
+    for (uint32 c = 0; c < inChannels; c++)
     {
       float* pDst = buffers[c];
       pTempFade = pFade;
@@ -207,7 +205,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
     for (uint32 i = 0; i < todo; i++)
       *pTempFade++ = 1.f - ((float)(mFadeOutPosition + i) / (float)mFadeOutLength);
     
-    for (uint32 c = 0; c < outChannels; c++)
+    for (uint32 c = 0; c < inChannels; c++)
     {
       float* pDst = buffers[c];
       pTempFade = pFade;
@@ -224,7 +222,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
       mFadeOutPosition = 0;
       mPlay = false;
       
-      for (uint32 c = 0; c < outChannels; c++)
+      for (uint32 c = 0; c < inChannels; c++)
       {
         float* pDst = buffers[c];
         for (uint32 i = todo; i < SampleFrames; i++)
@@ -324,7 +322,13 @@ int64 nuiVoice::GetPosition() const
 void nuiVoice::SetPosition(int64 position)
 {
   nglCriticalSectionGuard guard(mCs);
+  SetPositionInternal(position);
   mPosition = position;
+}
+
+void nuiVoice::SetPositionInternal(int64 position)
+{
+  
 }
 
 float nuiVoice::GetGainDb() const

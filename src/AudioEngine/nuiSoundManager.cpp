@@ -9,6 +9,7 @@
 #include "nuiSoundManager.h"
 #include "nuiFileSound.h"
 #include "nuiMemorySound.h"
+#include "nuiSynthSound.h"
 
 #define STREAM_SUFFIX _T("_stream");
 #define MEMORY_SUFFIX _T("_memory");
@@ -47,6 +48,14 @@ nuiSound* nuiSoundManager::GetSound(const nglPath& rPath, nuiSound::Type type)
   return pSound;
 }
 
+nuiSynthSound* nuiSoundManager::GetSynthSound()
+{
+  nuiSynthSound* pSound = new nuiSynthSound();
+  mSynthSounds.push_back(pSound);
+  
+  return pSound;
+}
+
 nuiSoundManager::nuiSoundManager()
 {
   
@@ -56,13 +65,25 @@ nuiSoundManager::~nuiSoundManager()
 {
 }
 
+void nuiSoundManager::RemoveSound(nuiSound* pSound)
+{
+  NGL_ASSERT(pSound->GetRefCount() == 0); // RemoveSound is called by nuiSound destructor
+  
+  if (pSound->mType == nuiSound::eStream)
+    RemoveSound(((nuiFileSound*)pSound)->mPath, pSound->mType);
+  else if (pSound->mType == nuiSound::eMemory)
+    RemoveSound(((nuiMemorySound*)pSound)->mPath, pSound->mType);
+  else if (pSound->mType == nuiSound::eSynth)
+    mSynthSounds.remove((nuiSynthSound*)pSound);
+    
+}
+
 void nuiSoundManager::RemoveSound(const nglPath& rPath, nuiSound::Type type)
 {
   nglString str = GetStringID(rPath, type);
   SoundMap::iterator it = mSounds.find(str);
   if (it != mSounds.end())
   {
-    NGL_ASSERT(it->second->GetRefCount() == 0);
     mSounds.erase(it);
   }
 }
@@ -81,6 +102,7 @@ nglString nuiSoundManager::GetStringID(const nglPath& rPath, nuiSound::Type type
       break;
       
     default:
+      NGL_ASSERT(0);
       break;
   }
   return str;
