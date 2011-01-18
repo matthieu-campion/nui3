@@ -292,7 +292,6 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 : mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   NGL_ASSERT(mpSpriteDef);
-  mpSpriteDef->Acquire();
   Init();
 }
 
@@ -312,6 +311,9 @@ void nuiSprite::Init()
   {
     InitAttributes();
   }
+  
+  if (mpSpriteDef)
+    mpSpriteDef->Acquire();
   
   mpParent = NULL;
   mpMatrixNodes = NULL;
@@ -725,18 +727,19 @@ nuiSpriteView::nuiSpriteView()
 
 nuiSpriteView::~nuiSpriteView()
 {
-  for (size_t i = 0; i < mpChildren.size(); i++)
+  for (size_t i = 0; i < mpSprites.size(); i++)
     mpSprites[i]->Release();
 }
 
 void nuiSpriteView::AddSprite(nuiSprite* pSprite)
 {
   mpSprites.push_back(pSprite);
+  pSprite->Acquire();
 }
 
 void nuiSpriteView::DelSprite(nuiSprite* pSprite)
 {
-  for (size_t i = 0; i < mpChildren.size(); i++)
+  for (size_t i = 0; i < mpSprites.size(); i++)
   {
     if (mpSprites[i] == pSprite)
     {
