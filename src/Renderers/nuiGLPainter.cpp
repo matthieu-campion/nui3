@@ -1469,6 +1469,15 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
     
     if (reload)
     {
+      glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
+      nuiCheckForGLErrors();
+
       int type = 8;
       GLint pixelformat = 0;
       GLint internalPixelformat = 0;
@@ -1610,15 +1619,6 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       //      if (!pTexture->IsBufferRetained()) { 
       //        pTexture->ReleaseBuffer();
       //      }
-      
-      glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
-      nuiCheckForGLErrors();
       
     }
   }
@@ -1925,7 +1925,10 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         //printf("surface render buffer -> %d\n", info.mRenderbuffer);
         nuiCheckForGLErrors();
       }
+
+#ifdef DEBUG
       CheckFramebufferStatus();
+#endif
       nuiCheckForGLErrors();
       mFramebuffers[pSurface] = info;
     }
@@ -1939,7 +1942,9 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
       
       nuiCheckForGLErrors();
+#ifdef DEBUG
       CheckFramebufferStatus();
+#endif
     }
   }
   else
@@ -1951,7 +1956,9 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     //printf("UNBIND glBindRenderbufferNUI -> %d\n", mDefaultRenderbuffer);
     
     nuiCheckForGLErrors();
+#ifdef DEBUG
     CheckFramebufferStatus();
+#endif
   }
 }
 
