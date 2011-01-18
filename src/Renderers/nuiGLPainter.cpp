@@ -394,6 +394,9 @@ void nuiGLPainter::StartRendering()
   glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA);
   
   
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
   mClientVertex = false;
   mClientColor = false;
   mClientTexCoord = false;
