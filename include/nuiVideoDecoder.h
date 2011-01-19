@@ -17,21 +17,27 @@ public:
   virtual ~nuiVideoDecoder();
   
   bool IsValid() const;
+  
   double GetDuration() const;
+  uint32 GetWidth() const;
+  uint32 GetHeight() const;
+  float GetRate() const;
+  
   double GetPosition() const;
   void SetPosition(double TimePosition);
   
-  double GetTimeTillNextFrame() const;
-  
   bool GoToNextFrame();
-  bool GoToPrevFrame();
   
-  nglImage* GetCurrentImage();
-  nuiTexture* GetCurrentTexture();
-  void UpdateTexture();
+  nglImage* UpdateImage();
+  nuiTexture* UpdateTexture();
   
 private:
   bool Init();
+  
+  double mDuration;
+  uint32 mWidth;
+  uint32 mHeight;
+  float mRate;
   
   nglPath mPath;
   nglImage* mpImage;

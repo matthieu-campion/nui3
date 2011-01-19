@@ -320,7 +320,8 @@ public:
 
   /** @name Basic outgoing events */
   //@{
-  nuiSimpleEventSource <nuiTrashed> Trashed; ///< Send an event when the object is destroyed
+  nuiSimpleEventSource <nuiTrashed> Trashed; ///< Send an event when the object is trashed (if there is a TRASH animation this event is sent once the anim is done)
+  nuiSimpleEventSource <nuiTrashed> TrashRequested; ///< Send an event when the object is trashed (if there is a TRASH animation this event is sent before it is started)
   nuiSimpleEventSource <nuiDestroyed> Destroyed; ///< Send an event when the object is destroyed
   nuiSimpleEventSource <nuiWidgetParentChanged> ParentChanged; ///< Send an event when the object is reparented
 

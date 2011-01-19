@@ -1,0 +1,22 @@
+//
+// main nui3 stylesheet
+//
+
+"ButtonsGrid"!
+{
+  Position: Center;
+}
+
+"GridButton"!
+{
+  BorderTop: 10;
+  BorderBottom: 10;
+  BorderLeft: 10;
+  BorderRight: 10;
+  
+  UserWidth: 40;
+  UserHeight: 40;
+}
+
+// blank ending line following
+

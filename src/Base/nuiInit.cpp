@@ -159,10 +159,10 @@ bool nuiUninit()
     if (pApp)
     {
       App->CallOnExit(0);
-      delete (pApp);
-      App = NULL;
       nuiDecoration::ExitDecorationEngine();
       nuiFont::ClearAll();
+      delete (pApp);
+      App = NULL;
       //nuiTexture::ClearAll();
 #ifdef WIN32
       WSACleanup();
