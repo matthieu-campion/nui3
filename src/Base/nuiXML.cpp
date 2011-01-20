@@ -1473,27 +1473,8 @@ bool nuiXML::ParseXMLHeader(xmlLexer* pLexer, nglString& str)
 
 bool nuiXML::Save(nglOStream& rStream) const
 {
-  nglString res;
-  res += _T("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-  
-  if (!mDTDName.IsEmpty()  && !mDTDFile.IsEmpty())
-  {
-    nglString dtd;
-    dtd.CFormat(_T("<!DOCTYPE %ls  SYSTEM '%ls'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
-    res += dtd;
-  }
-  
-  if( !mStyleSheetType.IsEmpty() && !mStyleSheetFile.IsEmpty())
-  {
-    nglString styleSheet;
-    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%ls\" href=\"%ls\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
-    res+= styleSheet;
-  }
-  
-  return rStream.WriteText(res) + Write(rStream);
-//  nglString res = Dump();
-//  //  rStream.Write(res.GetChars(),res.GetLength(),1);
-//  rStream.WriteText(res);
+  nglString res = Dump();
+  rStream.WriteText(res);
   return true;
 }
 
@@ -1523,7 +1504,24 @@ nglString nuiXML::Dump(uint level) const
 
 int64 nuiXML::Write(nglOStream& rStream, uint level) const
 {
-  return nuiXMLNode::Write(rStream, level);
+  nglString res;
+  res += _T("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+  
+  if (!mDTDName.IsEmpty()  && !mDTDFile.IsEmpty())
+  {
+    nglString dtd;
+    dtd.CFormat(_T("<!DOCTYPE %ls  SYSTEM '%ls'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
+    res += dtd;
+  }
+  
+  if( !mStyleSheetType.IsEmpty() && !mStyleSheetFile.IsEmpty())
+  {
+    nglString styleSheet;
+    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%ls\" href=\"%ls\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
+    res+= styleSheet;
+  }
+  
+  return rStream.WriteText(res) + nuiXMLNode::Write(rStream);
 }
 
 
