@@ -56,7 +56,14 @@ public:
   nuiSimpleEventSource<0> OffsetsChanged;
   nuiSize GetXOffset() const;
   nuiSize GetYOffset() const;
+  void SetXOffset(nuiSize offset);
+  void SetYOffset(nuiSize offset);
 
+  nuiSize GetXPos() const;
+  nuiSize GetYPos() const;
+  void SetXPos(nuiSize pos);
+  void SetYPos(nuiSize pos);
+  
   void SetForceNoSmartScroll(bool set);
   bool GetForceNoSmartScroll(bool set) const;
 
