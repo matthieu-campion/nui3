@@ -11,28 +11,43 @@
 #include "nuiSampleReader.h"
 
 class nuiVoice;
-class nuiSampleReader;
 
 class nuiSound : public nuiRefCount
 {
 public:
+  friend class nuiSoundManager;
   
   enum Type 
   {
     eStream = 0,
     eMemory,
+    eSynth,
     eUnknown
   };
   
-  const nglPath& GetPath() const;
+  nuiVoice* GetVoice();
   
-  virtual nuiVoice* GetVoice() = 0;
+  float GetGainDb() const;
+  void SetGainDb(float Db);
+  float GetGain() const;
+  void SetGain(float gain);
+  
+  float GetPan() const;
+  void SetPan(float pan);
+  
+  void SetLoop(bool loop);
+  bool IsLooping();
   
 protected:
-  nuiSound(const nglPath& rPath);
+  nuiSound();
   virtual ~nuiSound();
   
-  nglPath mInPath;
+  virtual nuiVoice* GetVoiceInternal() = 0;
+  
   Type mType;  
+  
+  float mGain;
+  float mPan;
+  bool mLoop;
 };
 

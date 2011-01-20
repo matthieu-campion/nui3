@@ -131,6 +131,8 @@ public:
 
   void SetTag(void* pTag);
   void* GetTag() const;
+  
+  virtual int64 Write(nglOStream& rStream, uint level = 0);
 protected:
   nuiXMLNode(xmlLexer* pLexer, nuiXMLNode* pParent);
   virtual bool ParseXMLNode(xmlLexer* pLexer, nglString& str);
@@ -165,6 +167,8 @@ public:
   virtual const nglString& GetDTDFile(); ///< Get the DTD File name of this XML doc.
   virtual const nglString& GetStyleSheetType(); ///< Get the Style sheet type of this xml doc.
   virtual const nglString& GetStyleSheetFile(); ///< Get the Style sheet file name of this xml doc.
+
+  virtual int64 Write(nglOStream& rStream, uint level = 0);
 protected:
   virtual bool ParseXMLHeader(xmlLexer* pLexer, nglString& str);
 private:
