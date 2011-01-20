@@ -225,6 +225,10 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   mB = -1;
   mA = -1;
   mTexEnvMode = 0;
+  mViewPort[0] = 0;
+  mViewPort[1] = 0;
+  mViewPort[2] = 0;
+  mViewPort[3] = 0;
   
   
   mpContext = pContext;
@@ -318,9 +322,24 @@ void nuiGLPainter::SetViewport()
   
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
   if (!mpSurface)
-    glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
-  else
-    glViewport(x, y, w, h);
+  {
+    //glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
+    x *= NUI_SCALE_FACTOR;
+    y *= NUI_SCALE_FACTOR;
+    w *= NUI_SCALE_FACTOR;
+    h *= NUI_SCALE_FACTOR;
+  }
+//  else
+//    glViewport(x, y, w, h);
+
+//  if (mViewPort[0] != x || mViewPort[1] != y || mViewPort[2] != w || mViewPort[3] != h)
+  {
+    mViewPort[0] = x;
+    mViewPort[1] = y;
+    mViewPort[2] = w;
+    mViewPort[3] = h;
+    glViewport(mViewPort[0], mViewPort[1], mViewPort[2], mViewPort[3]);
+  }
   
   nuiCheckForGLErrors();
   
