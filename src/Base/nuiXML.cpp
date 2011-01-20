@@ -820,7 +820,7 @@ nuiXMLNode* nuiXMLNode::Find (const nglString& rName) const
 //#define DUMPT(x) { OUT(tab.GetChars()); OUT x;}
 //#define DUMP(x) { OUT x;}
 
-int64 nuiXMLNode::Write(nglOStream& rStream, uint level)
+int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
 {
   nglString tab;
   int64 res = 0;
@@ -1473,9 +1473,27 @@ bool nuiXML::ParseXMLHeader(xmlLexer* pLexer, nglString& str)
 
 bool nuiXML::Save(nglOStream& rStream) const
 {
-  nglString res = Dump();
-  //  rStream.Write(res.GetChars(),res.GetLength(),1);
-  rStream.WriteText(res);
+  nglString res;
+  res += _T("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+  
+  if (!mDTDName.IsEmpty()  && !mDTDFile.IsEmpty())
+  {
+    nglString dtd;
+    dtd.CFormat(_T("<!DOCTYPE %ls  SYSTEM '%ls'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
+    res += dtd;
+  }
+  
+  if( !mStyleSheetType.IsEmpty() && !mStyleSheetFile.IsEmpty())
+  {
+    nglString styleSheet;
+    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%ls\" href=\"%ls\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
+    res+= styleSheet;
+  }
+  
+  return rStream.WriteText(res) + Write(rStream);
+//  nglString res = Dump();
+//  //  rStream.Write(res.GetChars(),res.GetLength(),1);
+//  rStream.WriteText(res);
   return true;
 }
 
@@ -1503,26 +1521,9 @@ nglString nuiXML::Dump(uint level) const
   return res;
 }
 
-int64 nuiXML::Write(nglOStream& rStream, uint level)
+int64 nuiXML::Write(nglOStream& rStream, uint level) const
 {
-  nglString res;
-  res += _T("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-  
-  if (!mDTDName.IsEmpty()  && !mDTDFile.IsEmpty())
-  {
-    nglString dtd;
-    dtd.CFormat(_T("<!DOCTYPE %ls  SYSTEM '%ls'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
-    res += dtd;
-  }
-  
-  if( !mStyleSheetType.IsEmpty() && !mStyleSheetFile.IsEmpty())
-  {
-    nglString styleSheet;
-    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%ls\" href=\"%ls\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
-    res+= styleSheet;
-  }
-  
-  return rStream.WriteText(res) + nuiXMLNode::Write(rStream, level);
+  return nuiXMLNode::Write(rStream, level);
 }
 
 
