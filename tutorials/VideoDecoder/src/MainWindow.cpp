@@ -61,7 +61,6 @@ void MainWindow::OnCreation()
     mpMainVBox->AddCell(pOpenBox);
     
     nuiButton* pOpenBtn = new nuiButton(_T("open"));
-    pOpenBtn->SetUserHeight(100);
     mEventSink.Connect(pOpenBtn->Activated, &MainWindow::OnBrowse);
     pOpenBox->AddCell(pOpenBtn);
     
@@ -76,7 +75,7 @@ void MainWindow::OnCreation()
     mpDurationLabel     = new nuiLabel(_T("unknown"));
     mpWidthLabel        = new nuiLabel(_T("unknown"));
     mpHeightLabel       = new nuiLabel(_T("unknown"));
-    mpBitsPerPixelLabel = new nuiLabel(_T("unknown"));
+    mpRateLabel         = new nuiLabel(_T("unknown"));
     
     pInfoGrid->SetCell(0, 0, new nuiLabel(_T("duration:")));
     pInfoGrid->SetCell(1, 0, mpDurationLabel);
@@ -87,8 +86,8 @@ void MainWindow::OnCreation()
     pInfoGrid->SetCell(0, 2, new nuiLabel(_T("height:")));
     pInfoGrid->SetCell(1, 2, mpHeightLabel);
     
-    pInfoGrid->SetCell(0, 3, new nuiLabel(_T("bits per pixel:")));
-    pInfoGrid->SetCell(1, 3, mpBitsPerPixelLabel);
+    pInfoGrid->SetCell(0, 3, new nuiLabel(_T("rate:")));
+    pInfoGrid->SetCell(1, 3, mpRateLabel);
   }
   
   mpImage = new nuiImage();
@@ -98,20 +97,14 @@ void MainWindow::OnCreation()
     nuiHBox* pBox = new nuiHBox();
     mpMainVBox->AddCell(pBox);
     
-    nuiButton* pBackBtn = new nuiButton(_T("<"));
-    mEventSink.Connect(pBackBtn->Activated, &MainWindow::OnBackBtnClicked);
-    
-    nuiButton* pFastBackBtn = new nuiButton(_T("<<"));
-    mEventSink.Connect(pFastBackBtn->Activated, &MainWindow::OnFastBackBtnClicked);
-    
     nuiButton* pForwardBtn = new nuiButton(_T(">"));
+    pForwardBtn->SetObjectName(_T("ForwardButton"));
     mEventSink.Connect(pForwardBtn->Activated, &MainWindow::OnForwardBtnClicked);
     
     nuiButton* pFastForwardBtn = new nuiButton(_T(">>"));
+    pFastForwardBtn->SetObjectName(_T("FastForwardButton"));
     mEventSink.Connect(pFastForwardBtn->Activated, &MainWindow::OnFastForwardBtnClicked);
     
-    pBox->AddCell(pFastBackBtn);
-    pBox->AddCell(pBackBtn);
     pBox->AddCell(pForwardBtn);
     pBox->AddCell(pFastForwardBtn);
   }
@@ -121,8 +114,6 @@ void MainWindow::OnCreation()
     mpMainVBox->AddCell(pBtn);
     mEventSink.Connect(pBtn->Activated, &MainWindow::OnPlayBtnClicked);
   }
-
-  LoadVideo(_T("/Users/meeloo/Movies/Films/Fenetre sur Cour - Hitchcock 1954.mp4"));
 }
 
 
@@ -256,6 +247,8 @@ bool MainWindow::LoadVideo(const nglPath& rPath)
     mpNglImage = NULL;
     
   mpVideoDecoder = pVideoDecoder;  
+  
+  UpdateVideoInfos();
   return true;
 }
 
@@ -271,27 +264,14 @@ void MainWindow::UpdateVideoName()
 }
 
 void MainWindow::UpdateVideoInfos()
-{
-  if (!mpNglImage)
-  {
-    mpDurationLabel->SetText(_T("unknown"));
-    mpWidthLabel->SetText(_T("unknown"));
-    mpHeightLabel->SetText(_T("unknown"));
-    mpBitsPerPixelLabel->SetText(_T("unknown"));
-    return;
-  }
-  
+{  
   double duration = mpVideoDecoder->GetDuration();
-  uint width = mpNglImage->GetWidth();
-  uint height = mpNglImage->GetHeight();
-  uint bitsDepth = mpNglImage->GetBitDepth();
-  NGL_ASSERT(duration);
-  NGL_ASSERT(width);
-  NGL_ASSERT(height);
-  NGL_ASSERT(bitsDepth);
+  uint32 width = mpVideoDecoder->GetWidth();
+  uint32 height = mpVideoDecoder->GetHeight();
+  float rate = mpVideoDecoder->GetRate();
   
   nglString durStr;
-  durStr.Format(_T("%lf s"), duration);
+  durStr.Format(_T("%.2lf s"), duration);
   mpDurationLabel->SetText(durStr);
   
   nglString widthStr;
@@ -302,70 +282,22 @@ void MainWindow::UpdateVideoInfos()
   heightStr.Format(_T("%u"), height);
   mpHeightLabel->SetText(heightStr);
   
-  nglString bitsStr;
-  bitsStr.Format(_T("%u"), bitsDepth);
-  mpBitsPerPixelLabel->SetText(bitsStr);
+  nglString rateSTr;
+  rateSTr.Format(_T("%.2f"), rate);
+  mpRateLabel->SetText(rateSTr);
   
 }
 
 void MainWindow::UpdateVideoImage()
 {
   if (!mpVideoDecoder)
+    return;  
+  
+  mpTexture = mpVideoDecoder->UpdateTexture();
+  if (!mpTexture)
     return;
-  
-//  mpNglImage = mpVideoDecoder->GetCurrentImage();
-//  UpdateVideoInfos();
-//  
-//  if (!mpTexture)
-//  {
-//    mpTexture = nuiTexture::GetTexture(mpNglImage, false);
-//    mpTexture->SetRetainBuffer(true);
-//    mpImage->SetTexture(mpTexture);
-//  }
-//  
-//  mpTexture->ForceReload(false);
-//  mpImage->Invalidate();
-
-  
-  // with texture:
-  
-//  if (mpTexture)
-//  {
-//    mpTexture->Release();
-//    mpTexture = NULL;
-//  }
-    
-  
-
-//  if (!mpTexture)
-  {
-    mpTexture = mpVideoDecoder->GetCurrentTexture();
-    if (!mpTexture)
-      return;
-    mpImage->SetTexture(mpTexture);
-  }
-  
-//  mpTexture->ForceReload(false);
+  mpImage->SetTexture(mpTexture);
   mpImage->Invalidate();
-}
-
-void MainWindow::OnBackBtnClicked(const nuiEvent& rEvent)
-{
-  if (!mpVideoDecoder)
-    return;
-  
-  mpVideoDecoder->GoToPrevFrame();
-  UpdateVideoImage();
-}
-
-void MainWindow::OnFastBackBtnClicked(const nuiEvent& rEvent)
-{
-  if (!mpVideoDecoder)
-    return;
-  
-  for (uint32 i = 0; i < 25; i++)
-    mpVideoDecoder->GoToPrevFrame();
-  UpdateVideoImage();
 }
 
 void MainWindow::OnForwardBtnClicked(const nuiEvent& rEvent)

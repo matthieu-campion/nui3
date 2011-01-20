@@ -513,7 +513,6 @@ HRESULT nglWindowsMediaIStream::QueryInterface(REFIID iid, __RPC__deref_out void
   {
     *ppvObject = (ISequentialStream*)this;
   }
-  
   else if(iid == IID_IStream)
   {
     *ppvObject = (IStream*)this;

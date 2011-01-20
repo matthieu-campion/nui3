@@ -108,6 +108,19 @@ protected:
   GLenum mDstColor;
   GLenum mSrcAlpha;
   GLenum mDstAlpha;
+
+  // Local cache:
+  bool mClientVertex;
+  bool mClientColor;
+  bool mClientTexCoord;
+  bool mMatrixChanged;
+  float mR;
+  float mG;
+  float mB;
+  float mA;
+  GLenum mTexEnvMode;
+  
+  uint32 mViewPort[4];
 };
 
 void nuiCheckForGLErrors();

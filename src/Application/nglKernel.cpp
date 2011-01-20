@@ -200,8 +200,6 @@ void nglKernel::Init()
 
 void nglKernel::Exit(int32 ExitCode)
 {
-  CallOnExit(ExitCode);
-  
   mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
   nuiAnimation::ReleaseTimer();
@@ -326,6 +324,7 @@ void nglKernel::CallOnExit(int Code)
 {
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Exit (code: %d)"), Code); )
   OnExit (Code);
+  nuiAnimation::ReleaseTimer();
 }
 
 void nglKernel::CallOnWillExit()
