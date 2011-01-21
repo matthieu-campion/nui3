@@ -2,10 +2,41 @@
 // main nui3 stylesheet
 //
 
-"ButtonsGrid"!
+@Font fontBold
+{
+  Name: "Verdana";
+  Size: 13;
+  Italic: false;
+  Bold: true;
+}
+
+
+"MemorySoundsGrid"!
+{
+  BorderLeft: 30;
+  BorderRight: 40;
+}
+
+"SynthSoundsGrid"!
+{
+  BorderLeft: 30;
+  BorderRight: 30;
+}
+
+"MemoryLabel"!
 {
   Position: Center;
+  Font: fontBold;
 }
+
+
+"SynthLabel"!
+{
+  Position: Center;
+  Font: fontBold;
+}
+
+
 
 "GridButton"!
 {
@@ -17,6 +48,12 @@
   UserWidth: 40;
   UserHeight: 40;
 }
+
+"MainGrid"!
+{
+  Position: Center;
+}
+
 
 // blank ending line following
 
