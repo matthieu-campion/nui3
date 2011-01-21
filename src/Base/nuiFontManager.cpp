@@ -1637,7 +1637,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
-      NGL_OUT(_T("FontManager: scanning font folder '%ls' '%ls' for font files\n"), str.GetChars(), pth.GetChars());
+      NGL_DEBUG(NGL_OUT(_T("FontManager: scanning font folder '%ls' '%ls' for font files\n"), str.GetChars(), pth.GetChars()));
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
@@ -1715,7 +1715,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         {
           mpFonts.push_back(pFontDesc);
           
-          NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+          NGL_DEBUG(NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars()));
         }
         else
         {
@@ -1826,7 +1826,7 @@ void nuiFontManager::UpdateFonts()
       {
         mpFonts.push_back(pFontDesc);
         
-        NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+        NGL_DEBUG(NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars()));
       }
       else
       {
@@ -1912,7 +1912,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
-  wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
+  NGL_DEBUG(wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars()));
   nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
@@ -1927,7 +1927,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   }
   
   const nuiFontRequestResult& rFont(*(Fonts.begin()));
-  printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
+  NGL_DEBUG(printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars()));
   
   pFont = nuiFont::GetFont(rFont.GetPath(), size, rFont.GetFace(), rID);
   return pFont;
