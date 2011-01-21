@@ -1473,8 +1473,9 @@ bool nuiXML::ParseXMLHeader(xmlLexer* pLexer, nglString& str)
 
 bool nuiXML::Save(nglOStream& rStream) const
 {
-  nglString res = Dump();
-  rStream.WriteText(res);
+  Write(rStream);
+//  nglString res = Dump();
+//  rStream.WriteText(res);
   return true;
 }
 
