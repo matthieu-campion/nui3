@@ -17772,6 +17772,7 @@
 				PRODUCT_NAME = nuiPhone_arm7;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = armv7;
 			};
 			name = Default;
 		};
