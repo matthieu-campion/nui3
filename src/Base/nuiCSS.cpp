@@ -659,7 +659,7 @@ public:
       
       if (name.IsEmpty())
       {
-        NGL_DEBUG(NGL_OUT(_T("a css included filename is empty!\n")));
+        //NGL_OUT(_T("a css included filename is empty!\n"));
         return false;
       }
       
@@ -687,7 +687,7 @@ public:
         return false;
       }
 
-      NGL_DEBUG(NGL_OUT(_T("CSS Include: '%ls'\n"), includePath.GetChars()));
+      //NGL_OUT(_T("CSS Include: '%ls'\n"), includePath.GetChars());
       // launch included file parsing
       nglFileOffset s = pF->Available();
       std::vector<uint8> cache;
@@ -707,7 +707,7 @@ public:
         return false;
       }
       uint32 cc = mrCSS.GetRulesCount();
-      NGL_DEBUG(NGL_OUT(_T("\tNew css rules: %d\n"), cc - c));
+      //NGL_OUT(_T("\tNew css rules: %d\n"), cc - c);
       return true;
     }
     else if (mChar == _T('+'))
@@ -1993,7 +1993,7 @@ bool nuiCSS::Load(nglIStream& rStream, const nglPath& rSourcePath)
     mErrorString.CFormat(_T("Error line %d (%d): %ls"), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
     return false;
   }
-  NGL_DEBUG(NGL_OUT(_T("Loaded %d css rules\n"), GetRulesCount()));
+  //NGL_OUT(_T("Loaded %d css rules\n"), GetRulesCount());
   return true;
 }
 
