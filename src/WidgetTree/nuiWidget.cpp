@@ -1082,8 +1082,9 @@ void nuiWidget::Invalidate()
     return;
   }
 
-  //nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+//  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
   nuiWidget::InvalidateRect(GetVisibleRect());
+//  nuiWidget::InvalidateRect(GetRect());
   SilentInvalidate();
 
   if (mpParent)
@@ -2102,9 +2103,10 @@ bool nuiWidget::Trash()
   CheckValid();
 
   if (!mTrashed)
+  {
     CallOnTrash();
-
-  TrashRequested();
+    TrashRequested();
+  }
   nuiAnimation* pAnim = GetAnimation(_T("TRASH"));
   if (pAnim && (pAnim->GetTime()==0 && pAnim->GetDuration()>0))
   {
