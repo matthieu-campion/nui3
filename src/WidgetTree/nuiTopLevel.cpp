@@ -153,6 +153,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
     mFillTrash(false),
     mpDrawContext(NULL),
     mTopLevelSink(this),
+    mIsDrawing(false),
     mpCSS(NULL)
 {
   //EnableRenderCache(false);
@@ -1504,6 +1505,8 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 
 bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 {
+  mIsDrawing = true;
+
   CheckValid();
   //nuiStopWatch watch(_T("nuiTopLevel::DrawTree"));
 
@@ -1513,6 +1516,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     clipHeight=pContext->GetHeight();
   }
 
+//  if (0)
   if (mPartialRedraw && !DISPLAY_PARTIAL_RECTS)
   {
     //nuiStopWatch watch(_T("nuiTopLevel::DrawTree / PartialReDraw"));
@@ -1521,11 +1525,11 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 
     int count = mDirtyRects.size();
 
-    //printf("drawing %d partial rects\n", count);
+//    printf("drawing %d partial rects\n", count);
     
     for (int i = 0; i < count; i++)
     {
-      //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
+//      printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
       pContext->ResetState();
       pContext->ResetClipRect();
       pContext->Clip(mDirtyRects[i]);
@@ -1615,6 +1619,8 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     pContext->ResetState();
   }
   
+  mIsDrawing = false;
+
   return true;
 }
                      
@@ -1633,6 +1639,7 @@ nglPath nuiTopLevel::GetResourcePath() const
 
 void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect)
 {
+  NGL_ASSERT(!mIsDrawing);
   CheckValid();
   nuiRect r = rRect;
   nuiRect rect = GetRect();
@@ -1652,7 +1659,7 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 
   r.Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
 
-  //printf("nuiTopLevel::BroadcastInvalidateRect %ls / %ls / 0x%x\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+//  printf("nuiTopLevel::BroadcastInvalidateRect %ls / %ls / 0x%x RECT:%ls\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender, rRect.GetValue().GetChars());
   AddInvalidRect(r);
   mNeedRender = true;
   DebugRefreshInfo();
