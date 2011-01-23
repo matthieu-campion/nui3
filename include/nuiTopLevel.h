@@ -205,6 +205,7 @@ protected:
 
   nuiEventSink<nuiTopLevel> mTopLevelSink;
   bool mPartialRedraw;
+  bool mIsDrawing;
   void SetToolTipRect();
 
   nglMouseInfo::Flags mLastClickedButton;
