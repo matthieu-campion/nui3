@@ -1082,9 +1082,12 @@ void nuiWidget::Invalidate()
     return;
   }
 
-//  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
-  nuiWidget::InvalidateRect(GetVisibleRect());
-//  nuiWidget::InvalidateRect(GetRect());
+  ////  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  nuiRect r(GetOverDrawRect(true, true));
+  r.Intersect(r, GetVisibleRect());
+  nuiWidget::InvalidateRect(r);
+//  nuiWidget::InvalidateRect(GetVisibleRect());
+  ////  nuiWidget::InvalidateRect(GetRect());
   SilentInvalidate();
 
   if (mpParent)
@@ -4890,7 +4893,7 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
       pContext->SetBlendFunc(nuiBlendTransp);
       pContext->EnableBlending(true);
       //pContext->EnableTexturing(false);
-      pContext->SetStrokeColor(nuiColor(64, 64, 255, 128));
+      pContext->SetStrokeColor(nuiColor(64, 64, 255, ToBelow(128 * GetMixedAlpha())));
       
       nuiShape shp;
       shp.AddRect(rect);
