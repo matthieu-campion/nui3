@@ -7144,7 +7144,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 73F097E812E9D09E00656E84 /* thirdparty_ios_arm7 */;
+			remoteGlobalIDString = 73F097E812E9D09E00656E84;
 			remoteInfo = thirdparty_ios_arm7;
 		};
 		E5DD343D12E09FB900F1EF4E /* PBXContainerItemProxy */ = {
