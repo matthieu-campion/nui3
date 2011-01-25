@@ -1639,7 +1639,7 @@ nglPath nuiTopLevel::GetResourcePath() const
 
 void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect)
 {
-  NGL_ASSERT(!mIsDrawing);
+  //NGL_ASSERT(!mIsDrawing);
   CheckValid();
   nuiRect r = rRect;
   nuiRect rect = GetRect();

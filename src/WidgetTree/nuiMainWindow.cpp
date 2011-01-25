@@ -635,6 +635,9 @@ bool nuiMainWindow::DBG_GetMouseOverInfo()
 
 void nuiMainWindow::InvalidateTimer(const nuiEvent& rEvent)
 {
+  if (!App->IsActive()) // Only repaint if the application is active!
+    return;
+  
   LazyPaint();
 
   nglTime now;
