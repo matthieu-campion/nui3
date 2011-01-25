@@ -975,7 +975,6 @@
 		73F086DF12E9BA0700656E84 /* nuiMemorySound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 400C2F7F12DE09DA007472C4 /* nuiMemorySound.cpp */; };
 		73F086E012E9BA0700656E84 /* nuiSynthSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4017059512E06460008769D5 /* nuiSynthSound.cpp */; };
 		73F086E112E9BA0700656E84 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
-		73F086E312E9BA0700656E84 /* libthirdparty_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD3FF412E0B08300F1EF4E /* libthirdparty_ios.a */; };
 		73F097EA12E9D09E00656E84 /* ftlist.h in Headers */ = {isa = PBXBuildFile; fileRef = E58168180C3CECA800902DFE /* ftlist.h */; };
 		73F097EB12E9D09E00656E84 /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A9A0C3CECA900902DFE /* jpeglib.h */; };
 		73F097EC12E9D09E00656E84 /* jpegint.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A990C3CECA900902DFE /* jpegint.h */; };
@@ -4229,6 +4228,8 @@
 		E58DF27C1268844C007E63DE /* nuiMatrixNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E58DF2781268844C007E63DE /* nuiMatrixNode.h */; };
 		E58DF27D1268844C007E63DE /* nuiMatrixNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E58DF2781268844C007E63DE /* nuiMatrixNode.h */; };
 		E58DF27E1268844C007E63DE /* nuiMatrixNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E58DF2781268844C007E63DE /* nuiMatrixNode.h */; };
+		E58E1B9012EDDF2600D92EEB /* libthirdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD341012E09CA800F1EF4E /* libthirdparty.a */; };
+		E58E1B9112EDDF2E00D92EEB /* libthirdparty_ios_arm7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F09AC312E9D09E00656E84 /* libthirdparty_ios_arm7.a */; };
 		E58E8A97115057B000C2D204 /* nuiTypeTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = E58E8A96115057B000C2D204 /* nuiTypeTraits.h */; };
 		E58E8A98115057B000C2D204 /* nuiTypeTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = E58E8A96115057B000C2D204 /* nuiTypeTraits.h */; };
 		E5901BEB1043F2C200D3FD5F /* nuiToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E5901BEA1043F2C200D3FD5F /* nuiToggleButton.h */; };
@@ -6373,7 +6374,6 @@
 		E5DD340C12E09CA800F1EF4E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D435961004DC5300388BF5 /* ApplicationServices.framework */; };
 		E5DD340D12E09CA800F1EF4E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */; };
 		E5DD343F12E09FC400F1EF4E /* libthirdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD341012E09CA800F1EF4E /* libthirdparty.a */; };
-		E5DD3A1612E0A3AF00F1EF4E /* libthirdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD341012E09CA800F1EF4E /* libthirdparty.a */; };
 		E5DD3A5E12E0B08300F1EF4E /* ftlist.h in Headers */ = {isa = PBXBuildFile; fileRef = E58168180C3CECA800902DFE /* ftlist.h */; };
 		E5DD3A5F12E0B08300F1EF4E /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A9A0C3CECA900902DFE /* jpeglib.h */; };
 		E5DD3A6012E0B08300F1EF4E /* jpegint.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A990C3CECA900902DFE /* jpegint.h */; };
@@ -7144,7 +7144,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 73F097E812E9D09E00656E84 /* thirdparty_ios_arm7 */;
+			remoteGlobalIDString = 73F097E812E9D09E00656E84;
 			remoteInfo = thirdparty_ios_arm7;
 		};
 		E5DD343D12E09FB900F1EF4E /* PBXContainerItemProxy */ = {
@@ -7262,7 +7262,7 @@
 		61D085100EAFAA3F00B73835 /* nuiSurface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiSurface.cpp; sourceTree = "<group>"; };
 		61D085130EAFAA5400B73835 /* nuiSurface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSurface.h; path = include/nuiSurface.h; sourceTree = SOURCE_ROOT; };
 		73F086E612E9BA0700656E84 /* libnuiPhone_arm7.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiPhone_arm7.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		73F09AC312E9D09E00656E84 /* libthirdparty_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthirdparty_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		73F09AC312E9D09E00656E84 /* libthirdparty_ios_arm7.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthirdparty_ios_arm7.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		941A98BA0E8BEAAE00CAFC3A /* nuiScrollingLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollingLabel.cpp; path = src/Text/nuiScrollingLabel.cpp; sourceTree = SOURCE_ROOT; };
 		941A98BD0E8BEAD000CAFC3A /* nuiScrollingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiScrollingLabel.h; path = include/nuiScrollingLabel.h; sourceTree = SOURCE_ROOT; };
 		941A98CA0E8BF04700CAFC3A /* nuiScrollBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiScrollBox.cpp; path = src/Layout/nuiScrollBox.cpp; sourceTree = SOURCE_ROOT; };
@@ -8860,7 +8860,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73F086E312E9BA0700656E84 /* libthirdparty_ios.a in Frameworks */,
+				E58E1B9112EDDF2E00D92EEB /* libthirdparty_ios_arm7.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8907,7 +8907,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5DD3A1612E0A3AF00F1EF4E /* libthirdparty.a in Frameworks */,
+				E58E1B9012EDDF2600D92EEB /* libthirdparty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9913,7 +9913,7 @@
 				E5DD341012E09CA800F1EF4E /* libthirdparty.a */,
 				E5DD3FF412E0B08300F1EF4E /* libthirdparty_ios.a */,
 				73F086E612E9BA0700656E84 /* libnuiPhone_arm7.a */,
-				73F09AC312E9D09E00656E84 /* libthirdparty_ios.a */,
+				73F09AC312E9D09E00656E84 /* libthirdparty_ios_arm7.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -15788,7 +15788,7 @@
 			);
 			name = thirdparty_ios_arm7;
 			productName = nui3D;
-			productReference = 73F09AC312E9D09E00656E84 /* libthirdparty_ios.a */;
+			productReference = 73F09AC312E9D09E00656E84 /* libthirdparty_ios_arm7.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E52412CD11CB860B0025CA71 /* nuiPhoneD */ = {
@@ -19320,7 +19320,7 @@
 					deps/libcss/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				PRODUCT_NAME = thirdparty_ios;
+				PRODUCT_NAME = thirdparty_ios_arm7;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;

@@ -82,6 +82,8 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   if (SetObjectClass(_T("nuiMainWindow")))
     InitAttributes();
   mMaxFPS = 0.0f;
+  mFPSCount = 0;
+  mFPS = 0;
 
   uint w,h;
   mpNGLWindow->GetSize(w,h);
@@ -125,6 +127,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
     InitAttributes();
 
   mMaxFPS = 0.0f;
+  mFPSCount = 0;
+  mFPS = 0;
 
   uint w,h;
   mpNGLWindow->GetSize(w,h);
@@ -631,7 +635,24 @@ bool nuiMainWindow::DBG_GetMouseOverInfo()
 
 void nuiMainWindow::InvalidateTimer(const nuiEvent& rEvent)
 {
+  if (!App->IsActive()) // Only repaint if the application is active!
+    return;
+  
   LazyPaint();
+
+  nglTime now;
+  mFPSCount++;
+  if (now - mFPSDelay > 1.0)
+  {
+    double v = (now - mFPSDelay);
+    double c = mFPSCount;
+    mFPS = c / v;
+    NGL_LOG(_T("fps"), NGL_LOG_DEBUG, _T("FPS: %f (%f seconds - %d frames)\n"), mFPS, v, ToNearest(c));
+    
+    mFPSCount = 0;
+    mFPSDelay = now;
+  }
+  mLastPaint = now;
 }
 
 
