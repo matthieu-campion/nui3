@@ -119,6 +119,8 @@ protected:
   float mB;
   float mA;
   GLenum mTexEnvMode;
+  
+  uint32 mViewPort[4];
 };
 
 void nuiCheckForGLErrors();

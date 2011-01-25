@@ -241,6 +241,11 @@ private:
   void OnInspectorDeath(const nuiEvent& rEvent);
   double mLastInteractiveEventTime;
   double mLastEventTime;
+  
+  double mLastPaint;
+  double mFPSDelay;
+  uint32 mFPSCount;
+  float mFPS;
 };
 
 #endif // __nuiMainWindow_h__

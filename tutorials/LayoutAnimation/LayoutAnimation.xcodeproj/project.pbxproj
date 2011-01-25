@@ -82,6 +82,13 @@
 			remoteGlobalIDString = E5A626F311CA240100446489;
 			remoteInfo = nuiPhoneD;
 		};
+		E5D4E8E512E4A9000001A86F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD3FF412E0B08300F1EF4E;
+			remoteInfo = thirdparty_ios;
+		};
 		E5D644FA120A01E0009C26A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
@@ -100,15 +107,8 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5DD341012E09CA800F1EF4E /* libthirdparty.a */;
+			remoteGlobalIDString = E5DD341012E09CA800F1EF4E;
 			remoteInfo = thirdparty;
-		};
-		E5DD3A1E12E0A3BC00F1EF4E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E5DD3A1312E0A39D00F1EF4E /* libnui3D.a */;
-			remoteInfo = "nui3D copy";
 		};
 		E5EF6FB011E77DE0000FB337 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -257,7 +257,7 @@
 				E5EF6FB111E77DE0000FB337 /* libnui3CocoaD.a */,
 				E5D644FB120A01E0009C26A9 /* libnui3Cocoa.a */,
 				E5DD348412E0A30100F1EF4E /* libthirdparty.a */,
-				E5DD3A1F12E0A3BC00F1EF4E /* libnui3D.a */,
+				E5D4E8E612E4A9000001A86F /* libthirdparty_ios.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -398,6 +398,13 @@
 			remoteRef = E5A630D411CA7CCD00446489 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E5D4E8E612E4A9000001A86F /* libthirdparty_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios.a;
+			remoteRef = E5D4E8E512E4A9000001A86F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E5D644FB120A01E0009C26A9 /* libnui3Cocoa.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -410,13 +417,6 @@
 			fileType = archive.ar;
 			path = libthirdparty.a;
 			remoteRef = E5DD348312E0A30100F1EF4E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E5DD3A1F12E0A3BC00F1EF4E /* libnui3D.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libnui3D.a;
-			remoteRef = E5DD3A1E12E0A3BC00F1EF4E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E5EF6FB111E77DE0000FB337 /* libnui3CocoaD.a */ = {

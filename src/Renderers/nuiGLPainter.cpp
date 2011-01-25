@@ -225,6 +225,10 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
   mB = -1;
   mA = -1;
   mTexEnvMode = 0;
+  mViewPort[0] = 0;
+  mViewPort[1] = 0;
+  mViewPort[2] = 0;
+  mViewPort[3] = 0;
   
   
   mpContext = pContext;
@@ -318,9 +322,24 @@ void nuiGLPainter::SetViewport()
   
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
   if (!mpSurface)
-    glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
-  else
-    glViewport(x, y, w, h);
+  {
+    //glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
+    x *= NUI_SCALE_FACTOR;
+    y *= NUI_SCALE_FACTOR;
+    w *= NUI_SCALE_FACTOR;
+    h *= NUI_SCALE_FACTOR;
+  }
+//  else
+//    glViewport(x, y, w, h);
+
+//  if (mViewPort[0] != x || mViewPort[1] != y || mViewPort[2] != w || mViewPort[3] != h)
+  {
+    mViewPort[0] = x;
+    mViewPort[1] = y;
+    mViewPort[2] = w;
+    mViewPort[3] = h;
+    glViewport(mViewPort[0], mViewPort[1], mViewPort[2], mViewPort[3]);
+  }
   
   nuiCheckForGLErrors();
   
@@ -1469,6 +1488,15 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
     
     if (reload)
     {
+      glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
+      nuiCheckForGLErrors();
+      glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
+      nuiCheckForGLErrors();
+
       int type = 8;
       GLint pixelformat = 0;
       GLint internalPixelformat = 0;
@@ -1610,15 +1638,6 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       //      if (!pTexture->IsBufferRetained()) { 
       //        pTexture->ReleaseBuffer();
       //      }
-      
-      glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
-      nuiCheckForGLErrors();
       
     }
   }
@@ -1925,7 +1944,10 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         //printf("surface render buffer -> %d\n", info.mRenderbuffer);
         nuiCheckForGLErrors();
       }
+
+#ifdef DEBUG
       CheckFramebufferStatus();
+#endif
       nuiCheckForGLErrors();
       mFramebuffers[pSurface] = info;
     }
@@ -1939,7 +1961,9 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
       
       nuiCheckForGLErrors();
+#ifdef DEBUG
       CheckFramebufferStatus();
+#endif
     }
   }
   else
@@ -1951,7 +1975,9 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     //printf("UNBIND glBindRenderbufferNUI -> %d\n", mDefaultRenderbuffer);
     
     nuiCheckForGLErrors();
+#ifdef DEBUG
     CheckFramebufferStatus();
+#endif
   }
 }
 

@@ -49,6 +49,15 @@ void nuiScrollView::InitAttributes()
 {
   AddAttribute(new nuiAttribute<bool>(_T("EnableHorizontalScroll"), nuiUnitYesNo, nuiMakeDelegate(this, &nuiScrollView::GetEnableHorizontalScroll), nuiMakeDelegate(this, &nuiScrollView::SetEnableHorizontalScroll)));
   AddAttribute(new nuiAttribute<bool>(_T("EnableVerticalScroll"), nuiUnitYesNo, nuiMakeDelegate(this, &nuiScrollView::GetEnableHorizontalScroll), nuiMakeDelegate(this, &nuiScrollView::SetEnableHorizontalScroll)));
+
+  AddAttribute(new nuiAttribute<float>(_T("HIncrement"), nuiUnitPixels, nuiMakeDelegate(this, &nuiScrollView::GetHIncrement), nuiMakeDelegate(this, &nuiScrollView::SetHIncrement)));
+  AddAttribute(new nuiAttribute<float>(_T("VIncrement"), nuiUnitPixels, nuiMakeDelegate(this, &nuiScrollView::GetVIncrement), nuiMakeDelegate(this, &nuiScrollView::SetVIncrement)));  
+
+  AddAttribute(new nuiAttribute<float>(_T("HPos"), nuiUnitPixels, nuiMakeDelegate(this, &nuiScrollView::GetXPos), nuiMakeDelegate(this, &nuiScrollView::SetXPos)));
+  AddAttribute(new nuiAttribute<float>(_T("VPos"), nuiUnitPixels, nuiMakeDelegate(this, &nuiScrollView::GetYPos), nuiMakeDelegate(this, &nuiScrollView::SetYPos)));  
+
+  AddAttribute(new nuiAttribute<float>(_T("HOffset"), nuiUnitPixels, nuiMakeDelegate(this, &nuiScrollView::GetXOffset), nuiMakeDelegate(this, &nuiScrollView::SetXOffset)));
+  AddAttribute(new nuiAttribute<float>(_T("VOffset"), nuiUnitPixels, nuiMakeDelegate(this, &nuiScrollView::GetYOffset), nuiMakeDelegate(this, &nuiScrollView::SetYOffset)));  
 }
 
 void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVerticalScrollBar, bool Horizontal, bool Vertical)
@@ -441,7 +450,7 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         pItem->SetLayout(rect);
         rect = VisibleRect;
         LocalToLocal(pItem, rect);
-        pItem->SetVisibleRect(rect);
+        //pItem->SetVisibleRect(rect);
       }
     }
     delete pIt;
@@ -482,7 +491,7 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         pItem->SetLayout(rect);
         rect = VisibleRect;
         LocalToLocal(pItem, rect);
-        pItem->SetVisibleRect(rect);
+        //pItem->SetVisibleRect(rect);
       }
     }
     delete pIt;
@@ -825,6 +834,43 @@ nuiSize nuiScrollView::GetYOffset() const
 {
   return mYOffset;
 }
+
+void nuiScrollView::SetXOffset(nuiSize offset)
+{
+  if (mXOffset == offset)
+    return;
+  mXOffset = offset;
+  UpdateLayout();
+}
+
+void nuiScrollView::SetYOffset(nuiSize offset)
+{
+  if (mYOffset == offset)
+    return;
+  mYOffset = offset;
+  UpdateLayout();
+}
+
+nuiSize nuiScrollView::GetXPos() const
+{
+  return mpHorizontal->GetRange().GetValue();
+}
+
+nuiSize nuiScrollView::GetYPos() const
+{
+  return mpVertical->GetRange().GetValue();
+}
+
+void nuiScrollView::SetXPos(nuiSize pos)
+{
+  mpHorizontal->GetRange().SetValue(pos);
+}
+
+void nuiScrollView::SetYPos(nuiSize pos)
+{
+  mpVertical->GetRange().SetValue(pos);
+}
+
 
 void nuiScrollView::SetForceNoSmartScroll(bool set)
 {
