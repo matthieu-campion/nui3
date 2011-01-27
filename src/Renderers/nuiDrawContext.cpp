@@ -293,8 +293,10 @@ void nuiDrawContext::SetBlendFunc(nuiBlendFunc Func)
  *
  ****************************************************************************/
 
-void nuiDrawContext::SetTexture (nuiTexture* pTex) 
+void nuiDrawContext::SetTexture(nuiTexture* pTex) 
 {
+  nuiTexture* pProxy = pTex ? pTex->GetProxyTexture() : NULL;
+  
   nuiTexture* pOld = mCurrentState.mpTexture;
   if (pTex == pOld)
     return;
@@ -308,7 +310,7 @@ void nuiDrawContext::SetTexture (nuiTexture* pTex)
 }
 
 bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) const
-{ 
+{
   return mCurrentState.mpTexture == pTex;
 }
 

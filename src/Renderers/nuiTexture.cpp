@@ -172,6 +172,21 @@ nuiTexture* nuiTexture::BindTexture(GLuint TextureID, GLenum Target)
 }
 
 
+nuiTexture* nuiTexture::CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect)
+{
+  nuiTexture* pTexture = NULL;
+  nglString name = rName;
+  nuiTextureMap::iterator it = mpTextures.find(name);
+  if (it == mpTextures.end())
+    pTexture = new nuiTexture(rName, rSourceTextureID, rProxyRect);
+  else
+    pTexture = it->second;
+  
+  LOG_GETTEXTURE(pTexture);
+  return pTexture;  
+}
+
+
 //#TODO remove this and do something to have more general AAPrimitives.*
 #define psz (phf * 2)
 #define psm (psz - 1)
@@ -220,6 +235,28 @@ nuiTexture* nuiTexture::GetAATexture()
 
 void nuiTexture::ClearAll()
 {
+  // Free proxies first:
+  {
+    nuiTextureMap::iterator it = mpTextures.begin();
+    nuiTextureMap::iterator end = mpTextures.end();
+    
+    std::vector<nuiTexture*> proxies;
+    while (it != end)
+    {
+      nuiTexture* pTex = it->second;
+      if (pTex->GetProxyTexture())
+        proxies.push_back(pTex);
+      ++it;
+    }
+    
+    for (uint32 i = 0; i < proxies.size(); i++)
+    {
+      nuiTexture* pTex = proxies[i];
+      pTex->Release();
+    }
+  }
+
+  // Now we can release the other textures...
   nuiTextureMap::iterator it = mpTextures.begin();
   nuiTextureMap::iterator end = mpTextures.end();
 
@@ -265,6 +302,7 @@ nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
   mpImage = new nglImage(pInput, pCodec);
+  mpProxyTexture = NULL;
   mpSurface = NULL;
   mOwnImage = true;
   mForceReload = false;
@@ -288,6 +326,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
     InitAttributes();
 
   mpImage = NULL;
+  mpProxyTexture = NULL;
   
   float scale = 1.0f;
   nglPath p(rPath);
@@ -339,6 +378,7 @@ nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
     InitAttributes();
   mpImage = new nglImage(rInfo, eClone);
   mpSurface = NULL;
+  mpProxyTexture = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -362,6 +402,7 @@ nuiTexture::nuiTexture (const nglImage& rImage)
     InitAttributes();
   mpImage = new nglImage(rImage);
   mpSurface = NULL;
+  mpProxyTexture = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -381,6 +422,7 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
     InitAttributes();
   mpImage = pImage;
   mpSurface = NULL;
+  mpProxyTexture = NULL;
   mOwnImage = OwnImage;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -400,6 +442,7 @@ nuiTexture::nuiTexture(const nuiXMLNode* pNode)
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
   mpSurface = NULL;
+  mpProxyTexture = NULL;
   mOwnImage = true;
   mForceReload = false;
   mRetainBuffer = mRetainBuffers;
@@ -421,6 +464,7 @@ nuiTexture::nuiTexture(nuiSurface* pSurface)
     InitAttributes();
 
   mpImage = NULL;
+  mpProxyTexture = NULL;
   mpSurface = pSurface;
   mOwnImage = false;
   mForceReload = false;
@@ -441,6 +485,7 @@ nuiTexture::nuiTexture(GLuint TextureID, GLenum Target)
     InitAttributes();
   
   mpImage = NULL;
+  mpProxyTexture = NULL;
   mpSurface = NULL;
   mOwnImage = false;
   mForceReload = false;
@@ -453,6 +498,30 @@ nuiTexture::nuiTexture(GLuint TextureID, GLenum Target)
  
   Init();
 }
+
+nuiTexture::nuiTexture(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect)
+: nuiObject(), mTextureID(0), mTarget(0)
+{
+  if (SetObjectClass(_T("nuiTexture")))
+    InitAttributes();
+  
+  mpImage = NULL;
+  mpProxyTexture = nuiTexture::GetTexture(rSourceTextureID);
+  if (!mpProxyTexture)
+    mpProxyTexture = nuiTexture::GetTexture(nglPath(rSourceTextureID));
+  mProxyRect = rProxyRect;
+  mpSurface = NULL;
+  mOwnImage = false;
+  mForceReload = false;
+  mRetainBuffer = false;
+  
+  nglString name = rName;
+  SetProperty(_T("Source"), name);
+  mpTextures[name] = this;
+  
+  Init();
+}
+
 
 void nuiTexture::Init()
 {
@@ -508,6 +577,11 @@ void nuiTexture::Init()
     
     glPopAttrib();
 #endif
+  }
+  else if (mpProxyTexture)
+  {
+    mRealWidth = mProxyRect.GetWidth();
+    mRealHeight = mProxyRect.GetHeight();
   }
   
   mRealWidthPOT = mRealWidth;
@@ -611,6 +685,10 @@ nuiTexture::~nuiTexture()
     //mpSurface->Release();
   }
   mpTextures.erase(GetProperty(_T("Source")));
+  
+  if (mpProxyTexture)
+    mpProxyTexture->Release();
+  
   TexturesChanged();
 }
 
@@ -653,7 +731,8 @@ nglImage* nuiTexture::GetImage() const
 
 void nuiTexture::ReleaseBuffer()
 {
-  if (mOwnImage) {
+  if (mOwnImage)
+  {
     mpImage->ReleaseBuffer();
   }
 }
@@ -681,6 +760,14 @@ void nuiTexture::TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const
 
 void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
+  if (mpProxyTexture)
+  {
+    x += mProxyRect.Left();
+    y += mProxyRect.Top();
+    mpProxyTexture->ImageToTextureCoord(x, y);
+    return;
+  }
+  
   if (mRealWidth)
     x /= GetWidth();
   else  if (mpImage && mpImage->GetWidth())
@@ -695,6 +782,14 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 
 void nuiTexture::TextureToImageCoord(nuiSize& x, nuiSize& y) const
 {
+  if (mpProxyTexture)
+  {
+    mpProxyTexture->TextureToImageCoord(x, y);
+    x -= mProxyRect.Left();
+    y -= mProxyRect.Top();
+    return;
+  }
+
   if (mRealWidth)
     x *= GetWidth();
   else if (mpImage && mpImage->GetWidth())
@@ -994,6 +1089,17 @@ void nuiTexture::SetTextureIdAndTarget(GLuint textureID, GLenum target)
   mTarget = target;
   Init();
 }
+
+nuiTexture* nuiTexture::GetProxyTexture() const
+{
+  return mpProxyTexture;
+}
+
+const nuiRect& nuiTexture::GetProxyRect() const
+{
+  return mProxyRect;
+}
+
 
 nuiSimpleEventSource<0> nuiTexture::TexturesChanged;
 

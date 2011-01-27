@@ -34,6 +34,7 @@ public:
   static nuiTexture* GetTexture(const nglString& rName); ///< Get a texture from its ID only
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   static nuiTexture* BindTexture(GLuint TextureID, GLenum Target); ///< Returns a texture that will use an existing OpenGL Texture.
+  static nuiTexture* CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect); ///< Create a proxy texture that is at subtexture in an atlas.
   
   static void ClearAll();
   static void ForceReloadAll(bool Rebind = false);
@@ -109,6 +110,9 @@ public:
   
   void SetTextureIdAndTarget(GLuint textureID, GLenum target);
   
+  nuiTexture* GetProxyTexture() const;
+  const nuiRect& GetProxyRect() const;
+  
 protected:
   friend class nuiSurface;
   static nuiTexture* GetTexture(nuiSurface* pSurface); ///< Create a texture from an existing nuiSurface.
@@ -120,6 +124,7 @@ protected:
   nuiTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
   nuiTexture(nuiSurface* pSurface); ///< Create an image for rendering to surface
   nuiTexture(GLuint TextureID, GLenum Target); ///< Create an nuiTexture from an existing OpenGL texture ID
+  nuiTexture(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect); ///< Create a proxy texture that is at subtexture in an atlas.
   
   virtual ~nuiTexture();
   void Init();
@@ -148,6 +153,9 @@ protected:
   GLuint mTextureID;
   GLenum mTarget;
   /// Beware, the two members above are only used when a texture is created from an existing Texture ID/Target pair.
+  
+  nuiRect mProxyRect;
+  nuiTexture* mpProxyTexture;
   
   float mScale;
 

@@ -1,0 +1,109 @@
+/*
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
+
+#include "nui.h"
+#include "MainWindow.h"
+#include "Application.h"
+#include "nuiCSS.h"
+#include "nuiVBox.h"
+
+#include "nuiAudioDevice.h"
+
+/*
+ * MainWindow
+ */
+
+MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
+: nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
+{
+#ifdef _DEBUG_
+  SetDebugMode(true);
+#endif
+  
+#ifdef NUI_IPHONE
+  LoadCSS(_T("rsrc:/css/style-iPhone.css"));
+#else
+  LoadCSS(_T("rsrc:/css/style.css"));
+#endif
+
+}
+
+MainWindow::~MainWindow()
+{
+}
+
+void MainWindow::OnCreation()
+{
+  nuiTexture* pTex1 = nuiTexture::CreateTextureProxy(_T("Tex1"), _T("rsrc:/decorations/Atlas.png"), nuiRect(0, 0, 128, 32));
+  nuiTexture* pTex2 = nuiTexture::CreateTextureProxy(_T("Tex2"), _T("rsrc:/decorations/Atlas.png"), nuiRect(128, 0, 128, 32));
+  nuiTexture* pTex3 = nuiTexture::CreateTextureProxy(_T("Tex3"), _T("rsrc:/decorations/Atlas.png"), nuiRect(0, 32, 128, 32));
+  nuiTexture* pTex4 = nuiTexture::CreateTextureProxy(_T("Tex4"), _T("rsrc:/decorations/Atlas.png"), nuiRect(128, 32, 128, 32));
+  nuiImage* pImage1 = new nuiImage(pTex1);
+  nuiImage* pImage2 = new nuiImage(pTex2);
+  nuiImage* pImage3 = new nuiImage(pTex3);
+  nuiImage* pImage4 = new nuiImage(pTex4);
+  
+  pImage1->SetPosition(nuiTopLeft);
+  pImage2->SetPosition(nuiTopRight);
+  pImage3->SetPosition(nuiBottomLeft);
+  pImage4->SetPosition(nuiBottomRight);
+  
+  AddChild(pImage1);
+  AddChild(pImage2);
+  AddChild(pImage3);
+  AddChild(pImage4);
+}
+
+
+
+
+
+
+
+void MainWindow::OnButtonClick(const nuiEvent& rEvent)
+{
+  nglString message;
+  double currentTime = nglTime();
+  message.Format(_T("click time: %.2f"), currentTime);
+  mMyLabel->SetText(message);
+}
+
+
+void MainWindow::OnClose()
+{
+  if (GetNGLWindow()->IsInModalState())
+    return;
+  
+  
+  App->Quit();
+}
+
+
+bool MainWindow::LoadCSS(const nglPath& rPath)
+{
+  nglIStream* pF = rPath.OpenRead();
+  if (!pF)
+  {
+    NGL_OUT(_T("Unable to open CSS source file '%ls'\n"), rPath.GetChars());
+    return false;
+  }
+  
+  nuiCSS* pCSS = new nuiCSS();
+  bool res = pCSS->Load(*pF, rPath);
+  delete pF;
+  
+  if (res)
+  {
+    nuiMainWindow::SetCSS(pCSS);
+    return true;
+  }
+  
+  NGL_OUT(_T("%ls\n"), pCSS->GetErrorString().GetChars());
+  
+  delete pCSS;
+  return false;
+}
