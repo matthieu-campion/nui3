@@ -226,7 +226,6 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     {
       mVoices.erase(it);
       it = mVoices.begin() + index;
-      index++;
       pVoice->Release();
       continue;
     }
