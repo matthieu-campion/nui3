@@ -1033,18 +1033,24 @@ void nuiWidget::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRe
   nuiRect size = GetOverDrawRect(true, true);
   r.Intersect(r, size);
 
-  nuiVector vec1(r.Left(),r.Top(),0);
-  nuiVector vec2(r.Right(),r.Bottom(),0);
   if (!IsMatrixIdentity())
   {
     nuiMatrix m(GetMatrix());
     //m.InvertHomogenous();
 
+    nuiVector vec1(r.mLeft,r.mTop,0);
+    nuiVector vec2(r.mRight,r.mTop,0);
+    nuiVector vec3(r.mRight,r.mBottom,0);
+    nuiVector vec4(r.mLeft,r.mBottom,0);
     vec1 = m * vec1;
     vec2 = m * vec2;
+    vec3 = m * vec3;
+    vec4 = m * vec4;
+    r.mLeft   = MIN(vec1[0], MIN(vec2[0], MIN(vec3[0], vec4[0]) ) );
+    r.mTop    = MIN(vec1[1], MIN(vec2[1], MIN(vec3[1], vec4[1]) ) );
+    r.mRight  = MAX(vec1[0], MAX(vec2[0], MAX(vec3[0], vec4[0]) ) );
+    r.mBottom = MAX(vec1[1], MAX(vec2[1], MAX(vec3[1], vec4[1]) ) );
   }
-
-  r.Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
 
   mNeedRender = true;
   if (mSurfaceEnabled)

@@ -56,6 +56,18 @@ void MainWindow::OnCreation()
   AddChild(pImage2);
   AddChild(pImage3);
   AddChild(pImage4);
+  
+  nuiFixed* pBox = new nuiFixed();
+  
+  AddChild(pBox);
+  
+  nuiButton *aButton=new nuiButton(_T("Click test"));
+  aButton->AddMatrixNode(new nuiMatrixNode_Translation(100,150,0));
+  aButton->AddMatrixNode(new nuiMatrixNode_Pivot(20,-20,-20,0,0,0,1));
+  aButton->AddMatrixNode(new nuiMatrixNode_Scale(3.0,3.0,1.0));
+  
+  aButton->SetAutoClip(false);
+  pBox->AddChild(aButton);
 }
 
 
