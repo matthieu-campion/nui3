@@ -765,7 +765,7 @@ nuiWidget::~nuiWidget()
     mpSurface->Release();
   }
   delete mpRenderCache;
-  delete mpMatrixNodes;
+  LoadIdentityMatrix();
 }
 
 bool nuiWidget::IsTrashed(bool combined) const 
