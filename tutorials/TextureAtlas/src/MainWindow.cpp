@@ -12,6 +12,24 @@
 #include "nuiVBox.h"
 
 #include "nuiAudioDevice.h"
+/*
+  You can create a texture atlas for nui with Zwoptex. Just use the following export script. For the moment you will have to replace the Path of the actual atlas texture un the css file as there is no way to export the texture file name from this tool (contacted the author about it).
+ 
+@TextureAtlas atlas =
+{
+Path: "{{ metadata.name }}";
+
+{% for sprite in sprites %}
+///////////////////////////////// Texture {{ sprite.name }}
+TextureName: "{{ sprite.name }}";
+Rect: "{ {{sprite.textureRectX}}, {{sprite.textureRectY}}, {{sprite.textureRectWidth}}, {{sprite.textureRectHeight}} }";
+{% for alias in sprite.aliases %}Alias: "{{ alias.name }}"; {% /for %}
+{% /for %}
+}
+ 
+ 
+ */
+
 
 /*
  * MainWindow

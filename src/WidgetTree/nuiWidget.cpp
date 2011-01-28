@@ -765,7 +765,13 @@ nuiWidget::~nuiWidget()
     mpSurface->Release();
   }
   delete mpRenderCache;
-  LoadIdentityMatrix();
+  if (mpMatrixNodes)
+  {
+    for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+      mpMatrixNodes->at(i)->Release();
+    delete mpMatrixNodes;
+    mpMatrixNodes = NULL;
+  }
 }
 
 bool nuiWidget::IsTrashed(bool combined) const 

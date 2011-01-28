@@ -618,7 +618,105 @@ public:
     return true;  
   }
   
-  
+  bool ReadTextureAtlas(const nglString& rName)
+  {
+    if (!GetChar()) // eat =
+      return false;
+    if (!SkipBlank())
+      return false;
+
+    if (mChar != '{')
+      return false;
+    if (!GetChar())
+      return false;
+    if (!SkipBlank())
+      return false;
+    
+    uint32 count = 0;
+    nglString AtlasPath;
+    nglString TextureName;
+    nuiRect Rect;
+    
+    while (mChar != _T('}'))
+    {
+      nglString symbol;
+      if (!GetSymbol(symbol))
+        return false;
+      
+      if (!SkipBlank())
+        return false;
+
+      if (mChar != ':')
+        return false;
+      if (!GetChar())
+        return false;
+      if (!SkipBlank())
+        return false;
+
+      
+      nglString value;
+      if (mChar == _T('"'))
+      {
+        if (!GetQuoted(value))
+          return false;
+      }
+      else
+      {
+        if (!GetValue(value, true/*AllowBlank*/))
+          return false;
+      }
+      
+      if (!SkipBlank())
+        return false;
+      
+      if (mChar != _T(';'))
+        return false;
+      if (!GetChar())
+        return false;
+      if (!SkipBlank())
+        return false;
+      
+      if (symbol == _T("Path"))
+      {
+        AtlasPath = value;
+      }
+      else if (symbol == _T("TextureName"))
+      {
+        if (count)
+        {
+          nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect);
+        }
+
+        TextureName = value;
+        count++;
+      }
+      else if (symbol == _T("Alias"))
+      {
+        if (count)
+        {
+          nuiTexture::CreateTextureProxy(value, AtlasPath, Rect);
+        }
+      }
+      else if (symbol == _T("Rect"))
+      {
+        Rect.SetValue(value);
+      }
+    }
+
+    if (count)
+    {
+      nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect);
+    }
+    
+    if (!SkipBlank())
+      return false;
+    if (mChar != _T('}'))
+      return false;
+    if (!GetChar())
+      return false;
+    
+    return true;  
+  }
   
   
   bool ReadDesc()
@@ -703,7 +801,6 @@ public:
         nglString tmp;
         tmp.CFormat(_T("Error (file '%ls') line %d (%d): %ls"), includePath.GetChars(), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
         SetError(tmp);
-        delete pF;
         return false;
       }
       uint32 cc = mrCSS.GetRulesCount();
@@ -919,6 +1016,16 @@ public:
         {
           nglString str;
           str.CFormat(_T("Unable to parse a variable with name '%ls'"), name.GetChars());
+          SetError(str);
+          return NULL;
+        }
+      }
+      else if (!type.Compare(_T("textureatlas"), false) || !type.Compare(_T("atlas"), false))
+      {
+        if (!ReadTextureAtlas(name))
+        {
+          nglString str;
+          str.CFormat(_T("Unable to parse an atlas definition for %ls"), name.GetChars());
           SetError(str);
           return NULL;
         }

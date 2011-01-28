@@ -47,6 +47,7 @@
 		BCD448C811D2123000BEF227 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF116511D20BD5001B2A28 /* UIKit.framework */; };
 		BCD448C911D2123000BEF227 /* libnuiPhoneD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448B511D2120F00BEF227 /* libnuiPhoneD.a */; };
 		BCD449A211D23EAB00BEF227 /* libnuiPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD448B711D2120F00BEF227 /* libnuiPhone.a */; };
+		E5345E0D12F3106D00F435D9 /* Atlas.css in Resources */ = {isa = PBXBuildFile; fileRef = E5345E0C12F3106D00F435D9 /* Atlas.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +178,7 @@
 		BCD4495611D23BCE00BEF227 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = resources/css/style.css; sourceTree = SOURCE_ROOT; };
 		BCD4495711D23BF900BEF227 /* style-Common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-Common.css"; path = "resources/css/style-Common.css"; sourceTree = SOURCE_ROOT; };
 		BCD4495811D23BF900BEF227 /* style-iPhone.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "style-iPhone.css"; path = "resources/css/style-iPhone.css"; sourceTree = SOURCE_ROOT; };
+		E5345E0C12F3106D00F435D9 /* Atlas.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = Atlas.css; path = resources/Atlas.css; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +326,7 @@
 		BC6A09CA0EF9300600881ACF /* css */ = {
 			isa = PBXGroup;
 			children = (
+				E5345E0C12F3106D00F435D9 /* Atlas.css */,
 				BCD4495611D23BCE00BEF227 /* style.css */,
 				BCD4495811D23BF900BEF227 /* style-iPhone.css */,
 				BCD4495711D23BF900BEF227 /* style-Common.css */,
@@ -536,6 +539,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5345E0D12F3106D00F435D9 /* Atlas.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
