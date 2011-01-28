@@ -14,6 +14,8 @@
 
 #include "nuiSurface.h"
 
+#include "../Utils/TextureAtlas.h"
+
 using namespace std;
 
 nuiTextureMap nuiTexture::mpTextures;
@@ -184,6 +186,86 @@ nuiTexture* nuiTexture::CreateTextureProxy(const nglString& rName, const nglStri
   
   LOG_GETTEXTURE(pTexture);
   return pTexture;  
+}
+
+class AtlasElem
+{
+public:
+  nglPath mPath;
+  nglImage* mpImage;
+};
+
+static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath, int32 maxWidth, int32 maxHeight)
+{
+  std::list<nglPath> children;
+  rPath.GetChildren(&children);
+  
+  std::list<nglPath>::iterator it = children.begin();
+  std::list<nglPath>::iterator end = children.end();
+  while (it != end)
+  {
+    nglPath p(rPath);
+    p += *it;
+
+    if (p.IsLeaf())
+    {
+      // Try to load the image
+      nglImage* pImage = new nglImage(p);
+      if (!pImage->IsValid())
+      {
+        delete pImage;
+      }
+      else
+      {
+        AtlasElem elem;
+        elem.mPath = p;
+        elem.mpImage = pImage;
+        rElements.push_back(elem);
+      }
+    }
+    else
+    {
+      // Descend the path:
+      nglPath dir(rPath);
+      dir += *it;
+      
+      GetAllImages(rElements, dir, maxWidth, maxHeight);
+    }
+
+    ++it;
+  }
+}
+
+bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 maxWidth, int32 maxHeight)
+{
+  std::vector<AtlasElem> images;
+  
+  GetAllImages(images, rPath, maxWidth, maxHeight);
+  
+  TEXTURE_PACKER::TexturePacker* packer = TEXTURE_PACKER::createTexturePacker();
+  packer->setTextureCount(images.size());
+
+  for (uint32 i = 0; i < images.size(); i++)
+  {
+    const AtlasElem& rElem(images[i]);
+    packer->addTexture(rElem.mpImage->GetWidth(), rElem.mpImage->GetHeight());
+  }
+  
+  int unused_area = packer->packTextures(maxWidth, maxHeight, true, true);
+
+  // Finally, to retrieve the results, for each texture 0-(n-1) call 'getTextureLocation'.
+  for (uint32 i = 0; i < images.size(); i++)
+  {
+    const AtlasElem& rElem(images[i]);
+    int x, y, w, h;
+    packer->getTextureLocation(i, x, y, w, h);
+    
+    delete rElem.mpImage;
+  }
+  
+  TEXTURE_PACKER::releaseTexturePacker(packer);
+
+  return true;
 }
 
 

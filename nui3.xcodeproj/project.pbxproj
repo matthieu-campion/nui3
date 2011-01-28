@@ -3443,6 +3443,20 @@
 		E52E1A260CD7EEAF006FBCDD /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */; };
 		E52E1A280CD7F397006FBCDD /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */; };
 		E52E1A570CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */; };
+		E5345F3112F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
+		E5345F3212F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
+		E5345F3312F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
+		E5345F3412F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
+		E5345F3512F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
+		E5345F3612F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
+		E5345F3712F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
+		E5345F3812F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
+		E5345F3912F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
+		E5345F3A12F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
+		E5345F3B12F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
+		E5345F3C12F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
+		E5345F3D12F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
+		E5345F3E12F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
 		E5354C0811383244008F5402 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5354C0611383244008F5402 /* nuiObjectInspector.h */; };
 		E5354C0911383244008F5402 /* nuiObjectInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E5354C0611383244008F5402 /* nuiObjectInspector.h */; };
 		E5354C0C113832B8008F5402 /* nuiObjectInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */; };
@@ -7949,6 +7963,8 @@
 		E52FB3A012B6D7B300984B17 /* hb-unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "hb-unicode.c"; path = "harfbuzz/hb-unicode.c"; sourceTree = "<group>"; };
 		E52FB3A112B6D7B300984B17 /* hb-unicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-unicode.h"; path = "harfbuzz/hb-unicode.h"; sourceTree = "<group>"; };
 		E52FB3A212B6D7B300984B17 /* hb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hb.h; path = harfbuzz/hb.h; sourceTree = "<group>"; };
+		E5345F2F12F3317500F435D9 /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
+		E5345F3012F3317500F435D9 /* TextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlas.cpp; sourceTree = "<group>"; };
 		E5354C0611383244008F5402 /* nuiObjectInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiObjectInspector.h; path = include/nuiObjectInspector.h; sourceTree = SOURCE_ROOT; };
 		E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiObjectInspector.cpp; path = Introspector/nuiObjectInspector.cpp; sourceTree = "<group>"; };
 		E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPopupView.cpp; sourceTree = "<group>"; };
@@ -11149,6 +11165,8 @@
 				E5D2D18C0FDE949C00143480 /* nuiRSS.h */,
 				4024358E10568E550089BA0B /* nuiStopWatch.h */,
 				4024359210568E6F0089BA0B /* nuiStopWatch.cpp */,
+				E5345F2F12F3317500F435D9 /* TextureAtlas.h */,
+				E5345F3012F3317500F435D9 /* TextureAtlas.cpp */,
 			);
 			name = Utils;
 			path = src/Utils;
@@ -12104,6 +12122,7 @@
 				73F0859212E9BA0700656E84 /* nuiFileVoice.h in Headers */,
 				73F0859312E9BA0700656E84 /* nuiSynthSound.h in Headers */,
 				73F0859412E9BA0700656E84 /* nuiSynthVoice.h in Headers */,
+				E5345F3D12F3317500F435D9 /* TextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12941,6 +12960,7 @@
 				400C2F8312DE09DA007472C4 /* nuiFileVoice.h in Headers */,
 				4017059812E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705C812E06878008769D5 /* nuiSynthVoice.h in Headers */,
+				E5345F3112F3317500F435D9 /* TextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13325,6 +13345,7 @@
 				400C2F8D12DE09DA007472C4 /* nuiFileVoice.h in Headers */,
 				4017059612E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705C612E06878008769D5 /* nuiSynthVoice.h in Headers */,
+				E5345F3512F3317500F435D9 /* TextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13708,6 +13729,7 @@
 				400C2F8812DE09DA007472C4 /* nuiFileVoice.h in Headers */,
 				4017059A12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CA12E06878008769D5 /* nuiSynthVoice.h in Headers */,
+				E5345F3912F3317500F435D9 /* TextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14091,6 +14113,7 @@
 				400C2F9712DE09DA007472C4 /* nuiFileVoice.h in Headers */,
 				4017059E12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CE12E06878008769D5 /* nuiSynthVoice.h in Headers */,
+				E5345F3712F3317500F435D9 /* TextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14474,6 +14497,7 @@
 				400C2F9C12DE09DA007472C4 /* nuiFileVoice.h in Headers */,
 				401705A012E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705D012E06878008769D5 /* nuiSynthVoice.h in Headers */,
+				E5345F3312F3317500F435D9 /* TextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14857,6 +14881,7 @@
 				400C2F9212DE09DA007472C4 /* nuiFileVoice.h in Headers */,
 				4017059C12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CC12E06878008769D5 /* nuiSynthVoice.h in Headers */,
+				E5345F3B12F3317500F435D9 /* TextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16303,6 +16328,7 @@
 				73F086DF12E9BA0700656E84 /* nuiMemorySound.cpp in Sources */,
 				73F086E012E9BA0700656E84 /* nuiSynthSound.cpp in Sources */,
 				73F086E112E9BA0700656E84 /* nuiSynthVoice.cpp in Sources */,
+				E5345F3E12F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16920,6 +16946,7 @@
 				400C2F8412DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
 				4017059912E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705C912E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
+				E5345F3212F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17259,6 +17286,7 @@
 				400C2F8E12DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
 				4017059712E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705C712E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
+				E5345F3612F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17602,6 +17630,7 @@
 				400C2F8912DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
 				4017059B12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705CB12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
+				E5345F3A12F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17944,6 +17973,7 @@
 				400C2F9812DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
 				4017059F12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705CF12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
+				E5345F3812F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18287,6 +18317,7 @@
 				400C2F9D12DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
 				401705A112E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705D112E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
+				E5345F3412F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18630,6 +18661,7 @@
 				400C2F9312DE09DA007472C4 /* nuiMemorySound.cpp in Sources */,
 				4017059D12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705CD12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
+				E5345F3C12F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

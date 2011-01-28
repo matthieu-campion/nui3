@@ -701,6 +701,10 @@ public:
       {
         Rect.SetValue(value);
       }
+      else if (symbol == _T("AutoScan"))
+      {
+        nuiTexture::CreateAtlasFromPath(value, 1024, 1024);
+      }
     }
 
     if (count)
