@@ -2,7 +2,12 @@
 // main nui3 stylesheet
 //
 
-#include "rsrc:/Atlas.css"
+//#include "rsrc:/Atlas.css"
+
+@Atlas blah = 
+{
+  AutoScan: "rsrc:/atlas";
+}
 
 "MyImage"!
 {

@@ -34,7 +34,7 @@ public:
   static nuiTexture* GetTexture(const nglString& rName); ///< Get a texture from its ID only
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   static nuiTexture* BindTexture(GLuint TextureID, GLenum Target); ///< Returns a texture that will use an existing OpenGL Texture.
-  static nuiTexture* CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect); ///< Create a proxy texture that is at subtexture in an atlas.
+  static nuiTexture* CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotatedToTheRight); ///< Create a proxy texture that is at subtexture in an atlas.
   static bool CreateAtlasFromPath(const nglPath& rPath, int32 maxWidth, int32 maxHeight);
   
   static void ClearAll();
@@ -125,7 +125,7 @@ protected:
   nuiTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
   nuiTexture(nuiSurface* pSurface); ///< Create an image for rendering to surface
   nuiTexture(GLuint TextureID, GLenum Target); ///< Create an nuiTexture from an existing OpenGL texture ID
-  nuiTexture(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect); ///< Create a proxy texture that is at subtexture in an atlas.
+  nuiTexture(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotatedToTheRight); ///< Create a proxy texture that is at subtexture in an atlas.
   
   virtual ~nuiTexture();
   void Init();
@@ -157,6 +157,7 @@ protected:
   
   nuiRect mProxyRect;
   nuiTexture* mpProxyTexture;
+  bool mRotated;
   
   float mScale;
 

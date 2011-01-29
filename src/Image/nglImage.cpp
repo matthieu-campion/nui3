@@ -747,6 +747,153 @@ nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
   return pNew;
 }
 
+nglImage* nglImage::RotateLeft()
+{
+  int32 width = GetWidth();
+  int32 height = GetHeight();
+  int32 bpp = (GetBitDepth() + 1) / 8;
+  
+  nglImageInfo info(height, width, GetBitDepth());
+  info.AllocateBuffer();
+  
+  int32 sbpl = GetBytesPerLine();
+  int32 dbpl = info.mBytesPerLine;
+
+  char* pDst = info.mpBuffer;
+  char* pSrc = GetBuffer();
+  
+  if (mInfo.mBitDepth == 8)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 16)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 24)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 32)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  
+  return new nglImage(info);
+}
+
+nglImage* nglImage::RotateRight()
+{
+  int32 width = GetWidth();
+  int32 height = GetHeight();
+  int32 bpp = (GetBitDepth() + 1) / 8;
+  
+  nglImageInfo info(height, width, GetBitDepth());
+  info.AllocateBuffer();
+  
+  int32 sbpl = GetBytesPerLine();
+  int32 dbpl = info.mBytesPerLine;
+  
+  char* pDst = info.mpBuffer;
+  char* pSrc = GetBuffer();
+  
+  if (mInfo.mBitDepth == 8)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 16)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 24)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 32)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  
+  return new nglImage(info);
+}
+
+
 void nglImage::PreMultiply()
 {
   if (mInfo.mPreMultAlpha)

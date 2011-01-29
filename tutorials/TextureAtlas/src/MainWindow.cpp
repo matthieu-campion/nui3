@@ -27,7 +27,7 @@ Rect: "{ {{sprite.textureRectX}}, {{sprite.textureRectY}}, {{sprite.textureRectW
 {% /for %}
 }
  
- 
+
  */
 
 
@@ -56,10 +56,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  nuiTexture* pTex1 = nuiTexture::CreateTextureProxy(_T("Tex1"), _T("rsrc:/decorations/Atlas.png"), nuiRect(0, 0, 128, 32));
-  nuiTexture* pTex2 = nuiTexture::CreateTextureProxy(_T("Tex2"), _T("rsrc:/decorations/Atlas.png"), nuiRect(128, 0, 128, 32));
-  nuiTexture* pTex3 = nuiTexture::CreateTextureProxy(_T("Tex3"), _T("rsrc:/decorations/Atlas.png"), nuiRect(0, 32, 128, 32));
-  nuiTexture* pTex4 = nuiTexture::CreateTextureProxy(_T("Tex4"), _T("rsrc:/decorations/Atlas.png"), nuiRect(128, 32, 128, 32));
+  nuiTexture* pTex1 = nuiTexture::CreateTextureProxy(_T("Tex1"), _T("rsrc:/decorations/Atlas.png"), nuiRect(0, 0, 128, 32), false);
+  nuiTexture* pTex2 = nuiTexture::CreateTextureProxy(_T("Tex2"), _T("rsrc:/decorations/Atlas.png"), nuiRect(128, 0, 128, 32), false);
+  nuiTexture* pTex3 = nuiTexture::CreateTextureProxy(_T("Tex3"), _T("rsrc:/decorations/Atlas.png"), nuiRect(0, 32, 128, 32), false);
+  nuiTexture* pTex4 = nuiTexture::CreateTextureProxy(_T("Tex4"), _T("rsrc:/decorations/Atlas.png"), nuiRect(128, 32, 128, 32), false);
   nuiImage* pImage1 = new nuiImage(pTex1);
   nuiImage* pImage2 = new nuiImage(pTex2);
   nuiImage* pImage3 = new nuiImage(pTex3);

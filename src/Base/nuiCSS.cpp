@@ -636,6 +636,7 @@ public:
     nglString AtlasPath;
     nglString TextureName;
     nuiRect Rect;
+    bool Rotated = false;
     
     while (mChar != _T('}'))
     {
@@ -684,7 +685,7 @@ public:
       {
         if (count)
         {
-          nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect);
+          nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect, Rotated);
         }
 
         TextureName = value;
@@ -694,22 +695,26 @@ public:
       {
         if (count)
         {
-          nuiTexture::CreateTextureProxy(value, AtlasPath, Rect);
+          nuiTexture::CreateTextureProxy(value, AtlasPath, Rect, Rotated);
         }
       }
       else if (symbol == _T("Rect"))
       {
         Rect.SetValue(value);
       }
+      else if (symbol == _T("Rotated"))
+      {
+        Rotated = nuiGetBool(value, false);
+      }
       else if (symbol == _T("AutoScan"))
       {
-        nuiTexture::CreateAtlasFromPath(value, 1024, 1024);
+        nuiTexture::CreateAtlasFromPath(value, 256, 256);
       }
     }
 
     if (count)
     {
-      nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect);
+      nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect, Rotated);
     }
     
     if (!SkipBlank())

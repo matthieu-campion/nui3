@@ -305,6 +305,14 @@ public:
    return NULL if the coordinates or the new size goes outside the source image.
    */
   
+  nglImage* RotateLeft();
+  /*!< create a copy, rotating the whole image to the left
+   */
+  
+  nglImage* RotateRight();
+  /*!< create a copy, rotating the whole image to the right
+   */
+  
   void PreMultiply(); ///< Premultiply the alpha in the image buffer
   void UnPreMultiply(); ///< Try to inverse the effect of PreMultiply.
 

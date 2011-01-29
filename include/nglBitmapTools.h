@@ -20,6 +20,7 @@ typedef void (*nglCopyLineFn)(void* pDst, void* pSrc, int32 PixelCount, bool Inv
 
 NGL_API nglCopyLineFn nglGetCopyLineFn(int32 DstBPP, int32 SrcBPP); ///< Retreive a pointer to a function that can copy any BPP to any BPP.
 NGL_API void nglCopyImage(void* pDst, int32 dstwidth, int32 dstheight, int32 dstbpp, void* pSrc, int32 srcwidth, int32 srcheight, int32 srcbpp, bool vmirror, bool hmirror);
+NGL_API void nglCopyImage(void* pDst, int32 x, int32 y, int32 dstwidth, int32 dstheight, int32 dstbpp, void* pSrc, int32 srcwidth, int32 srcheight, int32 srcbpp, bool vmirror, bool hmirror);
 
 NGL_API void nglInvertLineSwap32(char* pDst, char* pSrc, uint32 pixelcount);
 NGL_API void nglInvertLineSwap24(char* pDst, char* pSrc, uint32 pixelcount);

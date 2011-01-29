@@ -174,13 +174,13 @@ nuiTexture* nuiTexture::BindTexture(GLuint TextureID, GLenum Target)
 }
 
 
-nuiTexture* nuiTexture::CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect)
+nuiTexture* nuiTexture::CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotateRight)
 {
   nuiTexture* pTexture = NULL;
   nglString name = rName;
   nuiTextureMap::iterator it = mpTextures.find(name);
   if (it == mpTextures.end())
-    pTexture = new nuiTexture(rName, rSourceTextureID, rProxyRect);
+    pTexture = new nuiTexture(rName, rSourceTextureID, rProxyRect, RotateRight);
   else
     pTexture = it->second;
   
@@ -204,8 +204,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
   std::list<nglPath>::iterator end = children.end();
   while (it != end)
   {
-    nglPath p(rPath);
-    p += *it;
+    nglPath p(*it);
 
     if (p.IsLeaf())
     {
@@ -253,16 +252,34 @@ bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 maxWidth, int32
   
   int unused_area = packer->packTextures(maxWidth, maxHeight, true, true);
 
+  // Create image buffer:
+  nglImageInfo info(maxWidth, maxHeight, 32);
+  info.AllocateBuffer();
+  // Clear buffer:
+  memset(info.mpBuffer, 0, 4 * maxWidth * maxHeight);
+  nuiTexture* pAtlas = nuiTexture::GetTexture(info);
+  pAtlas->SetSource(rPath.GetPathName());
+  
   // Finally, to retrieve the results, for each texture 0-(n-1) call 'getTextureLocation'.
   for (uint32 i = 0; i < images.size(); i++)
   {
-    const AtlasElem& rElem(images[i]);
+    AtlasElem& rElem(images[i]);
     int x, y, w, h;
-    packer->getTextureLocation(i, x, y, w, h);
+    bool rotated = packer->getTextureLocation(i, x, y, w, h);
+    if (rotated)
+    {
+      nglImage* pImg = rElem.mpImage->RotateRight();
+      delete rElem.mpImage;
+      rElem.mpImage = pImg;
+    }
+
+    //NGL_OUT(_T("{%d, %d, %d, %d} %ls %ls\n"), x, y, w, h, TRUEFALSE(rotated), rElem.mPath.GetChars());
     
+    nglCopyImage(pAtlas->GetImage()->GetBuffer(), x, y, maxWidth, maxHeight, info.mBitDepth, rElem.mpImage->GetBuffer(), rElem.mpImage->GetWidth(), rElem.mpImage->GetHeight(), rElem.mpImage->GetBitDepth(), false, false);
+    nuiTexture* pTex = nuiTexture::CreateTextureProxy(rElem.mPath.GetPathName(), rPath.GetPathName(), nuiRect(x, y, w, h), rotated);
     delete rElem.mpImage;
   }
-  
+
   TEXTURE_PACKER::releaseTexturePacker(packer);
 
   return true;
@@ -379,7 +396,7 @@ void nuiTexture::ForceReloadAll(bool Rebind)
 
 //--------------------------------
 nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
-  : nuiObject(), mTextureID(0), mTarget(0)
+  : nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -402,7 +419,7 @@ nuiTexture::nuiTexture(nglIStream* pInput, nglImageCodec* pCodec)
 extern float NUI_SCALE_FACTOR;
 
 nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
-: nuiObject(), mTextureID(0), mTarget(0)
+: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -454,7 +471,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
 }
 
 nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
-: nuiObject(), mTextureID(0), mTarget(0)
+: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -478,7 +495,7 @@ nuiTexture::nuiTexture (nglImageInfo& rInfo, bool Clone)
 }
 
 nuiTexture::nuiTexture (const nglImage& rImage)
-: nuiObject(), mTextureID(0), mTarget(0)
+: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -498,7 +515,7 @@ nuiTexture::nuiTexture (const nglImage& rImage)
 }
 
 nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
-: nuiObject(), mTextureID(0), mTarget(0)
+: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -518,7 +535,7 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
 }
 
 nuiTexture::nuiTexture(const nuiXMLNode* pNode)
-: nuiObject(), mTextureID(0), mTarget(0)
+: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
   nuiObject::Load(pNode);
   if (SetObjectClass(_T("nuiTexture")))
@@ -540,7 +557,7 @@ nuiTexture::nuiTexture(const nuiXMLNode* pNode)
 }
 
 nuiTexture::nuiTexture(nuiSurface* pSurface)
-: nuiObject(), mTextureID(0), mTarget(0)
+: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -561,7 +578,7 @@ nuiTexture::nuiTexture(nuiSurface* pSurface)
 }
 
 nuiTexture::nuiTexture(GLuint TextureID, GLenum Target)
-: nuiObject(), mTextureID(TextureID), mTarget(Target)
+: nuiObject(), mTextureID(TextureID), mTarget(Target), mRotated(false)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -581,8 +598,8 @@ nuiTexture::nuiTexture(GLuint TextureID, GLenum Target)
   Init();
 }
 
-nuiTexture::nuiTexture(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect)
-: nuiObject(), mTextureID(0), mTarget(0)
+nuiTexture::nuiTexture(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotateRight)
+: nuiObject(), mTextureID(0), mTarget(0), mRotated(RotateRight)
 {
   if (SetObjectClass(_T("nuiTexture")))
     InitAttributes();
@@ -662,8 +679,17 @@ void nuiTexture::Init()
   }
   else if (mpProxyTexture)
   {
-    mRealWidth = mProxyRect.GetWidth();
-    mRealHeight = mProxyRect.GetHeight();
+    if (mRotated)
+    {
+      mRealWidth = mProxyRect.GetHeight();
+      mRealHeight = mProxyRect.GetWidth();
+    }
+    else
+    {
+      mRealWidth = mProxyRect.GetWidth();
+      mRealHeight = mProxyRect.GetHeight();
+    }
+
   }
   
   mRealWidthPOT = mRealWidth;
@@ -844,6 +870,21 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
   if (mpProxyTexture)
   {
+    if (mRotated)
+    {
+      // Rotate coords 90¡ to the right
+      x = mRealWidth - x;
+      y = mRealHeight - y;
+      float t = x;
+      x = y;
+      y = x;
+      const float xx = mRealHeight - y;
+      const float yy = x;
+      
+      x = xx;
+      y = yy;
+    }
+
     x += mProxyRect.Left();
     y += mProxyRect.Top();
     mpProxyTexture->ImageToTextureCoord(x, y);
@@ -869,6 +910,16 @@ void nuiTexture::TextureToImageCoord(nuiSize& x, nuiSize& y) const
     mpProxyTexture->TextureToImageCoord(x, y);
     x -= mProxyRect.Left();
     y -= mProxyRect.Top();
+
+    if (mRotated)
+    {
+      // Rotate coords 90¡ to the left
+      const float xx = y - mRealHeight;
+      const float yy = x;
+      
+      x = xx;
+      y = yy;
+    }
     return;
   }
 

@@ -1104,6 +1104,60 @@ NGL_API void nglCopyImage(void* pDst, int32 dstwidth, int32 dstheight, int32 dst
 }
 
 
+NGL_API void nglCopyImage(void* pDst, int32 x, int32 y, int32 dstwidth, int32 dstheight, int32 dstbpp, void* pSrc, int32 srcwidth, int32 srcheight, int32 srcbpp, bool vmirror, bool hmirror)
+{
+  int32 i;
+  int32 sizex = 0, sizey = 0;
+  int32 sbytes = ((srcbpp+1)/8);
+  int32 dbytes = ((dstbpp+1)/8);
+  int32 slinesize = srcwidth * sbytes;
+  int32 dlinesize = dstwidth * dbytes;
+  
+  nglCopyLineFn pCpFn = nglGetCopyLineFn(dstbpp,srcbpp);
+  
+  if (!pCpFn)
+    return;
+  
+  if ( x + dstwidth > srcwidth )
+  {
+    sizex = srcwidth;
+  }
+  else if ( x + dstwidth < srcwidth )
+  {
+    sizex = dstwidth;
+  }
+  else
+    sizex = dstwidth;
+  
+  if ( y + dstheight > srcheight )
+    sizey = srcheight;
+  else
+    sizey = dstheight;
+  
+  uint8* pSource = (uint8*) pSrc;
+  uint8* pDest = (uint8*) pDst + sbytes * x + dlinesize * y;
+  if (vmirror)
+  {
+    pSource += slinesize * (sizey - 1);
+    for (i = 0; i < sizey; i++)
+    {
+      pCpFn(pDest,pSource, sizex, hmirror);
+      pSource -= slinesize;
+      pDest += dlinesize;
+    }
+  }
+  else
+  {
+    for (i = 0; i < sizey; i++)
+    {
+      pCpFn(pDest,pSource, sizex, hmirror);
+      pSource += slinesize;
+      pDest += dlinesize;
+    }
+  }
+}
+
+
 
 
 NGL_API void nglPreMultLine16LumA(void* pDst, void* pSrc, int32 PixelCount)
