@@ -273,7 +273,7 @@ bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 maxWidth, int32
       rElem.mpImage = pImg;
     }
 
-    //NGL_OUT(_T("{%d, %d, %d, %d} %ls %ls\n"), x, y, w, h, TRUEFALSE(rotated), rElem.mPath.GetChars());
+    NGL_OUT(_T("{%d, %d, %d, %d} %ls %ls\n"), x, y, w, h, TRUEFALSE(rotated), rElem.mPath.GetChars());
     
     nglCopyImage(pAtlas->GetImage()->GetBuffer(), x, y, maxWidth, maxHeight, info.mBitDepth, rElem.mpImage->GetBuffer(), rElem.mpImage->GetWidth(), rElem.mpImage->GetHeight(), rElem.mpImage->GetBitDepth(), false, false);
     nuiTexture* pTex = nuiTexture::CreateTextureProxy(rElem.mPath.GetPathName(), rPath.GetPathName(), nuiRect(x, y, w, h), rotated);
@@ -870,14 +870,10 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
   if (mpProxyTexture)
   {
+    //NGL_OUT(_T("%ls\n???  %f, %f (rotated: %ls)\n"), GetSource().GetChars(), x, y, YESNO(mRotated));
     if (mRotated)
     {
       // Rotate coords 90¡ to the right
-      x = mRealWidth - x;
-      y = mRealHeight - y;
-      float t = x;
-      x = y;
-      y = x;
       const float xx = mRealHeight - y;
       const float yy = x;
       
@@ -887,7 +883,13 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 
     x += mProxyRect.Left();
     y += mProxyRect.Top();
+
+    //NGL_OUT(_T("  -> %f, %f\n"), x, y);
+    
     mpProxyTexture->ImageToTextureCoord(x, y);
+    
+    //NGL_OUT(_T("     %f, %f\n"), x, y);
+
     return;
   }
   
