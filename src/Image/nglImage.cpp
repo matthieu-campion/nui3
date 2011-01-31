@@ -589,6 +589,79 @@ nglImage::~nglImage()
 }
 
 
+/** This dummy class only exists to read image infos without the data... */
+class nglImageDummy : public nglImage
+{
+public:
+  nglImageDummy(nglIStream* pInput, nglImageCodec* pCodec)
+  : nglImage(pInput, pCodec)
+  {
+    
+  }
+  
+  bool OnInfo(nglImageInfo& rInfo)
+  {
+    nglImage::OnInfo(rInfo);
+    return false;
+  }
+};
+
+bool nglImage::GetImageInfo(nglImageInfo& rInfo, nglIStream* pIFile, nglImageCodec* pCodec)
+{
+  StaticInit();
+  
+  if (!pIFile)
+    return false;
+  
+  if (pIFile->GetState() != eStreamReady)
+  {
+    delete pIFile;
+    return false;
+  }
+  
+  if (!pCodec)
+  {
+    uint32 count;
+    count = mpCodecInfos->size();
+    for (uint32 i=0; i<count && !pCodec; i++)
+    {
+      if ((*mpCodecInfos)[i])
+      {
+        pCodec = (*mpCodecInfos)[i]->CreateInstance(); // try to create a codec
+        if (pCodec) // success?
+        {
+          if (!pCodec->Probe(pIFile)) // try to make the codec recognize the data.
+          { // :-(
+            delete pCodec;
+            pCodec = NULL;
+          }
+        }
+      }
+    }
+  }
+    
+  if (pCodec)
+  {
+    nglImageDummy img(pIFile, pCodec);
+    
+    pCodec->Init(&img);
+    pCodec->Feed(pIFile); // Should return as soon as the header is read
+    
+    img.GetInfo(rInfo);
+  }
+
+  delete pCodec;
+}
+
+bool nglImage::GetImageInfo(nglImageInfo& rInfo, const nglPath& rPath, nglImageCodec* pCodec)
+{
+  nglIStream* pIFile = rPath.OpenRead();
+  bool res = GetImageInfo(rInfo, pIFile, pCodec);
+  delete pIFile;
+  return res;
+}
+
+
 /*
  * Image description
  */
@@ -933,14 +1006,16 @@ void nglImage::UnPreMultiply()
  * User callbacks
  */
 
-void nglImage::OnInfo (nglImageInfo& rInfo)
+bool nglImage::OnInfo (nglImageInfo& rInfo)
 {
 //  rInfo.Copy (mInfo, false);
+  return true;
 }
 
-void nglImage::OnData(float Completion)
+bool nglImage::OnData(float Completion)
 {
   mCompletion = Completion;
+  return true;
 }
 
 bool nglImage::OnError()
@@ -1049,16 +1124,16 @@ nglImageCodec* nglImage::CreateCodec (const nglString& rName)
  * Codec callbacks
  */
 
-void nglImage::OnCodecInfo(nglImageInfo& rInfo)
+bool nglImage::OnCodecInfo(nglImageInfo& rInfo)
 {
-  mInfo.Copy (rInfo, false);
+  mInfo.Copy(rInfo, false);
   mInfo.AllocateBuffer();
-  OnInfo (mInfo);
+  return OnInfo (mInfo);
 }
 
-void nglImage::OnCodecData(float Completion)
+bool nglImage::OnCodecData(float Completion)
 {
-  OnData (Completion);
+  return OnData(Completion);
 }
 
 bool nglImage::OnCodecError()

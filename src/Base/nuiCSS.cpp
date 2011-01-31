@@ -708,7 +708,7 @@ public:
       }
       else if (symbol == _T("AutoScan"))
       {
-        nuiTexture::CreateAtlasFromPath(value, 256, 256);
+        nuiTexture::CreateAtlasFromPath(value, 256, 1024);
       }
     }
 

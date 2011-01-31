@@ -60,6 +60,7 @@ protected:
   TargaHeader mHeader;
   tgaState mState;
   char* mpImageID;
+  bool mStop;
 };
 
 class nglImageTGACodecInfo : public nglImageCodecInfo

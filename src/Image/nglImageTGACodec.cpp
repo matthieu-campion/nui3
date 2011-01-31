@@ -18,6 +18,7 @@ nglImageTGACodec::nglImageTGACodec(void)
   mpImageID = NULL;
   mLine = 0;
   mLineSize = 0;
+  mStop = true;
 }
 
 nglImageTGACodec::~nglImageTGACodec(void)
@@ -163,13 +164,13 @@ void ReverseRGB32(char*& pBuffer,uint count)
 bool nglImageTGACodec::Feed(nglIStream* pIStream) 
 {
   nglFileSize count;
-  while (pIStream->Available(1) && pIStream->GetState()==eStreamReady)
+  while (pIStream->Available(1) && pIStream->GetState()==eStreamReady && mStop)
   {
     switch (mState)
     {
     case tgaHeader:
       if (ReadHeader(pIStream,false))
-        mState=tgaID;
+        mState = tgaID;
       break;
     case tgaID:
       if (mHeader.IDFieldSize)
@@ -225,7 +226,8 @@ bool nglImageTGACodec::Feed(nglIStream* pIStream)
           }
         }
 
-        SendData((float)mLine/(float)mHeader.Height);
+        if (!SendData((float)mLine/(float)mHeader.Height))
+          mStop = true;
       }
       return (pIStream->GetState()==eStreamWait) || (pIStream->GetState()==eStreamReady);
       break;

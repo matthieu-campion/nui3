@@ -52,6 +52,7 @@ protected:
   ppmHeader mHeader;
   char* mpImageID;
   char* mpBuffer;
+  bool mStop;
 };
 
 class nglImagePPMCodecInfo : public nglImageCodecInfo
