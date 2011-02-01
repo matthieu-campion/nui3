@@ -637,6 +637,7 @@ public:
     nglString TextureName;
     nuiRect Rect;
     bool Rotated = false;
+    bool AutoTrim = false;
     
     while (mChar != _T('}'))
     {
@@ -706,9 +707,13 @@ public:
       {
         Rotated = nuiGetBool(value, false);
       }
+      else if (symbol == _T("AutoTrim"))
+      {
+        AutoTrim = nuiGetBool(value, false);
+      }
       else if (symbol == _T("AutoScan"))
       {
-        nuiTexture::CreateAtlasFromPath(value, 256, 1024);
+        nuiTexture::CreateAtlasFromPath(value, 256, 1024, AutoTrim);
       }
     }
 

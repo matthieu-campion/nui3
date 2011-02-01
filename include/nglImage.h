@@ -302,13 +302,21 @@ public:
    */
   
   nglImage* Crop(uint32 x, uint32 y, uint32 width, uint32 height);
-  /*!< create a copy, cropping hte source 
+  /*!< create a copy, cropping the source 
    \param x x-coord in the source image
    \param y y-coord in the source image
    \param width new image width
    \param height new image height
    
    return NULL if the coordinates or the new size goes outside the source image.
+   */
+  
+  nglImage* Trim(int32& rXOffset, int32& rYOffset);
+  /*!< create a copy, cropping the source so that no fully transparent lines or columns are left.
+   \param rXOffset on output, contains the number of x pixels eaten from the left of the image during the operation.
+   \param rYOffset on output, contains the number of y pixels eaten from the top of the image during the operation.
+   
+   return NULL if something bad happened.
    */
   
   nglImage* RotateLeft();

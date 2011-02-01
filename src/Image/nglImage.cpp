@@ -820,6 +820,81 @@ nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
   return pNew;
 }
 
+nglImage* nglImage::Trim(int32& rXOffset, int32& rYOffset)
+{
+  int32 x = 0, y = 0, width = GetWidth(), height = GetHeight();
+
+  // Eat transparent pixels from the top:
+  {
+    bool stop = false;
+    for (int32 Y = 0; Y < GetHeight() && !stop; Y++)
+    {
+      for (int32 X = 0; X < GetWidth() && !stop; X++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          y = Y;
+        }
+      }
+    }
+  }
+  
+  // Eat transparent pixels from the bottom:
+  {
+    bool stop = false;
+    for (int32 Y = GetHeight() - 1; Y > y && !stop; Y--)
+    {
+      for (int32 X = 0; X < GetWidth() && !stop; X++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          height = Y - y;
+        }
+      }
+    }
+  }
+  
+  // Eat transparent pixels from the left:
+  {
+    bool stop = false;
+    for (int32 X = 0; X < GetWidth() && !stop; X++)
+    {
+      for (int32 Y = y; Y < y + height && !stop; Y++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          x = X;
+        }
+      }
+    }
+  }
+  
+  // Eat transparent pixels from the right:
+  {
+    bool stop = false;
+    for (int32 X = GetWidth(); X > x && !stop; X--)
+    {
+      for (int32 Y = y; Y < y + height && !stop; Y++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          width = X - x;
+        }
+      }
+    }
+  }
+  
+  rXOffset = x;
+  rYOffset = y;
+  return Crop(x, y, width, height);
+}
+
+
+
 nglImage* nglImage::RotateLeft()
 {
   int32 width = GetWidth();

@@ -35,7 +35,7 @@ public:
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   static nuiTexture* BindTexture(GLuint TextureID, GLenum Target); ///< Returns a texture that will use an existing OpenGL Texture.
   static nuiTexture* CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotatedToTheRight); ///< Create a proxy texture that is at subtexture in an atlas.
-  static bool CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize);
+  static bool CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize, bool Trim);
   
   static void ClearAll();
   static void ForceReloadAll(bool Rebind = false);

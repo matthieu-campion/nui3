@@ -198,7 +198,7 @@ public:
   nglImage* mpImage;
 };
 
-static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize)
+static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize, bool AutoTrim)
 {
   std::set<nglPath> childrenset;
   
@@ -245,7 +245,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
       else
       {
         // Descend the path:
-        GetAllImages(rElements, *it, MaxTextureSize, ForceAtlasSize);
+        GetAllImages(rElements, *it, MaxTextureSize, ForceAtlasSize, AutoTrim);
       }
 
       ++it;
@@ -266,6 +266,33 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
     if (res && info.mWidth <= MaxTextureSize && info.mHeight <= MaxTextureSize)
     {
       nglImage* pImage = new nglImage(p);
+      
+      if (AutoTrim)
+      {
+        nglImagePixelFormat format = pImage->GetPixelFormat();
+        
+        if (format == eImagePixelRGBA ||
+            format == eImagePixelAlpha ||
+            format == eImagePixelLumA)
+        {
+          int32 x, y;
+          nglImage* pTrimmed = pImage->Trim(x, y);
+          
+          if (1)
+          {
+            int32 ow, oh, nw, nh;
+            ow = pImage->GetWidth();
+            oh = pImage->GetHeight();
+            nw = pTrimmed->GetWidth();
+            nh = pTrimmed->GetHeight();
+            NGL_OUT(_T("Trim %ls\n\t\t%d x %d -> %d x %d (%d less)\n"), p.GetChars(), ow, oh, nw, nh, ow*oh - nw*nh);
+          }
+          
+          delete pImage;
+          pImage = pTrimmed;
+        }
+      }
+      
       AtlasElem elem;
       elem.mPath = p;
       elem.mpImage = pImage;
@@ -276,7 +303,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
   }
 }
 
-bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize)
+bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize, bool AutoTrim)
 {
   MaxTextureSize *= NUI_SCALE_FACTOR;
   ForceAtlasSize *= NUI_SCALE_FACTOR;
@@ -288,7 +315,7 @@ bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize,
   nuiStopWatch watch(_T("Create atlas"));
   std::vector<AtlasElem> images;
   
-  GetAllImages(images, rPath, MaxTextureSize, ForceAtlasSize);
+  GetAllImages(images, rPath, MaxTextureSize, ForceAtlasSize, AutoTrim);
   watch.AddIntermediate(_T("Got all images"));
   
   TEXTURE_PACKER::TexturePacker* packer = TEXTURE_PACKER::createTexturePacker();
