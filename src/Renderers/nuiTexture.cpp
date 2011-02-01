@@ -305,6 +305,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
 
 bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize, bool AutoTrim)
 {
+  //NGL_OUT(_T("nuiTexture::CreateAtlasFromPath(rPath = '%ls', MaxTextureSize = %d, ForceAtlasSize = %d, AutoTrim = '%ls')\n"), rPath.GetChars(), MaxTextureSize, ForceAtlasSize, YESNO(AutoTrim));
   MaxTextureSize *= NUI_SCALE_FACTOR;
   ForceAtlasSize *= NUI_SCALE_FACTOR;
   int32 offset = 0;
