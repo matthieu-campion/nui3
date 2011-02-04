@@ -1019,6 +1019,9 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
 {
   CheckValid();
+  
+  mMouseClickedEvents[rInfo.TouchId] = rInfo;
+  
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons |= rInfo.Buttons;
@@ -1140,6 +1143,11 @@ bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
   CheckValid();
 //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseUnclick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
+  // Update counterpart:
+  std::map<nglTouchId, nglMouseInfo>::iterator it = mMouseClickedEvents.find(rInfo.TouchId);
+  if (it != mMouseClickedEvents.end())
+    rInfo.Counterpart = &it->second;
+  
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons &= ~rInfo.Buttons;
@@ -1264,6 +1272,11 @@ bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 {
   CheckValid();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseMove X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
+
+  // Update counterpart:
+  std::map<nglTouchId, nglMouseInfo>::iterator it = mMouseClickedEvents.find(rInfo.TouchId);
+  if (it != mMouseClickedEvents.end())
+    rInfo.Counterpart = &it->second;
 
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;

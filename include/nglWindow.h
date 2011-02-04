@@ -47,6 +47,7 @@ public:
     TouchId = 0;
     
     SwipeInfo = eNoSwipe;
+    Counterpart = NULL;
   }
 
   nglMouseInfo(const nglMouseInfo& rInfo)
@@ -58,6 +59,8 @@ public:
     TouchId = rInfo.TouchId;
     
     SwipeInfo = rInfo.SwipeInfo;
+    EventTime = rInfo.EventTime;
+    Counterpart = rInfo.Counterpart;
   }
   
   enum Mode     ///< Select the metrics returned by mouse events (relative vs. absolute)
@@ -83,6 +86,9 @@ public:
   Flags Buttons;  ///< Buttons state
 
   nglTouchId    TouchId; ///< used to retrieve which finger acting
+  
+  nglTime EventTime; ///< Timestamp of the mouse info object (= time of the event if the mouse info comes from an event).
+  nglMouseInfo* Counterpart; ///< Contains the counter part of this mouse event or NULL if there is no counterpart. In a moved or unclicked event, the counterpart points to the nglMouseInfo that was in the clicked event.
 
   // Handle  specific touch screen events
   enum SwipeDirection
