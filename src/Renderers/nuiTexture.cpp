@@ -285,7 +285,8 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
             oh = pImage->GetHeight();
             nw = pTrimmed->GetWidth();
             nh = pTrimmed->GetHeight();
-            NGL_OUT(_T("Trim %ls\n\t\t%d x %d -> %d x %d (%d less)\n"), p.GetChars(), ow, oh, nw, nh, ow*oh - nw*nh);
+            float gain = (float)(ow*oh - nw*nh) / (float)(ow*oh);
+            NGL_OUT(_T("Trim %ls\n\t\t%d x %d -> %d x %d (%d pixels -> %2.2fpcf gained)\n"), p.GetChars(), ow, oh, nw, nh, ow*oh - nw*nh, 100.0 * gain);
           }
           
           delete pImage;
