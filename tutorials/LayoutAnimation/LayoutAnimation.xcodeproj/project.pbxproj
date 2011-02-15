@@ -75,6 +75,20 @@
 			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
+		E56C84F912FD9D2B00231540 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84;
+			remoteInfo = nuiPhone_arm7;
+		};
+		E56C84FB12FD9D2B00231540 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84;
+			remoteInfo = thirdparty_ios_arm7;
+		};
 		E5A630D411CA7CCD00446489 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
@@ -254,10 +268,12 @@
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
 				E5A630D511CA7CCD00446489 /* libnuiPhoneD.a */,
 				E52420EE11CBCEBC0025CA71 /* libnuiPhone.a */,
+				E56C84FA12FD9D2B00231540 /* libnuiPhone_arm7.a */,
 				E5EF6FB111E77DE0000FB337 /* libnui3CocoaD.a */,
 				E5D644FB120A01E0009C26A9 /* libnui3Cocoa.a */,
 				E5DD348412E0A30100F1EF4E /* libthirdparty.a */,
 				E5D4E8E612E4A9000001A86F /* libthirdparty_ios.a */,
+				E56C84FC12FD9D2B00231540 /* libthirdparty_ios_arm7.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -389,6 +405,20 @@
 			fileType = archive.ar;
 			path = libnuiPhone.a;
 			remoteRef = E52420ED11CBCEBC0025CA71 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E56C84FA12FD9D2B00231540 /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = E56C84F912FD9D2B00231540 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E56C84FC12FD9D2B00231540 /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = E56C84FB12FD9D2B00231540 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E5A630D511CA7CCD00446489 /* libnuiPhoneD.a */ = {
@@ -612,6 +642,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = LayoutAnimationD;

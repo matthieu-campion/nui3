@@ -126,17 +126,19 @@ void nuiImage::SetTexturePath(const nglPath& rTexturePath)
 {
   mTexturePath = rTexturePath;
   
-  mpTexture = nuiTexture::GetTexture(mTexturePath, NULL);
+  SetTexture(nuiTexture::GetTexture(mTexturePath, NULL));
   mUseAlpha = true;
   //SetFixedAspectRatio(true);
-  mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), mTexturePath.GetPathName());
-  ResetTextureRect();
-  Invalidate();
 }
 
 void nuiImage::SetTexture(nuiTexture* pTex)
 {  
+  if (pTex)
+    pTex->Acquire();
+  if (mpTexture)
+    mpTexture->Release();
+
   mpTexture = pTex;
   mUseAlpha = true;
   //SetFixedAspectRatio(true);
