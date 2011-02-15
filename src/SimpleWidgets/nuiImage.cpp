@@ -125,8 +125,10 @@ const nglPath& nuiImage::GetTexturePath()
 void nuiImage::SetTexturePath(const nglPath& rTexturePath)
 {
   mTexturePath = rTexturePath;
-  
-  SetTexture(nuiTexture::GetTexture(mTexturePath, NULL));
+
+  nuiTexture* pTexture = nuiTexture::GetTexture(mTexturePath, NULL);
+  SetTexture(pTexture);
+  pTexture->Release();
   mUseAlpha = true;
   //SetFixedAspectRatio(true);
   SetProperty(_T("Source"), mTexturePath.GetPathName());
