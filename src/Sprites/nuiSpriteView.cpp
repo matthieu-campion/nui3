@@ -143,7 +143,7 @@ const nuiSpriteFrame* nuiSpriteAnimation::GetFrame(int32 index) const
 
 void nuiSpriteAnimation::SetDuration(float seconds)
 {
-  mFPS = seconds / (float)GetFrameCount();
+  mFPS = (float)GetFrameCount() / seconds;
 }
 
 void nuiSpriteAnimation::SetFPS(float FPS)
