@@ -638,6 +638,8 @@ public:
     nuiRect Rect;
     bool Rotated = false;
     bool AutoTrim = false;
+    int32 MaxTextureSize = 128;
+    int32 AtlasSize = 1024;
     
     while (mChar != _T('}'))
     {
@@ -711,9 +713,17 @@ public:
       {
         AutoTrim = nuiGetBool(value, false);
       }
+      else if (symbol == _T("MaxTextureSize"))
+      {
+        MaxTextureSize = value.GetCInt();
+      }
+      else if (symbol == _T("Size"))
+      {
+        AtlasSize = value.GetCInt();
+      }
       else if (symbol == _T("AutoScan"))
       {
-        nuiTexture::CreateAtlasFromPath(value, 256, 1024, AutoTrim);
+        nuiTexture::CreateAtlasFromPath(value, MaxTextureSize, AtlasSize, AutoTrim);
       }
     }
 
