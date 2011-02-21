@@ -240,7 +240,7 @@ set(SOURCES
   src/Decorations/nuiMetaDecoration.cpp
   src/Decorations/nuiStateDecoration.cpp
   src/Decorations/nuiTreeHandleDecoration.cpp
-
+  src/Decorations/nuiNavigationViewDecoration.cpp
 
   src/String/ConvertUTF.cpp
   src/String/nglString.cpp
@@ -327,6 +327,8 @@ set(SOURCES
   src/Utils/nuiParser.cpp
   src/Utils/nuiRSS.cpp
   src/Utils/nuiStopWatch.cpp
+  src/Utils/TextureAtlas.cpp
+
 
   src/Threading/nglLightLock.cpp
   src/Threading/nglLock.cpp
