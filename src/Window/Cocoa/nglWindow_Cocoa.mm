@@ -318,6 +318,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   }
 
   [self setTitle:@"Testing Simple Cocoa Application"];
+  [self setAcceptsMouseMovedEvents:TRUE];
   
   NSRect glrect = {0};
   glrect.size.width = 320;
