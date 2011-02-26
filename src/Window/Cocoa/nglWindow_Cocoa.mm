@@ -402,7 +402,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseClick(info);
 }
 
@@ -413,7 +413,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseUnclick(info);
 }
 
@@ -424,7 +424,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseMove(info);
 }
 
@@ -435,7 +435,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseMove(info);
 }
 
@@ -447,7 +447,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseClick(info);
 }
 
@@ -458,7 +458,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseUnclick(info);
 }
 
@@ -469,7 +469,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseMove(info);
 }
 
@@ -483,7 +483,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
 
   if (x > 0)
   {
@@ -520,7 +520,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseClick(info);
 }
 
@@ -531,7 +531,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseUnclick(info);
 }
 
@@ -542,7 +542,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   info.TouchId = 0;
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
-  info.Y = [self frame].size.height - p.y;
+  info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
   mpNGLWindow->CallOnMouseMove(info);
 }
 

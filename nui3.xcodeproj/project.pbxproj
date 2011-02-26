@@ -3898,6 +3898,12 @@
 		E57BC75A0C63EA070026DE07 /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
 		E57BC75C0C63EA1A0026DE07 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
 		E57BC75D0C63EA1A0026DE07 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
+		E57D21481318B327007B3B7A /* libthirdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD341012E09CA800F1EF4E /* libthirdparty.a */; };
+		E57D214B1318B35A007B3B7A /* nuiNavigationViewDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC19B5CE12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp */; };
+		E57D214C1318B35B007B3B7A /* nuiNavigationViewDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = BC19B5D312AFC0FE002DA665 /* nuiNavigationViewDecoration.h */; };
+		E57D214D1318B35E007B3B7A /* nuiNavigationViewDecoration.h in Headers */ = {isa = PBXBuildFile; fileRef = BC19B5D312AFC0FE002DA665 /* nuiNavigationViewDecoration.h */; };
+		E57D214E1318B35F007B3B7A /* nuiNavigationViewDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC19B5CE12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp */; };
+		E57D215F1318B45F007B3B7A /* libthirdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD341012E09CA800F1EF4E /* libthirdparty.a */; };
 		E57DDB5F11ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */; };
 		E57DDB6011ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E57DDB6111ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */; };
@@ -7161,6 +7167,20 @@
 			remoteGlobalIDString = 73F097E812E9D09E00656E84;
 			remoteInfo = thirdparty_ios_arm7;
 		};
+		E57D21461318B31E007B3B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
+			remoteInfo = thirdparty;
+		};
+		E57D215D1318B458007B3B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
+			remoteInfo = thirdparty;
+		};
 		E5DD343D12E09FB900F1EF4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
@@ -8931,6 +8951,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57D21481318B327007B3B7A /* libthirdparty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8938,6 +8959,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57D215F1318B45F007B3B7A /* libthirdparty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14498,6 +14520,7 @@
 				401705A012E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705D012E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3312F3317500F435D9 /* TextureAtlas.h in Headers */,
+				E57D214C1318B35B007B3B7A /* nuiNavigationViewDecoration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14882,6 +14905,7 @@
 				4017059C12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CC12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3B12F3317500F435D9 /* TextureAtlas.h in Headers */,
+				E57D214D1318B35E007B3B7A /* nuiNavigationViewDecoration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15899,6 +15923,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E57D21471318B31E007B3B7A /* PBXTargetDependency */,
 			);
 			name = nui3CocoaD;
 			productName = nui3D;
@@ -15916,6 +15941,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E57D215E1318B458007B3B7A /* PBXTargetDependency */,
 			);
 			name = nui3Cocoa;
 			productName = nui3D;
@@ -18318,6 +18344,7 @@
 				401705A112E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705D112E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3412F3317500F435D9 /* TextureAtlas.cpp in Sources */,
+				E57D214B1318B35A007B3B7A /* nuiNavigationViewDecoration.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18662,6 +18689,7 @@
 				4017059D12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705CD12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3C12F3317500F435D9 /* TextureAtlas.cpp in Sources */,
+				E57D214E1318B35F007B3B7A /* nuiNavigationViewDecoration.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19217,6 +19245,16 @@
 			isa = PBXTargetDependency;
 			target = 73F097E812E9D09E00656E84 /* thirdparty_ios_arm7 */;
 			targetProxy = 73F09ACA12E9D0B200656E84 /* PBXContainerItemProxy */;
+		};
+		E57D21471318B31E007B3B7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
+			targetProxy = E57D21461318B31E007B3B7A /* PBXContainerItemProxy */;
+		};
+		E57D215E1318B458007B3B7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
+			targetProxy = E57D215D1318B458007B3B7A /* PBXContainerItemProxy */;
 		};
 		E5DD343E12E09FB900F1EF4E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
