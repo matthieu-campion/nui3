@@ -16,7 +16,7 @@
 
 @end//nglNSApplication
 
-@interface nglNSApplicationDelegate : NSObject
+@interface nglNSApplicationDelegate : NSObject<NSApplicationDelegate>
 {
 }
 
