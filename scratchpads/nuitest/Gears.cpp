@@ -15,7 +15,6 @@
  */
 
 #include "nui.h"
-#include "ngl.h"
 #include <math.h>
 #include <stdlib.h>
 #include "Gears.h"
