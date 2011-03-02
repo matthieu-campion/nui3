@@ -1027,12 +1027,12 @@ void nglWindow::ExitModalState()
 
 void nglWindow::StartTextInput(int32 X, int32 Y, int32 W, int32 H)
 {
-  [(nglNSWindow*)mpNSWindow showKeyboard];
+  //[(nglNSWindow*)mpNSWindow showKeyboard];
 }
 
 void nglWindow::EndTextInput()
 {
-  [(nglNSWindow*)mpNSWindow hideKeyboard];
+  //[(nglNSWindow*)mpNSWindow hideKeyboard];
 }
 
 bool nglWindow::IsEnteringText() const
