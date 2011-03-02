@@ -164,7 +164,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 
 //#define _DEBUG_WINDOW_
 
-@interface customGLView : NSView
+@interface customGLView : NSView<NSWindowDelegate>
 {
 	NSOpenGLContext *oglContext;
 }
