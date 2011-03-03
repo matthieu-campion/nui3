@@ -695,6 +695,14 @@ bool nglWindow::IsKeyDown (nglKeyCode Key) const
     return false;
 }
 
+static nglString composing;
+OSStatus GetScriptLang(EventRef inEvent, ScriptLanguageRecord& outSlr)
+{
+  OSStatus err = ::GetEventParameter(inEvent, kEventParamTextInputSendSLRec, typeIntlWritingCode, NULL, 
+                                     sizeof(outSlr), NULL, &outSlr);
+  return err;
+}
+
 static OSStatus GetText(EventRef inEvent, nglString& outString)
 {
   UInt32 neededSize;
@@ -898,6 +906,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //char* pStr = str.Export(eUTF8);
               //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
               //delete[] pStr;
+              composing += str;
               if (CallOnTextInput(str))
                 result = noErr;
             }
@@ -930,6 +939,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //char* pStr = str.Export(eUTF8);
               //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
               //delete[] pStr;
+              composing += str;
               if (CallOnTextInput(str))
                 result = noErr;
             }
@@ -964,6 +974,45 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               printf("kEventTextInputUpdateActiveInputArea\n");
               nglString outString;
               GetText(eventRef, outString);
+              
+              uint32 fixLength;
+              OSStatus err = ::GetEventParameter(eventRef, kEventParamTextInputSendFixLen, typeLongInteger, NULL, sizeof(fixLength), NULL, &fixLength);
+              if (noErr != err)
+                return eventParameterNotFoundErr;
+              
+              ScriptLanguageRecord slr;
+              err = GetScriptLang(eventRef, slr);
+              if (noErr != err)
+                return eventParameterNotFoundErr;
+              
+              nglString text;
+              err = GetText(eventRef, text);
+              if (noErr != err)
+                return eventParameterNotFoundErr;
+              
+              // kEventParamTextInputSendHiliteRng is optional parameter, don't return if we cannot get it.
+              
+              TextRangeArray* hiliteRng = NULL;                        
+              ByteCount rngSize=0;   
+              err = ::GetEventParameter(eventRef, kEventParamTextInputSendHiliteRng, typeTextRangeArray, NULL, 0, NULL, &rngSize);
+              if (noErr == err)  
+              {
+                TextRangeArray* pt = (TextRangeArray*)::malloc(rngSize);
+                NGL_ASSERT(pt); 
+                if (pt)
+                { 
+                  hiliteRng = pt;
+                  err = ::GetEventParameter(eventRef, kEventParamTextInputSendHiliteRng, typeTextRangeArray, NULL, rngSize, &rngSize, hiliteRng);
+                  NGL_ASSERT(noErr == err);
+                }                          
+              }                     
+              // printf("call HandleUpdateActiveInputArea textlength = %d ",text.Length());
+              // printf("script=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / 2);
+              //err = aBrowserShell->HandleUpdateActiveInputArea(text, slr.fScript, slr.fLanguage, fixLength / sizeof(PRUnichar), hiliteRng);
+              if (hiliteRng)
+                ::free(hiliteRng);
+              return err;
+              
             }
             break;
             
@@ -978,8 +1027,10 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           case kEventTextInputGetSelectedText:
             {
               printf("kEventTextInputGetSelectedText\n");
-              nglString outString;
-              GetText(eventRef, outString);
+              printf("\t\tcomposing '%ls'\n", composing.GetChars());
+              UniChar* pBuf = (UniChar*)composing.Export(eUCS2);
+              result = ::SetEventParameter(eventRef, kEventParamTextInputReplyText, typeUnicodeText, composing.GetLength() * sizeof(UniChar), pBuf);
+              free(pBuf);
             }
             break;
             

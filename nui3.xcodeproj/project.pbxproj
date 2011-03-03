@@ -11220,17 +11220,17 @@
 		E5816E1C0C3CECAB00902DFE /* Window */ = {
 			isa = PBXGroup;
 			children = (
-				E524181111CB87D90025CA71 /* iOS */,
-				E52EA7ED106D6DA8008598F5 /* Cocoa */,
-				E5816C910C3CECAB00902DFE /* nglInputDevice.h */,
-				E5816C7A0C3CECAB00902DFE /* ngl_glext.h */,
 				E5816E1D0C3CECAB00902DFE /* Carbon */,
+				E52EA7ED106D6DA8008598F5 /* Cocoa */,
 				E5816E230C3CECAB00902DFE /* glext */,
+				E524181111CB87D90025CA71 /* iOS */,
+				E5816C7A0C3CECAB00902DFE /* ngl_glext.h */,
 				E5816E280C3CECAB00902DFE /* nglContext.cpp */,
 				E5816C7F0C3CECAB00902DFE /* nglContext.h */,
 				E5816E290C3CECAB00902DFE /* nglDeviceInfo.cpp */,
 				E5816C830C3CECAB00902DFE /* nglDeviceInfo.h */,
 				E5816E2A0C3CECAB00902DFE /* nglInputDevice.cpp */,
+				E5816C910C3CECAB00902DFE /* nglInputDevice.h */,
 				E5816E2B0C3CECAB00902DFE /* nglInputDeviceInstance.cpp */,
 				E5816E2C0C3CECAB00902DFE /* nglInputDeviceInstance.h */,
 				E5816E2D0C3CECAB00902DFE /* nglKeyboard.cpp */,
@@ -11239,10 +11239,10 @@
 				E5816CA90C3CECAB00902DFE /* nglVideoMode.h */,
 				E5816E300C3CECAB00902DFE /* nglWindow.cpp */,
 				E5816CAA0C3CECAB00902DFE /* nglWindow.h */,
+				E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */,
+				E5D9FEE81082B350008D0F11 /* nuiGLUTBridge.h */,
 				BC77BAE70DF94C2500E0EC0D /* nuiMainMenu.cpp */,
 				BC77BAEE0DF9574500E0EC0D /* nuiMainMenu.h */,
-				E5D9FEE81082B350008D0F11 /* nuiGLUTBridge.h */,
-				E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */,
 			);
 			path = Window;
 			sourceTree = "<group>";
