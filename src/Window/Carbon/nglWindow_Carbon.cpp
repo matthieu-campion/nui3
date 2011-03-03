@@ -58,7 +58,7 @@ NULL
  #define EVENTTYPE kEventWindowDrawContent
  */
 
-TSMDocumentID nuiTSMDocument;
+TSMDocumentID nuiTSMDocument = NULL;
 
 /*
  * OS specific info
@@ -695,6 +695,30 @@ bool nglWindow::IsKeyDown (nglKeyCode Key) const
     return false;
 }
 
+static OSStatus GetText(EventRef inEvent, nglString& outString)
+{
+  UInt32 neededSize;
+  outString.Nullify();
+  OSStatus err = ::GetEventParameter(inEvent, kEventParamTextInputSendText, typeUnicodeText, NULL, 0, &neededSize, NULL);
+  if (noErr != err)
+    return err;
+  
+  if (neededSize > 0) 
+  {
+    std::vector<UniChar> buf;
+    buf.resize(neededSize);
+    
+    err = ::GetEventParameter(inEvent, kEventParamTextInputSendText, typeUnicodeText, NULL, 
+                              neededSize, &neededSize, &buf[0]);
+    
+    if (noErr == err) 
+      outString.Import((const char*)&buf[0], neededSize * sizeof(UniChar), eUCS2);
+    
+    NGL_OUT(_T("  Unicode text: %ls\n"), outString.GetChars());
+  }
+  return err;
+}
+
 
 OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandlerCallRef, EventRef eventRef, void* userData)
 {
@@ -710,261 +734,281 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
   switch (eventClass)
   {
     case kEventClassKeyboard:
-    {
-      uint16 unicodetext;
-      uint16 rawunicodetext = 0;
-      uint32 keycode;
-      if (eventKind != kEventRawKeyModifiersChanged)
       {
-        OSStatus err = GetEventParameter (eventRef, kEventParamKeyCode, typeUInt32, NULL, sizeof(keycode), NULL, &keycode);
-        if (err != noErr)
-          return eventNotHandledErr;
-        err = GetEventParameter (eventRef, kEventParamKeyUnicodes, typeUnicodeText, NULL, sizeof(unicodetext), NULL, &unicodetext);
-        rawunicodetext = unicodetext;
-#if 1
-        // Try to get the Raw Key Code (that is the unicode string for the pressed key without dead keys and modifiers:
-        KeyboardLayoutRef layoutRef;
-        UCKeyboardLayout* uchrKeyLayout;
-        UInt32 deadKeyState;
-        const int kMaxUnicodeInputStringLength = 32;
-        UniChar unicodeInputString[kMaxUnicodeInputStringLength];
-        OSStatus status; 
-        
-        // initialization
-        KLGetCurrentKeyboardLayout(&layoutRef);
-        status = KLGetKeyboardLayoutProperty(layoutRef, kKLuchrData, (const void **)(&uchrKeyLayout));
-        
-        
-        // if there is a 'uchr' for the current keyboard layout, 
-        // use it
-        if (uchrKeyLayout != NULL)
+        uint16 unicodetext;
+        uint16 rawunicodetext = 0;
+        uint32 keycode;
+        if (eventKind != kEventRawKeyModifiersChanged)
         {
-          UInt32 keyboardType;
-          UInt32 modifierKeyState;
-          UInt16 virtualKeyCode;
-          UInt16 keyAction;
-          UniCharCount actualStringLength;
+          OSStatus err = GetEventParameter (eventRef, kEventParamKeyCode, typeUInt32, NULL, sizeof(keycode), NULL, &keycode);
+          if (err != noErr)
+            return eventNotHandledErr;
+          err = GetEventParameter (eventRef, kEventParamKeyUnicodes, typeUnicodeText, NULL, sizeof(unicodetext), NULL, &unicodetext);
+          rawunicodetext = unicodetext;
+  #if 1
+          // Try to get the Raw Key Code (that is the unicode string for the pressed key without dead keys and modifiers:
+          KeyboardLayoutRef layoutRef;
+          UCKeyboardLayout* uchrKeyLayout;
+          UInt32 deadKeyState;
+          const int kMaxUnicodeInputStringLength = 32;
+          UniChar unicodeInputString[kMaxUnicodeInputStringLength];
+          OSStatus status; 
           
-          virtualKeyCode = keycode;
-          keyAction = keyDown;
-          modifierKeyState = 0;
-          keyboardType = LMGetKbdType();
-          status = UCKeyTranslate(uchrKeyLayout, 
-                                  virtualKeyCode, keyAction,
-                                  modifierKeyState, keyboardType, 0,
-                                  &deadKeyState,
-                                  kMaxUnicodeInputStringLength,
-                                  &actualStringLength, unicodeInputString);
-          // now do something with status and unicodeInputString
-          if (status == noErr)
+          // initialization
+          KLGetCurrentKeyboardLayout(&layoutRef);
+          status = KLGetKeyboardLayoutProperty(layoutRef, kKLuchrData, (const void **)(&uchrKeyLayout));
+          
+          
+          // if there is a 'uchr' for the current keyboard layout, 
+          // use it
+          if (uchrKeyLayout != NULL)
           {
-            rawunicodetext = unicodeInputString[0];
-            //printf("Raw unicode key : 0x%x (%c)\n", rawunicodetext, (char)rawunicodetext);
+            UInt32 keyboardType;
+            UInt32 modifierKeyState;
+            UInt16 virtualKeyCode;
+            UInt16 keyAction;
+            UniCharCount actualStringLength;
+            
+            virtualKeyCode = keycode;
+            keyAction = keyDown;
+            modifierKeyState = 0;
+            keyboardType = LMGetKbdType();
+            status = UCKeyTranslate(uchrKeyLayout, 
+                                    virtualKeyCode, keyAction,
+                                    modifierKeyState, keyboardType, 0,
+                                    &deadKeyState,
+                                    kMaxUnicodeInputStringLength,
+                                    &actualStringLength, unicodeInputString);
+            // now do something with status and unicodeInputString
+            if (status == noErr)
+            {
+              rawunicodetext = unicodeInputString[0];
+              //printf("Raw unicode key : 0x%x (%c)\n", rawunicodetext, (char)rawunicodetext);
+            }
           }
-        }
-        else
-        {
-          // no 'uchr' resource, do something with 'KCHR'?
-          // add your code here
-          Ptr kchrKeyLayout;
-          status = KLGetKeyboardLayoutProperty(layoutRef, kKLKCHRData, (const void **)(&kchrKeyLayout));
-          if (kchrKeyLayout)
+          else
           {
-            UInt32 state = 0;
-            rawunicodetext = KeyTranslate(kchrKeyLayout, keycode, &state);
+            // no 'uchr' resource, do something with 'KCHR'?
+            // add your code here
+            Ptr kchrKeyLayout;
+            status = KLGetKeyboardLayoutProperty(layoutRef, kKLKCHRData, (const void **)(&kchrKeyLayout));
+            if (kchrKeyLayout)
+            {
+              UInt32 state = 0;
+              rawunicodetext = KeyTranslate(kchrKeyLayout, keycode, &state);
+            }
           }
+  #endif        
+          
+          if (err != noErr)
+            return eventNotHandledErr;
         }
-#endif        
         
-        if (err != noErr)
-          return eventNotHandledErr;
+        switch (eventKind)
+        {
+          case kEventRawKeyModifiersChanged:
+            {
+              UInt32 modKeys;
+              UInt32 upKeys;
+              UInt32 dnKeys;
+              GetEventParameter(eventRef, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(typeUInt32), NULL, &modKeys);
+              upKeys = ~modKeys & mModifiers;
+              dnKeys = modKeys & ~mModifiers;
+              mModifiers = modKeys;
+              
+              bool res = false;
+              if (upKeys & shiftKey)
+                res |= CallOnKeyUp(nglKeyEvent(NK_LSHIFT, 0, 0));
+              if (upKeys & controlKey)
+                res |= CallOnKeyUp(nglKeyEvent(NK_LCTRL, 0, 0));
+              if (upKeys & optionKey)
+                res |= CallOnKeyUp(nglKeyEvent(NK_LALT, 0, 0));
+              
+              if (dnKeys & shiftKey)
+                res |= CallOnKeyDown(nglKeyEvent(NK_LSHIFT, 0, 0));
+              if (dnKeys & controlKey)
+                result |= CallOnKeyDown(nglKeyEvent(NK_LCTRL, 0, 0));
+              if (dnKeys & optionKey)
+                res |= CallOnKeyDown(nglKeyEvent(NK_LALT, 0, 0));
+              
+              //NGL_OUT("ModifiersChanged %ls\n", YESNO(res));
+              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;          
+            }
+            break;
+
+          case kEventRawKeyDown:
+            {      
+              //NGL_OUT("%2.2d\"%c\"\n", keycode, (char)unicodetext, unicodetext);
+              bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext,rawunicodetext));
+              //NGL_OUT("KeyDown %ls\n", YESNO(res));
+              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
+            }
+            break;
+            
+          case kEventRawKeyUp:
+            {
+              //NGL_OUT("KeyUp 0x%x ['%c' (0x%x)]\n", keycode, (char)unicodetext, unicodetext);
+              bool res = CallOnKeyUp(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
+              //NGL_OUT("KeyUp %ls\n", YESNO(res));
+              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
+            }
+            break;
+
+          case kEventRawKeyRepeat:
+            {
+              //NGL_OUT("KeyRepeat\n");
+              bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
+              //NGL_OUT("KeyRepeat %ls\n", YESNO(res));
+              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
+            }
+            break;
+        }
       }
-      
-      switch (eventKind)
-      {
-        case kEventRawKeyModifiersChanged:
-        {
-          UInt32 modKeys;
-          UInt32 upKeys;
-          UInt32 dnKeys;
-          GetEventParameter(eventRef, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(typeUInt32), NULL, &modKeys);
-          upKeys = ~modKeys & mModifiers;
-          dnKeys = modKeys & ~mModifiers;
-          mModifiers = modKeys;
-          
-          bool res = false;
-          if (upKeys & shiftKey)
-            res |= CallOnKeyUp(nglKeyEvent(NK_LSHIFT, 0, 0));
-          if (upKeys & controlKey)
-            res |= CallOnKeyUp(nglKeyEvent(NK_LCTRL, 0, 0));
-          if (upKeys & optionKey)
-            res |= CallOnKeyUp(nglKeyEvent(NK_LALT, 0, 0));
-          
-          if (dnKeys & shiftKey)
-            res |= CallOnKeyDown(nglKeyEvent(NK_LSHIFT, 0, 0));
-          if (dnKeys & controlKey)
-            result |= CallOnKeyDown(nglKeyEvent(NK_LCTRL, 0, 0));
-          if (dnKeys & optionKey)
-            res |= CallOnKeyDown(nglKeyEvent(NK_LALT, 0, 0));
-          
-          //NGL_OUT("ModifiersChanged %ls\n", YESNO(res));
-          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;          
-        }
-          break;
-        case kEventRawKeyDown:
-        {      
-          //NGL_OUT("%2.2d\"%c\"\n", keycode, (char)unicodetext, unicodetext);
-          bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext,rawunicodetext));
-          //NGL_OUT("KeyDown %ls\n", YESNO(res));
-          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
-        }
-          break;
-          
-        case kEventRawKeyUp:
-        {
-          //NGL_OUT("KeyUp 0x%x ['%c' (0x%x)]\n", keycode, (char)unicodetext, unicodetext);
-          bool res = CallOnKeyUp(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
-          //NGL_OUT("KeyUp %ls\n", YESNO(res));
-          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
-        }
-          break;
-        case kEventRawKeyRepeat:
-        {
-          //NGL_OUT("KeyRepeat\n");
-          bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
-          //NGL_OUT("KeyRepeat %ls\n", YESNO(res));
-          result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
-        }
-          break;
-      }
-    }
       break;
+
     case kEventClassTextInput:
-    {
-      switch (eventKind)
       {
-        case kEventTextInputUnicodeText:
-          {
-            printf("kEventTextInputUnicodeText\n");
-            UInt32 size = 0;
-            OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
-            //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+        switch (eventKind)
+        {
+          case kEventTextInputUnicodeText:
+            {
+              printf("kEventTextInputUnicodeText\n");
+              nglString outString;
+              GetText(eventRef, outString);
+              UInt32 size = 0;
+              OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
+              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+              
+              uint16 unicodetext[size + 1];
+              memset(unicodetext, 0, sizeof(uint16) * (size + 1));
+              err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
+              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
+              //for (uint i = 0; i < size; i++)
+              //{
+              //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
+              //}
+              if (err != noErr)
+                return eventNotHandledErr;
+              
+              nglChar ucs4[size+1];
+              memset(ucs4, 0, sizeof(nglChar) * (size + 1));
+              for (uint i = 0; i < size; i++)
+                ucs4[i] = unicodetext[i];
+              nglString str(ucs4);
+              //char* pStr = str.Export(eUTF8);
+              //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
+              //delete[] pStr;
+              if (CallOnTextInput(str))
+                result = noErr;
+            }
+            break;
+          case kEventTextInputUnicodeForKeyEvent:
+            {
+              printf("kEventTextInputUnicodeForKeyEvent\n");
+              nglString outString;
+              GetText(eventRef, outString);
+              UInt32 size = 0;
+              OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
+              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+              
+              uint16 unicodetext[size + 1];
+              memset(unicodetext, 0, sizeof(uint16) * (size + 1));
+              err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
+              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
+              //for (uint i = 0; i < size; i++)
+              //{
+              //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
+              //}
+              if (err != noErr)
+                return eventNotHandledErr;
+              
+              nglChar ucs4[size+1];
+              memset(ucs4, 0, sizeof(nglChar) * (size + 1));
+              for (uint i = 0; i < size; i++)
+                ucs4[i] = unicodetext[i];
+              nglString str(ucs4);
+              //char* pStr = str.Export(eUTF8);
+              //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
+              //delete[] pStr;
+              if (CallOnTextInput(str))
+                result = noErr;
+            }
+            break;
             
-            uint16 unicodetext[size + 1];
-            memset(unicodetext, 0, sizeof(uint16) * (size + 1));
-            err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
-            //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
-            //for (uint i = 0; i < size; i++)
-            //{
-            //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
-            //}
-            if (err != noErr)
-              return eventNotHandledErr;
+          case kEventTextInputShowHideBottomWindow:
+            {
+              Boolean r = false;
+              OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendShowHide, typeBoolean, NULL, sizeof(r), NULL, &r);
+              printf("kEventTextInputShowHideBottomWindow\n");
+              nglString outString;
+              GetText(eventRef, outString);
+              if (r)
+                printf("kEventTextInputShowHideBottomWindow Activated Input window\n");
+              else
+                printf("kEventTextInputShowHideBottomWindow Disabled Input window\n");
+              result = eventNotHandledErr;  
+            }
+            break;
             
-            nglChar ucs4[size+1];
-            memset(ucs4, 0, sizeof(nglChar) * (size + 1));
-            for (uint i = 0; i < size; i++)
-              ucs4[i] = unicodetext[i];
-            nglString str(ucs4);
-            //char* pStr = str.Export(eUTF8);
-            //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
-            //delete[] pStr;
-            if (CallOnTextInput(str))
-              result = noErr;
-          }
-          break;
-        case kEventTextInputUnicodeForKeyEvent:
-          {
-            printf("kEventTextInputUnicodeForKeyEvent\n");
-            UInt32 size = 0;
-            OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
-            //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+          case kEventTextInputFilterText:
+            {
+              printf("kEventTextInputFilterText\n");
+              nglString outString;
+              GetText(eventRef, outString);
+            }
+            break;
             
-            uint16 unicodetext[size + 1];
-            memset(unicodetext, 0, sizeof(uint16) * (size + 1));
-            err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
-            //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
-            //for (uint i = 0; i < size; i++)
-            //{
-            //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
-            //}
-            if (err != noErr)
-              return eventNotHandledErr;
             
-            nglChar ucs4[size+1];
-            memset(ucs4, 0, sizeof(nglChar) * (size + 1));
-            for (uint i = 0; i < size; i++)
-              ucs4[i] = unicodetext[i];
-            nglString str(ucs4);
-            //char* pStr = str.Export(eUTF8);
-            //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
-            //delete[] pStr;
-            if (CallOnTextInput(str))
-              result = noErr;
-          }
-          break;
-          
-        case kEventTextInputShowHideBottomWindow:
-          {
-            Boolean r = false;
-            OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendShowHide, typeBoolean, NULL, sizeof(r), NULL, &r);
-            printf("kEventTextInputShowHideBottomWindow\n");
-            if (r)
-              printf("kEventTextInputShowHideBottomWindow Activated Input window\n");
-            else
-              printf("kEventTextInputShowHideBottomWindow Disabled Input window\n");
-            result = eventNotHandledErr;  
-          }
-          break;
-          
-        case kEventTextInputFilterText:
-          {
-            printf("kEventTextInputFilterText\n");
-          }
-          break;
-          
-          
-        case kEventTextInputUpdateActiveInputArea:
-          {
-            printf("kEventTextInputUpdateActiveInputArea\n");
-          }
-          break;
-          
-        case kEventTextInputPosToOffset:
-          {
-            printf("kEventTextInputPosToOffset\n");
-          }
-          break;
-          
-        case kEventTextInputGetSelectedText:
-          {
-            printf("kEventTextInputGetSelectedText\n");
-          }
-          break;
-          
-        case kEventTextInputOffsetToPos:
-          {
-            printf("kEventTextInputOffsetToPos\n");
-            long byte_offset;
-            Point p;
+          case kEventTextInputUpdateActiveInputArea:
+            {
+              printf("kEventTextInputUpdateActiveInputArea\n");
+              nglString outString;
+              GetText(eventRef, outString);
+            }
+            break;
             
-            OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendTextOffset, typeLongInteger, NULL, sizeof (long), NULL, &byte_offset);
-            if (err != noErr)
-              break;
+          case kEventTextInputPosToOffset:
+            {
+              printf("kEventTextInputPosToOffset\n");
+              nglString outString;
+              GetText(eventRef, outString);
+            }
+            break;
             
-            p.h = 50;
-            p.v = 100;
+          case kEventTextInputGetSelectedText:
+            {
+              printf("kEventTextInputGetSelectedText\n");
+              nglString outString;
+              GetText(eventRef, outString);
+            }
+            break;
             
-            //              SetEventParameter (event, kEventParamTextInputReplyPointSize, typeFixed, sizeof (Fixed), &point_size);
-            //              SetEventParameter (event, kEventParamTextInputReplyLineHeight, typeShortInteger, sizeof (short), &height);
-            //              SetEventParameter (event, kEventParamTextInputReplyLineAscent, typeShortInteger, sizeof (short), &ascent);
-            err = SetEventParameter (eventRef, kEventParamTextInputReplyPoint, typeQDPoint, sizeof (Point), &p);
-            if (err == noErr)
-              result = noErr;
-          }
-          break;
+          case kEventTextInputOffsetToPos:
+            {
+              printf("kEventTextInputOffsetToPos\n");
+              nglString outString;
+              GetText(eventRef, outString);
+
+              long byte_offset;
+              Point p;
+              
+              OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendTextOffset, typeLongInteger, NULL, sizeof (long), NULL, &byte_offset);
+              if (err != noErr)
+                break;
+              
+              p.h = 50;
+              p.v = 100;
+              
+              //              SetEventParameter (event, kEventParamTextInputReplyPointSize, typeFixed, sizeof (Fixed), &point_size);
+              //              SetEventParameter (event, kEventParamTextInputReplyLineHeight, typeShortInteger, sizeof (short), &height);
+              //              SetEventParameter (event, kEventParamTextInputReplyLineAscent, typeShortInteger, sizeof (short), &ascent);
+              err = SetEventParameter (eventRef, kEventParamTextInputReplyPoint, typeQDPoint, sizeof (Point), &p);
+              if (err == noErr)
+                result = noErr;
+            }
+            break;
+        }
       }
-    }
       break;
   }
   
@@ -1174,11 +1218,11 @@ OSStatus nglWindow::WindowEventHandler (EventHandlerCallRef eventHandlerCallRef,
         case kEventWindowActivated:
           {
             ActivateTSMDocument(nuiTSMDocument);
-            UseInputWindow(nuiTSMDocument, TRUE);
-            RgnHandle rgn = NewRgn();
-            SetRectRgn(rgn, 20, 20, 100, 30);
-            TSMSetInlineInputRegion(nuiTSMDocument, mWindow, rgn);
-            DisposeRgn(rgn);
+            UseInputWindow(nuiTSMDocument, FALSE);
+//            RgnHandle rgn = NewRgn();
+//            SetRectRgn(rgn, 20, 20, 100, 30);
+//            TSMSetInlineInputRegion(nuiTSMDocument, mWindow, rgn);
+//            DisposeRgn(rgn);
             SetUserFocusWindow(mWindow);
             CallOnActivation();
             if (mIsFakeChildWindow)
@@ -1435,7 +1479,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     {
       InterfaceTypeList supportedServices =
       {
-        kUnicodeDocumentInterfaceType
+        kUnicodeDocument
       };
       NewTSMDocument(1, supportedServices, &nuiTSMDocument, 0);
       // We don't support inline input yet, use input window by default
