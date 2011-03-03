@@ -126,8 +126,6 @@ void nuiWindow::InitProperties()
 
   AddAnimation(_T("TRASH"), pAnim);
 
-  mNuiWindowSink.Connect(pAnim->AnimStop, &nuiWindow::AutoTrash);
-
   SetPosition(nuiNoPosition); // User rect by default
   
   NUI_ADD_EVENT(CloseButtonPressed);

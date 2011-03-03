@@ -2144,10 +2144,8 @@ void nuiEditText::TextBlock::Layout()
       (mEnd < mrString.GetLength())
     )
   {
-    if (GetLength() > 1)
-      mIdealRect.SetSize(mIdealRect.GetWidth(), mIdealRect.GetHeight() - fontinfo.Ascender);
-    else if (mEnd < mrString.GetLength())
-      mIdealRect.SetSize(mIdealRect.GetWidth(), mIdealRect.GetHeight() + fontinfo.Ascender);
+    if (GetLength() == 1)
+      mIdealRect.SetSize(mIdealRect.GetWidth(), mIdealRect.GetHeight() + fontinfo.Height);
   }
   mLayoutOK = true;
 }
