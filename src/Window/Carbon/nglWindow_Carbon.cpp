@@ -698,8 +698,7 @@ bool nglWindow::IsKeyDown (nglKeyCode Key) const
 static nglString composing;
 OSStatus GetScriptLang(EventRef inEvent, ScriptLanguageRecord& outSlr)
 {
-  OSStatus err = ::GetEventParameter(inEvent, kEventParamTextInputSendSLRec, typeIntlWritingCode, NULL, 
-                                     sizeof(outSlr), NULL, &outSlr);
+  OSStatus err = ::GetEventParameter(inEvent, kEventParamTextInputSendSLRec, typeIntlWritingCode, NULL, sizeof(outSlr), NULL, &outSlr);
   return err;
 }
 
@@ -940,8 +939,8 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
               //delete[] pStr;
               composing += str;
-              if (CallOnTextInput(str))
-                result = noErr;
+//              if (CallOnTextInput(str))
+//                result = noErr;
             }
             break;
             
@@ -1006,9 +1005,14 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                   NGL_ASSERT(noErr == err);
                 }                          
               }                     
-              // printf("call HandleUpdateActiveInputArea textlength = %d ",text.Length());
-              // printf("script=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / 2);
+              printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n",text.GetLength());
+              printf("\t\tscript=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / sizeof(UniChar));
               //err = aBrowserShell->HandleUpdateActiveInputArea(text, slr.fScript, slr.fLanguage, fixLength / sizeof(PRUnichar), hiliteRng);
+              nglString str(fixLength == -1 ? text : text.GetRight(text.GetLength() - fixLength));
+              printf("\t\tcomplete str = '%s'\n", text.GetStdString().c_str());
+              printf("\t\tpartial  str = '%s'\n", str.GetStdString().c_str());
+              if (CallOnTextInput(str))
+                err = noErr;
               if (hiliteRng)
                 ::free(hiliteRng);
               return err;

@@ -214,6 +214,11 @@ public:
   virtual bool DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
   virtual bool DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
 
+  virtual void TextCompositionStarted(){}; ///< Tells the widget that a complex text input session is starting (mostly used to enter diacritics with dead keys and complex scripts like east asian glyphs)
+  virtual void TextCompositionConfirmed(){}; ///< Tells the widget to confirm the composed text as final and end the composition session start with TextCompositionStart.
+  virtual void TextCompositionCanceled(){}; ///< Tells the widget to cancel the composed text input and end the composition session started with TextCompositionStart.
+  virtual void TextCompositionUpdated(const nglString& rString, int32 CursorPosition){};
+  
   virtual bool TextInput(const nglString& rUnicodeText);
   virtual void TextInputCancelled();
   virtual bool KeyDown(const nglKeyEvent& rEvent);
