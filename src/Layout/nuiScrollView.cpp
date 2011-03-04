@@ -448,8 +448,8 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         #endif
 
         pItem->SetLayout(rect);
-        rect = VisibleRect;
-        LocalToLocal(pItem, rect);
+        //rect = VisibleRect;
+        //LocalToLocal(pItem, rect);
         //pItem->SetVisibleRect(rect);
       }
     }
@@ -489,9 +489,15 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         #endif
         
         pItem->SetLayout(rect);
+<<<<<<< HEAD
         rect = VisibleRect;
         LocalToLocal(pItem, rect);
         pItem->SetVisibleRect(rect);
+=======
+        //rect = VisibleRect;
+        //LocalToLocal(pItem, rect);
+        //pItem->SetVisibleRect(rect);
+>>>>>>> 5929455320b81a275a11f62df8c2b1cbe0f9b1f1
       }
     }
     delete pIt;
