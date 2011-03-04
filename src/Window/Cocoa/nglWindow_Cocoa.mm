@@ -404,6 +404,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
   info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
+  info.Buttons |= [theEvent clickCount] > 1 ? nglMouseInfo::ButtonDoubleClick : 0;
   mpNGLWindow->CallOnMouseClick(info);
 }
 
@@ -449,6 +450,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
   info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
+  info.Buttons |= [theEvent clickCount] > 1 ? nglMouseInfo::ButtonDoubleClick : 0;
   mpNGLWindow->CallOnMouseClick(info);
 }
 
@@ -522,6 +524,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   NSPoint p = [self mouseLocationOutsideOfEventStream];
   info.X = p.x;
   info.Y = [self contentRectForFrameRect:[self frame]].size.height - p.y;
+  info.Buttons |= [theEvent clickCount] > 1 ? nglMouseInfo::ButtonDoubleClick : 0;
   mpNGLWindow->CallOnMouseClick(info);
 }
 
@@ -1027,12 +1030,12 @@ void nglWindow::ExitModalState()
 
 void nglWindow::StartTextInput(int32 X, int32 Y, int32 W, int32 H)
 {
-  [(nglNSWindow*)mpNSWindow showKeyboard];
+  //[(nglNSWindow*)mpNSWindow showKeyboard];
 }
 
 void nglWindow::EndTextInput()
 {
-  [(nglNSWindow*)mpNSWindow hideKeyboard];
+  //[(nglNSWindow*)mpNSWindow hideKeyboard];
 }
 
 bool nglWindow::IsEnteringText() const
