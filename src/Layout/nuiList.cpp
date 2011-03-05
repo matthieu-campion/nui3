@@ -133,7 +133,7 @@ nuiRect nuiList::CalcIdealSize()
       mPositions.push_back(Rect);
       nuiSize w = Rect.GetWidth();
       nuiSize h = Rect.GetHeight();
-      Width = MAX(Width, w+2);
+      //Width = MAX(Width, w+2);
       Height +=h;
       Height = (nuiSize)ToAbove(Height);
     }
@@ -153,7 +153,7 @@ nuiRect nuiList::CalcIdealSize()
       nuiSize w=Rect.GetWidth();
       nuiSize h=Rect.GetHeight();
 
-      Height = MAX(Height, h+2);
+      //Height = MAX(Height, h+2);
       Width += w;
       Width = (nuiSize)ToAbove(Width);
     }
@@ -201,7 +201,7 @@ bool nuiList::SetRect(const nuiRect& rRect)
         rw = (nuiSize)Width;
         rh = rw / rratio;
 
-        h=rh;
+        h = rh;
 
       }
       else
@@ -243,7 +243,7 @@ bool nuiList::SetRect(const nuiRect& rRect)
       }
       else
       {
-        w=(nuiSize)(int)((nuiSize)Rect.GetWidth());
+        w = (nuiSize)(int)((nuiSize)Rect.GetWidth());
       }
       
       Rect.Set(Width, mBorderSize, w, Height - 2 * mBorderSize);
