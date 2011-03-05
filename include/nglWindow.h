@@ -740,6 +740,7 @@ private:
   uint32             mInModalState;
   uint32             mAngle;
   bool               mAutoRotate;
+  bool               mComposingText;
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 
