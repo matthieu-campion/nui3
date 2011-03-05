@@ -787,6 +787,42 @@ bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
   return false;
 }
 
+void nuiTopLevel::CallTextCompositionStarted()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionStarted();
+}
+void nuiTopLevel::CallTextCompositionConfirmed()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionConfirmed();
+}
+
+void nuiTopLevel::CallTextCompositionCanceled()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionCanceled();
+}
+
+void nuiTopLevel::CallTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  if (mpFocus)
+    mpFocus->TextCompositionUpdated(rString, CursorPosition);
+}
+
+nglString nuiTopLevel::CallGetTextComposition() const
+{
+  if (mpFocus)
+    return mpFocus->GetTextComposition();
+  return nglString::Null;
+}
+
+void nuiTopLevel::CallTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  if (mpFocus)
+    mpFocus->TextCompositionIndexToPoint(CursorPosition, x, y);
+}
+
 bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 {
   CheckValid();

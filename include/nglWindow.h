@@ -603,6 +603,14 @@ window = new nglWindow (context, info, NULL);
     This method is only called if the NoResize flag is set or the programmer
     explicitely called SetSize().
   */
+
+  virtual void OnTextCompositionStarted(); ///< Called when a complex text input session is starting (mostly used to enter diacritics with dead keys and complex scripts like east asian glyphs)
+  virtual void OnTextCompositionConfirmed(); ///< Called to confirm the composed text as final and end the composition session start with OnTextCompositionStart.
+  virtual void OnTextCompositionCanceled(); ///< Called to cancel the composed text input and end the composition session started with OnTextCompositionStart.
+  virtual void OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+  virtual nglString OnGetTextComposition() const;
+  virtual void OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
+  
   virtual bool OnTextInput(const nglString& rUnicodeTextInput);
   /*!<
    This method is called when the user enters text input into the program. This is a high level method that takes a unicode character string parameter.

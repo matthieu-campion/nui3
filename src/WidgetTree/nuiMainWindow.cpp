@@ -687,6 +687,44 @@ bool nuiMainWindow::OnMouseUnclick(nglMouseInfo& rInfo)
   return CallMouseUnclick(rInfo);
 }
 
+void nuiMainWindow::OnTextCompositionStarted()
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  TextCompositionStarted();
+}
+
+void nuiMainWindow::OnTextCompositionConfirmed()
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  TextCompositionConfirmed();
+}
+
+void nuiMainWindow::OnTextCompositionCanceled()
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  CallTextCompositionCanceled();
+}
+
+void nuiMainWindow::OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  CallTextCompositionUpdated(rString, CursorPosition);
+}
+
+nglString nuiMainWindow::OnGetTextComposition() const
+{
+  return CallGetTextComposition();
+}
+
+void nuiMainWindow::OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  return CallTextCompositionIndexToPoint(CursorPosition, x, y);
+}
+
 bool nuiMainWindow::OnTextInput(const nglString& rUnicodeText)
 {
   mLastEventTime = nglTime();
@@ -1102,6 +1140,37 @@ bool nuiMainWindow::NGLWindow::OnMouseMove(nglMouseInfo& rInfo)
 bool nuiMainWindow::NGLWindow::OnRotation(uint Angle)
 {
   return mpMainWindow->OnRotation(Angle);
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionStarted()
+{
+  mpMainWindow->OnTextCompositionStarted();
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionConfirmed()
+{
+  mpMainWindow->OnTextCompositionConfirmed();
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionCanceled()
+{
+  mpMainWindow->OnTextCompositionCanceled();
+
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  mpMainWindow->OnTextCompositionUpdated(rString, CursorPosition);
+}
+
+nglString nuiMainWindow::NGLWindow::OnGetTextComposition() const
+{
+  return mpMainWindow->OnGetTextComposition();
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  mpMainWindow->OnTextCompositionIndexToPoint(CursorPosition, x, y);
 }
 
 // Dnd receive
