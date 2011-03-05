@@ -713,15 +713,15 @@ static OSStatus GetText(EventRef inEvent, nglString& outString)
   if (neededSize > 0) 
   {
     std::vector<UniChar> buf;
-    buf.resize(neededSize);
+    buf.resize(neededSize / sizeof(UniChar));
     
     err = ::GetEventParameter(inEvent, kEventParamTextInputSendText, typeUnicodeText, NULL, 
                               neededSize, &neededSize, &buf[0]);
     
     if (noErr == err) 
-      outString.Import((const char*)&buf[0], neededSize * sizeof(UniChar), eUCS2);
+      outString.Import((const char*)&buf[0], buf.size() * sizeof(UniChar), eUCS2);
     
-    NGL_OUT(_T("  Unicode text: %ls\n"), outString.GetChars());
+    //NGL_OUT(_T("  Unicode text: %ls\n"), outString.GetChars());
   }
   return err;
 }
@@ -880,65 +880,41 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           case kEventTextInputUnicodeText:
             {
               printf("kEventTextInputUnicodeText\n");
-              nglString outString;
-              GetText(eventRef, outString);
-              UInt32 size = 0;
-              OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+
+              nglString str;
+              result = GetText(eventRef, str);
               
-              uint16 unicodetext[size + 1];
-              memset(unicodetext, 0, sizeof(uint16) * (size + 1));
-              err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
-              //for (uint i = 0; i < size; i++)
-              //{
-              //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
-              //}
-              if (err != noErr)
-                return eventNotHandledErr;
-              
-              nglChar ucs4[size+1];
-              memset(ucs4, 0, sizeof(nglChar) * (size + 1));
-              for (uint i = 0; i < size; i++)
-                ucs4[i] = unicodetext[i];
-              nglString str(ucs4);
-              //char* pStr = str.Export(eUTF8);
-              //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
-              //delete[] pStr;
-              if (CallOnTextInput(str))
+              nglChar c = str[0];
+              if (mModifiers & (cmdKey | controlKey) || c < ' ')
+              {
+                // Skip this event, it's a comand / menu event
+              }
+              else
+              {
+                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                if (CallOnTextInput(str))
                 result = noErr;
+              }
             }
             break;
           case kEventTextInputUnicodeForKeyEvent:
             {
               printf("kEventTextInputUnicodeForKeyEvent\n");
-              nglString outString;
-              GetText(eventRef, outString);
-              UInt32 size = 0;
-              OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+                          
+              nglString str;
+              result = GetText(eventRef, str);
               
-              uint16 unicodetext[size + 1];
-              memset(unicodetext, 0, sizeof(uint16) * (size + 1));
-              err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
-              //for (uint i = 0; i < size; i++)
-              //{
-              //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
-              //}
-              if (err != noErr)
-                return eventNotHandledErr;
-              
-              nglChar ucs4[size+1];
-              memset(ucs4, 0, sizeof(nglChar) * (size + 1));
-              for (uint i = 0; i < size; i++)
-                ucs4[i] = unicodetext[i];
-              nglString str(ucs4);
-              //char* pStr = str.Export(eUTF8);
-              //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
-              //delete[] pStr;
-              if (CallOnTextInput(str))
-                result = noErr;
+              nglChar c = str[0];
+              if (mModifiers & (cmdKey | controlKey) || c < ' ')
+              {
+                // Skip this event, it's a comand / menu event
+              }
+              else
+              {
+                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                if (CallOnTextInput(str))
+                  result = noErr;
+              }
             }
             break;
             
@@ -974,10 +950,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                 OnTextCompositionStarted();
               }
               
-              printf("kEventTextInputUpdateActiveInputArea\n");
-              nglString outString;
-              GetText(eventRef, outString);
-              
+              printf("kEventTextInputUpdateActiveInputArea\n");            
               uint32 fixLength;
               OSStatus err = ::GetEventParameter(eventRef, kEventParamTextInputSendFixLen, typeLongInteger, NULL, sizeof(fixLength), NULL, &fixLength);
               if (noErr != err)
@@ -1017,7 +990,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               
               
               OnTextCompositionUpdated(mComposedText, mComposedText.GetLength());
-              if (fixLength == -1 || fixLength == mComposedText.GetLength())
+              if (fixLength == -1 || fixLength / sizeof(UniChar) == mComposedText.GetLength())
               {
                 // Done!
                 OnTextCompositionConfirmed();
@@ -1408,10 +1381,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     { kEventClassTextInput, kEventTextInputOffsetToPos },
     { kEventClassTextInput, kEventTextInputPosToOffset },
     //kEventTSMDocumentAccessGetFirstRectForRange
-    { kEventClassTextInput, kEventTextInputShowHideBottomWindow },
+    //{ kEventClassTextInput, kEventTextInputShowHideBottomWindow },
     { kEventClassTextInput, kEventTextInputGetSelectedText },
     { kEventClassTextInput, kEventTextInputUnicodeText },
-    { kEventClassTextInput, kEventTextInputFilterText }
+    //{ kEventClassTextInput, kEventTextInputFilterText }
   };
   
   mpContext = NULL;
