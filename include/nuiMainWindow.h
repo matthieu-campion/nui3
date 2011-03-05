@@ -129,14 +129,6 @@ public:
   virtual void EndTextInput();
   virtual bool IsEnteringText() const;
   
-  virtual void TextCompositionStarted(); ///< Tells the widget that a complex text input session is starting (mostly used to enter diacritics with dead keys and complex scripts like east asian glyphs)
-  virtual void TextCompositionConfirmed(); ///< Tells the widget to confirm the composed text as final and end the composition session start with TextCompositionStart.
-  virtual void TextCompositionCanceled(); ///< Tells the widget to cancel the composed text input and end the composition session started with TextCompositionStart.
-  virtual void TextCompositionUpdated(const nglString& rString, int32 CursorPosition);
-  virtual nglString GetTextComposition() const;
-  virtual void TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
-  
-  
   void SetPaintEnabled(bool set);
   bool IsPaintEnabled() const;
   

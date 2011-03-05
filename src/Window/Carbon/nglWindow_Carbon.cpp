@@ -988,8 +988,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               if (noErr != err)
                 return eventParameterNotFoundErr;
               
-              nglString text;
-              err = GetText(eventRef, text);
+              err = GetText(eventRef, mComposedText);
               if (noErr != err)
                 return eventParameterNotFoundErr;
               
@@ -1009,20 +1008,21 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                   NGL_ASSERT(noErr == err);
                 }                          
               }                     
-              printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n",text.GetLength());
+              printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n", mComposedText.GetLength());
               printf("\t\tscript=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / sizeof(UniChar));
               //err = aBrowserShell->HandleUpdateActiveInputArea(text, slr.fScript, slr.fLanguage, fixLength / sizeof(PRUnichar), hiliteRng);
 //              nglString str(fixLength == -1 ? text : text.GetRight(text.GetLength() - fixLength));
-//              printf("\t\tcomplete str = '%s'\n", text.GetStdString().c_str());
+              printf("\t\tstr = '%s'\n", mComposedText.GetStdString().c_str());
 //              printf("\t\tpartial  str = '%s'\n", str.GetStdString().c_str());
               
               
-              OnTextCompositionUpdated(text, text.GetLength());
+              OnTextCompositionUpdated(mComposedText, mComposedText.GetLength());
               if (fixLength == -1)
               {
                 // Done!
                 OnTextCompositionConfirmed();
                 mComposingText = false;
+                mComposedText.Nullify();
               }
               err = noErr;
 
@@ -1045,9 +1045,8 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           case kEventTextInputGetSelectedText:
             {
               printf("kEventTextInputGetSelectedText\n");
-              nglString str = OnGetTextComposition();
-              UniChar* pBuf = (UniChar*)str.Export(eUCS2);
-              result = ::SetEventParameter(eventRef, kEventParamTextInputReplyText, typeUnicodeText, str.GetLength() * sizeof(UniChar), pBuf);
+              UniChar* pBuf = (UniChar*)mComposedText.Export(eUCS2);
+              result = ::SetEventParameter(eventRef, kEventParamTextInputReplyText, typeUnicodeText, mComposedText.GetLength() * sizeof(UniChar), pBuf);
               free(pBuf);
             }
             break;
