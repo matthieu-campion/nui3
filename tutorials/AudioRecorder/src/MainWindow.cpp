@@ -102,7 +102,7 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
   mpWriter = new nuiWaveWriter(*mpStream);
   nuiSampleInfo Infos;
   Infos.SetSampleRate(44100);
-  Infos.SetChannels(2);
+  Infos.SetChannels(1);
   Infos.SetBitsPerSample(16);
   mpWriter->WriteInfo(Infos);
   mpRecorder = new Recorder(mpWriter, 1024 * 64);
