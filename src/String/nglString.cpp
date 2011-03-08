@@ -37,7 +37,7 @@ licence: see nui3/LICENCE.TXT
 #define ngl_strnicmp wcsncasecmp
 #define ngl_mbs_stricmp strcasecmp
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_6
+#if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_6) || (defined _UIKIT_)
 static int wcscasecmp(const nglChar* s1, const nglChar* s2)
 {
   nglChar c1;
