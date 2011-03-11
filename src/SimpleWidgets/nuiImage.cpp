@@ -125,18 +125,22 @@ const nglPath& nuiImage::GetTexturePath()
 void nuiImage::SetTexturePath(const nglPath& rTexturePath)
 {
   mTexturePath = rTexturePath;
-  
-  mpTexture = nuiTexture::GetTexture(mTexturePath, NULL);
+
+  nuiTexture* pTexture = nuiTexture::GetTexture(mTexturePath, NULL);
+  SetTexture(pTexture);
+  pTexture->Release();
   mUseAlpha = true;
   //SetFixedAspectRatio(true);
-  mBlendFunc = nuiBlendTransp;
   SetProperty(_T("Source"), mTexturePath.GetPathName());
-  ResetTextureRect();
-  Invalidate();
 }
 
 void nuiImage::SetTexture(nuiTexture* pTex)
 {  
+  if (pTex)
+    pTex->Acquire();
+  if (mpTexture)
+    mpTexture->Release();
+
   mpTexture = pTex;
   mUseAlpha = true;
   //SetFixedAspectRatio(true);
@@ -235,14 +239,10 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
 
   nuiRect rect = mRect.Size();
 
-  //pContext->EnableClipping(false);
   nuiColor c(mColor);
   c.Multiply(alpha);
   pContext->SetFillColor(c);
   pContext->DrawImage(rect, mTextureRect);
-
-//  nuiRect r(mTextureRect.GetWidth() * mTextureRect.GetWidth(), mTextureRect.GetHeight() * mTextureRect.GetHeight());
-//  pContext->DrawImage(rect, r);
 
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);

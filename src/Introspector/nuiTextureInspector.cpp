@@ -114,7 +114,8 @@ void nuiTextureInspector::OnTextureSelection(const nuiEvent& rEvent)
   
   // build attributes list
   std::map<nglString, nuiAttribBase> attributes;
-  pTexture->GetAttributes(attributes);
+  if (pTexture)
+    pTexture->GetAttributes(attributes);
   uint32 i = 0;
   std::map<nglString, nuiAttribBase>::const_iterator it_a = attributes.begin();
   std::map<nglString, nuiAttribBase>::const_iterator end_a = attributes.end();

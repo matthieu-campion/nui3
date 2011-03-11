@@ -125,7 +125,11 @@ nuiSimpleContainer::~nuiSimpleContainer()
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem)
+    {
+      if (!pItem->IsTrashed(false))
+        pItem->SetParent(NULL);
       pItem->Release();
+    }
   }
   delete pIt;
 }

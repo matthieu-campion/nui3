@@ -1649,11 +1649,11 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         if (path.IsLeaf())
         {
           fontFiles.insert(path);
-          NGL_OUT(_T("FontManager: font file found '%ls'\n"), path.GetChars());
+          //NGL_OUT(_T("FontManager: font file found '%ls'\n"), path.GetChars());
         }
         else
         {
-          NGL_OUT(_T("FontManager: skip '%ls'\n"), path.GetChars());
+          //NGL_OUT(_T("FontManager: skip '%ls'\n"), path.GetChars());
         }
       }
     }
@@ -1668,7 +1668,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
       // check font file existence
       if (!pFontDesc->CheckPath())
       {
-        NGL_OUT(_T("FontManager: remove font from database '%ls'\n"), pFontDesc->GetPath().GetChars());
+        //NGL_OUT(_T("FontManager: remove font from database '%ls'\n"), pFontDesc->GetPath().GetChars());
         
         continue;
       }
@@ -1727,7 +1727,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     }
     else
     {
-      NGL_OUT(_T("FontManager: skip already scanned font '%ls'\n"), path.GetChars());
+      //NGL_OUT(_T("FontManager: skip already scanned font '%ls'\n"), path.GetChars());
     }
     
   }
@@ -1774,7 +1774,7 @@ void nuiFontManager::UpdateFonts()
       if (path.IsLeaf())
       {
         fontFiles.insert(path);
-        printf("font file? %d: %s -> %ls\n", i, buffer, rstr.GetChars());
+        //printf("font file? %d: %s -> %ls\n", i, buffer, rstr.GetChars());
       }
     }
   }

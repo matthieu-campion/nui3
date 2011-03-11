@@ -36,6 +36,22 @@ void nglReaderWriterLock::LockRead()
   } while (!ok);
 }
 
+bool nglReaderWriterLock::TryLockRead()
+{ 
+  bool ok = false;
+  {
+    nglCriticalSectionGuard guard(mCS);
+    
+    if (!mWriter)
+    {
+      mReaders++;
+      ok = true;
+    }
+  }
+
+  return ok;  
+}
+
 void nglReaderWriterLock::UnlockRead()
 {
   nglCriticalSectionGuard guard(mCS);
@@ -63,6 +79,21 @@ void nglReaderWriterLock::LockWrite()
 
   } while (mWriter != nglThread::GetCurThreadID());
 }
+
+bool nglReaderWriterLock::TryLockWrite()
+{
+  {
+    nglCriticalSectionGuard guard(mCS);
+    
+    if (!mWriter && !mReaders)
+    {
+      mWriter = nglThread::GetCurThreadID();
+    }
+  }
+  
+  return mWriter == nglThread::GetCurThreadID();
+}
+
 
 void nglReaderWriterLock::UnlockWrite()
 {

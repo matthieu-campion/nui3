@@ -21,6 +21,7 @@ nglImagePPMCodec::nglImagePPMCodec(void)
   mpImageID = NULL;
   mLine = 0;
   mLineSize = 0;
+  mStop = false;
 }
 
 nglImagePPMCodec::~nglImagePPMCodec(void)
@@ -95,7 +96,7 @@ bool nglImagePPMCodec::ReadHeader(nglIStream* pIStream)
     info.mWidth = mHeader.Width;
     mLineSize=info.mBytesPerLine;
 
-    SendInfo(info);
+    mStop = !SendInfo(info);
 
     success = true;
   }  
@@ -106,12 +107,12 @@ bool nglImagePPMCodec::ReadHeader(nglIStream* pIStream)
 bool nglImagePPMCodec::Feed(nglIStream* pIStream) 
 {
   nglFileSize count;
-  while(pIStream->Available() && pIStream->GetState() == eStreamReady)
+  while (pIStream->Available() && pIStream->GetState() == eStreamReady && !mStop)
   {
     switch(mState)
     {
       case ppmReadHeader:
-        if(ReadHeader(pIStream))
+        if (ReadHeader(pIStream))
         {
           mpBuffer = mpImage->GetBuffer() + mLineSize*(mHeader.Height-1);
           mState = ppmReadData;
@@ -130,7 +131,7 @@ bool nglImagePPMCodec::Feed(nglIStream* pIStream)
             mpBuffer -= mLineSize;
           }
           mLine+=(uint)count;             
-          SendData((float)mLine/(float)mHeader.Height);
+          mStop = !SendData((float)mLine/(float)mHeader.Height);
         }
         return (pIStream->GetState()==eStreamWait) || (pIStream->GetState()==eStreamReady);
         break;

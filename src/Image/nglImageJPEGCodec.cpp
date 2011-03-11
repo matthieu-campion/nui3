@@ -160,8 +160,7 @@ bool nglImageJPEGCodec::ReadHeader(nglIStream* pIStream)
   info.mWidth = mCinfo.output_width;
   mLineSize = info.mBytesPerLine;
 
-  SendInfo(info);
-  return true;  
+  return SendInfo(info);
 }
 
 bool nglImageJPEGCodec::ReadData()
@@ -199,7 +198,8 @@ bool nglImageJPEGCodec::Feed(nglIStream* pIStream)
   {
     mpBuffer = mpImage->GetBuffer(); // + mLineSize*(mpImage->GetHeight()-1);
     ReadData();
-    SendData((float)mLine/(float)mpImage->GetHeight());
+    if (!SendData((float)mLine/(float)mpImage->GetHeight()))
+      return false;
   }
   return (pIStream->GetState()==eStreamWait) || (pIStream->GetState()==eStreamReady);   
 }

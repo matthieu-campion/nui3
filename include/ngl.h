@@ -480,7 +480,7 @@ typedef wchar_t nglChar;
 /* Multitouch support is now always on
  */
 #define _MULTI_TOUCHES_
-#define _NUI_MAX_TOUCHES_ 5
+#define _NUI_MAX_TOUCHES_ 20
 
 /* At last, include GL and GLU headers if necessary
  */

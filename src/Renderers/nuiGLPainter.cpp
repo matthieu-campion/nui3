@@ -1417,6 +1417,9 @@ void nuiGLPainter::CreateTexture(nuiTexture* pTexture)
 
 void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 {
+  nuiTexture* pProxy = pTexture->GetProxyTexture();
+  if (pProxy)
+    pTexture = pProxy;
   nuiSurface* pSurface = pTexture->GetSurface();
   
   float Width = pTexture->GetUnscaledWidth();
