@@ -1271,7 +1271,8 @@ void nuiGrid::RemoveColumns(uint32 pos, uint32 columns)
     while (row != end)
     {
       nuiWidget* pWidget = *row;
-      DelChild(pWidget); //< Trash the current widget
+      if (pWidget)
+        DelChild(pWidget); //< Trash the current widget
       row++;
     }
 
