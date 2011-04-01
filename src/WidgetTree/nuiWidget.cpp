@@ -1677,6 +1677,34 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 }
 
 // Event callbacks:
+void nuiWidget::TextCompositionStarted()
+{
+}
+
+void nuiWidget::TextCompositionConfirmed()
+{
+}
+
+void nuiWidget::TextCompositionCanceled()
+{
+}
+
+void nuiWidget::TextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+}
+
+nglString nuiWidget::GetTextComposition() const
+{
+  return nglString::Null;
+}
+
+void nuiWidget::TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  x = 0; 
+  y = 0;
+}
+
+
 bool nuiWidget::TextInput(const nglString& rUnicodeText)
 {
   CheckValid();

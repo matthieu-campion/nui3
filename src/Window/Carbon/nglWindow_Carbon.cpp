@@ -578,6 +578,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
   
   mpMainMenu = NULL;
 	
+  mComposingText = false;
   
   InternalInit (context, info, NULL);
 }
@@ -695,7 +696,6 @@ bool nglWindow::IsKeyDown (nglKeyCode Key) const
     return false;
 }
 
-static nglString composing;
 OSStatus GetScriptLang(EventRef inEvent, ScriptLanguageRecord& outSlr)
 {
   OSStatus err = ::GetEventParameter(inEvent, kEventParamTextInputSendSLRec, typeIntlWritingCode, NULL, sizeof(outSlr), NULL, &outSlr);
@@ -713,15 +713,15 @@ static OSStatus GetText(EventRef inEvent, nglString& outString)
   if (neededSize > 0) 
   {
     std::vector<UniChar> buf;
-    buf.resize(neededSize);
+    buf.resize(neededSize / sizeof(UniChar));
     
     err = ::GetEventParameter(inEvent, kEventParamTextInputSendText, typeUnicodeText, NULL, 
                               neededSize, &neededSize, &buf[0]);
     
     if (noErr == err) 
-      outString.Import((const char*)&buf[0], neededSize * sizeof(UniChar), eUCS2);
+      outString.Import((const char*)&buf[0], buf.size() * sizeof(UniChar), eUCS2);
     
-    NGL_OUT(_T("  Unicode text: %ls\n"), outString.GetChars());
+    //NGL_OUT(_T("  Unicode text: %ls\n"), outString.GetChars());
   }
   return err;
 }
@@ -839,7 +839,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                 res |= CallOnKeyDown(nglKeyEvent(NK_LALT, 0, 0));
               
               //NGL_OUT("ModifiersChanged %ls\n", YESNO(res));
-              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;          
+              result = (res && !mComposingText) ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
             }
             break;
 
@@ -848,7 +848,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //NGL_OUT("%2.2d\"%c\"\n", keycode, (char)unicodetext, unicodetext);
               bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext,rawunicodetext));
               //NGL_OUT("KeyDown %ls\n", YESNO(res));
-              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
+              result = (res && !mComposingText) ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
             }
             break;
             
@@ -857,7 +857,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //NGL_OUT("KeyUp 0x%x ['%c' (0x%x)]\n", keycode, (char)unicodetext, unicodetext);
               bool res = CallOnKeyUp(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
               //NGL_OUT("KeyUp %ls\n", YESNO(res));
-              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
+              result = (res && !mComposingText) ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
             }
             break;
 
@@ -866,7 +866,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //NGL_OUT("KeyRepeat\n");
               bool res = CallOnKeyDown(nglKeyEvent(ngl_scode_table[keycode],unicodetext, rawunicodetext));
               //NGL_OUT("KeyRepeat %ls\n", YESNO(res));
-              result = res ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
+              result = (res && !mComposingText) ? (OSStatus)noErr : (OSStatus)eventNotHandledErr;
             }
             break;
         }
@@ -880,100 +880,77 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           case kEventTextInputUnicodeText:
             {
               printf("kEventTextInputUnicodeText\n");
-              nglString outString;
-              GetText(eventRef, outString);
-              UInt32 size = 0;
-              OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+
+              nglString str;
+              result = GetText(eventRef, str);
               
-              uint16 unicodetext[size + 1];
-              memset(unicodetext, 0, sizeof(uint16) * (size + 1));
-              err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
-              //for (uint i = 0; i < size; i++)
-              //{
-              //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
-              //}
-              if (err != noErr)
-                return eventNotHandledErr;
-              
-              nglChar ucs4[size+1];
-              memset(ucs4, 0, sizeof(nglChar) * (size + 1));
-              for (uint i = 0; i < size; i++)
-                ucs4[i] = unicodetext[i];
-              nglString str(ucs4);
-              //char* pStr = str.Export(eUTF8);
-              //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
-              //delete[] pStr;
-              composing += str;
-              if (CallOnTextInput(str))
+              nglChar c = str[0];
+              if (mModifiers & (cmdKey | controlKey) || c < ' ')
+              {
+                // Skip this event, it's a comand / menu event
+              }
+              else
+              {
+                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                if (CallOnTextInput(str))
                 result = noErr;
+              }
             }
             break;
           case kEventTextInputUnicodeForKeyEvent:
             {
               printf("kEventTextInputUnicodeForKeyEvent\n");
-              nglString outString;
-              GetText(eventRef, outString);
-              UInt32 size = 0;
-              OSStatus err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, NULL, &size, NULL) = %d [size = %d]\n", err, size);
+                          
+              nglString str;
+              result = GetText(eventRef, str);
               
-              uint16 unicodetext[size + 1];
-              memset(unicodetext, 0, sizeof(uint16) * (size + 1));
-              err = GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext);
-              //printf("GetEventParameter(eventRef, kEventParamTextInputSendText, typeUnicodeText, NULL, size, NULL, unicodetext) = %d\n", err);
-              //for (uint i = 0; i < size; i++)
-              //{
-              //  printf("%d: '%c' {%d}\n", i, unicodetext[i], unicodetext[i]);
-              //}
-              if (err != noErr)
-                return eventNotHandledErr;
-              
-              nglChar ucs4[size+1];
-              memset(ucs4, 0, sizeof(nglChar) * (size + 1));
-              for (uint i = 0; i < size; i++)
-                ucs4[i] = unicodetext[i];
-              nglString str(ucs4);
-              //char* pStr = str.Export(eUTF8);
-              //printf("Unicode text entered: '%s' [%d] {%x}\n", pStr, str.GetLength(), str[0]);
-              //delete[] pStr;
-              composing += str;
-//              if (CallOnTextInput(str))
-//                result = noErr;
-            }
-            break;
-            
-          case kEventTextInputShowHideBottomWindow:
-            {
-              Boolean r = false;
-              OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendShowHide, typeBoolean, NULL, sizeof(r), NULL, &r);
-              printf("kEventTextInputShowHideBottomWindow\n");
-              nglString outString;
-              GetText(eventRef, outString);
-              if (r)
-                printf("kEventTextInputShowHideBottomWindow Activated Input window\n");
+              nglChar c = str[0];
+              if (mModifiers & (cmdKey | controlKey) || c < ' ')
+              {
+                // Skip this event, it's a comand / menu event
+              }
               else
-                printf("kEventTextInputShowHideBottomWindow Disabled Input window\n");
-              result = eventNotHandledErr;  
+              {
+                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                if (CallOnTextInput(str))
+                  result = noErr;
+              }
             }
             break;
             
-          case kEventTextInputFilterText:
-            {
-              printf("kEventTextInputFilterText\n");
-              nglString outString;
-              GetText(eventRef, outString);
-            }
-            break;
+//          case kEventTextInputShowHideBottomWindow:
+//            {
+//              Boolean r = false;
+//              OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendShowHide, typeBoolean, NULL, sizeof(r), NULL, &r);
+//              printf("kEventTextInputShowHideBottomWindow\n");
+//              nglString outString;
+//              GetText(eventRef, outString);
+//              if (r)
+//                printf("kEventTextInputShowHideBottomWindow Activated Input window\n");
+//              else
+//                printf("kEventTextInputShowHideBottomWindow Disabled Input window\n");
+//              result = eventNotHandledErr;  
+//            }
+//            break;
+            
+//          case kEventTextInputFilterText:
+//            {
+//              printf("kEventTextInputFilterText\n");
+//              nglString outString;
+//              GetText(eventRef, outString);
+//            }
+//            break;
             
             
           case kEventTextInputUpdateActiveInputArea:
             {
-              printf("kEventTextInputUpdateActiveInputArea\n");
-              nglString outString;
-              GetText(eventRef, outString);
+              if (!mComposingText)
+              {
+                mComposingText = true;
+                OnTextCompositionStarted();
+              }
               
+              printf("kEventTextInputUpdateActiveInputArea\n");            
               uint32 fixLength;
               OSStatus err = ::GetEventParameter(eventRef, kEventParamTextInputSendFixLen, typeLongInteger, NULL, sizeof(fixLength), NULL, &fixLength);
               if (noErr != err)
@@ -984,8 +961,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               if (noErr != err)
                 return eventParameterNotFoundErr;
               
-              nglString text;
-              err = GetText(eventRef, text);
+              err = GetText(eventRef, mComposedText);
               if (noErr != err)
                 return eventParameterNotFoundErr;
               
@@ -1005,14 +981,25 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                   NGL_ASSERT(noErr == err);
                 }                          
               }                     
-              printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n",text.GetLength());
+              printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n", mComposedText.GetLength());
               printf("\t\tscript=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / sizeof(UniChar));
               //err = aBrowserShell->HandleUpdateActiveInputArea(text, slr.fScript, slr.fLanguage, fixLength / sizeof(PRUnichar), hiliteRng);
-              nglString str(fixLength == -1 ? text : text.GetRight(text.GetLength() - fixLength));
-              printf("\t\tcomplete str = '%s'\n", text.GetStdString().c_str());
-              printf("\t\tpartial  str = '%s'\n", str.GetStdString().c_str());
-              if (CallOnTextInput(str))
-                err = noErr;
+//              nglString str(fixLength == -1 ? text : text.GetRight(text.GetLength() - fixLength));
+              printf("\t\tstr = '%s'\n", mComposedText.GetStdString().c_str());
+//              printf("\t\tpartial  str = '%s'\n", str.GetStdString().c_str());
+              
+              
+              OnTextCompositionUpdated(mComposedText, mComposedText.GetLength());
+              if (fixLength == -1 || fixLength / sizeof(UniChar) == mComposedText.GetLength())
+              {
+                // Done!
+                OnTextCompositionConfirmed();
+                OnTextInput(mComposedText);
+                mComposingText = false;
+                mComposedText.Nullify();
+              }
+              err = noErr;
+
               if (hiliteRng)
                 ::free(hiliteRng);
               return err;
@@ -1023,27 +1010,27 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           case kEventTextInputPosToOffset:
             {
               printf("kEventTextInputPosToOffset\n");
-              nglString outString;
-              GetText(eventRef, outString);
+              float x, y;
+              x = y = 0;
+              OnTextCompositionIndexToPoint(0, x, y);
             }
             break;
             
           case kEventTextInputGetSelectedText:
             {
               printf("kEventTextInputGetSelectedText\n");
-              printf("\t\tcomposing '%ls'\n", composing.GetChars());
-              UniChar* pBuf = (UniChar*)composing.Export(eUCS2);
-              result = ::SetEventParameter(eventRef, kEventParamTextInputReplyText, typeUnicodeText, composing.GetLength() * sizeof(UniChar), pBuf);
+              UniChar* pBuf = (UniChar*)mComposedText.Export(eUCS2);
+              result = ::SetEventParameter(eventRef, kEventParamTextInputReplyText, typeUnicodeText, mComposedText.GetLength() * sizeof(UniChar), pBuf);
               free(pBuf);
             }
             break;
             
           case kEventTextInputOffsetToPos:
             {
+              float x = 0, y = 0;
               printf("kEventTextInputOffsetToPos\n");
-              nglString outString;
-              GetText(eventRef, outString);
 
+              
               long byte_offset;
               Point p;
               
@@ -1051,8 +1038,10 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               if (err != noErr)
                 break;
               
-              p.h = 50;
-              p.v = 100;
+              OnTextCompositionIndexToPoint(byte_offset, x, y);
+
+              p.h = x;
+              p.v = y;
               
               //              SetEventParameter (event, kEventParamTextInputReplyPointSize, typeFixed, sizeof (Fixed), &point_size);
               //              SetEventParameter (event, kEventParamTextInputReplyLineHeight, typeShortInteger, sizeof (short), &height);
@@ -1388,14 +1377,14 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     { kEventClassTextInput, kEventTextInputUnicodeText },
     
     { kEventClassTextInput, kEventTextInputUpdateActiveInputArea },
-    { kEventClassTextInput, kEventTextInputUnicodeForKeyEvent },
+    //{ kEventClassTextInput, kEventTextInputUnicodeForKeyEvent },
     { kEventClassTextInput, kEventTextInputOffsetToPos },
     { kEventClassTextInput, kEventTextInputPosToOffset },
     //kEventTSMDocumentAccessGetFirstRectForRange
-    { kEventClassTextInput, kEventTextInputShowHideBottomWindow },
+    //{ kEventClassTextInput, kEventTextInputShowHideBottomWindow },
     { kEventClassTextInput, kEventTextInputGetSelectedText },
     { kEventClassTextInput, kEventTextInputUnicodeText },
-    { kEventClassTextInput, kEventTextInputFilterText }
+    //{ kEventClassTextInput, kEventTextInputFilterText }
   };
   
   mpContext = NULL;

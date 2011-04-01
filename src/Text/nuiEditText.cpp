@@ -107,7 +107,6 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
 
   nuiRect cliprect(GetVisibleRect());
 
-  pContext->ResetState();
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
 
