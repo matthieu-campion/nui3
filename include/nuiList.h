@@ -93,7 +93,6 @@ public:
   
 protected:
   nuiOrientation mOrientation; /// mHorizontal is true if the containers' layout if horizontal, false if vertical.
-  std::list<nuiRect>  mPositions;
   float           mBorderSize;
 
   // Keyboard handling variables:
@@ -122,8 +121,6 @@ protected:
   
   float mMoveAnimDuration;
   nuiEasingMethod mMoveAnimEasing;
-
-  std::map<nuiWidgetPtr, nuiRect> mRects;
 };
 
 #endif // __nuiList_h__

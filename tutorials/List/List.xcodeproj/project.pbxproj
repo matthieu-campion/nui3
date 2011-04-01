@@ -55,32 +55,60 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
+		E5281B701346166A00E471FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84 /* libnuiPhone_arm7.a */;
+			remoteInfo = nuiPhone_arm7;
+		};
+		E5281B721346166A00E471FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD341012E09CA800F1EF4E /* libthirdparty.a */;
+			remoteInfo = thirdparty;
+		};
+		E5281B741346166A00E471FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD3FF412E0B08300F1EF4E /* libthirdparty_ios.a */;
+			remoteInfo = thirdparty_ios;
+		};
+		E5281B761346166A00E471FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84 /* libthirdparty_ios_arm7.a */;
+			remoteInfo = thirdparty_ios_arm7;
+		};
 		E5C0639F122B0C4B00F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
 		E5C063A1122B0C4B00F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
 		E5C063A3122B0C4B00F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		E5C063A5122B0C4B00F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
@@ -199,8 +227,12 @@
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
 				E5C063A0122B0C4B00F52C24 /* libnuiPhoneD.a */,
 				E5C063A2122B0C4B00F52C24 /* libnuiPhone.a */,
+				E5281B711346166A00E471FC /* libnuiPhone_arm7.a */,
 				E5C063A4122B0C4B00F52C24 /* libnui3CocoaD.a */,
 				E5C063A6122B0C4B00F52C24 /* libnui3Cocoa.a */,
+				E5281B731346166A00E471FC /* libthirdparty.a */,
+				E5281B751346166A00E471FC /* libthirdparty_ios.a */,
+				E5281B771346166A00E471FC /* libthirdparty_ios_arm7.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,7 +284,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "List" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
@@ -283,6 +322,34 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5281B711346166A00E471FC /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = E5281B701346166A00E471FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5281B731346166A00E471FC /* libthirdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty.a;
+			remoteRef = E5281B721346166A00E471FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5281B751346166A00E471FC /* libthirdparty_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios.a;
+			remoteRef = E5281B741346166A00E471FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5281B771346166A00E471FC /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = E5281B761346166A00E471FC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E5C063A0122B0C4B00F52C24 /* libnuiPhoneD.a */ = {
