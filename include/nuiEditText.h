@@ -94,6 +94,7 @@ public:
     eShowCursor,
 
     eInsertText,
+    eNewLine,
 
     eLastCommand
   };
@@ -196,6 +197,7 @@ protected:
   bool ShowCursor(nuiObject* pParams);
 
   bool InsertText(nuiObject* pParams);
+  bool NewLine(nuiObject* pParams);
 
   class NUI_API FontLayout : public nuiFontLayout
   {

@@ -241,6 +241,8 @@ void nuiEditText::InitKeyBindings()
   
   mCommandKeyBindings[NK_HOME] = eGoDocBegin;
   mCommandKeyBindings[NK_END] = eGoDocEnd;
+  mKeyBindings[NK_ENTER] = eNewLine;
+  mKeyBindings[NK_PAD_ENTER] = eNewLine;
   mKeyBindings[NK_HOME] = eGoLineBegin;
   mKeyBindings[NK_END] = eGoLineEnd;
   mAltKeyBindings[NK_HOME] = eGoParagraphBegin;
@@ -528,6 +530,7 @@ void nuiEditText::InitCommands()
   mCommands[eShowCursor] = &nuiEditText::ShowCursor;
 
   mCommands[eInsertText] = &nuiEditText::InsertText;
+  mCommands[eNewLine] = &nuiEditText::NewLine;
 }
 
 
@@ -1594,6 +1597,13 @@ bool nuiEditText::InsertText(nuiObject* pParams)
   
 
   return true;
+}
+
+bool nuiEditText::NewLine(nuiObject* pParams)
+{
+  nuiObject* pObj = new nuiObject();
+  pObj->SetProperty(_T("Text"), _T("\n"));
+  return Do(eInsertText, pObj);
 }
 
 
