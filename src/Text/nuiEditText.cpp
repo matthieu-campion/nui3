@@ -1613,7 +1613,7 @@ void nuiEditText::SetCursorPos(uint Pos)
   }
   Invalidate();
 
-  //NGL_OUT(_T("Cursor pos = %d (%f %f)\n"), Pos, x, y);
+  //NGL_OUT(_T("Cursor pos = %d\n"), Pos);
 }
 
 uint nuiEditText::GetCursorPos() const
@@ -2059,7 +2059,7 @@ bool nuiEditText::TextBlock::GetCoordsFromPos(uint Pos, nuiSize& rX, nuiSize& rY
   if (Pos == count)
   {
     nglGlyphInfo glyphinfo;
-    mpFont->GetGlyphInfo(glyphinfo, pGlyph->Index, nglFontBase::eGlyphNative);
+    pGlyph->mpFont->GetGlyphInfo(glyphinfo, pGlyph->Index, nglFontBase::eGlyphNative);
     rX += glyphinfo.AdvanceX;
   }
   return true;
