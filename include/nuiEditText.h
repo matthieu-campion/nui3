@@ -40,6 +40,13 @@ public:
   virtual bool KeyDown  (const nglKeyEvent& rEvent);
   virtual bool KeyUp    (const nglKeyEvent& rEvent);
 
+  virtual void TextCompositionStarted();
+  virtual void TextCompositionConfirmed();
+  virtual void TextCompositionCanceled();
+  virtual void TextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+  virtual nglString GetTextComposition() const;
+  virtual void TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
+  
   virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseMoved    (nuiSize X, nuiSize Y);

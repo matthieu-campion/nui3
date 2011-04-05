@@ -15,7 +15,7 @@ nuiEditText::nuiEditText(const nglString& rText)
   mCursorPos(0),
   mAnchorPos(0),
   mCompositionPos(-1),
-  mCompositionLength(-1),
+  mCompositionLength(0),
 
   mDropCursorPos(-1),
   mCommandStackPos(0),
@@ -46,7 +46,7 @@ bool nuiEditText::Load(const nuiXMLNode* pNode)
   mCursorPos = 0;
   mAnchorPos = 0;
   mCompositionPos = -1;
-  mCompositionLength = -1;
+  mCompositionLength = 0;
   mDropCursorPos = -1;
   mCommandStackPos = 0;
   mpFont = NULL;
@@ -289,6 +289,75 @@ bool nuiEditText::TextInput(const nglString& rUnicodeString)
   Do(eInsertText, pObject);
   
   return true;
+}
+
+void nuiEditText::TextCompositionStarted()
+{
+  // Nothing to do (?!)
+}
+
+void nuiEditText::TextCompositionConfirmed()
+{
+  TextCompositionCanceled(); // Same as cancel: remove the text, place the cursor and wait for final TextInput
+}
+
+void nuiEditText::TextCompositionCanceled()
+{
+  if (mCompositionPos < 0)
+  {
+    // Start composition
+    mCompositionPos = mCursorPos;
+    mCompositionLength = 0;
+  }
+  else
+  {
+    // Composition already active: use the selection to replace the existing composition string
+    mAnchorPos = mCompositionPos;
+    mCursorPos = mCompositionPos + mCompositionLength;
+  }
+  
+  Do(eDeleteSelection, NULL);
+  
+  mCompositionPos = -1;
+  mCompositionLength = 0;
+}
+
+void nuiEditText::TextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  if (mCompositionPos < 0)
+  {
+    // Start composition
+    mCompositionPos = mCursorPos;
+    mCompositionLength = 0;
+  }
+  else
+  {
+    // Composition already active: use the selection to replace the existing composition string
+    mAnchorPos = mCompositionPos;
+    mCursorPos = mCompositionPos + mCompositionLength;
+  }
+
+  Do(eDeleteSelection, NULL);
+  
+  TextInput(rString);
+  mCompositionLength = rString.GetLength();
+  SetCursorPos(mCompositionPos + CursorPosition);
+}
+
+nglString nuiEditText::GetTextComposition() const
+{
+  if (mCompositionPos < 0)
+    return nglString::Null;
+  return mText.Extract(mCompositionPos, mCompositionLength);
+}
+
+void nuiEditText::TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  float X = 0;
+  float Y = 0;
+  GetCoordsFromPos(CursorPosition, X, Y);
+  x = ToBelow(X);
+  y = ToBelow(Y);
 }
 
 bool nuiEditText::KeyDown(const nglKeyEvent& rEvent)

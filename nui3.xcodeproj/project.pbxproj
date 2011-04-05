@@ -8648,7 +8648,7 @@
 		E5816DF40C3CECAB00902DFE /* zip.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = zip.h; path = src/Stream/Zip/zip.h; sourceTree = SOURCE_ROOT; };
 		E5816DF60C3CECAB00902DFE /* nglString.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglString.cpp; path = src/String/nglString.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E000C3CECAB00902DFE /* nuiEditLine.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiEditLine.cpp; path = src/Text/nuiEditLine.cpp; sourceTree = SOURCE_ROOT; };
-		E5816E010C3CECAB00902DFE /* nuiEditText.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiEditText.cpp; path = src/Text/nuiEditText.cpp; sourceTree = SOURCE_ROOT; };
+		E5816E010C3CECAB00902DFE /* nuiEditText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiEditText.cpp; path = src/Text/nuiEditText.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E020C3CECAB00902DFE /* nuiLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiLabel.cpp; path = src/Text/nuiLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E030C3CECAB00902DFE /* nuiText.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiText.cpp; path = src/Text/nuiText.cpp; sourceTree = SOURCE_ROOT; };
 		E5816E060C3CECAB00902DFE /* nglTimer_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglTimer_Carbon.cpp; path = src/Time/Carbon/nglTimer_Carbon.cpp; sourceTree = SOURCE_ROOT; };
