@@ -14,6 +14,9 @@ nuiEditText::nuiEditText(const nglString& rText)
 : nuiComposite(),
   mCursorPos(0),
   mAnchorPos(0),
+  mCompositionPos(-1),
+  mCompositionLength(-1),
+
   mDropCursorPos(-1),
   mCommandStackPos(0),
   mpFont(NULL),
@@ -42,6 +45,8 @@ bool nuiEditText::Load(const nuiXMLNode* pNode)
 {
   mCursorPos = 0;
   mAnchorPos = 0;
+  mCompositionPos = -1;
+  mCompositionLength = -1;
   mDropCursorPos = -1;
   mCommandStackPos = 0;
   mpFont = NULL;
@@ -133,7 +138,7 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
 
     if (inter.Intersect(cliprect, pBlock->GetRect()))
     {
-      pBlock->Draw(pContext, PosX, PosY, SelectionBegin, SelectionEnd, width);
+      pBlock->Draw(pContext, PosX, PosY, SelectionBegin, SelectionEnd, mCompositionPos, mCompositionPos + mCompositionLength, width);
     }
     PosY += pBlock->GetHeight();
   }
@@ -1906,7 +1911,7 @@ nuiEditText::TextBlock::~TextBlock()
   mpFont->Release();
 }
 
-void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, nuiSize width)
+void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, uint CompositionBegin, uint CompositionEnd, nuiSize width)
 {
   if (!(SelectionBegin == SelectionEnd || SelectionBegin > GetEnd() || SelectionEnd < GetPos())) // Are we concerned about the selection?
   {
@@ -1957,6 +1962,56 @@ void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y
     }
   }
 
+  if (!(CompositionBegin == CompositionEnd || CompositionBegin > GetEnd() || CompositionEnd < GetPos())) // Are we concerned about the composition?
+  {
+    // Draw the selection:
+    if (CompositionBegin <= GetPos() && CompositionEnd >= GetEnd())
+    {
+      // We are completely enclosed by the selection
+      nuiRect r(mRect);
+      r.Right() = width;
+      pContext->DrawRect(r, eFillShape);
+    }
+    else
+    {
+      const std::vector<uint>& rLines = mpLayout->GetLines();
+      uint lines = (uint)rLines.size();
+      nuiSize height = mpFont->GetHeight();
+      nuiSize offset = mRect.Top();
+      
+      for (uint i = 0; i < lines; i++)
+      {
+        uint linepos = rLines[i] + GetPos();
+        uint lineend = GetLineEndFromPos(linepos);
+        if (!(CompositionBegin > lineend || CompositionEnd < linepos))
+        {
+          // We have at least a part in the selection
+          nuiSize StartX = 0, 
+          StopX = width, 
+          StartY = offset + i * height, 
+          StopY = offset + (i+1) * height;
+          
+          nuiSize dummy = 0;
+          
+          if (CompositionBegin >= linepos)
+          {
+            GetCoordsFromPos(CompositionBegin, StartX, dummy);
+          }
+          
+          if (CompositionEnd <= lineend)
+          {
+            GetCoordsFromPos(CompositionEnd, StopX, dummy);
+          }
+          
+          //nuiRect r(StartX, StartY, StopX, StopY, false);
+          
+          //pContext->DrawRect(r, eFillShape);
+          pContext->DrawLine(StartX, StopY, StopX, StopY);
+        }
+      }
+    }
+  }
+  
   pContext->SetFont(mpFont);
   pContext->DrawText(X, Y, *mpLayout);
 

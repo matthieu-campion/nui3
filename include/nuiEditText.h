@@ -221,7 +221,7 @@ protected:
     TextBlock(nuiFont* pFont, const nglString& rString, uint begin, uint end);
     virtual ~TextBlock();
 
-    void Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, nuiSize WidgetWidth);
+    void Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, uint CompositionBegin, uint CompositionEnd, nuiSize WidgetWidth);
     const nuiRect& GetIdealSize();
 
     void SetRect(const nuiRect& rRect);
@@ -267,6 +267,8 @@ protected:
   uint mCursorPos; // Position in the text string
   uint mAnchorPos; // Position in the text string
   int32 mDropCursorPos; // Position in the text string, -1 is disabled
+  int mCompositionPos; // Position in the text string of the text composition start (for IME)
+  int mCompositionLength; // size of the text composition (for IME)
 
   std::vector<std::pair<CommandId, nuiObject*> > mCommandStack;
   uint mCommandStackPos;
