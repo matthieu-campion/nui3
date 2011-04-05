@@ -316,7 +316,9 @@ void nuiEditText::TextCompositionCanceled()
     mCursorPos = mCompositionPos + mCompositionLength;
   }
   
+  mSelectionActive = true;
   Do(eDeleteSelection, NULL);
+  mSelectionActive = false;
   
   mCompositionPos = -1;
   mCompositionLength = 0;
@@ -324,6 +326,7 @@ void nuiEditText::TextCompositionCanceled()
 
 void nuiEditText::TextCompositionUpdated(const nglString& rString, int32 CursorPosition)
 {
+  printf("TextCompositionUpdated: '%s' %d\n", rString.GetChars(), CursorPosition);
   if (mCompositionPos < 0)
   {
     // Start composition
@@ -337,11 +340,14 @@ void nuiEditText::TextCompositionUpdated(const nglString& rString, int32 CursorP
     mCursorPos = mCompositionPos + mCompositionLength;
   }
 
+  mSelectionActive = true;
   Do(eDeleteSelection, NULL);
+  mSelectionActive = false;
   
   TextInput(rString);
   mCompositionLength = rString.GetLength();
   SetCursorPos(mCompositionPos + CursorPosition);
+  printf("  New cursor pos: %d\n", mCursorPos);
 }
 
 nglString nuiEditText::GetTextComposition() const
