@@ -820,7 +820,10 @@ nglString nuiTopLevel::CallGetTextComposition() const
 void nuiTopLevel::CallTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
 {
   if (mpFocus)
+  {
     mpFocus->TextCompositionIndexToPoint(CursorPosition, x, y);
+    mpFocus->LocalToGlobal(x, y);
+  }
 }
 
 bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)

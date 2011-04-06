@@ -691,14 +691,14 @@ void nuiMainWindow::OnTextCompositionStarted()
 {
   mLastEventTime = nglTime();
   mLastInteractiveEventTime = nglTime();
-  TextCompositionStarted();
+  CallTextCompositionStarted();
 }
 
 void nuiMainWindow::OnTextCompositionConfirmed()
 {
   mLastEventTime = nglTime();
   mLastInteractiveEventTime = nglTime();
-  TextCompositionConfirmed();
+  CallTextCompositionConfirmed();
 }
 
 void nuiMainWindow::OnTextCompositionCanceled()

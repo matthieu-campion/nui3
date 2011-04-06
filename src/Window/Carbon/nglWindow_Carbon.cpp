@@ -994,7 +994,6 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               {
                 // Done!
                 OnTextCompositionConfirmed();
-                OnTextInput(mComposedText);
                 mComposingText = false;
                 mComposedText.Nullify();
               }

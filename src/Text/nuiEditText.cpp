@@ -298,7 +298,14 @@ void nuiEditText::TextCompositionStarted()
 
 void nuiEditText::TextCompositionConfirmed()
 {
-  TextCompositionCanceled(); // Same as cancel: remove the text, place the cursor and wait for final TextInput
+  SetAnchorPos(mCompositionPos + mCompositionLength);
+  SetCursorPos(mCompositionPos + mCompositionLength);
+
+  mSelectionActive = false;
+
+  mCompositionPos = -1;
+  mCompositionLength = 0;
+  Invalidate();
 }
 
 void nuiEditText::TextCompositionCanceled()
@@ -322,6 +329,8 @@ void nuiEditText::TextCompositionCanceled()
   
   mCompositionPos = -1;
   mCompositionLength = 0;
+  
+  Invalidate();
 }
 
 void nuiEditText::TextCompositionUpdated(const nglString& rString, int32 CursorPosition)
@@ -1329,7 +1338,7 @@ bool nuiEditText::DeleteSelection(nuiObject* pParams)
     uint pos = 0;
     uint end = 0;
     SavePos(pParams);
-    if (mSelectionActive)
+    if (mSelectionActive && mAnchorPos != mCursorPos)
     {
       pos = MIN(mAnchorPos, mCursorPos);
       end = MAX(mAnchorPos, mCursorPos);
@@ -1339,6 +1348,7 @@ bool nuiEditText::DeleteSelection(nuiObject* pParams)
       return false;
     }
 
+    end = MIN(mText.GetLength(), end);
     pParams->SetProperty(_T("Text"), mText.Extract(pos, end - pos));
     mText.Delete(pos, end - pos);
 
@@ -1517,11 +1527,17 @@ bool nuiEditText::DeleteForward(nuiObject* pParams)
       end = mCursorPos + 1;
     }
 
+    if (mCompositionPos >= 0 && pos >= mCompositionPos + mCompositionLength)
+      return false;
+    
     pParams->SetProperty(_T("Text"), mText.Extract(pos, end - pos));
     mText.Delete(pos, end - pos);
 
     ClearBlocks();
     CreateBlocks(mText, mpBlocks);
+
+    if (mCompositionPos >= 0)
+      mCompositionLength--;
 
     MoveCursorTo(pos);
     mSelectionActive = false;
@@ -1565,6 +1581,9 @@ bool nuiEditText::DeleteBackward(nuiObject* pParams)
       pos = mCursorPos - 1;
       end = mCursorPos;
     }
+    
+    if (mCompositionPos >= 0 && pos < mCompositionPos)
+      return false;
 
     pParams->SetProperty(_T("Text"), mText.Extract(pos, end - pos));
     mText.Delete(pos, end - pos);
@@ -1573,6 +1592,9 @@ bool nuiEditText::DeleteBackward(nuiObject* pParams)
     CreateBlocks(mText, mpBlocks);
 
     MoveCursorTo(pos);
+    if (mCompositionPos >= 0)
+      mCompositionLength--;
+
     mSelectionActive = false;
     InvalidateLayout();
   }
@@ -1681,9 +1703,13 @@ bool nuiEditText::InsertText(nuiObject* pParams)
 
 bool nuiEditText::NewLine(nuiObject* pParams)
 {
-  nuiObject* pObj = new nuiObject();
-  pObj->SetProperty(_T("Text"), _T("\n"));
-  return Do(eInsertText, pObj);
+  if (mCompositionPos < 0)
+  {
+    nuiObject* pObj = new nuiObject();
+    pObj->SetProperty(_T("Text"), _T("\n"));
+    return Do(eInsertText, pObj);
+  }
+  return false;
 }
 
 
