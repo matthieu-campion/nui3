@@ -1008,10 +1008,10 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
             
           case kEventTextInputPosToOffset:
             {
-              printf("kEventTextInputPosToOffset\n");
               float x, y;
               x = y = 0;
               OnTextCompositionIndexToPoint(0, x, y);
+              printf("kEventTextInputPosToOffset -> %d %d\n", ToBelow(x), ToBelow(y));
             }
             break;
             
@@ -1031,7 +1031,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
 
               
               long byte_offset;
-              Point p;
+              HIPoint p;
               
               OSErr err = GetEventParameter(eventRef, kEventParamTextInputSendTextOffset, typeLongInteger, NULL, sizeof (long), NULL, &byte_offset);
               if (err != noErr)
@@ -1039,13 +1039,21 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               
               OnTextCompositionIndexToPoint(byte_offset, x, y);
 
-              p.h = x;
-              p.v = y;
+              p.x = x;
+              p.y = y;
+              
+              int xpos = 0, ypos = 0;
+              GetPosition(xpos, ypos);
+              
+              p.x += xpos;
+              p.y += ypos;
+
               
               //              SetEventParameter (event, kEventParamTextInputReplyPointSize, typeFixed, sizeof (Fixed), &point_size);
               //              SetEventParameter (event, kEventParamTextInputReplyLineHeight, typeShortInteger, sizeof (short), &height);
               //              SetEventParameter (event, kEventParamTextInputReplyLineAscent, typeShortInteger, sizeof (short), &ascent);
-              err = SetEventParameter (eventRef, kEventParamTextInputReplyPoint, typeQDPoint, sizeof (Point), &p);
+              err = SetEventParameter (eventRef, kEventParamTextInputReplyPoint, typeHIPoint, sizeof (HIPoint), &p);
+              printf("kEventTextInputOffsetToPos %d -> %d %d\n", byte_offset, ToBelow(x), ToBelow(y));
               if (err == noErr)
                 result = noErr;
             }
