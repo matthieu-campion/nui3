@@ -742,6 +742,9 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
   {
     case kEventClassKeyboard:
       {
+        if (mComposingText)
+          return eventNotHandledErr;
+        
         uint16 unicodetext;
         uint16 rawunicodetext = 0;
         uint32 keycode;
