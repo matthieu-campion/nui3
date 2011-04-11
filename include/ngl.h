@@ -550,6 +550,7 @@ typedef wchar_t nglChar;
 
 #  elif defined _ANDROID_
 #   include <GLES/gl.h>
+#   include <GLES/glext.h>
 
 #  else
 #    include <GL/gl.h>
