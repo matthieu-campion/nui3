@@ -547,6 +547,10 @@ typedef wchar_t nglChar;
 #      include <OpenGL/glu.h>
 #      include <OpenGL/OpenGL.h>
 #    endif
+
+#  elif defined _ANDROID_
+#   include <GLES/gl.h>
+
 #  else
 #    include <GL/gl.h>
 #    include <GL/glu.h>
