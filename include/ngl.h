@@ -572,7 +572,7 @@ typedef wchar_t nglChar;
 /* GL type for program/shader text */
 typedef char GLchar;
 #endif
-#ifndef GL_VERSION_1_5
+#if (!defined GL_VERSION_1_5) && (!defined _ANDROID_)
 typedef ptrdiff_t GLintptr;
 typedef ptrdiff_t GLsizeiptr;
 #endif
