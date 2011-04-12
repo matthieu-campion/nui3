@@ -201,7 +201,7 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
       if (dom_len > mDomainFormatLen)
       {
         mDomainFormatLen = dom_len;
-        mDomainFormat.Format(_T("%%-%dls: "), mDomainFormatLen);
+        mDomainFormat.Format(_T("%%-%ds: "), mDomainFormatLen);
       }
     }
 

@@ -54,7 +54,7 @@ bool nglModule::Load()
       BUFFER_LEN,
       NULL);
     errormsg = buffer;
-    NGL_LOG(_T("module"), NGL_LOG_ERROR, _T("error: %ls"), buffer);
+    NGL_LOG(_T("module"), NGL_LOG_ERROR, _T("error: %s"), buffer);
 
     return false;
   }

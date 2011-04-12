@@ -544,6 +544,16 @@ nglString::nglString(const std::string& rSource, nglTextEncoding Encoding)
   mIsNull = false;
 }
 
+nglString::nglString(const nglChar* pSource)
+{
+  mIsNull = true;
+  if (!pSource)
+    return;
+
+  mString = pSource;
+  mIsNull = false;
+}
+
 nglString::nglString(const nglChar* pSource, nglTextEncoding Encoding)
 {
   mIsNull = true;

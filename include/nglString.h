@@ -160,10 +160,11 @@ public:
 	//@{
 	nglString();                                 ///< Creates a null string (contains no data).
 	explicit nglString(nglUChar Ch);                 ///< Creates a string with a single char. If \p nglChar is zero, the string is empty
+  nglString(const nglChar* pSource);
 	nglString(const nglString& rSource);            ///< Copy constructor
 	nglString(const std::string& rSource, nglTextEncoding Encoding = eEncodingNative);       ///< Creates a string from a std::string
 
-	nglString(const nglChar* pSource, nglTextEncoding Encoding = eEncodingNative);
+	nglString(const nglChar* pSource, nglTextEncoding Encoding);
 	/*!<
 	Creates a string, importing from the null-terminated \a pSource byte array,
 	using the given \a Encoding. See Import() for more info.

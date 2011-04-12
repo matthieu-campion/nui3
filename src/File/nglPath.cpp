@@ -1187,7 +1187,7 @@ int32 nglPath::GetChildren(list<nglPath>& rChildren) const
 
 	do
 	{
-		if(wcscmp(findData.cFileName, ".") && wcscmp(findData.cFileName, ".."))
+		if(strcmp(findData.cFileName, ".") && strcmp(findData.cFileName, ".."))
 		{
       nglPath	path = *this;
       path += nglPath(findData.cFileName);
@@ -1224,7 +1224,7 @@ nglString nglPath::GetMimeType() const
 		return nglString(_T(""));;
 	}
 	RegCloseKey(key);
-	return nglString(value);
+	return nglString((nglChar*)value);
 }
 
 #ifdef WINCE
@@ -1362,7 +1362,7 @@ bool nglPath::ResolveLink()
 	}
 	else 
 	{
-		if (GetExtension() != L"lnk")
+		if (GetExtension() != "lnk")
 		{
 			return false;
 		}
