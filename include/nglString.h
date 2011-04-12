@@ -883,7 +883,7 @@ public:
 protected:
   nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglUChar Default, bool NoInit);
   
-  nglChar         mDefault;
+  nglUChar         mDefault;
   nglTextEncoding mFrom;
   nglTextEncoding mTo;
 

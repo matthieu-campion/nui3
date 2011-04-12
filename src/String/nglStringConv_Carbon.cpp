@@ -23,7 +23,7 @@ public:
 
 
 
-nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglChar Default)
+nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglUChar Default)
 {
   mFrom    = From;
   mTo      = To;
@@ -33,7 +33,7 @@ nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding T
   mpCodec  = new nglStringCodec(From, To);
 }
 
-nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglChar Default, bool NoInit)
+nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglUChar Default, bool NoInit)
 {
   mFrom    = From;
   mTo      = To;
