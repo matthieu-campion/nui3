@@ -255,7 +255,7 @@ bool nuiRect::SetValue(const nglString& Value)
     w = vec[2].GetCFloat();
     h = vec[3].GetCFloat();
     Set(x,y,w,h);
-    //NGL_OUT(_T("%ls\n"), GetValue().GetChars());
+    //NGL_OUT(_T("%s\n"), GetValue().GetChars());
 
     return true;
   }

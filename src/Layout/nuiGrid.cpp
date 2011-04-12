@@ -433,8 +433,8 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
     sizeX = mWidths[col];
     
     // if (GetDebug())
-    //     printf("  nuiGrid::SetRect [0x%x '%ls'] - column %d size: %f\n", this, GetProperty(_T("Name")).GetChars(), col, sizeX);
-    //NGL_OUT(_T("  nuiGrid::SetRect [0x%x '%ls'] - row %d column %d size: %f\n"), this, GetProperty(_T("Name")).GetChars(), row, col, sizeX);
+    //     printf("  nuiGrid::SetRect [0x%x '%s'] - column %d size: %f\n", this, GetProperty(_T("Name")).GetChars(), col, sizeX);
+    //NGL_OUT(_T("  nuiGrid::SetRect [0x%x '%s'] - row %d column %d size: %f\n"), this, GetProperty(_T("Name")).GetChars(), row, col, sizeX);
     
     std::vector<nuiWidget*>::const_iterator row_end = (*col_it).end();
     for (row_it = (*col_it).begin(); row_it != row_end; ++row_it)

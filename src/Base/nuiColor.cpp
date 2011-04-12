@@ -215,7 +215,7 @@ bool nuiColor::SetValue(const nglString& rString)
     }
     return true;
   }
-  else if (rString.Extract(0,3) == L"rgb")
+  else if (rString.Extract(0,3) == "rgb")
   {
     nglString str = rString.Extract(rString.Find('(')+1);
     str.TrimRight(')');
@@ -262,10 +262,10 @@ bool nuiColor::SetValue(const nglString& rString)
     }
     
     // the color name is unknow.
-    //wprintf(_T("error : the color name '%ls' is unknown\n"), rString.GetChars());
+    //wprintf(_T("error : the color name '%s' is unknown\n"), rString.GetChars());
   }
   
-  NGL_LOG(_T("nuiWidgetCreator"), NGL_LOG_WARNING, _T("nuiColor warning : could not find any color definition from '%ls'\n"), rString.GetChars());
+  NGL_LOG(_T("nuiWidgetCreator"), NGL_LOG_WARNING, _T("nuiColor warning : could not find any color definition from '%s'\n"), rString.GetChars());
 
   return false;
 }

@@ -48,7 +48,7 @@ using namespace std;
 #define _T(X) L##X
 #endif
 
-const nglChar nglPath::PortableCharset[] = L"/.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
+const nglChar nglPath::PortableCharset[] = _T("/.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_");
 
 const nglPathVolume::VolumeFlags nglPathVolume::All        = 0xFFFFFFFF;
 const nglPathVolume::VolumeFlags nglPathVolume::ReadOnly   = (1 << 0);
@@ -98,11 +98,6 @@ nglPathVolume& nglPathVolume::operator=(const nglPathVolume& rPathVolume)
 
 nglPath::nglPath()
 {
-}
-
-nglPath::nglPath (const char* pPathName)
-{
-	InternalSetPath(pPathName);
 }
 
 nglPath::nglPath (const nglChar* pPathName)
@@ -745,7 +740,7 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
   // output debug
 /*
 wchar_t prout[1024];
-  swprintf(&prout[0], 1024,_T("\n\nFILE '%ls'\naccess seconds %d  Minutes %d   Hours %d   Day %d   Month %d   Year %d   WeekDay %d   DST %d\n"),
+  swprintf(&prout[0], 1024,_T("\n\nFILE '%s'\naccess seconds %d  Minutes %d   Hours %d   Day %d   Month %d   Year %d   WeekDay %d   DST %d\n"),
     GetChars(), accessTimeInfo.Seconds, accessTimeInfo.Minutes, accessTimeInfo.Hours, accessTimeInfo.Day, accessTimeInfo.Month, accessTimeInfo.Year, accessTimeInfo.WeekDay, accessTimeInfo.DST);
  
   OutputDebugString(&prout[0]);
@@ -961,12 +956,6 @@ nglPath nglPath::GetAbsolutePath() const
 * Operators
 */
 
-const nglPath& nglPath::operator=(const char* pSource)
-{
-	InternalSetPath(pSource);
-	return *this;
-}
-
 const nglPath& nglPath::operator=(const nglChar* pSource)
 {
 	InternalSetPath(pSource);
@@ -1081,24 +1070,12 @@ len = mPathName.GetLength();
 for (i = 0; i < len; i++)
 if (strchr (ValidChars, mPathName[i]) == NULL)
 {
-NGL_DEBUG( NGL_LOG("path", NGL_LOG_WARNING, _T("Warning: path contains non portable chars (%ls)"), (nglChar*)mPathName); )
+NGL_DEBUG( NGL_LOG("path", NGL_LOG_WARNING, _T("Warning: path contains non portable chars (%s)"), (nglChar*)mPathName); )
 return false;
 }
 return true;
 }
 */
-
-bool nglPath::InternalSetPath(const char* pPath)
-{
-	nglString temp;
-
-	if (temp.Import(pPath, eUTF8) == -1)
-	{
-		// Conversion error
-		return false;
-	}
-	return InternalSetPath(temp.GetChars());
-}
 
 bool nglPath::InternalSetPath(const nglChar* pPath)
 {
@@ -1195,13 +1172,13 @@ int32 nglPath::GetChildren(list<nglPath>& rChildren) const
 
 //	#ifdef WINCE
 
-	WCHAR	filter[MAX_PATH + 1];
+	nglChar	filter[MAX_PATH + 1];
 
-	wcscpy(filter, mPathName.GetChars());
-	if (filter[wcslen(filter)-1] ==L'/')
-		wcscat(filter, L"*");
+	strcpy(filter, mPathName.GetChars());
+	if (filter[strlen(filter)-1] =='/')
+		strcat(filter, "*");
 	else
-    wcscat(filter, L"/*");
+    strcat(filter, "/*");
 
 	WIN32_FIND_DATA		findData;
 
@@ -1210,7 +1187,7 @@ int32 nglPath::GetChildren(list<nglPath>& rChildren) const
 
 	do
 	{
-		if(wcscmp(findData.cFileName, L".") && wcscmp(findData.cFileName, L".."))
+		if(wcscmp(findData.cFileName, ".") && wcscmp(findData.cFileName, ".."))
 		{
       nglPath	path = *this;
       path += nglPath(findData.cFileName);
@@ -1247,14 +1224,14 @@ nglString nglPath::GetMimeType() const
 		return nglString(_T(""));;
 	}
 	RegCloseKey(key);
-	return nglString((char*)value);
+	return nglString(value);
 }
 
 #ifdef WINCE
 uint64 nglPath::GetVolumes(list<nglPathVolume>& rVolumes, uint64 Flags)
 {
 	nglPathVolume	pathvolume;
-	pathvolume.mPath = L"/";
+	pathvolume.mPath = "/";
 	rVolumes.push_back(pathvolume);
 	return rVolumes.size();
 }
@@ -1494,7 +1471,7 @@ nglString nglPath::GetVolumeName() const
     nglString name(mPathName.Extract(0, rootpart));
     name.Trim(_T('/'));
     name.Trim(_T(':'));
-    //wprintf(_T("GetVolumeName(\"%ls\") -> \"%ls\"\n"), GetChars(), name.GetChars());
+    //wprintf(_T("GetVolumeName(\"%s\") -> \"%s\"\n"), GetChars(), name.GetChars());
     return name;
   }
   

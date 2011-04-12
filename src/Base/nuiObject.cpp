@@ -137,7 +137,7 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   if (mSerializeMode == eDontSaveNode)
     return NULL;
 
-  NGL_OUT(_T("Serialize: %ls\n"), GetObjectClass().GetChars());
+  NGL_OUT(_T("Serialize: %s\n"), GetObjectClass().GetChars());
   
   if (mSerializeMode != eSkipNode)
   {
@@ -206,7 +206,7 @@ nuiSerializeMode nuiObject::GetSerializeMode () const
 nuiObject::~nuiObject()
 {
   CheckValid();
-  //NGL_OUT(_T("Deleting object '%ls' (class='%ls')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
+  //NGL_OUT(_T("Deleting object '%s' (class='%s')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
   delete mpToken;
 
   int32 c = mClassNameIndex;
@@ -345,7 +345,7 @@ void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
   CheckValid();
 //  if (rName == _T("ToolTip") && GetObjectClass() == _T("HelpLabel"))
 //  {
-//    NGL_OUT(_T("nuiObject::SetProperty for 0x%x %ls / %ls = %ls\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rValue.GetChars());
+//    NGL_OUT(_T("nuiObject::SetProperty for 0x%x %s / %s = %s\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rValue.GetChars());
 //  }
   
   mProperties[rName] = rValue;
@@ -504,7 +504,7 @@ void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap)
   int32 c = mClassNameIndex;
   while (c >= 0)
   {
-    //printf("\t\tattr for class %ls\n", GetClassNameFromIndex(c).GetChars());
+    //printf("\t\tattr for class %s\n", GetClassNameFromIndex(c).GetChars());
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].begin();
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
     
@@ -526,7 +526,7 @@ void nuiObject::GetAttributesOfClass(uint32 ClassIndex, std::map<nglString, nuiA
   int32 c = ClassIndex;
   while (c >= 0)
   {
-    //printf("\t\tattr for class %ls\n", GetClassNameFromIndex(c).GetChars());
+    //printf("\t\tattr for class %s\n", GetClassNameFromIndex(c).GetChars());
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].begin();
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
     
@@ -682,7 +682,7 @@ int32 nuiObject::GetClassNameIndex(const nglString& rName)
     mObjectClassNames.push_back(rName);
     mClassAttributes.resize(index + 1);
     mInheritanceMap.push_back(-2); // -1 = not parent, -2 = not initialized
-    //NGL_DEBUG( printf("New class: %ls [%d]\n", rName.GetChars(), index); )
+    //NGL_DEBUG( printf("New class: %s [%d]\n", rName.GetChars(), index); )
     
     return index;
   }
@@ -791,7 +791,7 @@ void nuiObject::CheckValidInternal() const
   }
   else if (!it->second.mAlive)
   {
-    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%ls - %ls).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
+    NGL_LOG(_T("nuiObject"), 0, _T("Operating on an invalid Object! 0x%x (%s - %s).\n"), this, it->second.mClass.GetChars(), it->second.mName.GetChars());
   }
   NGL_ASSERT(it != mObjects.end());
   const Trace& rTrace(it->second);

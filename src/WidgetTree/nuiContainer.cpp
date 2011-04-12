@@ -75,7 +75,7 @@ void nuiContainer::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) co
 nuiContainer::~nuiContainer()
 {
   CheckValid();
-  //NGL_OUT(_T("Deleting nuiContainer '%ls' (class='%ls')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
+  //NGL_OUT(_T("Deleting nuiContainer '%s' (class='%s')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
 }
 
 // We need to do something special about SetObjectXXX in order to avoid pure virtual method called from the constructor.
@@ -287,7 +287,7 @@ nuiWidgetPtr nuiContainer::GetChild(const nglString& rName, bool recurse )
 
     if (!pNode)
     {
-      //NUI_OUT("Tried to find %ls on %ls", rTok.GetChars(), pOld->GetParamCString(ParamIds::Name));
+      //NUI_OUT("Tried to find %s on %s", rTok.GetChars(), pOld->GetParamCString(ParamIds::Name));
       return NULL;
     }
   }

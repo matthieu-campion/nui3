@@ -254,7 +254,7 @@ nuiRect nuiPane::CalcIdealSize()
     pItem->SetLayoutConstraint(constraint);
     nuiRect t = pItem->GetIdealRect();
     temp.Union(t,temp); // Dummy call. Only the side effect is important: the object recalculates its layout.
-    //NGL_OUT(_T("    PaneItem rect %ls\n"), t.GetValue().GetChars());
+    //NGL_OUT(_T("    PaneItem rect %s\n"), t.GetValue().GetChars());
   }
   delete pIt;
 
@@ -266,6 +266,6 @@ nuiRect nuiPane::CalcIdealSize()
 
   temp.MoveTo(0,0);
 
-  //NGL_OUT(_T("    Pane rect %ls\n"), mIdealRect.GetValue().GetChars());
+  //NGL_OUT(_T("    Pane rect %s\n"), mIdealRect.GetValue().GetChars());
   return temp;
 }

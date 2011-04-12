@@ -12,7 +12,7 @@ public:
   
 };
 
-nglStringConv::nglStringConv (const nglTextEncoding From, const nglTextEncoding To, nglChar Default)
+nglStringConv::nglStringConv (const nglTextEncoding From, const nglTextEncoding To, nglUChar Default)
 {
   mFrom    = From;
   mTo      = To;
@@ -22,7 +22,7 @@ nglStringConv::nglStringConv (const nglTextEncoding From, const nglTextEncoding 
   mpCodec  = new nglStringCodec(From, To);
 }
 
-nglStringConv::nglStringConv (const nglTextEncoding From, const nglTextEncoding To, nglChar Default, bool NoInit)
+nglStringConv::nglStringConv (const nglTextEncoding From, const nglTextEncoding To, nglUChar Default, bool NoInit)
 {
   mState   = eStringConv_OK;
   mFrom    = From;
@@ -195,13 +195,9 @@ const char *nglStringCodec::GetName(nglTextEncoding Encoding)
     case eUCS2 : return "UCS-2";
     case eUCS4 : return "UCS-4";
     // Others
-    //case eEncodingInternal: return "UCS-4-INTERNAL";
+    //case eEncodingInternal: return "UTF-8";
     //case eEncodingNative  : return "UTF-8";
-#if (!defined __CARBON__)
-    case eEncodingInternal: return "wchar_t";
-#else
-    case eEncodingInternal: return "UCS-4-INTERNAL";
-#endif
+    case eEncodingInternal: return "UTF-8";
     case eEncodingNative  : return "UTF-8";
     case eEncodingUnknown:
     default:

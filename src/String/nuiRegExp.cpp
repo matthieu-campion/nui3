@@ -239,7 +239,7 @@ public:
 
 void CRegErrorHandler::regerror( const nglChar* s ) const
 {
-  NGL_OUT(_T("regerror: %ls\n"), s );
+  NGL_OUT(_T("regerror: %s\n"), s );
   m_szError = s;
 }
 
@@ -502,7 +502,7 @@ regexp::regexp( const nglChar* exp, bool iCase )
 
   if ( iCase )
   {
-    nglChar* out = new nglChar[(wcslen( exp ) * 4) + 1];
+    nglChar* out = new nglChar[(strlen( exp ) * 4) + 1];
     ignoreCase( exp, out );
 
 #if _DEBUG
@@ -621,10 +621,10 @@ bool regexp::regcomp(const nglChar* exp)
       size_t len = 0;
 
       for (; scan != NULL; scan = regnext(scan))
-        if (OP(scan) == EXACTLY && wcslen(OPERAND(scan)) >= len)
+        if (OP(scan) == EXACTLY && strlen(OPERAND(scan)) >= len)
         {
           longest = OPERAND(scan);
-          len = wcslen(OPERAND(scan));
+          len = strlen(OPERAND(scan));
         }
       regmust = longest;
       regmlen = (int)len;
@@ -1088,7 +1088,7 @@ bool regexp::regexec( const nglChar* str )
   }
 
   // If there is a "must appear" string, look for it. 
-  if ( regmust != NULL && wcsstr( string, regmust ) == NULL )
+  if ( regmust != NULL && strstr( string, regmust ) == NULL )
     return false;
 
   CRegExecutor executor( this, string );
@@ -1101,7 +1101,7 @@ bool regexp::regexec( const nglChar* str )
   if ( regstart != '\0' )
   {
     // We know what nglChar it must start with. 
-    for ( nglChar* s = string; s != NULL; s = wcschr( s+1 , regstart ) )
+    for ( nglChar* s = string; s != NULL; s = strchr( s+1 , regstart ) )
     {
       if ( executor.regtry( s) )
         return true;
@@ -1210,8 +1210,8 @@ bool CRegExecutor::regmatch( nglChar* prog )
         // Inline the first character, for speed. 
         if (*opnd != *reginput)
           return false;
-        len = wcslen(opnd);
-        if (len > 1 && wcsncmp(opnd, reginput, len) != 0)
+        len = strlen(opnd);
+        if (len > 1 && strncmp(opnd, reginput, len) != 0)
           return false;
         reginput += len;
 
@@ -1219,13 +1219,13 @@ bool CRegExecutor::regmatch( nglChar* prog )
       }
       case ANYOF:
         if (*reginput == '\0' ||
-            wcschr(OPERAND(scan), *reginput) == NULL)
+            strchr(OPERAND(scan), *reginput) == NULL)
           return false;
         reginput++;
         break;
       case ANYBUT:
         if (*reginput == '\0' ||
-            wcschr(OPERAND(scan), *reginput) != NULL)
+            strchr(OPERAND(scan), *reginput) != NULL)
           return false;
         reginput++;
         break;
@@ -1341,7 +1341,7 @@ size_t CRegExecutor::regrepeat( nglChar* node )
   switch (OP(node))
   {
     case ANY:
-      return(wcslen(reginput));
+      return(strlen(reginput));
       break;
     case EXACTLY:
       ch = *OPERAND(node);
@@ -1351,10 +1351,10 @@ size_t CRegExecutor::regrepeat( nglChar* node )
       return(count);
       break;
     case ANYOF:
-      return(wcsspn(reginput, OPERAND(node)));
+      return(strspn(reginput, OPERAND(node)));
       break;
     case ANYBUT:
-      return(wcscspn(reginput, OPERAND(node)));
+      return(strcspn(reginput, OPERAND(node)));
       break;
     default:    // Oh dear.  Called inappropriately. 
       regerror( REGERR_BAD_REGREPEAT );
@@ -1437,13 +1437,13 @@ nglChar* CRegProgramAccessor::regprop( nglChar* op )
   case OPEN+1: case OPEN+2: case OPEN+3:
   case OPEN+4: case OPEN+5: case OPEN+6:
   case OPEN+7: case OPEN+8: case OPEN+9:
-    _stprintf(buf+wcslen(buf), _T( "OPEN%d" ), OP(op)-OPEN);
+    _stprintf(buf+strlen(buf), _T( "OPEN%d" ), OP(op)-OPEN);
     p = NULL;
     break;
   case CLOSE+1: case CLOSE+2: case CLOSE+3:
   case CLOSE+4: case CLOSE+5: case CLOSE+6:
   case CLOSE+7: case CLOSE+8: case CLOSE+9:
-    _stprintf(buf+wcslen(buf), _T( "CLOSE%d" ), OP(op)-CLOSE);
+    _stprintf(buf+strlen(buf), _T( "CLOSE%d" ), OP(op)-CLOSE);
     p = NULL;
     break;
   default:
@@ -1736,7 +1736,7 @@ nglString regexp::GetReplaceString( const nglChar* sReplaceExp ) const
     {
       // Get tagged expression
       len = endp[no] - startp[no];
-      wcsncpy(buf, startp[no], len);
+      strncpy(buf, startp[no], len);
       buf += len;
       if (len != 0 && *(buf-1) == _T( '\0' ))
       { /* strncpy hit NUL. */

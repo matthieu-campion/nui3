@@ -543,21 +543,21 @@ bool nglFile::Open()
 	switch (mMode)
 	{
 		case eFileRead:
-			mFD = _wfsopen(filename.GetChars(), L"rb", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "rb", _SH_DENYNO);
 			break;
 
 		case eFileWrite:
-			mFD = _wfsopen(filename.GetChars(), L"wb", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "wb", _SH_DENYNO);
 			break;
 
 		case eFileModify:
-			mFD = _wfsopen(filename.GetChars(), L"rb+", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "rb+", _SH_DENYNO);
       if (!mFD)
-        mFD = _wfsopen(filename.GetChars(), L"wb", _SH_DENYNO);
+        mFD = _fsopen(filename.GetChars(), "wb", _SH_DENYNO);
       break;
 
 		case eFileAppend:
-			mFD = _wfsopen(filename.GetChars(), L"ab+", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "ab+", _SH_DENYNO);
 			break;
 	}
 

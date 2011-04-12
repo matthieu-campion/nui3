@@ -8,7 +8,8 @@
 #pragma once
 
 // nglChar
-typedef wchar_t nglChar;
+typedef char nglChar;
+typedef wchar_t nglUChar;
 
 class nglStringConv;
 
@@ -158,27 +159,25 @@ public:
 	/** @name Life cycle */
 	//@{
 	nglString();                                 ///< Creates a null string (contains no data).
-	explicit nglString(nglChar Ch);                 ///< Creates a string with a sinuie char. If \p nglChar is zero, the string is empty
+	explicit nglString(nglUChar Ch);                 ///< Creates a string with a single char. If \p nglChar is zero, the string is empty
 	nglString(const nglString& rSource);            ///< Copy constructor
-	nglString(const nglChar* pSource);              ///< Creates a string from a null-terminated char array
 	nglString(const std::string& rSource, nglTextEncoding Encoding = eEncodingNative);       ///< Creates a string from a std::string
-	nglString(const std::wstring& rSource);      ///< Creates a string from a std::wstring
 
-	explicit nglString(const char* pSource, nglTextEncoding Encoding = eEncodingNative);
+	nglString(const nglChar* pSource, nglTextEncoding Encoding = eEncodingNative);
 	/*!<
 	Creates a string, importing from the null-terminated \a pSource byte array,
 	using the given \a Encoding. See Import() for more info.
 	*/
-	nglString(const char* pSource, int32 Length, nglTextEncoding Encoding = eEncodingNative);
+	nglString(const nglChar* pSource, int32 Length, nglTextEncoding Encoding = eEncodingNative);
 	/*!<
 	Creates a string, importing no more than \p Length chars from the
 	\p pSource string, using the given \p Encoding. See Import() for more info.
 	*/
 
-	explicit nglString(int32 integer);
-	explicit nglString(uint32 integer);
-	explicit nglString(float fl, int32 precision = 8);
-	explicit nglString(double db, int32 precision = 8);
+//	explicit nglString(int32 integer);
+//	explicit nglString(uint32 integer);
+//	explicit nglString(float fl, int32 precision = 8);
+//	explicit nglString(double db, int32 precision = 8);
 
 	~nglString();                            ///< Destructor. Release associated data
 	//@}
@@ -195,9 +194,11 @@ public:
 	nglChar GetChar(uint32 Index)	const;  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
 	nglChar GetChar(int32 Index)		const { return GetChar((uint32)Index); }  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
 	nglChar GetLastChar() const;        ///< Returns last char of string. Returns zero if the string is \e null or \e empty
+	nglUChar GetUChar(uint32 Index)	const;  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
+	nglUChar GetUChar(int32 Index)		const { return GetChar((uint32)Index); }  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
+	nglUChar GetLastUChar() const;        ///< Returns last char of string. Returns zero if the string is \e null or \e empty
 	const nglChar* GetChars() const;           ///< Returns the string content as a char array. Returns null if the string is \e null
 	std::string GetStdString(const nglTextEncoding Encoding=eUTF8) const;    ///< Returns the string content as an std::string. Return an empty string if the string is \e null.
-	std::wstring GetStdWString() const;   ///< Returns the string content as an std::string. Return an empty string if the string is \e null.
 
 	char* Export(const nglTextEncoding Encoding = eUTF8) const;
 	/*!< Export to a given text encoding
@@ -298,14 +299,14 @@ public:
 
 	/** @name Add/modify string content */
 	//@{
-	bool SetChar (nglChar nglChar, int32 Index);
+	bool SetChar (nglUChar Char, int32 Index);
 	/*!< Set char value \p nglChar at position \p Index
 	\return false if \p Index is out of range
 
 	A zero char can be inserted, although it is a funny hack (use Delete() instead).
 	*/
 
-	bool Fill (nglChar Pattern, int32 RepeatCount);            ///< Fills string with \p RepeatCount chars of value \p Pattern
+	bool Fill (nglUChar Pattern, int32 RepeatCount);            ///< Fills string with \p RepeatCount chars of value \p Pattern
 	bool Fill (const nglChar* pPattern, int32 RepeatCount);    ///< Fills string with \p RepeatCount occurrences of the null-terminated \p pPattern string
 	bool Fill (const nglString& rPattern, int32 RepeatCount);  ///< Fills string with \p RepeatCount occurrences of \p rString
 
@@ -328,7 +329,7 @@ public:
   int32 Import(int32& rOffset, const char* pBuffer, int32& rToRead, nglStringConv& rConv);
 
 
-	bool Copy   (nglChar nglChar);              ///< Set current string to one char which value is \p nglChar
+	bool Copy   (nglChar Char);              ///< Set current string to one char which value is \p nglChar
 	bool Copy   (const nglChar* pSource);
 	bool Copy   (const nglChar* pSource, int32 len);
 	/*!< Copy \a pSource content into string
@@ -336,7 +337,7 @@ public:
 	*/
 	bool Copy   (const nglString& rSource);  ///< Copy \p rSource content into string
 
-	bool Insert(nglChar nglChar, int32 Index);
+	bool Insert(nglChar Char, int32 Index);
 	/*!< Insert \p nglChar at position \p Index
 	\return false if \p Index is out of range
 	*/
@@ -349,11 +350,11 @@ public:
 	\return false if \p rSource is a null string or \p Index is out of range
 	*/
 
-	nglString& Append(nglChar nglChar);              ///< Append \p nglChar to string
+	nglString& Append(nglUChar Char);              ///< Append \p nglChar to string
 	nglString& Append(const nglChar* pSource);    ///< Append the null-terminated \p pSource string
 	nglString& Append(const nglString& rSource);  ///< Append \p rSource content
 
-	nglString& Prepend(nglChar nglChar);              ///< Prepend \p nglChar to string
+	nglString& Prepend(nglUChar nglChar);              ///< Prepend \p nglChar to string
 	nglString& Prepend(const nglChar* pSource);    ///< Prepend the null-terminated \p pSource string
 	nglString& Prepend(const nglString& rSource);  ///< Prepend \p rSource content
 
@@ -374,27 +375,27 @@ public:
 	bool DeleteRight(int32 Count);              ///< Delete \p Count rightmost chars
 
 	bool Trim();                           ///< Remove white spaces from both ends (see WhiteSpace)
-	bool Trim(nglChar nglChar);                 ///< Remove trailing chars \p nglChar from both ends
+	bool Trim(nglUChar Char);                 ///< Remove trailing chars \p nglChar from both ends
 	bool Trim(const nglChar* pTrimSet);      ///< Remove chars from the null-termianted \p pTrimSet string from both ends
 	bool Trim(const nglString& rTrimSet);    ///< Remove chars from the \p rTrimSet string from both ends
 
 	bool TrimLeft();                             ///< Remove leftmost white spaces (see WhiteSpace)
-	bool TrimLeft(nglChar nglChar);                ///< Remove leftmost trailing chars \p nglChar
+	bool TrimLeft(nglUChar Char);                ///< Remove leftmost trailing chars \p nglChar
 	bool TrimLeft(const nglChar* pTrimSet);     ///< Remove leftmost chars from the null-termianted \p pTrimSet string
 	bool TrimLeft(const nglString& rTrimSet);   ///< Remove leftmost chars from the \p rTrimSet string
 
 	bool TrimRight();                            ///< Remove rightmost white spaces (see WhiteSpace)
-	bool TrimRight(nglChar nglChar);               ///< Remove rightmost trailing chars \p nglChar
+	bool TrimRight(nglUChar Char);               ///< Remove rightmost trailing chars \p nglChar
 	bool TrimRight(const nglChar* pTrimSet);    ///< Remove rightmost chars from the null-termianted \p pTrimSet string
 	bool TrimRight(const nglString& rTrimSet);  ///< Remove rightmost chars from the \p rTrimSet string
 	//@}
 
 	/** @name Edit string content */
 	//@{
-	bool Replace(int32 Index, int32 Length, nglChar nglChar);
+	bool Replace(int32 Index, int32 Length, nglChar Char);
 	/*!< Replace string portion of length \p Length starting from position \p Index with char \p nglChar
-	\return false if \p Index or \p Length are out of range
-	*/
+   \return false if \p Index or \p Length are out of range
+   */
 	bool Replace(int32 Index, int32 Length, const nglChar* pSource);
 	/*!< Replace string portion of length \p Length starting from position \p Index with the null-terminated \p pSource string
 	\return false if \p pSource is null or \p Index or \p Length are out of range
@@ -406,7 +407,7 @@ public:
 
 	bool Replace(const nglChar Old, const nglChar New);
 	/*!< Replace occurrences of char \p Old with \p New
-	*/
+   */
 	bool Replace(const nglChar* pOld, const nglChar* pNew);
 	/*!< Replace occurrences of the null-terminated \p pOld string with the null-terminated \p pNew string
 	\return false if \p pOld or \p pNew are null
@@ -421,7 +422,7 @@ public:
 	nglString& ToLower();                       ///< Convert all upper case chars to lower case
 	nglString& ToLower(int32 Index, int32 Length);  ///< Convert \p Length upper case chars from position \p Index to lower case
   
-  char* EncodeUrl(); ///< outputs a malloc'ed char* encoded as valid URL data in UTF8 as per RFC 2396
+  nglChar* EncodeUrl(); ///< outputs a malloc'ed char* encoded as valid URL data in UTF8 as per RFC 2396
   void DecodeUrl();
   void EncodeToXML();
   void DecodeFromXML();
@@ -432,7 +433,6 @@ public:
   
 	nglString& Format(const nglString& rFormat, ...);
 	nglString& Format(const nglChar* pFormat, ...);
-	nglString& Format(const char* pFormat, ...);
 	/*!< Format a string from arguments a la printf
 	Please refer to your favorite printf's reference. Make sure you are using
 	POSIX or ISOC99 format tags if you want to keep your program portable.
@@ -442,21 +442,18 @@ public:
 	*/
 	nglString& Formatv(const nglString& rFormat, va_list Args);
 	nglString& Formatv(const nglChar* pFormat, va_list Args);
-	nglString& Formatv(const char* pFormat, va_list Args);
 	/*!< Format a string from arguments a la printf
 	This is the vararg version of Format()
 	*/
 
 	nglString& CFormat(const nglString& rFormat, ...);
 	nglString& CFormat(const nglChar* pFormat, ...);
-	nglString& CFormat(const char* pFormat, ...);
 	/*!< Format a string from arguments a la printf, using the 'C' locale (American numeric conventions) */
 	nglString& CFormatv(const nglString& pFormat, va_list Args);
 	nglString& CFormatv(const nglChar* pFormat, va_list Args);
-	nglString& CFormatv(const char* pFormat, va_list Args);
 	/*!< Format a string from arguments a la printf, using the 'C' locale (American numeric conventions) */
 
-	nglString& Add(nglChar s);
+	nglString& Add(nglUChar s);
 	nglString& Add(int8 s, int base = 10);
 	nglString& Add(uint8 s, int base = 10);
 	nglString& Add(int16 s, int base = 10);
@@ -469,16 +466,13 @@ public:
 	nglString& Add(double s, int32 precision = 8, nglFloatFormatFlag flags = Simple);
 	nglString& Add(const nglString& rString, int32 count = 1);
   nglString& Add(const nglChar* pString, int32 count = 1);
-	nglString& Add(const char* pString, int32 count = 1);
 	nglString& Add(void* pVoidPointer);
 	nglString& AddNewLine();
 
-  nglString& AddFormat(const char* pString, ...);
-  nglString& AddFormat(const char* pString, va_list Args);
   nglString& AddFormat(const nglChar* pString, ...);
   nglString& AddFormat(const nglChar* pString, va_list Args);
 
-  int32 HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar = true, int32 Columns = 16);
+  int32 HexDump(const nglChar* pBuffer, int32 ByteCount, bool PrintChar = true, int32 Columns = 16);
 	/*!< Output an hexadecimal byte dump
 	\param pBuffer source buffer
 	\param ByteCount size of buffer in bytes
@@ -579,7 +573,7 @@ public:
   
 	/** @name Substring search */
 	//@{
-	int32 Find(nglChar nglChar, int32 Index, int32 End,  bool CaseSensitive = true) const;
+	int32 Find(nglChar Char, int32 Index, int32 End,  bool CaseSensitive = true) const;
 	/*!< Search the first occurrence of char \p nglChar from position \p Index to position \p End
 	\param nglChar occurrence to find
 	\param Index start search from this position
@@ -587,7 +581,7 @@ public:
 	\param CaseSensitive if false perform a case insensitive comparison
 	\return the position of the first occurrence, -1 if there is none
 	*/
-	int32 Find(nglChar nglChar, int32 Index = 0, bool CaseSensitive = true) const;
+	int32 Find(nglChar Char, int32 Index = 0, bool CaseSensitive = true) const;
 	/*!< Search the first occurrence of char \p nglChar from position \p Index
 	\param nglChar occurrence to find
 	\param Index start search from this position
@@ -609,7 +603,7 @@ public:
 	\return the position of the first occurrence, -1 if there is none
 	*/
 
-	int32 FindLast(nglChar nglChar, int32 Index = -1, bool CaseSensitive = true) const;
+	int32 FindLast(nglChar Char, int32 Index = -1, bool CaseSensitive = true) const;
 	/*!< Search the last occurrence of char \p nglChar
 	\param nglChar occurrence to find
 	\param Index search start index. If negative, start search from GetLength() - Index.
@@ -631,8 +625,8 @@ public:
 	\return the position of the first occurrence, -1 if there is none
 	*/
 
-	int32 Contains(nglChar nglChar, int32 Index, int32 End, bool CaseSensitive = true) const; ///< Return the number of occurrences of \p nglChar
-	int32 Contains(nglChar nglChar, bool CaseSensitive = true) const;              ///< Return the number of occurrences of \p nglChar
+	int32 Contains(nglChar Char, int32 Index, int32 End, bool CaseSensitive = true) const; ///< Return the number of occurrences of \p nglChar
+	int32 Contains(nglChar Char, bool CaseSensitive = true) const;              ///< Return the number of occurrences of \p nglChar
 	int32 Contains(const nglChar* pSource, bool CaseSensitive = true) const;    ///< Return the number of occurrences of the null-terminated \p pSource string
 	int32 Contains(const nglString& rSource, bool CaseSensitive = true) const;  ///< Return the number of occurrences of \p rSource
 	//@}
@@ -730,63 +724,62 @@ public:
 	/** @name Operators */
 	//@{
 	// Assignment
-	const nglString& operator=(const nglChar nglChar);
-	const nglString& operator=(const char* pSource);
+	const nglString& operator=(const nglUChar Char);
 	const nglString& operator=(const nglChar* pSource);
 	const nglString& operator=(const nglString& rSource);
 
 	// Appending
-	const nglString& operator+=(const nglChar nglChar);
+	const nglString& operator+=(const nglUChar Char);
 	const nglString& operator+=(const nglChar* pSource);
 	const nglString& operator+=(const nglString& rSource);
 
 	// Concatenation
-	friend nglString operator+(const nglString& rLeft, const nglChar Right);
+	friend nglString operator+(const nglString& rLeft, const nglUChar Right);
 	friend nglString operator+(const nglString& rLeft, const nglChar* pRight);
 	friend nglString operator+(const nglString& rLeft, const nglString& rRight);
-	friend nglString operator+(const nglChar Left, const nglString& rRight);
+	friend nglString operator+(const nglUChar Left, const nglString& rRight);
 	friend nglString operator+(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (equal)
-	friend bool operator==(const nglString& rLeft, const nglChar Right);
+	friend bool operator==(const nglString& rLeft, const nglUChar Right);
 	friend bool operator==(const nglString& rLeft, const nglChar* pRight);
 	friend bool operator==(const nglString& rLeft, const nglString& rRight);
-	friend bool operator==(const nglChar Left, const nglString& rRight);
+	friend bool operator==(const nglUChar Left, const nglString& rRight);
 	friend bool operator==(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (different)
-	friend bool operator!=(const nglString& rLeft, const nglChar Right);
+	friend bool operator!=(const nglString& rLeft, const nglUChar Right);
 	friend bool operator!=(const nglString& rLeft, const nglChar* pRight);
 	friend bool operator!=(const nglString& rLeft, const nglString& rRight);
-	friend bool operator!=(const nglChar Left, const nglString& rRight);
+	friend bool operator!=(const nglUChar Left, const nglString& rRight);
 	friend bool operator!=(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (less than)
-	friend bool operator<(const nglString& rLeft, const nglChar Right);
+	friend bool operator<(const nglString& rLeft, const nglUChar Right);
 	friend bool operator<(const nglString& rLeft, const nglChar* pRight);
 	friend bool operator<(const nglString& rLeft, const nglString& rRight);
-	friend bool operator<(const nglChar Left, const nglString& rRight);
+	friend bool operator<(const nglUChar Left, const nglString& rRight);
 	friend bool operator<(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (less or equal)
-	friend bool operator<=(const nglString& rLeft, const nglChar Right);
+	friend bool operator<=(const nglString& rLeft, const nglUChar Right);
 	friend bool operator<=(const nglString& rLeft, const nglChar* pRight);
 	friend bool operator<=(const nglString& rLeft, const nglString& rRight);
-	friend bool operator<=(const nglChar Left, const nglString& rRight);
+	friend bool operator<=(const nglUChar Left, const nglString& rRight);
 	friend bool operator<=(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (more than)
-	friend bool operator>(const nglString& rLeft, const nglChar Right);
+	friend bool operator>(const nglString& rLeft, const nglUChar Right);
 	friend bool operator>(const nglString& rLeft, const nglChar* pRight);
 	friend bool operator>(const nglString& rLeft, const nglString& rRight);
-	friend bool operator>(const nglChar Left, const nglString& rRight);
+	friend bool operator>(const nglUChar Left, const nglString& rRight);
 	friend bool operator>(const nglChar* pLeft, const nglString& rRight);
 
 	// Comparison (more or equal)
-	friend bool operator>=(const nglString& rLeft, const nglChar Right);
+	friend bool operator>=(const nglString& rLeft, const nglUChar Right);
 	friend bool operator>=(const nglString& rLeft, const nglChar* pRight);
 	friend bool operator>=(const nglString& rLeft, const nglString& rRight);
-	friend bool operator>=(const nglChar Left, const nglString& rRight);
+	friend bool operator>=(const nglUChar Left, const nglString& rRight);
 	friend bool operator>=(const nglChar* pLeft, const nglString& rRight);
 
 	// Array access
@@ -806,7 +799,7 @@ public:
   #endif
 
 private:
-	std::wstring	mString;
+	std::string	mString;
   bool mIsNull;
   
   static nglStringConvMap gStringConvCache;
@@ -820,9 +813,9 @@ private:
 * Inline code
 */
 
-bool nglIsDigit(nglChar a);
+bool nglIsDigit(nglUChar a);
 
-bool nglIsSpace(nglChar a);
+bool nglIsSpace(nglUChar a);
 
 bool nglCompareStrings(const nglString& rLeft, const nglString& rRight);
 bool nglCompareStringsNoCase(const nglString& rLeft, const nglString& rRight);
@@ -857,7 +850,7 @@ class NGL_API nglStringConv
 public:
   static nglChar mUnknown;  ///< Default char used to mark in place a conversion error. Unused if set to '\\0'
 
-  nglStringConv(nglTextEncoding From, nglTextEncoding To, nglChar Default = nglStringConv::mUnknown);
+  nglStringConv(nglTextEncoding From, nglTextEncoding To, nglUChar Default = nglStringConv::mUnknown);
   /*!< Create a conversion context
   \param From source encoding
   \param To target encoding
@@ -888,7 +881,7 @@ public:
   }
 
 protected:
-  nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglChar Default, bool NoInit);
+  nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglUChar Default, bool NoInit);
   
   nglChar         mDefault;
   nglTextEncoding mFrom;

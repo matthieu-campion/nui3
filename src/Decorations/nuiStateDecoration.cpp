@@ -156,7 +156,7 @@ nuiDecoration* nuiStateDecoration::GetDecoration(const nglString& rName) const
   nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(rName));
   if (!pTexture || !pTexture->IsValid())
   {
-    NGL_OUT(_T("nuiStateDecoration::GetDecoration warning : could not load graphic resource '%ls'\n"), rName.GetChars());
+    NGL_OUT(_T("nuiStateDecoration::GetDecoration warning : could not load graphic resource '%s'\n"), rName.GetChars());
     return NULL;
   }
   

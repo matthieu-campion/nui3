@@ -61,7 +61,7 @@ public:
     
     while (it != end)
     {
-      NGL_OUT(_T("%ls: %d\n", it->first.GetChars(), it->second));
+      NGL_OUT(_T("%s: %d\n", it->first.GetChars(), it->second));
       ++it;
     }
   }
@@ -740,7 +740,7 @@ nuiWidget::~nuiWidget()
 #ifdef _DEBUG_
   if (GetDebug())
   {
-    NGL_OUT(_T("nuiWidget::~nuiWidget() [0x%x '%ls':'%ls']\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
+    NGL_OUT(_T("nuiWidget::~nuiWidget() [0x%x '%s':'%s']\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
 #endif
   
@@ -1016,7 +1016,7 @@ void nuiWidget::InvalidateRect(const nuiRect& rRect)
   CheckValid();
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
-    NGL_OUT(_T("  nuiWidget::InvalidateRect '%ls' [%ls] %ls\n"), GetObjectClass().GetChars(), GetObjectName().GetChars(), rRect.GetValue().GetChars());
+    NGL_OUT(_T("  nuiWidget::InvalidateRect '%s' [%s] %s\n"), GetObjectClass().GetChars(), GetObjectName().GetChars(), rRect.GetValue().GetChars());
   #endif
   
   if (IsVisible(true))
@@ -1079,14 +1079,14 @@ void nuiWidget::Invalidate()
   if ((mNeedRender && mNeedSelfRedraw))
     return;
 
-  //printf("nuiWidget::Invalidate '%ls [%ls]'\n", GetObjectClass().GetChars() , GetObjectName().GetChars());
+  //printf("nuiWidget::Invalidate '%s [%s]'\n", GetObjectClass().GetChars() , GetObjectName().GetChars());
   
   if (!IsVisible(true))
   {
 #ifdef _DEBUG_
     if (GetDebug())
     {
-      NGL_OUT(_T("  nuiWidget::Invalidate '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
+      NGL_OUT(_T("  nuiWidget::Invalidate '%s' [%s]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
     }
 #endif
     mNeedSelfRedraw = true;
@@ -1174,7 +1174,7 @@ void nuiWidget::SilentInvalidate()
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
-    NGL_OUT(_T("  nuiWidget::SilentInvalidate '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
+    NGL_OUT(_T("  nuiWidget::SilentInvalidate '%s' [%s]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
   #endif
   
@@ -1207,7 +1207,7 @@ void nuiWidget::SilentInvalidateLayout()
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
-    NGL_OUT(_T("  nuiWidget::SilentInvalidateLayout '%ls' [%ls]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
+    NGL_OUT(_T("  nuiWidget::SilentInvalidateLayout '%s' [%s]\n"), GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
   #endif
   mNeedSelfLayout = true;
@@ -1232,7 +1232,7 @@ void nuiWidget::InvalidateLayout()
 
   if (mpParent && broadcast)
   {
-    //NGL_OUT(_T("InvalidateLayout + Broadcast from %ls\n"), GetObjectClass().GetChars());
+    //NGL_OUT(_T("InvalidateLayout + Broadcast from %s\n"), GetObjectClass().GetChars());
     mpParent->BroadcastInvalidateLayout(this, false);
   }
   DebugRefreshInfo();
@@ -1246,7 +1246,7 @@ void nuiWidget::ForcedInvalidateLayout()
   
   if (mpParent && broadcast)
   {
-    //NGL_OUT(_T("InvalidateLayout + Broadcast from %ls\n"), GetObjectClass().GetChars());
+    //NGL_OUT(_T("InvalidateLayout + Broadcast from %s\n"), GetObjectClass().GetChars());
     mpParent->BroadcastInvalidateLayout(this, false);
   }
   DebugRefreshInfo();
@@ -1274,13 +1274,13 @@ void nuiWidget::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCastOn
   if (mpParent)
   {
     mpParent->BroadcastInvalidateLayout(pSender, BroadCastOnly);
-    //NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout %ls / %ls / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+    //NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout %s / %s / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
   }
 
 #ifdef DEBUG
   if (GetDebug() || pSender->GetDebug())
   {
-    //NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout SKIP %ls / %ls / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+    //NGL_OUT(_T("nuiWidget::BroadcastInvalidateLayout SKIP %s / %s / 0x%x\n"), pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
   }
 #endif
 
@@ -1417,7 +1417,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
 
   //NGL_ASSERT(!mNeedLayout);
   //if (mNeedLayout)
-  // printf("need layout bug on 0x%X [%ls - %ls]\n", this, GetObjectClass().GetChars(), GetObjectName().GetChars());
+  // printf("need layout bug on 0x%X [%s - %s]\n", this, GetObjectClass().GetChars(), GetObjectName().GetChars());
 
   if (mSurfaceEnabled)
   {
@@ -1451,7 +1451,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         
         for (int i = 0; i < count; i++)
         {
-          //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
+          //printf("\t%d: %s\n", i, mDirtyRects[i].GetValue().GetChars());
           mpSurface->ResetState();
           mpSurface->ResetClipRect();
           mpSurface->SetStrokeColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
@@ -1481,7 +1481,7 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
     //nuiMatrix m = pContext->GetMatrix();
     //nglString d;
     //m.GetValue(d);
-    //    NGL_OUT(_T("nglWidget(0x%p):\n%ls\n"), this, d.GetChars());
+    //    NGL_OUT(_T("nglWidget(0x%p):\n%s\n"), this, d.GetChars());
     //NGL_ASSERT(m.Array[12] > 0);
     
     mNeedSurfaceRedraw = false;
@@ -2125,12 +2125,12 @@ void nuiWidget::CallOnTrash()
   nuiTopLevel* pRoot = GetTopLevel();
   if (pRoot)
   {
-    //NGL_OUT(_T("nuiWidget OnTrash [0x%x '%ls']\n"), this, GetObjectClass().GetChars());
+    //NGL_OUT(_T("nuiWidget OnTrash [0x%x '%s']\n"), this, GetObjectClass().GetChars());
     pRoot->AdviseObjectDeath(this);
   }
   else
   {
-    //NGL_OUT(_T("nuiWidget OnTrash NO ROOT! [0x%x '%ls']\n"), this, GetObjectClass().GetChars());
+    //NGL_OUT(_T("nuiWidget OnTrash NO ROOT! [0x%x '%s']\n"), this, GetObjectClass().GetChars());
   }
   
   OnTrash();
@@ -2419,7 +2419,7 @@ void nuiWidget::UnlockState()
 void nuiWidget::SetVisible(bool Visible)
 {
   CheckValid();
-  //NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+  //NGL_OUT(_T("(%p) nuiWidget::SetVisible(%s) '%s' / '%s'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
   
   nuiAnimation* pHideAnim = GetAnimation(_T("HIDE"));
   nuiAnimation* pShowAnim = GetAnimation(_T("SHOW"));
@@ -2571,12 +2571,12 @@ void nuiWidget::SetVisible(bool Visible)
     {
       if (!pHideAnim)
       {
-        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN1\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%s) '%s' / '%s' RETURN1\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
         return; // No
       }
       else if (!pHideAnim->IsPlaying())
       {
-        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN2\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%s) '%s' / '%s' RETURN2\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
         return; // No
       }
       
@@ -2586,12 +2586,12 @@ void nuiWidget::SetVisible(bool Visible)
     {
       if (!pHideAnim)
       {
-        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN1\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%s) '%s' / '%s' RETURN1\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
         return; // No
       }
       else if (!pHideAnim->IsPlaying())
       {
-        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls' RETURN2\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+        NGL_OUT(_T("(%p) nuiWidget::SetVisible(%s) '%s' / '%s' RETURN2\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
         return; // No
       }
     }
@@ -2600,7 +2600,7 @@ void nuiWidget::SetVisible(bool Visible)
   
   if (pShowAnim && pHideAnim)
   {
-    NGL_OUT(_T("(%p) nuiWidget::SetVisible(%ls) '%ls' / '%ls'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
+    NGL_OUT(_T("(%p) nuiWidget::SetVisible(%s) '%s' / '%s'\n"), this, TRUEFALSE(Visible), GetObjectClass().GetChars(), GetObjectName().GetChars());
   }
   
   if (pHideAnim)
@@ -2745,7 +2745,7 @@ bool nuiWidget::SetToolTip(const nglString& rToolTip)
   CheckValid();
 //  if (GetDebug())
 //  {
-//    NGL_OUT(_T("nuiWidget::SetToolTip for 0x%x %ls / %ls to %ls\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rToolTip.GetChars());
+//    NGL_OUT(_T("nuiWidget::SetToolTip for 0x%x %s / %s to %s\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rToolTip.GetChars());
 //  }
   SetProperty(_T("ToolTip"), rToolTip);
   return true;
@@ -2761,7 +2761,7 @@ bool nuiWidget::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
   CheckValid();
 //  if (GetDebug())
 //  {
-//    NGL_OUT(_T("nuiWidget::ActivateToolTip for 0x%x %ls / %ls\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
+//    NGL_OUT(_T("nuiWidget::ActivateToolTip for 0x%x %s / %s\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars());
 //  }
   
   nglString tt = GetToolTip();
@@ -2912,7 +2912,7 @@ bool nuiWidget::SetRect(const nuiRect& rRect)
   CheckValid();
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
-    NGL_OUT(_T("nuiWidget::SetRect on '%ls' (%f, %f - %f, %f)\n"), GetObjectClass().GetChars(), rRect.mLeft, rRect.mTop, rRect.GetWidth(), rRect.GetHeight());
+    NGL_OUT(_T("nuiWidget::SetRect on '%s' (%f, %f - %f, %f)\n"), GetObjectClass().GetChars(), rRect.mLeft, rRect.mTop, rRect.GetWidth(), rRect.GetHeight());
   #endif
   
   bool inval = mNeedInvalidateOnSetRect;
@@ -3118,7 +3118,7 @@ static nglString GetSurfaceName(nuiWidget* pWidget)
 {
   static uint32 gSurfaceCount = 0;
   nglString str;
-  str.CFormat(_T("'%ls'/'%ls' %x %d"), pWidget->GetObjectClass().GetChars(), pWidget->GetObjectName().GetChars(), pWidget, gSurfaceCount++);
+  str.CFormat(_T("'%s'/'%s' %x %d"), pWidget->GetObjectClass().GetChars(), pWidget->GetObjectName().GetChars(), pWidget, gSurfaceCount++);
   return str;
 }
 
@@ -4991,7 +4991,7 @@ bool nuiWidget::GetClickThru() const
 void nuiWidget::AddInvalidRect(const nuiRect& rRect)
 {
   CheckValid();
-  //printf("+++ AddInvalidRect %ls\n", rRect.GetValue().GetChars());
+  //printf("+++ AddInvalidRect %s\n", rRect.GetValue().GetChars());
   int count = mDirtyRects.size();
   
   nuiRect intersect;
@@ -5015,7 +5015,7 @@ void nuiWidget::AddInvalidRect(const nuiRect& rRect)
   }
   
   // Found no rect to blend into, let's create a new one:
-  //printf("--- AddInvalidRect OK %ls\n", rRect.GetValue().GetChars());
+  //printf("--- AddInvalidRect OK %s\n", rRect.GetValue().GetChars());
   mDirtyRects.push_back(rRect);
 }
 

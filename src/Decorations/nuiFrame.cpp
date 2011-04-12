@@ -135,7 +135,7 @@ void nuiFrame::SetTexturePath(const nglPath& rPath)
 
   if (!mpTexture || !mpTexture->IsValid())
   {
-    NGL_OUT(_T("nuiFrame::SetTexturePath warning : could not load graphic resource '%ls'\n"), rPath.GetChars());
+    NGL_OUT(_T("nuiFrame::SetTexturePath warning : could not load graphic resource '%s'\n"), rPath.GetChars());
     return;
   }
 

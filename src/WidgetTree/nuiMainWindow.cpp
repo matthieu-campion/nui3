@@ -503,7 +503,7 @@ void nuiMainWindow::BroadcastInvalidate(nuiWidgetPtr pSender)
 {
   nuiTopLevel::BroadcastInvalidate(pSender);
 
-  //NGL_OUT(_T("(Invalidate)InvalidatePosted(%ls)\n"), pSender->GetObjectClass().GetChars());
+  //NGL_OUT(_T("(Invalidate)InvalidatePosted(%s)\n"), pSender->GetObjectClass().GetChars());
   mInvalidatePosted = true;
 }
 
@@ -511,7 +511,7 @@ void nuiMainWindow::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect&
 {
   nuiTopLevel::BroadcastInvalidateRect(pSender, rRect);
 
-  //NGL_OUT(_T("(InvalidateRect)InvalidatePosted(%ls)\n"), pSender->GetObjectClass().GetChars());
+  //NGL_OUT(_T("(InvalidateRect)InvalidatePosted(%s)\n"), pSender->GetObjectClass().GetChars());
   mInvalidatePosted = true;
 }
 
@@ -519,7 +519,7 @@ void nuiMainWindow::BroadcastInvalidateLayout(nuiWidgetPtr pSender, bool BroadCa
 {
   nuiTopLevel::BroadcastInvalidateLayout(pSender, BroadCastOnly);
 
-  //NGL_OUT(_T("(Invalidate)BroadcastInvalidateLayout(%ls)\n"), pSender->GetObjectClass().GetChars());
+  //NGL_OUT(_T("(Invalidate)BroadcastInvalidateLayout(%s)\n"), pSender->GetObjectClass().GetChars());
   mInvalidatePosted = true;
 }
 
@@ -573,7 +573,7 @@ void nuiMainWindow::DBG_DisplayMouseOverInfo()
     nglString text;
     text.CFormat
       (
-        _T("Class: '%ls'\nName: '%ls'\n"),
+        _T("Class: '%s'\nName: '%s'\n"),
         pWidget->GetObjectClass().GetChars(),
         pWidget->GetObjectName().GetChars()
       );
@@ -789,7 +789,7 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
       nglMimeTextSource mimesrc(dump);
       App->GetClipBoard().SetData(mimesrc);
       
-      //NGL_OUT(_T("Dumping this widget tree XML description:\n%ls\n"), dump.GetChars());
+      //NGL_OUT(_T("Dumping this widget tree XML description:\n%s\n"), dump.GetChars());
     }
 #endif
   }

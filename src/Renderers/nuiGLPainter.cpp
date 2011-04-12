@@ -237,7 +237,7 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
     mpContext->BeginSession();
     const char* ext0 = (const char*)glGetString(GL_EXTENSIONS);
     nglString exts(ext0);
-    //NGL_OUT(_T("Extensions: %ls\n"), exts.GetChars());
+    //NGL_OUT(_T("Extensions: %s\n"), exts.GetChars());
     
     
     mpContext->CheckExtension(_T("GL_VERSION_1_2"));
@@ -624,7 +624,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       nuiCheckForGLErrors();
     }
     
-    //NGL_OUT(_T("Change texture to 0x%x (%ls)\n"), rState.mpTexture, rState.mpTexture?rState.mpTexture->GetSource().GetChars() : nglString::Empty.GetChars());
+    //NGL_OUT(_T("Change texture to 0x%x (%s)\n"), rState.mpTexture, rState.mpTexture?rState.mpTexture->GetSource().GetChars() : nglString::Empty.GetChars());
     mFinalState.mpTexture = rState.mpTexture ;
     
     if (mFinalState.mpTexture)
@@ -838,7 +838,7 @@ void nuiGLPainter::ClearColor()
  */
 
 
-#define LOGENUM(XXX) case XXX: { NGL_OUT(_T("%ls\n"), #XXX); } break;
+#define LOGENUM(XXX) case XXX: { NGL_OUT(_T("%s\n"), #XXX); } break;
 
 void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 {
@@ -1480,7 +1480,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       //      }
       
       glGenTextures(1, &info.mTexture);
-      //NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%ls' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
+      //NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
       nuiCheckForGLErrors();
       firstload = true;
       reload = true;
@@ -1728,7 +1728,7 @@ void nuiGLPainter::DestroyTexture(nuiTexture* pTexture)
   TextureInfo& info(it->second);
   if (info.mTexture <= 0)
     return;
-  //NGL_OUT(_T("nuiGLPainter::DestroyTexture 0x%x : '%ls' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
+  //NGL_OUT(_T("nuiGLPainter::DestroyTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
   
   mpContext->BeginSession();
   glDeleteTextures(1, &info.mTexture);

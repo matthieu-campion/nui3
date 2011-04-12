@@ -161,7 +161,7 @@ bool nuiHugeImage::Draw(nuiDrawContext* pContext)
         int32 h = pTexture->GetHeight();
         nuiRect src(w, h);
         nuiRect dest(x, y, w, h);
-        //NGL_OUT(_T("%d x %d - %ls\n"), i, j, dest.GetValue().GetChars());
+        //NGL_OUT(_T("%d x %d - %s\n"), i, j, dest.GetValue().GetChars());
         pContext->SetTexture(pTexture);
         pContext->DrawImage(dest, src);
       }

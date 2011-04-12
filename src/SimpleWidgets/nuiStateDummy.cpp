@@ -99,7 +99,7 @@ nuiRect nuiStateDummy::CalcIdealSize()
   if (pWidget)
   {
     mIdealRect = pWidget->GetIdealRect();
-//    NGL_OUT(_T("Dummy: %ls (%f,%f - %f,%f\n"), nuiGetState(GetState(mCombined)).GetChars(),ideal.mLeft,ideal.mTop,ideal.GetWidth(),ideal.GetHeight());
+//    NGL_OUT(_T("Dummy: %s (%f,%f - %f,%f\n"), nuiGetState(GetState(mCombined)).GetChars(),ideal.mLeft,ideal.mTop,ideal.GetWidth(),ideal.GetHeight());
   }
 
   return mIdealRect;

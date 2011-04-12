@@ -199,15 +199,15 @@ void nglFontInfo::Dump (uint Level) const
   nglFontInstance* ifont = nglFontInstance::Lookup(pFont->mpFace->Desc.face_id);
   if (ifont)
   {
-    NGL_LOG(_T("font"), Level, _T("  source   : %ls"), ifont->GetPath().GetChars());
+    NGL_LOG(_T("font"), Level, _T("  source   : %s"), ifont->GetPath().GetChars());
     NGL_LOG(_T("font"), Level, _T("  face     : %d"), ifont->GetFace());
   }
-  NGL_LOG(_T("font"), Level, _T("  family   : %ls"), FamilyName.GetChars());
-  NGL_LOG(_T("font"), Level, _T("  style    : %ls"), StyleName.GetChars());
-  NGL_LOG(_T("font"), Level, _T("  scalable : %ls"), YESNO(IsScalable));
-  NGL_LOG(_T("font"), Level, _T("  bold     : %ls"), YESNO(IsBold));
-  NGL_LOG(_T("font"), Level, _T("  monospace: %ls"), YESNO(IsMonospace));
-  NGL_LOG(_T("font"), Level, _T("  italic   : %ls"), YESNO(IsItalic));
+  NGL_LOG(_T("font"), Level, _T("  family   : %s"), FamilyName.GetChars());
+  NGL_LOG(_T("font"), Level, _T("  style    : %s"), StyleName.GetChars());
+  NGL_LOG(_T("font"), Level, _T("  scalable : %s"), YESNO(IsScalable));
+  NGL_LOG(_T("font"), Level, _T("  bold     : %s"), YESNO(IsBold));
+  NGL_LOG(_T("font"), Level, _T("  monospace: %s"), YESNO(IsMonospace));
+  NGL_LOG(_T("font"), Level, _T("  italic   : %s"), YESNO(IsItalic));
   NGL_LOG(_T("font"), Level, _T("  glyph cnt: %d"), GlyphCount);
 
   int i = 0;
@@ -223,9 +223,9 @@ void nglFontInfo::Dump (uint Level) const
   }
   if (i == 0)
     avail_map += _T(" (none)");
-  NGL_LOG(_T("font"), Level, _T("  charmaps :%ls"), avail_map.GetChars());
+  NGL_LOG(_T("font"), Level, _T("  charmaps :%s"), avail_map.GetChars());
 
-  NGL_LOG(_T("font"), Level, _T("  Global metrics, in `%ls' units"), nglFontInfo_UnitName(Unit));
+  NGL_LOG(_T("font"), Level, _T("  Global metrics, in `%s' units"), nglFontInfo_UnitName(Unit));
   if (IsScalable)
   {
     NGL_LOG(_T("font"), Level, _T("    bbox     : [%.1f %.1f]x[%.1f %.1f]"), BBoxMinX, BBoxMaxX, BBoxMinY, BBoxMaxY);
@@ -245,7 +245,7 @@ void nglFontInfo::Dump (uint Level) const
   NGL_LOG(_T("font"), Level, _T("  Current settings"));
   NGL_LOG(_T("font"), Level, _T("    res.   : %.0fdpi"), pFont->GetResolution());
   NGL_LOG(_T("font"), Level, _T("    size   : %.1fpt / %.0fpx"), pFont->GetSize(eFontUnitPoint), pFont->GetSize(eFontUnitPixel));
-  NGL_LOG(_T("font"), Level, _T("    charmap: %ls"), pFont->GetCharMapName(pFont->GetCharMap()));
+  NGL_LOG(_T("font"), Level, _T("    charmap: %s"), pFont->GetCharMapName(pFont->GetCharMap()));
 }
 
 
@@ -272,7 +272,7 @@ void nglGlyphInfo::Dump (uint Level) const
 
   if (Index < 0)
   {
-    NGL_LOG(_T("font"), Level, _T("Multiple glyph info (%d item%ls) :"), -Index, PLURAL(-Index));
+    NGL_LOG(_T("font"), Level, _T("Multiple glyph info (%d item%s) :"), -Index, PLURAL(-Index));
   }
   else
   {
@@ -1104,7 +1104,7 @@ bool nglFontBase::Init()
 bool nglFontBase::Load (const nglPath& rPath, uint Face)
 {
   // Load face from file spec
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font '%ls' (face %d)"), rPath.GetNodeName().GetChars(), Face); )
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font '%s' (face %d)"), rPath.GetNodeName().GetChars(), Face); )
   mpFace->SetFontInstance(new nglFontInstance(rPath, Face));
   mpFace->Desc.face_id = nglFontInstance::Install(mpFace->GetFontInstance());
 
@@ -1127,7 +1127,7 @@ bool nglFontBase::Load (FaceID ID)
 #ifdef _DEBUG_
   nglFontInstance* ifont = nglFontInstance::Lookup((FTC_FaceID)ID);
   if (ifont)
-    NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Copying logical font '%ls' (face %d)"), ifont->GetPath().GetNodeName().GetChars(), ifont->GetFace());
+    NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Copying logical font '%s' (face %d)"), ifont->GetPath().GetNodeName().GetChars(), ifont->GetFace());
 #endif
 
   mpFace->Desc.face_id = (FTC_FaceID)ID;
@@ -1163,7 +1163,7 @@ bool nglFontBase::LoadFinish()
   }
   else
   {
-    NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("Warning: font '%ls (%ls)' has no panose information.\n"), mFamilyName.GetChars(), mStyleName.GetChars()); )
+    NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("Warning: font '%s (%s)' has no panose information.\n"), mFamilyName.GetChars(), mStyleName.GetChars()); )
     memset(&mPanoseBytes, 0, 10);
     mHasPanoseInfo = false;
   }
@@ -1216,8 +1216,8 @@ bool nglFontBase::LoadFinish()
 #endif
   mCharMap = FT_Get_Charmap_Index(mpFace->Face->charmap);
 
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  selected charmap   : %ls (#%d)"), GetCharMapName(), GetCharMap()); )
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  charmap conversion : %ls"), YESNO(mpConv)); )
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  selected charmap   : %s (#%d)"), GetCharMapName(), GetCharMap()); )
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  charmap conversion : %s"), YESNO(mpConv)); )
 
   return true;
 }

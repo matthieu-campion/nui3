@@ -335,7 +335,7 @@ bool nuiHotKeyEditor::Import(nuiXMLNode* pInputNode)
   nglString nodeName = pInputNode->GetName();
   if (nodeName.Compare(NUIHOTKEYS_XML_NODEID))
   {
-    NGL_OUT(_T("Not a hotkeys node\n : %ls"), nodeName.GetChars());
+    NGL_OUT(_T("Not a hotkeys node\n : %s"), nodeName.GetChars());
     return false;
   }
   
@@ -426,8 +426,8 @@ nuiXMLNode* nuiHotKeyEditor::Serialize(nuiXMLNode* pParentNode) const
       pNode->SetAttribute(_T("Name"), name);
       pNode->SetAttribute(_T("Description"), pUserHotKeyKey->GetDescription());
       pNode->SetAttribute(_T("IsHotKeyKey"), true);
-      pNode->SetAttribute(_T("Trigger_KeyCode"), pUserHotKeyKey->GetTrigger());
-      pNode->SetAttribute(_T("Modifiers"), pUserHotKeyKey->GetModifiers());
+      pNode->SetAttribute(_T("Trigger_KeyCode"), (int64)pUserHotKeyKey->GetTrigger());
+      pNode->SetAttribute(_T("Modifiers"), (int64)pUserHotKeyKey->GetModifiers());
       pNode->SetAttribute(_T("Priority"), pUserHotKeyKey->HasPriority());
       pNode->SetAttribute(_T("OnKeyUp"), pUserHotKeyKey->IsOnKeyUp());
     }
@@ -437,8 +437,8 @@ nuiXMLNode* nuiHotKeyEditor::Serialize(nuiXMLNode* pParentNode) const
       pNode->SetAttribute(_T("Name"), name);
       pNode->SetAttribute(_T("Description"), pUserHotKeyChar->GetDescription());
       pNode->SetAttribute(_T("IsHotKeyKey"), false);
-      pNode->SetAttribute(_T("Trigger_Char"), pUserHotKeyChar->GetTrigger());
-      pNode->SetAttribute(_T("Modifiers"), pUserHotKeyChar->GetModifiers());
+      pNode->SetAttribute(_T("Trigger_Char"), (int64)pUserHotKeyChar->GetTrigger());
+      pNode->SetAttribute(_T("Modifiers"), (int64)pUserHotKeyChar->GetModifiers());
       pNode->SetAttribute(_T("Priority"), pUserHotKeyChar->HasPriority());
       pNode->SetAttribute(_T("OnKeyUp"), pUserHotKeyChar->IsOnKeyUp());
     }

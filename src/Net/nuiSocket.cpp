@@ -121,6 +121,6 @@ void nuiSocket::DumpError(int err) const
     default: error = "Unknown error "; error.Add(err); break;
   }
   
-  NGL_OUT(_T("Socket Error: %ls\n"), error.GetChars());
+  NGL_OUT(_T("Socket Error: %s\n"), error.GetChars());
 }
 

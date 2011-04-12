@@ -26,7 +26,7 @@ nglLog::nglLog (bool UseConsole)
   mDefaultLevel = NGL_LOG_DEFAULT;
   mStampFlags = DomainStamp;
   mUseConsole = UseConsole;
-  mDomainFormat = _T("%ls: ");
+  mDomainFormat = _T("%s: ");
   mDomainFormatLen = 0;
 }
 
@@ -111,7 +111,7 @@ void nglLog::SetLevel (const nglChar* pDomain, uint Level)
   if (!pDomain)
     return;
 
-  if (wcscmp(pDomain, _T("all")) == 0)
+  if (strcmp(pDomain, _T("all")) == 0)
   {
     mLock.LockRead();
     DomainList::iterator dom = mDomainList.begin();
@@ -149,22 +149,6 @@ void nglLog::Log (const nglChar* pDomain, uint Level, const nglChar* pText, ...)
   va_start (args, pText);
 
   Logv (pDomain, Level, pText, args);
-
-  va_end (args);
-}
-
-void nglLog::Log (const char* pDomain, uint Level, const char* pText, ...)
-{
-  if (pText == NULL)
-    return;
-
-  va_list args;
-  va_start (args, pText);
-
-  
-  nglString str(pDomain);
-  nglString txt(pText);
-  Logv (str.GetChars(), Level, txt.GetChars(), args);
 
   va_end (args);
 }
@@ -212,7 +196,7 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
     if (dom->Count == 1)
     {
       // On first display from this domain, adjust domain display width
-      uint32 dom_len = wcslen(dom_name);
+      uint32 dom_len = strlen(dom_name);
 
       if (dom_len > mDomainFormatLen)
       {
@@ -254,15 +238,6 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
   }
 }
 
-void nglLog::Logv (const char* pDomain, uint Level, const char* pText, va_list Args)
-{
-  if (pText == NULL) return;
-
-  nglString domain(pDomain);
-  nglString text(pText);
-  Logv(domain.GetChars(), Level, text.GetChars(), Args);
-}
-
 void nglLog::Dump (uint Level) const
 {
   mLock.LockRead();
@@ -275,7 +250,7 @@ void nglLog::Dump (uint Level) const
 
   for (; dom != end; dom++)
   {
-    format.Format(_T("#   %ls %%d\n"), mDomainFormat.GetChars());
+    format.Format(_T("#   %s %%d\n"), mDomainFormat.GetChars());
     text.Format(format.GetChars(), (*dom).Name.GetChars(), (*dom).Count);
     Output(text);
   }

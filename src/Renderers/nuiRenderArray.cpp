@@ -429,7 +429,7 @@ nglString nuiRenderArray::Dump() const
   {
     nglString f;
     f.CFormat(_T("%d:  %3f %3f - %3f %3f (%3f %3f)"), i, mVertices[i].mX, mVertices[i].mY, mVertices[i].mTX, mVertices[i].mTY, mVertices[i].mTX * 2, mVertices[i].mTY * 2);
-    NGL_OUT(_T("%ls\n"), f.GetChars());
+    NGL_OUT(_T("%s\n"), f.GetChars());
   }
   
   NGL_OUT(_T("\n"));

@@ -152,7 +152,7 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
   CheckValid();
   if (GetDebug())
   {
-    NGL_OUT(_T("[%ls] Add Child 0x%x <--- 0x%x\n"), GetObjectClass().GetChars(), this, pChild);
+    NGL_OUT(_T("[%s] Add Child 0x%x <--- 0x%x\n"), GetObjectClass().GetChars(), this, pChild);
   }
   pChild->Acquire();
   nuiContainer* pParent = pChild->GetParent();
@@ -192,7 +192,7 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild)
 
   if (GetDebug())
   {
-    NGL_OUT(_T("[%ls] Del Child 0x%x <--- 0x%x (%s)\n"), GetObjectClass().GetChars(), this, pChild);
+    NGL_OUT(_T("[%s] Del Child 0x%x <--- 0x%x (%s)\n"), GetObjectClass().GetChars(), this, pChild);
   }
   
   nuiWidgetList::iterator it  = mpChildren.begin();

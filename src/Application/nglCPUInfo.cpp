@@ -102,7 +102,7 @@ nglString nglCPUInfo::Dump()
     text += _T(" x %d");
   }
 
-  buffer.Format(_T("%ls%ls%ls%ls%ls"),
+  buffer.Format(_T("%s%s%s%s%s"),
     HasMMX()     ? _T(" MMX") : _T(""),
     HasSSE()     ? _T(" SSE") : _T(""),
     HasSSE2()    ? _T(" SSE2") : _T(""),

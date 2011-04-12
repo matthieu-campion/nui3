@@ -478,7 +478,7 @@ public:
   /// Display the vector's scalar values in the log
   void Dump (uint Level = 0, const nglChar* pTitle = NULL) const
   {
-    NGL_LOG(_T("math"), Level, _T("%ls%ls[ %8.3f %8.3f %8.3f %8.3f ]"),
+    NGL_LOG(_T("math"), Level, _T("%s%s[ %8.3f %8.3f %8.3f %8.3f ]"),
       pTitle ? pTitle : _T(""),
       pTitle ? _T(" = ") : _T(""),
       (T)Elt[0], (T)Elt[1], (T)Elt[2], (T)Elt[3]);

@@ -88,15 +88,9 @@ public:
 	/*!<
 	nglPath default constructor
 	*/
-	nglPath(const char* pPathName);
-	/*!< nglPath constructor
-	\param pPathName path name, using current locale's encoding
-
-	For portability reasons, any '\\' (anti-slash) characters are replaced by '/' (slash).
-	*/
 	nglPath(const nglChar* pPathName);
 	/*!< nglPath constructor
-	\param pPathName path name
+	\param pPathName path name, using current locale's encoding
 
 	For portability reasons, any '\\' (anti-slash) characters are replaced by '/' (slash).
 	*/
@@ -218,8 +212,7 @@ public:
 
 	/** @name Operators */
 	//@{
-	const nglPath& operator=(const char* pSource);       ///< Initialize a path from a string using locale's encoding
-	const nglPath& operator=(const nglChar* pSource);    ///< Initialize a path from a string
+	const nglPath& operator=(const nglChar* pSource);       ///< Initialize a path from a string using locale's encoding
 	const nglPath& operator=(const nglString& rSource);  ///< Initialize a path from a string
 	const nglPath& operator=(const nglPath& rSource);    ///< Copy a path
 
@@ -307,7 +300,6 @@ protected:
 	static MimeMap mMimeType;
 #endif // _UNIX_ || _CARBON_ || _UIKIT_ || _COCOA_
 
-	bool InternalSetPath (const char* pPath);
 	bool InternalSetPath (const nglChar* pPath);
 	//  bool ValidateChars();
 	int32 GetRootPart() const;

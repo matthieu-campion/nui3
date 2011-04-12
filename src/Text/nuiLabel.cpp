@@ -131,7 +131,7 @@ nuiXMLNode* nuiLabel::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 nuiLabel::~nuiLabel()
 {
-  //printf("~nuiLabel: '%ls'\n", mText.GetChars());
+  //printf("~nuiLabel: '%s'\n", mText.GetChars());
   delete mpLayout;
   delete mpIdealLayout;
   if (mpFont)
@@ -433,12 +433,12 @@ nuiRect nuiLabel::CalcIdealSize()
     mIdealRect = mIdealLayoutRect;
 //    if (GetDebug(1))
 //    {
-//      printf("New ideal rect: %ls\n", mIdealRect.GetValue().GetChars());
+//      printf("New ideal rect: %s\n", mIdealRect.GetValue().GetChars());
 //    }
   }
 
   mIdealRect.RoundToBiggest();
-  //NGL_OUT(_T("%ls [%ls]"), mText.GetChars(), mIdealRect.GetValue().GetChars());
+  //NGL_OUT(_T("%s [%s]"), mText.GetChars(), mIdealRect.GetValue().GetChars());
   return mIdealRect;
 }
 
@@ -495,7 +495,7 @@ nuiRect nuiLabel::GetLayoutRect()
   mIdealLayoutRect = mIdealLayoutRect.Size();
 //  if (GetDebug())
 //  {
-//    printf("New layout rect: %ls\n", mIdealLayoutRect.GetValue().GetChars());
+//    printf("New layout rect: %s\n", mIdealLayoutRect.GetValue().GetChars());
 //  }
   
   if (!(mIdealLayoutRect == mIdealRect))

@@ -122,7 +122,7 @@ int32 nglStringConv::Process(const char*& pSource, int32& rToRead, char*& pTarge
     ByteCount actualOutputLength = 0;
     ByteCount actualInputLength = 0;
     
-    if (mFrom == eUCS4 || mFrom == eEncodingInternal)
+    if (mFrom == eUCS4)
     {
       int16* pInputBuffer = new int16[rToRead];
       inputBuffer = (ConstTextPtr)new int16[rToRead];
@@ -144,7 +144,7 @@ int32 nglStringConv::Process(const char*& pSource, int32& rToRead, char*& pTarge
     pTarget += actualOutputLength;
     rToWrite -= actualOutputLength;
     
-    if (mTo == eUCS4 || mTo == eEncodingInternal)
+    if (mTo == eUCS4)
     {
       int32 SkipBOM = 0;
       uint16 BOM = ((uint16*)outputBuffer)[0];
@@ -162,7 +162,7 @@ int32 nglStringConv::Process(const char*& pSource, int32& rToRead, char*& pTarge
       rToWrite -= actualOutputLength - SkipBOM;
     }
     
-    if (mFrom == eUCS4 || mFrom == eEncodingInternal)
+    if (mFrom == eUCS4)
     {
       pSource += actualInputLength;
       rToRead -= actualInputLength;
@@ -276,7 +276,7 @@ nglStringCodec::~nglStringCodec()
                                                                                                                            // Others
       
       
-    case eEncodingInternal: return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF16Format);
+    case eEncodingInternal: return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF8Format);
       
     case eEncodingNative  : return CreateTextEncoding(kTextEncodingUnicodeDefault, norm, kUnicodeUTF8Format);
       

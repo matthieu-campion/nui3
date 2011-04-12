@@ -177,7 +177,7 @@ void nglConsole::Input (nglString& rLine)
         if ((!base.Compare(_T("!"), 0, 1)) ||  // "!!" (repeat last)
             (!(*h_entry)->Compare (base, 0, size, mHistoryCase)))
         {
-          NGL_OUT(_T("%ls\n"), (nglChar*)(*h_entry));
+          NGL_OUT(_T("%s\n"), (nglChar*)(*h_entry));
           OnInput (**h_entry);
           return;
         }
@@ -254,40 +254,9 @@ void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
 #ifdef _WIN32_
     OutputDebugString(out.GetChars());
 #else
-    wprintf(_T("%ls\n"), out.GetChars());
+    printf(_T("%s\n"), out.GetChars());
 #endif
 
-  }
-}
-
-void nglConsole::Output (const char* pFormat, ...)
-{
-  nglCriticalSectionGuard guard(mCS);
-  va_list args;
-  
-  va_start (args, pFormat);
-  Outputv (pFormat, args);
-  va_end (args);
-}
-
-void nglConsole::Outputv (const char* pFormat, va_list Args)
-{
-  if (this)   //#HACK This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
-  {
-    nglCriticalSectionGuard guard(mCS);
-    mOutputBuffer.Formatv(pFormat, Args);
-    OnOutput(mOutputBuffer);
-  }
-  else
-  {
-    nglString out;
-    out.Formatv(pFormat, Args);
-#ifdef _WIN32_
-    OutputDebugString(out.GetChars());
-#else
-    wprintf(_T("%ls\n"), out.GetChars());
-#endif
-    
   }
 }
 

@@ -17,7 +17,7 @@ nuiFont* nuiFont::GetFont(const nglPath& rPath, nuiSize size, int face, const ng
   nglString id = rID.IsEmpty() ? GetUniqueID(rPath.GetPathName(), size, face) : rID;
   NGL_ASSERT(!id.IsEmpty());
   
-  //NGL_OUT(_T("nuiFont::GetFont1 %ls\n"), id.GetChars());
+  //NGL_OUT(_T("nuiFont::GetFont1 %s\n"), id.GetChars());
 
   if (mpFonts.find(id) == mpFonts.end())
   {
@@ -61,7 +61,7 @@ nuiFont* nuiFont::GetFont(const nglString& rName, uint8* pBuffer, uint BufferSiz
   nglString id = rID.IsEmpty() ? GetUniqueID(rName, Size, Face) : rID;
   NGL_ASSERT(!id.IsEmpty());
 
-  //NGL_OUT(_T("nuiFont::GetFont2 %ls\n"), id.GetChars());
+  //NGL_OUT(_T("nuiFont::GetFont2 %s\n"), id.GetChars());
 
   if (mpFonts.find(id) == mpFonts.end())
   {
@@ -96,7 +96,7 @@ nuiFont* nuiFont::GetFont(nuiXMLNode* pNode, const nglString& rID)
   nglString id = rID.IsEmpty() ? GetUniqueID(nuiGetString(pNode, _T("Source")), nuiGetVal(pNode, _T("Size"), 0.0f), nuiGetVal(pNode, _T("Face"), 0)) : rID;
   NGL_ASSERT(!id.IsEmpty());
 
-  //NGL_OUT(_T("nuiFont::GetFont3 %ls\n"), id.GetChars());
+  //NGL_OUT(_T("nuiFont::GetFont3 %s\n"), id.GetChars());
 
   nglPath path(nuiGetString(pNode, _T("Source")));
   if (mpFonts.find(id) == mpFonts.end())
@@ -141,7 +141,7 @@ nuiFont* nuiFont::GetFont(nuiXMLNode* pNode, const nglString& rID)
 
 nuiFont* nuiFont::GetFont(const nglString& rId)
 {
-  //NGL_OUT(_T("nuiFont::GetFont4 %ls\n"), rId.GetChars());
+  //NGL_OUT(_T("nuiFont::GetFont4 %s\n"), rId.GetChars());
 
   std::map<nglString,nuiFont*, nglString::LessFunctor>::iterator it = mpFonts.find(rId);
   if (it == mpFonts.end())
@@ -163,7 +163,7 @@ nuiFont* nuiFont::GetFont(nuiSize size, const nglString& rID)
   nglString id = rID.IsEmpty()?GetUniqueID(_T("NGL Default Font"), size, face) : rID;
   NGL_ASSERT(!id.IsEmpty());
 
-  //NGL_OUT(_T("nuiFont::GetFont4 %ls\n"), id.GetChars());
+  //NGL_OUT(_T("nuiFont::GetFont4 %s\n"), id.GetChars());
 
   if (mpFonts.find(id) == mpFonts.end())
   { 
@@ -298,7 +298,7 @@ nglString nuiFont::GetUniqueID(const nglString& rFace, nuiSize size, int face)
 {
   nglString id = rFace;
   id.Add(_T(" ")).Add(face).Add(" ").Add(size);
-  //id.CFormat(_T("%f %d %ls"),size, face, rFace.GetChars());
+  //id.CFormat(_T("%f %d %s"),size, face, rFace.GetChars());
   NGL_ASSERT(!id.IsEmpty());
   return id;
 }

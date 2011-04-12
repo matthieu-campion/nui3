@@ -78,7 +78,7 @@ bool nuiAudioEngine::AudioInit(ChannelConfig inputConfig)
 {
   mpOutAudioDevice = nuiAudioDeviceManager::Get().GetDefaultOutputDevice();
 
-  NGL_OUT(_T("Default output: %ls\n"), mpOutAudioDevice->GetName().GetChars());
+  NGL_OUT(_T("Default output: %s\n"), mpOutAudioDevice->GetName().GetChars());
 
   std::vector<uint32> InputChannels;
   std::vector<uint32> OutputChannels;

@@ -87,7 +87,6 @@ public:
   // Node attributes management:
 
   void SetAttribute(const char* pName, const nglString& rValue);
-  void SetAttribute(const char* pName, const char* pValue); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, const nglChar* pValue); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, uint64 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, int64 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.

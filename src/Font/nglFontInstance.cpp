@@ -23,7 +23,7 @@ nglFontInstance::FontListType nglFontInstance::gFontList;
 
 nglFontInstance::nglFontInstance (const nglPath& rPath, uint Face)
 {
-  //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::nglFontInstance 0x%x (%ls - %d)\n"), this, rPath.GetChars(), Face);)
+  //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::nglFontInstance 0x%x (%s - %d)\n"), this, rPath.GetChars(), Face);)
   mPath     = rPath;
   mFace     = Face;
   mpMemBase = NULL;
@@ -61,12 +61,12 @@ nglFontInstance::nglFontInstance (const nglFontInstance& rInstance)
   mOwnMemory = !mStatic;
   
   Acquire();
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::nglFontInstance COPY CTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::nglFontInstance COPY CTOR 0x%x (%s - %d)\n"), this, mPath.GetChars(), mFace);)
 }
 
 nglFontInstance::~nglFontInstance()
 {
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::~nglFontInstance DTOR 0x%x (%ls - %d)\n"), this, mPath.GetChars(), mFace);)
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nglFontInstance::~nglFontInstance DTOR 0x%x (%s - %d)\n"), this, mPath.GetChars(), mFace);)
   if (mOwnMemory)
     delete[] mpMemBase;
 }
@@ -99,7 +99,7 @@ FTC_FaceID nglFontInstance::Install(nglFontInstance * pInstance)
 
   // Not matching installed font : create (copy), install and return it
   pInstance->Acquire();
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Install '%ls' %d"), pInstance->mPath.GetPathName().GetChars(), pInstance->mFace); )
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Install '%s' %d"), pInstance->mPath.GetPathName().GetChars(), pInstance->mFace); )
   gFontList.insert(pInstance);
   return (FTC_FaceID)pInstance;
 }
@@ -119,7 +119,7 @@ FTC_FaceID nglFontInstance::Uninstall(nglFontInstance * pInstance)
       int32 f = font->mFace;
       if (!font->Release())
       {
-        NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Uninstall '%ls' %d"), p.GetChars(), f); )
+        NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Uninstall '%s' %d"), p.GetChars(), f); )
         gFontList.erase(it);
       }
       
@@ -155,7 +155,7 @@ FT_Error nglFontInstance::FaceRequestHandler (FTC_FaceID FaceID, FT_Library pLib
 
 FT_Error nglFontInstance::OnFaceRequest (FT_Library pLibrary, FT_Pointer pData, FT_Face* pFace)
 {
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Hard loading '%ls'"), mPath.GetPathName().GetChars(), mFace); )
+  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Hard loading '%s'"), mPath.GetPathName().GetChars(), mFace); )
 
   if (!mpMemBase) // Load the file in memory instead of counting on ft2 to understand our pathes...
   {
@@ -218,7 +218,7 @@ void nglFontInstance::OnExit()
   nglFontInstance* pFontInstance = NULL;
   uint c = 0;
   
-  NGL_DEBUG( uint cnt = gFontList.size(); NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Releasing %d installed font%ls"), cnt, PLURAL(cnt)); )
+  NGL_DEBUG( uint cnt = gFontList.size(); NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Releasing %d installed font%s"), cnt, PLURAL(cnt)); )
 
   for (i = gFontList.begin(); i != gFontList.end(); ++i)
   {

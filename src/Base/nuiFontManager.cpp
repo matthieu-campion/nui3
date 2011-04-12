@@ -592,7 +592,7 @@ const nuiFontDesc* nuiFontRequestResult::GetFontDesc() const
 //class nuiFontDesc
 nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 {
-  //  NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
+  //  NGL_OUT(_T("Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
 
   mValid = false;
   
@@ -603,7 +603,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   if (!pStream)
   {
-    NGL_OUT(_T("Error Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
+    NGL_OUT(_T("Error Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
     return;
   }
   
@@ -623,7 +623,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     return;
   }
   
-  NGL_OUT(_T("Scaning font '%ls' face %d\n"), rPath.GetChars(), Face);
+  NGL_OUT(_T("Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -646,11 +646,11 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     uint8* pBytes = (uint8*)&mPanoseBytes;
     for (uint i = 0; i < 10; i++)
       str.Add(pBytes[i]).Add(_T(" "));
-    //NGL_DEBUG( NGL_OUT(_T("\tpanose bytes: %ls\n"), str.GetChars()); )
+    //NGL_DEBUG( NGL_OUT(_T("\tpanose bytes: %s\n"), str.GetChars()); )
   }
   else
   {
-    //NGL_DEBUG( NGL_OUT(_T("Warning: font '%ls' has no panose information.\n"), mPath.GetChars()); )
+    //NGL_DEBUG( NGL_OUT(_T("Warning: font '%s' has no panose information.\n"), mPath.GetChars()); )
     memset(&mPanoseBytes, 0, 10);
   }
 
@@ -767,7 +767,7 @@ bool nuiFontDesc::CheckPath()
   mPath = p;
   if (mPath.Exists())
   {
-    printf("found '%ls' instead of '%ls'\n", p.GetChars(), pp.GetChars());
+    printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
     return true;
   }
 
@@ -782,7 +782,7 @@ bool nuiFontDesc::CheckPath()
     
     if (mPath.Exists())
     {
-      printf("found '%ls' instead of '%ls'\n", p.GetChars(), pp.GetChars());
+      printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
       return true;
     }
     
@@ -793,7 +793,7 @@ bool nuiFontDesc::CheckPath()
     mPath = p;
     if (mPath.Exists())
     {
-      printf("found '%ls' instead of '%ls'\n", p.GetChars(), pp.GetChars());
+      printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
       return true;
     }
   }
@@ -1041,7 +1041,7 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   // Read the panose bytes for this font:
   rStream.Read(&mPanoseBytes, 10, 1);
   
-  //printf("FontDesc: '%ls' (%ls)\n", mName.GetChars(), mPath.GetChars());
+  //printf("FontDesc: '%s' (%s)\n", mName.GetChars(), mPath.GetChars());
   
   return true;
 }
@@ -1088,7 +1088,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   {
     rFolders[_T("System0")] = p;
     
-    //NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%ls'\n"), p); )
+    //NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%s'\n"), p); )
   }
   else
   {
@@ -1499,7 +1499,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     {
       const nuiFontRequestResult& r(*it);
       const nuiFontDesc* pDesc = r.GetFontDesc();
-      printf("font '%ls' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
+      printf("font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
       ++it;
     }
   }
@@ -1620,7 +1620,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
       if (path.IsLeaf())
       {
         fontFiles.insert(path);
-        printf("font file? %d: %s -> %ls\n", i, buffer, rstr.GetChars());
+        printf("font file? %d: %s -> %s\n", i, buffer, rstr.GetChars());
       }
     }
   }
@@ -1637,7 +1637,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
-      //NGL_OUT(_T("FontManager: scanning font folder '%ls' '%ls' for font files\n"), str.GetChars(), pth.GetChars());
+      //NGL_OUT(_T("FontManager: scanning font folder '%s' '%s' for font files\n"), str.GetChars(), pth.GetChars());
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
@@ -1649,11 +1649,11 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         if (path.IsLeaf())
         {
           fontFiles.insert(path);
-          //NGL_OUT(_T("FontManager: font file found '%ls'\n"), path.GetChars());
+          //NGL_OUT(_T("FontManager: font file found '%s'\n"), path.GetChars());
         }
         else
         {
-          //NGL_OUT(_T("FontManager: skip '%ls'\n"), path.GetChars());
+          //NGL_OUT(_T("FontManager: skip '%s'\n"), path.GetChars());
         }
       }
     }
@@ -1668,7 +1668,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
       // check font file existence
       if (!pFontDesc->CheckPath())
       {
-        //NGL_OUT(_T("FontManager: remove font from database '%ls'\n"), pFontDesc->GetPath().GetChars());
+        //NGL_OUT(_T("FontManager: remove font from database '%s'\n"), pFontDesc->GetPath().GetChars());
         
         continue;
       }
@@ -1715,7 +1715,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         {
           mpFonts.push_back(pFontDesc);
           
-          //NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+          //NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
         }
         else
         {
@@ -1727,7 +1727,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     }
     else
     {
-      //NGL_OUT(_T("FontManager: skip already scanned font '%ls'\n"), path.GetChars());
+      //NGL_OUT(_T("FontManager: skip already scanned font '%s'\n"), path.GetChars());
     }
     
   }
@@ -1774,7 +1774,7 @@ void nuiFontManager::UpdateFonts()
       if (path.IsLeaf())
       {
         fontFiles.insert(path);
-        //printf("font file? %d: %s -> %ls\n", i, buffer, rstr.GetChars());
+        //printf("font file? %d: %s -> %s\n", i, buffer, rstr.GetChars());
       }
     }
   }
@@ -1826,7 +1826,7 @@ void nuiFontManager::UpdateFonts()
       {
         mpFonts.push_back(pFontDesc);
         
-        //NGL_OUT(_T("FontManager: add new font in database '%ls'\n"), path.GetChars());
+        //NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
       }
       else
       {
@@ -1912,7 +1912,7 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
-  //wprintf(_T("Loading font %ls\n"), rRequest.mName.mElement.GetChars());
+  //wprintf(_T("Loading font %s\n"), rRequest.mName.mElement.GetChars());
   nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
@@ -1922,12 +1922,12 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   
   if (Fonts.empty())
   {
-    wprintf(_T("font request for '%ls'failed, loading default font\n"), rRequest.mName.mElement.GetChars());
+    printf(_T("font request for '%s'failed, loading default font\n"), rRequest.mName.mElement.GetChars());
     return nuiFont::GetFont(size);
   }
   
   const nuiFontRequestResult& rFont(*(Fonts.begin()));
-  //printf("found font '%ls' (%ls)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
+  //printf("found font '%s' (%s)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
   
   pFont = nuiFont::GetFont(rFont.GetPath(), size, rFont.GetFace(), rID);
   return pFont;

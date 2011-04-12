@@ -1527,26 +1527,26 @@ main()
     }
     
     {
-      uint32_t* str = L"é";
+      uint32_t* str = _T("é");
       int32_t i = 0;
       uint32_t* res = NULL;
       uint32_t len = wcslen(str);
       uint32_t reslen = 0;
       
-      printf("Original: '%ls' (%d)\n", str, len);
+      printf("Original: '%s' (%d)\n", str, len);
       for (i = 0; i < len; i++)
         printf("0x%04x ", str[i]);
       printf("\n");
       
       uccanondecomp(str, len, &res, &reslen);
-      printf("Result: '%ls' (%d)\n", res, reslen);
+      printf("Result: '%s' (%d)\n", res, reslen);
       for (i = 0; i < reslen; i++)
         printf("0x%04x ", res[i]);
       printf("\n");
       
       reslen = uccanoncomp(res, reslen);
       res[reslen] = 0;
-      printf("Back to the original: '%ls' (%d)\n", res, reslen);
+      printf("Back to the original: '%s' (%d)\n", res, reslen);
       for (i = 0; i < reslen; i++)
         printf("0x%04x ", res[i]);
       printf("\n");

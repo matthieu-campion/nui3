@@ -485,9 +485,9 @@ nglString nuiAudioDevice_CoreAudio::GetChannelName(bool IsInput, uint32 index) c
   
   nglString str;
   if (IsInput)
-    str.CFormat(_T("%ls:in[%d]"), mName.GetChars(), index + 1);
+    str.CFormat(_T("%s:in[%d]"), mName.GetChars(), index + 1);
   else
-    str.CFormat(_T("%ls:out[%d]"), mName.GetChars(), index + 1);
+    str.CFormat(_T("%s:out[%d]"), mName.GetChars(), index + 1);
   return str; 
 }  
 

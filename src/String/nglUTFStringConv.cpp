@@ -52,32 +52,32 @@ UTFConverter nglUTFStringConv::GetUTFConverter(nglTextEncoding From, nglTextEnco
   if (From == eEncodingNative)
     From = eUTF8;
   if (From == eEncodingInternal)
-    From = eUCS2;
+    From = eUTF8;
   if (To == eEncodingNative)
     To = eUTF8;
   if (To == eEncodingInternal)
-    To = eUCS2;
+    To = eUTF8;
 #endif
 #if (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_) 
   if (From == eEncodingNative)
     From = eUTF8;
   if (From == eEncodingInternal)
-    From = eUCS4;
+    From = eUTF8;
   if (To == eEncodingNative)
     To = eUTF8;
   if (To == eEncodingInternal)
-    To = eUCS4;
+    To = eUTF8;
 #endif
 //TODO check these are good values (at least, no more segfault) 
 #ifdef _LINUX_
   if (From == eEncodingNative)
     From = eUTF8;
   if (From == eEncodingInternal)
-    From = eUCS4;
+    From = eUTF8;
   if (To == eEncodingNative)
     To = eUTF8;
   if (To == eEncodingInternal)
-    To = eUCS4;
+    To = eUTF8;
 #endif
 
   if (From == To)

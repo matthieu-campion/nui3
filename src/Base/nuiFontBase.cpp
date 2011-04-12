@@ -529,7 +529,7 @@ nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, 
     uint index = 0;
     if (!mpSubstitutionFonts[i]->IsLastResort() && mpSubstitutionFonts[i]->GetGlyphIndexes(&Glyph, 1, &index, 1) > 0 && index)
     {
-      //NGL_OUT(_T("found in previous fonts '%ls' as glyph 0x%x OK\n"), mpSubstitutionFonts[i]->GetFamilyName().GetChars(), index);
+      //NGL_OUT(_T("found in previous fonts '%s' as glyph 0x%x OK\n"), mpSubstitutionFonts[i]->GetFamilyName().GetChars(), index);
       return mpSubstitutionFonts[i];
     }
   }
@@ -554,7 +554,7 @@ nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, 
     uint index = 0;
     if (pFont->GetGlyphIndexes(&Glyph, 1, &index, 1) > 0)
     {
-      //NGL_OUT(_T("Found font '%ls' with glyph index %d\n"), pFont->GetFamilyName().GetChars(), index);
+      //NGL_OUT(_T("Found font '%s' with glyph index %d\n"), pFont->GetFamilyName().GetChars(), index);
       
       NGL_ASSERT(rResult.GetFontDesc()->HasGlyph(Glyph));
       
@@ -1195,7 +1195,7 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
     }
 
     //nglString str = pArray->Dump();
-    //NGL_OUT("%ls", str.GetChars());
+    //NGL_OUT("%s", str.GetChars());
     pContext->DrawArray(pArray);
 
     ++it;

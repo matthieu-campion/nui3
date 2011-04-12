@@ -105,7 +105,7 @@ void nuiRSSView::Update(const nuiEvent& rEvent)
   for (uint32 i = 0; i < count; i++)
   {
     const nuiRSSItem& rItem(mpRSS->GetItem(i));
-    //printf("%ls / %ls\n", rItem.GetLink().GetChars(), rItem.GetTitle().GetChars());
+    //printf("%s / %s\n", rItem.GetLink().GetChars(), rItem.GetTitle().GetChars());
 
     nglString desc(rItem.GetDescription());
     
@@ -123,12 +123,12 @@ void nuiRSSView::Update(const nuiEvent& rEvent)
     {
       // Contents is valid HTML
       html.GetSimpleText(text);
-      //NGL_OUT(_T("%d - Could parse HTML tags:\n%ls\n"), i, text.GetChars());
+      //NGL_OUT(_T("%d - Could parse HTML tags:\n%s\n"), i, text.GetChars());
     }
     else
     {
       text = rItem.GetDescription();
-      //NGL_OUT(_T("%d - Couldn't parse HTML tags:\n%ls\n"), i, text.GetChars());
+      //NGL_OUT(_T("%d - Couldn't parse HTML tags:\n%s\n"), i, text.GetChars());
     }
 
     
@@ -168,7 +168,7 @@ void nuiRSSView::Update(const nuiEvent& rEvent)
 //        text = desc;
 //      }
 
-      NGL_OUT(_T("AGENDA: %ls\n"), rItem.GetTitle().GetChars());
+      NGL_OUT(_T("AGENDA: %s\n"), rItem.GetTitle().GetChars());
       std::map<nglString, nglString> dictionnary;
       dictionnary[_T("ItemText")] = text;
       dictionnary[_T("ItemHTML")] = desc;
@@ -188,23 +188,23 @@ void nuiRSSView::Update(const nuiEvent& rEvent)
       if (!rItem.GetImageURL().IsEmpty())
       {
         nglString imagehtml;
-        imagehtml.CFormat(_T("<img src=\"%ls\" alt=\"%ls\"/>"), rItem.GetImageURL().GetChars(), rItem.GetImageTitle().GetChars());
-        NGL_OUT(_T("ImageHTML: %ls\n"), imagehtml.GetChars());
+        imagehtml.CFormat(_T("<img src=\"%s\" alt=\"%s\"/>"), rItem.GetImageURL().GetChars(), rItem.GetImageTitle().GetChars());
+        NGL_OUT(_T("ImageHTML: %s\n"), imagehtml.GetChars());
         dictionnary[_T("ImageHTML")] = imagehtml;
       }
       else
       {
         nglString imagehtml;
-        imagehtml.CFormat(_T("<img src=\"%ls\" alt=\"%ls\"/>"), rItem.GetLink().GetChars(), _T(""));
+        imagehtml.CFormat(_T("<img src=\"%s\" alt=\"%s\"/>"), rItem.GetLink().GetChars(), _T(""));
         imagehtml.Replace(_T("https"), _T("http"));
-        NGL_OUT(_T("ImageHTML (from link): %ls\n"), imagehtml.GetChars());
+        NGL_OUT(_T("ImageHTML (from link): %s\n"), imagehtml.GetChars());
         dictionnary[_T("ImageHTML")] = imagehtml;
       }
       if (!rItem.GetEnclosureURL().IsEmpty())
       {
         nglString enclosurehtml;
-        enclosurehtml.CFormat(_T("<img src=\"%ls\" alt=\"enclosure\"/>"), rItem.GetEnclosureURL().GetChars());
-        NGL_OUT(_T("EnclosureHTML: %ls\n"), enclosurehtml.GetChars());
+        enclosurehtml.CFormat(_T("<img src=\"%s\" alt=\"enclosure\"/>"), rItem.GetEnclosureURL().GetChars());
+        NGL_OUT(_T("EnclosureHTML: %s\n"), enclosurehtml.GetChars());
         dictionnary[_T("EnclosureHTML")] = enclosurehtml;
       }
       nuiWidget* pWidget = nuiBuilder::Get().CreateWidget(mItemWidget, dictionnary);

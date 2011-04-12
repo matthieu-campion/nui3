@@ -35,7 +35,7 @@ static inline void LOG_GETTEXTURE(nuiTexture* pTexture)
   {
     printf("NULL Texture\n"); 
   }
-  printf("0x%p '%ls'\n", pTexture, pTexture->GetSource().GetChars());
+  printf("0x%p '%s'\n", pTexture, pTexture->GetSource().GetChars());
 }
 #endif
 
@@ -286,7 +286,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
             nw = pTrimmed->GetWidth();
             nh = pTrimmed->GetHeight();
             float gain = (float)(ow*oh - nw*nh) / (float)(ow*oh);
-            NGL_OUT(_T("Trim %ls\n\t\t%d x %d -> %d x %d (%d pixels -> %2.2fpcf gained)\n"), p.GetChars(), ow, oh, nw, nh, ow*oh - nw*nh, 100.0 * gain);
+            NGL_OUT(_T("Trim %s\n\t\t%d x %d -> %d x %d (%d pixels -> %2.2fpcf gained)\n"), p.GetChars(), ow, oh, nw, nh, ow*oh - nw*nh, 100.0 * gain);
           }
           
           delete pImage;
@@ -306,7 +306,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
 
 bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize, bool AutoTrim)
 {
-  //NGL_OUT(_T("nuiTexture::CreateAtlasFromPath(rPath = '%ls', MaxTextureSize = %d, ForceAtlasSize = %d, AutoTrim = '%ls')\n"), rPath.GetChars(), MaxTextureSize, ForceAtlasSize, YESNO(AutoTrim));
+  //NGL_OUT(_T("nuiTexture::CreateAtlasFromPath(rPath = '%s', MaxTextureSize = %d, ForceAtlasSize = %d, AutoTrim = '%s')\n"), rPath.GetChars(), MaxTextureSize, ForceAtlasSize, YESNO(AutoTrim));
   MaxTextureSize *= NUI_SCALE_FACTOR;
   ForceAtlasSize *= NUI_SCALE_FACTOR;
   int32 offset = 0;
@@ -357,7 +357,7 @@ bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize,
       rElem.mpImage = pImg;
     }
 
-    NGL_OUT(_T("{%d, %d, %d, %d} %ls %ls\n"), x, y, w, h, TRUEFALSE(rotated), rElem.mPath.GetChars());
+    NGL_OUT(_T("{%d, %d, %d, %d} %s %s\n"), x, y, w, h, TRUEFALSE(rotated), rElem.mPath.GetChars());
     
     nglCopyImage(pAtlas->GetImage()->GetBuffer(), x, y, width, height, info.mBitDepth, rElem.mpImage->GetBuffer(), rElem.mpImage->GetWidth(), rElem.mpImage->GetHeight(), rElem.mpImage->GetBitDepth(), false, false);
     nuiTexture* pTex = nuiTexture::CreateTextureProxy(rElem.mPath.GetPathName(), rPath.GetPathName(), nuiRect(x, y, w, h), rotated);
@@ -778,7 +778,7 @@ void nuiTexture::Init()
   mRealWidthPOT = mRealWidth;
   mRealHeightPOT = mRealHeight;
 
-  //NGL_OUT(_T("nuiTexture::Init() (0x%x - [%f %f] source='%ls') COUNT: %d\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars(), mpTextures.size());
+  //NGL_OUT(_T("nuiTexture::Init() (0x%x - [%f %f] source='%s') COUNT: %d\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars(), mpTextures.size());
 
   if (mRealWidth > 0 && mRealHeight > 0)
   // Find the nearest bounding power of two size:
@@ -866,7 +866,7 @@ nuiTexture::~nuiTexture()
   }
   
   
-//  NGL_OUT(_T("nuiTexture::~nuiTexture(0x%x - [%f %f] source='%ls')\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars());
+//  NGL_OUT(_T("nuiTexture::~nuiTexture(0x%x - [%f %f] source='%s')\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars());
 
   if (mOwnImage)
     delete mpImage;
@@ -953,7 +953,7 @@ void nuiTexture::ImageToTextureCoord(nuiSize& x, nuiSize& y) const
 {
   if (mpProxyTexture)
   {
-    //NGL_OUT(_T("%ls\n???  %f, %f (rotated: %ls)\n"), GetSource().GetChars(), x, y, YESNO(mRotated));
+    //NGL_OUT(_T("%s\n???  %f, %f (rotated: %s)\n"), GetSource().GetChars(), x, y, YESNO(mRotated));
     if (mRotated)
     {
       // Rotate coords 90¡ to the right

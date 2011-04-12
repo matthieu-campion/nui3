@@ -106,19 +106,19 @@ void nglContextInfo::Dump(uint Level) const
   uint fbcount = (FrameCnt <= 4) ? FrameCnt : 4;
 
   NGL_LOG(_T("context"), Level, _T("GL Context description :"));
-  NGL_LOG(_T("context"), Level, _T("  Frame buffer : %ls"), human_readable[fbcount]);
+  NGL_LOG(_T("context"), Level, _T("  Frame buffer : %s"), human_readable[fbcount]);
   NGL_LOG(_T("context"), Level, _T("  Frame bits   : %d:%d:%d:%d\n"), FrameBitsR, FrameBitsG, FrameBitsB, FrameBitsA);
   NGL_LOG(_T("context"), Level, _T("  Depth bits   : %d\n"), DepthBits);
   NGL_LOG(_T("context"), Level, _T("  Stencil bits : %d\n"), StencilBits);
   NGL_LOG(_T("context"), Level, _T("  Accum bits   : %d:%d:%d:%d\n"), AccumBitsR, AccumBitsG, AccumBitsB, AccumBitsA);
   NGL_LOG(_T("context"), Level, _T("  Aux buffer   : %d\n"), AuxCnt);
-  NGL_LOG(_T("context"), Level, _T("  Multisample  : %d buffer%ls, %d sample%ls\n"), AABufferCnt, PLURAL(AABufferCnt), AASampleCnt, PLURAL(AASampleCnt));
-  NGL_LOG(_T("context"), Level, _T("  Stereo       : %ls\n"), YESNO(Stereo));
-  NGL_LOG(_T("context"), Level, _T("  Offscreen    : %ls\n"), YESNO(Offscreen));
-  NGL_LOG(_T("context"), Level, _T("  Copy On Swap : %ls\n"), YESNO(CopyOnSwap));
-  NGL_LOG(_T("context"), Level, _T("  Vertical Sync: %ls\n"), YESNO(VerticalSync));
-  NGL_LOG(_T("context"), Level, _T("  CopyOnSwap  : %ls\n"), YESNO(CopyOnSwap));
-  NGL_LOG(_T("context"), Level, _T("  VerticalSync: %ls\n"), YESNO(VerticalSync));
+  NGL_LOG(_T("context"), Level, _T("  Multisample  : %d buffer%s, %d sample%s\n"), AABufferCnt, PLURAL(AABufferCnt), AASampleCnt, PLURAL(AASampleCnt));
+  NGL_LOG(_T("context"), Level, _T("  Stereo       : %s\n"), YESNO(Stereo));
+  NGL_LOG(_T("context"), Level, _T("  Offscreen    : %s\n"), YESNO(Offscreen));
+  NGL_LOG(_T("context"), Level, _T("  Copy On Swap : %s\n"), YESNO(CopyOnSwap));
+  NGL_LOG(_T("context"), Level, _T("  Vertical Sync: %s\n"), YESNO(VerticalSync));
+  NGL_LOG(_T("context"), Level, _T("  CopyOnSwap  : %s\n"), YESNO(CopyOnSwap));
+  NGL_LOG(_T("context"), Level, _T("  VerticalSync: %s\n"), YESNO(VerticalSync));
 }
 
 
@@ -153,11 +153,11 @@ bool nglContext::CheckExtension (const nglChar* pExtName)
     success = InitExtension(pExtName);
 #ifdef _DEBUG_
     if (!success)
-      NGL_LOG(_T("context"), NGL_LOG_WARNING, _T("'%ls' extension setup failed"), pExtName);
+      NGL_LOG(_T("context"), NGL_LOG_WARNING, _T("'%s' extension setup failed"), pExtName);
   }
   else
   {
-    NGL_LOG(_T("context"), NGL_LOG_DEBUG, _T("'%ls' extension not found"), pExtName);
+    NGL_LOG(_T("context"), NGL_LOG_DEBUG, _T("'%s' extension not found"), pExtName);
 #endif
   }
 
@@ -221,11 +221,11 @@ void nglContext::Dump(uint Level) const
   nglString sl((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
 #endif
   
-  NGL_LOG(_T("context"), Level, _T("  OpenGL Version: %ls"), version.GetChars());
-  NGL_LOG(_T("context"), Level, _T("  Renderer      : %ls"),        renderer.GetChars());
-  NGL_LOG(_T("context"), Level, _T("  Vendor        : %ls"),        vendor.GetChars());
+  NGL_LOG(_T("context"), Level, _T("  OpenGL Version: %s"), version.GetChars());
+  NGL_LOG(_T("context"), Level, _T("  Renderer      : %s"),        renderer.GetChars());
+  NGL_LOG(_T("context"), Level, _T("  Vendor        : %s"),        vendor.GetChars());
 #ifndef _UIKIT_
-  NGL_LOG(_T("context"), Level, _T("  GLSL version  : %ls"),        sl.GetChars());
+  NGL_LOG(_T("context"), Level, _T("  GLSL version  : %s"),        sl.GetChars());
 #endif
   NGL_LOG(_T("context"), Level, _T("  Extensions    :"));
   
@@ -233,7 +233,7 @@ void nglContext::Dump(uint Level) const
   exts.Tokenize(tokens);
   for (int32 i = 0; i < tokens.size(); i++)
   {
-    NGL_LOG(_T("context"), Level, _T("    %3d %ls"), i, tokens[i].GetChars());
+    NGL_LOG(_T("context"), Level, _T("    %3d %s"), i, tokens[i].GetChars());
   }
   
 }

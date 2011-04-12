@@ -962,19 +962,19 @@ nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString)
     source.Replace(_T(" "), nglString::Empty);
     source.ToUpper();
     
-    //NGL_OUT(_T("1) Web: '%ls' Source: '%ls' Input: '%ls'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
+    //NGL_OUT(_T("1) Web: '%s' Source: '%s' Input: '%s'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
     if (source == input)
       return res;
     
     // Try - instead of _
     input.Replace('_', '-');
-    //NGL_OUT(_T("2) Web: '%ls' Source: '%ls' Input: '%ls'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
+    //NGL_OUT(_T("2) Web: '%s' Source: '%s' Input: '%s'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
     if (source == input)
       return res;
     
     // Try ' ' instead of _
     input.Replace(_T("-"), nglString::Empty);
-    //NGL_OUT(_T("3) Web: '%ls' Source: '%ls' Input: '%ls'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
+    //NGL_OUT(_T("3) Web: '%s' Source: '%s' Input: '%s'\n"), WebString.GetChars(), source.GetChars(), input.GetChars());
     if (source == input)
       return res;
   }
