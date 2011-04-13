@@ -134,8 +134,8 @@ struct RangeRecord
     return c->check_struct (this);
   }
 
-  hb_GlyphID	start;		/* First hb_GlyphID in the range */
-  hb_GlyphID	end;		/* Last hb_GlyphID in the range */
+  GlyphID	start;		/* First GlyphID in the range */
+  GlyphID	end;		/* Last GlyphID in the range */
   USHORT	value;		/* Value */
   public:
   DEFINE_SIZE_STATIC (6);
@@ -359,8 +359,8 @@ struct CoverageFormat1
 
   private:
   USHORT	coverageFormat;	/* Format identifier--format = 1 */
-  SortedArrayOf<hb_GlyphID>
-		glyphArray;	/* Array of hb_GlyphIDs--in numerical order */
+  SortedArrayOf<GlyphID>
+		glyphArray;	/* Array of GlyphIDs--in numerical order */
   public:
   DEFINE_SIZE_ARRAY (4, glyphArray);
 };
@@ -389,7 +389,7 @@ struct CoverageFormat2
   USHORT	coverageFormat;	/* Format identifier--format = 2 */
   SortedArrayOf<RangeRecord>
 		rangeRecord;	/* Array of glyph ranges--ordered by
-				 * Start hb_GlyphID. rangeCount entries
+				 * Start GlyphID. rangeCount entries
 				 * long */
   public:
   DEFINE_SIZE_ARRAY (4, rangeRecord);
@@ -452,9 +452,9 @@ struct ClassDefFormat1
   }
 
   USHORT	classFormat;		/* Format identifier--format = 1 */
-  hb_GlyphID	startGlyph;		/* First hb_GlyphID of the classValueArray */
+  GlyphID	startGlyph;		/* First GlyphID of the classValueArray */
   ArrayOf<USHORT>
-		classValue;		/* Array of Class Values--one per hb_GlyphID */
+		classValue;		/* Array of Class Values--one per GlyphID */
   public:
   DEFINE_SIZE_ARRAY (6, classValue);
 };
@@ -480,7 +480,7 @@ struct ClassDefFormat2
   USHORT	classFormat;	/* Format identifier--format = 2 */
   SortedArrayOf<RangeRecord>
 		rangeRecord;	/* Array of glyph ranges--ordered by
-				 * Start hb_GlyphID */
+				 * Start GlyphID */
   public:
   DEFINE_SIZE_ARRAY (4, rangeRecord);
 };

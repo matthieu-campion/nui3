@@ -429,8 +429,6 @@
 		73F084BC12E9BA0700656E84 /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D7F0C3CECAB00902DFE /* nglFontInstance.h */; };
 		73F084BD12E9BA0700656E84 /* nglInputDeviceInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816E2C0C3CECAB00902DFE /* nglInputDeviceInstance.h */; };
 		73F084BE12E9BA0700656E84 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
-		73F084BF12E9BA0700656E84 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		73F084C012E9BA0700656E84 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		73F084C112E9BA0700656E84 /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
 		73F084C212E9BA0700656E84 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
 		73F084C312E9BA0700656E84 /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
@@ -1072,8 +1070,6 @@
 		73F0984812E9D09E00656E84 /* jmemsys.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A970C3CECA900902DFE /* jmemsys.h */; };
 		73F0984912E9D09E00656E84 /* ftdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = E581682E0C3CECA800902DFE /* ftdebug.h */; };
 		73F0984A12E9D09E00656E84 /* jinclude.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A8F0C3CECA900902DFE /* jinclude.h */; };
-		73F0984B12E9D09E00656E84 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		73F0984C12E9D09E00656E84 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		73F0984D12E9D09E00656E84 /* gxvalid.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1C90C5E6CCE0026DE07 /* gxvalid.h */; };
 		73F0984E12E9D09E00656E84 /* gxvcommn.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1CA0C5E6CCE0026DE07 /* gxvcommn.h */; };
 		73F0984F12E9D09E00656E84 /* gxverror.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1CB0C5E6CCE0026DE07 /* gxverror.h */; };
@@ -2264,8 +2260,6 @@
 		E52413D511CB860B0025CA71 /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D7F0C3CECAB00902DFE /* nglFontInstance.h */; };
 		E52413D611CB860B0025CA71 /* nglInputDeviceInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816E2C0C3CECAB00902DFE /* nglInputDeviceInstance.h */; };
 		E52413D711CB860B0025CA71 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
-		E52413D811CB860B0025CA71 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E52413D911CB860B0025CA71 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		E524144711CB860B0025CA71 /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
 		E524144811CB860B0025CA71 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
 		E524144A11CB860B0025CA71 /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
@@ -2918,8 +2912,6 @@
 		E5241CAC11CBCE9E0025CA71 /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D7F0C3CECAB00902DFE /* nglFontInstance.h */; };
 		E5241CAD11CBCE9E0025CA71 /* nglInputDeviceInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816E2C0C3CECAB00902DFE /* nglInputDeviceInstance.h */; };
 		E5241CAE11CBCE9E0025CA71 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
-		E5241CAF11CBCE9E0025CA71 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E5241CB011CBCE9E0025CA71 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		E5241D1E11CBCE9E0025CA71 /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
 		E5241D1F11CBCE9E0025CA71 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
 		E5241D2111CBCE9E0025CA71 /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
@@ -3888,10 +3880,6 @@
 		E57951D3100AB47200821E44 /* nglStringConv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5795182100AB20400821E44 /* nglStringConv_iconv.cpp */; };
 		E57BBCD90C5800A30026DE07 /* nuiFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57BBCD70C5800A30026DE07 /* nuiFontManager.cpp */; };
 		E57BBCDB0C5800A30026DE07 /* nuiFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57BBCD70C5800A30026DE07 /* nuiFontManager.cpp */; };
-		E57BBCF90C5898320026DE07 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E57BBCFA0C5898320026DE07 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E57BBF740C5C9FBF0026DE07 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
-		E57BBF750C5C9FBF0026DE07 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		E57BC7560C63E9E00026DE07 /* nuiSignalsSlots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57BC7550C63E9E00026DE07 /* nuiSignalsSlots.cpp */; };
 		E57BC7570C63E9E00026DE07 /* nuiSignalsSlots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57BC7550C63E9E00026DE07 /* nuiSignalsSlots.cpp */; };
 		E57BC7590C63EA070026DE07 /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
@@ -4489,8 +4477,6 @@
 		E5A8CDB611E33A54004E14CE /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D7F0C3CECAB00902DFE /* nglFontInstance.h */; };
 		E5A8CDB711E33A54004E14CE /* nglInputDeviceInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816E2C0C3CECAB00902DFE /* nglInputDeviceInstance.h */; };
 		E5A8CDB811E33A54004E14CE /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
-		E5A8CDB911E33A54004E14CE /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E5A8CDBA11E33A54004E14CE /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		E5A8CE2811E33A54004E14CE /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
 		E5A8CE2911E33A54004E14CE /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
 		E5A8CE2B11E33A54004E14CE /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
@@ -5188,8 +5174,6 @@
 		E5D63FC11209AB9C009C26A9 /* nglFontInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816D7F0C3CECAB00902DFE /* nglFontInstance.h */; };
 		E5D63FC21209AB9C009C26A9 /* nglInputDeviceInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816E2C0C3CECAB00902DFE /* nglInputDeviceInstance.h */; };
 		E5D63FC31209AB9C009C26A9 /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E51B694E0C4E564D008EF7A3 /* ConvertUTF.h */; };
-		E5D63FC41209AB9C009C26A9 /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E5D63FC51209AB9C009C26A9 /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		E5D640331209AB9C009C26A9 /* nuiFastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC7580C63EA070026DE07 /* nuiFastDelegate.h */; };
 		E5D640341209AB9C009C26A9 /* nuiSignalsSlots.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC75B0C63EA1A0026DE07 /* nuiSignalsSlots.h */; };
 		E5D640361209AB9C009C26A9 /* nuiTreeView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5A2A6E60C7F2877008E2827 /* nuiTreeView.h */; };
@@ -5789,8 +5773,6 @@
 		E5DD2EED12E09CA700F1EF4E /* jmemsys.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A970C3CECA900902DFE /* jmemsys.h */; };
 		E5DD2EEE12E09CA700F1EF4E /* ftdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = E581682E0C3CECA800902DFE /* ftdebug.h */; };
 		E5DD2EEF12E09CA700F1EF4E /* jinclude.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A8F0C3CECA900902DFE /* jinclude.h */; };
-		E5DD2F9812E09CA700F1EF4E /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E5DD2F9912E09CA700F1EF4E /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		E5DD2F9A12E09CA700F1EF4E /* gxvalid.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1C90C5E6CCE0026DE07 /* gxvalid.h */; };
 		E5DD2F9B12E09CA700F1EF4E /* gxvcommn.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1CA0C5E6CCE0026DE07 /* gxvcommn.h */; };
 		E5DD2F9C12E09CA700F1EF4E /* gxverror.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1CB0C5E6CCE0026DE07 /* gxverror.h */; };
@@ -6491,8 +6473,6 @@
 		E5DD3ABC12E0B08300F1EF4E /* jmemsys.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A970C3CECA900902DFE /* jmemsys.h */; };
 		E5DD3ABD12E0B08300F1EF4E /* ftdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = E581682E0C3CECA800902DFE /* ftdebug.h */; };
 		E5DD3ABE12E0B08300F1EF4E /* jinclude.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816A8F0C3CECA900902DFE /* jinclude.h */; };
-		E5DD3B6212E0B08300F1EF4E /* nglFontBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBCF80C5898320026DE07 /* nglFontBase.h */; };
-		E5DD3B6312E0B08300F1EF4E /* nglFontLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */; };
 		E5DD3B6412E0B08300F1EF4E /* gxvalid.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1C90C5E6CCE0026DE07 /* gxvalid.h */; };
 		E5DD3B6512E0B08300F1EF4E /* gxvcommn.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1CA0C5E6CCE0026DE07 /* gxvcommn.h */; };
 		E5DD3B6612E0B08300F1EF4E /* gxverror.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC1CB0C5E6CCE0026DE07 /* gxverror.h */; };
@@ -8033,8 +8013,6 @@
 		E578F7E40D04611D00D2F07C /* nuiNativeResourceVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNativeResourceVolume.h; path = include/nuiNativeResourceVolume.h; sourceTree = SOURCE_ROOT; };
 		E5795182100AB20400821E44 /* nglStringConv_iconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglStringConv_iconv.cpp; path = src/String/nglStringConv_iconv.cpp; sourceTree = SOURCE_ROOT; };
 		E57BBCD70C5800A30026DE07 /* nuiFontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFontManager.cpp; path = ../Base/nuiFontManager.cpp; sourceTree = "<group>"; };
-		E57BBCF80C5898320026DE07 /* nglFontBase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglFontBase.h; path = include/nglFontBase.h; sourceTree = SOURCE_ROOT; };
-		E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglFontLayout.h; path = include/nglFontLayout.h; sourceTree = SOURCE_ROOT; };
 		E57BC1C90C5E6CCE0026DE07 /* gxvalid.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gxvalid.h; path = deps/freetype2/src/gxvalid/gxvalid.h; sourceTree = SOURCE_ROOT; };
 		E57BC1CA0C5E6CCE0026DE07 /* gxvcommn.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gxvcommn.h; path = deps/freetype2/src/gxvalid/gxvcommn.h; sourceTree = SOURCE_ROOT; };
 		E57BC1CB0C5E6CCE0026DE07 /* gxverror.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = gxverror.h; path = deps/freetype2/src/gxvalid/gxverror.h; sourceTree = SOURCE_ROOT; };
@@ -10823,10 +10801,8 @@
 				E5816D7F0C3CECAB00902DFE /* nglFontInstance.h */,
 				E5816D800C3CECAB00902DFE /* nglFontLayout.cpp */,
 				E5816C8C0C3CECAB00902DFE /* nglFontLayout.h */,
-				E57BBCF80C5898320026DE07 /* nglFontBase.h */,
 				E5816D810C3CECAB00902DFE /* nglFontTexCache.cpp */,
 				E5816D820C3CECAB00902DFE /* nglFontTexCache.h */,
-				E57BBF730C5C9FBF0026DE07 /* nglFontLayout.h */,
 				E5F9F7700EACB86D00F8D3A3 /* nuiPanose.h */,
 				E5F9F7750EACC8F000F8D3A3 /* nuiPanose.cpp */,
 			);
@@ -11930,8 +11906,6 @@
 				73F084BC12E9BA0700656E84 /* nglFontInstance.h in Headers */,
 				73F084BD12E9BA0700656E84 /* nglInputDeviceInstance.h in Headers */,
 				73F084BE12E9BA0700656E84 /* ConvertUTF.h in Headers */,
-				73F084BF12E9BA0700656E84 /* nglFontBase.h in Headers */,
-				73F084C012E9BA0700656E84 /* nglFontLayout.h in Headers */,
 				73F084C112E9BA0700656E84 /* nuiFastDelegate.h in Headers */,
 				73F084C212E9BA0700656E84 /* nuiSignalsSlots.h in Headers */,
 				73F084C312E9BA0700656E84 /* nuiTreeView.h in Headers */,
@@ -12249,8 +12223,6 @@
 				73F0984812E9D09E00656E84 /* jmemsys.h in Headers */,
 				73F0984912E9D09E00656E84 /* ftdebug.h in Headers */,
 				73F0984A12E9D09E00656E84 /* jinclude.h in Headers */,
-				73F0984B12E9D09E00656E84 /* nglFontBase.h in Headers */,
-				73F0984C12E9D09E00656E84 /* nglFontLayout.h in Headers */,
 				73F0984D12E9D09E00656E84 /* gxvalid.h in Headers */,
 				73F0984E12E9D09E00656E84 /* gxvcommn.h in Headers */,
 				73F0984F12E9D09E00656E84 /* gxverror.h in Headers */,
@@ -12768,8 +12740,6 @@
 				E52413D511CB860B0025CA71 /* nglFontInstance.h in Headers */,
 				E52413D611CB860B0025CA71 /* nglInputDeviceInstance.h in Headers */,
 				E52413D711CB860B0025CA71 /* ConvertUTF.h in Headers */,
-				E52413D811CB860B0025CA71 /* nglFontBase.h in Headers */,
-				E52413D911CB860B0025CA71 /* nglFontLayout.h in Headers */,
 				E524144711CB860B0025CA71 /* nuiFastDelegate.h in Headers */,
 				E524144811CB860B0025CA71 /* nuiSignalsSlots.h in Headers */,
 				E524144A11CB860B0025CA71 /* nuiTreeView.h in Headers */,
@@ -13153,8 +13123,6 @@
 				E5241CAC11CBCE9E0025CA71 /* nglFontInstance.h in Headers */,
 				E5241CAD11CBCE9E0025CA71 /* nglInputDeviceInstance.h in Headers */,
 				E5241CAE11CBCE9E0025CA71 /* ConvertUTF.h in Headers */,
-				E5241CAF11CBCE9E0025CA71 /* nglFontBase.h in Headers */,
-				E5241CB011CBCE9E0025CA71 /* nglFontLayout.h in Headers */,
 				E5241D1E11CBCE9E0025CA71 /* nuiFastDelegate.h in Headers */,
 				E5241D1F11CBCE9E0025CA71 /* nuiSignalsSlots.h in Headers */,
 				E5241D2111CBCE9E0025CA71 /* nuiTreeView.h in Headers */,
@@ -13543,8 +13511,6 @@
 				E542A05B0C3F0A5900225219 /* nglFontInstance.h in Headers */,
 				E542A05C0C3F0A5900225219 /* nglInputDeviceInstance.h in Headers */,
 				E51B69520C4E564D008EF7A3 /* ConvertUTF.h in Headers */,
-				E57BBCFA0C5898320026DE07 /* nglFontBase.h in Headers */,
-				E57BBF750C5C9FBF0026DE07 /* nglFontLayout.h in Headers */,
 				E57BC75A0C63EA070026DE07 /* nuiFastDelegate.h in Headers */,
 				E57BC75D0C63EA1A0026DE07 /* nuiSignalsSlots.h in Headers */,
 				E5A2A6E80C7F2877008E2827 /* nuiTreeView.h in Headers */,
@@ -13925,8 +13891,6 @@
 				E58177D20C3D112C00902DFE /* nglFontInstance.h in Headers */,
 				E58177D30C3D112C00902DFE /* nglInputDeviceInstance.h in Headers */,
 				E51B69500C4E564D008EF7A3 /* ConvertUTF.h in Headers */,
-				E57BBCF90C5898320026DE07 /* nglFontBase.h in Headers */,
-				E57BBF740C5C9FBF0026DE07 /* nglFontLayout.h in Headers */,
 				E57BC7590C63EA070026DE07 /* nuiFastDelegate.h in Headers */,
 				E57BC75C0C63EA1A0026DE07 /* nuiSignalsSlots.h in Headers */,
 				E5A2A6E70C7F2877008E2827 /* nuiTreeView.h in Headers */,
@@ -14309,8 +14273,6 @@
 				E5A8CDB611E33A54004E14CE /* nglFontInstance.h in Headers */,
 				E5A8CDB711E33A54004E14CE /* nglInputDeviceInstance.h in Headers */,
 				E5A8CDB811E33A54004E14CE /* ConvertUTF.h in Headers */,
-				E5A8CDB911E33A54004E14CE /* nglFontBase.h in Headers */,
-				E5A8CDBA11E33A54004E14CE /* nglFontLayout.h in Headers */,
 				E5A8CE2811E33A54004E14CE /* nuiFastDelegate.h in Headers */,
 				E5A8CE2911E33A54004E14CE /* nuiSignalsSlots.h in Headers */,
 				E5A8CE2B11E33A54004E14CE /* nuiTreeView.h in Headers */,
@@ -14694,8 +14656,6 @@
 				E5D63FC11209AB9C009C26A9 /* nglFontInstance.h in Headers */,
 				E5D63FC21209AB9C009C26A9 /* nglInputDeviceInstance.h in Headers */,
 				E5D63FC31209AB9C009C26A9 /* ConvertUTF.h in Headers */,
-				E5D63FC41209AB9C009C26A9 /* nglFontBase.h in Headers */,
-				E5D63FC51209AB9C009C26A9 /* nglFontLayout.h in Headers */,
 				E5D640331209AB9C009C26A9 /* nuiFastDelegate.h in Headers */,
 				E5D640341209AB9C009C26A9 /* nuiSignalsSlots.h in Headers */,
 				E5D640361209AB9C009C26A9 /* nuiTreeView.h in Headers */,
@@ -15010,8 +14970,6 @@
 				E5DD2EED12E09CA700F1EF4E /* jmemsys.h in Headers */,
 				E5DD2EEE12E09CA700F1EF4E /* ftdebug.h in Headers */,
 				E5DD2EEF12E09CA700F1EF4E /* jinclude.h in Headers */,
-				E5DD2F9812E09CA700F1EF4E /* nglFontBase.h in Headers */,
-				E5DD2F9912E09CA700F1EF4E /* nglFontLayout.h in Headers */,
 				E5DD2F9A12E09CA700F1EF4E /* gxvalid.h in Headers */,
 				E5DD2F9B12E09CA700F1EF4E /* gxvcommn.h in Headers */,
 				E5DD2F9C12E09CA700F1EF4E /* gxverror.h in Headers */,
@@ -15450,8 +15408,6 @@
 				E5DD3ABC12E0B08300F1EF4E /* jmemsys.h in Headers */,
 				E5DD3ABD12E0B08300F1EF4E /* ftdebug.h in Headers */,
 				E5DD3ABE12E0B08300F1EF4E /* jinclude.h in Headers */,
-				E5DD3B6212E0B08300F1EF4E /* nglFontBase.h in Headers */,
-				E5DD3B6312E0B08300F1EF4E /* nglFontLayout.h in Headers */,
 				E5DD3B6412E0B08300F1EF4E /* gxvalid.h in Headers */,
 				E5DD3B6512E0B08300F1EF4E /* gxvcommn.h in Headers */,
 				E5DD3B6612E0B08300F1EF4E /* gxverror.h in Headers */,

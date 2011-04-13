@@ -280,7 +280,7 @@ public:
     helps you to support fonts which do not define their height (mostly bitmap fonts).
   */
   uint      GetGlyphCount() const;  ///< Returns the number of available glyphs
-  void      GetGlyphs(std::set<nglChar>& rGlyphs) const; ///< Return all the available charcodes in the current charmap.
+  void      GetGlyphs(std::set<nglUChar>& rGlyphs) const; ///< Return all the available charcodes in the current charmap.
 
   // Unit conversion methods
   float     EMToPixel   (float Value) const;  ///< Convert from EM to pixels (undefined for bitmap fonts)
@@ -314,7 +314,7 @@ public:
     instance with nglWindow::GetResolution().
   */
 
-  bool  GetMetrics (nglGlyphInfo& rInfo, nglChar Char, GlyphType Type = eGlyphBitmap) const;
+  bool  GetMetrics (nglGlyphInfo& rInfo, nglUChar Char, GlyphType Type = eGlyphBitmap) const;
   /*!< Fetch glyph metrics
     \param rInfo information receptacle
     \param Char character code of the inspected glyph
@@ -375,6 +375,7 @@ public:
   const nglChar* GetCharMapName(int Index) const;  ///< Get charmap \p Index human readable name
 
   int GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint* pIndexes, int IndexesLength) const;
+  int GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uint* pIndexes, int IndexesLength) const;
   /*!< Retrieve a range of glyph indexes from a nglChar array (encoding aware)
     \param pSource nglChar source array (zero terminal is not handled)
     \param SourceLength \p pSource array length in nglChars
@@ -385,12 +386,12 @@ public:
     This method retrieves glyph indexes from nglChars using the current active charmap.
   */
 
-  int32 GetGlyphIndex(nglChar Source) const;
-  /*!< Retrieve a glyph indexes from a nglChar
-   \param Source nglChar source
+  int32 GetGlyphIndex(nglUChar Source) const;
+  /*!< Retrieve a glyph indexes from a nglUChar
+   \param Source nglUChar source
    \return glyph indexes converted, -1 if a fatal error occured
    
-   This method retrieves a glyph index from an nglChar using the current active charmap.
+   This method retrieves a glyph index from an nglUChar using the current active charmap.
    */
   //@}
 

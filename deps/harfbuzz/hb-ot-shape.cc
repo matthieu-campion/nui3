@@ -37,7 +37,6 @@ hb_tag_t default_features[] = {
   HB_TAG('c','a','l','t'),
   HB_TAG('c','c','m','p'),
   HB_TAG('c','l','i','g'),
-  HB_TAG('c','s','w','h'),
   HB_TAG('c','u','r','s'),
   HB_TAG('k','e','r','n'),
   HB_TAG('l','i','g','a'),
@@ -64,6 +63,7 @@ hb_ot_shape_collect_features (hb_ot_shape_plan_t       *plan,
       break;
     case HB_DIRECTION_TTB:
     case HB_DIRECTION_BTT:
+    case HB_DIRECTION_INVALID:
     default:
       break;
   }
@@ -170,7 +170,7 @@ hb_ensure_native_direction (hb_ot_shape_context_t *c)
 
   /* TODO vertical */
   if (HB_DIRECTION_IS_HORIZONTAL (direction) &&
-      direction != _hb_script_get_horizontal_direction (c->buffer->props.script))
+      direction != hb_script_get_horizontal_direction (c->buffer->props.script))
   {
     hb_buffer_reverse_clusters (c->buffer);
     c->buffer->props.direction = HB_DIRECTION_REVERSE (c->buffer->props.direction);

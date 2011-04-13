@@ -469,7 +469,7 @@ uint nglFontBase::GetGlyphCount() const
   return mpFace->Face ? (uint)mpFace->Face->num_glyphs : 0;
 }
 
-void nglFontBase::GetGlyphs(std::set<nglChar>& rGlyphs) const
+void nglFontBase::GetGlyphs(std::set<nglUChar>& rGlyphs) const
 {
   rGlyphs.clear();
 
@@ -603,13 +603,11 @@ void nglFontBase::SetResolution (float Resolution)
 }
 
 
-bool nglFontBase::GetMetrics (nglGlyphInfo& rInfo, nglChar Char, GlyphType Type) const
+bool nglFontBase::GetMetrics (nglGlyphInfo& rInfo, nglUChar Char, GlyphType Type) const
 {
   uint index;
-
-  return
-    GetGlyphIndexes(&Char, 1, &index, 1) == 1 &&
-    GetGlyphInfo(rInfo, index, Type);
+  bool res = GetGlyphIndexes(&Char, 1, &index, 1) == 1 && GetGlyphInfo(rInfo, index, Type);
+  return res;
 }
 
 bool nglFontBase::GetGlyphInfo (nglGlyphInfo& rInfo, uint Index, GlyphType Type) const
@@ -720,9 +718,17 @@ const nglChar* nglFontBase::GetCharMapName (int Index)  const
 }
 
 
-//#define DBG_INDEX
+#define DBG_INDEX
 
 int nglFontBase::GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint* pIndexes, int IndexesLength) const
+{
+  nglUChar* pChars = (nglUChar*)nglString(pSource, SourceLength).Export(sizeof(nglUChar) == 2 ? eUCS2 : eUCS4);
+  int res = GetGlyphIndexes(pChars, wcslen(pChars), pIndexes, IndexesLength);
+  free(pChars);
+  return res;
+}
+
+int nglFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uint* pIndexes, int IndexesLength) const
 {
   if (!mpFace->Face)
     return -1;
@@ -812,7 +818,7 @@ int nglFontBase::GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint
     {
       *pIndexes++ = FTC_CMapCache_Lookup (gFTCMapCache, face_id, mCharMap, *pSource++);
 #ifdef DBG_INDEX
-      NGL_OUT(_T(" %d -> %d"), pSource[-1], pIndexes[-1]);
+//      NGL_OUT(_T(" %d -> %d"), pSource[-1], pIndexes[-1]);
 #endif
       todo--;
     }
@@ -822,7 +828,7 @@ int nglFontBase::GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint
 }
 
 
-int32 nglFontBase::GetGlyphIndex(nglChar Source) const
+int32 nglFontBase::GetGlyphIndex(nglUChar Source) const
 {
   if (!mpFace->Face)
     return -1;

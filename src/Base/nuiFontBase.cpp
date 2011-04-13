@@ -61,7 +61,7 @@ nuiFontLayout::~nuiFontLayout()
   }
 }
 
-nuiFontLayout::WordElement::WordElement(nglGlyphInfo Glyph, nglChar Char, int Pos, nglFontBase* pFont)
+nuiFontLayout::WordElement::WordElement(nglGlyphInfo Glyph, nglUChar Char, int Pos, nglFontBase* pFont)
 {
   mGlyph = Glyph;
   mChar = Char;
@@ -100,7 +100,7 @@ nuiFontLayout::WordElement::WordElement(const WordElement& rWordElement)
 
 void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph)
 {
-  nglChar c = rString[Pos];
+  nglUChar c = rString[Pos];
   if (mOrientation == nuiVertical)
   {
     nglFontInfo info;
@@ -280,7 +280,7 @@ void nuiFontLayout::OnFinalizeLayout()
 
       //NGL_OUT(_T("New Word %f %f\n"), mPenX, mPenY);
 
-      nglChar c = pWord->front().mChar;
+      nglUChar c = pWord->front().mChar;
       nglGlyphInfo* pGlyph = &pWord->front().mGlyph;
       // Handle new line control char
       if (c == _T('\n'))
@@ -519,7 +519,7 @@ nuiRect nuiFontLayout::GetRect() const
   return r.Size();
 }
 
-nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglChar Glyph)
+nglFontBase* nuiFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglUChar Glyph)
 {
   //NGL_OUT(_T("Try to find font for char 0x%x (%c)\n"), Glyph, Glyph);
   

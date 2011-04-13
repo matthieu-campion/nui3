@@ -53,7 +53,7 @@ public:
   nuiSize GetDensityY() const;
 
   nuiRect GetRect() const;
-  nglFontBase* FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglChar Glyph);
+  nglFontBase* FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglUChar Glyph);
   
   struct Line
   {
@@ -72,11 +72,11 @@ protected:
   class NUI_API WordElement
   {
   public:
-    WordElement(nglGlyphInfo Glyph, nglChar Char, int Pos, nglFontBase* pFont);
+    WordElement(nglGlyphInfo Glyph, nglUChar Char, int Pos, nglFontBase* pFont);
     WordElement(const WordElement& rWordElement);
 
     nglGlyphInfo mGlyph;
-    nglChar mChar;
+    nglUChar mChar;
     int mPos;
     nglFontBase* mpFont;
   };

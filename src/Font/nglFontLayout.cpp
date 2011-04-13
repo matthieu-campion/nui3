@@ -86,12 +86,16 @@ int nglFontLayout::Layout (const nglString& rText, bool FinalizeLayout)
   if (len == 0)
     return 0;
 
-  int indexes_max = len * 2 + 1; // Let's have extra space (eg. for composite glyphs)
+  nglUChar* pChars = (nglUChar*)rText.Export(sizeof(nglUChar) == 2 ? eUCS2 : eUCS4);
+  uint UCount = wcslen(pChars);
+  
+  int indexes_max = UCount * 2 + 1; // Let's have extra space (eg. for composite glyphs)
   uint32* indexes = (uint32*) malloc(indexes_max * sizeof(uint32));
 
-  if (!mFont.GetGlyphIndexes(rText.GetChars(), len, indexes, indexes_max))
+  if (!mFont.GetGlyphIndexes(pChars, UCount, indexes, indexes_max))
   {
     free(indexes);
+    free(pChars);
     return -1;
   }
 
@@ -110,17 +114,16 @@ int nglFontLayout::Layout (const nglString& rText, bool FinalizeLayout)
     }
     else
     {
-      if (rText[i] >= ' ')
+      if (pChars[i] >= ' ')
       {
         bool handled = false;
         // Try to find an alternative font that contains the missing glyph:
-        nglFontBase* pFont = FindFontForMissingGlyph(&mFont, rText[i]);
+        nglFontBase* pFont = FindFontForMissingGlyph(&mFont, pChars[i]);
         
         if (pFont)
         {
           uint32 index = 0;
-          const nglChar* pStr = rText.GetChars();
-          if (pFont->GetGlyphIndexes(pStr + i, 1, &index, 1) > 0)
+          if (pFont->GetGlyphIndexes(pChars + i, 1, &index, 1) > 0)
           {
             if (pFont->GetGlyphInfo(info, index, nglFontBase::eGlyphBitmap))
             {
@@ -160,13 +163,13 @@ int nglFontLayout::Layout (const nglString& rText, bool FinalizeLayout)
   // Finalize the layout (needed to handle complex layout that needs to buffer glyphs in order to manage things such as word wrapping).
 
   free(indexes);
-
+  free(pChars);
   return done;
 }
 
 void nglFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph)
 {
-  nglChar c = rString[Pos];
+  nglUChar c = rString[Pos];
 
   // Handle new line control char
   if (c == _T('\n'))
@@ -375,7 +378,7 @@ void nglFontLayout::CallOnGlyph (nglFontBase* pFont, const nglString& rString, i
   OnGlyph(pFont, rString, Pos, pGlyph);
 }
 
-nglFontBase* nglFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglChar Glyph)
+nglFontBase* nglFontLayout::FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglUChar Glyph)
 {
   return NULL; // We don't use font substitution by default
 }

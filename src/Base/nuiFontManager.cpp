@@ -90,7 +90,7 @@ nuiFontRequest::nuiFontRequest(nglFontBase* pOriginalFont, bool ForcePanoseOnlyF
   mBold(false),
   mMonospace(false),
   mScalable(true),
-  mMustHaveGlyphs(std::set<nglChar>()),
+  mMustHaveGlyphs(std::set<nglUChar>()),
   mMustHaveEncoding(std::set<nglTextEncoding>()),
   mMustHaveSizes(std::set<int32>()),
   mPanose(nuiPanose())
@@ -251,7 +251,7 @@ nuiFontRequest::nuiFontRequest(const nuiFontRequest& rOriginal)
   mBold(false),
   mMonospace(false),
   mScalable(true),
-  mMustHaveGlyphs(std::set<nglChar>()),
+  mMustHaveGlyphs(std::set<nglUChar>()),
   mMustHaveEncoding(std::set<nglTextEncoding>()),
   mMustHaveSizes(std::set<int32>()),
   mPanose(nuiPanose())
@@ -393,14 +393,14 @@ void nuiFontRequest::SetBold(bool Bold, float Score, bool Strict)
   mBold.mStrict = Strict;  
 }
 
-void nuiFontRequest::MustHaveGlyphs(const std::set<nglChar>& rGlyphs, float Score, bool Strict)
+void nuiFontRequest::MustHaveGlyphs(const std::set<nglUChar>& rGlyphs, float Score, bool Strict)
 {
   mMustHaveGlyphs.mElement = rGlyphs;
   mMustHaveGlyphs.mScore = Score;
   mMustHaveGlyphs.mStrict = Strict;  
 }
 
-void nuiFontRequest::MustHaveGlyph(nglChar Glyph, float Score, bool Strict)
+void nuiFontRequest::MustHaveGlyph(nglUChar Glyph, float Score, bool Strict)
 {
   mMustHaveGlyphs.mElement.insert(Glyph);
   mMustHaveGlyphs.mScore = Score;
@@ -679,7 +679,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   charcode = FT_Get_First_Char(pFace, &gindex);
   // Using the vector directly is very slow on gcc so we store the elements in a set and then copy the set to the vector...
-  std::vector<nglChar> tmp;
+  std::vector<nglUChar> tmp;
   tmp.reserve(10000);
   
   while ( gindex != 0 )
@@ -701,16 +701,16 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 
   std::sort(tmp.begin(), tmp.end());
 
-  std::vector<nglChar>::iterator it = tmp.begin();
-  std::vector<nglChar>::iterator end = tmp.end();
+  std::vector<nglUChar>::iterator it = tmp.begin();
+  std::vector<nglUChar>::iterator end = tmp.end();
   
   //mGlyphs.resize(tmpset.size());
   
   uint i = 0;
-  nglChar prevc = -1;
+  nglUChar prevc = -1;
   while (it != end)
   {
-    nglChar c = *it;
+    nglUChar c = *it;
     if (prevc != c)
       mGlyphs.push_back(c);
     
@@ -842,7 +842,7 @@ bool nuiFontDesc::HasEncoding(nglTextEncoding Encoding) const
   return (it != mEncodings.end());
 }
 
-bool nuiFontDesc::HasGlyph(nglChar Glyph) const
+bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
 {
   // Dichotomic lookup of the charcode:
   
@@ -853,9 +853,9 @@ bool nuiFontDesc::HasGlyph(nglChar Glyph) const
   
   while (len > 0)
   {
-    nglChar middleglyph = mGlyphs[middle];
-    nglChar firstglyph = mGlyphs[start];
-    nglChar lastglyph = mGlyphs[end];
+    nglUChar middleglyph = mGlyphs[middle];
+    nglUChar firstglyph = mGlyphs[start];
+    nglUChar lastglyph = mGlyphs[end];
 
     if (Glyph < firstglyph || lastglyph < Glyph)
       return false;
@@ -891,7 +891,7 @@ const std::set<nglTextEncoding>& nuiFontDesc::GetEncodings() const
   return mEncodings;
 }
 
-const std::vector<nglChar>& nuiFontDesc::GetGlyphs() const
+const std::vector<nglUChar>& nuiFontDesc::GetGlyphs() const
 {
   return mGlyphs;
 }
@@ -953,7 +953,7 @@ bool nuiFontDesc::Save(nglOStream& rStream)
   s = mGlyphs.size();
   rStream.WriteUInt32(&s);
   if (s)
-    rStream.Write(&mGlyphs[0], s, sizeof(nglChar));
+    rStream.Write(&mGlyphs[0], s, sizeof(nglUChar));
   
   s = mSizes.size();
   rStream.WriteUInt32(&s);
@@ -1026,7 +1026,7 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   rStream.ReadUInt32(&s);
   mGlyphs.resize(s);
   if (s)
-    rStream.Read(&mGlyphs[0], s, sizeof(nglChar));
+    rStream.Read(&mGlyphs[0], s, sizeof(nglUChar));
   
   rStream.ReadUInt32(&s);
   std::vector<uint32> Sizes;
@@ -1082,7 +1082,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/System/Library/Fonts/Cache/");
 #elif (defined _WIN32_)
-  nglChar p[MAX_PATH];
+  nglUChar p[MAX_PATH];
   HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
   if (hr == S_OK)
   {
@@ -1423,12 +1423,12 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     
     {
       uint32 count = 0;  
-      std::set<nglChar>::const_iterator it = rRequest.mMustHaveGlyphs.mElement.begin();
-      std::set<nglChar>::const_iterator end = rRequest.mMustHaveGlyphs.mElement.end();
+      std::set<nglUChar>::const_iterator it = rRequest.mMustHaveGlyphs.mElement.begin();
+      std::set<nglUChar>::const_iterator end = rRequest.mMustHaveGlyphs.mElement.end();
       
       while (it != end)
       {
-        const nglChar glyph = *it;
+        const nglUChar glyph = *it;
         if (pFontDesc->HasGlyph(glyph))
           count++;
         ++it;

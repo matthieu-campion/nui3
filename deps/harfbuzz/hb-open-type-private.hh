@@ -441,7 +441,7 @@ struct Tag : ULONG
 DEFINE_NULL_DATA (Tag, "    ");
 
 /* Glyph index number, same as uint16 (length = 16 bits) */
-typedef USHORT hb_GlyphID;
+typedef USHORT GlyphID;
 
 /* Script/language-system/feature index */
 struct Index : USHORT {

@@ -546,7 +546,7 @@ struct PairValueRecord
   friend struct PairSet;
 
   private:
-  hb_GlyphID	secondGlyph;		/* hb_GlyphID of second glyph in the
+  GlyphID	secondGlyph;		/* GlyphID of second glyph in the
 					 * pair--first glyph is listed in the
 					 * Coverage table */
   ValueRecord	values;			/* Positioning data for the first glyph
@@ -608,7 +608,7 @@ struct PairSet
   private:
   USHORT	len;			/* Number of PairValueRecords */
   USHORT	array[VAR];		/* Array of PairValueRecords--ordered
-					 * by hb_GlyphID of the second glyph */
+					 * by GlyphID of the second glyph */
   public:
   DEFINE_SIZE_ARRAY (2, array);
 };

@@ -67,6 +67,14 @@ static unsigned int get_joining_type (hb_codepoint_t u, hb_category_t gen_cat)
       return j_type;
   }
 
+  /* Mongolian joining data is not in ArabicJoining.txt yet */
+  if (unlikely (0x1800 <= u && u <= 0x18AF))
+  {
+    /* All letters, SIBE SYLLABLE BOUNDARY MARKER, and NIRUGU are D */
+    if (gen_cat == HB_CATEGORY_OTHER_LETTER || u == 0x1807 || u == 0x180A)
+      return JOINING_TYPE_D;
+  }
+
   if (unlikely ((u & ~(0x200C^0x200D)) == 0x200C)) {
     return u == 0x200C ? JOINING_TYPE_U : JOINING_TYPE_C;
   }
@@ -146,6 +154,9 @@ static const struct arabic_state_table_entry {
 void
 _hb_ot_shape_complex_collect_features_arabic	(hb_ot_shape_plan_t *plan, const hb_segment_properties_t  *props)
 {
+  /* ArabicOT spec enables 'cswh' for Arabic where as for basic shaper it's disabled by default. */
+  plan->map.add_bool_feature (HB_TAG('c','s','w','h'));
+
   unsigned int num_features = props->script == HB_SCRIPT_SYRIAC ? SYRIAC_NUM_FEATURES : COMMON_NUM_FEATURES;
   for (unsigned int i = 0; i < num_features; i++)
     plan->map.add_bool_feature (arabic_syriac_features[i], false);

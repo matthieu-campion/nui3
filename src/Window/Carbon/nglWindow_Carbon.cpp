@@ -593,6 +593,7 @@ nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo
 	mpCarbonDragAndDrop = NULL;
   
   mpMainMenu = NULL;
+  mComposingText = false;
   
   InternalInit (rContext, rInfo, pShared);
 }

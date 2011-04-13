@@ -116,7 +116,7 @@ void nglFontLayout::Onglyph (const nglString& rString, int Pos, nglGlyphInfo* pG
     \p Pos parameter.
   */
   virtual void OnFinalizeLayout();
-  virtual nglFontBase* FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglChar Glyph);
+  virtual nglFontBase* FindFontForMissingGlyph(nglFontBase* pOriginalFont, nglUChar Glyph);
   
   uint  GetGlyphCount() const;
   const nglGlyphLayout* GetGlyph   (uint Offset) const;

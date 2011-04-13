@@ -65,8 +65,8 @@ struct SingleSubstFormat1
   OffsetTo<Coverage>
 		coverage;		/* Offset to Coverage table--from
 					 * beginning of Substitution table */
-  SHORT		deltaGlyphID;		/* Add to original hb_GlyphID to get
-					 * substitute hb_GlyphID */
+  SHORT		deltaGlyphID;		/* Add to original GlyphID to get
+					 * substitute GlyphID */
   public:
   DEFINE_SIZE_STATIC (6);
 };
@@ -105,9 +105,9 @@ struct SingleSubstFormat2
   OffsetTo<Coverage>
 		coverage;		/* Offset to Coverage table--from
 					 * beginning of Substitution table */
-  ArrayOf<hb_GlyphID>
+  ArrayOf<GlyphID>
 		substitute;		/* Array of substitute
-					 * hb_GlyphIDs--ordered by Coverage Index */
+					 * GlyphIDs--ordered by Coverage Index */
   public:
   DEFINE_SIZE_ARRAY (6, substitute);
 };
@@ -172,8 +172,8 @@ struct Sequence
   }
 
   private:
-  ArrayOf<hb_GlyphID>
-		substitute;		/* String of hb_GlyphIDs to substitute */
+  ArrayOf<GlyphID>
+		substitute;		/* String of GlyphIDs to substitute */
   public:
   DEFINE_SIZE_ARRAY (2, substitute);
 };
@@ -245,7 +245,7 @@ struct MultipleSubst
 };
 
 
-typedef ArrayOf<hb_GlyphID> AlternateSet;	/* Array of alternate hb_GlyphIDs--in
+typedef ArrayOf<GlyphID> AlternateSet;	/* Array of alternate GlyphIDs--in
 					 * arbitrary order */
 
 struct AlternateSubstFormat1
@@ -421,9 +421,9 @@ struct Ligature
   }
 
   private:
-  hb_GlyphID	ligGlyph;		/* hb_GlyphID of ligature to substitute */
-  HeadlessArrayOf<hb_GlyphID>
-		component;		/* Array of component hb_GlyphIDs--start
+  GlyphID	ligGlyph;		/* GlyphID of ligature to substitute */
+  HeadlessArrayOf<GlyphID>
+		component;		/* Array of component GlyphIDs--start
 					 * with the second  component--ordered
 					 * in writing direction */
   public:
@@ -596,7 +596,7 @@ struct ReverseChainSingleSubstFormat1
       return false;
 
     const OffsetArrayOf<Coverage> &lookahead = StructAfter<OffsetArrayOf<Coverage> > (backtrack);
-    const ArrayOf<hb_GlyphID> &substitute = StructAfter<ArrayOf<hb_GlyphID> > (lookahead);
+    const ArrayOf<GlyphID> &substitute = StructAfter<ArrayOf<GlyphID> > (lookahead);
 
     if (match_backtrack (c,
 			 backtrack.len, (USHORT *) backtrack.array,
@@ -622,7 +622,7 @@ struct ReverseChainSingleSubstFormat1
     OffsetArrayOf<Coverage> &lookahead = StructAfter<OffsetArrayOf<Coverage> > (backtrack);
     if (!lookahead.sanitize (c, this))
       return false;
-    ArrayOf<hb_GlyphID> &substitute = StructAfter<ArrayOf<hb_GlyphID> > (lookahead);
+    ArrayOf<GlyphID> &substitute = StructAfter<ArrayOf<GlyphID> > (lookahead);
     return substitute.sanitize (c);
   }
 
@@ -639,9 +639,9 @@ struct ReverseChainSingleSubstFormat1
 		lookaheadX;		/* Array of coverage tables
 					 * in lookahead sequence, in glyph
 					 * sequence order */
-  ArrayOf<hb_GlyphID>
+  ArrayOf<GlyphID>
 		substituteX;		/* Array of substitute
-					 * hb_GlyphIDs--ordered by Coverage Index */
+					 * GlyphIDs--ordered by Coverage Index */
   public:
   DEFINE_SIZE_MIN (10);
 };
