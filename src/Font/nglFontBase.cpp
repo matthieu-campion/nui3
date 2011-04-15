@@ -1035,7 +1035,7 @@ void nglFontBase::Defaults()
    */
   mpFace = new FaceHandle();
 
-  /* A nglFont is described by mpFace->Desc, this is used to query the
+  /* A nuiFont is described by mpFace->Desc, this is used to query the
    * face or glyph objects through the cache manager. Face IDs
    * are managed via nglFontInstance.
    */

@@ -743,7 +743,7 @@ bool nuiFontBase::CopyBitmapToTexture(const GlyphBitmap &rBitmap, nuiTexture *pT
 
   default:
     {
-      NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("nglFont: unsupported input bitmap pixel depth (%d)"), rBitmap.Depth); )
+      NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("nuiFont: unsupported input bitmap pixel depth (%d)"), rBitmap.Depth); )
         return false;
     }
   }

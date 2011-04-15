@@ -384,7 +384,7 @@ void nglKernel::SetCrashReportEmail(const nglString& rEmail)
 void nglKernel::ProcessMessages(const nuiEvent& rEvent)
 {
   nuiNotification* pNotif;
-  while (pNotif = Get(0))
+  while ((pNotif = Get(0)))
   {
     nuiCommand* pCommand = NULL;
     nuiGetTokenValue<nuiCommand*>(pNotif->GetToken(), pCommand);

@@ -123,7 +123,7 @@ void Application::OnInit()
 
 
   /* Create the nglWindow (and thus a GL context, don't even try to
-   *   instantiate the gui (or nglFont) before the nuiWin !)
+   *   instantiate the gui (or nuiFont) before the nuiWin !)
    */
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;

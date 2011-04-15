@@ -7,7 +7,7 @@
 
 /*!
 \file  nglFontBase.h
-\brief Font abstraction (see nglFont for display)
+\brief Font abstraction (see nuiFont for display)
 */
 
 #pragma once

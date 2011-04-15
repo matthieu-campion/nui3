@@ -13,7 +13,6 @@
 #include "nuiRect.h"
 
 class nglPath;
-//class nglFont;
 class nuiTexture;
 class nuiDrawContext;
 class nuiTexture;
