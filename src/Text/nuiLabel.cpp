@@ -302,10 +302,10 @@ bool nuiLabel::Draw(nuiDrawContext* pContext)
     }
   }
 
-  nglGlyphInfo GlyphInfo;
+  nuiGlyphInfo GlyphInfo;
   mpLayout->GetMetrics(GlyphInfo);
 
-  nglFontInfo info;
+  nuiFontInfo info;
   mpFont->GetInfo(info);
   //info.Dump(0);
 

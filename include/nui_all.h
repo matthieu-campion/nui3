@@ -70,6 +70,7 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiGradient.h"
 #include "nuiFont.h"
 #include "nuiFontBase.h"
+#include "nuiFontLayout.h"
 #include "nuiTopLevel.h"
 #include "nuiTree.h"
 #include "nuiTreeView.h"

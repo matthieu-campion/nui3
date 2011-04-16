@@ -137,8 +137,6 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include "nglError.h"
 #include "nglEvent.h"
 #include "nglFile.h"
-#include "nglFontBase.h"
-#include "nglFontLayout.h"
 #include "nglIFile.h"
 #include "nglIMemory.h"
 #include "nglIOFile.h"

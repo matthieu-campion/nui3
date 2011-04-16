@@ -910,7 +910,7 @@ void nuiScrollingLabel::CreateSubStrings(nuiSize width)
       // NGL_OUT(_T("... '%s' \t\t // remaining: '%s'\n"), firstString.GetChars(), secondString.GetChars());
       
       // remove last glyph
-      const nglGlyphLayout* pGlyphLayout = pFirstStringLayout->GetGlyph(nbGlyphs -1);
+      const nuiGlyphLayout* pGlyphLayout = pFirstStringLayout->GetGlyph(nbGlyphs -1);
       int pos = (pGlyphLayout->Pos);
       
       // update strings to repeat

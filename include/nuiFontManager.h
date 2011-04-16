@@ -14,7 +14,7 @@
 class nuiFontRequest : public nuiObject
 {
 public:
-  nuiFontRequest(nglFontBase* pOriginalFont = NULL, bool ForcePanoseOnlyFonts = false);
+  nuiFontRequest(nuiFontBase* pOriginalFont = NULL, bool ForcePanoseOnlyFonts = false);
   nuiFontRequest(const nuiFontRequest& rOriginal);
   ~nuiFontRequest();
   
@@ -121,57 +121,6 @@ private:
   void _SetScalable(bool set);
   void _SetSize(int32 size);  
   void _SetPanose(const nglString& rPanose);
-};
-
-class nuiFontDesc
-{
-public:
-  nuiFontDesc(const nglPath& rPath, int32 Face);
-  nuiFontDesc(nglIStream& rStream);
-  ~nuiFontDesc();
-  
-  const nglPath& GetPath() const;
-  bool CheckPath();
-  const nglString& GetName() const;
-  const nglString& GetStyle() const;
-  
-  int32 GetFace() const;
-  bool GetBold() const;
-  bool GetItalic() const;
-  bool GetMonospace() const;
-  bool GetScalable() const;
-  
-  bool HasEncoding(nglTextEncoding Encoding) const;
-  bool HasGlyph(nglUChar Glyph) const;
-  bool HasSize(int32 Size) const;
-  
-  const std::set<nglTextEncoding>&  GetEncodings() const;
-  const std::vector<nglUChar>&       GetGlyphs() const;
-  const std::set<int32>&            GetSizes() const;
-  
-  const nuiFontPanoseBytes& GetPanoseBytes() const; 
-  
-  bool IsValid() const;
-  
-  bool Save(nglOStream& rStream);
-  bool Load(nglIStream& rStream);
-  
-private:
-  bool mValid;
-  nglPath   mPath;
-  nglString mName;
-  nglString mStyle;
-  int32     mFace;
-  
-  bool mBold;
-  bool mItalic;
-  bool mMonospace;
-  bool mScalable;
-  std::set<nglTextEncoding> mEncodings;
-  std::vector<nglUChar>      mGlyphs;
-  std::set<int32>           mSizes;
-
-  nuiFontPanoseBytes        mPanoseBytes;
 };
 
 class nuiFontRequestResult

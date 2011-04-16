@@ -270,7 +270,7 @@ void nuiHTMLBox::Layout(nuiHTMLContext& rContext)
       
       if (linebreak)
       {
-        nglFontInfo info;
+        nuiFontInfo info;
         rContext.mpFont->GetInfo(info);
         Y += info.Height;
       }

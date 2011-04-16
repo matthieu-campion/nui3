@@ -6,7 +6,7 @@
 */
 
 /*!
-\file  nglFontInstance.h
+\file  nuiFontInstancenuiFontInstance.h
 \brief Font instance handler for FreeType cache manager
 */
 
@@ -23,27 +23,27 @@
 /*!
 See src/font/README for more details.
 */
-class nglFontInstance : public nuiRefCount
+class nuiFontInstance : public nuiRefCount
 {
 public:
-  nglFontInstance(const nglPath& rPath, uint Face);
-  nglFontInstance(const FT_Byte* pBase, FT_Long Size, uint Face, bool StaticBuffer);
-  nglFontInstance(const nglFontInstance& rInstance);
-  ~nglFontInstance();
+  nuiFontInstance(const nglPath& rPath, uint Face);
+  nuiFontInstance(const FT_Byte* pBase, FT_Long Size, uint Face, bool StaticBuffer);
+  nuiFontInstance(const nuiFontInstance& rInstance);
+  ~nuiFontInstance();
   
   nglPath  GetPath() const;
   uint     GetFace() const;
 
-  static FTC_FaceID       Install(nglFontInstance * pInstance);
-  static FTC_FaceID       Uninstall(nglFontInstance * pInstance);
-  static nglFontInstance* Lookup(const FTC_FaceID FaceID);
+  static FTC_FaceID       Install(nuiFontInstance * pInstance);
+  static FTC_FaceID       Uninstall(nuiFontInstance * pInstance);
+  static nuiFontInstance* Lookup(const FTC_FaceID FaceID);
   static FT_Error         FaceRequestHandler (FTC_FaceID FaceID, FT_Library pLibrary, FT_Pointer pData, FT_Face* pFace);
   static void             OnExit();
   static void             Dump();
   friend void nglDumpFontInstances();
 
 private:
-  typedef std::set<nglFontInstance*> FontListType;
+  typedef std::set<nuiFontInstance*> FontListType;
 
   static FontListType gFontList;
 
