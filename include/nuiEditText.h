@@ -40,6 +40,13 @@ public:
   virtual bool KeyDown  (const nglKeyEvent& rEvent);
   virtual bool KeyUp    (const nglKeyEvent& rEvent);
 
+  virtual void TextCompositionStarted();
+  virtual void TextCompositionConfirmed();
+  virtual void TextCompositionCanceled();
+  virtual void TextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+  virtual nglString GetTextComposition() const;
+  virtual void TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
+  
   virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseMoved    (nuiSize X, nuiSize Y);
@@ -94,6 +101,7 @@ public:
     eShowCursor,
 
     eInsertText,
+    eNewLine,
 
     eLastCommand
   };
@@ -196,6 +204,7 @@ protected:
   bool ShowCursor(nuiObject* pParams);
 
   bool InsertText(nuiObject* pParams);
+  bool NewLine(nuiObject* pParams);
 
   class NUI_API FontLayout : public nuiFontLayout
   {
@@ -219,7 +228,7 @@ protected:
     TextBlock(nuiFont* pFont, const nglString& rString, uint begin, uint end);
     virtual ~TextBlock();
 
-    void Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, nuiSize WidgetWidth);
+    void Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, uint CompositionBegin, uint CompositionEnd, nuiSize WidgetWidth);
     const nuiRect& GetIdealSize();
 
     void SetRect(const nuiRect& rRect);
@@ -265,6 +274,8 @@ protected:
   uint mCursorPos; // Position in the text string
   uint mAnchorPos; // Position in the text string
   int32 mDropCursorPos; // Position in the text string, -1 is disabled
+  int mCompositionPos; // Position in the text string of the text composition start (for IME)
+  int mCompositionLength; // size of the text composition (for IME)
 
   std::vector<std::pair<CommandId, nuiObject*> > mCommandStack;
   uint mCommandStackPos;

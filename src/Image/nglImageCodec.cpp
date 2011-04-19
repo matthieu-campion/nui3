@@ -48,14 +48,16 @@ bool nglImageCodec::Init(nglImage* pImage)      ///< Codec init is decoupled fro
   return true;
 }
 
-void nglImageCodec::SendInfo (nglImageInfo& rInfo)  ///< Send image description to image object. The image object will allocate the image buffer.
+bool nglImageCodec::SendInfo (nglImageInfo& rInfo)  ///< Send image description to image object. The image object will allocate the image buffer.
 {
-  if (mpImage) mpImage->OnCodecInfo (rInfo);
+  if (mpImage)
+    return mpImage->OnCodecInfo (rInfo);
 }
 
-void nglImageCodec::SendData (float Completion)  ///< Acknowledge that more data was decoded to image buffer
+bool nglImageCodec::SendData (float Completion)  ///< Acknowledge that more data was decoded to image buffer
 {
-  if (mpImage) mpImage->OnCodecData (Completion);
+  if (mpImage)
+    return mpImage->OnCodecData (Completion);
 }
 
 bool nglImageCodec::SendError()  ///< Signals an encoding/decoding error

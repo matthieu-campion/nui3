@@ -301,6 +301,7 @@ public:
    */
   //@}
   
+  bool IsActive() const; ///< Returns true is the application is in the active state (mainly for iOS multitasking).
   
   void NonBlockingHeartBeat(); ///< Keep the application event loop alive without waiting for new events. (i.e. only process the events that are already in the queue).
   
@@ -332,7 +333,7 @@ protected:
   void CallOnActivation();
   void CallOnDeactivation();
   
-  
+  bool mActive;
   
   // From nglError
   virtual const nglChar* OnError (uint& rError) const;
@@ -478,9 +479,7 @@ protected:
   friend void objCCallOnInit(void* pNSApplication);
   friend void objCCallOnExit(int Code);
   friend void objCCallOnWillExit();
-  
-  void CallOnWillExit();
-	
+  	
   void* mpNSApplication;
   
   friend void objCCallOnInitWithURL(void* pUIApplication, const nglString &url);  
