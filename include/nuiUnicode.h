@@ -88,8 +88,8 @@ enum nuiUnicodeScript
   eScriptYi
 };
 
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch);
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, nglChar& rLow, nglChar& rHigh);
+nuiUnicodeScript nuiGetUnicodeScript(nglUChar ch);
+nuiUnicodeScript nuiGetUnicodeScript(nglUChar ch, nglUChar& rLow, nglUChar& rHigh);
 nglString nuiGetUnicodeScriptName(nuiUnicodeScript script);
 
 
@@ -224,8 +224,8 @@ enum nuiUnicodeRange
   eRangeSupplementaryPrivateUseAreaB
 };
 
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch);
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, nglChar& rLow, nglChar& rHigh);
+nuiUnicodeRange nuiGetUnicodeRange(nglUChar ch);
+nuiUnicodeRange nuiGetUnicodeRange(nglUChar ch, nglUChar& rLow, nglUChar& rHigh);
 nglString nuiGetUnicodeRangeName(nuiUnicodeRange range);
 
 enum nuiUnicodeDirection
@@ -234,11 +234,11 @@ enum nuiUnicodeDirection
   eRightToLeft
 };
 
-nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch);
+nuiUnicodeDirection nuiGetUnicodeDirection(nglUChar ch);
 
 
 
-bool nuiIsUnicodeBlank(nglChar ch);
+bool nuiIsUnicodeBlank(nglUChar ch);
 
 class nuiTextRange
 {

@@ -12,11 +12,11 @@ Preferences::Preferences() : mXml(_T("YapukaPreferences"))
 {
   nglPath prefPath(ePathUserPreferences);
   
-  prefPath += "/NUI";
+  prefPath += nglPath("/NUI");
   if(!prefPath.Exists())
     prefPath.Create();
   
-  prefPath += "/yapuka.pref";
+  prefPath += nglPath("/yapuka.pref");
 
   if(!prefPath.Exists())
     Save();
@@ -24,7 +24,7 @@ Preferences::Preferences() : mXml(_T("YapukaPreferences"))
   nglIFile xmlIFile(prefPath);
   if (!mXml.Load(xmlIFile))
   {
-    wprintf(_T("yapuka Preferences : ERROR in loading the xml preferences file '%ls'!\n"), prefPath.GetChars());
+    printf("yapuka Preferences : ERROR in loading the xml preferences file '%s'!\n", prefPath.GetChars());
     NGL_ASSERT(0);
   }
   xmlIFile.Close();
@@ -46,9 +46,9 @@ void Preferences::Dump(nglString& rStore)
 void Preferences::Save()
 {
   nglPath prefPath(ePathUserPreferences);
-  prefPath += "/NUI/yapuka.pref";
+  prefPath += nglString("/NUI/yapuka.pref");
   nglOFile xmlOFile(prefPath, eOFileCreate);
-  bool result = mXml.Save(xmlOFile);
+  mXml.Save(xmlOFile);
   xmlOFile.Close();  
 }
 

@@ -583,6 +583,18 @@ int32 nglString::GetLength() const
   return (int32)mString.size();
 }
 
+int32 nglString::GetULength() const
+{
+  int32 len = 0;
+  int32 l = 0;
+  while (l >= 0)
+  {
+    len = l;
+    l = GetNextUChar(l);
+  }
+  return len;
+}
+
 bool nglString::IsEmpty() const
 {
   return mString.empty();
@@ -609,16 +621,74 @@ nglChar nglString::GetLastChar() const
 
 nglUChar nglString::GetUChar(uint32 Index) const
 {
-  if (IsEmpty())
-    return 0;
-  return mString[Index];
+  int32 i = Index;
+  return GetNextUChar(i);
 }
 
-nglUChar nglString::GetLastUChar() const
+nglUChar nglString::GetNextUChar(int32& Index) const
 {
   if (IsEmpty())
     return 0;
-  return mString[(uint32)GetLength()-1];
+
+  int32 len = GetLength();
+  nglUChar UChar = 0;
+  nglChar previous = 0;
+  // Parse an utf-8 char sequence:
+  uint8 c = 0;
+  if (Index >= len)
+    return 0;
+
+  c = mString[Index++];
+  if (!(c & 0x80))
+  {
+    UChar = c;
+  }
+  else
+  {
+    //  0xC0 // 2 bytes
+    //  0xE0 // 3
+    //  0xF0 // 4
+    //  0xF8 // 5
+    //  0xFC // 6
+    uint32 count = 0;
+    if ((c & 0xFC) == 0xFC)
+    {
+      UChar = c & (~0xFC);
+      count = 5;
+    }
+    else if ((c & 0xF8) == 0xF8)
+    {
+      UChar = c & (~0xF8);
+      count = 4;
+    }
+    else if ((c & 0xF0) == 0xF0)
+    {
+      UChar = c & (~0xF0);
+      count = 3;
+    }
+    else if ((c & 0xE0) == 0xE0)
+    {
+      UChar = c & (~0xE0);
+      count = 2;
+    }
+    else if ((c & 0xC0) == 0xC0)
+    {
+      UChar = c & (~0xC0);
+      count = 1;
+    }
+    
+    for (uint32 i = 0; i < count; i++)
+    {
+      if (Index >= len)
+        return UChar;
+      c = mString[Index++];
+      UChar <<= 6;
+      UChar |= c & 0x3F;
+    }
+  }
+  //NGL_OUT(_T("%lc"), UChar);
+  
+  return UChar;
 }
 
 const nglChar* nglString::GetChars() const

@@ -169,13 +169,13 @@ nuiUnicodeRangeDesc nuiUnicodeRanges[] =
 }; 
 
 
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch)
+nuiUnicodeRange nuiGetUnicodeRange(nglUChar ch)
 {
-  nglChar l, h;
+  nglUChar l, h;
   return nuiGetUnicodeRange(ch, l, h);
 }
 
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, nglChar& rLow, nglChar& rHigh)
+nuiUnicodeRange nuiGetUnicodeRange(nglUChar ch, nglUChar& rLow, nglUChar& rHigh)
 {
   const uint32 count = sizeof(nuiUnicodeRanges) / sizeof(nuiUnicodeRangeDesc);
   for (uint32 i = 0; i < count; i++)
@@ -330,13 +330,13 @@ nglString nuiGetUnicodeRangeName(nuiUnicodeRange range)
 }
 #undef NAME
 
-nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch)
+nuiUnicodeDirection nuiGetUnicodeDirection(nglUChar ch)
 {
   //#FIXME need to add BiDi algo here
   return eLeftToRight;
 }
 
-bool nuiIsUnicodeBlank(nglChar ch)
+bool nuiIsUnicodeBlank(nglUChar ch)
 {
   //#FIXME add the actual unicode blank detection algo here
   return ch <= 32;
@@ -353,40 +353,39 @@ nuiTextRange::nuiTextRange()
 
 bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags)
 {
-  uint32 size = rSourceString.GetLength();
+  int32 size = rSourceString.GetLength();
 
   rRanges.clear();
   if (!size)
     return true;
 
-  const bool scriptchange = flags & nuiST_ScriptChange;
+  const bool scriptchange = flags & nuiST_StrictScriptChange;
   const bool rangechange = flags & nuiST_RangeChange;
   const bool wordboundary = flags & nuiST_WordBoundary;
   const bool directionchange = flags & nuiST_DirectionChange;
   const bool mergecommonscript = flags & nuiST_MergeCommonScript;
-  uint32 lastpos = 0;
-  uint32 curpos = 0;
-  const nglChar& ch = rSourceString[curpos];
+  int32 lastpos = 0;
+  int32 curpos = 0;
+  nglUChar ch = rSourceString.GetNextUChar(curpos);
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
   
-  nglChar scriptlow = 0;
-  nglChar scripthi = 0;
+  nglUChar scriptlow = 0;
+  nglUChar scripthi = 0;
   nuiUnicodeScript script = nuiGetUnicodeScript(ch, scriptlow, scripthi);
   nuiUnicodeScript newscript = script;
 
-  nglChar rangelow = 0;
-  nglChar rangehi = 0;
+  nglUChar rangelow = 0;
+  nglUChar rangehi = 0;
   nuiUnicodeRange range = nuiGetUnicodeRange(ch, rangelow, rangehi);
   nuiUnicodeRange newrange = range;
   bool blank = nuiIsUnicodeBlank(ch);
   bool newblank = blank;
-  curpos++;
   
-  while (curpos != size)
+  while (curpos < size)
   {
     bool brk = false;
-    const nglChar& ch = rSourceString[curpos];
+    ch = rSourceString.GetNextUChar(curpos);
 
     if (wordboundary)
     {
@@ -452,8 +451,6 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
       range = newrange;
       blank = newblank;
     }
-    
-    curpos++;
   }
 
   // Last range:
@@ -742,13 +739,13 @@ nuiScriptRange nuiScriptRanges[] =
 };
 
 
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch)
+nuiUnicodeScript nuiGetUnicodeScript(nglUChar ch)
 {
-  nglChar low, hi;
+  nglUChar low, hi;
   return nuiGetUnicodeScript(ch, low, hi);
 }
 
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, nglChar& rLow, nglChar& rHigh)
+nuiUnicodeScript nuiGetUnicodeScript(nglUChar ch, nglUChar& rLow, nglUChar& rHigh)
 {
   const int32 count = sizeof(nuiScriptRanges) / sizeof(nuiScriptRange);
   

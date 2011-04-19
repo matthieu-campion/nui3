@@ -27,10 +27,46 @@ MainWindow::~MainWindow()
 {
 }
 
+
+#include "nuiUnicode.h"
+void Test(const nglString& txt)
+{
+  nuiTextRangeList ranges;
+  bool res = nuiSplitText(txt, ranges, nuiST_StrictScriptChange);
+  
+  nuiTextRangeList::iterator it = ranges.begin();
+  nuiTextRangeList::iterator end = ranges.end();
+  uint32 i = 0;
+  uint32 pos = 0;
+  while (it != end)
+  {
+    const nuiTextRange& range(*it);
+    uint32 len = range.mLength;
+    printf("range %d (%d - %d)\n%s\n\n", i, pos, len, txt.Extract(pos, len).GetChars());
+    
+    pos += len;
+    ++i;
+    ++it;
+  }
+  
+}
+
 void MainWindow::OnCreation()
 {
   nuiScrollView* pScrollView = new nuiScrollView;
-  nuiEditText* pText = new nuiEditText(_T("Type something here"));
+  nuiEditText* pText = new nuiEditText(_T("Type something here\n\n"));
+  
+  nglIStream* pStream = nglPath("rsrc:/test.txt").OpenRead();
+  if (pStream)
+  {
+    pStream->SetTextEncoding(eUTF8);
+    nglString text;
+    pStream->ReadText(text);
+    Test(text);
+    pText->AddText(text);
+    delete pStream;
+  }
+  
   pText->SetTextColor(nuiColor(128,128,128));
   AddChild(pScrollView);
   pScrollView->AddChild(pText);

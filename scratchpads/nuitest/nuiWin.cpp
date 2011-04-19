@@ -927,6 +927,7 @@ void nuiWin::CreateText2Window(const nuiEvent& rEvent)
 
   if (pFile->ReadText(text))
   {
+    //printf("Read text:\n\n%s\n\n", text.GetChars());
     pText->SetText(text);
   }
 

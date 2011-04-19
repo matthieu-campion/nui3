@@ -186,6 +186,7 @@ public:
 	/** @name nglString size */
 	//@{
 	int32  GetLength() const; ///< Returns size in chars. If zero, the string is either \e null or \e empty
+	int32  GetULength() const; ///< Returns size in unicode code points. Remember that GetULength() <= GetLength(). If zero, the string is either \e null or \e empty
   bool IsEmpty() const; ///< Returns whether the string contains characters or not. Null strings are considered empty.
   bool IsNull() const; ///< Returns whether the string is equal to nglString::Null.
 	//@}
@@ -197,7 +198,7 @@ public:
 	nglChar GetLastChar() const;        ///< Returns last char of string. Returns zero if the string is \e null or \e empty
 	nglUChar GetUChar(uint32 Index)	const;  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
 	nglUChar GetUChar(int32 Index)		const { return GetChar((uint32)Index); }  ///< Returns the char at position \p Index. If \p Index is out of range, returns zero. See operator[]()
-	nglUChar GetLastUChar() const;        ///< Returns last char of string. Returns zero if the string is \e null or \e empty
+  nglUChar GetNextUChar(int32& Index) const;
 	const nglChar* GetChars() const;           ///< Returns the string content as a char array. Returns null if the string is \e null
 	std::string GetStdString(const nglTextEncoding Encoding=eUTF8) const;    ///< Returns the string content as an std::string. Return an empty string if the string is \e null.
 
