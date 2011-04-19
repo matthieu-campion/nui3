@@ -32,7 +32,7 @@ MainWindow::~MainWindow()
 void Test(const nglString& txt)
 {
   nuiTextRangeList ranges;
-  bool res = nuiSplitText(txt, ranges, nuiST_StrictScriptChange);
+  bool res = nuiSplitText(txt, ranges, nuiST_ScriptChange);
   
   nuiTextRangeList::iterator it = ranges.begin();
   nuiTextRangeList::iterator end = ranges.end();
@@ -42,7 +42,7 @@ void Test(const nglString& txt)
   {
     const nuiTextRange& range(*it);
     uint32 len = range.mLength;
-    printf("range %d (%d - %d)\n%s\n\n", i, pos, len, txt.Extract(pos, len).GetChars());
+    printf("range %d (%d - %d) (%s - %s)\n%s\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars(), txt.Extract(pos, len).GetChars());
     
     pos += len;
     ++i;
@@ -50,6 +50,25 @@ void Test(const nglString& txt)
   }
   
 }
+
+class nuiFontLayout2
+{
+public:
+  nuiFontLayout2(nuiFont* pFont)
+  {
+    pFont->Acquire();
+    mpFonts.push_back(pFont);
+  }
+  
+  virtual ~nuiFontLayout2()
+  {
+    for (int32 i = 0; i < mpFonts.size(); i++)
+      mpFonts[i]->Release();
+  }
+  
+private:
+  std::vector<nuiFont*> mpFonts;
+};
 
 void MainWindow::OnCreation()
 {

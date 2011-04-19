@@ -377,7 +377,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
 
   nglUChar rangelow = 0;
   nglUChar rangehi = 0;
-  nuiUnicodeRange range = nuiGetUnicodeRange(ch, rangelow, rangehi);
+  nuiUnicodeRange range = rangechange ? nuiGetUnicodeRange(ch, rangelow, rangehi) : eRangeUnused;
   nuiUnicodeRange newrange = range;
   bool blank = nuiIsUnicodeBlank(ch);
   bool newblank = blank;
@@ -385,6 +385,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   while (curpos < size)
   {
     bool brk = false;
+    int32 pos = curpos;
     ch = rSourceString.GetNextUChar(curpos);
 
     if (wordboundary)
@@ -437,7 +438,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
     if (brk)
     {
       nuiTextRange r;
-      r.mLength = curpos - lastpos; // count of unicode code points
+      r.mLength = pos - lastpos; // count of unicode code points
       r.mDirection = direction; // even: Left to right, odd: right to left
       r.mScript = script; // What script if this range of text
       r.mRange = range; // What script if this range of text
@@ -445,7 +446,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
       
       rRanges.push_back(r);
       
-      lastpos = curpos;
+      lastpos = pos;
       direction = newdirection;
       script = newscript;
       range = newrange;
