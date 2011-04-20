@@ -32,7 +32,7 @@ MainWindow::~MainWindow()
 void Test(const nglString& txt)
 {
   nuiTextRangeList ranges;
-  bool res = nuiSplitText(txt, ranges, nuiST_ScriptChange);
+  nuiSplitText(txt, ranges, nuiST_ScriptChange);
   
   nuiTextRangeList::iterator it = ranges.begin();
   nuiTextRangeList::iterator end = ranges.end();
@@ -62,9 +62,43 @@ public:
   
   virtual ~nuiFontLayout2()
   {
-    for (int32 i = 0; i < mpFonts.size(); i++)
+    for (uint32 i = 0; i < mpFonts.size(); i++)
       mpFonts[i]->Release();
   }
+  
+  class Line
+  {
+  public:
+    Line()
+    {
+      
+    }
+    
+  private:
+    
+  };
+  
+  
+  class Run
+  {
+  public:
+    Run(nuiFont* pFont, const nglString& rString, int32 Position, int32 Length)
+    : mpFont(pFont),
+      mString(rString),
+      mPosition(Position),
+      mLength(Length)
+    {
+    }
+  private:
+    nuiFont* mpFont;
+    const nglString& mString;
+    int32 mPosition;
+    int32 mLength;
+    
+    std::vector<nglUChar> mGlyphs;
+  };
+  
+  
   
 private:
   std::vector<nuiFont*> mpFonts;
