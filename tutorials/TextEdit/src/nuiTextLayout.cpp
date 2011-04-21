@@ -10,23 +10,9 @@
 
 void TextLayoutTest(const nglString& txt)
 {
-  nuiTextRangeList ranges;
-  nuiSplitText(txt, ranges, nuiST_ScriptChange);
-  
-  nuiTextRangeList::iterator it = ranges.begin();
-  nuiTextRangeList::iterator end = ranges.end();
-  uint32 i = 0;
-  uint32 pos = 0;
-  while (it != end)
-  {
-    const nuiTextRange& range(*it);
-    uint32 len = range.mLength;
-    printf("range %d (%d - %d) (%s - %s)\n%s\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars(), txt.Extract(pos, len).GetChars());
-    
-    pos += len;
-    ++i;
-    ++it;
-  }
+  nuiFont* pFont = nuiFont::GetFont(12);
+  nuiTextLayout layout(pFont);
+  layout.LayoutText(txt);
   
 }
 
@@ -114,8 +100,57 @@ nuiTextLayout::~nuiTextLayout()
 
 bool nuiTextLayout::LayoutText(const nglString& rString)
 {
+  // General algorithm:
+  // 1. Split text into paragraphs (LayoutText)
+  // 2. Split paragraphs into ranges (LayoutParagraph)
+  // 3. Split ranges into fonts
+  // 4. Split ranges into lines / words if needed
+
+  int32 start = 0;
+  int32 position = 0;
+  int32 len = rString.GetLength();
+  while (position < len)
+  {
+    // Scan through the text and look for end of line markers
+    int32 prev = position;
+    nglUChar ch = rString.GetNextUChar(position);
+    if (ch == '\n')
+    {
+      // Found a paragraph
+      LayoutParagraph(rString, start, position - start);
+      start = position;
+    }
+  }
   
+  return true;
 }
+
+bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32 length)
+{
+  printf("new paragraph: %d + %d\n", start, length);
+
+  // Split the paragraph into ranges:
+  nuiTextRangeList ranges;
+  nuiSplitText(rString, ranges, nuiST_ScriptChange, start, length);
+  
+  nuiTextRangeList::iterator it = ranges.begin();
+  nuiTextRangeList::iterator end = ranges.end();
+  uint32 i = 0;
+  uint32 pos = 0;
+  while (it != end)
+  {
+    const nuiTextRange& range(*it);
+    uint32 len = range.mLength;
+    printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+    
+    pos += len;
+    ++i;
+    ++it;
+  }
+  
+  return true;
+}
+
 
 void nuiTextLayout::SetJustification(bool set)
 {

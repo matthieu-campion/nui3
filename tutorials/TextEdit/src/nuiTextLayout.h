@@ -80,17 +80,9 @@ private:
   float mFlush;
   
   void AddLine(nuiTextLine* pLine);
+  bool LayoutParagraph(const nglString& rString, int32 start, int32 length);
   
   std::vector<nuiTextLine*> mpLines;
-
-  class Paragraph
-  {
-  public:
-    int32 mPosition;
-    int32 mLength;
-
-    std::vector<nnuiTextRangeList> mScripts;
-  };
   
 };
 

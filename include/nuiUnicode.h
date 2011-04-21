@@ -264,7 +264,7 @@ const nuiSplitTextFlag nuiST_ScriptChange    = nuiST_StrictScriptChange | nuiST_
 const nuiSplitTextFlag nuiST_Natural         = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange | nuiST_MergeCommonScript;
 const nuiSplitTextFlag nuiST_All             = nuiST_Natural | nuiST_RangeChange;
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural);
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1);
 
 nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString);
 

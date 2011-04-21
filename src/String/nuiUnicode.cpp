@@ -351,9 +351,13 @@ nuiTextRange::nuiTextRange()
   mBlank = false;
 }
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags)
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
 {
   int32 size = rSourceString.GetLength();
+  if (length < 0)
+    length = size;
+  if (length + start > size)
+    length = size - start;
 
   rRanges.clear();
   if (!size)
@@ -364,8 +368,8 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   const bool wordboundary = flags & nuiST_WordBoundary;
   const bool directionchange = flags & nuiST_DirectionChange;
   const bool mergecommonscript = flags & nuiST_MergeCommonScript;
-  int32 lastpos = 0;
-  int32 curpos = 0;
+  int32 lastpos = start;
+  int32 curpos = start;
   nglUChar ch = rSourceString.GetNextUChar(curpos);
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
@@ -382,7 +386,8 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   bool blank = nuiIsUnicodeBlank(ch);
   bool newblank = blank;
   
-  while (curpos < size)
+  
+  while (curpos < start + length)
   {
     bool brk = false;
     int32 pos = curpos;
