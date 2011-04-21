@@ -57,6 +57,8 @@ nuiTextLine::nuiTextLine(float X, float Y)
 
 nuiTextLine::~nuiTextLine()
 {
+  for (uint32 i = 0; i < mpRuns.size(); i++)
+    mpRuns[i]->Release();
 }
 
 /** @name Drawing the Line */
@@ -68,7 +70,7 @@ void nuiTextLine::Draw(nuiDrawContext* pContext)
 
 const std::vector<nuiTextRun*>& nuiTextLine::GetGlyphRuns() const
 {
-  return mRuns;
+  return mpRuns;
 }
 
 float nuiTextLine::GetX() const
@@ -89,7 +91,7 @@ void nuiTextLine::SetPosition(float X, float Y)
 
 void nuiTextLine::AddRun(nuiTextRun* pRun)
 {
-  mRuns.push_back(pRun);
+  mpRuns.push_back(pRun);
 }
 
 
@@ -105,5 +107,39 @@ nuiTextLayout::~nuiTextLayout()
 {
   for (uint32 i = 0; i < mpFonts.size(); i++)
     mpFonts[i]->Release();
+
+  for (uint32 i = 0; i < mpLines.size(); i++)
+    mpLines[i]->Release();
 }
+
+bool nuiTextLayout::LayoutText(const nglString& rString)
+{
+  
+}
+
+void nuiTextLayout::SetJustification(bool set)
+{
+  mJustify = set;
+}
+
+bool nuiTextLayout::GetJustification() const
+{
+  return mJustify;
+}
+
+void nuiTextLayout::SetFlush(float set)
+{
+  mFlush = set;
+}
+
+float nuiTextLayout::GetFlush() const
+{
+  return mFlush;
+}
+
+void nuiTextLayout::AddLine(nuiTextLine* pLine)
+{
+  mpLines.push_back(pLine);
+}
+
 

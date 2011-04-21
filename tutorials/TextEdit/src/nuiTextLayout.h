@@ -13,7 +13,7 @@
 #include "nuiUnicode.h"
 void TextLayoutTest(const nglString& txt);
 
-class nuiTextRun
+class nuiTextRun : public nuiRefCount
 {
 public:
   nuiTextRun(nuiFont* pFont, const nglString& rString, int32 Position, int32 Length);
@@ -31,7 +31,7 @@ private:
   std::vector<nuiGlyphLayout> mGlyphs;
 };
 
-class nuiTextLine
+class nuiTextLine : public nuiRefCount
 {
 public:
   nuiTextLine(float X, float Y);
@@ -52,20 +52,45 @@ private:
   
   void AddRun(nuiTextRun* pRun);
   
-  std::vector<nuiTextRun*> mRuns;
+  std::vector<nuiTextRun*> mpRuns;
   float mX, mY;
 };
 
 
 
-class nuiTextLayout
+class nuiTextLayout : public nuiRefCount
 {
 public:
   nuiTextLayout(nuiFont* pFont);
-
   virtual ~nuiTextLayout();
+
+  bool LayoutText(const nglString& rString);
+  
+  void SetJustification(bool set);
+  bool GetJustification() const;
+  
+  void SetFlush(float set);
+  float GetFlush() const;
+  
   
 private:
   std::vector<nuiFont*> mpFonts;
+  
+  bool mJustify;
+  float mFlush;
+  
+  void AddLine(nuiTextLine* pLine);
+  
+  std::vector<nuiTextLine*> mpLines;
+
+  class Paragraph
+  {
+  public:
+    int32 mPosition;
+    int32 mLength;
+
+    std::vector<nnuiTextRangeList> mScripts;
+  };
+  
 };
 
