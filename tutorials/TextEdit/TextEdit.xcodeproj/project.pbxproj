@@ -25,6 +25,8 @@
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
 		E5C18700135DC5D90062231B /* resources in Resources */ = {isa = PBXBuildFile; fileRef = E5C186FF135DC5D90062231B /* resources */; };
+		E5C4616F1360800000D1B5A1 /* nuiTextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */; };
+		E5C461701360800000D1B5A1 /* nuiTextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +132,8 @@
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E5C186FF135DC5D90062231B /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
+		E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTextLayout.cpp; path = src/nuiTextLayout.cpp; sourceTree = "<group>"; };
+		E5C4616E1360800000D1B5A1 /* nuiTextLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTextLayout.h; path = src/nuiTextLayout.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +198,8 @@
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
 				61A9DFF20B83433800BC506C /* MainWindow.h */,
+				E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */,
+				E5C4616E1360800000D1B5A1 /* nuiTextLayout.h */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -424,6 +430,7 @@
 			files = (
 				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
+				E5C4616F1360800000D1B5A1 /* nuiTextLayout.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +440,7 @@
 			files = (
 				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
+				E5C461701360800000D1B5A1 /* nuiTextLayout.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
