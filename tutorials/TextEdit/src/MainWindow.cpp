@@ -51,54 +51,102 @@ void Test(const nglString& txt)
   
 }
 
-class nuiFontLayout2
+class nuiTextRun
 {
 public:
-  nuiFontLayout2(nuiFont* pFont)
+  nuiTextRun(nuiFont* pFont, const nglString& rString, int32 Position, int32 Length)
+  : mpFont(pFont),
+    mString(rString),
+    mPosition(Position),
+    mLength(Length)
+  {
+  }
+
+private:
+  friend class nuiTextLayout;
+  nuiFont* mpFont;
+  const nglString& mString;
+  int32 mPosition;
+  int32 mLength;
+  
+  void AddGlyph(nuiFont* pFont, int32 Index, float X, float Y)
+  {
+    nuiGlyphLayout glyph;
+    glyph.X = X;
+    glyph.Y = Y;
+    pFont->PrepareGlyph(Index, glyph, true);
+    mGlyphs.push_back(glyph);
+  }
+  
+private:
+  std::vector<nuiGlyphLayout> mGlyphs;
+};
+
+class nuiTextLine
+{
+public:
+  nuiTextLine(float X, float Y)
+  {
+  }
+  
+  virtual ~nuiTextLine()
+  {
+  }
+  
+  /** @name Drawing the Line */
+  //@{
+  void Draw(nuiDrawContext* pContext)
+  {
+  }
+  //@}
+  
+  const std::vector<nuiTextRun*>& GetGlyphRuns() const
+  {
+  }
+  
+  float GetX() const
+  {
+    return mX;
+  }
+  
+  float GetY() const
+  {
+    return mY;
+  }
+  
+  void SetPosition(float X, float Y)
+  {
+    mX = X;
+    mY = Y;
+  }
+private:
+  friend class nuiTextLayout;
+  
+  void AddRun(Run* pRun)
+  {
+    mRuns.push_back(pRun);
+  }
+  
+  std::vector<Run*> mRuns;
+  float mX, mY;
+};
+
+
+
+class nuiTextLayout
+{
+public:
+  nuiTextLayout(nuiFont* pFont)
   {
     pFont->Acquire();
     mpFonts.push_back(pFont);
   }
   
-  virtual ~nuiFontLayout2()
+  virtual ~nuiTextLayout()
   {
     for (uint32 i = 0; i < mpFonts.size(); i++)
       mpFonts[i]->Release();
   }
-  
-  class Line
-  {
-  public:
-    Line()
-    {
-      
-    }
-    
-  private:
-    
-  };
-  
-  
-  class Run
-  {
-  public:
-    Run(nuiFont* pFont, const nglString& rString, int32 Position, int32 Length)
-    : mpFont(pFont),
-      mString(rString),
-      mPosition(Position),
-      mLength(Length)
-    {
-    }
-  private:
-    nuiFont* mpFont;
-    const nglString& mString;
-    int32 mPosition;
-    int32 mLength;
-    
-    std::vector<nglUChar> mGlyphs;
-  };
-  
-  
   
 private:
   std::vector<nuiFont*> mpFonts;

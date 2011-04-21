@@ -2091,7 +2091,7 @@ int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFont
     glyph.Pos   = pglyph->Pos;
     glyph.Index = pglyph->Index;
 
-    if (((nuiFontBase*)pglyph->mpFont)->PrepareGlyph(pContext, glyph, AlignGlyphPixels))
+    if (((nuiFontBase*)pglyph->mpFont)->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels))
       done++;
 
     Glyphs[glyph.mpTexture].push_back(glyph);
@@ -2198,11 +2198,12 @@ bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rG
   return true;
 }
 
-bool nuiFontBase::PrepareGlyph (nuiDrawContext *pContext, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
+bool nuiFontBase::PrepareGlyph (int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
 {
   // Fetch rendered glyph
-  GlyphHandle glyph = GetGlyph(rGlyph.Index, eGlyphBitmap);
-
+  GlyphHandle glyph = GetGlyph(Index, eGlyphBitmap);
+  rGlyph.Index = Index;
+  
   // If we don't have this glyph, assert it has not been rendered
   if (!glyph)
     return false;
@@ -2212,7 +2213,7 @@ bool nuiFontBase::PrepareGlyph (nuiDrawContext *pContext, nuiGlyphLayout& rGlyph
     return false;
 
   nuiFontBase::GlyphLocation GlyphLocation;
-  GetCacheGlyph(rGlyph.Index, GlyphLocation);
+  GetCacheGlyph(Index, GlyphLocation);
 
   float w = GlyphLocation.mWidth;
   float h = GlyphLocation.mHeight;

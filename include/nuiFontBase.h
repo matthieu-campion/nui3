@@ -472,6 +472,7 @@ public:
   int  GetTextPos (float X, const nglChar* pText); ///< Calculate the bounding of the char pos in the given text where the pixel (X,?) lies and returns it.
 
   
+  bool PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
 protected:
   GLclampf mAlphaTest;  ///< Alpha test threshold as set by SetAlphaTest()
   const nglChar* OnError (uint& rError) const;
@@ -491,7 +492,6 @@ protected:
 private:
   bool PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
   bool PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiGlyphLayout> >& rGlyphs);
-  bool PrepareGlyph(nuiDrawContext *pContext, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
   class NUI_API GlyphLocation
   {
   public:
