@@ -7,6 +7,7 @@
 //
 
 #include "nuiTextLayout.h"
+#include "nuiFontManager.h"
 
 void TextLayoutTest(const nglString& txt)
 {
@@ -112,7 +113,6 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
   while (position < len)
   {
     // Scan through the text and look for end of line markers
-    int32 prev = position;
     nglUChar ch = rString.GetNextUChar(position);
     if (ch == '\n')
     {
@@ -129,9 +129,13 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
 {
   printf("new paragraph: %d + %d\n", start, length);
 
+  nuiTextLine* pLine = new nuiTextLine(0, 0);
+  AddLine(pLine);
+  
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
   nuiSplitText(rString, ranges, nuiST_ScriptChange, start, length);
+  
   
   nuiTextRangeList::iterator it = ranges.begin();
   nuiTextRangeList::iterator end = ranges.end();
@@ -142,6 +146,22 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
     const nuiTextRange& range(*it);
     uint32 len = range.mLength;
     printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+
+    std::vector<nglUChar> codepoints;
+    {
+      int32 pos = start;
+      while (pos < start + length)
+      {
+        nglUChar ch = rString.GetNextUChar(pos);
+        
+        codepoints.push_back(ch);
+      }
+    }
+    
+    nuiFont* pFont = FindBestFont(codepoints);
+    nuiTextRun* pRun = new nuiTextRun(pFont, rString, pos, len);
+    pLine->AddRun(pRun);
+    
     
     pos += len;
     ++i;
@@ -151,6 +171,52 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
   return true;
 }
 
+nuiFont* nuiTextLayout::FindBestFont(const std::vector<nglUChar>& rCodepoints)
+{
+  // Create a set of the code points we need:
+  std::set<nglUChar> points;
+  points.insert(rCodepoints.begin(), rCodepoints.end());
+  nuiFont* pFont = NULL;
+
+  // Try the fonts we already use
+  for (uint32 i = 0; i < mpFonts.size(); i++)
+  {
+    pFont = mpFonts[i];
+
+    std::set<nglUChar>::iterator it = points.begin();
+    std::set<nglUChar>::iterator end = points.end();
+    
+    int32 index = 1;
+    while (it != end && index > 0)
+    {
+      nglUChar ch = *it;
+      printf("%d ", ch);
+      index = pFont->GetGlyphIndex(*it);
+      ++it;
+    }      
+    
+    if (it == end) // We found a font that works
+      continue;
+    
+    pFont = NULL;
+  }
+  
+  if (!pFont)
+  {
+    // We haven't found a font that contains the glyphs we need
+    nuiFontRequest request(mpFonts.front());
+    request.MustHaveGlyphs(points, 10.f, true);
+    
+    pFont = nuiFontManager::GetManager().GetFont(request);
+  }
+  
+  if (pFont)
+    printf("\t\tbest font found: %s (%s)\n", pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars());
+  else
+    printf("\n\nNo font found matching these unicode points\n");
+  
+  return pFont;
+}
 
 void nuiTextLayout::SetJustification(bool set)
 {

@@ -81,6 +81,7 @@ private:
   
   void AddLine(nuiTextLine* pLine);
   bool LayoutParagraph(const nglString& rString, int32 start, int32 length);
+  nuiFont* FindBestFont(const std::vector<nglUChar>& rCodepoints);
   
   std::vector<nuiTextLine*> mpLines;
   
