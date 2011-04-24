@@ -16,7 +16,13 @@ void TextLayoutTest(const nglString& txt);
 class nuiTextRun : public nuiRefCount
 {
 public:
-  nuiTextRun(nuiFont* pFont, const nglString& rString, int32 Position, int32 Length);
+  nuiTextRun(nuiUnicodeScript Script, const nglString& rString, int32 Position, int32 Length);
+  virtual ~nuiTextRun();
+  void SetFont(nuiFont* pFont);
+  
+  nuiUnicodeScript GetScript() const;
+  int32 GetPosition() const;
+  int32 GetLength() const;
   
 private:
   friend class nuiTextLayout;
@@ -24,8 +30,9 @@ private:
   const nglString& mString;
   int32 mPosition;
   int32 mLength;
+  nuiUnicodeScript mScript;
   
-  void AddGlyph(nuiFont* pFont, int32 Index, float X, float Y);
+  void AddGlyph(int32 Index, float X, float Y);
   
 private:
   std::vector<nuiGlyphLayout> mGlyphs;
@@ -42,6 +49,9 @@ public:
   //@{
   void Draw(nuiDrawContext* pContext);
   //@}
+  
+  uint32 size() const;
+  nuiTextRun* operator[](uint32 index) const;
   
   const std::vector<nuiTextRun*>& GetGlyphRuns() const;
   float GetX() const;
@@ -74,16 +84,17 @@ public:
   
   
 private:
-  std::vector<nuiFont*> mpFonts;
+  nuiFont* mpFont;
+  std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;
+
   
   bool mJustify;
   float mFlush;
   
-  void AddLine(nuiTextLine* pLine);
   bool LayoutParagraph(const nglString& rString, int32 start, int32 length);
-  nuiFont* FindBestFont(const std::vector<nglUChar>& rCodepoints);
   
-  std::vector<nuiTextLine*> mpLines;
+  typedef std::vector<nuiTextLine> Paragraph;
+  std::vector<Paragraph> mParagraphs;
   
 };
 

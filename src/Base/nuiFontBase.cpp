@@ -1248,7 +1248,7 @@ const nglChar* nuiFontBase::GetCharMapName (int Index)  const
 }
 
 
-#define DBG_INDEX
+//#define DBG_INDEX
 
 int nuiFontBase::GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint* pIndexes, int IndexesLength) const
 {

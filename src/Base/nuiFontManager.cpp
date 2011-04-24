@@ -699,7 +699,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   Info.XPos = 0;
   Info.YPos = 0;
 
-#if 0
+#if 1
 #ifndef _UIKIT_
   gpWin = new nuiMainWindow(ContextInfo, Info);
   nuiVBox* pBox = new nuiVBox();
@@ -1077,7 +1077,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscan
 }
 
 
-#define NUI_FONTDB_MARKER "nuiFontDatabase3"
+#define NUI_FONTDB_MARKER "nuiFontDatabase4"
 
 bool nuiFontManager::Save(nglOStream& rStream)
 {
@@ -1134,41 +1134,6 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
-#if 0 && defined _UIKIT_
-#ifdef __IPHONE_3_2
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_3_2
-  if (CTFontCollectionCreateFromAvailableFonts != NULL)
-  {
-    scanfolders = false;
-    
-    CTFontCollectionRef collection = CTFontCollectionCreateFromAvailableFonts(NULL);
-    CFArrayRef fonts = CTFontCollectionCreateMatchingFontDescriptors(collection);
-    int count = CFArrayGetCount(fonts);
-    
-    for (int i = 0; i < count; i++)
-    {
-      CTFontDescriptorRef desc = (CTFontDescriptorRef)CFArrayGetValueAtIndex(fonts, i);     
-      CFURLRef url = (CFURLRef)CTFontDescriptorCopyAttribute(desc, kCTFontURLAttribute);
-      CFStringRef str = CFURLGetString(url);
-      const int buffersize = 1024;
-      char buffer[buffersize];
-      memset(buffer, 0, buffersize);
-      CFStringGetFileSystemRepresentation(str, buffer, buffersize - 1);
-      
-      nglString rstr(buffer);
-      // Remove file://localhost from the start of the url:
-      rstr.DeleteLeft(16);
-      const nglPath& path(rstr);
-      if (path.IsLeaf())
-      {
-        fontFiles.insert(path);
-        printf("font file? %d: %s -> %s\n", i, buffer, rstr.GetChars());
-      }
-    }
-  }
-#endif
-#endif
-#endif
   
   if (scanfolders)
   {
@@ -1179,7 +1144,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
-      //NGL_OUT(_T("FontManager: scanning font folder '%s' '%s' for font files\n"), str.GetChars(), pth.GetChars());
+      NGL_OUT(_T("FontManager: scanning font folder '%s' '%s' for font files\n"), str.GetChars(), pth.GetChars());
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
@@ -1191,11 +1156,11 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         if (path.IsLeaf())
         {
           fontFiles.insert(path);
-          //NGL_OUT(_T("FontManager: font file found '%s'\n"), path.GetChars());
+          NGL_OUT(_T("FontManager: font file found '%s'\n"), path.GetChars());
         }
         else
         {
-          //NGL_OUT(_T("FontManager: skip '%s'\n"), path.GetChars());
+          NGL_OUT(_T("FontManager: skip '%s'\n"), path.GetChars());
         }
       }
     }
@@ -1210,7 +1175,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
       // check font file existence
       if (!pFontDesc->CheckPath())
       {
-        //NGL_OUT(_T("FontManager: remove font from database '%s'\n"), pFontDesc->GetPath().GetChars());
+        NGL_OUT(_T("FontManager: remove font from database '%s'\n"), pFontDesc->GetPath().GetChars());
         
         continue;
       }
@@ -1257,7 +1222,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         {
           mpFonts.push_back(pFontDesc);
           
-          //NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
+          NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
         }
         else
         {
@@ -1269,7 +1234,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     }
     else
     {
-      //NGL_OUT(_T("FontManager: skip already scanned font '%s'\n"), path.GetChars());
+      NGL_OUT(_T("FontManager: skip already scanned font '%s'\n"), path.GetChars());
     }
     
   }
@@ -1288,41 +1253,6 @@ void nuiFontManager::UpdateFonts()
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
-#if 0 && (defined _UIKIT_)
-#ifdef __IPHONE_3_2
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
-  if (CTFontCollectionCreateFromAvailableFonts != NULL)
-  {
-    scanfolders = false;
-    
-    CTFontCollectionRef collection = CTFontCollectionCreateFromAvailableFonts(NULL);
-    CFArrayRef fonts = CTFontCollectionCreateMatchingFontDescriptors(collection);
-    int count = CFArrayGetCount(fonts);
-    
-    for (int i = 0; i < count; i++)
-    {
-      CTFontDescriptorRef desc = (CTFontDescriptorRef)CFArrayGetValueAtIndex(fonts, i);     
-      CFURLRef url = (CFURLRef)CTFontDescriptorCopyAttribute(desc, kCTFontURLAttribute);
-      CFStringRef str = CFURLGetString(url);
-      const int buffersize = 1024;
-      char buffer[buffersize];
-      memset(buffer, 0, buffersize);
-      CFStringGetFileSystemRepresentation(str, buffer, buffersize - 1);
-      
-      nglString rstr(buffer);
-      // Remove file://localhost from the start of the url:
-      rstr.DeleteLeft(16);
-      const nglPath& path(rstr);
-      if (path.IsLeaf())
-      {
-        fontFiles.insert(path);
-        //printf("font file? %d: %s -> %s\n", i, buffer, rstr.GetChars());
-      }
-    }
-  }
-#endif
-#endif
-#endif
   
   if (scanfolders)
   {
@@ -1368,7 +1298,7 @@ void nuiFontManager::UpdateFonts()
       {
         mpFonts.push_back(pFontDesc);
         
-        //NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
+        NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
       }
       else
       {

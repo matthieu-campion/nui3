@@ -11,7 +11,11 @@
 
 void TextLayoutTest(const nglString& txt)
 {
-  nuiFont* pFont = nuiFont::GetFont(12);
+  nuiFontRequest request;
+  request.MustHaveSize(14, 2);
+  request.SetName("Times", 2);
+  nuiFont* pFont = nuiFontManager::GetManager().GetFont(request);
+  printf("Requested font: %s\n", pFont->GetFamilyName().GetChars());
   nuiTextLayout layout(pFont);
   layout.LayoutText(txt);
   
@@ -19,22 +23,52 @@ void TextLayoutTest(const nglString& txt)
 
 
 /////////////
-nuiTextRun::nuiTextRun(nuiFont* pFont, const nglString& rString, int32 Position, int32 Length)
-: mpFont(pFont),
+nuiTextRun::nuiTextRun(nuiUnicodeScript script, const nglString& rString, int32 Position, int32 Length)
+: mpFont(NULL),
   mString(rString),
   mPosition(Position),
-  mLength(Length)
+  mLength(Length),
+  mScript(script)
 {
 }
 
-void nuiTextRun::AddGlyph(nuiFont* pFont, int32 Index, float X, float Y)
+nuiTextRun::~nuiTextRun()
+{
+  mpFont->Release();
+}
+
+void nuiTextRun::SetFont(nuiFont* pFont)
+{
+  NGL_ASSERT(!mpFont);
+  pFont->Acquire();
+  mpFont = pFont;
+}
+
+nuiUnicodeScript nuiTextRun::GetScript() const
+{
+  return mScript;
+}
+
+
+void nuiTextRun::AddGlyph(int32 Index, float X, float Y)
 {
   nuiGlyphLayout glyph;
   glyph.X = X;
   glyph.Y = Y;
-  pFont->PrepareGlyph(Index, glyph, true);
+  mpFont->PrepareGlyph(Index, glyph, true);
   mGlyphs.push_back(glyph);
 }
+
+int32 nuiTextRun::GetPosition() const
+{
+  return mPosition;
+}
+
+int32 nuiTextRun::GetLength() const
+{
+  return mLength;
+}
+
 
 ////////////
 //nuiTextLine
@@ -81,22 +115,39 @@ void nuiTextLine::AddRun(nuiTextRun* pRun)
   mpRuns.push_back(pRun);
 }
 
+uint32 nuiTextLine::size() const
+{
+  return mpRuns.size();
+}
+
+nuiTextRun* nuiTextLine::operator[](uint32 index) const
+{
+  return mpRuns[index];
+}
+
 
 /////////////////
 // nuiTextLayout
 nuiTextLayout::nuiTextLayout(nuiFont* pFont)
 {
   pFont->Acquire();
-  mpFonts.push_back(pFont);
+  mpFont = pFont;
 }
 
 nuiTextLayout::~nuiTextLayout()
 {
-  for (uint32 i = 0; i < mpFonts.size(); i++)
-    mpFonts[i]->Release();
+  mpFont->Release();
 
-  for (uint32 i = 0; i < mpLines.size(); i++)
-    mpLines[i]->Release();
+  for (uint32 p = 0; p < mParagraphs.size(); p++)
+  {
+    for (uint32 l = 0; l < mParagraphs[p].size(); l++)
+    {
+      for (uint32 r = 0; r < mParagraphs[p][l].size(); r++)
+      { 
+        mParagraphs[p][l][r]->Release();
+      }
+    }
+  }
 }
 
 bool nuiTextLayout::LayoutText(const nglString& rString)
@@ -122,6 +173,46 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     }
   }
   
+  // Find the needed fonts for each script:
+  std::map<nuiUnicodeScript, nuiFont*> FontSet;
+  {
+    std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator it = mCharsets.begin();
+    std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
+    while (it != end)
+    {
+      const std::set<nglUChar>& charset(it->second);
+      nuiFontRequest request(mpFont);
+      request.MustHaveGlyphs(charset, 10);
+      nuiFont* pFont = nuiFontManager::GetManager().GetFont(request);
+      FontSet[it->first] = pFont;
+      
+      printf("%s -> %s\n", nuiGetUnicodeScriptName(it->first).GetChars(), pFont->GetFamilyName().GetChars());
+      
+      ++it;
+    }
+  }
+
+  uint32 i = 0;
+  // Assign the correct font to each run
+  for (uint32 p = 0; p < mParagraphs.size(); p++)
+  {
+    for (uint32 l = 0; l < mParagraphs[p].size(); l++)
+    {
+      for (uint32 r = 0; r < mParagraphs[p][l].size(); r++)
+      {
+        nuiTextRun* pRun = mParagraphs[p][l][r];
+        nuiFont* pFont = FontSet[pRun->GetScript()];
+        pRun->SetFont(pFont);
+        
+        printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars());
+
+        i++;
+      }
+    }
+  }
+  
+  
+  mCharsets.clear();
   return true;
 }
 
@@ -129,93 +220,65 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
 {
   printf("new paragraph: %d + %d\n", start, length);
 
-  nuiTextLine* pLine = new nuiTextLine(0, 0);
-  AddLine(pLine);
+  mParagraphs.push_back(Paragraph());
+
+  mParagraphs.back().push_back(nuiTextLine(0, 0));
+  nuiTextLine& rLine = mParagraphs.back().back();
   
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
   nuiSplitText(rString, ranges, nuiST_ScriptChange, start, length);
-  
-  
-  nuiTextRangeList::iterator it = ranges.begin();
-  nuiTextRangeList::iterator end = ranges.end();
-  uint32 i = 0;
-  uint32 pos = 0;
-  while (it != end)
-  {
-    const nuiTextRange& range(*it);
-    uint32 len = range.mLength;
-    printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
 
-    std::vector<nglUChar> codepoints;
+  {
+    nuiTextRangeList::iterator it = ranges.begin();
+    nuiTextRangeList::iterator end = ranges.end();
+    uint32 pos = 0;
+    int32 i = 0;
+    while (it != end)
     {
-      int32 pos = start;
-      while (pos < start + length)
+      const nuiTextRange& range(*it);
+      uint32 len = range.mLength;
+      //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+      
+      std::set<nglUChar>& charset(mCharsets[range.mScript]);
       {
-        nglUChar ch = rString.GetNextUChar(pos);
-        
-        codepoints.push_back(ch);
+        int32 pos = start;
+        while (pos < start + length)
+        {
+          nglUChar ch = rString.GetNextUChar(pos);
+          
+          charset.insert(ch);
+        }
       }
+
+      pos += len;
+      ++it;
     }
-    
-    nuiFont* pFont = FindBestFont(codepoints);
-    nuiTextRun* pRun = new nuiTextRun(pFont, rString, pos, len);
-    pLine->AddRun(pRun);
-    
-    
-    pos += len;
-    ++i;
-    ++it;
+  }
+  
+
+  {
+    nuiTextRangeList::iterator it = ranges.begin();
+    nuiTextRangeList::iterator end = ranges.end();
+    uint32 i = 0;
+    uint32 pos = 0;
+    while (it != end)
+    {
+      const nuiTextRange& range(*it);
+      uint32 len = range.mLength;
+      //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+         
+      nuiTextRun* pRun = new nuiTextRun(range.mScript, rString, pos, len);
+      rLine.AddRun(pRun);
+      
+      
+      pos += len;
+      ++i;
+      ++it;
+    }
   }
   
   return true;
-}
-
-nuiFont* nuiTextLayout::FindBestFont(const std::vector<nglUChar>& rCodepoints)
-{
-  // Create a set of the code points we need:
-  std::set<nglUChar> points;
-  points.insert(rCodepoints.begin(), rCodepoints.end());
-  nuiFont* pFont = NULL;
-
-  // Try the fonts we already use
-  for (uint32 i = 0; i < mpFonts.size(); i++)
-  {
-    pFont = mpFonts[i];
-
-    std::set<nglUChar>::iterator it = points.begin();
-    std::set<nglUChar>::iterator end = points.end();
-    
-    int32 index = 1;
-    while (it != end && index > 0)
-    {
-      nglUChar ch = *it;
-      printf("%d ", ch);
-      index = pFont->GetGlyphIndex(*it);
-      ++it;
-    }      
-    
-    if (it == end) // We found a font that works
-      continue;
-    
-    pFont = NULL;
-  }
-  
-  if (!pFont)
-  {
-    // We haven't found a font that contains the glyphs we need
-    nuiFontRequest request(mpFonts.front());
-    request.MustHaveGlyphs(points, 10.f, true);
-    
-    pFont = nuiFontManager::GetManager().GetFont(request);
-  }
-  
-  if (pFont)
-    printf("\t\tbest font found: %s (%s)\n", pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars());
-  else
-    printf("\n\nNo font found matching these unicode points\n");
-  
-  return pFont;
 }
 
 void nuiTextLayout::SetJustification(bool set)
@@ -236,11 +299,6 @@ void nuiTextLayout::SetFlush(float set)
 float nuiTextLayout::GetFlush() const
 {
   return mFlush;
-}
-
-void nuiTextLayout::AddLine(nuiTextLine* pLine)
-{
-  mpLines.push_back(pLine);
 }
 
 
