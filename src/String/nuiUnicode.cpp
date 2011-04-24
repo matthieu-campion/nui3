@@ -409,7 +409,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
         if (!newblank)
         {
           newscript = nuiGetUnicodeScript(ch, scriptlow, scripthi);
-          if ((newscript != script) && !(mergecommonscript && newscript == eScriptCommon))
+          if ((newscript != script) && !(mergecommonscript && (newscript == eScriptCommon || newscript == eScriptInherited)))
           {
             brk = true;
           }

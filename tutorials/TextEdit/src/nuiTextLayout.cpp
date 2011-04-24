@@ -18,7 +18,6 @@ void TextLayoutTest(const nglString& txt)
   printf("Requested font: %s\n", pFont->GetFamilyName().GetChars());
   nuiTextLayout layout(pFont);
   layout.LayoutText(txt);
-  
 }
 
 
@@ -180,13 +179,35 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
     while (it != end)
     {
+      printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
       const std::set<nglUChar>& charset(it->second);
-      nuiFontRequest request(mpFont);
-      request.MustHaveGlyphs(charset, 10);
-      nuiFont* pFont = nuiFontManager::GetManager().GetFont(request);
+      nuiFont* pFont = NULL;
+      // First try the requested font
+      {
+        std::set<nglUChar>::const_iterator it = charset.begin();
+        std::set<nglUChar>::const_iterator end = charset.end();
+        
+        while (it != end && mpFont->GetGlyphIndex(*it) > 0)
+          ++it;
+        
+        // If all the glyphs are available in the font we're done...
+        if (it == end)
+          pFont = mpFont;
+        else
+          printf("[couldn't find glyph %d '%c' in requested font] ", *it, *it);
+      }
+
+      // If the requested font doesn't work, try to find one that does:
+      if (!pFont)
+      {
+        nuiFontRequest request(mpFont);
+        request.MustHaveGlyphs(charset, 10);
+        pFont = nuiFontManager::GetManager().GetFont(request);
+      }
+      
       FontSet[it->first] = pFont;
       
-      printf("%s -> %s\n", nuiGetUnicodeScriptName(it->first).GetChars(), pFont->GetFamilyName().GetChars());
+      printf("%s\n", pFont->GetFamilyName().GetChars());
       
       ++it;
     }
@@ -232,27 +253,27 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
   {
     nuiTextRangeList::iterator it = ranges.begin();
     nuiTextRangeList::iterator end = ranges.end();
-    uint32 pos = 0;
+    int32 origin = start;
     int32 i = 0;
     while (it != end)
     {
       const nuiTextRange& range(*it);
-      uint32 len = range.mLength;
+      int32 len = range.mLength;
+      int32 pos = origin;
       //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
       
       std::set<nglUChar>& charset(mCharsets[range.mScript]);
       {
-        int32 pos = start;
-        while (pos < start + length)
+        while (pos < origin + len)
         {
           nglUChar ch = rString.GetNextUChar(pos);
-          
           charset.insert(ch);
         }
       }
 
-      pos += len;
+      origin += len;
       ++it;
+      i++;
     }
   }
   
