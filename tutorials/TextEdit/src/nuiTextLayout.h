@@ -38,7 +38,7 @@ private:
   std::vector<nuiGlyphLayout> mGlyphs;
 };
 
-class nuiTextLine : public nuiRefCount
+class nuiTextLine
 {
 public:
   nuiTextLine(float X, float Y);
