@@ -131,6 +131,9 @@ extern "C" {
 extern int32_t ucisprop __((uint32_t code, uint32_t mask1,
                         uint32_t mask2));
 
+extern int32_t ucprop_lookup __((uint32_t code, uint32_t n));
+
+  
 #define ucisalpha(cc) ucisprop(cc, UC_LU|UC_LL|UC_LM|UC_LO|UC_LT, 0)
 #define ucisdigit(cc) ucisprop(cc, UC_ND, 0)
 #define ucisalnum(cc) ucisprop(cc, UC_LU|UC_LL|UC_LM|UC_LO|UC_LT|UC_ND, 0)

@@ -246,11 +246,11 @@ _ucprop_unload()
     _ucprop_size = 0;
 }
 
-static int32_t
+int32_t
 #ifdef __STDC__
-_ucprop_lookup(uint32_t code, uint32_t n)
+ucprop_lookup(uint32_t code, uint32_t n)
 #else
-_ucprop_lookup(code, n)
+ucprop_lookup(code, n)
 uint32_t code, n;
 #endif
 {
@@ -304,12 +304,12 @@ uint32_t code, mask1, mask2;
       return 0;
 
     for (i = 0; mask1 && i < 32; i++) {
-        if ((mask1 & masks32[i]) && _ucprop_lookup(code, i))
+        if ((mask1 & masks32[i]) && ucprop_lookup(code, i))
           return 1;
     }
 
     for (i = 32; mask2 && i < _ucprop_size; i++) {
-        if ((mask2 & masks32[i & 31]) && _ucprop_lookup(code, i))
+        if ((mask2 & masks32[i & 31]) && ucprop_lookup(code, i))
           return 1;
     }
 
