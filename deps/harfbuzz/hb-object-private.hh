@@ -27,33 +27,29 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#ifndef HB_OBJECT_PRIVATE_H
-#define HB_OBJECT_PRIVATE_H
+#ifndef HB_OBJECT_PRIVATE_HH
+#define HB_OBJECT_PRIVATE_HH
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
 HB_BEGIN_DECLS
 
 
-/* Encapsulate operations on the object's reference count */
 typedef struct {
   hb_atomic_int_t ref_count;
-} hb_reference_count_t;
-
-#define hb_reference_count_inc(RC) hb_atomic_int_fetch_and_add ((RC).ref_count, 1)
-#define hb_reference_count_dec(RC) hb_atomic_int_fetch_and_add ((RC).ref_count, -1)
-
-#define HB_REFERENCE_COUNT_INIT(RC, VALUE) ((RC).ref_count = (VALUE))
-
-#define HB_REFERENCE_COUNT_GET_VALUE(RC) hb_atomic_int_get ((RC).ref_count)
-#define HB_REFERENCE_COUNT_SET_VALUE(RC, VALUE) hb_atomic_int_set ((RC).ref_count, (VALUE))
 
 #define HB_REFERENCE_COUNT_INVALID_VALUE ((hb_atomic_int_t) -1)
 #define HB_REFERENCE_COUNT_INVALID {HB_REFERENCE_COUNT_INVALID_VALUE}
 
-#define HB_REFERENCE_COUNT_IS_INVALID(RC) (HB_REFERENCE_COUNT_GET_VALUE (RC) == HB_REFERENCE_COUNT_INVALID_VALUE)
+  inline void init (int v) { ref_count = v; /* non-atomic is fine */ }
+  inline int inc (void) { return hb_atomic_int_fetch_and_add (ref_count,  1); }
+  inline int dec (void) { return hb_atomic_int_fetch_and_add (ref_count, -1); }
+  inline void set (int v) { hb_atomic_int_set (ref_count, v); }
 
-#define HB_REFERENCE_COUNT_HAS_REFERENCE(RC) (HB_REFERENCE_COUNT_GET_VALUE (RC) > 0)
+  inline int get (void) const { return hb_atomic_int_get (ref_count); }
+  inline bool is_invalid (void) const { return get () == HB_REFERENCE_COUNT_INVALID_VALUE; }
+
+} hb_reference_count_t;
 
 
 
@@ -71,7 +67,7 @@ _hb_trace_object (const void *obj,
   (void) (HB_DEBUG_OBJECT &&
 	  fprintf (stderr, "OBJECT(%p) refcount=%d %s\n",
 		   obj,
-		   HB_REFERENCE_COUNT_GET_VALUE (*ref_count),
+		   ref_count->get (),
 		   function));
 }
 
@@ -82,10 +78,10 @@ _hb_trace_object (const void *obj,
 /* Object allocation and lifecycle manamgement macros */
 
 #define HB_OBJECT_IS_INERT(obj) \
-    (unlikely (HB_REFERENCE_COUNT_IS_INVALID ((obj)->ref_count)))
+    (unlikely ((obj)->ref_count.is_invalid ()))
 
 #define HB_OBJECT_DO_INIT_EXPR(obj) \
-    HB_REFERENCE_COUNT_INIT (obj->ref_count, 1)
+    obj->ref_count.init (1)
 
 #define HB_OBJECT_DO_INIT(obj) \
   HB_STMT_START { \
@@ -111,16 +107,9 @@ _hb_trace_object (const void *obj,
     if (unlikely (!(obj) || HB_OBJECT_IS_INERT (obj))) \
       return obj; \
     TRACE_OBJECT (obj); \
-    old_count = hb_reference_count_inc (obj->ref_count); \
+    old_count = obj->ref_count.inc (); \
     assert (old_count > 0); \
     return obj; \
-  } HB_STMT_END
-
-#define HB_OBJECT_DO_GET_REFERENCE_COUNT(obj) \
-  HB_STMT_START { \
-    if (unlikely (!(obj) || HB_OBJECT_IS_INERT (obj))) \
-      return 0; \
-    return HB_REFERENCE_COUNT_GET_VALUE (obj->ref_count); \
   } HB_STMT_END
 
 #define HB_OBJECT_DO_DESTROY(obj) \
@@ -129,7 +118,7 @@ _hb_trace_object (const void *obj,
     if (unlikely (!(obj) || HB_OBJECT_IS_INERT (obj))) \
       return; \
     TRACE_OBJECT (obj); \
-    old_count = hb_reference_count_dec (obj->ref_count); \
+    old_count = obj->ref_count.dec (); \
     assert (old_count > 0); \
     if (old_count != 1) \
       return; \
@@ -138,4 +127,4 @@ _hb_trace_object (const void *obj,
 
 HB_END_DECLS
 
-#endif /* HB_OBJECT_PRIVATE_H */
+#endif /* HB_OBJECT_PRIVATE_HH */

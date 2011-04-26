@@ -45,8 +45,8 @@ hb_blob_t *
 hb_blob_create (const char        *data,
 		unsigned int       length,
 		hb_memory_mode_t   mode,
-		hb_destroy_func_t  destroy,
-		void              *user_data);
+		void              *user_data,
+		hb_destroy_func_t  destroy);
 
 hb_blob_t *
 hb_blob_create_sub_blob (hb_blob_t    *parent,
@@ -58,9 +58,6 @@ hb_blob_create_empty (void);
 
 hb_blob_t *
 hb_blob_reference (hb_blob_t *blob);
-
-unsigned int
-hb_blob_get_reference_count (hb_blob_t *blob);
 
 void
 hb_blob_destroy (hb_blob_t *blob);

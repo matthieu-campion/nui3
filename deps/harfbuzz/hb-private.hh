@@ -24,8 +24,8 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#ifndef HB_PRIVATE_H
-#define HB_PRIVATE_H
+#ifndef HB_PRIVATE_HH
+#define HB_PRIVATE_HH
 
 #if HAVE_CONFIG_H
 #include "config.h"
@@ -78,6 +78,24 @@ HB_BEGIN_DECLS
 #define _ASSERT_STATIC0(_line, _cond) _ASSERT_STATIC1 (_line, (_cond))
 #define ASSERT_STATIC(_cond) _ASSERT_STATIC0 (__LINE__, (_cond))
 
+#define ASSERT_STATIC_EXPR(_cond) ((void) sizeof (char[(_cond) ? 1 : -1]))
+
+
+/* Lets assert int types.  Saves trouble down the road. */
+
+ASSERT_STATIC (sizeof (int8_t) == 1);
+ASSERT_STATIC (sizeof (uint8_t) == 1);
+ASSERT_STATIC (sizeof (int16_t) == 2);
+ASSERT_STATIC (sizeof (uint16_t) == 2);
+ASSERT_STATIC (sizeof (int32_t) == 4);
+ASSERT_STATIC (sizeof (uint32_t) == 4);
+ASSERT_STATIC (sizeof (int64_t) == 8);
+ASSERT_STATIC (sizeof (uint64_t) == 8);
+
+ASSERT_STATIC (sizeof (hb_codepoint_t) == 4);
+ASSERT_STATIC (sizeof (hb_position_t) == 4);
+ASSERT_STATIC (sizeof (hb_mask_t) == 4);
+ASSERT_STATIC (sizeof (hb_var_int_t) == 4);
 
 /* Misc */
 
@@ -196,7 +214,7 @@ typedef int (*hb_compare_func_t) (const void *, const void *);
 
 #include <glib.h>
 
-typedef int hb_atomic_int_t;
+typedef volatile int hb_atomic_int_t;
 #define hb_atomic_int_fetch_and_add(AI, V)	g_atomic_int_exchange_and_add (&(AI), V)
 #define hb_atomic_int_get(AI)			g_atomic_int_get (&(AI))
 #define hb_atomic_int_set(AI, V)		g_atomic_int_set (&(AI), V)
@@ -211,17 +229,20 @@ typedef GStaticMutex hb_mutex_t;
 #else
 
 #ifdef _MSC_VER
+#define _HB__STR2__(x) #x
+#define _HB__STR1__(x) _HB__STR2__(x)
+#define _HB__LOC__ __FILE__ "("_HB__STR1__(__LINE__)") : Warning Msg: "
 #pragma message(_HB__LOC__"Could not find any system to define platform macros, library will NOT be thread-safe")
 #else
 #warning "Could not find any system to define platform macros, library will NOT be thread-safe"
 #endif
 
-typedef int hb_atomic_int_t;
+typedef volatile int hb_atomic_int_t;
 #define hb_atomic_int_fetch_and_add(AI, V)	((AI) += (V), (AI) - (V))
 #define hb_atomic_int_get(AI)			(AI)
-#define hb_atomic_int_set(AI, V)		HB_STMT_START { (AI) = (V); } HB_STMT_END
+#define hb_atomic_int_set(AI, V)  (AI) = (V);
 
-typedef int hb_mutex_t;
+typedef volatile int hb_mutex_t;
 #define HB_MUTEX_INIT				0
 #define hb_mutex_init(M)			HB_STMT_START { (M) = 0; } HB_STMT_END
 #define hb_mutex_lock(M)			HB_STMT_START { (M) = 1; } HB_STMT_END
@@ -244,6 +265,18 @@ typedef int hb_mutex_t;
 #define hb_be_uint32_cmp(a,b)	(a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3])
 
 
+/* ASCII tag/character handling */
+
+#define ISALPHA(c) (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z'))
+#define TOUPPER(c) (((c) >= 'a' && (c) <= 'z') ? (c) - 'a' + 'A' : (c))
+#define TOLOWER(c) (((c) >= 'A' && (c) <= 'Z') ? (c) - 'A' + 'a' : (c))
+
+#define HB_TAG_CHAR4(s)   (HB_TAG(((const char *) s)[0], \
+				  ((const char *) s)[1], \
+				  ((const char *) s)[2], \
+				  ((const char *) s)[3]))
+
+
 /* Debug */
 
 #ifndef HB_DEBUG
@@ -262,9 +295,9 @@ _hb_trace (const char *what,
 }
 
 
-#include "hb-object-private.h"
+#include "hb-object-private.hh"
 
 
 HB_END_DECLS
 
-#endif /* HB_PRIVATE_H */
+#endif /* HB_PRIVATE_HH */

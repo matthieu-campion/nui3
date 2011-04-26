@@ -1,8 +1,9 @@
 /*
  * Copyright (C) 1998-2004  David Turner and Werner Lemberg
  * Copyright (C) 2004,2007,2009  Red Hat, Inc.
+ * Copyright (C) 2011  Google, Inc.
  *
- * This is part of HarfBuzz, a text shaping library.
+ *  This is part of HarfBuzz, a text shaping library.
  *
  * Permission is hereby granted, without written agreement and without
  * license or royalty fees, to use, copy, modify, and distribute this
@@ -23,6 +24,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  * Red Hat Author(s): Owen Taylor, Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #ifndef HB_BUFFER_H
@@ -30,7 +32,6 @@
 
 #include "hb-common.h"
 #include "hb-unicode.h"
-#include "hb-language.h"
 
 HB_BEGIN_DECLS
 
@@ -41,6 +42,8 @@ typedef struct _hb_glyph_info_t {
   hb_codepoint_t codepoint;
   hb_mask_t      mask;
   uint32_t       cluster;
+
+  /*< private >*/
   hb_var_int_t   var1;
   hb_var_int_t   var2;
 } hb_glyph_info_t;
@@ -50,6 +53,8 @@ typedef struct _hb_glyph_position_t {
   hb_position_t  y_advance;
   hb_position_t  x_offset;
   hb_position_t  y_offset;
+
+  /*< private >*/
   hb_var_int_t   var;
 } hb_glyph_position_t;
 
@@ -59,9 +64,6 @@ hb_buffer_create (unsigned int pre_alloc_size);
 
 hb_buffer_t *
 hb_buffer_reference (hb_buffer_t *buffer);
-
-unsigned int
-hb_buffer_get_reference_count (hb_buffer_t *buffer);
 
 void
 hb_buffer_destroy (hb_buffer_t *buffer);
@@ -96,15 +98,20 @@ hb_language_t
 hb_buffer_get_language (hb_buffer_t *buffer);
 
 
+/* Resets the buffer.  Afterwards it's as if it was just created,
+ * except that it has a larger buffer allocated perhaps... */
 void
-hb_buffer_clear (hb_buffer_t *buffer);
+hb_buffer_reset (hb_buffer_t *buffer);
 
-void
-hb_buffer_clear_positions (hb_buffer_t *buffer);
-
+/* Returns FALSE if allocation failed */
 hb_bool_t
-hb_buffer_ensure (hb_buffer_t  *buffer,
-		  unsigned int  size);
+hb_buffer_pre_allocate (hb_buffer_t  *buffer,
+		        unsigned int  size);
+
+
+/* Returns FALSE if allocation has failed before */
+hb_bool_t
+hb_buffer_allocation_successful (hb_buffer_t  *buffer);
 
 void
 hb_buffer_reverse (hb_buffer_t *buffer);
@@ -116,10 +123,10 @@ hb_buffer_reverse_clusters (hb_buffer_t *buffer);
 /* Filling the buffer in */
 
 void
-hb_buffer_add_glyph (hb_buffer_t    *buffer,
-		     hb_codepoint_t  codepoint,
-		     hb_mask_t       mask,
-		     unsigned int    cluster);
+hb_buffer_add (hb_buffer_t    *buffer,
+	       hb_codepoint_t  codepoint,
+	       hb_mask_t       mask,
+	       unsigned int    cluster);
 
 void
 hb_buffer_add_utf8 (hb_buffer_t  *buffer,
@@ -143,19 +150,26 @@ hb_buffer_add_utf32 (hb_buffer_t    *buffer,
 		     unsigned int    item_length);
 
 
-/* Getting glyphs out of the buffer */
+/* Clears any new items added at the end */
+hb_bool_t
+hb_buffer_set_length (hb_buffer_t  *buffer,
+		      unsigned int  length);
 
 /* Return value valid as long as buffer not modified */
 unsigned int
 hb_buffer_get_length (hb_buffer_t *buffer);
 
+/* Getting glyphs out of the buffer */
+
 /* Return value valid as long as buffer not modified */
 hb_glyph_info_t *
-hb_buffer_get_glyph_infos (hb_buffer_t *buffer);
+hb_buffer_get_glyph_infos (hb_buffer_t  *buffer,
+                           unsigned int *length);
 
 /* Return value valid as long as buffer not modified */
 hb_glyph_position_t *
-hb_buffer_get_glyph_positions (hb_buffer_t *buffer);
+hb_buffer_get_glyph_positions (hb_buffer_t  *buffer,
+                               unsigned int *length);
 
 
 HB_END_DECLS

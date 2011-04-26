@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright (C) 2010  Red Hat, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -24,37 +24,36 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#ifndef HB_UNICODE_PRIVATE_H
-#define HB_UNICODE_PRIVATE_H
+#ifndef HB_BLOB_PRIVATE_HH
+#define HB_BLOB_PRIVATE_HH
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
-#include "hb-unicode.h"
+#include "hb-blob.h"
 
 HB_BEGIN_DECLS
 
 
-/*
- * hb_unicode_funcs_t
- */
-
-struct _hb_unicode_funcs_t {
+struct _hb_blob_t {
   hb_reference_count_t ref_count;
 
-  hb_bool_t immutable;
+  unsigned int length;
 
-  struct {
-    hb_unicode_get_general_category_func_t	get_general_category;
-    hb_unicode_get_combining_class_func_t	get_combining_class;
-    hb_unicode_get_mirroring_func_t		get_mirroring;
-    hb_unicode_get_script_func_t		get_script;
-    hb_unicode_get_eastasian_width_func_t	get_eastasian_width;
-  } v;
+  hb_mutex_t lock;
+  /* the rest are protected by lock */
+
+  unsigned int lock_count;
+  hb_memory_mode_t mode;
+
+  const char *data;
+
+  void *user_data;
+  hb_destroy_func_t destroy;
 };
 
-extern HB_INTERNAL hb_unicode_funcs_t _hb_unicode_funcs_nil;
+extern HB_INTERNAL hb_blob_t _hb_blob_nil;
 
 
 HB_END_DECLS
 
-#endif /* HB_UNICODE_PRIVATE_H */
+#endif /* HB_BLOB_PRIVATE_HH */

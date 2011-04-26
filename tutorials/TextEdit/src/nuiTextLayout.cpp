@@ -9,6 +9,9 @@
 #include "nuiTextLayout.h"
 #include "nuiFontManager.h"
 
+#include "../../../deps/harfbuzz/hb.h"
+
+
 void TextLayoutTest(const nglString& txt)
 {
   nuiFontRequest request;

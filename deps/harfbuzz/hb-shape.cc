@@ -24,7 +24,7 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
 #include "hb-shape.h"
 
@@ -40,15 +40,15 @@ HB_BEGIN_DECLS
 
 
 static void
-hb_shape_internal (hb_font_t    *font,
-		   hb_face_t    *face,
-		   hb_buffer_t  *buffer,
-		   hb_feature_t *features,
-		   unsigned int  num_features)
+hb_shape_internal (hb_font_t          *font,
+		   hb_face_t          *face,
+		   hb_buffer_t        *buffer,
+		   const hb_feature_t *features,
+		   unsigned int        num_features)
 {
 #if 0 && defined(HAVE_GRAPHITE)
   hb_blob_t *silf_blob;
-  silf_blob = hb_face_get_table (face, HB_GRAPHITE_TAG_Silf);
+  silf_blob = hb_face_reference_table (face, HB_GRAPHITE_TAG_Silf);
   if (hb_blob_get_length(silf_blob))
   {
     hb_graphite_shape(font, face, buffer, features, num_features);
@@ -62,11 +62,11 @@ hb_shape_internal (hb_font_t    *font,
 }
 
 void
-hb_shape (hb_font_t    *font,
-	  hb_face_t    *face,
-	  hb_buffer_t  *buffer,
-	  hb_feature_t *features,
-	  unsigned int  num_features)
+hb_shape (hb_font_t          *font,
+	  hb_face_t          *face,
+	  hb_buffer_t        *buffer,
+	  const hb_feature_t *features,
+	  unsigned int        num_features)
 {
   hb_segment_properties_t orig_props;
 
@@ -74,11 +74,13 @@ hb_shape (hb_font_t    *font,
 
   /* If script is set to INVALID, guess from buffer contents */
   if (buffer->props.script == HB_SCRIPT_INVALID) {
-    hb_unicode_get_script_func_t get_script = buffer->unicode->v.get_script;
+    hb_unicode_funcs_t *unicode = buffer->unicode;
     unsigned int count = buffer->len;
     for (unsigned int i = 0; i < count; i++) {
-      hb_script_t script = get_script (buffer->info[i].codepoint);
-      if (likely (script > HB_SCRIPT_INHERITED)) {
+      hb_script_t script = unicode->get_script (buffer->info[i].codepoint);
+      if (likely (script != HB_SCRIPT_COMMON &&
+		  script != HB_SCRIPT_INHERITED &&
+		  script != HB_SCRIPT_UNKNOWN)) {
         buffer->props.script = script;
         break;
       }

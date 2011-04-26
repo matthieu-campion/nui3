@@ -27,7 +27,7 @@
 #ifndef HB_OPEN_TYPE_PRIVATE_HH
 #define HB_OPEN_TYPE_PRIVATE_HH
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
 #include "hb-blob.h"
 
@@ -285,9 +285,6 @@ struct Sanitizer
     bool sane;
 
     /* TODO is_sane() stuff */
-
-    if (!blob)
-      return hb_blob_create_empty ();
 
   retry:
     (void) (HB_DEBUG_SANITIZE &&

@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2004  David Turner and Werner Lemberg
  * Copyright (C) 2004,2007,2009,2010  Red Hat, Inc.
  *
- * This is part of HarfBuzz, a text shaping library.
+ *  This is part of HarfBuzz, a text shaping library.
  *
  * Permission is hereby granted, without written agreement and without
  * license or royalty fees, to use, copy, modify, and distribute this
@@ -28,9 +28,9 @@
 #ifndef HB_BUFFER_PRIVATE_HH
 #define HB_BUFFER_PRIVATE_HH
 
-#include "hb-private.h"
+#include "hb-private.hh"
 #include "hb-buffer.h"
-#include "hb-unicode-private.h"
+#include "hb-unicode-private.hh"
 
 HB_BEGIN_DECLS
 
@@ -50,6 +50,9 @@ _hb_buffer_swap (hb_buffer_t *buffer);
 
 HB_INTERNAL void
 _hb_buffer_clear_output (hb_buffer_t *buffer);
+
+HB_INTERNAL void
+_hb_buffer_clear_positions (hb_buffer_t *buffer);
 
 HB_INTERNAL void
 _hb_buffer_replace_glyphs_be16 (hb_buffer_t *buffer,
@@ -91,8 +94,6 @@ struct _hb_buffer_t {
 
   /* Buffer contents */
 
-  unsigned int allocated; /* Length of allocated arrays */
-
   hb_bool_t have_output; /* Whether we have an output buffer going on */
   hb_bool_t have_positions; /* Whether we have positions */
   hb_bool_t in_error; /* Allocation failed */
@@ -101,13 +102,12 @@ struct _hb_buffer_t {
   unsigned int len; /* Length of ->info and ->pos arrays */
   unsigned int out_len; /* Length of ->out array if have_output */
 
+  unsigned int serial;
+
+  unsigned int allocated; /* Length of allocated arrays */
   hb_glyph_info_t     *info;
   hb_glyph_info_t     *out_info;
   hb_glyph_position_t *pos;
-
-  /* Other stuff */
-
-  unsigned int serial;
 
 
   /* Methods */
@@ -116,6 +116,7 @@ struct _hb_buffer_t {
   inline unsigned int next_serial (void) { return serial++; }
   inline void swap (void) { _hb_buffer_swap (this); }
   inline void clear_output (void) { _hb_buffer_clear_output (this); }
+  inline void clear_positions (void) { _hb_buffer_clear_positions (this); }
   inline void next_glyph (void) { _hb_buffer_next_glyph (this); }
   inline void replace_glyphs_be16 (unsigned int num_in,
 				   unsigned int num_out,

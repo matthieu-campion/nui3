@@ -27,12 +27,12 @@
 #ifndef HB_OT_LAYOUT_PRIVATE_HH
 #define HB_OT_LAYOUT_PRIVATE_HH
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
 #include "hb-ot-layout.h"
 #include "hb-ot-head-private.hh"
 
-#include "hb-font-private.h"
+#include "hb-font-private.hh"
 #include "hb-buffer-private.hh"
 
 HB_BEGIN_DECLS
@@ -77,7 +77,7 @@ struct hb_ot_layout_context_t
   inline hb_position_t scale_y (int16_t v) { return scale (v, this->font->y_scale); }
 
   private:
-  inline hb_position_t scale (int16_t v, unsigned int scale) { return v * (int64_t) scale / this->face->head_table->get_upem (); }
+  inline hb_position_t scale (int16_t v, int scale) { return v * (int64_t) scale / this->face->head_table->get_upem (); }
 };
 
 

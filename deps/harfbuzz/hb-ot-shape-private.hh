@@ -27,7 +27,7 @@
 #ifndef HB_OT_SHAPE_PRIVATE_HH
 #define HB_OT_SHAPE_PRIVATE_HH
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
 #include "hb-ot-shape.h"
 
@@ -37,7 +37,7 @@ HB_BEGIN_DECLS
 
 
 /* buffer var allocations */
-#define general_category() var1.u8[0] /* unicode general_category (hb_category_t) */
+#define general_category() var1.u8[0] /* unicode general_category (hb_unicode_general_category_t) */
 #define combining_class() var1.u8[1] /* unicode combining_class (uint8_t) */
 
 

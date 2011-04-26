@@ -49,14 +49,11 @@ typedef hb_blob_t * (*hb_get_table_func_t)  (hb_tag_t tag, void *user_data);
 /* calls destroy() when not needing user_data anymore */
 hb_face_t *
 hb_face_create_for_tables (hb_get_table_func_t  get_table,
-			   hb_destroy_func_t    destroy,
-			   void                *user_data);
+			   void                *user_data,
+			   hb_destroy_func_t    destroy);
 
 hb_face_t *
 hb_face_reference (hb_face_t *face);
-
-unsigned int
-hb_face_get_reference_count (hb_face_t *face);
 
 void
 hb_face_destroy (hb_face_t *face);
@@ -70,13 +67,10 @@ hb_face_destroy (hb_face_t *face);
  *     table vs a zero-length table vs a very short table.  It only leads to implementations
  *     that check for non-NULL and assume that they've got a usable table going on...  This
  *     actually happened with Firefox.
- *
- *   - It has to be renamed to reference_table() since unlike any other _get_ API, a reference
- *     ownership transfer happens and the user is responsible to destroy the result.
  */
 hb_blob_t *
-hb_face_get_table (hb_face_t *face,
-		   hb_tag_t   tag);
+hb_face_reference_table (hb_face_t *face,
+			 hb_tag_t   tag);
 
 unsigned int
 hb_face_get_upem (hb_face_t *face);
@@ -93,9 +87,6 @@ hb_font_funcs_create (void);
 
 hb_font_funcs_t *
 hb_font_funcs_reference (hb_font_funcs_t *ffuncs);
-
-unsigned int
-hb_font_funcs_get_reference_count (hb_font_funcs_t *ffuncs);
 
 void
 hb_font_funcs_destroy (hb_font_funcs_t *ffuncs);
@@ -209,17 +200,14 @@ hb_font_create (void);
 hb_font_t *
 hb_font_reference (hb_font_t *font);
 
-unsigned int
-hb_font_get_reference_count (hb_font_t *font);
-
 void
 hb_font_destroy (hb_font_t *font);
 
 void
 hb_font_set_funcs (hb_font_t         *font,
 		   hb_font_funcs_t   *klass,
-		   hb_destroy_func_t  destroy,
-		   void              *user_data);
+		   void              *user_data,
+		   hb_destroy_func_t  destroy);
 
 /* Returns what was set and unsets it, but doesn't destroy(user_data).
  * This is useful for wrapping / chaining font_funcs_t's.
@@ -234,8 +222,8 @@ hb_font_set_funcs (hb_font_t         *font,
 void
 hb_font_unset_funcs (hb_font_t          *font,
 		     hb_font_funcs_t   **klass,
-		     hb_destroy_func_t  *destroy,
-		     void              **user_data);
+		     void              **user_data,
+		     hb_destroy_func_t  *destroy);
 
 
 /*
@@ -243,13 +231,13 @@ hb_font_unset_funcs (hb_font_t          *font,
  */
 void
 hb_font_set_scale (hb_font_t *font,
-		   unsigned int x_scale,
-		   unsigned int y_scale);
+		   int x_scale,
+		   int y_scale);
 
 void
 hb_font_get_scale (hb_font_t *font,
-		   unsigned int *x_scale,
-		   unsigned int *y_scale);
+		   int *x_scale,
+		   int *y_scale);
 
 /*
  * A zero value means "no hinting in that direction"

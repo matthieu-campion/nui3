@@ -1,8 +1,9 @@
 /*
  * Copyright (C) 1998-2004  David Turner and Werner Lemberg
  * Copyright (C) 2004,2007,2009,2010  Red Hat, Inc.
+ * Copyright (C) 2011  Google, Inc.
  *
- * This is part of HarfBuzz, a text shaping library.
+ *  This is part of HarfBuzz, a text shaping library.
  *
  * Permission is hereby granted, without written agreement and without
  * license or royalty fees, to use, copy, modify, and distribute this
@@ -23,6 +24,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  * Red Hat Author(s): Owen Taylor, Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #include "hb-buffer-private.hh"
@@ -35,7 +37,12 @@ HB_BEGIN_DECLS
 static hb_buffer_t _hb_buffer_nil = {
   HB_REFERENCE_COUNT_INVALID, /* ref_count */
 
-  &_hb_unicode_funcs_nil  /* unicode */
+  &_hb_unicode_funcs_nil,  /* unicode */
+  {
+    HB_DIRECTION_INVALID,
+    HB_SCRIPT_INVALID,
+    NULL,
+  },
 };
 
 /* Here is how the buffer works internally:
@@ -136,7 +143,7 @@ hb_buffer_create (unsigned int pre_alloc_size)
   if (pre_alloc_size)
     _hb_buffer_ensure (buffer, pre_alloc_size);
 
-  buffer->unicode = &_hb_unicode_funcs_nil;
+  hb_buffer_reset (buffer);
 
   return buffer;
 }
@@ -145,12 +152,6 @@ hb_buffer_t *
 hb_buffer_reference (hb_buffer_t *buffer)
 {
   HB_OBJECT_DO_REFERENCE (buffer);
-}
-
-unsigned int
-hb_buffer_get_reference_count (hb_buffer_t *buffer)
-{
-  HB_OBJECT_DO_GET_REFERENCE_COUNT (buffer);
 }
 
 void
@@ -227,29 +228,43 @@ hb_buffer_get_language (hb_buffer_t *buffer)
 
 
 void
-hb_buffer_clear (hb_buffer_t *buffer)
+hb_buffer_reset (hb_buffer_t *buffer)
 {
+  hb_unicode_funcs_destroy (buffer->unicode);
+  buffer->unicode = _hb_buffer_nil.unicode;
+
+  buffer->props = _hb_buffer_nil.props;
+
   buffer->have_output = FALSE;
   buffer->have_positions = FALSE;
   buffer->in_error = FALSE;
+
+  buffer->i = 0;
   buffer->len = 0;
   buffer->out_len = 0;
-  buffer->i = 0;
-  buffer->out_info = buffer->info;
+
   buffer->serial = 0;
+
+  buffer->out_info = buffer->info;
 }
 
 hb_bool_t
-hb_buffer_ensure (hb_buffer_t *buffer, unsigned int size)
+hb_buffer_pre_allocate (hb_buffer_t *buffer, unsigned int size)
 {
   return _hb_buffer_ensure (buffer, size);
 }
 
+hb_bool_t
+hb_buffer_allocation_successful (hb_buffer_t  *buffer)
+{
+  return !buffer->in_error;
+}
+
 void
-hb_buffer_add_glyph (hb_buffer_t    *buffer,
-		     hb_codepoint_t  codepoint,
-		     hb_mask_t       mask,
-		     unsigned int    cluster)
+hb_buffer_add (hb_buffer_t    *buffer,
+	       hb_codepoint_t  codepoint,
+	       hb_mask_t       mask,
+	       unsigned int    cluster)
 {
   hb_glyph_info_t *glyph;
 
@@ -265,16 +280,6 @@ hb_buffer_add_glyph (hb_buffer_t    *buffer,
   buffer->len++;
 }
 
-void
-hb_buffer_clear_positions (hb_buffer_t *buffer)
-{
-  _hb_buffer_clear_output (buffer);
-  buffer->have_output = FALSE;
-  buffer->have_positions = TRUE;
-
-  memset (buffer->pos, 0, sizeof (buffer->pos[0]) * buffer->len);
-}
-
 /* HarfBuzz-Internal API */
 
 void
@@ -282,8 +287,18 @@ _hb_buffer_clear_output (hb_buffer_t *buffer)
 {
   buffer->have_output = TRUE;
   buffer->have_positions = FALSE;
+
   buffer->out_len = 0;
   buffer->out_info = buffer->info;
+}
+
+void
+_hb_buffer_clear_positions (hb_buffer_t *buffer)
+{
+  buffer->have_output = FALSE;
+  buffer->have_positions = TRUE;
+
+  memset (buffer->pos, 0, sizeof (buffer->pos[0]) * buffer->len);
 }
 
 void
@@ -434,6 +449,24 @@ _hb_buffer_set_masks (hb_buffer_t *buffer,
 
 /* Public API again */
 
+hb_bool_t
+hb_buffer_set_length (hb_buffer_t  *buffer,
+		      unsigned int  length)
+{
+  if (!_hb_buffer_ensure (buffer, length))
+    return FALSE;
+
+  /* Wipe the new space */
+  if (length > buffer->len) {
+    memset (buffer->info + buffer->len, 0, sizeof (buffer->info[0]) * (length - buffer->len));
+    if (buffer->have_positions)
+      memset (buffer->pos + buffer->len, 0, sizeof (buffer->pos[0]) * (length - buffer->len));
+  }
+
+  buffer->len = length;
+  return TRUE;
+}
+
 unsigned int
 hb_buffer_get_length (hb_buffer_t *buffer)
 {
@@ -442,17 +475,25 @@ hb_buffer_get_length (hb_buffer_t *buffer)
 
 /* Return value valid as long as buffer not modified */
 hb_glyph_info_t *
-hb_buffer_get_glyph_infos (hb_buffer_t *buffer)
+hb_buffer_get_glyph_infos (hb_buffer_t  *buffer,
+                           unsigned int *length)
 {
+  if (length)
+    *length = buffer->len;
+
   return (hb_glyph_info_t *) buffer->info;
 }
 
 /* Return value valid as long as buffer not modified */
 hb_glyph_position_t *
-hb_buffer_get_glyph_positions (hb_buffer_t *buffer)
+hb_buffer_get_glyph_positions (hb_buffer_t  *buffer,
+                               unsigned int *length)
 {
   if (!buffer->have_positions)
-    hb_buffer_clear_positions (buffer);
+    _hb_buffer_clear_positions (buffer);
+
+  if (length)
+    *length = buffer->len;
 
   return (hb_glyph_position_t *) buffer->pos;
 }
@@ -525,7 +566,7 @@ hb_buffer_reverse_clusters (hb_buffer_t *buffer)
 	    hb_codepoint_t u; \
 	    const T *old_next = next; \
 	    next = UTF_NEXT (next, end, u); \
-	    hb_buffer_add_glyph (buffer, u, 1,  old_next - (const T *) text); \
+	    hb_buffer_add (buffer, u, 1,  old_next - (const T *) text); \
 	  } \
 	} HB_STMT_END
 
@@ -592,7 +633,7 @@ hb_utf16_next (const uint16_t *text,
   if (unlikely (c >= 0xd800 && c < 0xdc00)) {
     /* high surrogate */
     uint16_t l;
-    if (text < end && ((l = *text), unlikely (l >= 0xdc00 && l < 0xe000))) {
+    if (text < end && ((l = *text), likely (l >= 0xdc00 && l < 0xe000))) {
       /* low surrogate */
       *unicode = ((hb_codepoint_t) ((c) - 0xd800) * 0x400 + (l) - 0xdc00 + 0x10000);
        text++;

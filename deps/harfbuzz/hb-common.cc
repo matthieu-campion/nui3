@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright (C) 2009,2010  Red Hat, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -24,12 +24,36 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#include "hb-private.h"
-
-#include "hb-language.h"
+#include "hb-private.hh"
 
 HB_BEGIN_DECLS
 
+
+/* hb_tag_t */
+
+hb_tag_t
+hb_tag_from_string (const char *s)
+{
+  char tag[4];
+  unsigned int i;
+
+  if (!s || !*s)
+    return HB_TAG_NONE;
+
+  for (i = 0; i < 4 && s[i]; i++)
+    tag[i] = s[i];
+  for (; i < 4; i++)
+    tag[i] = ' ';
+
+  return HB_TAG_CHAR4 (tag);
+}
+
+
+/* hb_language_t */
+
+struct _hb_language_t {
+  const char s[1];
+};
 
 static const char canon_map[256] = {
    0,   0,   0,   0,   0,   0,   0,   0,    0,   0,   0,   0,   0,   0,   0,   0,
@@ -46,8 +70,8 @@ static hb_bool_t
 lang_equal (const void *v1,
 	    const void *v2)
 {
-  const unsigned char *p1 = v1;
-  const unsigned char *p2 = v2;
+  const unsigned char *p1 = (const unsigned char *) v1;
+  const unsigned char *p2 = (const unsigned char *) v2;
 
   while (canon_map[*p1] && canon_map[*p1] == canon_map[*p2])
     {
@@ -79,41 +103,119 @@ hb_language_from_string (const char *str)
 {
   static unsigned int num_langs;
   static unsigned int num_alloced;
-  static const char **langs;
+  static hb_language_t *langs;
   unsigned int i;
   unsigned char *p;
 
   /* TODO Use a hash table or something */
 
-  if (!str)
+  if (!str || !*str)
     return NULL;
 
   for (i = 0; i < num_langs; i++)
-    if (lang_equal (str, langs[i]))
+    if (lang_equal (str, langs[i]->s))
       return langs[i];
 
   if (unlikely (num_langs == num_alloced)) {
     unsigned int new_alloced = 2 * (8 + num_alloced);
-    const char **new_langs = realloc (langs, new_alloced * sizeof (langs[0]));
+    hb_language_t *new_langs = (hb_language_t *) realloc (langs, new_alloced * sizeof (langs[0]));
     if (!new_langs)
       return NULL;
     num_alloced = new_alloced;
     langs = new_langs;
   }
 
-  langs[i] = strdup (str);
-  for (p = (unsigned char *) langs[i]; *p; p++)
+  langs[i] = (hb_language_t) strdup (str);
+  for (p = (unsigned char *) langs[i]->s; *p; p++)
     *p = canon_map[*p];
 
   num_langs++;
 
-  return (hb_language_t) langs[i];
+  return langs[i];
 }
 
 const char *
 hb_language_to_string (hb_language_t language)
 {
-  return (const char *) language;
+  return language->s;
+}
+
+
+/* hb_script_t */
+
+hb_script_t
+hb_script_from_iso15924_tag (hb_tag_t tag)
+{
+  if (unlikely (tag == HB_TAG_NONE))
+    return HB_SCRIPT_INVALID;
+
+  /* Be lenient, adjust case (one capital letter followed by three small letters) */
+  tag = (tag & 0xDFDFDFDF) | 0x00202020;
+
+  switch (tag) {
+    case HB_TAG('C','y','r','s'): return HB_SCRIPT_CYRILLIC;
+    case HB_TAG('G','e','o','a'): return HB_SCRIPT_GEORGIAN;
+    case HB_TAG('G','e','o','n'): return HB_SCRIPT_GEORGIAN;
+    case HB_TAG('L','a','t','f'): return HB_SCRIPT_LATIN;
+    case HB_TAG('L','a','t','g'): return HB_SCRIPT_LATIN;
+    case HB_TAG('S','y','r','e'): return HB_SCRIPT_SYRIAC;
+    case HB_TAG('S','y','r','j'): return HB_SCRIPT_SYRIAC;
+    case HB_TAG('S','y','r','n'): return HB_SCRIPT_SYRIAC;
+  }
+
+  /* If it looks right, just use the tag as a script */
+  if (((uint32_t) tag & 0xE0E0E0E0) == 0x40606060)
+    return (hb_script_t) tag;
+
+  /* Otherwise, return unknown */
+  return HB_SCRIPT_UNKNOWN;
+}
+
+hb_script_t
+hb_script_from_string (const char *s)
+{
+  return hb_script_from_iso15924_tag (hb_tag_from_string (s));
+}
+
+hb_tag_t
+hb_script_to_iso15924_tag (hb_script_t script)
+{
+  return (hb_tag_t) script;
+}
+
+hb_direction_t
+hb_script_get_horizontal_direction (hb_script_t script)
+{
+  switch ((hb_tag_t) script)
+  {
+    case HB_SCRIPT_ARABIC:
+    case HB_SCRIPT_HEBREW:
+    case HB_SCRIPT_SYRIAC:
+    case HB_SCRIPT_THAANA:
+
+    /* Unicode-4.0 additions */
+    case HB_SCRIPT_CYPRIOT:
+
+    /* Unicode-5.0 additions */
+    case HB_SCRIPT_PHOENICIAN:
+    case HB_SCRIPT_NKO:
+
+    /* Unicode-5.2 additions */
+    case HB_SCRIPT_AVESTAN:
+    case HB_SCRIPT_IMPERIAL_ARAMAIC:
+    case HB_SCRIPT_INSCRIPTIONAL_PAHLAVI:
+    case HB_SCRIPT_INSCRIPTIONAL_PARTHIAN:
+    case HB_SCRIPT_OLD_SOUTH_ARABIAN:
+    case HB_SCRIPT_OLD_TURKIC:
+    case HB_SCRIPT_SAMARITAN:
+
+    /* Unicode-6.0 additions */
+    case HB_SCRIPT_MANDAIC:
+
+      return HB_DIRECTION_RTL;
+  }
+
+  return HB_DIRECTION_LTR;
 }
 
 

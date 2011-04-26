@@ -143,14 +143,13 @@ is_variation_selector (hb_codepoint_t unicode)
 static void
 hb_set_unicode_props (hb_ot_shape_context_t *c)
 {
-  hb_unicode_get_general_category_func_t get_general_category = c->buffer->unicode->v.get_general_category;
-  hb_unicode_get_combining_class_func_t get_combining_class = c->buffer->unicode->v.get_combining_class;
+  hb_unicode_funcs_t *unicode = c->buffer->unicode;
   hb_glyph_info_t *info = c->buffer->info;
 
   unsigned int count = c->buffer->len;
   for (unsigned int i = 1; i < count; i++) {
-    info[i].general_category() = get_general_category (info[i].codepoint);
-    info[i].combining_class() = get_combining_class (info[i].codepoint);
+    info[i].general_category() = unicode->get_general_category (info[i].codepoint);
+    info[i].combining_class() = unicode->get_combining_class (info[i].codepoint);
   }
 }
 
@@ -159,7 +158,7 @@ hb_form_clusters (hb_ot_shape_context_t *c)
 {
   unsigned int count = c->buffer->len;
   for (unsigned int i = 1; i < count; i++)
-    if (c->buffer->info[i].general_category() == HB_CATEGORY_NON_SPACING_MARK)
+    if (c->buffer->info[i].general_category() == HB_UNICODE_GENERAL_CATEGORY_NON_SPACING_MARK)
       c->buffer->info[i].cluster = c->buffer->info[i - 1].cluster;
 }
 
@@ -191,7 +190,7 @@ hb_reset_glyph_infos (hb_ot_shape_context_t *c)
 static void
 hb_mirror_chars (hb_ot_shape_context_t *c)
 {
-  hb_unicode_get_mirroring_func_t get_mirroring = c->buffer->unicode->v.get_mirroring;
+  hb_unicode_funcs_t *unicode = c->buffer->unicode;
 
   if (HB_DIRECTION_IS_FORWARD (c->target_direction))
     return;
@@ -200,7 +199,7 @@ hb_mirror_chars (hb_ot_shape_context_t *c)
 
   unsigned int count = c->buffer->len;
   for (unsigned int i = 0; i < count; i++) {
-    hb_codepoint_t codepoint = get_mirroring (c->buffer->info[i].codepoint);
+    hb_codepoint_t codepoint = unicode->get_mirroring (c->buffer->info[i].codepoint);
     if (likely (codepoint == c->buffer->info[i].codepoint))
       c->buffer->info[i].mask |= rtlm_mask; /* XXX this should be moved to before setting user-feature masks */
     else
@@ -249,7 +248,7 @@ hb_substitute_complex_fallback (hb_ot_shape_context_t *c HB_UNUSED)
 static void
 hb_position_default (hb_ot_shape_context_t *c)
 {
-  hb_buffer_clear_positions (c->buffer);
+  hb_ot_layout_position_start (c->buffer);
 
   unsigned int count = c->buffer->len;
   for (unsigned int i = 0; i < count; i++) {
@@ -366,16 +365,16 @@ hb_ot_shape_execute (hb_ot_shape_plan_t *plan,
 }
 
 void
-hb_ot_shape (hb_font_t    *font,
-	     hb_face_t    *face,
-	     hb_buffer_t  *buffer,
-	     const hb_feature_t *user_features,
-	     unsigned int        num_user_features)
+hb_ot_shape (hb_font_t          *font,
+	     hb_face_t          *face,
+	     hb_buffer_t        *buffer,
+	     const hb_feature_t *features,
+	     unsigned int        num_features)
 {
   hb_ot_shape_plan_t plan;
 
-  hb_ot_shape_plan_internal (&plan, face, &buffer->props, user_features, num_user_features);
-  hb_ot_shape_execute (&plan, font, face, buffer, user_features, num_user_features);
+  hb_ot_shape_plan_internal (&plan, face, &buffer->props, features, num_features);
+  hb_ot_shape_execute (&plan, font, face, buffer, features, num_features);
 }
 
 

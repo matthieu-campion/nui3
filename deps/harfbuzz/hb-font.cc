@@ -24,10 +24,10 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
-#include "hb-font-private.h"
-#include "hb-blob-private.h"
+#include "hb-font-private.hh"
+#include "hb-blob-private.hh"
 #include "hb-open-file-private.hh"
 
 #include "hb-ot-layout-private.hh"
@@ -113,12 +113,6 @@ hb_font_funcs_t *
 hb_font_funcs_reference (hb_font_funcs_t *ffuncs)
 {
   HB_OBJECT_DO_REFERENCE (ffuncs);
-}
-
-unsigned int
-hb_font_funcs_get_reference_count (hb_font_funcs_t *ffuncs)
-{
-  HB_OBJECT_DO_GET_REFERENCE_COUNT (ffuncs);
 }
 
 void
@@ -296,8 +290,8 @@ static hb_face_t _hb_face_nil = {
   HB_REFERENCE_COUNT_INVALID, /* ref_count */
 
   NULL, /* get_table */
-  NULL, /* destroy */
   NULL, /* user_data */
+  NULL, /* destroy */
 
   NULL, /* head_blob */
   NULL, /* head_table */
@@ -308,8 +302,8 @@ static hb_face_t _hb_face_nil = {
 
 hb_face_t *
 hb_face_create_for_tables (hb_get_table_func_t  get_table,
-			   hb_destroy_func_t    destroy,
-			   void                *user_data)
+			   void                *user_data,
+			   hb_destroy_func_t    destroy)
 {
   hb_face_t *face;
 
@@ -320,12 +314,12 @@ hb_face_create_for_tables (hb_get_table_func_t  get_table,
   }
 
   face->get_table = get_table;
-  face->destroy = destroy;
   face->user_data = user_data;
+  face->destroy = destroy;
 
   face->ot_layout = _hb_ot_layout_new (face);
 
-  face->head_blob = Sanitizer<head>::sanitize (hb_face_get_table (face, HB_OT_TAG_head));
+  face->head_blob = Sanitizer<head>::sanitize (hb_face_reference_table (face, HB_OT_TAG_head));
   face->head_table = Sanitizer<head>::lock_instance (face->head_blob);
 
   return face;
@@ -386,8 +380,8 @@ hb_face_create_for_data (hb_blob_t    *blob,
     return &_hb_face_nil;
 
   return hb_face_create_for_tables (_hb_face_for_data_get_table,
-				    (hb_destroy_func_t) _hb_face_for_data_closure_destroy,
-				    closure);
+				    closure,
+				    (hb_destroy_func_t) _hb_face_for_data_closure_destroy);
 }
 
 
@@ -395,12 +389,6 @@ hb_face_t *
 hb_face_reference (hb_face_t *face)
 {
   HB_OBJECT_DO_REFERENCE (face);
-}
-
-unsigned int
-hb_face_get_reference_count (hb_face_t *face)
-{
-  HB_OBJECT_DO_GET_REFERENCE_COUNT (face);
 }
 
 void
@@ -420,7 +408,7 @@ hb_face_destroy (hb_face_t *face)
 }
 
 hb_blob_t *
-hb_face_get_table (hb_face_t *face,
+hb_face_reference_table (hb_face_t *face,
 		   hb_tag_t   tag)
 {
   hb_blob_t *blob;
@@ -429,6 +417,8 @@ hb_face_get_table (hb_face_t *face,
     return &_hb_blob_nil;
 
   blob = face->get_table (tag, face->user_data);
+  if (unlikely (!blob))
+    blob = hb_blob_create_empty();
 
   return blob;
 }
@@ -454,8 +444,8 @@ static hb_font_t _hb_font_nil = {
   0, /* y_ppem */
 
   NULL, /* klass */
-  NULL, /* destroy */
-  NULL  /* user_data */
+  NULL, /* user_data */
+  NULL  /* destroy */
 };
 
 hb_font_t *
@@ -477,12 +467,6 @@ hb_font_reference (hb_font_t *font)
   HB_OBJECT_DO_REFERENCE (font);
 }
 
-unsigned int
-hb_font_get_reference_count (hb_font_t *font)
-{
-  HB_OBJECT_DO_GET_REFERENCE_COUNT (font);
-}
-
 void
 hb_font_destroy (hb_font_t *font)
 {
@@ -498,8 +482,8 @@ hb_font_destroy (hb_font_t *font)
 void
 hb_font_set_funcs (hb_font_t         *font,
 		   hb_font_funcs_t   *klass,
-		   hb_destroy_func_t  destroy,
-		   void              *user_data)
+		   void              *user_data,
+		   hb_destroy_func_t  destroy)
 {
   if (HB_OBJECT_IS_INERT (font))
     return;
@@ -513,34 +497,34 @@ hb_font_set_funcs (hb_font_t         *font,
   hb_font_funcs_reference (klass);
   hb_font_funcs_destroy (font->klass);
   font->klass = klass;
-  font->destroy = destroy;
   font->user_data = user_data;
+  font->destroy = destroy;
 }
 
 void
 hb_font_unset_funcs (hb_font_t          *font,
 		     hb_font_funcs_t   **klass,
-		     hb_destroy_func_t  *destroy,
-		     void              **user_data)
+		     void              **user_data,
+		     hb_destroy_func_t  *destroy)
 {
   /* None of the input arguments can be NULL. */
 
   *klass = font->klass;
-  *destroy = font->destroy;
   *user_data = font->user_data;
+  *destroy = font->destroy;
 
   if (HB_OBJECT_IS_INERT (font))
     return;
 
   font->klass = NULL;
-  font->destroy = NULL;
   font->user_data = NULL;
+  font->destroy = NULL;
 }
 
 void
 hb_font_set_scale (hb_font_t *font,
-		   unsigned int x_scale,
-		   unsigned int y_scale)
+		   int x_scale,
+		   int y_scale)
 {
   if (HB_OBJECT_IS_INERT (font))
     return;
@@ -551,8 +535,8 @@ hb_font_set_scale (hb_font_t *font,
 
 void
 hb_font_get_scale (hb_font_t *font,
-		   unsigned int *x_scale,
-		   unsigned int *y_scale)
+		   int *x_scale,
+		   int *y_scale)
 {
   if (x_scale) *x_scale = font->x_scale;
   if (y_scale) *y_scale = font->y_scale;
