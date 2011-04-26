@@ -93,8 +93,8 @@ private:
   
   bool LayoutParagraph(const nglString& rString, int32 start, int32 length);
   
-  typedef std::vector<nuiTextLine> Paragraph;
-  std::vector<Paragraph> mParagraphs;
+  typedef std::vector<nuiTextLine*> Paragraph;
+  std::vector<Paragraph*> mpParagraphs;
   
 };
 

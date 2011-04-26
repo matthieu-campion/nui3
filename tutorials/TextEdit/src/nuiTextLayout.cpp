@@ -137,15 +137,21 @@ nuiTextLayout::~nuiTextLayout()
 {
   mpFont->Release();
 
-  for (uint32 p = 0; p < mParagraphs.size(); p++)
+  for (uint32 p = 0; p < mpParagraphs.size(); p++)
   {
-    for (uint32 l = 0; l < mParagraphs[p].size(); l++)
+    Paragraph* pParagraph = mpParagraphs[p];
+    for (uint32 l = 0; l < pParagraph->size(); l++)
     {
-      for (uint32 r = 0; r < mParagraphs[p][l].size(); r++)
+      nuiTextLine* pLine = (*pParagraph)[l];
+      for (uint32 r = 0; r < pLine->size(); r++)
       { 
-        mParagraphs[p][l][r]->Release();
+        nuiTextRun* pRun = (*pLine)[r];
+        pRun->Release();
       }
+      delete pLine;
     }
+    
+    delete pParagraph;
   }
 }
 
@@ -215,13 +221,15 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
 
   uint32 i = 0;
   // Assign the correct font to each run
-  for (uint32 p = 0; p < mParagraphs.size(); p++)
+  for (uint32 p = 0; p < mpParagraphs.size(); p++)
   {
-    for (uint32 l = 0; l < mParagraphs[p].size(); l++)
+    Paragraph* pParagraph = mpParagraphs[p];
+    for (uint32 l = 0; l < pParagraph->size(); l++)
     {
-      for (uint32 r = 0; r < mParagraphs[p][l].size(); r++)
-      {
-        nuiTextRun* pRun = mParagraphs[p][l][r];
+      nuiTextLine* pLine = (*pParagraph)[l];
+      for (uint32 r = 0; r < pLine->size(); r++)
+      { 
+        nuiTextRun* pRun = (*pLine)[r];
         nuiFont* pFont = FontSet[pRun->GetScript()];
         pRun->SetFont(pFont);
         
@@ -241,10 +249,10 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
 {
   printf("new paragraph: %d + %d\n", start, length);
 
-  mParagraphs.push_back(Paragraph());
+  mpParagraphs.push_back(new Paragraph());
 
-  mParagraphs.back().push_back(nuiTextLine(0, 0));
-  nuiTextLine& rLine = mParagraphs.back().back();
+  nuiTextLine* pLine = new nuiTextLine(0, 0);
+  mpParagraphs.back()->push_back(pLine);
   
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
@@ -290,7 +298,7 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
       //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
          
       nuiTextRun* pRun = new nuiTextRun(range.mScript, rString, pos, len);
-      rLine.AddRun(pRun);
+      pLine->AddRun(pRun);
       
       
       pos += len;
