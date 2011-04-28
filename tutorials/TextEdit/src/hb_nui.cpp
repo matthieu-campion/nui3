@@ -1,16 +1,15 @@
-//
-//  hb_nui.cpp
-//  TextEdit
-//
-//  Created by Sébastien Métrot on 4/26/11.
-//  Copyright 2011 MXP4. All rights reserved.
-//
+/*
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 #include "nui.h"
-#include "hb_nui.h"
 #include "../../../deps/harfbuzz/hb-private.hh"
 #include "../../../deps/harfbuzz/hb-unicode-private.hh"
 #include "../../../deps/ucdata/ucdata.h"
+#include "hb_nui.h"
 
 #include "nuiUnicode.h"
 

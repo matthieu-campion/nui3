@@ -1,7 +1,10 @@
-//
-//  hb_nui.h
-//  TextEdit
-//
-//  Created by Sébastien Métrot on 4/26/11.
-//  Copyright 2011 MXP4. All rights reserved.
-//
+/*
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
+
+#pragma once
+
+hb_unicode_funcs_t* hb_nui_get_unicode_funcs (void);

@@ -1,10 +1,9 @@
-//
-//  nuiTextLayout.cpp
-//  TextEdit
-//
-//  Created by Sébastien Métrot on 4/21/11.
-//  Copyright 2011 MXP4. All rights reserved.
-//
+/*
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 #include "nuiTextLayout.h"
 #include "nuiFontManager.h"
@@ -333,4 +332,49 @@ float nuiTextLayout::GetFlush() const
   return mFlush;
 }
 
+#if 0
+FT_Face ft_face = cairo_ft_scaled_font_lock_face (scaled_font);
+hb_face_t *hb_face = hb_ft_face_create_cached (ft_face);
+hb_font_t *hb_font = hb_ft_font_create (ft_face, NULL);
+hb_buffer_t *hb_buffer;
+cairo_glyph_t *cairo_glyphs;
+hb_glyph_info_t *hb_glyph;
+hb_glyph_position_t *hb_position;
+unsigned int num_glyphs, i;
+hb_position_t x;
+
+if (len < 0)
+len = strlen (text);
+hb_buffer = hb_buffer_create (len);
+
+hb_buffer_set_unicode_funcs (hb_buffer, hb_glib_get_unicode_funcs ());
+
+hb_buffer_add_utf8 (hb_buffer, text, len, 0, len);
+if (script)
+hb_buffer_set_script (hb_buffer, hb_script_from_string (script));
+if (language)
+hb_buffer_set_language (hb_buffer, hb_language_from_string (language));
+
+hb_shape (hb_font, hb_face, hb_buffer, features, num_features);
+
+num_glyphs = hb_buffer_get_length (hb_buffer);
+hb_glyph = hb_buffer_get_glyph_infos (hb_buffer, NULL);
+hb_position = hb_buffer_get_glyph_positions (hb_buffer, NULL);
+cairo_glyphs = cairo_glyph_allocate (num_glyphs + 1);
+x = 0;
+for (i = 0; i < num_glyphs; i++)
+{
+  cairo_glyphs[i].index = hb_glyph->codepoint;
+  cairo_glyphs[i].x = (hb_position->x_offset + x) * (1./64);
+  cairo_glyphs[i].y = -(hb_position->y_offset)    * (1./64);
+  x += hb_position->x_advance;
+  
+  hb_glyph++;
+  hb_position++;
+}
+cairo_glyphs[i].x = x * (1./64);
+hb_buffer_destroy (hb_buffer);
+hb_font_destroy (hb_font);
+hb_face_destroy (hb_face);
+#endif
 
