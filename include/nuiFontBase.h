@@ -20,6 +20,7 @@ class nuiTexture;
 class nuiFont;
 class nuiGlyphLayout;
 class nuiTextRun;
+class nuiRenderArray;
 
 //! Font units
 /*!
@@ -476,6 +477,7 @@ public:
   bool PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
   
   void Shape(nuiTextRun* pRun);
+  void Draw(nuiRenderArray* pArray, nuiTextRun* pRun);
 protected:
   GLclampf mAlphaTest;  ///< Alpha test threshold as set by SetAlphaTest()
   const nglChar* OnError (uint& rError) const;

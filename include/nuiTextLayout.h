@@ -1,6 +1,6 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
- Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
+ Copyright (C) 2002-2003 Sebastien Metrot
  
  licence: see nui3/LICENCE.TXT
  */
@@ -16,6 +16,7 @@ class nuiTextGlyph
 {
 public:
   int32 mIndex;
+  int32 mCluster;
   float mX, mY;
 };
 
