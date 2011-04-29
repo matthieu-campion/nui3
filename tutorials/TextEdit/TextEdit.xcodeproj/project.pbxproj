@@ -27,8 +27,6 @@
 		E511F7D31367233400DE93B0 /* hb_nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E511F7D11367233400DE93B0 /* hb_nui.cpp */; };
 		E511F7D41367233400DE93B0 /* hb_nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E511F7D11367233400DE93B0 /* hb_nui.cpp */; };
 		E5C18700135DC5D90062231B /* resources in Resources */ = {isa = PBXBuildFile; fileRef = E5C186FF135DC5D90062231B /* resources */; };
-		E5C4616F1360800000D1B5A1 /* nuiTextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */; };
-		E5C461701360800000D1B5A1 /* nuiTextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,8 +134,6 @@
 		E511F7D11367233400DE93B0 /* hb_nui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hb_nui.cpp; path = src/hb_nui.cpp; sourceTree = "<group>"; };
 		E511F7D21367233400DE93B0 /* hb_nui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hb_nui.h; path = src/hb_nui.h; sourceTree = "<group>"; };
 		E5C186FF135DC5D90062231B /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
-		E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTextLayout.cpp; path = src/nuiTextLayout.cpp; sourceTree = "<group>"; };
-		E5C4616E1360800000D1B5A1 /* nuiTextLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTextLayout.h; path = src/nuiTextLayout.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,8 +198,6 @@
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
 				61A9DFF20B83433800BC506C /* MainWindow.h */,
-				E5C4616D1360800000D1B5A1 /* nuiTextLayout.cpp */,
-				E5C4616E1360800000D1B5A1 /* nuiTextLayout.h */,
 				E511F7D11367233400DE93B0 /* hb_nui.cpp */,
 				E511F7D21367233400DE93B0 /* hb_nui.h */,
 			);
@@ -436,7 +430,6 @@
 			files = (
 				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
-				E5C4616F1360800000D1B5A1 /* nuiTextLayout.cpp in Sources */,
 				E511F7D31367233400DE93B0 /* hb_nui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,7 +440,6 @@
 			files = (
 				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
-				E5C461701360800000D1B5A1 /* nuiTextLayout.cpp in Sources */,
 				E511F7D41367233400DE93B0 /* hb_nui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

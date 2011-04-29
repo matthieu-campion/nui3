@@ -1,10 +1,9 @@
-//
-//  nuiTextLayout.h
-//  TextEdit
-//
-//  Created by Sébastien Métrot on 4/21/11.
-//  Copyright 2011 MXP4. All rights reserved.
-//
+/*
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 #pragma once
 
@@ -26,6 +25,7 @@ public:
   
 private:
   friend class nuiTextLayout;
+  friend class nuiFontBase;
   nuiFont* mpFont;
   const nglString& mString;
   int32 mPosition;
