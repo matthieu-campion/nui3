@@ -59,29 +59,57 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
 		E5C0657D122B117B00F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
 		E5C0657F122B117B00F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		E5C06581122B117B00F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
+		};
+		E5C461A91366EF6300D1B5A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84;
+			remoteInfo = nuiPhone_arm7;
+		};
+		E5C461AB1366EF6300D1B5A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD341012E09CA800F1EF4E;
+			remoteInfo = thirdparty;
+		};
+		E5C461AD1366EF6300D1B5A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD3FF412E0B08300F1EF4E;
+			remoteInfo = thirdparty_ios;
+		};
+		E5C461AF1366EF6300D1B5A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84;
+			remoteInfo = thirdparty_ios_arm7;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -199,8 +227,12 @@
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
 				E5C0657C122B117B00F52C24 /* libnuiPhoneD.a */,
 				E5C0657E122B117B00F52C24 /* libnuiPhone.a */,
+				E5C461AA1366EF6300D1B5A1 /* libnuiPhone_arm7.a */,
 				E5C06580122B117B00F52C24 /* libnui3CocoaD.a */,
 				E5C06582122B117B00F52C24 /* libnui3Cocoa.a */,
+				E5C461AC1366EF6300D1B5A1 /* libthirdparty.a */,
+				E5C461AE1366EF6300D1B5A1 /* libthirdparty_ios.a */,
+				E5C461B01366EF6300D1B5A1 /* libthirdparty_ios_arm7.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,7 +284,11 @@
 			isa = PBXProject;
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "TextEdit" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
@@ -311,6 +347,34 @@
 			fileType = archive.ar;
 			path = libnui3Cocoa.a;
 			remoteRef = E5C06581122B117B00F52C24 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5C461AA1366EF6300D1B5A1 /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = E5C461A91366EF6300D1B5A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5C461AC1366EF6300D1B5A1 /* libthirdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty.a;
+			remoteRef = E5C461AB1366EF6300D1B5A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5C461AE1366EF6300D1B5A1 /* libthirdparty_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios.a;
+			remoteRef = E5C461AD1366EF6300D1B5A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5C461B01366EF6300D1B5A1 /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = E5C461AF1366EF6300D1B5A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

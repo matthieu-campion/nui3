@@ -1,0 +1,36 @@
+//
+// main nui3 stylesheet
+//
+
+//#include "rsrc:/Atlas.css"
+
+@Atlas blah = 
+{
+  AutoScan: "rsrc:/atlas";
+}
+
+"MyImage"!
+{
+  Texture: "rsrc:/decorations/Logo.png";
+  UserWidth: 198;
+  UserHeight: 163;
+}
+
+
+@nuiColorDecoration dMyLabel
+{
+  FillColor: rgb(96,96,96);
+  StrokeColor: black;
+  ShapeMode: StrokeAndFill;
+  ClientRect: "{10 10 0 0}";
+}
+
+"MyLabel"!
+{
+  DecorationMode: Border;
+  Decoration: dMyLabel;
+  TextColor: white;
+}
+
+// blank ending line following
+

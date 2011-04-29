@@ -765,7 +765,13 @@ nuiWidget::~nuiWidget()
     mpSurface->Release();
   }
   delete mpRenderCache;
-  delete mpMatrixNodes;
+  if (mpMatrixNodes)
+  {
+    for (uint32 i = 0; i < mpMatrixNodes->size(); i++)
+      mpMatrixNodes->at(i)->Release();
+    delete mpMatrixNodes;
+    mpMatrixNodes = NULL;
+  }
 }
 
 bool nuiWidget::IsTrashed(bool combined) const 
@@ -1033,18 +1039,24 @@ void nuiWidget::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRe
   nuiRect size = GetOverDrawRect(true, true);
   r.Intersect(r, size);
 
-  nuiVector vec1(r.Left(),r.Top(),0);
-  nuiVector vec2(r.Right(),r.Bottom(),0);
   if (!IsMatrixIdentity())
   {
     nuiMatrix m(GetMatrix());
     //m.InvertHomogenous();
 
+    nuiVector vec1(r.mLeft,r.mTop,0);
+    nuiVector vec2(r.mRight,r.mTop,0);
+    nuiVector vec3(r.mRight,r.mBottom,0);
+    nuiVector vec4(r.mLeft,r.mBottom,0);
     vec1 = m * vec1;
     vec2 = m * vec2;
+    vec3 = m * vec3;
+    vec4 = m * vec4;
+    r.mLeft   = MIN(vec1[0], MIN(vec2[0], MIN(vec3[0], vec4[0]) ) );
+    r.mTop    = MIN(vec1[1], MIN(vec2[1], MIN(vec3[1], vec4[1]) ) );
+    r.mRight  = MAX(vec1[0], MAX(vec2[0], MAX(vec3[0], vec4[0]) ) );
+    r.mBottom = MAX(vec1[1], MAX(vec2[1], MAX(vec3[1], vec4[1]) ) );
   }
-
-  r.Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
 
   mNeedRender = true;
   if (mSurfaceEnabled)
@@ -1082,8 +1094,12 @@ void nuiWidget::Invalidate()
     return;
   }
 
-  //nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
-  nuiWidget::InvalidateRect(GetVisibleRect());
+  ////  nuiWidget::InvalidateRect(GetOverDrawRect(true, true));
+  nuiRect r(GetOverDrawRect(true, true));
+  r.Intersect(r, GetVisibleRect());
+  nuiWidget::InvalidateRect(r);
+//  nuiWidget::InvalidateRect(GetVisibleRect());
+  ////  nuiWidget::InvalidateRect(GetRect());
   SilentInvalidate();
 
   if (mpParent)
@@ -1661,6 +1677,34 @@ bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 }
 
 // Event callbacks:
+void nuiWidget::TextCompositionStarted()
+{
+}
+
+void nuiWidget::TextCompositionConfirmed()
+{
+}
+
+void nuiWidget::TextCompositionCanceled()
+{
+}
+
+void nuiWidget::TextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+}
+
+nglString nuiWidget::GetTextComposition() const
+{
+  return nglString::Null;
+}
+
+void nuiWidget::TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  x = 0; 
+  y = 0;
+}
+
+
 bool nuiWidget::TextInput(const nglString& rUnicodeText)
 {
   CheckValid();
@@ -2102,9 +2146,10 @@ bool nuiWidget::Trash()
   CheckValid();
 
   if (!mTrashed)
+  {
     CallOnTrash();
-
-  TrashRequested();
+    TrashRequested();
+  }
   nuiAnimation* pAnim = GetAnimation(_T("TRASH"));
   if (pAnim && (pAnim->GetTime()==0 && pAnim->GetDuration()>0))
   {
@@ -2862,6 +2907,13 @@ const nuiRect& nuiWidget::GetIdealRect()
   return mIdealRect;
 }
 
+bool nuiWidget::IsInSetRect() const
+{
+  if (mInSetRect)
+    return true;
+  return mpParent ? mpParent->IsInSetRect() : false;
+}
+
 bool nuiWidget::SetRect(const nuiRect& rRect)
 {
   CheckValid();
@@ -3282,7 +3334,7 @@ void nuiWidget::InternalSetLayout(const nuiRect& rect, bool PositionChanged, boo
   
   if (mNeedSelfLayout)
   {
-    if (mInSetRect)
+    if (IsInSetRect())
       return;
     mInSetRect = true;
     SetRect(rect);
@@ -3379,7 +3431,7 @@ void nuiWidget::SetUserRect(const nuiRect& rRect)
 
     if (optim)
     {
-      if (!mInSetRect)
+      if (!IsInSetRect())
       {
         mInSetRect = true;
         SetRect(rRect);
@@ -4411,7 +4463,7 @@ void nuiWidget::AddEvent(const nglString& rName, nuiEventSource& rEvent)
 void nuiWidget::UpdateLayout()
 {
   CheckValid();
-  if (mInSetRect)
+  if (IsInSetRect())
     return;
   GetIdealRect();
   nuiRect r(GetRect());
@@ -4888,7 +4940,7 @@ void nuiWidget::DrawFocus(nuiDrawContext* pContext, bool FrontOrBack)
       pContext->SetBlendFunc(nuiBlendTransp);
       pContext->EnableBlending(true);
       //pContext->EnableTexturing(false);
-      pContext->SetStrokeColor(nuiColor(64, 64, 255, 128));
+      pContext->SetStrokeColor(nuiColor(64, 64, 255, ToBelow(128 * GetMixedAlpha())));
       
       nuiShape shp;
       shp.AddRect(rect);

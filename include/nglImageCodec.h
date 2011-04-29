@@ -62,8 +62,8 @@ public:
 protected:
   nglImage* mpImage;
 
-  void SendInfo(nglImageInfo& rInfo);  ///< Send image description to image object. The image object will allocate the image buffer.
-  void SendData(float Completion);  ///< Acknowledge that more data was decoded to image buffer
+  bool SendInfo(nglImageInfo& rInfo);  ///< Send image description to image object. The image object will allocate the image buffer. Returns true if the image object is ok, false if it doesn't want the rest of the data.
+  bool SendData(float Completion);  ///< Acknowledge that more data was decoded to image buffer. Returns true if the image object is ok, false if it doesn't want the rest of the data.
   bool SendError();  ///< Signals an encoding/decoding error
 };
 

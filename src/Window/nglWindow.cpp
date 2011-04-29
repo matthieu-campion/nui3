@@ -182,6 +182,36 @@ void nglWindow::OnResize (uint Width, uint Height)
 {
 }
 
+void nglWindow::OnTextCompositionStarted()
+{
+  
+}
+
+void nglWindow::OnTextCompositionConfirmed()
+{
+  
+}
+
+void nglWindow::OnTextCompositionCanceled()
+{
+  
+}
+
+void nglWindow::OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  
+}
+
+nglString nglWindow::OnGetTextComposition() const
+{
+  return nglString::Null;
+}
+
+void nglWindow::OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  x = y = 0;
+}
+
 bool nglWindow::OnTextInput(const nglString& rUnicodeTextInput)
 {
   return false;

@@ -618,7 +618,129 @@ public:
     return true;  
   }
   
-  
+  bool ReadTextureAtlas(const nglString& rName)
+  {
+    if (!GetChar()) // eat =
+      return false;
+    if (!SkipBlank())
+      return false;
+
+    if (mChar != '{')
+      return false;
+    if (!GetChar())
+      return false;
+    if (!SkipBlank())
+      return false;
+    
+    uint32 count = 0;
+    nglString AtlasPath;
+    nglString TextureName;
+    nuiRect Rect;
+    bool Rotated = false;
+    bool AutoTrim = false;
+    int32 MaxTextureSize = 128;
+    int32 AtlasSize = 1024;
+    
+    while (mChar != _T('}'))
+    {
+      nglString symbol;
+      if (!GetSymbol(symbol))
+        return false;
+      
+      if (!SkipBlank())
+        return false;
+
+      if (mChar != ':')
+        return false;
+      if (!GetChar())
+        return false;
+      if (!SkipBlank())
+        return false;
+
+      
+      nglString value;
+      if (mChar == _T('"'))
+      {
+        if (!GetQuoted(value))
+          return false;
+      }
+      else
+      {
+        if (!GetValue(value, true/*AllowBlank*/))
+          return false;
+      }
+      
+      if (!SkipBlank())
+        return false;
+      
+      if (mChar != _T(';'))
+        return false;
+      if (!GetChar())
+        return false;
+      if (!SkipBlank())
+        return false;
+      
+      if (symbol == _T("Path"))
+      {
+        AtlasPath = value;
+      }
+      else if (symbol == _T("TextureName"))
+      {
+        if (count)
+        {
+          nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect, Rotated);
+        }
+
+        TextureName = value;
+        count++;
+      }
+      else if (symbol == _T("Alias"))
+      {
+        if (count)
+        {
+          nuiTexture::CreateTextureProxy(value, AtlasPath, Rect, Rotated);
+        }
+      }
+      else if (symbol == _T("Rect"))
+      {
+        Rect.SetValue(value);
+      }
+      else if (symbol == _T("Rotated"))
+      {
+        Rotated = nuiGetBool(value, false);
+      }
+      else if (symbol == _T("AutoTrim"))
+      {
+        AutoTrim = nuiGetBool(value, false);
+      }
+      else if (symbol == _T("MaxTextureSize"))
+      {
+        MaxTextureSize = value.GetCInt();
+      }
+      else if (symbol == _T("Size"))
+      {
+        AtlasSize = value.GetCInt();
+      }
+      else if (symbol == _T("AutoScan"))
+      {
+        nuiTexture::CreateAtlasFromPath(value, MaxTextureSize, AtlasSize, AutoTrim);
+      }
+    }
+
+    if (count)
+    {
+      nuiTexture::CreateTextureProxy(TextureName, AtlasPath, Rect, Rotated);
+    }
+    
+    if (!SkipBlank())
+      return false;
+    if (mChar != _T('}'))
+      return false;
+    if (!GetChar())
+      return false;
+    
+    return true;  
+  }
   
   
   bool ReadDesc()
@@ -659,7 +781,7 @@ public:
       
       if (name.IsEmpty())
       {
-        NGL_OUT(_T("a css included filename is empty!\n"));
+        //NGL_OUT(_T("a css included filename is empty!\n"));
         return false;
       }
       
@@ -687,7 +809,7 @@ public:
         return false;
       }
 
-      NGL_OUT(_T("CSS Include: '%ls'\n"), includePath.GetChars());
+      //NGL_OUT(_T("CSS Include: '%ls'\n"), includePath.GetChars());
       // launch included file parsing
       nglFileOffset s = pF->Available();
       std::vector<uint8> cache;
@@ -703,11 +825,10 @@ public:
         nglString tmp;
         tmp.CFormat(_T("Error (file '%ls') line %d (%d): %ls"), includePath.GetChars(), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
         SetError(tmp);
-        delete pF;
         return false;
       }
       uint32 cc = mrCSS.GetRulesCount();
-      NGL_OUT(_T("\tNew css rules: %d\n"), cc - c);
+      //NGL_OUT(_T("\tNew css rules: %d\n"), cc - c);
       return true;
     }
     else if (mChar == _T('+'))
@@ -919,6 +1040,16 @@ public:
         {
           nglString str;
           str.CFormat(_T("Unable to parse a variable with name '%ls'"), name.GetChars());
+          SetError(str);
+          return NULL;
+        }
+      }
+      else if (!type.Compare(_T("textureatlas"), false) || !type.Compare(_T("atlas"), false))
+      {
+        if (!ReadTextureAtlas(name))
+        {
+          nglString str;
+          str.CFormat(_T("Unable to parse an atlas definition for %ls"), name.GetChars());
           SetError(str);
           return NULL;
         }
@@ -1993,7 +2124,7 @@ bool nuiCSS::Load(nglIStream& rStream, const nglPath& rSourcePath)
     mErrorString.CFormat(_T("Error line %d (%d): %ls"), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
     return false;
   }
-  NGL_OUT(_T("Loaded %d css rules\n"), GetRulesCount());
+  //NGL_OUT(_T("Loaded %d css rules\n"), GetRulesCount());
   return true;
 }
 

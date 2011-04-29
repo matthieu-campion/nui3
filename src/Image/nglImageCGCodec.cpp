@@ -178,7 +178,12 @@ CGImageRef nglImageCGCodec::ReadInfo(nglIStream* pIStream)
       info.mPreMultAlpha = true;
       info.mpBuffer = NULL;
 
-      SendInfo(info);
+      if (!SendInfo(info))
+      {
+        CGImageRelease(pCGImage);
+        return NULL;
+      }
+        
 
       return pCGImage;
     }
@@ -228,6 +233,7 @@ bool nglImageCGCodec::Feed(nglIStream* pIStream)
   CGContextDrawImage(pCGContext, rect, mpCGImage);
   CGContextRelease(pCGContext);
 
+  SendData(1.0f);
   return (pIStream->GetState()==eStreamWait) || (pIStream->GetState()==eStreamReady);;
 }
 

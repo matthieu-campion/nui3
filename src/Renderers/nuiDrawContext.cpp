@@ -293,7 +293,7 @@ void nuiDrawContext::SetBlendFunc(nuiBlendFunc Func)
  *
  ****************************************************************************/
 
-void nuiDrawContext::SetTexture (nuiTexture* pTex) 
+void nuiDrawContext::SetTexture(nuiTexture* pTex) 
 {
   nuiTexture* pOld = mCurrentState.mpTexture;
   if (pTex == pOld)
@@ -308,7 +308,7 @@ void nuiDrawContext::SetTexture (nuiTexture* pTex)
 }
 
 bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) const
-{ 
+{
   return mCurrentState.mpTexture == pTex;
 }
 
@@ -534,15 +534,25 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   if (!texturing)
     EnableTexturing(true);
 
-  nuiSize tx,ty,tw,th;
+  nuiSize tx0,tx1,tx2,tx3;
+  nuiSize ty0,ty1,ty2,ty3;
 
-  tx = rSource.mLeft;
-  ty = rSource.mTop;
-  tw = rSource.mRight;
-  th = rSource.mBottom;
+  tx0 = rSource.mLeft;
+  ty0 = rSource.mTop;
 
-  mCurrentState.mpTexture->ImageToTextureCoord(tx, ty);
-  mCurrentState.mpTexture->ImageToTextureCoord(tw, th);
+  tx1 = rSource.mRight;
+  ty1 = rSource.mTop;
+  
+  tx2 = rSource.mRight;
+  ty2 = rSource.mBottom;
+  
+  tx3 = rSource.mLeft;
+  ty3 = rSource.mBottom;
+  
+  mCurrentState.mpTexture->ImageToTextureCoord(tx0, ty0);
+  mCurrentState.mpTexture->ImageToTextureCoord(tx1, ty1);
+  mCurrentState.mpTexture->ImageToTextureCoord(tx2, ty2);
+  mCurrentState.mpTexture->ImageToTextureCoord(tx3, ty3);
 
   nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
   pArray->Reserve(4);
@@ -551,21 +561,21 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   pArray->EnableArray(nuiRenderArray::eColor, true);
 
   // 1
-  pArray->SetTexCoords(tx,ty); 
+  pArray->SetTexCoords(tx0,ty0); 
   pArray->SetVertex(x0, y0);
   pArray->SetColor(mCurrentState.mFillColor);
   pArray->PushVertex();
 
-  pArray->SetTexCoords(tw,ty); 
+  pArray->SetTexCoords(tx1,ty1); 
   pArray->SetVertex(x1, y1);
   pArray->PushVertex();
 
-  pArray->SetTexCoords(tx,th); 
+  pArray->SetTexCoords(tx3,ty3); 
   pArray->SetVertex(x3, y3);
   pArray->PushVertex();
 
   // 2
-  pArray->SetTexCoords(tw,th); 
+  pArray->SetTexCoords(tx2,ty2); 
   pArray->SetVertex(x2, y2);
   pArray->PushVertex();
 

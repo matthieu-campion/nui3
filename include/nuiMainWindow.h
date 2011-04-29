@@ -154,6 +154,12 @@ protected:
   virtual void OnDesactivation();
   virtual void OnClose();
   virtual void OnState(nglWindow::StateInfo State);
+  virtual void OnTextCompositionStarted();
+  virtual void OnTextCompositionConfirmed();
+  virtual void OnTextCompositionCanceled();
+  virtual void OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+  virtual nglString OnGetTextComposition() const;
+  virtual void OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
   virtual bool OnTextInput(const nglString& rUnicodeText);
   virtual void OnTextInputCancelled();
   virtual bool OnKeyDown     (const nglKeyEvent& rEvent);
@@ -220,6 +226,14 @@ private:
     virtual bool OnMouseMove(nglMouseInfo& rInfo);
     virtual bool OnRotation(uint Angle);
 
+    virtual void OnTextCompositionStarted(); ///< Tells the widget that a complex text input session is starting (mostly used to enter diacritics with dead keys and complex scripts like east asian glyphs)
+    virtual void OnTextCompositionConfirmed(); ///< Tells the widget to confirm the composed text as final and end the composition session start with TextCompositionStart.
+    virtual void OnTextCompositionCanceled(); ///< Tells the widget to cancel the composed text input and end the composition session started with TextCompositionStart.
+    virtual void OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+    virtual nglString OnGetTextComposition() const;
+    virtual void OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
+    
+    
     // Dnd receive
     virtual void OnDragEnter();
     virtual void OnDragLeave();
@@ -241,6 +255,11 @@ private:
   void OnInspectorDeath(const nuiEvent& rEvent);
   double mLastInteractiveEventTime;
   double mLastEventTime;
+  
+  double mLastPaint;
+  double mFPSDelay;
+  uint32 mFPSCount;
+  float mFPS;
 };
 
 #endif // __nuiMainWindow_h__

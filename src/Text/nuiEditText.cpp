@@ -14,6 +14,9 @@ nuiEditText::nuiEditText(const nglString& rText)
 : nuiComposite(),
   mCursorPos(0),
   mAnchorPos(0),
+  mCompositionPos(-1),
+  mCompositionLength(0),
+
   mDropCursorPos(-1),
   mCommandStackPos(0),
   mpFont(NULL),
@@ -42,6 +45,8 @@ bool nuiEditText::Load(const nuiXMLNode* pNode)
 {
   mCursorPos = 0;
   mAnchorPos = 0;
+  mCompositionPos = -1;
+  mCompositionLength = 0;
   mDropCursorPos = -1;
   mCommandStackPos = 0;
   mpFont = NULL;
@@ -107,7 +112,6 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
 
   nuiRect cliprect(GetVisibleRect());
 
-  pContext->ResetState();
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
 
@@ -134,7 +138,7 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
 
     if (inter.Intersect(cliprect, pBlock->GetRect()))
     {
-      pBlock->Draw(pContext, PosX, PosY, SelectionBegin, SelectionEnd, width);
+      pBlock->Draw(pContext, PosX, PosY, SelectionBegin, SelectionEnd, mCompositionPos, mCompositionPos + mCompositionLength, width);
     }
     PosY += pBlock->GetHeight();
   }
@@ -242,6 +246,8 @@ void nuiEditText::InitKeyBindings()
   
   mCommandKeyBindings[NK_HOME] = eGoDocBegin;
   mCommandKeyBindings[NK_END] = eGoDocEnd;
+  mKeyBindings[NK_ENTER] = eNewLine;
+  mKeyBindings[NK_PAD_ENTER] = eNewLine;
   mKeyBindings[NK_HOME] = eGoLineBegin;
   mKeyBindings[NK_END] = eGoLineEnd;
   mAltKeyBindings[NK_HOME] = eGoParagraphBegin;
@@ -283,6 +289,90 @@ bool nuiEditText::TextInput(const nglString& rUnicodeString)
   Do(eInsertText, pObject);
   
   return true;
+}
+
+void nuiEditText::TextCompositionStarted()
+{
+  // Nothing to do (?!)
+}
+
+void nuiEditText::TextCompositionConfirmed()
+{
+  SetAnchorPos(mCompositionPos + mCompositionLength);
+  SetCursorPos(mCompositionPos + mCompositionLength);
+
+  mSelectionActive = false;
+
+  mCompositionPos = -1;
+  mCompositionLength = 0;
+  Invalidate();
+}
+
+void nuiEditText::TextCompositionCanceled()
+{
+  if (mCompositionPos < 0)
+  {
+    // Start composition
+    mCompositionPos = mCursorPos;
+    mCompositionLength = 0;
+  }
+  else
+  {
+    // Composition already active: use the selection to replace the existing composition string
+    mAnchorPos = mCompositionPos;
+    mCursorPos = mCompositionPos + mCompositionLength;
+  }
+  
+  mSelectionActive = true;
+  Do(eDeleteSelection, NULL);
+  mSelectionActive = false;
+  
+  mCompositionPos = -1;
+  mCompositionLength = 0;
+  
+  Invalidate();
+}
+
+void nuiEditText::TextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  printf("TextCompositionUpdated: '%s' %d\n", rString.GetChars(), CursorPosition);
+  if (mCompositionPos < 0)
+  {
+    // Start composition
+    mCompositionPos = mCursorPos;
+    mCompositionLength = 0;
+  }
+  else
+  {
+    // Composition already active: use the selection to replace the existing composition string
+    mAnchorPos = mCompositionPos;
+    mCursorPos = mCompositionPos + mCompositionLength;
+  }
+
+  mSelectionActive = true;
+  Do(eDeleteSelection, NULL);
+  mSelectionActive = false;
+  
+  TextInput(rString);
+  mCompositionLength = rString.GetLength();
+  SetCursorPos(mCompositionPos + CursorPosition);
+  printf("  New cursor pos: %d\n", mCursorPos);
+}
+
+nglString nuiEditText::GetTextComposition() const
+{
+  if (mCompositionPos < 0)
+    return nglString::Null;
+  return mText.Extract(mCompositionPos, mCompositionLength);
+}
+
+void nuiEditText::TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  float X = 0;
+  float Y = 0;
+  GetCoordsFromPos(CursorPosition, X, Y);
+  x = ToBelow(X);
+  y = ToBelow(Y);
 }
 
 bool nuiEditText::KeyDown(const nglKeyEvent& rEvent)
@@ -529,6 +619,7 @@ void nuiEditText::InitCommands()
   mCommands[eShowCursor] = &nuiEditText::ShowCursor;
 
   mCommands[eInsertText] = &nuiEditText::InsertText;
+  mCommands[eNewLine] = &nuiEditText::NewLine;
 }
 
 
@@ -1247,7 +1338,7 @@ bool nuiEditText::DeleteSelection(nuiObject* pParams)
     uint pos = 0;
     uint end = 0;
     SavePos(pParams);
-    if (mSelectionActive)
+    if (mSelectionActive && mAnchorPos != mCursorPos)
     {
       pos = MIN(mAnchorPos, mCursorPos);
       end = MAX(mAnchorPos, mCursorPos);
@@ -1257,6 +1348,7 @@ bool nuiEditText::DeleteSelection(nuiObject* pParams)
       return false;
     }
 
+    end = MIN(mText.GetLength(), end);
     pParams->SetProperty(_T("Text"), mText.Extract(pos, end - pos));
     mText.Delete(pos, end - pos);
 
@@ -1435,11 +1527,17 @@ bool nuiEditText::DeleteForward(nuiObject* pParams)
       end = mCursorPos + 1;
     }
 
+    if (mCompositionPos >= 0 && pos >= mCompositionPos + mCompositionLength)
+      return false;
+    
     pParams->SetProperty(_T("Text"), mText.Extract(pos, end - pos));
     mText.Delete(pos, end - pos);
 
     ClearBlocks();
     CreateBlocks(mText, mpBlocks);
+
+    if (mCompositionPos >= 0)
+      mCompositionLength--;
 
     MoveCursorTo(pos);
     mSelectionActive = false;
@@ -1483,6 +1581,9 @@ bool nuiEditText::DeleteBackward(nuiObject* pParams)
       pos = mCursorPos - 1;
       end = mCursorPos;
     }
+    
+    if (mCompositionPos >= 0 && pos < mCompositionPos)
+      return false;
 
     pParams->SetProperty(_T("Text"), mText.Extract(pos, end - pos));
     mText.Delete(pos, end - pos);
@@ -1491,6 +1592,9 @@ bool nuiEditText::DeleteBackward(nuiObject* pParams)
     CreateBlocks(mText, mpBlocks);
 
     MoveCursorTo(pos);
+    if (mCompositionPos >= 0)
+      mCompositionLength--;
+
     mSelectionActive = false;
     InvalidateLayout();
   }
@@ -1597,6 +1701,17 @@ bool nuiEditText::InsertText(nuiObject* pParams)
   return true;
 }
 
+bool nuiEditText::NewLine(nuiObject* pParams)
+{
+  if (mCompositionPos < 0)
+  {
+    nuiObject* pObj = new nuiObject();
+    pObj->SetProperty(_T("Text"), _T("\n"));
+    return Do(eInsertText, pObj);
+  }
+  return false;
+}
+
 
 void nuiEditText::SetCursorPos(uint Pos)
 {
@@ -1614,7 +1729,7 @@ void nuiEditText::SetCursorPos(uint Pos)
   }
   Invalidate();
 
-  //NGL_OUT(_T("Cursor pos = %d (%f %f)\n"), Pos, x, y);
+  //NGL_OUT(_T("Cursor pos = %d\n"), Pos);
 }
 
 uint nuiEditText::GetCursorPos() const
@@ -1897,7 +2012,7 @@ nuiEditText::TextBlock::~TextBlock()
   mpFont->Release();
 }
 
-void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, nuiSize width)
+void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y, uint SelectionBegin, uint SelectionEnd, uint CompositionBegin, uint CompositionEnd, nuiSize width)
 {
   if (!(SelectionBegin == SelectionEnd || SelectionBegin > GetEnd() || SelectionEnd < GetPos())) // Are we concerned about the selection?
   {
@@ -1948,6 +2063,56 @@ void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y
     }
   }
 
+  if (!(CompositionBegin == CompositionEnd || CompositionBegin > GetEnd() || CompositionEnd < GetPos())) // Are we concerned about the composition?
+  {
+    // Draw the selection:
+    if (CompositionBegin <= GetPos() && CompositionEnd >= GetEnd())
+    {
+      // We are completely enclosed by the selection
+      nuiRect r(mRect);
+      r.Right() = width;
+      pContext->DrawRect(r, eFillShape);
+    }
+    else
+    {
+      const std::vector<uint>& rLines = mpLayout->GetLines();
+      uint lines = (uint)rLines.size();
+      nuiSize height = mpFont->GetHeight();
+      nuiSize offset = mRect.Top();
+      
+      for (uint i = 0; i < lines; i++)
+      {
+        uint linepos = rLines[i] + GetPos();
+        uint lineend = GetLineEndFromPos(linepos);
+        if (!(CompositionBegin > lineend || CompositionEnd < linepos))
+        {
+          // We have at least a part in the selection
+          nuiSize StartX = 0, 
+          StopX = width, 
+          StartY = offset + i * height, 
+          StopY = offset + (i+1) * height;
+          
+          nuiSize dummy = 0;
+          
+          if (CompositionBegin >= linepos)
+          {
+            GetCoordsFromPos(CompositionBegin, StartX, dummy);
+          }
+          
+          if (CompositionEnd <= lineend)
+          {
+            GetCoordsFromPos(CompositionEnd, StopX, dummy);
+          }
+          
+          //nuiRect r(StartX, StartY, StopX, StopY, false);
+          
+          //pContext->DrawRect(r, eFillShape);
+          pContext->DrawLine(StartX, StopY, StopX, StopY);
+        }
+      }
+    }
+  }
+  
   pContext->SetFont(mpFont);
   pContext->DrawText(X, Y, *mpLayout);
 
@@ -2060,7 +2225,7 @@ bool nuiEditText::TextBlock::GetCoordsFromPos(uint Pos, nuiSize& rX, nuiSize& rY
   if (Pos == count)
   {
     nglGlyphInfo glyphinfo;
-    mpFont->GetGlyphInfo(glyphinfo, pGlyph->Index, nglFontBase::eGlyphNative);
+    pGlyph->mpFont->GetGlyphInfo(glyphinfo, pGlyph->Index, nglFontBase::eGlyphNative);
     rX += glyphinfo.AdvanceX;
   }
   return true;
@@ -2144,10 +2309,8 @@ void nuiEditText::TextBlock::Layout()
       (mEnd < mrString.GetLength())
     )
   {
-    if (GetLength() > 1)
-      mIdealRect.SetSize(mIdealRect.GetWidth(), mIdealRect.GetHeight() - fontinfo.Ascender);
-    else if (mEnd < mrString.GetLength())
-      mIdealRect.SetSize(mIdealRect.GetWidth(), mIdealRect.GetHeight() + fontinfo.Ascender);
+    if (GetLength() == 1)
+      mIdealRect.SetSize(mIdealRect.GetWidth(), mIdealRect.GetHeight() + fontinfo.Height);
   }
   mLayoutOK = true;
 }

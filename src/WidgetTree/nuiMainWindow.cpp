@@ -82,6 +82,8 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   if (SetObjectClass(_T("nuiMainWindow")))
     InitAttributes();
   mMaxFPS = 0.0f;
+  mFPSCount = 0;
+  mFPS = 0;
 
   uint w,h;
   mpNGLWindow->GetSize(w,h);
@@ -125,6 +127,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
     InitAttributes();
 
   mMaxFPS = 0.0f;
+  mFPSCount = 0;
+  mFPS = 0;
 
   uint w,h;
   mpNGLWindow->GetSize(w,h);
@@ -631,7 +635,24 @@ bool nuiMainWindow::DBG_GetMouseOverInfo()
 
 void nuiMainWindow::InvalidateTimer(const nuiEvent& rEvent)
 {
+  if (!App->IsActive()) // Only repaint if the application is active!
+    return;
+  
   LazyPaint();
+
+  nglTime now;
+  mFPSCount++;
+  if (now - mFPSDelay > 1.0)
+  {
+    double v = (now - mFPSDelay);
+    double c = mFPSCount;
+    mFPS = c / v;
+    NGL_LOG(_T("fps"), NGL_LOG_DEBUG, _T("FPS: %f (%f seconds - %d frames)\n"), mFPS, v, ToNearest(c));
+    
+    mFPSCount = 0;
+    mFPSDelay = now;
+  }
+  mLastPaint = now;
 }
 
 
@@ -664,6 +685,44 @@ bool nuiMainWindow::OnMouseUnclick(nglMouseInfo& rInfo)
   mLastEventTime = nglTime();
   mLastInteractiveEventTime = nglTime();
   return CallMouseUnclick(rInfo);
+}
+
+void nuiMainWindow::OnTextCompositionStarted()
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  CallTextCompositionStarted();
+}
+
+void nuiMainWindow::OnTextCompositionConfirmed()
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  CallTextCompositionConfirmed();
+}
+
+void nuiMainWindow::OnTextCompositionCanceled()
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  CallTextCompositionCanceled();
+}
+
+void nuiMainWindow::OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  mLastEventTime = nglTime();
+  mLastInteractiveEventTime = nglTime();
+  CallTextCompositionUpdated(rString, CursorPosition);
+}
+
+nglString nuiMainWindow::OnGetTextComposition() const
+{
+  return CallGetTextComposition();
+}
+
+void nuiMainWindow::OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  return CallTextCompositionIndexToPoint(CursorPosition, x, y);
 }
 
 bool nuiMainWindow::OnTextInput(const nglString& rUnicodeText)
@@ -1081,6 +1140,37 @@ bool nuiMainWindow::NGLWindow::OnMouseMove(nglMouseInfo& rInfo)
 bool nuiMainWindow::NGLWindow::OnRotation(uint Angle)
 {
   return mpMainWindow->OnRotation(Angle);
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionStarted()
+{
+  mpMainWindow->OnTextCompositionStarted();
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionConfirmed()
+{
+  mpMainWindow->OnTextCompositionConfirmed();
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionCanceled()
+{
+  mpMainWindow->OnTextCompositionCanceled();
+
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  mpMainWindow->OnTextCompositionUpdated(rString, CursorPosition);
+}
+
+nglString nuiMainWindow::NGLWindow::OnGetTextComposition() const
+{
+  return mpMainWindow->OnGetTextComposition();
+}
+
+void nuiMainWindow::NGLWindow::OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  mpMainWindow->OnTextCompositionIndexToPoint(CursorPosition, x, y);
 }
 
 // Dnd receive

@@ -183,7 +183,6 @@ class NGL_API nglImage : public nglError
 {
 public:
   /** @name Life cycle */
-  //@{
   nglImage (nglIStream* pInput, nglImageCodec* pCodec = NULL);
   /*!< Create an image from a stream
     \param pInput input stream (feeding the codec)
@@ -201,8 +200,9 @@ public:
     callback will be invoked with valid data (image size, pixel format, etc). Then, OnData()
     and OnError() will be called respectively when more data was decoded or an error occured
     (interrupted stream or codec complaint for instance).
-  */
-  nglImage (const nglPath& rPath, nglImageCodec* pCodec = NULL );
+   */
+   nglImage (const nglPath& rPath, nglImageCodec* pCodec = NULL );
+  //@{
   /*!< Create an image from a file
     \param rPath input file
     \param pCodec codec to use, NULL means auto-detection
@@ -252,6 +252,12 @@ public:
   virtual ~nglImage();
   //@}
 
+  /** @name Image info helpers */
+  //@{
+  static bool GetImageInfo(nglImageInfo& rInfo, nglIStream* pInput, nglImageCodec* pCodec = NULL);
+  static bool GetImageInfo(nglImageInfo& rInfo, const nglPath& rPath, nglImageCodec* pCodec = NULL );
+  //@}
+  
   /** @name Image description (info & data) */
   //@{
   bool  GetInfo (nglImageInfo& rInfo) const;
@@ -296,7 +302,7 @@ public:
    */
   
   nglImage* Crop(uint32 x, uint32 y, uint32 width, uint32 height);
-  /*!< create a copy, cropping hte source 
+  /*!< create a copy, cropping the source 
    \param x x-coord in the source image
    \param y y-coord in the source image
    \param width new image width
@@ -305,19 +311,35 @@ public:
    return NULL if the coordinates or the new size goes outside the source image.
    */
   
+  nglImage* Trim(int32& rXOffset, int32& rYOffset);
+  /*!< create a copy, cropping the source so that no fully transparent lines or columns are left.
+   \param rXOffset on output, contains the number of x pixels eaten from the left of the image during the operation.
+   \param rYOffset on output, contains the number of y pixels eaten from the top of the image during the operation.
+   
+   return NULL if something bad happened.
+   */
+  
+  nglImage* RotateLeft();
+  /*!< create a copy, rotating the whole image to the left
+   */
+  
+  nglImage* RotateRight();
+  /*!< create a copy, rotating the whole image to the right
+   */
+  
   void PreMultiply(); ///< Premultiply the alpha in the image buffer
   void UnPreMultiply(); ///< Try to inverse the effect of PreMultiply.
 
   /** @name User callbacks */
   //@{
-  virtual void OnInfo (nglImageInfo& rInfo);
+  virtual bool OnInfo (nglImageInfo& rInfo);
   /*!< Image description available
     \param rInfo image description
 
     This method is called as soon as the image description is available.
     From this point, image size is known and buffer data is properly allocated.
   */
-  virtual void OnData (float Completion);
+  virtual bool OnData (float Completion);
   /*!< More data decoded
     \param Completion completion status, from 0 (nothing) to 1 (full image decoded)
 
@@ -361,8 +383,8 @@ public:
   void SetPixel(uint32 X, uint32 Y, const Color& rColor);
 
 protected:
-  void OnCodecInfo (nglImageInfo& rInfo);  ///< The codec invoke this method as soon as all the image metadata is available
-  void OnCodecData (float Completion);     ///< The codec invoke this method whenever more data has been decoded to image buffer
+  bool OnCodecInfo (nglImageInfo& rInfo);  ///< The codec invoke this method as soon as all the image metadata is available
+  bool OnCodecData (float Completion);     ///< The codec invoke this method whenever more data has been decoded to image buffer
   bool OnCodecError();                     ///< The codec invoke this method when an error occurs while encoding/decoding
 
   static void StaticInit();

@@ -92,6 +92,12 @@ public:
   virtual bool IsKeyDown (nglKeyCode Key) const;
 
   // Events entry points:
+  void CallTextCompositionStarted(); ///< Tells the widget that a complex text input session is starting (mostly used to enter diacritics with dead keys and complex scripts like east asian glyphs)
+  void CallTextCompositionConfirmed(); ///< Tells the widget to confirm the composed text as final and end the composition session start with TextCompositionStart.
+  void CallTextCompositionCanceled(); ///< Tells the widget to cancel the composed text input and end the composition session started with TextCompositionStart.
+  void CallTextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+  nglString CallGetTextComposition() const;
+  void CallTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
   bool CallTextInput (const nglString& rUnicodeText);
   void CallTextInputCancelled ();
   bool CallKeyDown (const nglKeyEvent& rEvent);
@@ -175,6 +181,7 @@ protected:
   nuiGrabMap mpGrab;
   bool HasGrab(nuiWidgetPtr pWidget); ///< Returns true if this \p pWidget has been grabbed by any touch
   nuiWidgetPtr GetGrab(nglTouchId touchId) const;  ///< Returns the Widget that has been grabbed by this \p touchId, NULL otherwise
+  std::map<nglTouchId, nglMouseInfo> mMouseClickedEvents;
 
   nglPath mResPath;
 
@@ -205,6 +212,7 @@ protected:
 
   nuiEventSink<nuiTopLevel> mTopLevelSink;
   bool mPartialRedraw;
+  bool mIsDrawing;
   void SetToolTipRect();
 
   nglMouseInfo::Flags mLastClickedButton;

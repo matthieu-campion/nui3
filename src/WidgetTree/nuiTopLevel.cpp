@@ -153,6 +153,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
     mFillTrash(false),
     mpDrawContext(NULL),
     mTopLevelSink(this),
+    mIsDrawing(false),
     mpCSS(NULL)
 {
   //EnableRenderCache(false);
@@ -786,6 +787,45 @@ bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
   return false;
 }
 
+void nuiTopLevel::CallTextCompositionStarted()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionStarted();
+}
+void nuiTopLevel::CallTextCompositionConfirmed()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionConfirmed();
+}
+
+void nuiTopLevel::CallTextCompositionCanceled()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionCanceled();
+}
+
+void nuiTopLevel::CallTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  if (mpFocus)
+    mpFocus->TextCompositionUpdated(rString, CursorPosition);
+}
+
+nglString nuiTopLevel::CallGetTextComposition() const
+{
+  if (mpFocus)
+    return mpFocus->GetTextComposition();
+  return nglString::Null;
+}
+
+void nuiTopLevel::CallTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  if (mpFocus)
+  {
+    mpFocus->TextCompositionIndexToPoint(CursorPosition, x, y);
+    mpFocus->LocalToGlobal(x, y);
+  }
+}
+
 bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 {
   CheckValid();
@@ -1018,6 +1058,9 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
 {
   CheckValid();
+  
+  mMouseClickedEvents[rInfo.TouchId] = rInfo;
+  
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons |= rInfo.Buttons;
@@ -1139,6 +1182,11 @@ bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
   CheckValid();
 //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseUnclick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
+  // Update counterpart:
+  std::map<nglTouchId, nglMouseInfo>::iterator it = mMouseClickedEvents.find(rInfo.TouchId);
+  if (it != mMouseClickedEvents.end())
+    rInfo.Counterpart = &it->second;
+  
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons &= ~rInfo.Buttons;
@@ -1263,6 +1311,11 @@ bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 {
   CheckValid();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseMove X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
+
+  // Update counterpart:
+  std::map<nglTouchId, nglMouseInfo>::iterator it = mMouseClickedEvents.find(rInfo.TouchId);
+  if (it != mMouseClickedEvents.end())
+    rInfo.Counterpart = &it->second;
 
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
@@ -1504,6 +1557,8 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
 
 bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 {
+  mIsDrawing = true;
+
   CheckValid();
   //nuiStopWatch watch(_T("nuiTopLevel::DrawTree"));
 
@@ -1513,6 +1568,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     clipHeight=pContext->GetHeight();
   }
 
+//  if (0)
   if (mPartialRedraw && !DISPLAY_PARTIAL_RECTS)
   {
     //nuiStopWatch watch(_T("nuiTopLevel::DrawTree / PartialReDraw"));
@@ -1521,11 +1577,11 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
 
     int count = mDirtyRects.size();
 
-    //printf("drawing %d partial rects\n", count);
+//    printf("drawing %d partial rects\n", count);
     
     for (int i = 0; i < count; i++)
     {
-      //printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
+//      printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
       pContext->ResetState();
       pContext->ResetClipRect();
       pContext->Clip(mDirtyRects[i]);
@@ -1615,6 +1671,8 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     pContext->ResetState();
   }
   
+  mIsDrawing = false;
+
   return true;
 }
                      
@@ -1633,6 +1691,7 @@ nglPath nuiTopLevel::GetResourcePath() const
 
 void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect)
 {
+  //NGL_ASSERT(!mIsDrawing);
   CheckValid();
   nuiRect r = rRect;
   nuiRect rect = GetRect();
@@ -1652,7 +1711,7 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 
   r.Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
 
-  //printf("nuiTopLevel::BroadcastInvalidateRect %ls / %ls / 0x%x\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender);
+//  printf("nuiTopLevel::BroadcastInvalidateRect %ls / %ls / 0x%x RECT:%ls\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender, rRect.GetValue().GetChars());
   AddInvalidRect(r);
   mNeedRender = true;
   DebugRefreshInfo();

@@ -589,6 +589,79 @@ nglImage::~nglImage()
 }
 
 
+/** This dummy class only exists to read image infos without the data... */
+class nglImageDummy : public nglImage
+{
+public:
+  nglImageDummy(nglIStream* pInput, nglImageCodec* pCodec)
+  : nglImage(pInput, pCodec)
+  {
+    
+  }
+  
+  bool OnInfo(nglImageInfo& rInfo)
+  {
+    nglImage::OnInfo(rInfo);
+    return false;
+  }
+};
+
+bool nglImage::GetImageInfo(nglImageInfo& rInfo, nglIStream* pIFile, nglImageCodec* pCodec)
+{
+  StaticInit();
+  
+  if (!pIFile)
+    return false;
+  
+  if (pIFile->GetState() != eStreamReady)
+  {
+    delete pIFile;
+    return false;
+  }
+  
+  if (!pCodec)
+  {
+    uint32 count;
+    count = mpCodecInfos->size();
+    for (uint32 i=0; i<count && !pCodec; i++)
+    {
+      if ((*mpCodecInfos)[i])
+      {
+        pCodec = (*mpCodecInfos)[i]->CreateInstance(); // try to create a codec
+        if (pCodec) // success?
+        {
+          if (!pCodec->Probe(pIFile)) // try to make the codec recognize the data.
+          { // :-(
+            delete pCodec;
+            pCodec = NULL;
+          }
+        }
+      }
+    }
+  }
+    
+  if (pCodec)
+  {
+    nglImageDummy img(pIFile, pCodec);
+    
+    pCodec->Init(&img);
+    pCodec->Feed(pIFile); // Should return as soon as the header is read
+    
+    img.GetInfo(rInfo);
+  }
+
+  delete pCodec;
+}
+
+bool nglImage::GetImageInfo(nglImageInfo& rInfo, const nglPath& rPath, nglImageCodec* pCodec)
+{
+  nglIStream* pIFile = rPath.OpenRead();
+  bool res = GetImageInfo(rInfo, pIFile, pCodec);
+  delete pIFile;
+  return res;
+}
+
+
 /*
  * Image description
  */
@@ -747,6 +820,228 @@ nglImage* nglImage::Crop(uint32 x, uint32 y, uint32 width, uint32 height)
   return pNew;
 }
 
+nglImage* nglImage::Trim(int32& rXOffset, int32& rYOffset)
+{
+  int32 x = 0, y = 0, width = GetWidth(), height = GetHeight();
+
+  // Eat transparent pixels from the top:
+  {
+    bool stop = false;
+    for (int32 Y = 0; Y < GetHeight() && !stop; Y++)
+    {
+      for (int32 X = 0; X < GetWidth() && !stop; X++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          y = Y;
+        }
+      }
+    }
+  }
+  
+  // Eat transparent pixels from the bottom:
+  {
+    bool stop = false;
+    for (int32 Y = GetHeight() - 1; Y > y && !stop; Y--)
+    {
+      for (int32 X = 0; X < GetWidth() && !stop; X++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          height = Y - y;
+        }
+      }
+    }
+  }
+  
+  // Eat transparent pixels from the left:
+  {
+    bool stop = false;
+    for (int32 X = 0; X < GetWidth() && !stop; X++)
+    {
+      for (int32 Y = y; Y < y + height && !stop; Y++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          x = X;
+        }
+      }
+    }
+  }
+  
+  // Eat transparent pixels from the right:
+  {
+    bool stop = false;
+    for (int32 X = GetWidth(); X > x && !stop; X--)
+    {
+      for (int32 Y = y; Y < y + height && !stop; Y++)
+      {
+        if (GetPixel(X, Y).mAlpha != 0)
+        {
+          stop = true;
+          width = X - x;
+        }
+      }
+    }
+  }
+  
+  rXOffset = x;
+  rYOffset = y;
+  return Crop(x, y, width, height);
+}
+
+
+
+nglImage* nglImage::RotateLeft()
+{
+  int32 width = GetWidth();
+  int32 height = GetHeight();
+  int32 bpp = (GetBitDepth() + 1) / 8;
+  
+  nglImageInfo info(height, width, GetBitDepth());
+  info.AllocateBuffer();
+  
+  int32 sbpl = GetBytesPerLine();
+  int32 dbpl = info.mBytesPerLine;
+
+  char* pDst = info.mpBuffer;
+  char* pSrc = GetBuffer();
+  
+  if (mInfo.mBitDepth == 8)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 16)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 24)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 32)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = j * bpp + dbpl * (width - 1 - i);
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  
+  return new nglImage(info);
+}
+
+nglImage* nglImage::RotateRight()
+{
+  int32 width = GetWidth();
+  int32 height = GetHeight();
+  int32 bpp = (GetBitDepth() + 1) / 8;
+  
+  nglImageInfo info(height, width, GetBitDepth());
+  info.AllocateBuffer();
+  
+  int32 sbpl = GetBytesPerLine();
+  int32 dbpl = info.mBytesPerLine;
+  
+  char* pDst = info.mpBuffer;
+  char* pSrc = GetBuffer();
+  
+  if (mInfo.mBitDepth == 8)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 16)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 24)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  else if (mInfo.mBitDepth == 32)
+  {
+    for (int32 i = 0; i < width; i++)
+    {
+      for (int32 j = 0; j < height; j++)
+      {
+        int32 soff = i * bpp + sbpl * j;
+        int32 doff = (height - 1 - j) * bpp + dbpl * i;
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff++] = pSrc[soff++];
+        pDst[doff] = pSrc[soff];
+      }
+    }
+  }
+  
+  return new nglImage(info);
+}
+
+
 void nglImage::PreMultiply()
 {
   if (mInfo.mPreMultAlpha)
@@ -786,14 +1081,16 @@ void nglImage::UnPreMultiply()
  * User callbacks
  */
 
-void nglImage::OnInfo (nglImageInfo& rInfo)
+bool nglImage::OnInfo (nglImageInfo& rInfo)
 {
 //  rInfo.Copy (mInfo, false);
+  return true;
 }
 
-void nglImage::OnData(float Completion)
+bool nglImage::OnData(float Completion)
 {
   mCompletion = Completion;
+  return true;
 }
 
 bool nglImage::OnError()
@@ -902,16 +1199,16 @@ nglImageCodec* nglImage::CreateCodec (const nglString& rName)
  * Codec callbacks
  */
 
-void nglImage::OnCodecInfo(nglImageInfo& rInfo)
+bool nglImage::OnCodecInfo(nglImageInfo& rInfo)
 {
-  mInfo.Copy (rInfo, false);
+  mInfo.Copy(rInfo, false);
   mInfo.AllocateBuffer();
-  OnInfo (mInfo);
+  return OnInfo (mInfo);
 }
 
-void nglImage::OnCodecData(float Completion)
+bool nglImage::OnCodecData(float Completion)
 {
-  OnData (Completion);
+  return OnData(Completion);
 }
 
 bool nglImage::OnCodecError()

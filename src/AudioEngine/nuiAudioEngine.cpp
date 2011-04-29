@@ -33,6 +33,7 @@ nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize, ChannelConf
 nuiAudioEngine::~nuiAudioEngine()
 {  
   delete mpOutAudioDevice;
+  delete mpInAudioDevice;
   
   for (uint32 i = 0; i < mVoices.size(); i++)
     mVoices[i]->Release();
@@ -226,7 +227,6 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     {
       mVoices.erase(it);
       it = mVoices.begin() + index;
-      index++;
       pVoice->Release();
       continue;
     }
