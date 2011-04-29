@@ -7,16 +7,14 @@
 
 
 #include "nui.h"
-#include "hb_nui.h"
-#include "../../../deps/harfbuzz/hb-private.hh"
-#include "../../../deps/harfbuzz/hb-unicode-private.hh"
-#include "../../../deps/ucdata/ucdata.h"
-
+#include "hb-private.hh"
+#include "hb-unicode-private.hh"
+#include "ucdata.h"
 #include "nuiUnicode.h"
+#include "hb_nui.h"
+
 
 HB_BEGIN_DECLS
-
-
 
 static unsigned int
 hb_nui_get_combining_class (hb_unicode_funcs_t *ufuncs,
@@ -109,12 +107,8 @@ hb_nui_get_mirroring (hb_unicode_funcs_t *ufuncs,
   return ucismirroring(unicode);
 }
 
-static hb_script_t
-hb_nui_get_script (hb_unicode_funcs_t *ufuncs,
-                   hb_codepoint_t      unicode,
-                   void               *user_data)
+hb_script_t hb_get_script_from_nui(nuiUnicodeScript script)
 {
-  nuiUnicodeScript script = nuiGetUnicodeScript(unicode);
   switch (script)
   {
     case eScriptCommon:
@@ -269,10 +263,19 @@ hb_nui_get_script (hb_unicode_funcs_t *ufuncs,
       return HB_SCRIPT_UGARITIC;
     case eScriptVai:
       return HB_SCRIPT_VAI;
-  case eScriptYi:
+    case eScriptYi:
       return HB_SCRIPT_YI;
   }
   return HB_SCRIPT_UNKNOWN;
+}
+
+static hb_script_t
+hb_nui_get_script (hb_unicode_funcs_t *ufuncs,
+                   hb_codepoint_t      unicode,
+                   void               *user_data)
+{
+  nuiUnicodeScript script = nuiGetUnicodeScript(unicode);
+  return hb_get_script_from_nui(script);
 }
 
 static hb_unicode_funcs_t nui_ufuncs = {

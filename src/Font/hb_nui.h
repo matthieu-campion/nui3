@@ -5,5 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
-hb_unicode_funcs_t *
-hb_nui_get_unicode_funcs (void)
+#pragma once
+
+hb_unicode_funcs_t* hb_nui_get_unicode_funcs (void);
+hb_script_t hb_get_script_from_nui(nuiUnicodeScript script);

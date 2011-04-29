@@ -15,6 +15,7 @@
 #include "nuiTexture.h"
 
 #include "nuiFontLayout.h"
+#include "nuiTextLayout.h"
 #include "nglImage.h"
 
 #include "nuiDrawContext.h"
@@ -30,7 +31,10 @@
 #include "nglMath.h"
 #include "ngl_default_font.h"
 
-//#include "harfbuzz.h"
+#include "nuiUnicode.h"
+#include "hb.h"
+#include "hb-ft.h"
+#include "hb_nui.h"
 
 using namespace std;
 
@@ -2397,3 +2401,59 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
   return true;
 }
 
+
+void nuiFontBase::Shape(nuiTextRun* pRun)
+{
+  NGL_ASSERT(this == pRun->mpFont);
+  
+  FT_Face ft_face = mpFace->Face;
+  hb_face_t *hb_face = hb_ft_face_create_cached(ft_face);
+  hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
+  hb_buffer_t *hb_buffer;
+  hb_glyph_info_t *hb_glyph;
+  hb_glyph_position_t *hb_position;
+  unsigned int num_glyphs, i;
+  hb_position_t x;
+  const nglChar* text = NULL;
+  int32 len = 0;
+
+  text = pRun->GetString().GetChars() + pRun->GetPosition();
+  len = pRun->GetLength();
+  
+  hb_buffer = hb_buffer_create(len);
+  
+  hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
+  
+  hb_buffer_add_utf8(hb_buffer, text, len, 0, len);
+  hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
+  //if (language)
+  //  hb_buffer_set_language(hb_buffer, hb_language_from_string(language));
+  
+  hb_feature_t* features = NULL;
+  int32 num_features = 0;
+  
+  hb_shape (hb_font, hb_face, hb_buffer, features, num_features);
+  
+  num_glyphs = hb_buffer_get_length(hb_buffer);
+  hb_glyph = hb_buffer_get_glyph_infos(hb_buffer, NULL);
+  hb_position = hb_buffer_get_glyph_positions(hb_buffer, NULL);
+  //cairo_glyphs = cairo_glyph_allocate(num_glyphs + 1);
+  pRun->mGlyphs.clear();
+  pRun->mGlyphs.resize(num_glyphs);
+  x = 0;
+  for (i = 0; i < num_glyphs; i++)
+  {
+    pRun->mGlyphs[i].mIndex = hb_glyph->codepoint;
+    pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * (1./64);
+    pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * (1./64);
+    x += hb_position->x_advance;
+    
+    hb_glyph++;
+    hb_position++;
+  }
+  pRun->mAdvanceX = x * (1./64);
+  pRun->mAdvanceY = 0;
+  hb_buffer_destroy(hb_buffer);
+  hb_font_destroy(hb_font);
+  hb_face_destroy(hb_face);
+}

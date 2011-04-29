@@ -24,8 +24,6 @@
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
-		E511F7D31367233400DE93B0 /* hb_nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E511F7D11367233400DE93B0 /* hb_nui.cpp */; };
-		E511F7D41367233400DE93B0 /* hb_nui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E511F7D11367233400DE93B0 /* hb_nui.cpp */; };
 		E5C18700135DC5D90062231B /* resources in Resources */ = {isa = PBXBuildFile; fileRef = E5C186FF135DC5D90062231B /* resources */; };
 /* End PBXBuildFile section */
 
@@ -131,8 +129,6 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
-		E511F7D11367233400DE93B0 /* hb_nui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hb_nui.cpp; path = src/hb_nui.cpp; sourceTree = "<group>"; };
-		E511F7D21367233400DE93B0 /* hb_nui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hb_nui.h; path = src/hb_nui.h; sourceTree = "<group>"; };
 		E5C186FF135DC5D90062231B /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,8 +194,6 @@
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
 				61A9DFF20B83433800BC506C /* MainWindow.h */,
-				E511F7D11367233400DE93B0 /* hb_nui.cpp */,
-				E511F7D21367233400DE93B0 /* hb_nui.h */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -430,7 +424,6 @@
 			files = (
 				61A9DFF30B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */,
-				E511F7D31367233400DE93B0 /* hb_nui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,7 +433,6 @@
 			files = (
 				61A9DFF50B83433800BC506C /* Application.cpp in Sources */,
 				61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */,
-				E511F7D41367233400DE93B0 /* hb_nui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

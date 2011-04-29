@@ -12,6 +12,13 @@
 #include "nuiUnicode.h"
 void TextLayoutTest(const nglString& txt);
 
+class nuiTextGlyph
+{
+public:
+  int32 mIndex;
+  float mX, mY;
+};
+
 class nuiTextRun : public nuiRefCount
 {
 public:
@@ -20,8 +27,12 @@ public:
   void SetFont(nuiFont* pFont);
   
   nuiUnicodeScript GetScript() const;
+  const nglString& GetString() const;
   int32 GetPosition() const;
   int32 GetLength() const;
+  float GetAdvanceX() const;
+  float GetAdvanceY() const;
+  const std::vector<nuiTextGlyph>& GetGlyphs() const;
   
 private:
   friend class nuiTextLayout;
@@ -31,11 +42,9 @@ private:
   int32 mPosition;
   int32 mLength;
   nuiUnicodeScript mScript;
-  
-  void AddGlyph(int32 Index, float X, float Y);
-  
-private:
-  std::vector<nuiGlyphLayout> mGlyphs;
+
+  std::vector<nuiTextGlyph> mGlyphs;
+  float mAdvanceX, mAdvanceY;
 };
 
 class nuiTextLine
