@@ -19,6 +19,8 @@ class nuiDrawContext;
 class nuiTexture;
 class nuiFont;
 class nuiGlyphLayout;
+class nuiTextLayout;
+class nuiTextLine;
 class nuiTextRun;
 class nuiRenderArray;
 
@@ -477,7 +479,7 @@ public:
   bool PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
   
   void Shape(nuiTextRun* pRun);
-  void Draw(nuiRenderArray* pArray, nuiTextRun* pRun);
+  void Print(nuiDrawContext* pContext, nuiTextLayout* pLayout);
 protected:
   GLclampf mAlphaTest;  ///< Alpha test threshold as set by SetAlphaTest()
   const nglChar* OnError (uint& rError) const;

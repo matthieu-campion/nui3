@@ -60,8 +60,8 @@ public:
   void Draw(nuiDrawContext* pContext);
   //@}
   
-  uint32 size() const;
-  nuiTextRun* operator[](uint32 index) const;
+  int32 GetRunCount() const;
+  nuiTextRun* GetRun(int32 index) const;
   
   const std::vector<nuiTextRun*>& GetGlyphRuns() const;
   float GetX() const;
@@ -92,7 +92,14 @@ public:
   void SetFlush(float set);
   float GetFlush() const;
   
+  int32 GetParagraphCount() const;
+  int32 GetLineCount(int32 Paragraph) const;
+  int32 GetRunCount(int32 Paragraph, int32 Line) const;
   
+  nuiTextLine* GetLine(int32 Paragraph, int32 Line) const;
+  nuiTextRun*  GetRun(int32 Paragraph, int32 Line, int32 Run) const;
+  
+
 private:
   nuiFont* mpFont;
   std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;

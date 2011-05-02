@@ -2459,15 +2459,8 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_face_destroy(hb_face);
 }
 
-void nuiFontBase::Draw(nuiRenderArray* pArray, nuiTextRun* pRun)
+void nuiFontBase::Print(nuiDrawContext* pContext, nuiTextLayout* pLayout)
 {
-#if 0
-  int todo = rLayout.GetGlyphCount();
-  if (!todo)
-    return 0;
-  int i;
-  int done = 0;
-  
   bool blendsaved = pContext->GetState().mBlending;
   bool texturesaved = pContext->GetState().mTexturing;
   
@@ -2479,10 +2472,26 @@ void nuiFontBase::Draw(nuiRenderArray* pArray, nuiTextRun* pRun)
   pContext->SetBlendFunc(nuiBlendTransp);
   
   std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
+
+  // Iterate runs:
+  for (int32 p = 0; p < pLayout->GetParagraphCount(); p++)
+  {
+    for (int32 l = 0; l < pLayout->GetLineCount(p); l++)
+    {
+      nuiTextLine* pLine = pLayout->GetLine(p, l);
+      for (int32 r = 0; r < pLine->GetRunCount(); r++)
+      {
+        nuiTextRun* pRun = pLine->GetRun(r);
+        
+      }
+    }
+  }
+
+#if 0
   for (i = 0; i < todo; i++)
   {
     // Fetch i-th glyph in layout
-    const nuiGlyphLayout* pglyph = rLayout.GetGlyph(i);
+    const nuiGlyphLayout* pglyph = pLayout.GetGlyph(i);
     if (!pglyph)
       break;
     
@@ -2550,12 +2559,10 @@ void nuiFontBase::Draw(nuiRenderArray* pArray, nuiTextRun* pRun)
     
     pContext->SetStrokeColor(oldcolor);
   }
+#endif
   
   pContext->EnableBlending(blendsaved);
   pContext->EnableTexturing(texturesaved);
   
   pContext->SetFillColor(SavedColor);
-  
-  return done;
-#endif
 }

@@ -122,12 +122,12 @@ void nuiTextLine::AddRun(nuiTextRun* pRun)
   mpRuns.push_back(pRun);
 }
 
-uint32 nuiTextLine::size() const
+int32 nuiTextLine::GetRunCount() const
 {
   return mpRuns.size();
 }
 
-nuiTextRun* nuiTextLine::operator[](uint32 index) const
+nuiTextRun* nuiTextLine::GetRun(int32 index) const
 {
   return mpRuns[index];
 }
@@ -232,9 +232,9 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     for (uint32 l = 0; l < pParagraph->size(); l++)
     {
       nuiTextLine* pLine = (*pParagraph)[l];
-      for (uint32 r = 0; r < pLine->size(); r++)
+      for (uint32 r = 0; r < pLine->GetRunCount(); r++)
       { 
-        nuiTextRun* pRun = (*pLine)[r];
+        nuiTextRun* pRun = pLine->GetRun(r);
         nuiFont* pFont = FontSet[pRun->GetScript()];
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
@@ -263,7 +263,7 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
   
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
-  nuiSplitText(rString, ranges, nuiST_ScriptChange, start, length);
+  nuiSplitText(rString, ranges, nuiST_ScriptChange | nuiST_DirectionChange, start, length);
 
   {
     nuiTextRangeList::iterator it = ranges.begin();
@@ -336,4 +336,30 @@ float nuiTextLayout::GetFlush() const
 {
   return mFlush;
 }
+
+int32 nuiTextLayout::GetParagraphCount() const
+{
+  return mpParagraphs.size();
+}
+
+int32 nuiTextLayout::GetLineCount(int32 Paragraph) const
+{
+  return mpParagraphs[Paragraph]->size();
+}
+
+int32 nuiTextLayout::GetRunCount(int32 Paragraph, int32 Line) const
+{
+  return GetLine(Paragraph, Line)->GetRunCount();
+}
+
+nuiTextLine* nuiTextLayout::GetLine(int32 Paragraph, int32 Line) const
+{
+  return (*mpParagraphs[Paragraph])[Line];
+}
+
+nuiTextRun*  nuiTextLayout::GetRun(int32 Paragraph, int32 Line, int32 Run) const
+{
+  return GetLine(Paragraph, Line)->GetRun(Run);
+}
+
 
