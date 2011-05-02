@@ -9,6 +9,8 @@
 
 #pragma once
 #include "nui.h"
+#include "nuiAttributeAnimation.h"
+
 
 class nuiViewController;
 
@@ -98,6 +100,10 @@ private:
   bool mPoped;
   bool mAlphed;
 
+  
+  
+  
+  
   bool mPendingLayout;
   enum PendingOperationType {ePendingPush, ePendingPop, ePendingPopTo, ePendingPopToRoot};
   class PendingOperation
@@ -113,7 +119,62 @@ private:
   std::list<PendingOperation> mPendingOperations;
   void PopPendingOperation();
   
+  
+  
+  
+  
+  
+  
   nuiSize mAnimPosition;
+  
+  
+  // 
+  // animation class, only for coding convenience
+  // 
+  class TransitionAttributeAnimation: public nuiAttributeAnimation
+  {
+  public:
+    TransitionAttributeAnimation(nuiWidget* pTarget, const nglString& rAttribute, float start, float end, const nuiEasingMethod& rEasing, float duration)
+    : nuiAttributeAnimation()
+    {
+      SetTargetObject(pTarget);
+      SetTargetAttribute(rAttribute);
+      SetStartValue(start);
+      SetEndValue(end);
+      SetEasing(rEasing);
+      SetDuration(duration);
+      SetDeleteOnStop(true);
+    };
+    ~TransitionAttributeAnimation(){};
+  };
+  
+  // transparency fading animation
+  class TransitionAnimation_Alpha: public TransitionAttributeAnimation
+  {
+  public:
+    TransitionAnimation_Alpha(nuiWidget* pTarget, TransitionType transition, float start, float end)
+    : TransitionAttributeAnimation(pTarget, _T("Alpha"), start, end, mEasings[transition], mDurations[transition])
+    {};
+    TransitionAnimation_Alpha(nuiWidget* pTarget, float start, float end, const nuiEasingMethod& rEasing, float duration)
+    : TransitionAttributeAnimation(pTarget, _T("Alpha"), start, end, rEasing, duration)
+    {};
+    virtual ~TransitionAnimation_Alpha(){};
+  };
+
+  // container position animation
+  class TransitionAnimation_Position: public TransitionAttributeAnimation
+  {
+  public:
+    TransitionAnimation_Position(nuiWidget* pTarget, TransitionType transition, float start, float end)
+    : TransitionAttributeAnimation(pTarget, _T(".AnimPosition"), start, end, mEasings[transition], mDurations[transition])
+    {};
+    virtual ~TransitionAnimation_Position(){};
+  };
+  
+  
+  
+  
+  
   nuiEventSink<nuiNavigationController> mEventSink;
   
   std::list<nuiAnimation*> mCurrentAnims;
