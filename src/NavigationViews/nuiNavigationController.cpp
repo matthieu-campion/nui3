@@ -415,8 +415,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     }
     mpOut->ViewDidDisappear();
     mpOut->GetNavigationBar()->Release();
-    mpOut->Release();
     DelChild(mpOut->GetNavigationBar());
+    mpOut->Release();
     DelChild(mpOut);
     
     // mpIn->ViewDidAppear() is made in nuiViewController::ConnectTopLevel
@@ -565,11 +565,13 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     }
     
     nuiViewController* pView = *it;
-    
+
+    // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
+    // but their reference had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
+    // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
     pView->GetNavigationBar()->Release();
     pView->Release();
-    DelChild(pView->GetNavigationBar());
-    DelChild(pView);
+    
     mViewControllers.erase(it);
   }
   
@@ -626,10 +628,13 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     }
     
     nuiViewController* pView = *it;
+    
+    // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
+    // but their reference had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
+    // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
     pView->GetNavigationBar()->Release();
     pView->Release();
-    DelChild(pView->GetNavigationBar());
-    DelChild(pView);
+    
     mViewControllers.erase(it);
   }
   
@@ -639,7 +644,7 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     return;  
   }
   
-  // now, the main pop operation
+  // now, the main pop operation : it will be in charge of deleting the last child before getting to the root
   _PopViewControllerAnimated(animated, transition);
 }
 
@@ -689,10 +694,11 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
   if (mpOut->GetParent())
   {
     mpOut->GetNavigationBar()->Release();
-    mpOut->Release();
-
     DelChild(mpOut->GetNavigationBar());
+
+    mpOut->Release();
     DelChild(mpOut);
+    
     mViewControllers.pop_back(); 
 
     if (mPendingOperations.size() >0)
