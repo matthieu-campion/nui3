@@ -567,7 +567,7 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     nuiViewController* pView = *it;
 
     // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
-    // but their reference had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
+    // but their references had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
     // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
     pView->GetNavigationBar()->Release();
     pView->Release();
@@ -630,7 +630,7 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     nuiViewController* pView = *it;
     
     // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
-    // but their reference had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
+    // but their references had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
     // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
     pView->GetNavigationBar()->Release();
     pView->Release();
