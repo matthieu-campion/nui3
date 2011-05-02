@@ -2459,7 +2459,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_face_destroy(hb_face);
 }
 
-void nuiFontBase::Print(nuiDrawContext* pContext, nuiTextLayout* pLayout)
+void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayout* pLayout, bool AlignGlyphPixels)
 {
   bool blendsaved = pContext->GetState().mBlending;
   bool texturesaved = pContext->GetState().mTexturing;
@@ -2482,7 +2482,24 @@ void nuiFontBase::Print(nuiDrawContext* pContext, nuiTextLayout* pLayout)
       for (int32 r = 0; r < pLine->GetRunCount(); r++)
       {
         nuiTextRun* pRun = pLine->GetRun(r);
+        const std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
+        nuiFont* pFont = pRun->GetFont();
         
+        for (int32 g = 0; g < rGlyphs.size(); g++)
+        {
+          const nuiTextGlyph& rGlyph(rGlyphs.at(g));
+          
+          nuiGlyphLayout glyph;
+          
+          glyph.X     = X + rGlyph.mX;
+          glyph.Y     = Y + rGlyph.mY;
+          glyph.Pos   = rGlyph.mCluster;
+          glyph.Index = rGlyph.mIndex;
+          
+          pFont->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels);
+          Glyphs[glyph.mpTexture].push_back(glyph);
+        }
+
       }
     }
   }

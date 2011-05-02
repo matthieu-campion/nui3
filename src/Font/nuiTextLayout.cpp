@@ -38,6 +38,11 @@ nuiTextRun::~nuiTextRun()
   mpFont->Release();
 }
 
+const std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs() const
+{
+  return mGlyphs;
+}
+
 void nuiTextRun::SetFont(nuiFont* pFont)
 {
   NGL_ASSERT(!mpFont);
@@ -48,6 +53,11 @@ void nuiTextRun::SetFont(nuiFont* pFont)
 nuiUnicodeScript nuiTextRun::GetScript() const
 {
   return mScript;
+}
+
+nuiFont* nuiTextRun::GetFont() const
+{
+  return mpFont;
 }
 
 

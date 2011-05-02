@@ -34,6 +34,7 @@ public:
   float GetAdvanceX() const;
   float GetAdvanceY() const;
   const std::vector<nuiTextGlyph>& GetGlyphs() const;
+  nuiFont* GetFont() const;
   
 private:
   friend class nuiTextLayout;

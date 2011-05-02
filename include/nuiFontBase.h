@@ -479,7 +479,7 @@ public:
   bool PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
   
   void Shape(nuiTextRun* pRun);
-  void Print(nuiDrawContext* pContext, nuiTextLayout* pLayout);
+  void Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayout* pLayout, bool AlignGlyphPixels = true);
 protected:
   GLclampf mAlphaTest;  ///< Alpha test threshold as set by SetAlphaTest()
   const nglChar* OnError (uint& rError) const;
