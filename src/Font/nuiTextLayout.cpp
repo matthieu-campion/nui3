@@ -151,11 +151,6 @@ nuiTextLayout::~nuiTextLayout()
     for (uint32 l = 0; l < pParagraph->size(); l++)
     {
       nuiTextLine* pLine = (*pParagraph)[l];
-      for (uint32 r = 0; r < pLine->size(); r++)
-      { 
-        nuiTextRun* pRun = (*pLine)[r];
-        pRun->Release();
-      }
       delete pLine;
     }
     
