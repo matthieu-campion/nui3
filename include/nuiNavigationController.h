@@ -31,6 +31,10 @@ public:
   nuiNavigationController();
   virtual ~nuiNavigationController();
   
+  /// Push a view container to the top of the controller stack
+  /// \p pViewController
+  /// \p animated: true if the "push" action has to be animated. if false, it's immediate.
+  /// \p transition: type of animated transition : 
   void PushViewController(nuiViewController* pViewController, bool animated=true, TransitionType transition = eTransitionSlide, bool viewOverlay = false);
   void PopViewControllerAnimated(bool animated=true, TransitionType type = eTransitionSlide, bool viewOverlay = false); 
   
