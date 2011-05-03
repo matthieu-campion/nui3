@@ -26,8 +26,8 @@
 #include "nglKernel.h"
 #include "nglVideoMode.h"
 #include "nuiFontBase.h"
-#include "nuiFontInstance.h"
 #include "nuiFontLayout.h"
+#include "nuiFontInstance.h"
 #include "nglMath.h"
 #include "ngl_default_font.h"
 

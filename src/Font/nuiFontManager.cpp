@@ -624,7 +624,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/System/Library/Fonts/Cache/");
 #elif (defined _WIN32_)
-  nglUChar p[MAX_PATH];
+  nglChar p[MAX_PATH];
   HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
   if (hr == S_OK)
   {
