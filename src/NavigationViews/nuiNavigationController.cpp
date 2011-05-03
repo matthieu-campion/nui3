@@ -127,15 +127,17 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   mpOut  = NULL;
   
   mpIn->mAnimated = animated;
-  mpIn->SetAlpha(1);
-  mpIn->GetNavigationBar()->SetAlpha(1);
+  //LBDEBUG
+//  mpIn->SetAlpha(1);
+//  mpIn->GetNavigationBar()->SetAlpha(1);
   
   if ((mViewControllers.size() >0) && !viewOverlay)
   {
     mpOut = mViewControllers.back();
     mpOut->mAnimated = animated;
-    mpOut->SetAlpha(1);
-    mpOut->GetNavigationBar()->SetAlpha(1);
+    //LBDEBUG
+//    mpOut->SetAlpha(1);
+//    mpOut->GetNavigationBar()->SetAlpha(1);
   }
 
   // push the new view in the stack
@@ -160,33 +162,38 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     
     mAnimPosition = 0;
     
-    mpIn->SetAlpha(0);
-    mpIn->GetNavigationBar()->SetAlpha(0);
+    //LBDEBUG
+//    mpIn->SetAlpha(0);
+//    mpIn->GetNavigationBar()->SetAlpha(0);
     AddChild(mpIn);
     AddChild(mpIn->GetNavigationBar());
     
     // FADE IN animation
-    TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn, transition, 0, 1);
-    mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPushStop, (void*)viewOverlay);
-    NGL_ASSERT(mCurrentAnims.size() == 0);
-    mCurrentAnims.push_back(pAnim);
-    pAnim->Play();
+    TransitionAnimation_Alpha* pAnim = NULL;
+
+    //LBDEBUG
+//    pAnim = new TransitionAnimation_Alpha(mpIn, transition, 0, 1);
+//    mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPushStop, (void*)viewOverlay);
+//    NGL_ASSERT(mCurrentAnims.size() == 0);
+//    mCurrentAnims.push_back(pAnim);
+//    pAnim->Play();
 
     // nav bar FADE IN animation
     if (mpIn->GetNavigationBar()->IsVisible())
     {
-      pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
-      pAnim->SetDeleteOnStop(true);
-      mCurrentAnims.push_back(pAnim);
-      pAnim->Play();
+//LBDEBUG
+      //      pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
+//      mCurrentAnims.push_back(pAnim);
+//      pAnim->Play();
     }
     
     // FADE OUT animation
     if (mpOut)
     {
-      pAnim = new TransitionAnimation_Alpha(mpOut, transition, 1, 0);
-      mCurrentAnims.push_back(pAnim);
-      pAnim->Play();    
+      //LBDEBUG
+//      pAnim = new TransitionAnimation_Alpha(mpOut, transition, 1, 0);
+//      mCurrentAnims.push_back(pAnim);
+//      pAnim->Play();    
     }
     
   }
@@ -199,7 +206,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mPushed = true;
     mPoped = false;
     mAlphed = false;
-    
+     
     mAnimPosition = idealsize.GetWidth();
     
     AddChild(mpIn);  
@@ -215,9 +222,10 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     // nav bar FADE IN animation
     if (mpIn->GetNavigationBar()->IsVisible())
     {
-      TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
-      mCurrentAnims.push_back(pAnim);
-      pAnim->Play();
+      //LBDEBUG
+//      TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
+//      mCurrentAnims.push_back(pAnim);
+//      pAnim->Play();
     }    
   }
   else 
@@ -273,13 +281,14 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   
   nuiRect idealsize = GetRect().Size();
   
-  mpOut->SetAlpha(1);
-  mpOut->GetNavigationBar()->SetAlpha(1);
-  if (mpIn)
-  {
-    mpIn->SetAlpha(1);
-    mpIn->GetNavigationBar()->SetAlpha(1);
-  }
+  //LBDEBUG
+//  mpOut->SetAlpha(1);
+//  mpOut->GetNavigationBar()->SetAlpha(1);
+//  if (mpIn)
+//  {
+//    mpIn->SetAlpha(1);
+//    mpIn->GetNavigationBar()->SetAlpha(1);
+//  }
   
   // virtual cbk
   mpOut->ViewWillDisappear();
@@ -301,31 +310,36 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     if (mpIn)
     {
       AddChild(mpIn);  
-      mpIn->SetAlpha(0);
       AddChild(mpIn->GetNavigationBar());
-      mpIn->GetNavigationBar()->SetAlpha(0);
+      //LBDEBUG
+//      mpIn->SetAlpha(0);
+//      mpIn->GetNavigationBar()->SetAlpha(0);
     
       // FADE IN animation
-      TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn, transition, 0, 1);
-      mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop, (void*)viewOverlay);
-      NGL_ASSERT(mCurrentAnims.size() == 0);
-      mCurrentAnims.push_back(pAnim);
-      pAnim->Play();
+      TransitionAnimation_Alpha* pAnim = NULL;
+      //LBDEBUG
+//      pAnim = new TransitionAnimation_Alpha(mpIn, transition, 0, 1);
+//      mEventSink.Connect(pAnim->AnimStop, &nuiNavigationController::OnViewPopStop, (void*)viewOverlay);
+//      NGL_ASSERT(mCurrentAnims.size() == 0);
+//      mCurrentAnims.push_back(pAnim);
+//      pAnim->Play();
     
       // nav bar FADE IN animation
       if (mpIn->GetNavigationBar()->IsVisible())
       {
-        pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
-        mCurrentAnims.push_back(pAnim);
-        pAnim->Play();
+        //LBDEBUG
+//        pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
+//        mCurrentAnims.push_back(pAnim);
+//        pAnim->Play();
       }
     }
     
     
     // FADE OUT animation
-    TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpOut, transition, 1, 0);
-    mCurrentAnims.push_back(pAnim);
-    pAnim->Play();
+    //LBDEBUG
+//    TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpOut, transition, 1, 0);
+//    mCurrentAnims.push_back(pAnim);
+//    pAnim->Play();
     
   }
   //*****************************************************
@@ -348,9 +362,10 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
       // nav bar FADE IN animation
       if (mpIn->GetNavigationBar()->IsVisible())
       {
-        TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
-        mCurrentAnims.push_back(pAnim);
-        pAnim->Play();
+        //LBDEBUG
+//        TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
+//        mCurrentAnims.push_back(pAnim);
+//        pAnim->Play();
       }      
     }
     

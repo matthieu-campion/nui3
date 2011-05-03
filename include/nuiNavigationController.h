@@ -104,6 +104,8 @@ private:
   
   
   
+  //********************************************
+  // transition requests stack, to avoid process overlapping
   bool mPendingLayout;
   enum PendingOperationType {ePendingPush, ePendingPop, ePendingPopTo, ePendingPopToRoot};
   class PendingOperation
@@ -128,6 +130,7 @@ private:
   nuiSize mAnimPosition;
   
   
+  //********************************************
   // 
   // animation class, only for coding convenience
   // 
@@ -148,6 +151,7 @@ private:
     ~TransitionAttributeAnimation(){};
   };
   
+  //********************************************
   // transparency fading animation
   class TransitionAnimation_Alpha: public TransitionAttributeAnimation
   {
@@ -161,6 +165,7 @@ private:
     virtual ~TransitionAnimation_Alpha(){};
   };
 
+  //********************************************
   // container position animation
   class TransitionAnimation_Position: public TransitionAttributeAnimation
   {

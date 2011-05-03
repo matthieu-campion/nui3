@@ -17,6 +17,7 @@ nuiViewController::nuiViewController()
   mAnimated = false;
   
   mpBar = new nuiNavigationBar();
+
 }
 
 

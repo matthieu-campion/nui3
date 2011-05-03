@@ -40,7 +40,7 @@ public:
   bool GetTranslucent();
 
   void SetTitle(const nglString& rTitle);
-  void SetBackNavigationItem(nuiNavigationButton* pButton);
+  void SetBackNavigationItem(bool set);
   void SetTopNavigationItem(nuiNavigationButton* pButton);
   void SetLeftNavigationItem(nuiNavigationButton* pButton);
   void SetRightNavigationItem(nuiNavigationButton* pButton);
@@ -48,7 +48,7 @@ public:
 protected:
   
 //  virtual nuiRect CalcIdealSize();
-  virtual bool Draw(nuiDrawContext* pContext);
+//  virtual bool Draw(nuiDrawContext* pContext);
   
 private:
   
