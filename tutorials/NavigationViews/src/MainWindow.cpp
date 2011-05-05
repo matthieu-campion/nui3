@@ -37,7 +37,7 @@ void MainWindow::OnCreation()
   AddChild(mpNav);
   
   MyViewController* pView = new MyViewController(mpNav);
-  mpNav->PushViewController(pView);
+  mpNav->PushViewController(pView, false);
 }
 
 

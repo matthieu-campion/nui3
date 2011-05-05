@@ -86,7 +86,8 @@ void nuiNavigationBar::SetTitle(const nglString& rTitle)
 
 void nuiNavigationBar::SetBackNavigationItem(bool set)
 {
-  nuiNavigationButton* pButton = new nuiNavigationButton(const nglString& rText);
+  //LBDEBUG TODO
+  //nuiNavigationButton* pButton = new nuiNavigationButton(_T("Back"));
   
 }
 

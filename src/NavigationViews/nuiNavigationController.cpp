@@ -244,8 +244,13 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   }
 
   if (!animated)
+  {
     if (mPendingOperations.size() >0)
+    {  
       PopPendingOperation();
+      UpdateLayout();
+    }
+  }
 }
 
 
@@ -393,7 +398,10 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     mViewControllers.pop_back();
     
     if (mPendingOperations.size() >0)
+    {  
       PopPendingOperation();
+      UpdateLayout();
+    }
   }
 
 }
@@ -427,22 +435,25 @@ bool nuiNavigationController::Draw(nuiDrawContext* pContext)
 // virtual 
 bool nuiNavigationController::SetRect(const nuiRect& rRect)
 {
-  if (!mPushed && !mPoped)
-    nuiSimpleContainer::SetRect(rRect);
-  else
-    nuiWidget::SetRect(rRect);
+  NGL_OUT(_T("nuiNavigationController::SetRect(%ls)\n"), rRect.GetValue().GetChars());
  
   // pending operation, if any...
   if (mPendingLayout)
   {
     mPendingLayout = false;
-    if (mPendingOperations.size() >0)
+    if (mPendingOperations.size() > 0)
+    { 
       PopPendingOperation();
+    }
+  }
+  else if (!mPushed && !mPoped)
+  {
+    // nothing to layout right now...
+    nuiSimpleContainer::SetRect(rRect);
+    return true;
   }
 
-  // nothing to layout right now...
-  if (!mPushed && !mPoped)
-    return true;
+  nuiWidget::SetRect(rRect);
 
   nuiRect rect;
   rect.Set(mAnimPosition, rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
@@ -490,7 +501,6 @@ void nuiNavigationController::PopPendingOperation()
     break;
   }    
 
-  UpdateLayout();
 }
 
 
@@ -642,7 +652,10 @@ void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
     }
 
     if (mPendingOperations.size() >0)
+    {
       PopPendingOperation();
+      UpdateLayout();
+    }
   }
   
 }
@@ -671,7 +684,10 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
     mViewControllers.pop_back(); 
 
     if (mPendingOperations.size() >0)
+    {
       PopPendingOperation();
+      UpdateLayout();
+    }
   }
   
 }
@@ -693,7 +709,10 @@ void nuiNavigationController::OnNotification(const nuiNotification& rNotif)
   if (rNotif.GetName() == NOTIF_PENDING_OPERATION)
   {
     if (mPendingOperations.size() > 0)
+    {  
       PopPendingOperation();
+      UpdateLayout();
+    }
     return;
   }
 }
