@@ -14,7 +14,6 @@
 nuiNavigationBar::nuiNavigationBar()
 : nuiSimpleContainer(), mEventSink(this)
 {
-  //LBDEBUG
   SetObjectClass(_T("nuiNavigationBar"));
   
   mBarStyle = eBarStyleDefault;

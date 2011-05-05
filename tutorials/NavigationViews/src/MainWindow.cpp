@@ -110,11 +110,6 @@ MyViewController::MyViewController(nuiNavigationController* pNav)
   name.Format(_T("MyViewController%d"), mCount % 3);
   SetObjectClass(name);
   
-  name.Format(_T("%d"), mCount);
-  nuiLabel* pLabel = new nuiLabel(name);
-  pLabel->SetObjectName(_T("ViewControllerName"));
-  AddChild(pLabel);
-  
   // pop buttons
   nuiButton* pButton = new nuiButton(_T("pop [slide]"));
   pButton->SetObjectName(_T("PopButton0"));

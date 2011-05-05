@@ -1651,6 +1651,7 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
   if (pBar->GetBarStyle() == eBarStyleDefault)
   {
     pGradient->SetColors(nuiColor(145,165,191), nuiColor(109,131,161));
+
   }
   else if (pBar->GetBarStyle() == eBarStyleBlack)
   {
@@ -1662,7 +1663,7 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
     nuiColor tint2 = nuiColor(tint.Red()+(18.f/255.f), tint.Green()+(17.f/255.f), tint.Blue()+(15.f/255.f), tint.Alpha());
     pGradient->SetColors(tint2, tint);  
   }
-  
+
   
   pMeta->AddDecoration(pGradient);
   
