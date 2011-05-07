@@ -699,7 +699,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   Info.XPos = 0;
   Info.YPos = 0;
 
-#if 1
+#if 0
 #ifndef _UIKIT_
   gpWin = new nuiMainWindow(ContextInfo, Info);
   nuiVBox* pBox = new nuiVBox();
@@ -1052,6 +1052,8 @@ nuiFontManager nuiFontManager::gManager;
 
 nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
 {
+  nuiFontBase::Init();
+
   const bool FORCE_FONT_ENUM = 0;
   if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
   {

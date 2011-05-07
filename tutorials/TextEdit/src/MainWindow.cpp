@@ -12,13 +12,16 @@
 #include "nuiVBox.h"
 
 #include "nuiTextLayout.h"
+#include "nuiFontManager.h"
+#include "nuiFont.h"
 
 /*
  * MainWindow
  */
 
 MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, bool ShowFPS, const nglContext* pShared )
-  : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this)
+  : nuiMainWindow(rContextInfo, rInfo, pShared, nglPath(ePathCurrent)), mEventSink(this),
+    mpLayout(NULL), mpFont(NULL)
 {
   SetDebugMode(true);
   //mClearBackground = false;
@@ -26,6 +29,9 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 
 MainWindow::~MainWindow()
 {
+  delete mpLayout;
+  if (mpFont)
+    mpFont->Release();
 }
 
 
@@ -40,7 +46,16 @@ void MainWindow::OnCreation()
     pStream->SetTextEncoding(eUTF8);
     nglString text;
     pStream->ReadText(text);
-    TextLayoutTest(text);
+
+    nuiFontRequest request;
+    request.MustHaveSize(25, 2);
+    //request.SetName("Times", 2);
+    request.SetName("Arial", 2);
+    mpFont = nuiFontManager::GetManager().GetFont(request);
+    printf("Requested font: %s\n", mpFont->GetFamilyName().GetChars());
+    mpLayout = new nuiTextLayout(mpFont);
+    mpLayout->LayoutText(text);
+    
     pText->AddText(text);
     delete pStream;
   }
@@ -50,4 +65,17 @@ void MainWindow::OnCreation()
   pScrollView->AddChild(pText);
   
   pScrollView->SetBorder(10, 10, 32, 32);
+}
+
+bool MainWindow::Draw(nuiDrawContext* pContext)
+{
+  nuiMainWindow::Draw(pContext);
+
+  if (mpLayout)
+  {
+    pContext->SetTextColor(nuiColor(0, 0, 0));
+    mpFont->Print(pContext, 100, 100, mpLayout, false);
+  }
+  
+  return true;
 }

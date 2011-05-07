@@ -249,7 +249,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
         
-        printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
+        //printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
 
         
         i++;
@@ -307,7 +307,7 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
     nuiTextRangeList::iterator it = ranges.begin();
     nuiTextRangeList::iterator end = ranges.end();
     uint32 i = 0;
-    uint32 pos = 0;
+    uint32 pos = start;
     while (it != end)
     {
       const nuiTextRange& range(*it);

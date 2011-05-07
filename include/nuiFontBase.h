@@ -558,7 +558,7 @@ private:
   
   /* Init/setup
    */
-  bool Init();                                  // Mandatory init for all instances
+  static bool Init();                                  // Mandatory init for all instances
   bool Load (const nglPath& rPath, uint Face);  // Create font object from font file
   bool Load (const uint8* pBase, int32 Size, uint Face, bool StaticBuffer); // Create font object from memory
   bool Load (FaceID ID);                        // Clone font object from font ID (font already 'installed')
@@ -569,5 +569,6 @@ private:
   static void OnExit();
   
   friend class nuiFontInfo;
+  friend class nuiFontManager;
 };
 

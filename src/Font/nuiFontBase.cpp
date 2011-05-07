@@ -1618,7 +1618,8 @@ bool nuiFontBase::Init()
     error = FT_Init_FreeType (&gFTLibrary);
     if (error)
     {
-      SetError (_T("font"), NGL_FONT_EINIT);
+      NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Unable to initialize the FreeType library")); )
+      //SetError (_T("font"), NGL_FONT_EINIT);
       return false;
     }
     App->AddExit (OnExit);
@@ -2501,31 +2502,13 @@ void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayou
         }
 
       }
+      Y += 20;
     }
   }
 
-#if 0
-  for (i = 0; i < todo; i++)
-  {
-    // Fetch i-th glyph in layout
-    const nuiGlyphLayout* pglyph = pLayout.GetGlyph(i);
-    if (!pglyph)
-      break;
-    
-    nuiGlyphLayout glyph;
-    
-    glyph.X     = X + pglyph->X;
-    glyph.Y     = Y + pglyph->Y;
-    glyph.Pos   = pglyph->Pos;
-    glyph.Index = pglyph->Index;
-    
-    if (((nuiFontBase*)pglyph->mpFont)->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels))
-      done++;
-    
-    Glyphs[glyph.mpTexture].push_back(glyph);
-  }
-  
   PrintGlyphs(pContext, Glyphs);
+
+#if 0
   
   // Draw underlines if needed
   if (rLayout.GetUnderline())
