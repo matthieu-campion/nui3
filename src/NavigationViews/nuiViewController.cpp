@@ -36,7 +36,7 @@ void nuiViewController::ConnectTopLevel()
 // virtual 
 void nuiViewController::ViewWillAppear()
 {
-
+  
 }
 
 // virtual 

@@ -9,6 +9,7 @@
 
 #pragma once
 #include "nui.h"
+#include "nuiHBox.h"
 #include "nuiNavigationButton.h"
 
 
@@ -23,7 +24,7 @@ enum nuiNavigationBarStyle
 };
 
 
-class nuiNavigationBar : public nuiSimpleContainer
+class nuiNavigationBar : public nuiHBox
 {
 public:
   nuiNavigationBar();

@@ -68,11 +68,10 @@ nuiNavigationButton::nuiNavigationButton(const nglString& rText)
 }
 
 
-nuiNavigationButton::nuiNavigationButton(const nglPath& rIconTexture)
+nuiNavigationButton::nuiNavigationButton(nuiTexture* pIconTexture)
 : nuiButton()
 {
-  nuiTexture* pTex = nuiTexture::GetTexture(rIconTexture);
-  AddChild(new nuiImage(pTex));
+  AddChild(new nuiImage(pIconTexture));
 }
 
 

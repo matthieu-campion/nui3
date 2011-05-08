@@ -46,7 +46,7 @@ class nuiNavigationButton : public nuiButton
 public:
   nuiNavigationButton(nuiBarButtonSystemItem systemItem);
   nuiNavigationButton(const nglString& rText);
-  nuiNavigationButton(const nglPath& rIconTexture);
+  nuiNavigationButton(nuiTexture* pIconTexture);
   nuiNavigationButton();
   virtual ~nuiNavigationButton();
   

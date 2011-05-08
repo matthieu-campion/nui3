@@ -12,9 +12,13 @@
 #include "nuiFontManager.h"
 
 nuiNavigationBar::nuiNavigationBar()
-: nuiSimpleContainer(), mEventSink(this)
+: nuiHBox(3), mEventSink(this)
 {
   SetObjectClass(_T("nuiNavigationBar"));
+  
+  nuiHBox::SetCellExpand(0, nuiExpandFixed);
+  nuiHBox::SetCellExpand(1, nuiExpandShrinkAndGrow);
+  nuiHBox::SetCellExpand(2, nuiExpandFixed);
   
   mBarStyle = eBarStyleDefault;
   mTintColor = nuiColor(0,0,0);
@@ -85,25 +89,25 @@ void nuiNavigationBar::SetTitle(const nglString& rTitle)
 
 void nuiNavigationBar::SetBackNavigationItem(bool set)
 {
-  //LBDEBUG TODO
-  //nuiNavigationButton* pButton = new nuiNavigationButton(_T("Back"));
-  
+  nuiNavigationButton* pButton = new nuiNavigationButton(_T("Back"));
+  pButton->SetObjectClass(_T("nuiNavigationButton"));
+  SetLeftNavigationItem(pButton);
 }
 
 
 void nuiNavigationBar::SetTopNavigationItem(nuiNavigationButton* pButton)
 {
-
+  nuiHBox::SetCell(1, pButton);
 }
 
 void nuiNavigationBar::SetLeftNavigationItem(nuiNavigationButton* pButton)
 {
-
+  nuiHBox::SetCell(0, pButton);
 }
 
 void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
 {
-
+  nuiHBox::SetCell(2, pButton);
 }
   
 
