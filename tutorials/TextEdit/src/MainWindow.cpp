@@ -50,7 +50,7 @@ void MainWindow::OnCreation()
     nuiFontRequest request;
     request.MustHaveSize(25, 2);
     //request.SetName("Times", 2);
-    request.SetName("Arial", 2);
+    request.SetName("Helvetica", 2);
     mpFont = nuiFontManager::GetManager().GetFont(request);
     printf("Requested font: %s\n", mpFont->GetFamilyName().GetChars());
     mpLayout = new nuiTextLayout(mpFont);

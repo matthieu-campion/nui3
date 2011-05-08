@@ -53,7 +53,8 @@ hb_nui_get_general_category (hb_unicode_funcs_t *ufuncs,
                              hb_codepoint_t      unicode,
                              void               *user_data)
 {
-  switch (ucprop_lookup(unicode, 0))
+  int32 res = ucprop_lookup(unicode, 0);
+  switch (res)
   {
     case UC_CN:			return HB_UNICODE_GENERAL_CATEGORY_UNASSIGNED;
       
@@ -104,7 +105,7 @@ hb_nui_get_mirroring (hb_unicode_funcs_t *ufuncs,
                       hb_codepoint_t      unicode,
                       void               *user_data)
 {
-  return ucismirroring(unicode);
+  return nuiGetMirrorringChar(unicode);
 }
 
 hb_script_t hb_get_script_from_nui(nuiUnicodeScript script)

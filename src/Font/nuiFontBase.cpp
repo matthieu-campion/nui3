@@ -1362,7 +1362,7 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
 }
 
 
-int32 nuiFontBase::GetGlyphIndex(nglUChar Source) const
+int32 nuiFontBase::GetGlyphIndex(nglUChar Source, nglUChar VariationSelector) const
 {
   if (!mpFace->Face)
     return -1;
@@ -2416,17 +2416,28 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   unsigned int num_glyphs, i;
   hb_position_t x;
   const nglChar* text = NULL;
+  int32 total = 0;
   int32 len = 0;
+  int32 offset = 0;
 
-  text = pRun->GetString().GetChars() + pRun->GetPosition();
+  text = pRun->GetString().GetChars();
+  total = pRun->GetString().GetLength();
   len = pRun->GetLength();
+  offset = pRun->GetPosition();
+
+#ifdef DEBUG
+  const nglChar* debug_text = text + offset;
+  nglString dbgstr(debug_text, len);
+  printf("Debug shape: %s\n", dbgstr.GetChars());
+#endif
   
+  pRun->mAdvanceY = 0;
   hb_buffer = hb_buffer_create(len);
   
   hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
   
-  hb_buffer_add_utf8(hb_buffer, text, len, 0, len);
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
+  hb_buffer_add_utf8(hb_buffer, text, total, offset, len);
   //if (language)
   //  hb_buffer_set_language(hb_buffer, hb_language_from_string(language));
   
@@ -2452,9 +2463,18 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
     
     hb_glyph++;
     hb_position++;
+    
+    nuiGlyphInfo Info;
+    if (GetGlyphInfo(Info, hb_glyph->codepoint, nuiFontBase::eGlyphBitmap))
+    {
+      // prepare measurements 
+    }
   }
+  
+  
+  
   pRun->mAdvanceX = x * (1./64);
-  pRun->mAdvanceY = 0;
+  pRun->mAdvanceY = GetHeight();
   hb_buffer_destroy(hb_buffer);
   hb_font_destroy(hb_font);
   hb_face_destroy(hb_face);
@@ -2474,11 +2494,15 @@ void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayou
   
   std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
 
+  float x = X;
+  float y = Y;
+  
   // Iterate runs:
   for (int32 p = 0; p < pLayout->GetParagraphCount(); p++)
   {
     for (int32 l = 0; l < pLayout->GetLineCount(p); l++)
     {
+      x = X;
       nuiTextLine* pLine = pLayout->GetLine(p, l);
       for (int32 r = 0; r < pLine->GetRunCount(); r++)
       {
@@ -2492,17 +2516,17 @@ void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayou
           
           nuiGlyphLayout glyph;
           
-          glyph.X     = X + rGlyph.mX;
-          glyph.Y     = Y + rGlyph.mY;
+          glyph.X     = x + rGlyph.mX;
+          glyph.Y     = y + rGlyph.mY;
           glyph.Pos   = rGlyph.mCluster;
           glyph.Index = rGlyph.mIndex;
           
           pFont->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels);
           Glyphs[glyph.mpTexture].push_back(glyph);
         }
-
+        x += pRun->GetAdvanceX();
       }
-      Y += 20;
+      y += pLine->GetAdvanceY();
     }
   }
 

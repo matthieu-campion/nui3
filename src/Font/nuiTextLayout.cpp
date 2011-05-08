@@ -142,6 +142,28 @@ nuiTextRun* nuiTextLine::GetRun(int32 index) const
   return mpRuns[index];
 }
 
+float nuiTextLine::GetAdvanceY() const
+{
+  float y = 0;
+  for (uint32 i = 0; i < mpRuns.size(); i++)
+  {
+    y = MAX(y, mpRuns[i]->GetAdvanceY());
+  }
+
+  return y;
+}
+
+float nuiTextLine::GetAdvanceX() const
+{
+  float x = 0;
+  for (uint32 i = 0; i < mpRuns.size(); i++)
+  {
+    x += mpRuns[i]->GetAdvanceX();
+  }
+  
+  return x;
+}
+
 
 /////////////////
 // nuiTextLayout

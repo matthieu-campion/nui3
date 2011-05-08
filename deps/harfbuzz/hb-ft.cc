@@ -53,7 +53,11 @@ hb_ft_get_glyph (hb_font_t *font HB_UNUSED,
   }
 #endif
 
-  return FT_Get_Char_Index (ft_face, unicode);
+  //  return FT_Get_Char_Index (ft_face, unicode);
+  long r = FT_Get_Char_Index (ft_face, unicode);
+  if (!r)
+    printf("%x -> %x\n", unicode, r);
+  return r;
 }
 
 static void

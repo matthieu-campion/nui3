@@ -68,6 +68,9 @@ public:
   float GetX() const;
   float GetY() const;
   void SetPosition(float X, float Y);
+  
+  float GetAdvanceX() const;
+  float GetAdvanceY() const;
 private:
   friend class nuiTextLayout;
   

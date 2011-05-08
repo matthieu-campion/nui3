@@ -268,3 +268,4 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
 
 nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString);
 
+nglUChar nuiGetMirrorringChar(nglUChar ch); /// See http://www.unicode.org/Public/UNIDATA/BidiMirroring.txt and http://unicode.org/reports/tr9/#Mirroring
