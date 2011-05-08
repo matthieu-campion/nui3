@@ -205,10 +205,10 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
   {
     // Scan through the text and look for end of line markers
     nglUChar ch = rString.GetNextUChar(position);
-    if (ch == '\n')
+    if (ch == '\n' || ch == 0xb || ch == 0x2028 || ch == 0x2029)
     {
       // Found a paragraph
-      LayoutParagraph(rString, start, position - start);
+      LayoutParagraph(rString, start, position - start - 1); // Eat the \n char
       start = position;
     }
   }
@@ -295,7 +295,7 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
   
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
-  nuiSplitText(rString, ranges, nuiST_ScriptChange | nuiST_DirectionChange, start, length);
+  nuiSplitText(rString, ranges, nuiST_ScriptChange, start, length);
 
   {
     nuiTextRangeList::iterator it = ranges.begin();
