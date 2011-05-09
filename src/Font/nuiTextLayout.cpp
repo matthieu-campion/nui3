@@ -334,7 +334,7 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
     {
       const nuiTextRange& range(*it);
       uint32 len = range.mLength;
-      //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+      printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
          
       nuiTextRun* pRun = new nuiTextRun(range.mScript, rString, pos, len);
       pLine->AddRun(pRun);

@@ -4,48 +4,6 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "0"
-         filePath = "/Users/meeloo/work/nui3/src/Font/nuiFontBase.cpp"
-         timestampString = "326477827.628411"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2214"
-         endingLineNumber = "2214"
-         landmarkName = "nuiFontBase::PrepareGlyph (int32 Index, nuiGlyphLayout&amp; rGlyph, bool AlignGlyphPixels)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "0"
-         filePath = "/Users/meeloo/work/nui3/deps/harfbuzz/hb-ft.cc"
-         timestampString = "326500286.359128"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
-         landmarkName = "hb_ft_get_glyph (hb_font_t *font HB_UNUSED, hb_face_t *face HB_UNUSED, const void *user_data, hb_codepoint_t unicode, hb_codepoint_t variation_selector)"
-         landmarkType = "7">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "0"
-         filePath = "/Users/meeloo/work/nui3/src/Font/nuiFontBase.cpp"
-         timestampString = "326507963.554094"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2440"
-         endingLineNumber = "2440"
-         landmarkName = "nuiFontBase::Shape(nuiTextRun* pRun)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
@@ -102,18 +60,32 @@
          landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "0"
          filePath = "/Users/meeloo/work/nui3/deps/harfbuzz/hb-buffer.cc"
-         timestampString = "326503948.501109"
+         timestampString = "326665256.198802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "370"
-         endingLineNumber = "370"
+         startingLineNumber = "371"
+         endingLineNumber = "371"
          landmarkName = "_hb_buffer_replace_glyph (hb_buffer_t *buffer, hb_codepoint_t glyph_index)"
          landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TextEdit/src/Application.cpp"
+         timestampString = "326674967.45194"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "32"
+         endingLineNumber = "32"
+         landmarkName = "Application::OnExit (int Code)"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
