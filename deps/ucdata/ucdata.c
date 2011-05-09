@@ -290,6 +290,29 @@ uint32_t code, n;
     return 0;
 }
 
+void
+#ifdef __STDC__
+ucprop_get(uint32_t code, uint32_t* mask1, uint32_t* mask2)
+#else
+ucprop_get(code, mask1, mask2)
+uint32_t code;
+uint32_t* mask1;
+uint32_t* mask2;
+#endif
+{
+  uint32_t i;
+  for (i = 0; mask1 && i < 32; i++) {
+    if (ucprop_lookup(code, i))
+      *mask1 |= masks32[i];
+  }
+  
+  for (i = 32; mask2 && i < _ucprop_size; i++) {
+    if (ucprop_lookup(code, i))
+      *mask2 |= masks32[i & 31];
+  }
+}
+
+
 int32_t
 #ifdef __STDC__
 ucisprop(uint32_t code, uint32_t mask1, uint32_t mask2)
