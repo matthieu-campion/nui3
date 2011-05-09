@@ -143,7 +143,8 @@ hb_nui_get_mirroring (hb_unicode_funcs_t *ufuncs,
                       hb_codepoint_t      unicode,
                       void               *user_data)
 {
-  return nuiGetMirrorringChar(unicode);
+  //  return nuiGetMirrorringChar(unicode);
+  return unicode;
 }
 
 hb_script_t hb_get_script_from_nui(nuiUnicodeScript script)
