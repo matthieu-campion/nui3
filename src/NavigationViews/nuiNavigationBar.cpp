@@ -21,7 +21,7 @@ nuiNavigationBar::nuiNavigationBar()
   nuiHBox::SetCellExpand(2, nuiExpandFixed);
   
   mBarStyle = eBarStyleDefault;
-  mTintColor = nuiColor(0,0,0);
+  //mTintColor = nuiColor(0,0,0);
   mTranslucent = false;
 }
 
@@ -44,10 +44,10 @@ void nuiNavigationBar::SetBarStyle(nuiNavigationBarStyle style)
 }
 
 
-void nuiNavigationBar::SetTintColor(const nuiColor& rColor)
-{
-  mTintColor = rColor;
-}
+//void nuiNavigationBar::SetTintColor(const nuiColor& rColor)
+//{
+//  mTintColor = rColor;
+//}
 
 void nuiNavigationBar::SetTranslucent(bool set)
 {
@@ -60,10 +60,10 @@ nuiNavigationBarStyle nuiNavigationBar::GetBarStyle() const
 }
 
 
-const nuiColor& nuiNavigationBar::GetTintColor() const
-{
-  return mTintColor;
-}
+//const nuiColor& nuiNavigationBar::GetTintColor() const
+//{
+//  return mTintColor;
+//}
 
 bool nuiNavigationBar::GetTranslucent()
 {
@@ -90,7 +90,7 @@ void nuiNavigationBar::SetTitle(const nglString& rTitle)
 void nuiNavigationBar::SetBackNavigationItem(bool set)
 {
   nuiNavigationButton* pButton = new nuiNavigationButton(_T("Back"));
-  pButton->SetObjectClass(_T("nuiNavigationButton"));
+  pButton->SetObjectClass(_T("nuiNavigationButtonLeft"));
   SetLeftNavigationItem(pButton);
 }
 
@@ -109,7 +109,10 @@ void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
 {
   nuiHBox::SetCell(2, pButton);
 }
-  
+
+
+ 
+
 
 // virtual 
 //LBDEBUG

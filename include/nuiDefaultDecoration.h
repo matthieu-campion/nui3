@@ -37,9 +37,9 @@ public:
   static void TabView_Contents(nuiTabView* pView, nuiWidget* pContents);
   
   // NavigationViews
-  static void NavigationButton(nuiWidget* pWidget);
   static void NavigationBar(nuiWidget* pWidget);
-  
+  static void NavigationButton(nuiNavigationButton* pWidget, nuiNavigationBarStyle style);
+  static nglString NavigationBarStyleToString(nuiNavigationBarStyle barStyle);
   
   static nglImage* GetImage(const nglString& rRef);
   

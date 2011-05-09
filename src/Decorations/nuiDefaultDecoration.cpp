@@ -103,7 +103,6 @@ void nuiDefaultDecoration::Init()
 
   // NavigationViews
   nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiNavigationBar")), &nuiDefaultDecoration::NavigationBar);
-  nuiWidget::SetDefaultDecoration(nuiObject::GetClassNameIndex(_T("nuiNavigationButton")), &nuiDefaultDecoration::NavigationButton);
   
   
   App->AddExit(nuiDefaultDecoration::Exit);
@@ -1657,12 +1656,12 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
   {
     pGradient->SetColors(nuiColor(0,0,0), nuiColor(0,0,0));    
   }
-  else
-  {
-    nuiColor tint = pBar->GetTintColor();
-    nuiColor tint2 = nuiColor(tint.Red()+(18.f/255.f), tint.Green()+(17.f/255.f), tint.Blue()+(15.f/255.f), tint.Alpha());
-    pGradient->SetColors(tint2, tint);  
-  }
+//  else
+//  {
+//    nuiColor tint = pBar->GetTintColor();
+//    nuiColor tint2 = nuiColor(tint.Red()+(18.f/255.f), tint.Green()+(17.f/255.f), tint.Blue()+(15.f/255.f), tint.Alpha());
+//    pGradient->SetColors(tint2, tint);  
+//  }
 
   
   pMeta->AddDecoration(pGradient);
@@ -1682,10 +1681,73 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
 
 
 //static 
-void nuiDefaultDecoration::NavigationButton(nuiWidget* pWidget)
+void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNavigationBarStyle style)
 {
-  nuiNavigationButton* pButton = (nuiNavigationButton*)pWidget;
-  // TODO ?
+  nglString decoName;
+  nglString barStyle = NavigationBarStyleToString(style);
+  
+  decoName.Format(_T("nuiDefaultNavigation%lsButtonDecoration"), barStyle);
+  nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(decoName);
+  
+  if (pDeco)
+  {
+    pWidget->SetDecoration(pDeco);
+    return;
+  }
+  
+  void* pButtonUp = NULL;
+  void* pButtonDown = NULL;
+  long buttonUpSize = 0;
+  long buttonDownSize = 0;
+  switch (barStyle)
+  {
+    case eBarStyleDefault: pButtonUp = gpNavigationDefaultButtonUp; buttonUpSize = gNavigationDefaultButtonUpSize; pButtonDown = gpNavigationDefaultButtonDown; buttonDownSize = gNavigationDefaultButtonDownSize; break;
+    case eBarStyleBlack: pButtonUp = gpNavigationBlackButtonUp; buttonUpSize = gNavigationBlackButtonUpSize; pButtonDown = gpNavigationBlackButtonDown; buttonDownSize = gNavigationBlackButtonDownSize; break;
+
+    //case eBarStyleTint: return _T("Tint");
+    case eBarStyleNone: break;
+  }
+
+
+  nglString decoUpName;
+  decoUpName.Format(_T("nuiDefaultNavigation%lsButtonUp"), barStyle);
+
+  nglIMemory* pIMemUp = new nglIMemory(pButtonUp, buttonUpSize);
+  nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
+  NGL_ASSERT(pTexUp);
+  nuiFrame* pFrameUp = new nuiFrame(decoUpName, pTexUp, nuiRect(13,0,1,30));
+  delete pIMemUp;
+  
+  nglString decoDownName;
+  decoDownName.Format(_T("nuiDefaultNavigation%lsButtonDown"), barStyle);
+  
+  nglIMemory* pIMemDown = new nglIMemory(pButtonDown, buttonDownSize);
+  nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
+  NGL_ASSERT(pTexDown);
+  nuiFrame* pFrameDown = new nuiFrame(decoDownName, pTexDown, nuiRect(13,0,1,30));
+  delete pIMemDown;
+  
+  
+  nuiStateDecoration* pState = new nuiStateDecoration(decoName, decoUpName, decoDownName);
+  pState->SetSourceClientRect(nuiRect(13,0,1,30));
+  
+  pWidget->SetDecoration(pState, eDecorationBorder);
+}
+
+
+
+
+//static
+nglString nuiDefaultDecoration::NavigationBarStyleToString(nuiNavigationBarStyle barStyle)
+{
+  switch (barStyle)
+  {
+    case eBarStyleDefault: return _T("Default");
+    case eBarStyleBlack: return _T("Black");
+      //case eBarStyleTint: return _T("Tint");
+    case eBarStyleNone: return _T("None");
+  }
+  return _T("UnknownStyle");
 }
 
 

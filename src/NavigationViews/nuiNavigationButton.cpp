@@ -15,6 +15,7 @@ nuiNavigationButton::nuiNavigationButton(nuiBarButtonSystemItem systemItem)
 : nuiButton()
 {
   nglString text;
+  SetObjectClass(_T("nuiNavigationButton"));
   //LBDEBUG TODO
   
 //  switch (systemItem)
@@ -62,6 +63,7 @@ nuiNavigationButton::nuiNavigationButton(nuiBarButtonSystemItem systemItem)
 nuiNavigationButton::nuiNavigationButton(const nglString& rText)
 : nuiButton()
 {
+  SetObjectClass(_T("nuiNavigationButton"));
   nuiLabel* pLabel = new nuiLabel(rText);
   AddChild(pLabel);
  
@@ -71,6 +73,7 @@ nuiNavigationButton::nuiNavigationButton(const nglString& rText)
 nuiNavigationButton::nuiNavigationButton(nuiTexture* pIconTexture)
 : nuiButton()
 {
+  SetObjectClass(_T("nuiNavigationButton"));
   AddChild(new nuiImage(pIconTexture));
 }
 

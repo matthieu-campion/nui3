@@ -9,7 +9,7 @@
 
 #pragma once
 #include "nui.h"
-
+#include "nuiNavigationBar.h"
 
 enum nuiBarButtonSystemItem
 {
