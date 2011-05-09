@@ -986,7 +986,7 @@ nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString)
 }
 
 ///////// Mirroring Characters:
-static const nglChar gMirrorsArray[] =
+static const nglUChar gMirrorsArray[] =
 {
   0x0028, 0x0029,// LEFT PARENTHESIS
   0x0029, 0x0028,// RIGHT PARENTHESIS

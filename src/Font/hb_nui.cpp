@@ -54,31 +54,31 @@ static const char* HB_UnicodeCats[] =
   "UNASSIGNED,          Cn",
   "PRIVATE_USE,         Co",
   "SURROGATE,           Cs",
-  "LOWERCASE_LETTER,		Ll",
+  "LOWERCASE_LETTER,    Ll",
   "MODIFIER_LETTER,     Lm",
   "OTHER_LETTER,        Lo",
-  "TITLECASE_LETTER,		Lt",
-  "UPPERCASE_LETTER,		Lu",
+  "TITLECASE_LETTER,    Lt",
+  "UPPERCASE_LETTER,    Lu",
   "COMBINING_MARK,      Mc",
   "ENCLOSING_MARK,      Me",
-  "NON_SPACING_MARK,		Mn",
+  "NON_SPACING_MARK,    Mn",
   "DECIMAL_NUMBER,      Nd",
   "LETTER_NUMBER,       Nl",
   "OTHER_NUMBER,        No",
   "CONNECT_PUNCTUATION,	Pc",
-  "DASH_PUNCTUATION,		Pd",
+  "DASH_PUNCTUATION,    Pd",
   "CLOSE_PUNCTUATION,   Pe",
   "FINAL_PUNCTUATION,   Pf",
   "INITIAL_PUNCTUATION,	Pi",
   "OTHER_PUNCTUATION,   Po",
-  "OPEN_PUNCTUATION,		Ps",
+  "OPEN_PUNCTUATION,    Ps",
   "CURRENCY_SYMBOL,     Sc",
   "MODIFIER_SYMBOL,     Sk",
   "MATH_SYMBOL,         Sm",
-  "OTHER_SYMBOL,		    So",
-  "LINE_SEPARATOR,		  Zl",
+  "OTHER_SYMBOL,        So",
+  "LINE_SEPARATOR,      Zl",
   "PARAGRAPH_SEPARATOR,	Zp",
-  "SPACE_SEPARATOR		  Zs"
+  "SPACE_SEPARATOR,     Zs"
 };
 
 static hb_unicode_general_category_t
@@ -132,8 +132,6 @@ hb_nui_get_general_category (hb_unicode_funcs_t *ufuncs,
 
 #undef TEST
 
-  
-  
   printf("category %x -> %s\n", unicode, HB_UnicodeCats[res]);
   return res;
 }
@@ -143,8 +141,7 @@ hb_nui_get_mirroring (hb_unicode_funcs_t *ufuncs,
                       hb_codepoint_t      unicode,
                       void               *user_data)
 {
-  //  return nuiGetMirrorringChar(unicode);
-  return unicode;
+  return nuiGetMirrorringChar(unicode);
 }
 
 hb_script_t hb_get_script_from_nui(nuiUnicodeScript script)
