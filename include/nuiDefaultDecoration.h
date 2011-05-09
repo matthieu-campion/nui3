@@ -9,7 +9,7 @@
 #pragma once
 
 #include "nui.h"
-
+#include "nuiNavigationBarStyle.h"
 
 class nuiWidget;
 class nuiSimpleContainer;
@@ -18,6 +18,7 @@ class nuiMessageBox;
 class nuiTabView;
 class nuiImageSequence;
 class nuiTexture;
+class nuiNavigationButton;
 
 typedef nuiFastDelegate1<nuiWidget*> nuiDecorationDelegate;
 
@@ -38,7 +39,7 @@ public:
   
   // NavigationViews
   static void NavigationBar(nuiWidget* pWidget);
-  static void NavigationButton(nuiNavigationButton* pWidget, nuiNavigationBarStyle style);
+  static void NavigationButton(nuiNavigationButton* pWidget, nuiNavigationBarStyle style, bool leftyButton = false);
   static nglString NavigationBarStyleToString(nuiNavigationBarStyle barStyle);
   
   static nglImage* GetImage(const nglString& rRef);

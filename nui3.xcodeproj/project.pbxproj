@@ -1736,6 +1736,8 @@
 		BC1CE4B50DC2A49700DAF677 /* nuiRangeAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1CE4B30DC2A49700DAF677 /* nuiRangeAttributeEditor.cpp */; };
 		BC1CE4B70DC2A4A600DAF677 /* nuiRangeAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */; };
 		BC1CE4B80DC2A4A600DAF677 /* nuiRangeAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */; };
+		BC2475031377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */; };
+		BC2475041377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */; };
 		BC2A8A590F691D7A00502BAB /* nuiProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC2A8A580F691D7A00502BAB /* nuiProgressBar.cpp */; };
 		BC2A8A5A0F691D7A00502BAB /* nuiProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC2A8A580F691D7A00502BAB /* nuiProgressBar.cpp */; };
 		BC2A8A5D0F691D8800502BAB /* nuiProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2A8A5C0F691D8800502BAB /* nuiProgressBar.h */; };
@@ -7313,6 +7315,7 @@
 		BC1AD4660D814F7400390050 /* nuiSizeAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSizeAttributeEditor.h; path = include/nuiSizeAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		BC1CE4B30DC2A49700DAF677 /* nuiRangeAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRangeAttributeEditor.cpp; path = src/Attributes/nuiRangeAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRangeAttributeEditor.h; path = include/nuiRangeAttributeEditor.h; sourceTree = SOURCE_ROOT; };
+		BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNavigationBarStyle.h; path = include/nuiNavigationBarStyle.h; sourceTree = SOURCE_ROOT; };
 		BC2A8A580F691D7A00502BAB /* nuiProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiProgressBar.cpp; path = src/SimpleWidgets/nuiProgressBar.cpp; sourceTree = SOURCE_ROOT; };
 		BC2A8A5C0F691D8800502BAB /* nuiProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiProgressBar.h; path = include/nuiProgressBar.h; sourceTree = SOURCE_ROOT; };
 		BC2C68820D745D5500309364 /* nuiColorDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiColorDecoration.cpp; path = src/Decorations/nuiColorDecoration.cpp; sourceTree = SOURCE_ROOT; };
@@ -9208,6 +9211,7 @@
 				BC92ACB81282F91C006A27B0 /* nuiNavigationController.h */,
 				BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */,
 				BC92ACB71282F91C006A27B0 /* nuiNavigationBar.h */,
+				BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */,
 				BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */,
 				BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */,
 			);
@@ -13752,6 +13756,7 @@
 				4017059A12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CA12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3912F3317500F435D9 /* TextureAtlas.h in Headers */,
+				BC2475041377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14136,6 +14141,7 @@
 				4017059E12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CE12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3712F3317500F435D9 /* TextureAtlas.h in Headers */,
+				BC2475031377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

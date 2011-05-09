@@ -90,23 +90,26 @@ void nuiNavigationBar::SetTitle(const nglString& rTitle)
 void nuiNavigationBar::SetBackNavigationItem(bool set)
 {
   nuiNavigationButton* pButton = new nuiNavigationButton(_T("Back"));
-  pButton->SetObjectClass(_T("nuiNavigationButtonLeft"));
-  SetLeftNavigationItem(pButton);
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle, true /*leftyButton*/);  
+  nuiHBox::SetCell(0, pButton);
 }
 
 
 void nuiNavigationBar::SetTopNavigationItem(nuiNavigationButton* pButton)
 {
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
   nuiHBox::SetCell(1, pButton);
 }
 
 void nuiNavigationBar::SetLeftNavigationItem(nuiNavigationButton* pButton)
 {
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
   nuiHBox::SetCell(0, pButton);
 }
 
 void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
 {
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
   nuiHBox::SetCell(2, pButton);
 }
 

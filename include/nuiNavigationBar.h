@@ -10,17 +10,10 @@
 #pragma once
 #include "nui.h"
 #include "nuiHBox.h"
+#include "nuiNavigationBarStyle.h"
 
 
 class nuiNavigationButton;
-
-enum nuiNavigationBarStyle
-{
-  eBarStyleDefault = 0,
-  eBarStyleBlack   = 1,
-  //eBarStyleTint,
-  eBarStyleNone
-};
 
 
 class nuiNavigationBar : public nuiHBox
