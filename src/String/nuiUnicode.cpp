@@ -415,7 +415,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
             {
               if (newscript == eScriptCommon || newscript == eScriptInherited)
               {
-                // Continue with script as it is
+                // Continue with the current script as it is
               }
               else if (script == eScriptCommon || script == eScriptInherited)
               {
@@ -423,11 +423,13 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
               }
               else
               {
+                // Script really changed so we break
                 brk = true;
               }
             }
             else
             {
+              // Script changed so we break
               brk = true;
             }
           }
