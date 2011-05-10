@@ -32,11 +32,27 @@ protected:
   virtual void ViewWillDisappear();
   virtual void ViewDidAppear();
   virtual void ViewDidDisappear();
-  virtual void ConnectTopLevel();
   
+  virtual void HandleSwipe(nuiPosition swipeDirection);
+  nuiSimpleEventSource<0> EventSwipe;
+  nuiPosition GetSwipeDirection() const;
+  
+
+  
+  virtual void ConnectTopLevel();
+  virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseMoved(nuiSize X, nuiSize Y);
+
 private:
   
   bool mAnimated;
   nuiNavigationBar* mpBar;
+
+  bool mClicked;
+  nuiSize mSwipeStartX;
+  nuiSize mSwipeStartY;
+  bool mSwipeActivated;
+  nuiPosition mSwipeDirection;
   
 };
