@@ -50,8 +50,11 @@ private:
   nuiNavigationBar* mpBar;
 
   bool mClicked;
+  double mSwipeTime;
+  double mSwipeInitiatedTime;
   nuiSize mSwipeStartX;
   nuiSize mSwipeStartY;
+  bool mSwipeInitiated;
   bool mSwipeActivated;
   nuiPosition mSwipeDirection;
   
