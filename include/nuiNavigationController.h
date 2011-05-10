@@ -62,6 +62,8 @@ public:
   /// returns the list of the views from the stack controller
   const std::vector<nuiViewController*>& GetViewControllers();
   
+  /// Show/Hide the navigationBar
+  void ShowNavigationBar(bool show);
   
   
   
@@ -99,6 +101,7 @@ private:
   bool mPushed;
   bool mPoped;
   bool mAlphed;
+  bool mShowNavigationBar;
 
   
   

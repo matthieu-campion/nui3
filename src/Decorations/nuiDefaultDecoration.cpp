@@ -1695,22 +1695,35 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
     return;
   }
   
+  // choose the right map, depending on the style of the navigation bar, and on the button kind
   const void* pButtonUp = NULL;
   const void* pButtonDown = NULL;
   long buttonUpSize = 0;
   long buttonDownSize = 0;
-  switch (style)
-  {
-    case eBarStyleDefault: pButtonUp = gpNavigationBarDefaultButtonUp; buttonUpSize = gNavigationBarDefaultButtonUpSize; pButtonDown = gpNavigationBarDefaultButtonDown; buttonDownSize = gNavigationBarDefaultButtonDownSize; break;
-    case eBarStyleBlack: pButtonUp = gpNavigationBarBlackButtonUp; buttonUpSize = gNavigationBarBlackButtonUpSize; pButtonDown = gpNavigationBarBlackButtonDown; buttonDownSize = gNavigationBarBlackButtonDownSize; break;
+  if (leftyButton)
+    switch (style)
+    {
+      case eBarStyleDefault: pButtonUp = gpNavigationBarDefaultLeftButtonUp; buttonUpSize = gNavigationBarDefaultLeftButtonUpSize; pButtonDown = gpNavigationBarDefaultLeftButtonDown; buttonDownSize = gNavigationBarDefaultLeftButtonDownSize; break;
+      case eBarStyleBlack: pButtonUp = gpNavigationBarBlackLeftButtonUp; buttonUpSize = gNavigationBarBlackLeftButtonUpSize; pButtonDown = gpNavigationBarBlackLeftButtonDown; buttonDownSize = gNavigationBarBlackLeftButtonDownSize; break;
+      //case eBarStyleTint: return _T("Tint");
+      case eBarStyleNone: default: break;
+    }
+  else
+    switch (style)
+    {
+      case eBarStyleDefault: pButtonUp = gpNavigationBarDefaultButtonUp; buttonUpSize = gNavigationBarDefaultButtonUpSize; pButtonDown = gpNavigationBarDefaultButtonDown; buttonDownSize = gNavigationBarDefaultButtonDownSize; break;
+      case eBarStyleBlack: pButtonUp = gpNavigationBarBlackButtonUp; buttonUpSize = gNavigationBarBlackButtonUpSize; pButtonDown = gpNavigationBarBlackButtonDown; buttonDownSize = gNavigationBarBlackButtonDownSize; break;
+        //case eBarStyleTint: return _T("Tint");
+      case eBarStyleNone: default: break;
+    }
 
-    //case eBarStyleTint: return _T("Tint");
-    case eBarStyleNone: break;
-  }
 
-
+  // assign the texture for the "Up" state
   nglString decoUpName;
-  decoUpName.Format(_T("nuiDefaultNavigation%lsButtonUp"), barStyle.GetChars());
+  if (leftyButton)
+    decoUpName.Format(_T("nuiDefaultNavigation%lsLeftButtonUp"), barStyle.GetChars());
+  else
+    decoUpName.Format(_T("nuiDefaultNavigation%lsButtonUp"), barStyle.GetChars());
 
   nglIMemory* pIMemUp = new nglIMemory(pButtonUp, buttonUpSize);
   nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
@@ -1718,8 +1731,13 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   nuiFrame* pFrameUp = new nuiFrame(decoUpName, pTexUp, nuiRect(13,0,1,30));
   delete pIMemUp;
   
+
+  // assign the texture for the "Down" state
   nglString decoDownName;
-  decoDownName.Format(_T("nuiDefaultNavigation%lsButtonDown"), barStyle.GetChars());
+  if (leftyButton)
+    decoDownName.Format(_T("nuiDefaultNavigation%lsLeftButtonDown"), barStyle.GetChars());
+  else
+    decoDownName.Format(_T("nuiDefaultNavigation%lsButtonDown"), barStyle.GetChars());
   
   nglIMemory* pIMemDown = new nglIMemory(pButtonDown, buttonDownSize);
   nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
@@ -1728,10 +1746,17 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   delete pIMemDown;
   
   
+  // create "state" decoration for 2-states button
   nuiStateDecoration* pState = new nuiStateDecoration(decoName, decoUpName, decoDownName);
   pState->SetSourceClientRect(nuiRect(13,0,1,30));
   
+  // set decoration
   pWidget->SetDecoration(pState, eDecorationBorder);
+  
+  // set style
+  pWidget->SetPosition(nuiLeft);
+  pWidget->SetBorder(20, 0, 7, 0);
+  
 }
 
 

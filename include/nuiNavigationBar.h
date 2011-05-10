@@ -41,7 +41,7 @@ public:
 protected:
   
 //  virtual nuiRect CalcIdealSize();
-//  virtual bool Draw(nuiDrawContext* pContext);
+  virtual bool Draw(nuiDrawContext* pContext);
   
 private:
   

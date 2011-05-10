@@ -127,10 +127,12 @@ void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
 //
 
 // virtual 
-//bool nuiNavigationBar::Draw(nuiDrawContext* pContext)
-//{
-//  if (mBarStyle == eBarStyleNone)
-//    return true;
+bool nuiNavigationBar::Draw(nuiDrawContext* pContext)
+{
+  if (mBarStyle == eBarStyleNone)
+    return true;
+  return nuiHBox::Draw(pContext);
+}
 //  
 //  pContext->EnableAntialiasing(false);
 //  pContext->EnableBlending(true);

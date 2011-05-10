@@ -42,6 +42,7 @@ nuiNavigationController::nuiNavigationController()
   mPushed = false;
   mPoped = false;
   mAlphed = false;
+  mShowNavigationBar = true;
   
   mPendingLayout = true;
   
@@ -226,21 +227,26 @@ void nuiNavigationController::OnNotification(const nuiNotification& rNotif)
 bool nuiNavigationController::Draw(nuiDrawContext* pContext)
 {
   IteratorPtr pIt;
-  for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && (pItem->GetObjectClass() != _T("nuiNavigationBar")))
-      DrawChild(pContext, pItem);
-  }
+  nuiWidgetPtr pNavigationBar = NULL;
+  
   
   for (pIt = GetFirstChild(); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     if (pItem && (pItem->GetObjectClass() == _T("nuiNavigationBar")))
-      DrawChild(pContext, pItem);
+    {
+      pNavigationBar = pItem;
+      continue;
+    }
+    
+    DrawChild(pContext, pItem);
   }
   
   delete pIt;
+  
+  if (mShowNavigationBar && pNavigationBar)
+    DrawChild(pContext, pNavigationBar);
+  
   
   return true;
 }
@@ -281,11 +287,14 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
   {
     mpIn->SetLayout(rect);
     
-    nuiWidget* pBar =  mpIn->GetNavigationBar();
-    nuiRect r(pBar->GetIdealRect());
-    r.MoveTo(0, 0);
-    r.SetWidth(rect.GetWidth());
-    pBar->SetLayout(r);
+    if (mShowNavigationBar)
+    {
+      nuiWidget* pBar =  mpIn->GetNavigationBar();
+      nuiRect r(pBar->GetIdealRect());
+      r.MoveTo(0, 0);
+      r.SetWidth(rect.GetWidth());
+      pBar->SetLayout(r);
+    }
   }
   
   if (mpOut)
@@ -297,11 +306,14 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
     
     mpOut->SetLayout(rect);
     
-    nuiWidget* pBar =  mpOut->GetNavigationBar();
-    nuiRect r(pBar->GetIdealRect());
-    r.MoveTo(0, 0);
-    r.SetWidth(rect.GetWidth());
-    pBar->SetLayout(r);
+    if (mShowNavigationBar)
+    {
+      nuiWidget* pBar =  mpOut->GetNavigationBar();
+      nuiRect r(pBar->GetIdealRect());
+      r.MoveTo(0, 0);
+      r.SetWidth(rect.GetWidth());
+      pBar->SetLayout(r);
+    }
   }
   
   
@@ -376,7 +388,8 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   }
 
   // you want to keep those objects alive 'til the controller don't need them anymore
-  pViewController->GetNavigationBar()->Acquire();
+  if (mShowNavigationBar)
+    pViewController->GetNavigationBar()->Acquire();
   pViewController->Acquire();
   mpIn = pViewController;
   mpOut  = NULL;
@@ -437,7 +450,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     pAnim->Play();
 
     // nav bar FADE IN animation
-    if (mpIn->GetNavigationBar()->IsVisible())
+    if (mShowNavigationBar)
     {
       pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
       mCurrentAnims.push_back(pAnim);
@@ -445,7 +458,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     }
     
     // FADE OUT animation
-    if (mpOut)
+    if (mpOut && mShowNavigationBar)
     {
       pAnim = new TransitionAnimation_Alpha(mpOut, transition, 1, 0);
       mCurrentAnims.push_back(pAnim);
@@ -466,7 +479,8 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mAnimPosition = idealsize.GetWidth();
     
     AddChild(mpIn);  
-    AddChild(mpIn->GetNavigationBar());
+    if (mShowNavigationBar)
+      AddChild(mpIn->GetNavigationBar());
 
     // container POSITION animation
     TransitionAnimation_Position* pAnim = new TransitionAnimation_Position(this, transition, idealsize.GetWidth(), 0);
@@ -476,7 +490,7 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     pAnim->Play();
     
     // nav bar FADE IN animation
-    if (mpIn->GetNavigationBar()->IsVisible())
+    if (mShowNavigationBar)
     {
       TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
       mCurrentAnims.push_back(pAnim);
@@ -486,14 +500,16 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   else 
   {
     AddChild(mpIn);  
-    AddChild(mpIn->GetNavigationBar());
+    if (mShowNavigationBar)
+      AddChild(mpIn->GetNavigationBar());
   }
   
   
   if (!animated && mpOut && !viewOverlay)
   {
     mpOut->ViewDidDisappear();
-    DelChild(mpOut->GetNavigationBar());
+    if (mShowNavigationBar)
+      DelChild(mpOut->GetNavigationBar());
     DelChild(mpOut);
     // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
   }
@@ -579,7 +595,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     if (mpIn)
     {
       AddChild(mpIn);  
-      AddChild(mpIn->GetNavigationBar());
+      if (mShowNavigationBar)
+        AddChild(mpIn->GetNavigationBar());
       mpIn->SetAlpha(0);
       mpIn->GetNavigationBar()->SetAlpha(0);
     
@@ -592,7 +609,7 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
       pAnim->Play();
     
       // nav bar FADE IN animation
-      if (mpIn->GetNavigationBar()->IsVisible())
+      if (mShowNavigationBar)
       {
         pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
         mCurrentAnims.push_back(pAnim);
@@ -622,10 +639,11 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     if (mpIn)
     {
       AddChild(mpIn);  
-      AddChild(mpIn->GetNavigationBar());
+      if (mShowNavigationBar)
+        AddChild(mpIn->GetNavigationBar());
       
       // nav bar FADE IN animation
-      if (mpIn->GetNavigationBar()->IsVisible())
+      if (mShowNavigationBar)
       {
         TransitionAnimation_Alpha* pAnim = new TransitionAnimation_Alpha(mpIn->GetNavigationBar(), 0, 1, nuiEasingSinusStartFast, NAVBAR_ANIM_ALPHA_DURATION);
         mCurrentAnims.push_back(pAnim);
@@ -644,10 +662,12 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     if (mpIn)
     {
       AddChild(mpIn);  
-      AddChild(mpIn->GetNavigationBar());
+      if (mShowNavigationBar)
+        AddChild(mpIn->GetNavigationBar());
     }
     mpOut->ViewDidDisappear();
-    mpOut->GetNavigationBar()->Release();
+    if (mShowNavigationBar)
+      mpOut->GetNavigationBar()->Release();
     DelChild(mpOut->GetNavigationBar());
     mpOut->Release();
     DelChild(mpOut);
@@ -751,7 +771,8 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
     // but their references had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
     // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
-    pView->GetNavigationBar()->Release();
+    if (mShowNavigationBar)
+      pView->GetNavigationBar()->Release();
     pView->Release();
     
     mViewControllers.erase(it);
@@ -819,7 +840,8 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
     // but their references had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
     // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
-    pView->GetNavigationBar()->Release();
+    if (mShowNavigationBar)
+      pView->GetNavigationBar()->Release();
     pView->Release();
     
     mViewControllers.erase(it);
@@ -865,7 +887,8 @@ void nuiNavigationController::OnViewPushStop(const nuiEvent& rEvent)
       // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
       if (mpOut->GetParent())
       {
-        DelChild(mpOut->GetNavigationBar());
+        if (mShowNavigationBar)
+          DelChild(mpOut->GetNavigationBar());
         DelChild(mpOut);
       }
     }
@@ -902,8 +925,11 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
 
   if (mpOut->GetParent())
   {
-    mpOut->GetNavigationBar()->Release();
-    DelChild(mpOut->GetNavigationBar());
+    if (mShowNavigationBar)
+    {
+      mpOut->GetNavigationBar()->Release();
+      DelChild(mpOut->GetNavigationBar());
+    }
 
     mpOut->Release();
     DelChild(mpOut);
@@ -917,6 +943,18 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
     }
   }
   
+}
+
+
+
+
+//**********************************************
+//
+// ShowNavigationBar
+//
+void nuiNavigationController::ShowNavigationBar(bool show)
+{
+  mShowNavigationBar = show;
 }
 
 
