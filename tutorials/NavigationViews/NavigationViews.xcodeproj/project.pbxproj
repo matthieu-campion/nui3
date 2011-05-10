@@ -766,6 +766,7 @@
 		BCD448CC11D2123000BEF227 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
@@ -789,7 +790,7 @@
 				PREBINDING = YES;
 				PRODUCT_NAME = NavigationViewsD;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
