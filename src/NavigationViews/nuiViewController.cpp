@@ -111,10 +111,10 @@ nuiPosition nuiViewController::GetSwipeDirection() const
 
 
 
-#define SWIPE_INITIATED_THRESHOLD 10
-#define SWIPE_INITIATED_TIMEOUT 10
+#define SWIPE_INITIATED_THRESHOLD 9
+#define SWIPE_INITIATED_TIMEOUT 1.f
 #define SWIPE_ACTIVATED_THRESHOLD 100
-#define SWIPE_ACTIVATED_TIMEOUT 100
+#define SWIPE_ACTIVATED_TIMEOUT 2.f
 
 
 // virtual 
@@ -174,17 +174,23 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
     
     //LBDEBUG
 //    if(abs(diffx / diffy) > 1 && ((abs(diffx) > SWIPE_INITIATED_THRESHOLD) || (abs(diffy) > SWIPE_INITIATED_THRESHOLD))
-    if ((abs(diffx) > SWIPE_INITIATED_THRESHOLD) || (abs(diffy) > SWIPE_INITIATED_THRESHOLD))
+    if ((abs(diffx) >= SWIPE_INITIATED_THRESHOLD) || (abs(diffy) >= SWIPE_INITIATED_THRESHOLD))
     {
+      NGL_OUT(_T("initiated? %.2f\n"), (currentTime  - mSwipeTime));
+
       // yes, it's been initiated.
-      if ((currentTime  - mSwipeTime) > SWIPE_INITIATED_TIMEOUT)
+      if ((currentTime  - mSwipeTime) < SWIPE_INITIATED_TIMEOUT)
       {
+        NGL_OUT(_T("YES! initiated!\n"));
+
         mSwipeInitiated = true;
         mSwipeInitiatedTime = currentTime;
       }
       // no, it's not. set data for the next call
       else
       {
+        NGL_OUT(_T("NO! let's start again\n\n"));
+
         mSwipeStartX = X;
         mSwipeStartY = Y;
         mSwipeTime = currentTime;
@@ -197,16 +203,22 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
     return false;
 
   // swipe has been initiated, is the gesture fully completed?
-  bool activatedOnX = (abs(diffx) > SWIPE_ACTIVATED_THRESHOLD);
-  bool activatedOnY = (abs(diffy) > SWIPE_ACTIVATED_THRESHOLD);
+  bool activatedOnX = (abs(diffx) >= SWIPE_ACTIVATED_THRESHOLD);
+  bool activatedOnY = (abs(diffy) >= SWIPE_ACTIVATED_THRESHOLD);
        
+  NGL_OUT(_T("test (%d > %d)   || (%d > %d)\n"), abs(diffx), SWIPE_ACTIVATED_THRESHOLD, abs(diffy), SWIPE_ACTIVATED_THRESHOLD);
+  
 	// LBDEBUG 
   // if(abs(diffx / diffy) > 1 && abs(diffx) > SWIPE_ACTIVATED_THRESHOLD)
   if(activatedOnX || activatedOnY)
 	{
+    NGL_OUT(_T("activated? %.2f\n"), (currentTime  - mSwipeInitiatedTime));
+
     // the swipe gesture has been avorted. let's reset the data and start again
     if ((currentTime  - mSwipeInitiatedTime) < SWIPE_INITIATED_TIMEOUT)
     {
+      NGL_OUT(_T("NO! let's start again\n\n"));
+ 
       mSwipeTime = nglTime();
       mSwipeInitiatedTime = 0;
       mSwipeStartX = X;
@@ -218,6 +230,8 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
       return false;
     }
     
+    NGL_OUT(_T("YES! activated!\n"));
+
     // ok! the swipe gesture has been completed!
 		mSwipeActivated = true;
     
