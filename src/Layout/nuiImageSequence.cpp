@@ -59,6 +59,7 @@ mTexturePath(rTexturePath)
   mUseAlpha = true;
   mAlpha = 1;
   //printf("nuiImageSequence CTOR3 %p\n", this);
+
 }
 
 

@@ -215,7 +215,7 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
     NGL_OUT(_T("activated? %.2f\n"), (currentTime  - mSwipeInitiatedTime));
 
     // the swipe gesture has been avorted. let's reset the data and start again
-    if ((currentTime  - mSwipeInitiatedTime) < SWIPE_INITIATED_TIMEOUT)
+    if ((currentTime  - mSwipeInitiatedTime) > SWIPE_ACTIVATED_TIMEOUT)
     {
       NGL_OUT(_T("NO! let's start again\n\n"));
  
