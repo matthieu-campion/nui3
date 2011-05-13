@@ -33,8 +33,10 @@ protected:
   virtual void ViewDidAppear();
   virtual void ViewDidDisappear();
   
-  virtual void HandleSwipe(nuiPosition swipeDirection);
-  nuiSimpleEventSource<0> EventSwipe;
+  virtual void SwipeBegan(nuiPosition swipeDirection);
+  virtual void SwipeEnd(nuiPosition swipeDirection);
+  nuiSimpleEventSource<0> EventSwipeBegan;
+  nuiSimpleEventSource<0> EventSwipeEnd;
   nuiPosition GetSwipeDirection() const;
   
 
@@ -45,6 +47,9 @@ protected:
   virtual bool MouseMoved(nuiSize X, nuiSize Y);
 
 private:
+  
+  nuiPosition GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const;
+  
   
   bool mAnimated;
   nuiNavigationBar* mpBar;

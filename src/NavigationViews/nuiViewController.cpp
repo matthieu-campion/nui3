@@ -92,12 +92,18 @@ nuiNavigationBar* nuiViewController::GetNavigationBar()
 
 
 // virtual 
-void nuiViewController::HandleSwipe(nuiPosition swipeDirection)
+void nuiViewController::SwipeBegan(nuiPosition swipeDirection)
 {
-  NGL_OUT(_T("HandleSwipe %ls\n"), nuiGetPosition(swipeDirection).GetChars());
+  //NGL_OUT(_T("SwipeBegan %ls\n"), nuiGetPosition(swipeDirection).GetChars());
   // to be overloaded
 }
 
+
+void nuiViewController::SwipeEnd(nuiPosition swipeDirection)
+{
+  //NGL_OUT(_T("SwipeEnd(nuiPosition swipeD %ls\n"), nuiGetPosition(swipeDirection).GetChars());
+  // to be overloaded
+}
 
 nuiPosition nuiViewController::GetSwipeDirection() const
 {
@@ -112,9 +118,9 @@ nuiPosition nuiViewController::GetSwipeDirection() const
 
 
 #define SWIPE_INITIATED_THRESHOLD 9
-#define SWIPE_INITIATED_TIMEOUT 1.f
-#define SWIPE_ACTIVATED_THRESHOLD 100
-#define SWIPE_ACTIVATED_TIMEOUT 2.f
+#define SWIPE_INITIATED_TIMEOUT 0.15f
+#define SWIPE_ACTIVATED_THRESHOLD 80
+#define SWIPE_ACTIVATED_TIMEOUT 0.2f
 
 
 // virtual 
@@ -172,9 +178,10 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
     NGL_OUT(_T("\n"));
     NGL_OUT(_T("diffX %.2f   diffY %.2f\n"), diffx, diffy);
     
-    //LBDEBUG
-//    if(abs(diffx / diffy) > 1 && ((abs(diffx) > SWIPE_INITIATED_THRESHOLD) || (abs(diffy) > SWIPE_INITIATED_THRESHOLD))
-    if ((abs(diffx) >= SWIPE_INITIATED_THRESHOLD) || (abs(diffy) >= SWIPE_INITIATED_THRESHOLD))
+    bool initiatedOnX = (abs(diffx) >= SWIPE_INITIATED_THRESHOLD);
+    bool initiatedOnY = (abs(diffy) >= SWIPE_INITIATED_THRESHOLD);
+
+    if (initiatedOnX || initiatedOnY)
     {
       NGL_OUT(_T("initiated? %.2f\n"), (currentTime  - mSwipeTime));
 
@@ -185,6 +192,13 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
 
         mSwipeInitiated = true;
         mSwipeInitiatedTime = currentTime;
+        mSwipeDirection = GetGestureDirection(initiatedOnX, initiatedOnY, mSwipeStartX, X, mSwipeStartY, Y);
+        
+        // send synchronous event
+        EventSwipeBegan();
+        // call virtual cbk
+        SwipeBegan(mSwipeDirection);
+        
       }
       // no, it's not. set data for the next call
       else
@@ -206,8 +220,6 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
   bool activatedOnX = (abs(diffx) >= SWIPE_ACTIVATED_THRESHOLD);
   bool activatedOnY = (abs(diffy) >= SWIPE_ACTIVATED_THRESHOLD);
        
-  NGL_OUT(_T("test (%d > %d)   || (%d > %d)\n"), abs(diffx), SWIPE_ACTIVATED_THRESHOLD, abs(diffy), SWIPE_ACTIVATED_THRESHOLD);
-  
 	// LBDEBUG 
   // if(abs(diffx / diffy) > 1 && abs(diffx) > SWIPE_ACTIVATED_THRESHOLD)
   if(activatedOnX || activatedOnY)
@@ -235,45 +247,14 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
     // ok! the swipe gesture has been completed!
 		mSwipeActivated = true;
     
-    // diagonal gesture?
-    if (activatedOnX && activatedOnY)
-    {
-      if (mSwipeStartX < X) 
-      {
-        if (mSwipeStartY < Y)
-          mSwipeDirection = nuiBottomRight;
-        else
-          mSwipeDirection = nuiTopRight;
-      }
-      else 
-      {
-        if (mSwipeStartY < Y)
-          mSwipeDirection = nuiBottomLeft;
-        else
-          mSwipeDirection = nuiTopLeft;
-      }
-    }
-    // horizontal gesture?
-    else if (activatedOnX)
-    {
-      if (mSwipeStartX < X) 
-        mSwipeDirection = nuiRight;
-      else
-        mSwipeDirection = nuiLeft;
-    }
-    // vertical gesture?
-    else if (activatedOnY)
-    {
-      if (mSwipeStartY < Y) 
-        mSwipeDirection = nuiBottom;
-      else
-        mSwipeDirection = nuiTop;
-    }
+    // let's assume it's no use to compute mSwipeDirection here, since it's been done when the swipe gesture has been initiated.
+    // we'll see in the future if it's wrong to make that assumption.
+    // mSwipeDirection = GetGestureDirection(activatedOnX, activatedOnY, mSwipeStartX, X, mSwipeStartY, Y);
     
     // send synchronous event
-    EventSwipe();
+    EventSwipeEnd();
     // call virtual cbk
-    HandleSwipe(mSwipeDirection);
+    SwipeEnd(mSwipeDirection);
 	}
 
 
@@ -282,49 +263,45 @@ bool nuiViewController::MouseMoved(nuiSize X, nuiSize Y)
 
 
 
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//	UITouch *touch = [touches anyObject];
-//	CGPoint newTouchPosition = [touch locationInView:self.view];
-//	if(mystartTouchPosition.x != newTouchPosition.x || mystartTouchPosition.y != newTouchPosition.y) {
-//		isProcessingListMove = NO;
-//	}
-//	mystartTouchPosition = [touch locationInView:self.view];
-//	[super touchesBegan:touches withEvent:event];
-//}
 
-//-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event 
-//{
-//	UITouch *touch = touches.anyObject;
-//	CGPoint currentTouchPosition = [touch locationInView:self.view];
-//	
-//	// If the swipe tracks correctly.
-//	double diffx = mystartTouchPosition.x - currentTouchPosition.x + 0.1; // adding 0.1 to avoid division by zero
-//	double diffy = mystartTouchPosition.y - currentTouchPosition.y + 0.1; // adding 0.1 to avoid division by zero
-//	
-//	if(abs(diffx / diffy) > 1 && abs(diffx) > HORIZ_SWIPE_DRAG_MIN)
-//	{
-//		// It appears to be a swipe.
-//		if(isProcessingListMove) {
-//			// ignore move, we're currently processing the swipe
-//			return;
-//		}
-//		
-//		if (mystartTouchPosition.x < currentTouchPosition.x) {
-//			isProcessingListMove = YES;
-//			[self moveToPreviousItem];
-//			return;
-//		}
-//		else {
-//			isProcessingListMove = YES;
-//			[self moveToNextItem];
-//			return;
-//		}
-//	}
-//	else if(abs(diffy / diffx) > 1)
-//	{
-//		isProcessingListMove = YES;
-//		[super touchesMoved:touches	withEvent:event];
-//	}
-//}
 
+nuiPosition nuiViewController::GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const
+{
+  // diagonal gesture?
+  if (evalOnX && evalOnY)
+  {
+    if (x1 < x2) 
+    {
+      if (y1 < y2)
+        return nuiBottomRight;
+      else
+        return nuiTopRight;
+    }
+    else 
+    {
+      if (y1 < y2)
+        return nuiBottomLeft;
+      else
+        return nuiTopLeft;
+    }
+  }
+  // horizontal gesture?
+  else if (evalOnX)
+  {
+    if (x1 < x2) 
+      return nuiRight;
+    else
+      return nuiLeft;
+  }
+  // vertical gesture?
+  else if (evalOnY)
+  {
+    if (y1 < y2) 
+      return nuiBottom;
+    else
+      return nuiTop;
+  }
+  
+  return nuiNoPosition;
+
+}

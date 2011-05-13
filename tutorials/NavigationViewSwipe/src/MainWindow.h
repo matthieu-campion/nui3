@@ -44,11 +44,20 @@ public:
   
 protected:
 
-  virtual void HandleSwipe(nuiPosition swipeDirection);
-  void SetDelay(nuiTask* pTask, float seconds);
-  void ResetArrows();
-  
+  virtual void SwipeBegan(nuiPosition swipeDirection);
+  virtual void SwipeEnd(nuiPosition swipeDirection);
+  void OnResetArrows(const nuiEvent& rEvent);
+
+//  void SetDelay(nuiTask* pTask, float seconds);
+
+//  bool mClicked;
+//  virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+//  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+//  virtual bool MouseMoved    (nuiSize X, nuiSize Y);
+
+  nuiTimer mTimer;
   nuiImageAnimation* mpArrows;
   nuiSimpleContainer* mpArrowsContainer;
+  nuiEventSink<MyViewController> mEventSink;
 };
 
