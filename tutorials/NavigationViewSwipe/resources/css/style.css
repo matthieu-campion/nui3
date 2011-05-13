@@ -33,11 +33,26 @@ MyViewController
 
 
 
-"Arrows"!
+@nuiImageDecoration dArrowsBackground
 {
-  Texture: "rsrc:/decorations/directions.png";
-  NbFrames: 9;
-  Orientation: Vertical;
+  Texture: "rsrc:/decorations/directionsBackground.png";
+  Position: TopLeft;
+  ClientRect: "{0 0 198 198}";
+}
+
+
+
+"ArrowsContainer"!
+{
+  Decoration: dArrowsBackground;
+  
+  Position: TopLeft;
+  
+  BorderLeft: 60;
+  BorderTop: 190;
+  
+  UserWidth: 198;
+  UserHeight: 198;
 }
 
 

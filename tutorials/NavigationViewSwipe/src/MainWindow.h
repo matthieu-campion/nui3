@@ -11,7 +11,7 @@
 #include "nuiNavigationController.h"
 #include "nuiViewController.h"
 
-class nuiImageSequence;
+class nuiImageAnimation;
 
 
 
@@ -43,10 +43,12 @@ public:
   virtual ~MyViewController();
   
 protected:
-  
-  virtual bool Draw(nuiDrawContext* pContext);  
-  virtual nuiRect CalcIdealSize();
 
-  nuiImageSequence* mpArrows;
+  virtual void HandleSwipe(nuiPosition swipeDirection);
+  void SetDelay(nuiTask* pTask, float seconds);
+  void ResetArrows();
+  
+  nuiImageAnimation* mpArrows;
+  nuiSimpleContainer* mpArrowsContainer;
 };
 

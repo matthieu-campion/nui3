@@ -10,7 +10,8 @@
 #include "Application.h"
 #include "nuiCSS.h"
 #include "nuiVBox.h"
-#include "nuiImageSequence.h"
+#include "nuiImageAnimation.h"
+#include "nuiTask.h"
 
 
 
@@ -97,30 +98,56 @@ bool MainWindow::LoadCSS(const nglPath& rPath)
 MyViewController::MyViewController()
 {
   SetObjectClass(_T("MyViewController"));
-  mpArrows = new nuiImageSequence(9, _T("rsrc:/decorations/directions.png"));
-//  mpArrows->SetObjectName(_T("Arrows"));
-
+  SetTitle(_T("Swipe Detector"));
+  
+  mpArrowsContainer = new nuiSimpleContainer();
+  mpArrowsContainer->SetObjectName(_T("ArrowsContainer"));
+  AddChild(mpArrowsContainer);
+  
+  mpArrows = new nuiImageAnimation(17, _T("rsrc:/decorations/directions.png"));
+  mpArrows->SetObjectName(_T("Arrows"));
+  mpArrowsContainer->AddChild(mpArrows);
 }
+
 
 MyViewController::~MyViewController()
 {
 
 }
 
-nuiRect MyViewController::CalcIdealSize()
+// virtual 
+void MyViewController::HandleSwipe(nuiPosition swipeDirection)
 {
-  mpArrows->CalcIdealSize();
-  return nuiViewController::CalcIdealSize();
+  uint32 index = 0;
+  
+  switch (swipeDirection)
+  {
+    case nuiTop: index = 1; break;
+    case nuiTopRight: index = 2; break;
+    case nuiRight: index = 3; break;
+    case nuiBottomRight: index = 4; break;
+    case nuiBottom: index = 5; break;
+    case nuiBottomLeft: index = 6; break;
+    case nuiLeft: index = 7; break;
+    case nuiTopLeft: index = 8; break;
+  }
+  
+  mpArrows->SetFrameIndex(index);
+  mpArrows->Invalidate();
+  
+  SetDelay(nuiMakeTask(this, &MyViewController::ResetArrows), 0.4f);
 }
 
 
-bool MyViewController::Draw(nuiDrawContext* pContext)
+void MyViewController::SetDelay(nuiTask* pTask, float seconds)
 {
-  bool res = nuiViewController::Draw(pContext);
-  mpArrows->Draw(pContext);
-  return res;
+  nuiAnimation::RunOnAnimationTick(pTask, seconds / nuiAnimation::GetTimer()->GetPeriod());      
 }
 
 
-
-
+void MyViewController::ResetArrows()
+{
+  
+  mpArrows->SetFrameIndex(0);
+  mpArrows->Invalidate();
+}

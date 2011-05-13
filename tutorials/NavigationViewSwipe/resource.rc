@@ -6,5 +6,7 @@ decorations/Background-iPhone.png        NUI_RESOURCE    "resources/decorations/
 decorations/Background.png        NUI_RESOURCE    "resources/decorations/Background.png"
 decorations/directions.png        NUI_RESOURCE    "resources/decorations/directions.png"
 decorations/directions@2x.png        NUI_RESOURCE    "resources/decorations/directions@2x.png"
+decorations/directionsBackground.png        NUI_RESOURCE    "resources/decorations/directionsBackground.png"
+decorations/directionsBackground@2x.png        NUI_RESOURCE    "resources/decorations/directionsBackground@2x.png"
 decorations/Logo.png        NUI_RESOURCE    "resources/decorations/Logo.png"
 0 ICON "resources/icon.ico"
