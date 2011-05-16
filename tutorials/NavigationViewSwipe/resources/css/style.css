@@ -56,5 +56,15 @@ MyViewController
 }
 
 
+"SwipeIcon"!
+{
+  Texture: "rsrc:/decorations/SwipeIcon.png";
+  Position: TopLeft;
+  BorderTop: 40;
+  BorderLeft: 50;
+  
+}
+
+
 // blank ending line following
 

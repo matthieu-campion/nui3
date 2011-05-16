@@ -12,6 +12,7 @@
 #include "nuiViewController.h"
 
 class nuiImageAnimation;
+class nuiSprite;
 
 
 
@@ -56,8 +57,9 @@ protected:
 //  virtual bool MouseMoved    (nuiSize X, nuiSize Y);
 
   nuiTimer mTimer;
-  nuiImageAnimation* mpArrows;
-  nuiSimpleContainer* mpArrowsContainer;
+//  nuiImageAnimation* mpArrows;
+//  nuiSimpleContainer* mpArrowsContainer;
+  std::vector<nuiSprite*> mpArrows;
   nuiEventSink<MyViewController> mEventSink;
 };
 

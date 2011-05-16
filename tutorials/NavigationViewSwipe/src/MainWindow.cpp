@@ -12,6 +12,7 @@
 #include "nuiVBox.h"
 #include "nuiImageAnimation.h"
 #include "nuiTask.h"
+#include "nuiSpriteView.h"
 
 
 
@@ -101,17 +102,45 @@ MyViewController::MyViewController()
   SetObjectClass(_T("MyViewController"));
   SetTitle(_T("Swipe Detector"));
   
+  nuiImage* pIcon = new nuiImage();
+  pIcon->SetObjectName(_T("SwipeIcon"));
+  AddChild(pIcon);
+
+  
 //  mClicked = false;
   
-  mpArrowsContainer = new nuiSimpleContainer();
-  mpArrowsContainer->SetObjectName(_T("ArrowsContainer"));
-  AddChild(mpArrowsContainer);
+//  mpArrowsContainer = new nuiSimpleContainer();
+//  mpArrowsContainer->SetObjectName(_T("ArrowsContainer"));
+//  AddChild(mpArrowsContainer);
+//  
+//  mpArrows = new nuiImageAnimation(17, _T("rsrc:/decorations/directions.png"));
+//  mpArrows->SetObjectName(_T("Arrows"));
+//  mpArrowsContainer->AddChild(mpArrows);
   
-  mpArrows = new nuiImageAnimation(17, _T("rsrc:/decorations/directions.png"));
-  mpArrows->SetObjectName(_T("Arrows"));
-  mpArrowsContainer->AddChild(mpArrows);
+  nuiSpriteView* pSpriteView = new nuiSpriteView();
+//  pSpriteView->EnableRenderCache(false);
+  AddChild(pSpriteView);
+  
+  nuiSpriteDef* pDef = new nuiSpriteDef(nglPath(_T("rsrc:/decorations/arrow")));
+
+  nuiSprite* pSprite = NULL;
+  float angle = 0;
+  
+  for (uint32 i = 0; i < 8; i++)
+  {
+    pSprite = new nuiSprite(pDef);
+    mpArrows.push_back(pSprite);
+    pSprite->SetAnimation(_T("off"));
+    pSprite->SetPosition(160, 310);
+    pSprite->SetPivot(nglVectorf(0.f, -80.f, 0.f));
+    pSprite->SetAngle(angle);
+    pSpriteView->AddSprite(pSprite);
+    
+    angle += 360 / 8;
+  }
   
   mEventSink.Connect(mTimer.Tick, &MyViewController::OnResetArrows);  
+  
 }
 
 
@@ -175,8 +204,8 @@ void MyViewController::SwipeBegan(nuiPosition swipeDirection)
     case nuiTopLeft:      index = 16; break;
   }
   
-  mpArrows->SetFrameIndex(index);
-  mpArrows->Invalidate();
+  mpArrows[index]->SetAnimation(_T("initiated"));
+//  mpArrows->Invalidate();
   
   mTimer.Start(false);
 }
@@ -200,8 +229,8 @@ void MyViewController::SwipeEnd(nuiPosition swipeDirection)
     case nuiTopLeft: index = 8; break;
   }
   
-  mpArrows->SetFrameIndex(index);
-  mpArrows->Invalidate();
+  mpArrows[index]->SetAnimation(_T("activated"));
+//  mpArrows->Invalidate();
   
   mTimer.Start(false);
 }
@@ -219,6 +248,8 @@ void MyViewController::OnResetArrows(const nuiEvent& rEvent)
 {
   mTimer.Stop();
   
-  mpArrows->SetFrameIndex(0);
-  mpArrows->Invalidate();
+  for (uint32 index = 0; index < 8; index++)
+    mpArrows[index]->SetAnimation(_T("off"));
+//  mpArrows->SetFrameIndex(0);
+//  mpArrows->Invalidate();
 }
