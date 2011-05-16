@@ -46,11 +46,6 @@ void MainWindow::OnCreation()
 }
 
 
-
-
-
-
-
 void MainWindow::OnClose()
 {
   if (GetNGLWindow()->IsInModalState())
@@ -92,33 +87,29 @@ bool MainWindow::LoadCSS(const nglPath& rPath)
 
 
 
+//**************************************************************************************
+//**************************************************************************************
 
 
 
 
+//*************************************************
+// MyViewController
+//
 MyViewController::MyViewController()
 : nuiViewController(), mTimer(0.4f), mEventSink(this)
 {
   SetObjectClass(_T("MyViewController"));
   SetTitle(_T("Swipe Detector"));
   
+  // a simple background icon
   nuiImage* pIcon = new nuiImage();
   pIcon->SetObjectName(_T("SwipeIcon"));
   AddChild(pIcon);
 
   
-//  mClicked = false;
-  
-//  mpArrowsContainer = new nuiSimpleContainer();
-//  mpArrowsContainer->SetObjectName(_T("ArrowsContainer"));
-//  AddChild(mpArrowsContainer);
-//  
-//  mpArrows = new nuiImageAnimation(17, _T("rsrc:/decorations/directions.png"));
-//  mpArrows->SetObjectName(_T("Arrows"));
-//  mpArrowsContainer->AddChild(mpArrows);
-  
+  // sprite view to manage the sprites
   nuiSpriteView* pSpriteView = new nuiSpriteView();
-//  pSpriteView->EnableRenderCache(false);
   AddChild(pSpriteView);
   
   nuiSpriteDef* pDef = new nuiSpriteDef(nglPath(_T("rsrc:/decorations/arrow")));
@@ -126,6 +117,7 @@ MyViewController::MyViewController()
   nuiSprite* pSprite = NULL;
   float angle = 0;
   
+  // a set of sprite, rotated around the pivot
   for (uint32 i = 0; i < 8; i++)
   {
     pSprite = new nuiSprite(pDef);
@@ -144,48 +136,19 @@ MyViewController::MyViewController()
 }
 
 
+//*************************************************
+// ~MyViewController
+//
 MyViewController::~MyViewController()
 {
 
 }
 
 
-//// virtual 
-//bool MyViewController::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
-//{
-//  bool res = nuiViewController::MouseClicked(X, Y, Button);
-//  mClicked = true;
-//  return res;
-//}
-//
-//
-//// virtual 
-//bool MyViewController::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
-//{
-//  bool res = nuiViewController::MouseUnclicked(X, Y, Button);
-//  mClicked = false;
-//  
-//  SetDelay(nuiMakeTask(this, &MyViewController::ResetArrows), 0.4f);
-//  
-//  return res;
-//}
-//
-//
-//// virtual 
-//bool MyViewController::MouseMoved(nuiSize X, nuiSize Y)
-//{
-//  bool res = nuiViewController::MouseMoved(X, Y);
-//  if (!mClicked)
-//    return res;
-//
-//  
-//  
-//  return res;
-//}
 
-
-
-// virtual 
+//*************************************************
+// virtual SwipeBegan : the swipe gesture is initiated
+//
 void MyViewController::SwipeBegan(nuiPosition swipeDirection)
 {
   mTimer.Stop();
@@ -205,12 +168,16 @@ void MyViewController::SwipeBegan(nuiPosition swipeDirection)
   }
   
   mpArrows[index]->SetAnimation(_T("initiated"));
-//  mpArrows->Invalidate();
   
   mTimer.Start(false);
 }
 
 
+
+
+//*************************************************
+// virtual SwipeEnd : the swipe gesture is completed
+//
 void MyViewController::SwipeEnd(nuiPosition swipeDirection)
 {
   mTimer.Stop();
@@ -230,26 +197,18 @@ void MyViewController::SwipeEnd(nuiPosition swipeDirection)
   }
   
   mpArrows[index]->SetAnimation(_T("activated"));
-//  mpArrows->Invalidate();
-  
   mTimer.Start(false);
 }
 
 
 
-//SetDelay(nuiMakeTask(this, &MyViewController::ResetArrows), 0.4f);
-//void MyViewController::SetDelay(nuiTask* pTask, float seconds)
-//{
-//  nuiAnimation::RunOnAnimationTick(pTask, seconds / nuiAnimation::GetTimer()->GetPeriod());      
-//}
-
-
+//*************************************************
+// OnResetArrows
+//
 void MyViewController::OnResetArrows(const nuiEvent& rEvent)
 {
   mTimer.Stop();
   
   for (uint32 index = 0; index < 8; index++)
     mpArrows[index]->SetAnimation(_T("off"));
-//  mpArrows->SetFrameIndex(0);
-//  mpArrows->Invalidate();
 }

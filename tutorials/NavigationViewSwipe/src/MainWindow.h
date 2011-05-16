@@ -27,7 +27,6 @@ public:
   
 protected:
   
-  
 private:
   
   nuiNavigationController* mpNav;
@@ -37,6 +36,7 @@ private:
 
 
 
+// the inherited view controller to handle the application running
 class MyViewController : public nuiViewController
 {
 public:
@@ -45,20 +45,20 @@ public:
   
 protected:
 
+  // available virtual callbacks from nuiViewController
+  //
   virtual void SwipeBegan(nuiPosition swipeDirection);
   virtual void SwipeEnd(nuiPosition swipeDirection);
+  //  virtual void ViewWillAppear();
+  //  virtual void ViewWillDisappear();
+  //  virtual void ViewDidAppear();
+  //  virtual void ViewDidDisappear();
+
+private:
+
   void OnResetArrows(const nuiEvent& rEvent);
-
-//  void SetDelay(nuiTask* pTask, float seconds);
-
-//  bool mClicked;
-//  virtual bool MouseClicked  (nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-//  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-//  virtual bool MouseMoved    (nuiSize X, nuiSize Y);
-
+  
   nuiTimer mTimer;
-//  nuiImageAnimation* mpArrows;
-//  nuiSimpleContainer* mpArrowsContainer;
   std::vector<nuiSprite*> mpArrows;
   nuiEventSink<MyViewController> mEventSink;
 };
