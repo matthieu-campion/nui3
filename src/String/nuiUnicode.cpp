@@ -368,11 +368,14 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   const bool wordboundary = flags & nuiST_WordBoundary;
   const bool directionchange = flags & nuiST_DirectionChange;
   const bool mergecommonscript = flags & nuiST_MergeCommonScript;
+  const bool printable = flags & nuiST_Printable;
+  
   int32 lastpos = start;
   int32 curpos = start;
   nglUChar ch = rSourceString.GetNextUChar(curpos);
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
+  bool print = true;
   
   nglUChar scriptlow = 0;
   nglUChar scripthi = 0;
@@ -460,6 +463,13 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
         brk = true;
     }
     
+    if (printchange)
+    {
+      newprint = ucisprint(ch);
+      if (newprint != print)
+        brk = true;
+    }
+    
     if (brk)
     {
       nuiTextRange r;
@@ -468,6 +478,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
       r.mScript = script; // What script if this range of text
       r.mRange = range; // What script if this range of text
       r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+      r.mPrintable = print;
       
       rRanges.push_back(r);
       
@@ -476,6 +487,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
       script = newscript;
       range = newrange;
       blank = newblank;
+      print = newprint;
     }
   }
 

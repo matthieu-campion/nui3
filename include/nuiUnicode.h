@@ -250,6 +250,7 @@ public:
   nuiUnicodeScript mScript; // What script is this range of text
   nuiUnicodeRange mRange; // What unicode range is this range of text
   bool mBlank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+  bool mPrintable; // Does this range contains printable code points?
 };
 
 typedef std::list<nuiTextRange> nuiTextRangeList;
@@ -260,6 +261,7 @@ const nuiSplitTextFlag nuiST_WordBoundary    = 1 << 1;
 const nuiSplitTextFlag nuiST_DirectionChange = 1 << 2;
 const nuiSplitTextFlag nuiST_RangeChange     = 1 << 3;
 const nuiSplitTextFlag nuiST_MergeCommonScript = 1 << 4;
+const nuiSplitTextFlag nuiST_Printable       = 1 << 5;
 const nuiSplitTextFlag nuiST_ScriptChange    = nuiST_StrictScriptChange | nuiST_MergeCommonScript;
 const nuiSplitTextFlag nuiST_Natural         = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange | nuiST_MergeCommonScript;
 const nuiSplitTextFlag nuiST_All             = nuiST_Natural | nuiST_RangeChange;

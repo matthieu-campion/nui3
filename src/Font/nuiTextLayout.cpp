@@ -314,7 +314,8 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
         while (pos < origin + len)
         {
           nglUChar ch = rString.GetNextUChar(pos);
-          charset.insert(ch);
+          if (ucisprint(cc))
+            charset.insert(ch);
         }
       }
 
