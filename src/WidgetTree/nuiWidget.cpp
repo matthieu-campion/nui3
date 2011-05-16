@@ -2907,6 +2907,13 @@ const nuiRect& nuiWidget::GetIdealRect()
   return mIdealRect;
 }
 
+bool nuiWidget::IsInSetRect() const
+{
+  if (mInSetRect)
+    return true;
+  return mpParent ? mpParent->IsInSetRect() : false;
+}
+
 bool nuiWidget::SetRect(const nuiRect& rRect)
 {
   CheckValid();
@@ -3424,7 +3431,7 @@ void nuiWidget::SetUserRect(const nuiRect& rRect)
 
     if (optim)
     {
-      if (!mInSetRect)
+      if (!IsInSetRect())
       {
         mInSetRect = true;
         SetRect(rRect);
@@ -4456,7 +4463,7 @@ void nuiWidget::AddEvent(const nglString& rName, nuiEventSource& rEvent)
 void nuiWidget::UpdateLayout()
 {
   CheckValid();
-  if (mInSetRect)
+  if (IsInSetRect())
     return;
   GetIdealRect();
   nuiRect r(GetRect());

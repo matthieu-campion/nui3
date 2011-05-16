@@ -1736,6 +1736,8 @@
 		BC1CE4B50DC2A49700DAF677 /* nuiRangeAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1CE4B30DC2A49700DAF677 /* nuiRangeAttributeEditor.cpp */; };
 		BC1CE4B70DC2A4A600DAF677 /* nuiRangeAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */; };
 		BC1CE4B80DC2A4A600DAF677 /* nuiRangeAttributeEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */; };
+		BC2475031377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */; };
+		BC2475041377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */; };
 		BC2A8A590F691D7A00502BAB /* nuiProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC2A8A580F691D7A00502BAB /* nuiProgressBar.cpp */; };
 		BC2A8A5A0F691D7A00502BAB /* nuiProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC2A8A580F691D7A00502BAB /* nuiProgressBar.cpp */; };
 		BC2A8A5D0F691D8800502BAB /* nuiProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = BC2A8A5C0F691D8800502BAB /* nuiProgressBar.h */; };
@@ -2001,6 +2003,14 @@
 		BCF515C10D53785500ED7973 /* nuiCSV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF515BF0D53785500ED7973 /* nuiCSV.cpp */; };
 		BCF515C30D53786300ED7973 /* nuiCSV.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF515C20D53786300ED7973 /* nuiCSV.h */; };
 		BCF515C40D53786300ED7973 /* nuiCSV.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF515C20D53786300ED7973 /* nuiCSV.h */; };
+		BCF87560137D27570092DAAD /* nuiImageAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8755F137D27570092DAAD /* nuiImageAnimation.h */; };
+		BCF87561137D27570092DAAD /* nuiImageAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8755F137D27570092DAAD /* nuiImageAnimation.h */; };
+		BCF87562137D27570092DAAD /* nuiImageAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8755F137D27570092DAAD /* nuiImageAnimation.h */; };
+		BCF87563137D27570092DAAD /* nuiImageAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8755F137D27570092DAAD /* nuiImageAnimation.h */; };
+		BCF87565137D27630092DAAD /* nuiImageAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF87564137D27630092DAAD /* nuiImageAnimation.cpp */; };
+		BCF87566137D27630092DAAD /* nuiImageAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF87564137D27630092DAAD /* nuiImageAnimation.cpp */; };
+		BCF87567137D27630092DAAD /* nuiImageAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF87564137D27630092DAAD /* nuiImageAnimation.cpp */; };
+		BCF87568137D27630092DAAD /* nuiImageAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF87564137D27630092DAAD /* nuiImageAnimation.cpp */; };
 		BCF8F3690F0E6C8B000588D5 /* nuiSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */; };
 		BCF8F36B0F0E6C8B000588D5 /* nuiSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */; };
 		BCFE081C0E050AB90073662D /* nuiDialogSelectDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCFE081A0E050AB90073662D /* nuiDialogSelectDirectory.cpp */; };
@@ -7313,6 +7323,7 @@
 		BC1AD4660D814F7400390050 /* nuiSizeAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSizeAttributeEditor.h; path = include/nuiSizeAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		BC1CE4B30DC2A49700DAF677 /* nuiRangeAttributeEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiRangeAttributeEditor.cpp; path = src/Attributes/nuiRangeAttributeEditor.cpp; sourceTree = SOURCE_ROOT; };
 		BC1CE4B60DC2A4A600DAF677 /* nuiRangeAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRangeAttributeEditor.h; path = include/nuiRangeAttributeEditor.h; sourceTree = SOURCE_ROOT; };
+		BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNavigationBarStyle.h; path = include/nuiNavigationBarStyle.h; sourceTree = SOURCE_ROOT; };
 		BC2A8A580F691D7A00502BAB /* nuiProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiProgressBar.cpp; path = src/SimpleWidgets/nuiProgressBar.cpp; sourceTree = SOURCE_ROOT; };
 		BC2A8A5C0F691D8800502BAB /* nuiProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiProgressBar.h; path = include/nuiProgressBar.h; sourceTree = SOURCE_ROOT; };
 		BC2C68820D745D5500309364 /* nuiColorDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiColorDecoration.cpp; path = src/Decorations/nuiColorDecoration.cpp; sourceTree = SOURCE_ROOT; };
@@ -7432,6 +7443,8 @@
 		BCF4F8250CF5E224009FEF20 /* nuiPointAttributeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPointAttributeEditor.h; path = include/nuiPointAttributeEditor.h; sourceTree = SOURCE_ROOT; };
 		BCF515BF0D53785500ED7973 /* nuiCSV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiCSV.cpp; path = src/Utils/nuiCSV.cpp; sourceTree = SOURCE_ROOT; };
 		BCF515C20D53786300ED7973 /* nuiCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCSV.h; path = include/nuiCSV.h; sourceTree = SOURCE_ROOT; };
+		BCF8755F137D27570092DAAD /* nuiImageAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiImageAnimation.h; path = include/nuiImageAnimation.h; sourceTree = SOURCE_ROOT; };
+		BCF87564137D27630092DAAD /* nuiImageAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiImageAnimation.cpp; path = NavigationViews/nuiImageAnimation.cpp; sourceTree = "<group>"; };
 		BCF8F3680F0E6C8B000588D5 /* nuiSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSingleton.h; path = include/nuiSingleton.h; sourceTree = SOURCE_ROOT; };
 		BCFE081A0E050AB90073662D /* nuiDialogSelectDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDialogSelectDirectory.cpp; path = src/Dialogs/nuiDialogSelectDirectory.cpp; sourceTree = SOURCE_ROOT; };
 		BCFE081B0E050AB90073662D /* nuiDialogSelectFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiDialogSelectFile.cpp; path = src/Dialogs/nuiDialogSelectFile.cpp; sourceTree = SOURCE_ROOT; };
@@ -9208,8 +9221,11 @@
 				BC92ACB81282F91C006A27B0 /* nuiNavigationController.h */,
 				BC92ACA21282F90D006A27B0 /* nuiNavigationBar.cpp */,
 				BC92ACB71282F91C006A27B0 /* nuiNavigationBar.h */,
+				BC2475021377D7EA000F1ABB /* nuiNavigationBarStyle.h */,
 				BC87DEFE12A9598B00D836BF /* nuiNavigationButton.cpp */,
 				BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */,
+				BCF87564137D27630092DAAD /* nuiImageAnimation.cpp */,
+				BCF8755F137D27570092DAAD /* nuiImageAnimation.h */,
 			);
 			name = NavigationViews;
 			sourceTree = "<group>";
@@ -12983,6 +12999,7 @@
 				4017059812E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705C812E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3112F3317500F435D9 /* TextureAtlas.h in Headers */,
+				BCF87562137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13368,6 +13385,7 @@
 				4017059612E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705C612E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3512F3317500F435D9 /* TextureAtlas.h in Headers */,
+				BCF87563137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13752,6 +13770,8 @@
 				4017059A12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CA12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3912F3317500F435D9 /* TextureAtlas.h in Headers */,
+				BC2475041377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
+				BCF87561137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14136,6 +14156,8 @@
 				4017059E12E06460008769D5 /* nuiSynthSound.h in Headers */,
 				401705CE12E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3712F3317500F435D9 /* TextureAtlas.h in Headers */,
+				BC2475031377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
+				BCF87560137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16973,6 +16995,7 @@
 				4017059912E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705C912E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3212F3317500F435D9 /* TextureAtlas.cpp in Sources */,
+				BCF87567137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17313,6 +17336,7 @@
 				4017059712E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705C712E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3612F3317500F435D9 /* TextureAtlas.cpp in Sources */,
+				BCF87568137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17657,6 +17681,7 @@
 				4017059B12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705CB12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3A12F3317500F435D9 /* TextureAtlas.cpp in Sources */,
+				BCF87566137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18000,6 +18025,7 @@
 				4017059F12E06460008769D5 /* nuiSynthSound.cpp in Sources */,
 				401705CF12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3812F3317500F435D9 /* TextureAtlas.cpp in Sources */,
+				BCF87565137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19401,7 +19427,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = armv6;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -19601,6 +19626,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
