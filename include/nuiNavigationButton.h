@@ -9,7 +9,7 @@
 
 #pragma once
 #include "nui.h"
-
+#include "nuiNavigationBar.h"
 
 enum nuiBarButtonSystemItem
 {
@@ -46,11 +46,13 @@ class nuiNavigationButton : public nuiButton
 public:
   nuiNavigationButton(nuiBarButtonSystemItem systemItem);
   nuiNavigationButton(const nglString& rText);
-  nuiNavigationButton(const nglPath& rIconTexture);
+  nuiNavigationButton(nuiTexture* pIconTexture);
   nuiNavigationButton();
   virtual ~nuiNavigationButton();
   
 private:
+  
+  
   
 };
 

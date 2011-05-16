@@ -1,0 +1,70 @@
+//
+// main nui3 stylesheet
+//
+
+// you can include your stylesheets this way:
+//#include "style-Common.css"
+
+// remember each stylesheet file must have at least a blank ending line, 
+// or the stylehsheet parsing may not work properly
+
+@nuiNavigationViewDecoration dMyViewController
+{
+  DeviceStyle: Default;
+}
+
+
+MyViewController
+{
+  Decoration: dMyViewController;
+}
+
+
+
+
+@nuiFont fontName
+{
+  Name: "Arial";
+  Size: 24;
+  Italic: false; 
+  Bold: true;
+}
+
+
+
+
+@nuiImageDecoration dArrowsBackground
+{
+  Texture: "rsrc:/decorations/directionsBackground.png";
+  Position: TopLeft;
+  ClientRect: "{0 0 198 198}";
+}
+
+
+
+"ArrowsContainer"!
+{
+  Decoration: dArrowsBackground;
+  
+  Position: TopLeft;
+  
+  BorderLeft: 60;
+  BorderTop: 190;
+  
+  UserWidth: 198;
+  UserHeight: 198;
+}
+
+
+"SwipeIcon"!
+{
+  Texture: "rsrc:/decorations/SwipeIcon.png";
+  Position: TopLeft;
+  BorderTop: 40;
+  BorderLeft: 50;
+  
+}
+
+
+// blank ending line following
+
