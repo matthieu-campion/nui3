@@ -731,7 +731,9 @@ void nuiContainer::InternalSetLayout(const nuiRect& rect, bool PositionChanged, 
   CheckValid();
   if (mNeedSelfLayout || SizeChanged)
   {
+    mInSetRect = true;
     SetRect(rect);
+    mInSetRect = false;
     Invalidate();
   }
   else

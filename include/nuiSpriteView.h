@@ -131,6 +131,9 @@ public:
 
   float GetAngle() const;
   void SetAngle(float angle);
+  const nglVectorf& GetPivot() const;
+  void SetPivot(const nglVectorf& rPivot);
+
   
   float GetScaleX() const;
   float GetScaleY() const;

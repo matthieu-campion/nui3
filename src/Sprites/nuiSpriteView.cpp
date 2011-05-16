@@ -609,6 +609,18 @@ void nuiSprite::SetAngle(float angle)
   mpPivot->SetAngle(angle);
 }
 
+const nglVectorf& nuiSprite::GetPivot() const
+{
+  return mpPivot->GetPivot();
+}
+
+void nuiSprite::SetPivot(const nglVectorf& rPivot)
+{
+  mpPivot->SetPivot(rPivot);
+}
+
+
+
 void nuiSprite::SetX(float X)
 {
   mpPosition->SetX(X);
