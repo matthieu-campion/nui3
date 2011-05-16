@@ -173,7 +173,7 @@
 		BCB408AE1288498A00E9D79A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		BCD448A211D2120F00BEF227 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BCD448D611D2142C00BEF227 /* NavigationViewsD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationViewsD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCD448D811D2142C00BEF227 /* NavigationViewsD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationViewsD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCD448D811D2142C00BEF227 /* NavigationViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD4495611D23BCE00BEF227 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = resources/css/style.css; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -279,7 +279,7 @@
 				61A9DFBF0B833E9600BC506C /* NavigationViews.app */,
 				61A9DFC90B833EF200BC506C /* NavigationViewsD.app */,
 				BCD448D611D2142C00BEF227 /* NavigationViewsD.app */,
-				BCD448D811D2142C00BEF227 /* NavigationViewsD.app */,
+				BCD448D811D2142C00BEF227 /* NavigationViews.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -399,7 +399,7 @@
 			);
 			name = "NavigationViews iPhone";
 			productName = Tempd;
-			productReference = BCD448D811D2142C00BEF227 /* NavigationViewsD.app */;
+			productReference = BCD448D811D2142C00BEF227 /* NavigationViews.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BCD448BC11D2123000BEF227 /* NavigationViewsD iPhone */ = {
@@ -750,7 +750,7 @@
 					"-lz",
 				);
 				PREBINDING = YES;
-				PRODUCT_NAME = NavigationViewsD;
+				PRODUCT_NAME = NavigationViews;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos4.1;
 				WARNING_CFLAGS = (
@@ -767,7 +767,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: loic berthelot (K6D9PU3925)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -789,7 +789,7 @@
 				);
 				PREBINDING = YES;
 				PRODUCT_NAME = NavigationViewsD;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "DF2C734E-E5CE-471E-9805-C023D32A3528";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = (
 					"-Wmost",

@@ -194,14 +194,14 @@ void MyViewController::SwipeBegan(nuiPosition swipeDirection)
   
   switch (swipeDirection)
   {
-    case nuiTop:          index = 9; break;
-    case nuiTopRight:     index = 10; break;
-    case nuiRight:        index = 11; break;
-    case nuiBottomRight:  index = 12; break;
-    case nuiBottom:       index = 13; break;
-    case nuiBottomLeft:   index = 14; break;
-    case nuiLeft:         index = 15; break;
-    case nuiTopLeft:      index = 16; break;
+    case nuiTop:          index = 0; break;
+    case nuiTopRight:     index = 1; break;
+    case nuiRight:        index = 2; break;
+    case nuiBottomRight:  index = 3; break;
+    case nuiBottom:       index = 4; break;
+    case nuiBottomLeft:   index = 5; break;
+    case nuiLeft:         index = 6; break;
+    case nuiTopLeft:      index = 7; break;
   }
   
   mpArrows[index]->SetAnimation(_T("initiated"));
@@ -219,14 +219,14 @@ void MyViewController::SwipeEnd(nuiPosition swipeDirection)
   
   switch (swipeDirection)
   {
-    case nuiTop: index = 1; break;
-    case nuiTopRight: index = 2; break;
-    case nuiRight: index = 3; break;
-    case nuiBottomRight: index = 4; break;
-    case nuiBottom: index = 5; break;
-    case nuiBottomLeft: index = 6; break;
-    case nuiLeft: index = 7; break;
-    case nuiTopLeft: index = 8; break;
+    case nuiTop:          index = 0; break;
+    case nuiTopRight:     index = 1; break;
+    case nuiRight:        index = 2; break;
+    case nuiBottomRight:  index = 3; break;
+    case nuiBottom:       index = 4; break;
+    case nuiBottomLeft:   index = 5; break;
+    case nuiLeft:         index = 6; break;
+    case nuiTopLeft:      index = 7; break;
   }
   
   mpArrows[index]->SetAnimation(_T("activated"));

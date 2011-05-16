@@ -119,7 +119,7 @@ nuiPosition nuiViewController::GetSwipeDirection() const
 
 #define SWIPE_INITIATED_THRESHOLD 9
 #define SWIPE_INITIATED_TIMEOUT 0.10f
-#define SWIPE_ACTIVATED_THRESHOLD 80
+#define SWIPE_ACTIVATED_THRESHOLD 70
 #define SWIPE_ACTIVATED_TIMEOUT 0.15f
 
 
