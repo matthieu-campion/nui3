@@ -1716,6 +1716,14 @@
 		BC0F70800DB3BC0100329939 /* nglThreadChecker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC0F707C0DB3BC0100329939 /* nglThreadChecker.cpp */; };
 		BC0F70D50DB4A70F00329939 /* nglThreadChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = BC0F70D40DB4A70F00329939 /* nglThreadChecker.h */; };
 		BC0F70D60DB4A70F00329939 /* nglThreadChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = BC0F70D40DB4A70F00329939 /* nglThreadChecker.h */; };
+		BC1684DD1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1684DC1381605F00A605E6 /* nuiGestureRecognizer.cpp */; };
+		BC1684DE1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1684DC1381605F00A605E6 /* nuiGestureRecognizer.cpp */; };
+		BC1684DF1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1684DC1381605F00A605E6 /* nuiGestureRecognizer.cpp */; };
+		BC1684E01381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC1684DC1381605F00A605E6 /* nuiGestureRecognizer.cpp */; };
+		BC1684E21381606C00A605E6 /* nuiGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1684E11381606C00A605E6 /* nuiGestureRecognizer.h */; };
+		BC1684E31381606C00A605E6 /* nuiGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1684E11381606C00A605E6 /* nuiGestureRecognizer.h */; };
+		BC1684E41381606C00A605E6 /* nuiGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1684E11381606C00A605E6 /* nuiGestureRecognizer.h */; };
+		BC1684E51381606C00A605E6 /* nuiGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1684E11381606C00A605E6 /* nuiGestureRecognizer.h */; };
 		BC19B5CF12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC19B5CE12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp */; };
 		BC19B5D012AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC19B5CE12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp */; };
 		BC19B5D112AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC19B5CE12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp */; };
@@ -7315,6 +7323,8 @@
 		944C54170E00018200B691C5 /* nuiHotKeyEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHotKeyEditor.h; path = include/nuiHotKeyEditor.h; sourceTree = SOURCE_ROOT; };
 		BC0F707C0DB3BC0100329939 /* nglThreadChecker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nglThreadChecker.cpp; path = src/Threading/nglThreadChecker.cpp; sourceTree = SOURCE_ROOT; };
 		BC0F70D40DB4A70F00329939 /* nglThreadChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglThreadChecker.h; path = include/nglThreadChecker.h; sourceTree = SOURCE_ROOT; };
+		BC1684DC1381605F00A605E6 /* nuiGestureRecognizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGestureRecognizer.cpp; path = NavigationViews/nuiGestureRecognizer.cpp; sourceTree = "<group>"; };
+		BC1684E11381606C00A605E6 /* nuiGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGestureRecognizer.h; path = include/nuiGestureRecognizer.h; sourceTree = SOURCE_ROOT; };
 		BC19B5CE12AFC0F1002DA665 /* nuiNavigationViewDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNavigationViewDecoration.cpp; path = src/Decorations/nuiNavigationViewDecoration.cpp; sourceTree = SOURCE_ROOT; };
 		BC19B5D312AFC0FE002DA665 /* nuiNavigationViewDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNavigationViewDecoration.h; path = include/nuiNavigationViewDecoration.h; sourceTree = SOURCE_ROOT; };
 		BC19E1960EA3AC030026CB6B /* nuiImageSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiImageSequence.cpp; path = src/Layout/nuiImageSequence.cpp; sourceTree = SOURCE_ROOT; };
@@ -9190,7 +9200,6 @@
 				BC3BA4670D251050005B175E /* nuiFrame.cpp */,
 				BC3BA4730D25107B005B175E /* nuiFrame.h */,
 				BC3BA4680D251050005B175E /* nuiGradientDecoration.cpp */,
-				BC3BA4740D25107B005B175E /* nuiGradientDecoration.h */,
 				BC915AF80DE187E80044CD59 /* nuiImageDecoration.cpp */,
 				BC915AFB0DE187F80044CD59 /* nuiImageDecoration.h */,
 				E5D053F60D318DC000B1A021 /* nuiMetaDecoration.cpp */,
@@ -9226,6 +9235,8 @@
 				BC87DF0312A9599B00D836BF /* nuiNavigationButton.h */,
 				BCF87564137D27630092DAAD /* nuiImageAnimation.cpp */,
 				BCF8755F137D27570092DAAD /* nuiImageAnimation.h */,
+				BC1684DC1381605F00A605E6 /* nuiGestureRecognizer.cpp */,
+				BC1684E11381606C00A605E6 /* nuiGestureRecognizer.h */,
 			);
 			name = NavigationViews;
 			sourceTree = "<group>";
@@ -10616,6 +10627,7 @@
 				E5816D860C3CECAB00902DFE /* Image */,
 				BCC51B9A0DC0D8FA00563B7E /* Introspector */,
 				40033E6A12B14D31000695D2 /* Json */,
+				BC3BA4740D25107B005B175E /* nuiGradientDecoration.h */,
 				E5816D920C3CECAB00902DFE /* Layout */,
 				E5816DA30C3CECAB00902DFE /* Math */,
 				BC92AC991282F8F1006A27B0 /* NavigationViews */,
@@ -13000,6 +13012,7 @@
 				401705C812E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3112F3317500F435D9 /* TextureAtlas.h in Headers */,
 				BCF87562137D27570092DAAD /* nuiImageAnimation.h in Headers */,
+				BC1684E41381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13386,6 +13399,7 @@
 				401705C612E06878008769D5 /* nuiSynthVoice.h in Headers */,
 				E5345F3512F3317500F435D9 /* TextureAtlas.h in Headers */,
 				BCF87563137D27570092DAAD /* nuiImageAnimation.h in Headers */,
+				BC1684E51381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13772,6 +13786,7 @@
 				E5345F3912F3317500F435D9 /* TextureAtlas.h in Headers */,
 				BC2475041377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 				BCF87561137D27570092DAAD /* nuiImageAnimation.h in Headers */,
+				BC1684E31381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14158,6 +14173,7 @@
 				E5345F3712F3317500F435D9 /* TextureAtlas.h in Headers */,
 				BC2475031377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 				BCF87560137D27570092DAAD /* nuiImageAnimation.h in Headers */,
+				BC1684E21381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16996,6 +17012,7 @@
 				401705C912E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3212F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 				BCF87567137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
+				BC1684DF1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17337,6 +17354,7 @@
 				401705C712E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3612F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 				BCF87568137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
+				BC1684E01381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17682,6 +17700,7 @@
 				401705CB12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3A12F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 				BCF87566137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
+				BC1684DE1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18026,6 +18045,7 @@
 				401705CF12E06878008769D5 /* nuiSynthVoice.cpp in Sources */,
 				E5345F3812F3317500F435D9 /* TextureAtlas.cpp in Sources */,
 				BCF87565137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
+				BC1684DD1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
