@@ -228,6 +228,9 @@ void MyViewController::OnSignalRecognizerStateChanged(nuiGestureRecognizerState 
   
   NGL_OUT(_T("OnSwipeStateChanged %ls\n"), str.GetChars());
   
+  if (state != eGestureRecognizerStateBegan)
+    return;
+  
   uint32 index = 0;
   switch (mpSwipeRecognizer->GetRecognizedDirection())
   {
