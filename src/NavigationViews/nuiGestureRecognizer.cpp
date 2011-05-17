@@ -11,33 +11,6 @@
 
 
 
-
-////**********************************************************************
-////
-//// enum nuiGestureRecognizerState
-////
-//// defines current state of a gesture recognizer
-////
-//typedef enum
-//{
-//  eGestureRecognizerStatePossible,   // default state
-//  eGestureRecognizerStateBegan,      // touches recognized as the gesture.
-//  eGestureRecognizerStateEnded,      // the end of the gesture. 
-//  eGestureRecognizerStateCancelled,  // cancellation of the gesture. 
-//  eGestureRecognizerStateFailed      // a touch sequence that can not be recognized as the gesture.
-//  
-//  // maybe later...
-//  //  eGestureRecognizerStateChanged,    // the recognizer has received touches recognized as a change to the gesture. the action method will be called at the next turn of the run loop
-//  //  eGestureRecognizerStateRecognized = UIGestureRecognizerStateEnded // the recognizer has received touches recognized as the gesture. the action method will be called at the next turn of the run loop and the recognizer will be reset to UIGestureRecognizerStatePossible
-//  
-//} nuiGestureRecognizerState;
-//
-
-//nuiSimpleEventSource<0> EventGesture;
-//nuiSimpleEventSource<0> EventStateChanged;
-
-
-
 //*******************************************************************************************************************
 //*******************************************************************************************************************
 //
@@ -56,11 +29,21 @@ nuiGestureRecognizer::~nuiGestureRecognizer()
 {
 
 }
-  
+
+
 nuiGestureRecognizerState nuiGestureRecognizer::GetState() const
 {
   return mState;
 }
+
+void nuiGestureRecognizer::SetState(nuiGestureRecognizerState state)
+{
+  mState = state;
+  
+  // send synchronous signal
+  SignalStateChanged(mState);
+}
+
   
 
 // virtual 
@@ -89,22 +72,6 @@ bool nuiGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
 
 
 
-////**********************************************************************
-////
-//// enum nuiSwipeGestureRecognizerDirection
-////
-//// directions the swipe gesture is applying on. can combine several directions
-////
-//typedef enum
-//{
-//  eSwipeGestureRecognizerDirectionRight = 1 << 0,
-//  eSwipeGestureRecognizerDirectionLeft  = 1 << 1,
-//  eSwipeGestureRecognizerDirectionUp    = 1 << 2,
-//  eSwipeGestureRecognizerDirectionDown  = 1 << 3
-//  
-//} nuiSwipeGestureRecognizerDirection;
-//
-
 
 
 
@@ -121,14 +88,15 @@ bool nuiGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
 //
 
 
-nuiSwipeGestureRecognizer::nuiSwipeGestureRecognizer()
+nuiSwipeGestureRecognizer::nuiSwipeGestureRecognizer(nuiGestureDirection direction)
 : nuiGestureRecognizer()
 {
   mClicked = false;
   mStartX = 0;
   mStartY = 0;
   
-  mDirection = eSwipeGestureRecognizerDirectionRight;  
+  mDirection = direction;
+  mRecognizedDirection = nuiGestureDirectionNull;
 }
 
 
@@ -138,7 +106,7 @@ nuiSwipeGestureRecognizer::~nuiSwipeGestureRecognizer()
 
 }
   
-void nuiSwipeGestureRecognizer::SetDirection(nuiSwipeGestureRecognizerDirection direction)
+void nuiSwipeGestureRecognizer::SetDirections(nuiGestureDirection direction)
 {
   mDirection = direction;
 }
@@ -149,6 +117,8 @@ bool nuiSwipeGestureRecognizer::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo:
 {
   bool res = nuiGestureRecognizer::MouseClicked(X, Y, Button);
  
+  mRecognizedDirection = nuiGestureDirectionNull;
+  
   mClicked = true;
   mTime = nglTime();
   mInitiatedTime = 0;
@@ -165,7 +135,7 @@ bool nuiSwipeGestureRecognizer::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInf
   bool res = nuiGestureRecognizer::MouseUnclicked(X, Y, Button);
   
   mClicked = false;
-  mState = eGestureRecognizerStatePossible;
+  SetState(eGestureRecognizerStatePossible);
 
   mTime = nglTime();
   mInitiatedTime = 0;
@@ -184,7 +154,7 @@ bool nuiSwipeGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
   if (!mClicked)
     return false;
   
-  if (mState == eGestureRecognizerStateEnded)
+  if (GetState() == eGestureRecognizerStateEnded)
     return false;
   
 	double diffx = mStartX - X + 0.1; // adding 0.1 to avoid division by zero
@@ -192,7 +162,7 @@ bool nuiSwipeGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
   double currentTime = nglTime();
   
   // has the swipe gesture been initiated?
-  if (mState != eGestureRecognizerStateBegan)
+  if (GetState() != eGestureRecognizerStateBegan)
   {
     bool initiatedOnX = (abs(diffx) >= SWIPE_INITIATED_THRESHOLD);
     bool initiatedOnY = (abs(diffy) >= SWIPE_INITIATED_THRESHOLD);
@@ -200,18 +170,15 @@ bool nuiSwipeGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
     // yes, it's been initiated.
     if (initiatedOnX || initiatedOnY)
     {
-      nuiSwipeGestureRecognizerDirection direction = GetGestureDirection(initiatedOnX, initiatedOnY, mStartX, X, mStartY, Y);
+      mRecognizedDirection = GetGestureDirection(initiatedOnX, initiatedOnY, mStartX, X, mStartY, Y);
 
       // is this recognizer in charge of the detected gesture?
-      if ((direction & mDirection) 
+      if ((mRecognizedDirection & mDirection) 
           && ((currentTime  - mTime) < SWIPE_INITIATED_TIMEOUT))
       {
         // yes. consider that the gesture recognition has began
-        mState = eGestureRecognizerStateBegan;
         mInitiatedTime = currentTime;
-        
-        // send synchronous event
-        EventStateChanged();
+        SetState(eGestureRecognizerStateBegan);
       }
       // no, it's not. set data for the next call
       else
@@ -224,7 +191,7 @@ bool nuiSwipeGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
   }
   
   // not yet. it's a simple "move" gesture.
-  if (mState != eGestureRecognizerStateBegan)
+  if (GetState() != eGestureRecognizerStateBegan)
     return false;
   
   // swipe has been initiated, is the gesture fully completed?
@@ -240,69 +207,34 @@ bool nuiSwipeGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
       mInitiatedTime = 0;
       mStartX = X;
       mStartY = Y;
-      mState = eGestureRecognizerStateFailed;
+      SetState(eGestureRecognizerStateFailed);
+      mRecognizedDirection = nuiGestureDirectionNull;
       
       return false;
     }
     
     // ok! the swipe gesture has been completed!
-		mState = eGestureRecognizerStateEnded;
+		SetState(eGestureRecognizerStateEnded);
     
     // let's assume it's no use to compute mDirection here, since it's been done when the swipe gesture has been initiated.
     // we'll see in the future if it's wrong to make that assumption.
     // mDirection = GetGesturePosition(activatedOnX, activatedOnY, mStartX, X, mStartY, Y);
     
     // send synchronous event
-    EventStateChanged();
-    EventGesture();
+    SignalSwipe(mDirection);
 	}
   
   return false;
 }
 
 
-//nuiPosition nuiSwipeGestureRecognizer::GetGesturePosition(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const
-//{
-//  // diagonal gesture?
-//  if (evalOnX && evalOnY)
-//  {
-//    if (x1 < x2) 
-//    {
-//      if (y1 < y2)
-//        return nuiBottomRight;
-//      else
-//        return nuiTopRight;
-//    }
-//    else 
-//    {
-//      if (y1 < y2)
-//        return nuiBottomLeft;
-//      else
-//        return nuiTopLeft;
-//    }
-//  }
-//  // horizontal gesture?
-//  else if (evalOnX)
-//  {
-//    if (x1 < x2) 
-//      return nuiRight;
-//    else
-//      return nuiLeft;
-//  }
-//  // vertical gesture?
-//  else if (evalOnY)
-//  {
-//    if (y1 < y2) 
-//      return nuiBottom;
-//    else
-//      return nuiTop;
-//  }
-//  
-//  return nuiNoPosition;
-//}
+nuiGestureDirection nuiSwipeGestureRecognizer::GetRecognizedDirection() const
+{
+  return mRecognizedDirection;
+}
 
 
-nuiSwipeGestureRecognizerDirection nuiSwipeGestureRecognizer::GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const
+nuiGestureDirection nuiSwipeGestureRecognizer::GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const
 {
   // diagonal gesture?
   if (evalOnX && evalOnY)
@@ -310,45 +242,39 @@ nuiSwipeGestureRecognizerDirection nuiSwipeGestureRecognizer::GetGestureDirectio
     if (x1 < x2) 
     {
       if (y1 < y2)
-        return (eSwipeGestureRecognizerDirectionDownRight | eSwipeGestureRecognizerDirectionRight);
+        return nuiGestureDirectionDownRight;
       else
-        return (eSwipeGestureRecognizerDirectionUp | eSwipeGestureRecognizerDirectionRight);
+        return nuiGestureDirectionUpRight;
     }
     else 
     {
       if (y1 < y2)
-        return (eSwipeGestureRecognizerDirectionDown | eSwipeGestureRecognizerDirectionLeft);
+        return nuiGestureDirectionDownLeft;
       else
-        return (eSwipeGestureRecognizerDirectionUp | eSwipeGestureRecognizerDirectionLeft);
+        return nuiGestureDirectionUpLeft;
     }
   }
   // horizontal gesture?
   else if (evalOnX)
   {
     if (x1 < x2) 
-      return eSwipeGestureRecognizerDirectionRight;
+      return nuiGestureDirectionRight;
     else
-      return eSwipeGestureRecognizerDirectionLeft;
+      return nuiGestureDirectionLeft;
   }
   // vertical gesture?
   else if (evalOnY)
   {
     if (y1 < y2) 
-      return eSwipeGestureRecognizerDirectionDown;
+      return nuiGestureDirectionDown;
     else
-      return eSwipeGestureRecognizerDirectionUp;
+      return nuiGestureDirectionUp;
   }
   
-  return -1;
+  return nuiGestureDirectionNull;
 }
 
 
-
-// static 
-bool nuiSwipeGestureRecognizer::DoesPositionMatchesDirection(nuiPosition position, nuiSwipeGestureRecognizerDirection direction)
-{
-  if (
-}
 
 
 

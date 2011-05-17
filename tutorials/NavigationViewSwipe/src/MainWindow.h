@@ -10,10 +10,10 @@
 #include "nuiMainWindow.h"
 #include "nuiNavigationController.h"
 #include "nuiViewController.h"
+#include "nuiGestureRecognizer.h"
 
 class nuiImageAnimation;
 class nuiSprite;
-
 
 
 class MainWindow : public nuiMainWindow
@@ -45,10 +45,11 @@ public:
   
 protected:
 
+  void OnComboChanged(const nuiEvent& rEvent);
+  void OnSignalSwipe(nuiGestureDirection direction);
+  void OnSignalRecognizerStateChanged(nuiGestureRecognizerState state);
+
   // available virtual callbacks from nuiViewController
-  //
-  virtual void SwipeBegan(nuiPosition swipeDirection);
-  virtual void SwipeEnd(nuiPosition swipeDirection);
   //  virtual void ViewWillAppear();
   //  virtual void ViewWillDisappear();
   //  virtual void ViewDidAppear();
@@ -58,8 +59,11 @@ private:
 
   void OnResetArrows(const nuiEvent& rEvent);
   
+  nuiSwipeGestureRecognizer* mpSwipeRecognizer;
+  
   nuiTimer mTimer;
   std::vector<nuiSprite*> mpArrows;
   nuiEventSink<MyViewController> mEventSink;
+  nuiSlotsSink mSink;
 };
 

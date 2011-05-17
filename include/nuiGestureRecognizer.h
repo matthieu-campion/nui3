@@ -50,17 +50,19 @@ public:
   nuiGestureRecognizer();
   virtual ~nuiGestureRecognizer();
 
-  nuiSimpleEventSource<0> EventGesture;
-  
-  nuiSimpleEventSource<0> EventStateChanged;
+  nuiSignal1<nuiGestureRecognizerState> SignalStateChanged;
   nuiGestureRecognizerState GetState() const;
-
+  
+  
 protected:
+  
+  void SetState(nuiGestureRecognizerState state);
   
   virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
   virtual bool MouseMoved(nuiSize X, nuiSize Y);
 
+private:
   nuiGestureRecognizerState mState;
 
 };
@@ -68,26 +70,30 @@ protected:
 
 
 
-//**********************************************************************
-//
-// enum nuiSwipeGestureRecognizerDirection
+
+typedef uint32 nuiGestureDirection;
+
 //
 // directions the swipe gesture is applying on. can combine several directions
 //
-typedef enum 
-{
-  eSwipeGestureRecognizerDirectionRight = 1 << 0,
-  eSwipeGestureRecognizerDirectionLeft  = 1 << 1,
-  eSwipeGestureRecognizerDirectionUp    = 1 << 2,
-  eSwipeGestureRecognizerDirectionDown  = 1 << 3,
+const uint32 nuiGestureDirectionNull  = 1 << 0;
 
-  eSwipeGestureRecognizerDirectionUpRight   = eSwipeGestureRecognizerDirectionRight | eSwipeGestureRecognizerDirectionUp,
-  eSwipeGestureRecognizerDirectionDownRight = eSwipeGestureRecognizerDirectionRight | eSwipeGestureRecognizerDirectionDown,
-  eSwipeGestureRecognizerDirectionDownLeft  = eSwipeGestureRecognizerDirectionLeft | eSwipeGestureRecognizerDirectionDown,
-  eSwipeGestureRecognizerDirectionUpLeft    = eSwipeGestureRecognizerDirectionLeft | eSwipeGestureRecognizerDirectionUp
+const uint32 nuiGestureDirectionRight = 1 << 1;
+const uint32 nuiGestureDirectionLeft  = 1 << 2;
+const uint32 nuiGestureDirectionUp    = 1 << 3;
+const uint32 nuiGestureDirectionDown  = 1 << 4;
+
+const uint32 nuiGestureDirectionUpRight   = 1 << 5;
+const uint32 nuiGestureDirectionDownRight = 1 << 6;
+const uint32 nuiGestureDirectionDownLeft  = 1 << 7;
+const uint32 nuiGestureDirectionUpLeft    = 1 << 8;
+
+const uint32 nuiGestureDirectionHorizontal = nuiGestureDirectionRight | nuiGestureDirectionLeft;
+const uint32 nuiGestureDirectionVertical = nuiGestureDirectionUp | nuiGestureDirectionDown;
+
+const uint32 nuiGestureDirectionDiagonals = nuiGestureDirectionUpRight | nuiGestureDirectionDownRight | nuiGestureDirectionDownLeft | nuiGestureDirectionUpLeft;
 
 
-} nuiSwipeGestureRecognizerDirection;
 
 
 
@@ -103,10 +109,14 @@ class nuiSwipeGestureRecognizer: public nuiGestureRecognizer
 {
 public:
   
-  nuiSwipeGestureRecognizer();
+  nuiSwipeGestureRecognizer(nuiGestureDirection direction);
   ~nuiSwipeGestureRecognizer();
   
-  void SetDirection(nuiSwipeGestureRecognizerDirection direction);
+  void SetDirections(nuiGestureDirection direction);
+  
+  nuiSignal1<nuiGestureDirection> SignalSwipe;
+  nuiGestureDirection GetRecognizedDirection() const;
+  
   
 protected:
   
@@ -117,9 +127,9 @@ protected:
 private:
   
 //  nuiPosition GetGesturePosition(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const;
-  nuiSwipeGestureRecognizerDirection GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const;
+  nuiGestureDirection GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const;
   
-  static bool DoesPositionMatchesDirection(nuiPosition position, nuiSwipeGestureRecognizerDirection direction);
+//  static bool DoesPositionMatchesDirection(nuiPosition position, nuiSwipeGestureRecognizerDirection direction);
   
   bool mClicked;
   double mTime;
@@ -127,6 +137,7 @@ private:
   nuiSize mStartX;
   nuiSize mStartY;
   
-  nuiSwipeGestureRecognizerDirection mDirection;
+  nuiGestureDirection mDirection;
+  nuiGestureDirection mRecognizedDirection;
 };
 
