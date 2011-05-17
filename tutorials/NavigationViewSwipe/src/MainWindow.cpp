@@ -214,7 +214,6 @@ void MyViewController::OnSignalSwipe(nuiGestureDirection direction)
 
 void MyViewController::OnSignalRecognizerStateChanged(nuiGestureRecognizerState state)
 {
-  mTimer.Stop();
   
   nglString str;
   switch (state) 
@@ -230,7 +229,9 @@ void MyViewController::OnSignalRecognizerStateChanged(nuiGestureRecognizerState 
   
   if (state != eGestureRecognizerStateBegan)
     return;
-  
+
+  mTimer.Stop();
+
   uint32 index = 0;
   switch (mpSwipeRecognizer->GetRecognizedDirection())
   {

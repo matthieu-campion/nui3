@@ -221,7 +221,7 @@ bool nuiSwipeGestureRecognizer::MouseMoved(nuiSize X, nuiSize Y)
     // mDirection = GetGesturePosition(activatedOnX, activatedOnY, mStartX, X, mStartY, Y);
     
     // send synchronous event
-    SignalSwipe(mDirection);
+    SignalSwipe(mRecognizedDirection);
 	}
   
   return false;
