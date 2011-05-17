@@ -3334,7 +3334,7 @@ void nuiWidget::InternalSetLayout(const nuiRect& rect, bool PositionChanged, boo
   
   if (mNeedSelfLayout)
   {
-    if (IsInSetRect())
+    if (mInSetRect)
       return;
     mInSetRect = true;
     SetRect(rect);

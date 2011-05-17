@@ -157,7 +157,7 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
   pChild->Acquire();
   nuiContainer* pParent = pChild->GetParent();
   NGL_ASSERT(pParent != this);
-
+  
   uint32 capacity = mpChildren.capacity();
   uint32 size = mpChildren.size();
   if (size == capacity)
@@ -189,6 +189,7 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild)
 {
   CheckValid();
   NGL_ASSERT(pChild->GetParent() == this)
+
 
   if (GetDebug())
   {

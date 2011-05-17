@@ -55,16 +55,6 @@ MyViewController2!
   Bold: true;
 }
 
-"ViewControllerName"!
-{
-  Position: TopLeft;
-  Font: fontName;
-  BorderTop: 10;
-  BorderLeft: 10;
-  
-  TextColor: rgb(240,240,240);
-}
-
 
 "PopButton0"!
 {

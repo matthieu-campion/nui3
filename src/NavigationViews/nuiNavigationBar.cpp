@@ -12,12 +12,16 @@
 #include "nuiFontManager.h"
 
 nuiNavigationBar::nuiNavigationBar()
-: nuiSimpleContainer(), mEventSink(this)
+: nuiHBox(3), mEventSink(this)
 {
   SetObjectClass(_T("nuiNavigationBar"));
   
+  nuiHBox::SetCellExpand(0, nuiExpandFixed);
+  nuiHBox::SetCellExpand(1, nuiExpandShrinkAndGrow);
+  nuiHBox::SetCellExpand(2, nuiExpandFixed);
+  
   mBarStyle = eBarStyleDefault;
-  mTintColor = nuiColor(0,0,0);
+  //mTintColor = nuiColor(0,0,0);
   mTranslucent = false;
 }
 
@@ -40,10 +44,10 @@ void nuiNavigationBar::SetBarStyle(nuiNavigationBarStyle style)
 }
 
 
-void nuiNavigationBar::SetTintColor(const nuiColor& rColor)
-{
-  mTintColor = rColor;
-}
+//void nuiNavigationBar::SetTintColor(const nuiColor& rColor)
+//{
+//  mTintColor = rColor;
+//}
 
 void nuiNavigationBar::SetTranslucent(bool set)
 {
@@ -56,10 +60,10 @@ nuiNavigationBarStyle nuiNavigationBar::GetBarStyle() const
 }
 
 
-const nuiColor& nuiNavigationBar::GetTintColor() const
-{
-  return mTintColor;
-}
+//const nuiColor& nuiNavigationBar::GetTintColor() const
+//{
+//  return mTintColor;
+//}
 
 bool nuiNavigationBar::GetTranslucent()
 {
@@ -83,55 +87,67 @@ void nuiNavigationBar::SetTitle(const nglString& rTitle)
   AddChild(pLabel);
 }
 
-void nuiNavigationBar::SetBackNavigationItem(nuiNavigationButton* pButton)
+void nuiNavigationBar::SetBackNavigationItem(bool set)
 {
-
+  nuiNavigationButton* pButton = new nuiNavigationButton(_T("Back"));
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle, true /*leftyButton*/);  
+  nuiHBox::SetCell(0, pButton);
 }
 
 
 void nuiNavigationBar::SetTopNavigationItem(nuiNavigationButton* pButton)
 {
-
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
+  nuiHBox::SetCell(1, pButton);
 }
 
 void nuiNavigationBar::SetLeftNavigationItem(nuiNavigationButton* pButton)
 {
-
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
+  nuiHBox::SetCell(0, pButton);
 }
 
 void nuiNavigationBar::SetRightNavigationItem(nuiNavigationButton* pButton)
 {
-
+  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
+  nuiHBox::SetCell(2, pButton);
 }
-  
+
+
+ 
+
 
 // virtual 
+//LBDEBUG
 //nuiRect nuiNavigationBar::CalcIdealSize()
 //{
 //  // plateform? orientation? 
 //  return nuiRect(0, 0, 320, 44);
 //}
-
+//
 
 // virtual 
 bool nuiNavigationBar::Draw(nuiDrawContext* pContext)
 {
   if (mBarStyle == eBarStyleNone)
     return true;
-  
-  bool res = nuiSimpleContainer::Draw(pContext);
-  
-  pContext->EnableAntialiasing(false);
-  pContext->EnableBlending(true);
-  pContext->SetBlendFunc(nuiBlendTransp);
-  pContext->EnableTexturing(false);
-  
-  nuiGradient gradient;
-  nuiRect rect = GetRect();
-  rect.Set(rect.Left(), rect.Top(), rect.GetWidth(), rect.GetHeight() / 2.f);
-  gradient.AddStop(nuiColor(255,255,255,72), 0.f);
-  gradient.AddStop(nuiColor(255,255,255,16), 1.f);
-  pContext->DrawGradient(gradient, rect, 0, rect.Top(), 0, rect.Bottom());
-  return res;
+  return nuiHBox::Draw(pContext);
 }
-
+//  
+//  pContext->EnableAntialiasing(false);
+//  pContext->EnableBlending(true);
+//  pContext->SetBlendFunc(nuiBlendTransp);
+//  pContext->EnableTexturing(false);
+//  
+//  nuiGradient gradient;
+//  nuiRect rect = GetRect();
+//  rect.Set(rect.Left(), rect.Top(), rect.GetWidth(), rect.GetHeight() / 2.f);
+//  gradient.AddStop(nuiColor(255,255,255,72), 0.f);
+//  gradient.AddStop(nuiColor(255,255,255,16), 1.f);
+//  pContext->DrawGradient(gradient, rect, 0, rect.Top(), 0, rect.Bottom());
+//  
+//  bool res = nuiSimpleContainer::Draw(pContext);
+//  
+//  return res;
+//}
+//
