@@ -72,7 +72,7 @@ protected:
   class NUI_API WordElement
   {
   public:
-    WordElement();
+    WordElement(nglGlyphInfo Glyph, nglChar Char, int Pos, nglFontBase* pFont);
     WordElement(const WordElement& rWordElement);
 
     nglGlyphInfo mGlyph;

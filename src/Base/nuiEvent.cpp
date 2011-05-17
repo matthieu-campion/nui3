@@ -32,7 +32,7 @@ nuiEvent::nuiEvent(const nuiEvent& rEvent)
 
 void nuiEvent::Cancel() const
 {
-  mCancel = false;
+  mCancel = true;
 }
 
 bool nuiEvent::IsCanceled() const

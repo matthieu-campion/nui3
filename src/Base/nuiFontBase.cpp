@@ -61,11 +61,12 @@ nuiFontLayout::~nuiFontLayout()
   }
 }
 
-nuiFontLayout::WordElement::WordElement()
+nuiFontLayout::WordElement::WordElement(nglGlyphInfo Glyph, nglChar Char, int Pos, nglFontBase* pFont)
 {
-  //mGlyph;
-  mChar = 0;
-  mPos = -1;
+  mGlyph = Glyph;
+  mChar = Char;
+  mPos = Pos;
+  mpFont = pFont;
 }
 
 void nuiFontLayout::SetUnderline(bool set)
@@ -187,11 +188,7 @@ void nuiFontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int P
       if (!mpCurrentWord)
         mpCurrentWord = new Word;
 
-      WordElement element;
-      element.mChar = c;
-      element.mGlyph = *pGlyph;
-      element.mPos = Pos;
-      element.mpFont = pFont;
+      WordElement element(*pGlyph, c, Pos, pFont);
 
       // Handle new line control char and separate words:
       if ( c <= _T(' ') 

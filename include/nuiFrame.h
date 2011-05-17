@@ -54,6 +54,7 @@ public:
   
 	
 private:
+  void UpdateTextureCoordinates();
   nuiTexture* mpTexture;
   nglPath mTexturePath;
 	// attributes ***********************************
@@ -62,5 +63,8 @@ private:
   nuiRect mClientRect;
   bool mDebug;
   bool mInterpolated;
+  float mTx[24];
+  float mTy[24];
+  bool mNeedUpdate;
 };
 

@@ -115,6 +115,7 @@ public:
   void StartTransition(); ///< Signals to this widget that its state is being transitionned and that it should start ignoring layout changes from its parent.
   void StopTransition(); ///<  Signals to this widget that its state transition is done and that must obei to the layout changes from its parent again.
   bool IsInTransition() const;
+  bool IsInSetRect() const; ///< Returns true if this widget or one of its parents' SetRect method is currently being called.
   
   virtual const nuiRect& GetIdealRect(); ///< Return the ideal area used by this Object. If the layout of this object has changed CalIdealRect will be called and mIdealRect will contain the ideal rectangle. If the user specified a user size then mIdealRect will be overwritten with mUserRect. 
   virtual const nuiRect& GetRect() const; ///< Return the current area used by this Object.
@@ -214,6 +215,13 @@ public:
   virtual bool DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
   virtual bool DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask);
 
+  virtual void TextCompositionStarted(); ///< Tells the widget that a complex text input session is starting (mostly used to enter diacritics with dead keys and complex scripts like east asian glyphs)
+  virtual void TextCompositionConfirmed(); ///< Tells the widget to confirm the composed text as final and end the composition session start with TextCompositionStart.
+  virtual void TextCompositionCanceled(); ///< Tells the widget to cancel the composed text input and end the composition session started with TextCompositionStart.
+  virtual void TextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+  virtual nglString GetTextComposition() const;
+  virtual void TextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
+  
   virtual bool TextInput(const nglString& rUnicodeText);
   virtual void TextInputCancelled();
   virtual bool KeyDown(const nglKeyEvent& rEvent);

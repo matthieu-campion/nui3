@@ -1,0 +1,262 @@
+@TextureAtlas atlas =
+{
+  Path: "rsrc:/Atlas.png";
+
+  
+  ///////////////////////////////// Texture ArrowClose.png
+  TextureName: "ArrowClose.png";
+  Rect: "{ 92, 19, 7, 6 }";
+  
+  
+  ///////////////////////////////// Texture ArrowOpen.png
+  TextureName: "ArrowOpen.png";
+  Rect: "{ 83, 50, 6, 7 }";
+  
+  
+  ///////////////////////////////// Texture ButtonDown.png
+  TextureName: "ButtonDown.png";
+  Rect: "{ 106, 46, 10, 16 }";
+  
+  
+  ///////////////////////////////// Texture ButtonUp.png
+  TextureName: "ButtonUp.png";
+  Rect: "{ 102, 81, 10, 16 }";
+  
+  
+  ///////////////////////////////// Texture CheckerboardSmall.png
+  TextureName: "CheckerboardSmall.png";
+  Rect: "{ 0, 74, 20, 20 }";
+  
+  
+  ///////////////////////////////// Texture CloseButtonDown.png
+  TextureName: "CloseButtonDown.png";
+  Rect: "{ 149, 46, 12, 15 }";
+  
+  
+  ///////////////////////////////// Texture CloseButtonHover.png
+  TextureName: "CloseButtonHover.png";
+  Rect: "{ 102, 64, 12, 15 }";
+  
+  
+  ///////////////////////////////// Texture CloseButtonUp.png
+  TextureName: "CloseButtonUp.png";
+  Rect: "{ 133, 61, 12, 15 }";
+  
+  
+  ///////////////////////////////// Texture ComboDown.png
+  TextureName: "ComboDown.png";
+  Rect: "{ 92, 0, 100, 17 }";
+  
+  
+  ///////////////////////////////// Texture ComboUp.png
+  TextureName: "ComboUp.png";
+  Rect: "{ 92, 27, 100, 17 }";
+  
+  
+  ///////////////////////////////// Texture IconFile.png
+  TextureName: "IconFile.png";
+  Rect: "{ 220, 0, 18, 20 }";
+  
+  
+  ///////////////////////////////// Texture IconFolder.png
+  TextureName: "IconFolder.png";
+  Rect: "{ 63, 42, 18, 20 }";
+  Alias: "IconOpenFolder.png"; 
+  
+  ///////////////////////////////// Texture IconParentFolder.png
+  TextureName: "IconParentFolder.png";
+  Rect: "{ 194, 27, 18, 20 }";
+  
+  
+  ///////////////////////////////// Texture IconVolume.png
+  TextureName: "IconVolume.png";
+  Rect: "{ 214, 27, 18, 20 }";
+  
+  
+  ///////////////////////////////// Texture ImageDraggedFile.png
+  TextureName: "ImageDraggedFile.png";
+  Rect: "{ 0, 0, 39, 50 }";
+  
+  
+  ///////////////////////////////// Texture ImageDraggedFolder.png
+  TextureName: "ImageDraggedFolder.png";
+  Rect: "{ 41, 0, 49, 40 }";
+  
+  
+  ///////////////////////////////// Texture PaneInner.png
+  TextureName: "PaneInner.png";
+  Rect: "{ 116, 73, 12, 12 }";
+  
+  
+  ///////////////////////////////// Texture PaneOutter.png
+  TextureName: "PaneOutter.png";
+  Rect: "{ 194, 0, 24, 25 }";
+  
+  
+  ///////////////////////////////// Texture PopupMenu.png
+  TextureName: "PopupMenu.png";
+  Rect: "{ 22, 52, 16, 30 }";
+  
+  
+  ///////////////////////////////// Texture RadioButtonDown.png
+  TextureName: "RadioButtonDown.png";
+  Rect: "{ 72, 68, 13, 13 }";
+  
+  
+  ///////////////////////////////// Texture RadioButtonDownDisabled.png
+  TextureName: "RadioButtonDownDisabled.png";
+  Rect: "{ 55, 76, 13, 13 }";
+  
+  
+  ///////////////////////////////// Texture RadioButtonUp.png
+  TextureName: "RadioButtonUp.png";
+  Rect: "{ 22, 84, 13, 13 }";
+  
+  
+  ///////////////////////////////// Texture RadioButtonUpDisabled.png
+  TextureName: "RadioButtonUpDisabled.png";
+  Rect: "{ 40, 76, 13, 13 }";
+  
+  
+  ///////////////////////////////// Texture ScrollbarHorizontalBkg.png
+  TextureName: "ScrollbarHorizontalBkg.png";
+  Rect: "{ 234, 36, 16, 12 }";
+  
+  
+  ///////////////////////////////// Texture ScrollbarHorizontalHdl.png
+  TextureName: "ScrollbarHorizontalHdl.png";
+  Rect: "{ 70, 83, 12, 10 }";
+  
+  
+  ///////////////////////////////// Texture ScrollbarVerticalBkg.png
+  TextureName: "ScrollbarVerticalBkg.png";
+  Rect: "{ 92, 46, 12, 16 }";
+  
+  
+  ///////////////////////////////// Texture ScrollbarVerticalHdl.png
+  TextureName: "ScrollbarVerticalHdl.png";
+  Rect: "{ 27, 107, 10, 12 }";
+  
+  
+  ///////////////////////////////// Texture SliderHorizontalBkg.png
+  TextureName: "SliderHorizontalBkg.png";
+  Rect: "{ 101, 19, 12, 4 }";
+  
+  
+  ///////////////////////////////// Texture SliderHorizontalHdl.png
+  TextureName: "SliderHorizontalHdl.png";
+  Rect: "{ 0, 52, 20, 20 }";
+  
+  
+  ///////////////////////////////// Texture SliderVerticalBkg.png
+  TextureName: "SliderVerticalBkg.png";
+  Rect: "{ 234, 22, 4, 12 }";
+  
+  
+  ///////////////////////////////// Texture SliderVerticalHdl.png
+  TextureName: "SliderVerticalHdl.png";
+  Rect: "{ 41, 42, 20, 20 }";
+  
+  
+  ///////////////////////////////// Texture SplitterHorizontal.png
+  TextureName: "SplitterHorizontal.png";
+  Rect: "{ 252, 36, 3, 7 }";
+  
+  
+  ///////////////////////////////// Texture SplitterHorizontalHandle.png
+  TextureName: "SplitterHorizontalHandle.png";
+  Rect: "{ 83, 59, 6, 7 }";
+  
+  
+  ///////////////////////////////// Texture SplitterVertical.png
+  TextureName: "SplitterVertical.png";
+  Rect: "{ 115, 19, 7, 3 }";
+  
+  
+  ///////////////////////////////// Texture SplitterVerticalHandle.png
+  TextureName: "SplitterVerticalHandle.png";
+  Rect: "{ 83, 42, 7, 6 }";
+  
+  
+  ///////////////////////////////// Texture TabBottomContents.png
+  TextureName: "TabBottomContents.png";
+  Rect: "{ 37, 91, 10, 14 }";
+  
+  
+  ///////////////////////////////// Texture TabBottomDown.png
+  TextureName: "TabBottomDown.png";
+  Rect: "{ 73, 95, 10, 14 }";
+  
+  
+  ///////////////////////////////// Texture TabBottomUp.png
+  TextureName: "TabBottomUp.png";
+  Rect: "{ 61, 95, 10, 14 }";
+  
+  
+  ///////////////////////////////// Texture TabLeftContents.png
+  TextureName: "TabLeftContents.png";
+  Rect: "{ 40, 64, 14, 10 }";
+  
+  
+  ///////////////////////////////// Texture TabLeftDown.png
+  TextureName: "TabLeftDown.png";
+  Rect: "{ 240, 0, 14, 10 }";
+  
+  
+  ///////////////////////////////// Texture TabLeftUp.png
+  TextureName: "TabLeftUp.png";
+  Rect: "{ 56, 64, 14, 10 }";
+  
+  
+  ///////////////////////////////// Texture TabRightContents.png
+  TextureName: "TabRightContents.png";
+  Rect: "{ 240, 12, 14, 10 }";
+  
+  
+  ///////////////////////////////// Texture TabRightDown.png
+  TextureName: "TabRightDown.png";
+  Rect: "{ 240, 24, 14, 10 }";
+  
+  
+  ///////////////////////////////// Texture TabRightUp.png
+  TextureName: "TabRightUp.png";
+  Rect: "{ 118, 46, 14, 10 }";
+  
+  
+  ///////////////////////////////// Texture TabTopContents.png
+  TextureName: "TabTopContents.png";
+  Rect: "{ 49, 91, 10, 14 }";
+  
+  
+  ///////////////////////////////// Texture TabTopDown.png
+  TextureName: "TabTopDown.png";
+  Rect: "{ 0, 111, 10, 14 }";
+  
+  
+  ///////////////////////////////// Texture TabTopUp.png
+  TextureName: "TabTopUp.png";
+  Rect: "{ 15, 99, 10, 14 }";
+  
+  
+  ///////////////////////////////// Texture ToggleButtonDown.png
+  TextureName: "ToggleButtonDown.png";
+  Rect: "{ 87, 68, 13, 13 }";
+  
+  
+  ///////////////////////////////// Texture ToggleButtonDownDisabled.png
+  TextureName: "ToggleButtonDownDisabled.png";
+  Rect: "{ 118, 58, 13, 13 }";
+  
+  
+  ///////////////////////////////// Texture ToggleButtonUp.png
+  TextureName: "ToggleButtonUp.png";
+  Rect: "{ 0, 96, 13, 13 }";
+  
+  
+  ///////////////////////////////// Texture ToggleButtonUpDisabled.png
+  TextureName: "ToggleButtonUpDisabled.png";
+  Rect: "{ 134, 46, 13, 13 }";
+  
+  
+}
+

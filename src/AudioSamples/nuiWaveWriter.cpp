@@ -38,6 +38,10 @@ bool nuiWaveWriter::WriteInfo(const nuiSampleInfo& rInfos)
   {
     mrSampleInfo.SetFormatTag(eWaveFormatIEEEfloat);
   }
+  else // if (16 == rInfos.GetBitsPerSample())
+  {
+    mrSampleInfo.SetFormatTag(eWaveFormatPcm);
+  }
   
   
   int32 Data32;

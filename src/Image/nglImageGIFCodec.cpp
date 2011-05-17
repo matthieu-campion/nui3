@@ -86,7 +86,11 @@ bool nglImageGIFCodec::Feed(nglIStream* pIStream)
     return false;
   
   nglImageInfo info(pGIF->SWidth, pGIF->SHeight, 32);
-  SendInfo(info);
+  if (!SendInfo(info))
+  {
+    DGifCloseFile(pGIF);
+    return false;
+  }
 
   
   GifImageDesc* pImg = &pGIF->SavedImages[0].ImageDesc;
@@ -128,7 +132,9 @@ bool nglImageGIFCodec::Feed(nglIStream* pIStream)
   uint8* pInBuf = (uint8*)(pGIF->SavedImages[0].RasterBits);
   for (uint32 i = 0; i < pGIF->SWidth * pGIF->SHeight; i++)
     *pOutBuf++ = palette[*pInBuf++];
-  
+
+  SendData(1.0f);
+  DGifCloseFile(pGIF);
   return true;
 }
 

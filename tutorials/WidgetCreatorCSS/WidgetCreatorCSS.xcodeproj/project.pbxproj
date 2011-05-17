@@ -23,7 +23,14 @@
 		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
-		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E57D21971319531A007B3B7A /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
+		E57D21981319531A007B3B7A /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
+		E57D219B1319531A007B3B7A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
+		E57D219C1319531A007B3B7A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
+		E57D219E1319531A007B3B7A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
+		E57D21A813195391007B3B7A /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E57D21A91319539A007B3B7A /* libnui3CocoaD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C065E6122B12D900F52C24 /* libnui3CocoaD.a */; };
+		E57D21AC13195426007B3B7A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57D21AB13195426007B3B7A /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,32 +62,67 @@
 			remoteGlobalIDString = E58172D70C3D103300902DFE;
 			remoteInfo = nui3D;
 		};
+		E57D217D13194E78007B3B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84 /* libnuiPhone_arm7.a */;
+			remoteInfo = nuiPhone_arm7;
+		};
+		E57D217F13194E78007B3B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD341012E09CA800F1EF4E /* libthirdparty.a */;
+			remoteInfo = thirdparty;
+		};
+		E57D218113194E78007B3B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD3FF412E0B08300F1EF4E /* libthirdparty_ios.a */;
+			remoteInfo = thirdparty_ios;
+		};
+		E57D218313194E78007B3B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84 /* libthirdparty_ios_arm7.a */;
+			remoteInfo = thirdparty_ios_arm7;
+		};
+		E57D21A61319534A007B3B7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE /* nui3CocoaD */;
+			remoteInfo = nui3CocoaD;
+		};
 		E5C065E1122B12D900F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52417F311CB860B0025CA71 /* libnuiPhoneD.a */;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
 			remoteInfo = nuiPhoneD;
 		};
 		E5C065E3122B12D900F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E52420E511CBCE9E0025CA71 /* libnuiPhone.a */;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
 			remoteInfo = nuiPhone;
 		};
 		E5C065E5122B12D900F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
 			remoteInfo = nui3CocoaD;
 		};
 		E5C065E7122B12D900F52C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5D643E51209AB9C009C26A9 /* libnui3Cocoa.a */;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
 		};
 /* End PBXContainerItemProxy section */
@@ -100,6 +142,9 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E57D21A31319531A007B3B7A /* WidgetCreatorCSSCocoaD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WidgetCreatorCSSCocoaD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E57D21A51319531A007B3B7A /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
+		E57D21AB13195426007B3B7A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +170,19 @@
 				61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */,
 				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
-				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
+				E57D21A813195391007B3B7A /* libnui3D.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E57D21991319531A007B3B7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E57D219B1319531A007B3B7A /* CoreFoundation.framework in Frameworks */,
+				E57D219C1319531A007B3B7A /* CoreServices.framework in Frameworks */,
+				E57D219E1319531A007B3B7A /* OpenGL.framework in Frameworks */,
+				E57D21A91319539A007B3B7A /* libnui3CocoaD.a in Frameworks */,
+				E57D21AC13195426007B3B7A /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +203,7 @@
 		61A9DE490B833CB000BC506C /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				E57D21AB13195426007B3B7A /* Cocoa.framework */,
 				BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */,
 				61A9DFD20B833F1500BC506C /* AGL.framework */,
 				61A9DFD30B833F1500BC506C /* CoreFoundation.framework */,
@@ -172,6 +230,7 @@
 			children = (
 				61A9DFBF0B833E9600BC506C /* WidgetCreatorCSS.app */,
 				61A9DFC90B833EF200BC506C /* WidgetCreatorCSSD.app */,
+				E57D21A31319531A007B3B7A /* WidgetCreatorCSSCocoaD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				BC6A09AB0EF92BAB00881ACF /* Info.plist */,
+				E57D21A51319531A007B3B7A /* Info copy.plist */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -199,8 +259,12 @@
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
 				E5C065E2122B12D900F52C24 /* libnuiPhoneD.a */,
 				E5C065E4122B12D900F52C24 /* libnuiPhone.a */,
+				E57D217E13194E78007B3B7A /* libnuiPhone_arm7.a */,
 				E5C065E6122B12D900F52C24 /* libnui3CocoaD.a */,
 				E5C065E8122B12D900F52C24 /* libnui3Cocoa.a */,
+				E57D218013194E78007B3B7A /* libthirdparty.a */,
+				E57D218213194E78007B3B7A /* libthirdparty_ios.a */,
+				E57D218413194E78007B3B7A /* libthirdparty_ios_arm7.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -245,6 +309,24 @@
 			productReference = 61A9DFC90B833EF200BC506C /* WidgetCreatorCSSD.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E57D21931319531A007B3B7A /* WidgetCreatorCSSCocoaD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E57D21A11319531A007B3B7A /* Build configuration list for PBXNativeTarget "WidgetCreatorCSSCocoaD" */;
+			buildPhases = (
+				E57D21961319531A007B3B7A /* Sources */,
+				E57D21991319531A007B3B7A /* Frameworks */,
+				E57D21A01319531A007B3B7A /* Copy Resources Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E57D21A71319534A007B3B7A /* PBXTargetDependency */,
+			);
+			name = WidgetCreatorCSSCocoaD;
+			productName = Tempd;
+			productReference = E57D21A31319531A007B3B7A /* WidgetCreatorCSSCocoaD.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -252,7 +334,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "WidgetCreatorCSS" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 61A9DE3D0B833C9200BC506C;
 			productRefGroup = 61A9DFB50B833DE500BC506C /* Products */;
 			projectDirPath = "";
@@ -266,6 +355,7 @@
 			targets = (
 				61A9DFBE0B833E9600BC506C /* WidgetCreatorCSS */,
 				61A9DFC80B833EF200BC506C /* WidgetCreatorCSSD */,
+				E57D21931319531A007B3B7A /* WidgetCreatorCSSCocoaD */,
 			);
 		};
 /* End PBXProject section */
@@ -283,6 +373,34 @@
 			fileType = archive.ar;
 			path = libnui3.a;
 			remoteRef = BCBCB15D0DFD45B6002E8BC3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57D217E13194E78007B3B7A /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = E57D217D13194E78007B3B7A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57D218013194E78007B3B7A /* libthirdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty.a;
+			remoteRef = E57D217F13194E78007B3B7A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57D218213194E78007B3B7A /* libthirdparty_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios.a;
+			remoteRef = E57D218113194E78007B3B7A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57D218413194E78007B3B7A /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = E57D218313194E78007B3B7A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E5C065E2122B12D900F52C24 /* libnuiPhoneD.a */ = {
@@ -355,6 +473,20 @@
 			shellPath = /bin/sh;
 			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
 		};
+		E57D21A01319531A007B3B7A /* Copy Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Resources Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -rC ./resources/ --exclude \".*\" \"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n../../tools/make_rc.py resources resource.rc\necho 0 ICON \\\"resources/icon.ico\\\" >> resource.rc\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -376,6 +508,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E57D21961319531A007B3B7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E57D21971319531A007B3B7A /* Application.cpp in Sources */,
+				E57D21981319531A007B3B7A /* MainWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -388,6 +529,11 @@
 			isa = PBXTargetDependency;
 			name = nui3D;
 			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
+		};
+		E57D21A71319534A007B3B7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = nui3CocoaD;
+			targetProxy = E57D21A61319534A007B3B7A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -462,6 +608,39 @@
 			};
 			name = Default;
 		};
+		E57D21A21319531A007B3B7A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_COCOA_,
+					_DEBUG,
+				);
+				INFOPLIST_FILE = "Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-liconv",
+					"-lz",
+				);
+				PREBINDING = YES;
+				PRODUCT_NAME = WidgetCreatorCSSCocoaD;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -485,6 +664,14 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61A9DFCD0B833EF300BC506C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		E57D21A11319531A007B3B7A /* Build configuration list for PBXNativeTarget "WidgetCreatorCSSCocoaD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E57D21A21319531A007B3B7A /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;

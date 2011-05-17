@@ -41,6 +41,7 @@ private:
 
   void InfoCallback(png_structp png_ptr, png_infop info_ptr);
 
+  bool mStop;
 };
 
 nglImageCodec* nglImagePNGCodecInfo::CreateInstance()
@@ -54,6 +55,7 @@ nglImagePNGCodec::nglImagePNGCodec()
   mpRowPointers = NULL;
   png_ptr = NULL;
   info_ptr = NULL;
+  mStop = false;
 }
 
 nglImagePNGCodec::~nglImagePNGCodec()
@@ -66,8 +68,6 @@ nglImagePNGCodec::~nglImagePNGCodec()
     png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
   png_ptr = NULL;
   info_ptr = NULL;
-
-
 }
 
 bool nglImagePNGCodec::Probe(nglIStream* pIStream)
@@ -255,7 +255,10 @@ void nglImagePNGCodec::InfoCallback(png_structp png_ptr, png_infop info_ptr)
   imginfo.mBytesPerPixel = imginfo.mBitDepth / 8;
   imginfo.mBytesPerLine = imginfo.mBytesPerPixel * imginfo.mWidth;
   
-  SendInfo(imginfo);
+  if (!SendInfo(imginfo))
+  {
+    mStop = true;
+  }
 
   mpRowPointers = (png_byte**) malloc(imginfo.mHeight * sizeof(png_byte*));
 
@@ -269,12 +272,16 @@ void nglImagePNGCodec::InfoCallback(png_structp png_ptr, png_infop info_ptr)
 
 bool nglImagePNGCodec::Feed(nglIStream* pIStream)
 {
-  nglFileSize size=pIStream->Available();
-  char* buffer=new char[(size_t)size];
-  pIStream->Read(buffer,(size_t)size,1);
-  process_data((unsigned char*)buffer, (size_t)size);
-  delete[] buffer;
-  return true;
+  char buffer[4096];
+  nglFileSize size = MIN(pIStream->Available(), 4096);
+  
+  while (size > 0 && !mStop)
+  {
+    nglFileSize r = pIStream->Read(buffer,(size_t)size,1);
+    process_data((unsigned char*)buffer, (size_t)r);
+    size = MIN(pIStream->Available(), 4096);
+  }
+  return !mStop;
 }
 
 #ifdef _CARBON_

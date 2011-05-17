@@ -787,6 +787,45 @@ bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
   return false;
 }
 
+void nuiTopLevel::CallTextCompositionStarted()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionStarted();
+}
+void nuiTopLevel::CallTextCompositionConfirmed()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionConfirmed();
+}
+
+void nuiTopLevel::CallTextCompositionCanceled()
+{
+  if (mpFocus)
+    mpFocus->TextCompositionCanceled();
+}
+
+void nuiTopLevel::CallTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
+{
+  if (mpFocus)
+    mpFocus->TextCompositionUpdated(rString, CursorPosition);
+}
+
+nglString nuiTopLevel::CallGetTextComposition() const
+{
+  if (mpFocus)
+    return mpFocus->GetTextComposition();
+  return nglString::Null;
+}
+
+void nuiTopLevel::CallTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
+{
+  if (mpFocus)
+  {
+    mpFocus->TextCompositionIndexToPoint(CursorPosition, x, y);
+    mpFocus->LocalToGlobal(x, y);
+  }
+}
+
 bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 {
   CheckValid();
@@ -1019,6 +1058,9 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
 {
   CheckValid();
+  
+  mMouseClickedEvents[rInfo.TouchId] = rInfo;
+  
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons |= rInfo.Buttons;
@@ -1140,6 +1182,11 @@ bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
   CheckValid();
 //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseUnclick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
+  // Update counterpart:
+  std::map<nglTouchId, nglMouseInfo>::iterator it = mMouseClickedEvents.find(rInfo.TouchId);
+  if (it != mMouseClickedEvents.end())
+    rInfo.Counterpart = &it->second;
+  
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
   mMouseInfo.Buttons &= ~rInfo.Buttons;
@@ -1264,6 +1311,11 @@ bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 {
   CheckValid();
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseMove X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
+
+  // Update counterpart:
+  std::map<nglTouchId, nglMouseInfo>::iterator it = mMouseClickedEvents.find(rInfo.TouchId);
+  if (it != mMouseClickedEvents.end())
+    rInfo.Counterpart = &it->second;
 
   mMouseInfo.X = rInfo.X;
   mMouseInfo.Y = rInfo.Y;
@@ -1639,7 +1691,7 @@ nglPath nuiTopLevel::GetResourcePath() const
 
 void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect)
 {
-  NGL_ASSERT(!mIsDrawing);
+  //NGL_ASSERT(!mIsDrawing);
   CheckValid();
   nuiRect r = rRect;
   nuiRect rect = GetRect();

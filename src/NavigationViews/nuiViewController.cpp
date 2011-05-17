@@ -35,7 +35,7 @@ void nuiViewController::ConnectTopLevel()
 // virtual 
 void nuiViewController::ViewWillAppear()
 {
-
+  
 }
 
 // virtual 
@@ -68,5 +68,12 @@ nuiNavigationBar* nuiViewController::GetNavigationBar()
 {
   return mpBar;
 } 
+
+
+
+
+
+
+
 
 

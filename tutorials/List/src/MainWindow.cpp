@@ -55,6 +55,7 @@ void MainWindow::OnCreation()
   // input list
   pPane = new nuiBackgroundPane();
   pBox->AddCell(pPane);
+  pBox->SetCellExpand(pBox->GetNbCells() - 1, nuiExpandShrinkAndGrow);
   
   nuiScrollView* pScroll = new nuiScrollView();
   pPane->AddChild(pScroll);
@@ -62,7 +63,7 @@ void MainWindow::OnCreation()
   mpList = new nuiList();
   pScroll->AddChild(mpList);
   
-  for (uint32 i = 0; i < 16; i++)
+  for (uint32 i = 0; i < 36; i++)
   {
     nglString str;
     str.CFormat(_T("Item %d"), i);
