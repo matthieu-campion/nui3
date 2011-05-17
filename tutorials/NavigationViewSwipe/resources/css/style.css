@@ -62,9 +62,31 @@ MyViewController
   Position: TopLeft;
   BorderTop: 40;
   BorderLeft: 50;
-  
 }
 
+nuiComboBox!
+{
+  Position: TopLeft;
+  BorderTop: 54;
+  BorderLeft: 24;
+  
+  UserWidth: 180;
+  UserHeight: 26;
+}
+
+
+@nuiFont fontCombo
+{
+  Name: "Arial";
+  Size: 16;
+  Italic: false; 
+  Bold: true;
+}
+
+(nuiComboBox)nuiLabel!
+{
+  Font: fontCombo;
+}
 
 // blank ending line following
 
