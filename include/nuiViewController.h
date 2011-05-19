@@ -32,11 +32,23 @@ protected:
   virtual void ViewWillDisappear();
   virtual void ViewDidAppear();
   virtual void ViewDidDisappear();
-  virtual void ConnectTopLevel();
   
+  
+  virtual void ConnectTopLevel();
+
 private:
+  
   
   bool mAnimated;
   nuiNavigationBar* mpBar;
+
+  bool mClicked;
+  double mSwipeTime;
+  double mSwipeInitiatedTime;
+  nuiSize mSwipeStartX;
+  nuiSize mSwipeStartY;
+  bool mSwipeInitiated;
+  bool mSwipeActivated;
+  nuiPosition mSwipeDirection;
   
 };

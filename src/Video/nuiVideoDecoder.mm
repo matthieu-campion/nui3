@@ -16,7 +16,9 @@ class nuiVideoDecoderPrivate
 public:
   
   QTMovie* mpMovie;
+#ifndef __NUI64__
   QTVisualContextRef	mVisualContext;
+#endif
   CVOpenGLTextureRef mCurrentTexture;
 };
 
@@ -65,6 +67,7 @@ bool nuiVideoDecoder::Init()
   //printf("cglcontextQT: 0x%x / 0x%x\n", ctx, pixelFormat);
   CGLRetainPixelFormat(pixelFormat);
   // creates a new OpenGL texture context for a specified OpenGL context and pixel format
+#ifndef __NUI64__
 	OSStatus err = QTOpenGLTextureContextCreate(kCFAllocatorDefault, ctx, pixelFormat, nil,	&(mpPrivate->mVisualContext));
   NGL_ASSERT(!err);
   
@@ -73,7 +76,8 @@ bool nuiVideoDecoder::Init()
   
   [mpPrivate->mpMovie gotoBeginning];
   MoviesTask([mpPrivate->mpMovie quickTimeMovie], 0); 
-
+#endif
+  
   QTTime qtDuration = [mpPrivate->mpMovie duration];  
   mDuration = (double)(qtDuration.timeValue) / (double)(qtDuration.timeScale);
   
@@ -194,6 +198,7 @@ nuiTexture* nuiVideoDecoder::UpdateTexture()
   if (!IsValid())
     return NULL;
 
+#ifndef __NUI64__
   if (!QTVisualContextIsNewImageAvailable(mpPrivate->mVisualContext, NULL))
     return NULL;
   
@@ -202,7 +207,8 @@ nuiTexture* nuiVideoDecoder::UpdateTexture()
   QTVisualContextTask(mpPrivate->mVisualContext);
   OSStatus status = QTVisualContextCopyImageForTime(mpPrivate->mVisualContext, NULL, NULL, &(mpPrivate->mCurrentTexture));
   NGL_ASSERT(!status);
-
+#endif
+  
   GLuint texID = CVOpenGLTextureGetName(mpPrivate->mCurrentTexture);
   GLenum target = CVOpenGLTextureGetTarget(mpPrivate->mCurrentTexture);
   

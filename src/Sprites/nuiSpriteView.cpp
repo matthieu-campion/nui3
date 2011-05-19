@@ -143,7 +143,7 @@ const nuiSpriteFrame* nuiSpriteAnimation::GetFrame(int32 index) const
 
 void nuiSpriteAnimation::SetDuration(float seconds)
 {
-  mFPS = seconds / (float)GetFrameCount();
+  mFPS = (float)GetFrameCount() / seconds;
 }
 
 void nuiSpriteAnimation::SetFPS(float FPS)
@@ -608,6 +608,18 @@ void nuiSprite::SetAngle(float angle)
 {
   mpPivot->SetAngle(angle);
 }
+
+const nglVectorf& nuiSprite::GetPivot() const
+{
+  return mpPivot->GetPivot();
+}
+
+void nuiSprite::SetPivot(const nglVectorf& rPivot)
+{
+  mpPivot->SetPivot(rPivot);
+}
+
+
 
 void nuiSprite::SetX(float X)
 {

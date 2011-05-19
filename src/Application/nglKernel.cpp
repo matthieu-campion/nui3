@@ -195,7 +195,7 @@ void nglKernel::Init()
   mpLog = NULL;
   mpCon = NULL;
   mOwnCon = false;
-  
+  mActive = true;
 }
 
 void nglKernel::Exit(int32 ExitCode)
@@ -339,11 +339,13 @@ void nglKernel::OnWillExit()
 
 void nglKernel::CallOnActivation()
 {
+  mActive = true;
   OnActivation();
 }
 
 void nglKernel::CallOnDeactivation()
 {
+  mActive = false;
   OnDeactivation();
 }
 
@@ -355,6 +357,10 @@ void nglKernel::OnDeactivation()
 {
 }
 
+bool nglKernel::IsActive() const
+{
+  return mActive;
+}
 
 ///< Memory-warning methods (only availble on iPhone OS/UIKit)
 void nglKernel::OnMemoryWarning()

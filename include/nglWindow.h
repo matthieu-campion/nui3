@@ -47,6 +47,7 @@ public:
     TouchId = 0;
     
     SwipeInfo = eNoSwipe;
+    Counterpart = NULL;
   }
 
   nglMouseInfo(const nglMouseInfo& rInfo)
@@ -58,6 +59,8 @@ public:
     TouchId = rInfo.TouchId;
     
     SwipeInfo = rInfo.SwipeInfo;
+    EventTime = rInfo.EventTime;
+    Counterpart = rInfo.Counterpart;
   }
   
   enum Mode     ///< Select the metrics returned by mouse events (relative vs. absolute)
@@ -83,6 +86,9 @@ public:
   Flags Buttons;  ///< Buttons state
 
   nglTouchId    TouchId; ///< used to retrieve which finger acting
+  
+  nglTime EventTime; ///< Timestamp of the mouse info object (= time of the event if the mouse info comes from an event).
+  nglMouseInfo* Counterpart; ///< Contains the counter part of this mouse event or NULL if there is no counterpart. In a moved or unclicked event, the counterpart points to the nglMouseInfo that was in the clicked event.
 
   // Handle  specific touch screen events
   enum SwipeDirection
@@ -597,6 +603,14 @@ window = new nglWindow (context, info, NULL);
     This method is only called if the NoResize flag is set or the programmer
     explicitely called SetSize().
   */
+
+  virtual void OnTextCompositionStarted(); ///< Called when a complex text input session is starting (mostly used to enter diacritics with dead keys and complex scripts like east asian glyphs)
+  virtual void OnTextCompositionConfirmed(); ///< Called to confirm the composed text as final and end the composition session start with OnTextCompositionStart.
+  virtual void OnTextCompositionCanceled(); ///< Called to cancel the composed text input and end the composition session started with OnTextCompositionStart.
+  virtual void OnTextCompositionUpdated(const nglString& rString, int32 CursorPosition);
+  virtual nglString OnGetTextComposition() const;
+  virtual void OnTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const;
+  
   virtual bool OnTextInput(const nglString& rUnicodeTextInput);
   /*!<
    This method is called when the user enters text input into the program. This is a high level method that takes a unicode character string parameter.
@@ -726,6 +740,8 @@ private:
   uint32             mInModalState;
   uint32             mAngle;
   bool               mAutoRotate;
+  bool               mComposingText;
+  nglString          mComposedText;
 
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 

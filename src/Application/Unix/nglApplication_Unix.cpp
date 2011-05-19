@@ -159,7 +159,7 @@ void nglApplication::Exit()
   mTimers.clear();
   mEvents.clear();
 
-  nglKernel::Exit();
+  nglKernel::Exit(0);
 }
 
 
