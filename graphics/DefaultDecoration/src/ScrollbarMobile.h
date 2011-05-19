@@ -8,5 +8,5 @@
 #pragma once
 
 extern const char* gpScrollbarMobile;
-const long         gScrollbarMobileSize = 1102;
+const long         gScrollbarMobileSize = 1130;
 
