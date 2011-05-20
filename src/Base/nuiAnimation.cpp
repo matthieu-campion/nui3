@@ -504,6 +504,9 @@ bool nuiAnimation::UpdateTime()
   
   nglTime now;
   double t = now - mLastTime;
+  if (!IsPlaying())
+    t = 0;
+
   if (!mFirstFrameSincePlay)
     mCurrentTime += t;
   else
