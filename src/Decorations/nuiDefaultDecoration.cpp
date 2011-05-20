@@ -225,6 +225,16 @@ void nuiDefaultDecoration::InitMaps()
   
   
   
+  // mobile scrollbar handle
+  pIMem = new nglIMemory(gpScrollbarMobile, gScrollbarMobileSize);
+  pTex = nuiTexture::GetTexture(pIMem);
+  NGL_ASSERT(pTex);
+  pFrame = new nuiFrame(_T("nuiDefaultDecorationMobileScrollbarHandle"), pTex, nuiRect(5,5,1,1));
+  pFrame->UseWidgetAlpha(true);
+  delete pIMem; 
+  
+  
+  
   
   
   
