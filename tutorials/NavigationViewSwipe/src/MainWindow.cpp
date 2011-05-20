@@ -13,7 +13,8 @@
 #include "nuiImageAnimation.h"
 #include "nuiTask.h"
 #include "nuiSpriteView.h"
-
+#include "nuiGestureRecognizer.h"
+#include "nuiComboBox.h"
 
 
 /*
@@ -44,11 +45,6 @@ void MainWindow::OnCreation()
   
   
 }
-
-
-
-
-
 
 
 void MainWindow::OnClose()
@@ -92,33 +88,30 @@ bool MainWindow::LoadCSS(const nglPath& rPath)
 
 
 
+//**************************************************************************************
+//**************************************************************************************
 
 
 
 
+//*************************************************
+// MyViewController
+//
 MyViewController::MyViewController()
 : nuiViewController(), mTimer(0.4f), mEventSink(this)
 {
   SetObjectClass(_T("MyViewController"));
   SetTitle(_T("Swipe Detector"));
   
+  
+  // a simple background icon
   nuiImage* pIcon = new nuiImage();
   pIcon->SetObjectName(_T("SwipeIcon"));
   AddChild(pIcon);
 
   
-//  mClicked = false;
-  
-//  mpArrowsContainer = new nuiSimpleContainer();
-//  mpArrowsContainer->SetObjectName(_T("ArrowsContainer"));
-//  AddChild(mpArrowsContainer);
-//  
-//  mpArrows = new nuiImageAnimation(17, _T("rsrc:/decorations/directions.png"));
-//  mpArrows->SetObjectName(_T("Arrows"));
-//  mpArrowsContainer->AddChild(mpArrows);
-  
+  // sprite view to manage the sprites
   nuiSpriteView* pSpriteView = new nuiSpriteView();
-//  pSpriteView->EnableRenderCache(false);
   AddChild(pSpriteView);
   
   nuiSpriteDef* pDef = new nuiSpriteDef(nglPath(_T("rsrc:/decorations/arrow")));
@@ -126,6 +119,7 @@ MyViewController::MyViewController()
   nuiSprite* pSprite = NULL;
   float angle = 0;
   
+  // a set of sprite, rotated around the pivot
   for (uint32 i = 0; i < 8; i++)
   {
     pSprite = new nuiSprite(pDef);
@@ -139,117 +133,132 @@ MyViewController::MyViewController()
     angle += 360 / 8;
   }
   
+  // swipe gesture recognizer
+  mpSwipeRecognizer = new nuiSwipeGestureRecognizer(nuiGestureDirectionRight);
+  mSink.Connect(mpSwipeRecognizer->SignalSwipe, nuiMakeDelegate(this, &MyViewController::OnSignalSwipe));
+  mSink.Connect(mpSwipeRecognizer->SignalStateChanged, nuiMakeDelegate(this, &MyViewController::OnSignalRecognizerStateChanged));
+  AddChild(mpSwipeRecognizer);
+
+  // a combo box to setup the gesture recognizer
+  nuiTreeNode* pTree = new nuiTreeNode(_T("Swipe"), true);
+  nuiTreeNode* pNode = new nuiTreeNode(_T("right"), true);
+  pTree->AddChild(pNode);
+  pTree->AddChild(new nuiTreeNode(_T("right/left")));
+  pTree->AddChild(new nuiTreeNode(_T("top/bottom")));
+  pTree->AddChild(new nuiTreeNode(_T("diagonals")));
+  pTree->AddChild(new nuiTreeNode(_T("all")));
+  nuiComboBox* pCombo = new nuiComboBox(pTree);
+  pCombo->SetSelected(pNode);
+  mEventSink.Connect(pCombo->ValueChanged, &MyViewController::OnComboChanged, (void*)pCombo);
+  AddChild(pCombo);
+  
+  
+  // monitor reset
   mEventSink.Connect(mTimer.Tick, &MyViewController::OnResetArrows);  
   
 }
 
 
+//*************************************************
+// ~MyViewController
+//
 MyViewController::~MyViewController()
 {
 
 }
 
 
-//// virtual 
-//bool MyViewController::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
-//{
-//  bool res = nuiViewController::MouseClicked(X, Y, Button);
-//  mClicked = true;
-//  return res;
-//}
-//
-//
-//// virtual 
-//bool MyViewController::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
-//{
-//  bool res = nuiViewController::MouseUnclicked(X, Y, Button);
-//  mClicked = false;
-//  
-//  SetDelay(nuiMakeTask(this, &MyViewController::ResetArrows), 0.4f);
-//  
-//  return res;
-//}
-//
-//
-//// virtual 
-//bool MyViewController::MouseMoved(nuiSize X, nuiSize Y)
-//{
-//  bool res = nuiViewController::MouseMoved(X, Y);
-//  if (!mClicked)
-//    return res;
-//
-//  
-//  
-//  return res;
-//}
-
-
-
-// virtual 
-void MyViewController::SwipeBegan(nuiPosition swipeDirection)
+void MyViewController::OnComboChanged(const nuiEvent& rEvent)
 {
-  mTimer.Stop();
-
-  uint32 index = 0;
+  nuiComboBox* pCombo = (nuiComboBox*)rEvent.mpUser;
+  uint32 value = pCombo->GetValue();
   
-  switch (swipeDirection)
+  nuiGestureDirection direction;
+  
+  switch (value)
   {
-    case nuiTop:          index = 0; break;
-    case nuiTopRight:     index = 1; break;
-    case nuiRight:        index = 2; break;
-    case nuiBottomRight:  index = 3; break;
-    case nuiBottom:       index = 4; break;
-    case nuiBottomLeft:   index = 5; break;
-    case nuiLeft:         index = 6; break;
-    case nuiTopLeft:      index = 7; break;
+    case 0: direction = nuiGestureDirectionRight; break;
+    case 1: direction = nuiGestureDirectionHorizontal; break;
+    case 2: direction = nuiGestureDirectionVertical; break;
+    case 3: direction = nuiGestureDirectionDiagonals; break;
+    case 4: direction = nuiGestureDirectionHorizontal | nuiGestureDirectionVertical | nuiGestureDirectionDiagonals; break;
   }
   
-  mpArrows[index]->SetAnimation(_T("initiated"));
-//  mpArrows->Invalidate();
-  
-  mTimer.Start(false);
+  mpSwipeRecognizer->SetDirections(direction);
 }
 
 
-void MyViewController::SwipeEnd(nuiPosition swipeDirection)
+
+
+void MyViewController::OnSignalSwipe(nuiGestureDirection direction)
 {
   mTimer.Stop();
-
-  uint32 index = 0;
   
-  switch (swipeDirection)
+  uint32 index = 0;
+  switch (direction)
   {
-    case nuiTop:          index = 0; break;
-    case nuiTopRight:     index = 1; break;
-    case nuiRight:        index = 2; break;
-    case nuiBottomRight:  index = 3; break;
-    case nuiBottom:       index = 4; break;
-    case nuiBottomLeft:   index = 5; break;
-    case nuiLeft:         index = 6; break;
-    case nuiTopLeft:      index = 7; break;
+    case nuiGestureDirectionUp : index = 0; break;
+    case nuiGestureDirectionUpRight : index = 1; break;
+    case nuiGestureDirectionRight : index = 2; break;
+    case nuiGestureDirectionDownRight : index = 3; break;
+    case nuiGestureDirectionDown : index = 4; break;
+    case nuiGestureDirectionDownLeft: index = 5; break;
+    case nuiGestureDirectionLeft: index = 6; break;
+    case nuiGestureDirectionUpLeft: index = 7; break;
   }
   
   mpArrows[index]->SetAnimation(_T("activated"));
-//  mpArrows->Invalidate();
+  mTimer.Start(false);
+}
+
+
+void MyViewController::OnSignalRecognizerStateChanged(nuiGestureRecognizerState state)
+{
   
+  nglString str;
+  switch (state) 
+  {
+    case eGestureRecognizerStatePossible: str = _T("StatePossible"); break;
+    case eGestureRecognizerStateBegan: str = _T("StateBegan"); break;
+    case eGestureRecognizerStateEnded: str = _T("StateEnd"); break;
+    case eGestureRecognizerStateFailed: str = _T("StateFailed"); break;
+    default: str = _T("unknown");
+  }
+  
+  NGL_OUT(_T("OnSwipeStateChanged %ls\n"), str.GetChars());
+  
+  if (state != eGestureRecognizerStateBegan)
+    return;
+
+  mTimer.Stop();
+
+  uint32 index = 0;
+  switch (mpSwipeRecognizer->GetRecognizedDirection())
+  {
+    case nuiGestureDirectionUp : index = 0; break;
+    case nuiGestureDirectionUpRight : index = 1; break;
+    case nuiGestureDirectionRight : index = 2; break;
+    case nuiGestureDirectionDownRight : index = 3; break;
+    case nuiGestureDirectionDown : index = 4; break;
+    case nuiGestureDirectionDownLeft: index = 5; break;
+    case nuiGestureDirectionLeft: index = 6; break;
+    case nuiGestureDirectionUpLeft: index = 7; break;
+  }
+  
+  mpArrows[index]->SetAnimation(_T("initiated"));
   mTimer.Start(false);
 }
 
 
 
-//SetDelay(nuiMakeTask(this, &MyViewController::ResetArrows), 0.4f);
-//void MyViewController::SetDelay(nuiTask* pTask, float seconds)
-//{
-//  nuiAnimation::RunOnAnimationTick(pTask, seconds / nuiAnimation::GetTimer()->GetPeriod());      
-//}
 
-
+//*************************************************
+// OnResetArrows
+//
 void MyViewController::OnResetArrows(const nuiEvent& rEvent)
 {
   mTimer.Stop();
   
   for (uint32 index = 0; index < 8; index++)
     mpArrows[index]->SetAnimation(_T("off"));
-//  mpArrows->SetFrameIndex(0);
-//  mpArrows->Invalidate();
 }

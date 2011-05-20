@@ -181,6 +181,8 @@ protected:
 
   nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation
   nuiWidget*      mpWidgetCanDrop; ///< if not NULL, this is the last widget that return true to an OnCanDrop call (used for DragLeave)
+  
+  bool ShowWidgetInspector();
 private:
   
   // attributes
@@ -193,7 +195,7 @@ private:
   //@}
 
   bool mDebugMode;
-  bool ShowWidgetInspector();
+//  bool ShowWidgetInspector();
   nuiMainWindow* mpInspectorWindow;
 
   bool mInvalidatePosted;

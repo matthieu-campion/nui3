@@ -13,6 +13,7 @@
 #include "nuiComposite.h"
 #include "nuiScrollBar.h"
 #include "nuiContainer.h"
+#include "nuiWidgetAnimation.h"
 
 class NUI_API nuiScrollView : public nuiComposite
 {
@@ -34,6 +35,10 @@ public:
   virtual bool Clear();
 
   virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseMoved(nuiSize X, nuiSize Y);
+  
+  void Dragged(nuiSize X, nuiSize Y);
 
   const nuiRect& GetChildrenUnionRect() { return mChildrenUnionRect; }
 
@@ -72,6 +77,14 @@ public:
   bool GetEnableVerticalScroll() const;
   void SetEnableVerticalScroll(bool set);
   
+  void SetHideScrollBars(bool hide);
+  bool GetHideScrollBars();
+  
+  void EnableDrag(bool enable);
+  bool IsDragEnabled();
+  
+  void ActivateMobileMode();
+  
 private:
   void InitAttributes();
   void Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVerticalScrollBar, bool Horizontal, bool Vertical);
@@ -105,6 +118,10 @@ private:
   void OnVThumbPressed(const nuiEvent& rEvent);
   void OnVThumbDepressed(const nuiEvent& rEvent);
   
+  void ShowScrollBars(bool autoHide = false);
+  void HideScrollBars();
+  void OnHideTick(const nuiEvent& rEvent);
+  
   bool mHThumbPressed;
   bool mVThumbPressed;
   bool mSmoothScrolling;
@@ -115,6 +132,27 @@ private:
 
   bool mMinimalResize;
   nuiRect mOldIdealRect;
+  
+  bool mLeftClick;
+  nuiSize mClickX;
+  nuiSize mClickY;
+  double mClickValueH;
+  double mClickValueV;
+  nuiSize mSpeedX;
+  nuiSize mSpeedY;
+  nuiSize mLastX;
+  nuiSize mLastY;
+  
+  bool mDragEnabled;
+  
+  bool mHideScrollBars;
+  nuiFadeInWidgetAnim* mpShowAnimH;
+  nuiFadeInWidgetAnim* mpShowAnimV;
+  nuiFadeOutWidgetAnim* mpHideAnimH;
+  nuiFadeOutWidgetAnim* mpHideAnimV;
+  nuiTimer* mpHideTimer;
+  nglTime mLastTime;
+  
 
   nuiEventSink<nuiScrollView> mSVSink;
 };
