@@ -352,9 +352,9 @@ nuiTextRange::nuiTextRange()
   mBlank = false;
 }
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
 {
-  int32 size = rSourceString.GetLength();
+  int32 size = Iterator.GetLength();
   if (length < 0)
     length = size;
   if (length + start > size)
@@ -373,7 +373,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   
   int32 lastpos = start;
   int32 curpos = start;
-  nglUChar ch = rSourceString.GetNextUChar(curpos);
+  nglUChar ch = Iterator.GetNextUChar(curpos);
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
   bool print = ucisprint(ch);
@@ -396,7 +396,7 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   {
     bool brk = false;
     int32 pos = curpos;
-    ch = rSourceString.GetNextUChar(curpos);
+    ch = Iterator.GetNextUChar(curpos);
 
     if (wordboundary)
     {
@@ -506,6 +506,19 @@ bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nui
   
   return true;
 }
+
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+{
+  nuiUCharIterator_String it(rSourceString);
+  return nuiSplitText(it, rRanges, flags, start, length);
+}
+
+bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+{
+  nuiUCharIterator_Vector it(rSourceString);
+  return nuiSplitText(it, rRanges, flags, start, length);
+}
+
 
 class nuiScriptRange
 {
