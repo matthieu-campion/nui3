@@ -257,7 +257,7 @@ public:
   }
   virtual nglUChar GetNextUChar(int32& position) const
   {
-    mString.GetNextUChar(position);
+    return mString.GetNextUChar(position);
   }
   virtual int32 GetLength() const
   {
@@ -277,7 +277,7 @@ public:
   }
   virtual nglUChar GetNextUChar(int32& position) const
   {
-    mString[position++];
+    return mString[position++];
   }
   virtual int32 GetLength() const
   {
