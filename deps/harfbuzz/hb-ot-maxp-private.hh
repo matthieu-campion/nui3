@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009  Red Hat, Inc.
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -21,21 +21,48 @@
  * ON AN "AS IS" BASIS, AND THE COPYRIGHT HOLDER HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
- * Red Hat Author(s): Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
-#ifndef HB_H
-#define HB_H
+#ifndef HB_OT_MAXP_PRIVATE_HH
+#define HB_OT_MAXP_PRIVATE_HH
 
-#include "hb-blob.h"
-#include "hb-buffer.h"
-#include "hb-common.h"
-#include "hb-font.h"
-#include "hb-shape.h"
-#include "hb-unicode.h"
-#include "hb-version.h"
+#include "hb-open-type-private.hh"
 
 HB_BEGIN_DECLS
+
+
+/*
+ * maxp
+ */
+
+#define HB_OT_TAG_maxp HB_TAG('m','a','x','p')
+
+struct maxp
+{
+  static const hb_tag_t Tag	= HB_OT_TAG_maxp;
+
+  inline unsigned int get_num_glyphs (void) const {
+    return numGlyphs;
+  }
+
+  inline bool sanitize (hb_sanitize_context_t *c) {
+    TRACE_SANITIZE ();
+    return c->check_struct (this) &&
+	   likely (version.major == 1 ||
+		   (version.major == 0 && version.minor == 0x5000));
+  }
+
+  /* We only implement version 0.5 as none of the extra fields in version 1.0 are useful. */
+  private:
+  FixedVersion	version;		/* Version of the maxp table (0.5 or 1.0),
+					 * 0x00005000 or 0x00010000. */
+  USHORT	numGlyphs;		/* The number of glyphs in the font. */
+  public:
+  DEFINE_SIZE_STATIC (6);
+};
+
+
 HB_END_DECLS
 
-#endif /* HB_H */
+#endif /* HB_OT_MAXP_PRIVATE_HH */

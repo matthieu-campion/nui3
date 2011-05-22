@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
- * Copyright © 2011 Codethink Limited
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2009  Red Hat, Inc.
+ * Copyright © 2011  Codethink Limited
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -34,6 +34,7 @@
 #include "hb-private.hh"
 
 #include "hb-unicode.h"
+#include "hb-object-private.hh"
 
 HB_BEGIN_DECLS
 
@@ -43,10 +44,11 @@ HB_BEGIN_DECLS
  */
 
 struct _hb_unicode_funcs_t {
-  hb_reference_count_t ref_count;
+  hb_object_header_t header;
+
   hb_unicode_funcs_t *parent;
 
-  hb_bool_t immutable;
+  bool immutable;
 
 #define IMPLEMENT(return_type, name) \
   inline return_type \
@@ -88,7 +90,18 @@ struct _hb_unicode_funcs_t {
   } destroy;
 };
 
+
+#if HAVE_GLIB
+extern HB_INTERNAL hb_unicode_funcs_t _hb_glib_unicode_funcs;
+#define _hb_unicode_funcs_default _hb_glib_unicode_funcs
+#elif HAVE_ICU
+extern HB_INTERNAL hb_unicode_funcs_t _hb_icu_unicode_funcs;
+#define _hb_unicode_funcs_default _hb_icu_unicode_funcs
+#else
 extern HB_INTERNAL hb_unicode_funcs_t _hb_unicode_funcs_nil;
+#define _hb_unicode_funcs_default _hb_unicode_funcs_nil
+#endif
+
 
 
 HB_END_DECLS

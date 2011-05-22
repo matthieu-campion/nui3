@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright © 2009  Red Hat, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -54,7 +54,7 @@ hb_blob_create_sub_blob (hb_blob_t    *parent,
 			 unsigned int  length);
 
 hb_blob_t *
-hb_blob_create_empty (void);
+hb_blob_get_empty (void);
 
 hb_blob_t *
 hb_blob_reference (hb_blob_t *blob);
@@ -62,23 +62,33 @@ hb_blob_reference (hb_blob_t *blob);
 void
 hb_blob_destroy (hb_blob_t *blob);
 
+hb_bool_t
+hb_blob_set_user_data (hb_blob_t          *blob,
+		       hb_user_data_key_t *key,
+		       void *              data,
+		       hb_destroy_func_t   destroy);
+
+
+void *
+hb_blob_get_user_data (hb_blob_t          *blob,
+		       hb_user_data_key_t *key);
+
+
+void
+hb_blob_make_immutable (hb_blob_t *blob);
+
+hb_bool_t
+hb_blob_is_immutable (hb_blob_t *blob);
+
+
 unsigned int
 hb_blob_get_length (hb_blob_t *blob);
 
 const char *
-hb_blob_lock (hb_blob_t *blob);
+hb_blob_get_data (hb_blob_t *blob, unsigned int *length);
 
-void
-hb_blob_unlock (hb_blob_t *blob);
-
-hb_bool_t
-hb_blob_is_writable (hb_blob_t *blob);
-
-hb_bool_t
-hb_blob_try_writable_inplace (hb_blob_t *blob);
-
-hb_bool_t
-hb_blob_try_writable (hb_blob_t *blob);
+char *
+hb_blob_get_data_writable (hb_blob_t *blob, unsigned int *length);
 
 
 HB_END_DECLS

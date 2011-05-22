@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2007,2008,2009,2010  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2007,2008,2009,2010  Red Hat, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -354,7 +354,7 @@ struct Ligature
     for (i = 1, j = c->buffer->i + 1; i < count; i++, j++)
     {
       unsigned int property;
-      while (_hb_ot_layout_skip_mark (c->layout->face, &c->buffer->info[j], c->lookup_props, &property))
+      while (_hb_ot_layout_skip_mark (c->face, &c->buffer->info[j], c->lookup_props, &property))
       {
 	if (unlikely (j + count - i == end))
 	  return false;
@@ -392,7 +392,7 @@ struct Ligature
 
       for (i = 1; i < count; i++)
       {
-	while (_hb_ot_layout_skip_mark (c->layout->face, &c->buffer->info[c->buffer->i], c->lookup_props, NULL))
+	while (_hb_ot_layout_skip_mark (c->face, &c->buffer->info[c->buffer->i], c->lookup_props, NULL))
 	{
 	  c->buffer->info[c->buffer->i].lig_comp() = i;
 	  c->buffer->info[c->buffer->i].lig_id() = lig_id;
@@ -409,7 +409,7 @@ struct Ligature
 
   inline uint16_t allocate_lig_id (hb_buffer_t *buffer) const {
     uint16_t lig_id = buffer->next_serial ();
-    if (unlikely (!lig_id)) lig_id = buffer->next_serial (); /* in case of overflows */
+    if (unlikely (!lig_id)) lig_id = buffer->next_serial (); /* in case of overflow */
     return lig_id;
   }
 
@@ -762,7 +762,7 @@ struct SubstLookup : Lookup
   }
 
 
-  inline bool apply_once (hb_ot_layout_context_t *layout,
+  inline bool apply_once (hb_face_t *face,
 			  hb_buffer_t *buffer,
 			  hb_mask_t lookup_mask,
 			  unsigned int context_length,
@@ -771,14 +771,15 @@ struct SubstLookup : Lookup
     unsigned int lookup_type = get_type ();
     hb_apply_context_t c[1] = {{0}};
 
-    c->layout = layout;
+    c->face = face;
     c->buffer = buffer;
+    c->direction = buffer->props.direction;
     c->lookup_mask = lookup_mask;
     c->context_length = context_length;
     c->nesting_level_left = nesting_level_left;
     c->lookup_props = get_props ();
 
-    if (!_hb_ot_layout_check_glyph_property (c->layout->face, &c->buffer->info[c->buffer->i], c->lookup_props, &c->property))
+    if (!_hb_ot_layout_check_glyph_property (c->face, &c->buffer->info[c->buffer->i], c->lookup_props, &c->property))
       return false;
 
     if (unlikely (lookup_type == SubstLookupSubTable::Extension))
@@ -803,7 +804,7 @@ struct SubstLookup : Lookup
     return false;
   }
 
-  inline bool apply_string (hb_ot_layout_context_t *layout,
+  inline bool apply_string (hb_face_t   *face,
 			    hb_buffer_t *buffer,
 			    hb_mask_t    mask) const
   {
@@ -820,7 +821,7 @@ struct SubstLookup : Lookup
 	while (buffer->i < buffer->len)
 	{
 	  if ((buffer->info[buffer->i].mask & mask) &&
-	      apply_once (layout, buffer, mask, NO_CONTEXT, MAX_NESTING_LEVEL))
+	      apply_once (face, buffer, mask, NO_CONTEXT, MAX_NESTING_LEVEL))
 	    ret = true;
 	  else
 	    buffer->next_glyph ();
@@ -836,7 +837,7 @@ struct SubstLookup : Lookup
 	do
 	{
 	  if ((buffer->info[buffer->i].mask & mask) &&
-	      apply_once (layout, buffer, mask, NO_CONTEXT, MAX_NESTING_LEVEL))
+	      apply_once (face, buffer, mask, NO_CONTEXT, MAX_NESTING_LEVEL))
 	    ret = true;
 	  else
 	    buffer->i--;
@@ -869,11 +870,11 @@ struct GSUB : GSUBGPOS
   inline const SubstLookup& get_lookup (unsigned int i) const
   { return CastR<SubstLookup> (GSUBGPOS::get_lookup (i)); }
 
-  inline bool substitute_lookup (hb_ot_layout_context_t *layout,
+  inline bool substitute_lookup (hb_face_t    *face,
 				 hb_buffer_t  *buffer,
 			         unsigned int  lookup_index,
 				 hb_mask_t     mask) const
-  { return get_lookup (lookup_index).apply_string (layout, buffer, mask); }
+  { return get_lookup (lookup_index).apply_string (face, buffer, mask); }
 
   inline bool sanitize (hb_sanitize_context_t *c) {
     TRACE_SANITIZE ();
@@ -913,7 +914,7 @@ inline bool ExtensionSubst::is_reverse (void) const
 
 static inline bool substitute_lookup (hb_apply_context_t *c, unsigned int lookup_index)
 {
-  const GSUB &gsub = *(c->layout->face->ot_layout->gsub);
+  const GSUB &gsub = *(c->face->ot_layout->gsub);
   const SubstLookup &l = gsub.get_lookup (lookup_index);
 
   if (unlikely (c->nesting_level_left == 0))
@@ -922,7 +923,7 @@ static inline bool substitute_lookup (hb_apply_context_t *c, unsigned int lookup
   if (unlikely (c->context_length < 1))
     return false;
 
-  return l.apply_once (c->layout, c->buffer, c->lookup_mask, c->context_length, c->nesting_level_left - 1);
+  return l.apply_once (c->face, c->buffer, c->lookup_mask, c->context_length, c->nesting_level_left - 1);
 }
 
 

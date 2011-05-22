@@ -5049,6 +5049,9 @@
 		E5AFA4D8117548CD0021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E5AFA4E1117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
 		E5AFA4E2117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
+		E5B5CC651388968800A3A65D /* hb-version.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B5CC641388968800A3A65D /* hb-version.h */; };
+		E5B5CC661388968800A3A65D /* hb-version.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B5CC641388968800A3A65D /* hb-version.h */; };
+		E5B5CC671388968800A3A65D /* hb-version.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B5CC641388968800A3A65D /* hb-version.h */; };
 		E5B678C50F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */; };
 		E5B678C70F39EFCF00DBF325 /* nuiAttributeAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */; };
 		E5B678C90F39EFE100DBF325 /* nuiAttributeAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */; };
@@ -8000,6 +8003,12 @@
 		E56399B813703756006920F5 /* nuiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFont.cpp; sourceTree = "<group>"; };
 		E56399B913703756006920F5 /* nuiFontBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFontBase.cpp; sourceTree = "<group>"; };
 		E56399BA13703756006920F5 /* nuiFontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFontManager.cpp; sourceTree = "<group>"; };
+		E56A44691388959B00F053D4 /* hb-mutex-private.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = "hb-mutex-private.hh"; path = "harfbuzz/hb-mutex-private.hh"; sourceTree = "<group>"; };
+		E56A446A1388959B00F053D4 /* hb-ot-maxp-private.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = "hb-ot-maxp-private.hh"; path = "harfbuzz/hb-ot-maxp-private.hh"; sourceTree = "<group>"; };
+		E56A446B1388959B00F053D4 /* hb-view.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-view.cc"; path = "harfbuzz/hb-view.cc"; sourceTree = "<group>"; };
+		E56A446C1388959B00F053D4 /* main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cc; path = harfbuzz/main.cc; sourceTree = "<group>"; };
+		E56A446D1388959B00F053D4 /* test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = test.c; path = harfbuzz/test.c; sourceTree = "<group>"; };
+		E56A446E1388959B00F053D4 /* test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = test.cc; path = harfbuzz/test.cc; sourceTree = "<group>"; };
 		E56D24020FE2F3AD00C16F53 /* nuiFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFlowView.h; path = include/nuiFlowView.h; sourceTree = SOURCE_ROOT; };
 		E56D24060FE2F3C000C16F53 /* nuiFlowView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFlowView.cpp; sourceTree = "<group>"; };
 		E57465140D634B5600A2D66B /* nuiSerializeContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiSerializeContext.h; path = include/nuiSerializeContext.h; sourceTree = SOURCE_ROOT; };
@@ -8768,6 +8777,7 @@
 		E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3CocoaD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMimeMultiPart.h; path = include/nuiMimeMultiPart.h; sourceTree = SOURCE_ROOT; };
 		E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMimeMultiPart.cpp; path = src/Net/nuiMimeMultiPart.cpp; sourceTree = SOURCE_ROOT; };
+		E5B5CC641388968800A3A65D /* hb-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-version.h"; path = "harfbuzz/hb-version.h"; sourceTree = "<group>"; };
 		E5B678C40F39EFCF00DBF325 /* nuiAttributeAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiAttributeAnimation.cpp; path = Animations/nuiAttributeAnimation.cpp; sourceTree = "<group>"; };
 		E5B678C80F39EFE100DBF325 /* nuiAttributeAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeAnimation.h; path = include/nuiAttributeAnimation.h; sourceTree = SOURCE_ROOT; };
 		E5B74ADE0FE021C900476F43 /* nuiRSSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiRSSView.h; path = include/nuiRSSView.h; sourceTree = SOURCE_ROOT; };
@@ -11674,6 +11684,13 @@
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
+				E5B5CC641388968800A3A65D /* hb-version.h */,
+				E56A44691388959B00F053D4 /* hb-mutex-private.hh */,
+				E56A446A1388959B00F053D4 /* hb-ot-maxp-private.hh */,
+				E56A446B1388959B00F053D4 /* hb-view.cc */,
+				E56A446C1388959B00F053D4 /* main.cc */,
+				E56A446D1388959B00F053D4 /* test.c */,
+				E56A446E1388959B00F053D4 /* test.cc */,
 				E511F5C11367145700DE93B0 /* hb-blob-private.hh */,
 				E511F5C21367145700DE93B0 /* hb-blob.cc */,
 				E511F5C31367145700DE93B0 /* hb-blob.h */,
@@ -12558,6 +12575,7 @@
 				E511F7CC1367149100DE93B0 /* hb-unicode-private.hh in Headers */,
 				E511F7CE1367149100DE93B0 /* hb-unicode.h in Headers */,
 				E511F7D01367149100DE93B0 /* hb.h in Headers */,
+				E5B5CC671388968800A3A65D /* hb-version.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15291,6 +15309,7 @@
 				E511F76C1367149000DE93B0 /* hb-unicode-private.hh in Headers */,
 				E511F76E1367149000DE93B0 /* hb-unicode.h in Headers */,
 				E511F7701367149000DE93B0 /* hb.h in Headers */,
+				E5B5CC651388968800A3A65D /* hb-version.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15741,6 +15760,7 @@
 				E511F79C1367149100DE93B0 /* hb-unicode-private.hh in Headers */,
 				E511F79E1367149100DE93B0 /* hb-unicode.h in Headers */,
 				E511F7A01367149100DE93B0 /* hb.h in Headers */,
+				E5B5CC661388968800A3A65D /* hb-version.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

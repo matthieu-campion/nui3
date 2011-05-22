@@ -2434,7 +2434,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_feature_t* features = NULL;
   int32 num_features = 0;
   
-  hb_shape(hb_font, hb_face, hb_buffer, features, num_features);
+  hb_shape(hb_font, hb_buffer, features, num_features);
   
   num_glyphs = hb_buffer_get_length(hb_buffer);
   hb_glyph = hb_buffer_get_glyph_infos(hb_buffer, NULL);

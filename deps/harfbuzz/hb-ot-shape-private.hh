@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -51,6 +51,12 @@ struct hb_ot_shape_plan_t
 {
   hb_ot_map_t map;
   hb_ot_complex_shaper_t shaper;
+
+  hb_ot_shape_plan_t (void) : map () {}
+  ~hb_ot_shape_plan_t (void) { map.finish (); }
+
+  private:
+  NO_COPY (hb_ot_shape_plan_t);
 };
 
 

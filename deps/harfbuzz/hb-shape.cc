@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright © 2009  Red Hat, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -41,29 +41,15 @@ HB_BEGIN_DECLS
 
 static void
 hb_shape_internal (hb_font_t          *font,
-		   hb_face_t          *face,
 		   hb_buffer_t        *buffer,
 		   const hb_feature_t *features,
 		   unsigned int        num_features)
 {
-#if 0 && defined(HAVE_GRAPHITE)
-  hb_blob_t *silf_blob;
-  silf_blob = hb_face_reference_table (face, HB_GRAPHITE_TAG_Silf);
-  if (hb_blob_get_length(silf_blob))
-  {
-    hb_graphite_shape(font, face, buffer, features, num_features);
-    hb_blob_destroy(silf_blob);
-    return;
-  }
-  hb_blob_destroy(silf_blob);
-#endif
-
-  hb_ot_shape (font, face, buffer, features, num_features);
+  hb_ot_shape (font, buffer, features, num_features);
 }
 
 void
 hb_shape (hb_font_t          *font,
-	  hb_face_t          *face,
 	  hb_buffer_t        *buffer,
 	  const hb_feature_t *features,
 	  unsigned int        num_features)
@@ -93,12 +79,12 @@ hb_shape (hb_font_t          *font,
   }
 
   /* If language is not set, use default language from locale */
-  if (buffer->props.language == NULL) {
+  if (buffer->props.language == HB_LANGUAGE_INVALID) {
     /* TODO get_default_for_script? using $LANGUAGE */
-    //buffer->props.language = hb_language_get_default ();
+    buffer->props.language = hb_language_get_default ();
   }
 
-  hb_shape_internal (font, face, buffer, features, num_features);
+  hb_shape_internal (font, buffer, features, num_features);
 
   buffer->props = orig_props;
 }

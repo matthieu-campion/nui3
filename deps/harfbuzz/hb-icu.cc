@@ -1,6 +1,7 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
- * Copyright (C) 2009  Keith Stribley
+ * Copyright © 2009  Red Hat, Inc.
+ * Copyright © 2009  Keith Stribley
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -23,6 +24,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  * Red Hat Author(s): Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #include "hb-private.hh"
@@ -155,11 +157,16 @@ hb_icu_get_script (hb_unicode_funcs_t *ufuncs,
   UErrorCode status = U_ZERO_ERROR;
   UScriptCode scriptCode = uscript_getScript(unicode, &status);
 
+  if (unlikely (status != U_ZERO_ERROR))
+    return HB_SCRIPT_UNKNOWN;
+
   return hb_icu_script_to_script (scriptCode);
 }
 
-static hb_unicode_funcs_t icu_ufuncs = {
-  HB_REFERENCE_COUNT_INVALID, /* ref_count */
+extern HB_INTERNAL hb_unicode_funcs_t _hb_unicode_funcs_icu;
+hb_unicode_funcs_t _hb_icu_unicode_funcs = {
+  HB_OBJECT_HEADER_STATIC,
+
   NULL, /* parent */
   TRUE, /* immutable */
   {
@@ -174,7 +181,7 @@ static hb_unicode_funcs_t icu_ufuncs = {
 hb_unicode_funcs_t *
 hb_icu_get_unicode_funcs (void)
 {
-  return &icu_ufuncs;
+  return &_hb_icu_unicode_funcs;
 }
 
 
