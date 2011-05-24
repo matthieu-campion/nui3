@@ -302,7 +302,7 @@ nuiGestureDirection nuiSwipeGestureRecognizer::GetGestureDirection(bool evalOnX,
 #define PAD_ACTIVATED_TIMEOUT 0.15f
 #define PAD_FRICTION 0.9f
 #define PAD_ATTENUATOR_THRESHOLD 4.0f
-#define PAD_THRESHOLD 4.0f
+#define PAD_THRESHOLD 8.0f
 
 
 //************************************************************************************************************
