@@ -23,9 +23,9 @@ void TextLayoutTest(const nglString& txt)
 
 
 /////////////
-nuiTextRun::nuiTextRun(nuiUnicodeScript script, const nglString& rString, int32 Position, int32 Length)
+nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length)
 : mpFont(NULL),
-  mString(rString),
+  mLayout(rLayout),
   mPosition(Position),
   mLength(Length),
   mScript(script),
@@ -72,11 +72,6 @@ int32 nuiTextRun::GetLength() const
   return mLength;
 }
 
-const nglString& nuiTextRun::GetString() const
-{
-  return mString;
-}
-
 float nuiTextRun::GetAdvanceX() const
 {
   return mAdvanceX;
@@ -87,9 +82,16 @@ float nuiTextRun::GetAdvanceY() const
   return mAdvanceY;
 }
 
+const nglUChar* nuiTextRun::GetUnicodeChars() const
+{
+  return mLayout.GetUnicodeChars() + mPosition;
+}
+
+
 ////////////
 //nuiTextLine
-nuiTextLine::nuiTextLine(float X, float Y)
+nuiTextLine::nuiTextLine(const nuiTextLayout& rLayout, float X, float Y)
+: mLayout(rLayout), mX(X), mY(Y)
 {
 }
 
@@ -193,6 +195,17 @@ nuiTextLayout::~nuiTextLayout()
 
 bool nuiTextLayout::LayoutText(const nglString& rString)
 {
+  // Transform the string in a vector of nglUChar, also keep the offsets from the original chars to the nglUChar and vice versa
+  int32 len = rString.GetLength();
+  int32 i = 0;
+  while (i < len)
+  {
+    nglUChar ch = rString.GetNextUChar(i);
+    mUnicode.push_back(ch);
+    mOffsetInString.push_back(i);
+    mOffsetInUnicode.push_back(mUnicode.size() - 1);
+  }
+
   // General algorithm:
   // 1. Split text into paragraphs (LayoutText)
   // 2. Split paragraphs into ranges (LayoutParagraph)
@@ -201,17 +214,19 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
 
   int32 start = 0;
   int32 position = 0;
-  int32 len = rString.GetLength();
-  while (position < len)
+  int32 count = mUnicode.size();
+  while (position < count)
   {
     // Scan through the text and look for end of line markers
-    nglUChar ch = rString.GetNextUChar(position);
+    nglUChar ch = mUnicode[position];
     if (ch == '\n' || ch == 0xb || ch == 0x2028 || ch == 0x2029)
     {
       // Found a paragraph
-      LayoutParagraph(rString, start, position - start - 1); // Eat the \n char
+      LayoutParagraph(start, position - start); // Eat the \n char
+      position++;
       start = position;
     }
+    position++;
   }
   
   // Find the needed fonts for each script:
@@ -257,7 +272,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     }
   }
 
-  uint32 i = 0;
+  i = 0;
   // Assign the correct font to each run
   for (uint32 p = 0; p < mpParagraphs.size(); p++)
   {
@@ -272,7 +287,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
         
-        //printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
+        printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
 
         
         i++;
@@ -285,18 +300,18 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
   return true;
 }
 
-bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32 length)
+bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
 {
   //printf("new paragraph: %d + %d\n", start, length);
 
   mpParagraphs.push_back(new Paragraph());
 
-  nuiTextLine* pLine = new nuiTextLine(0, 0);
+  nuiTextLine* pLine = new nuiTextLine(*this, 0, 0);
   mpParagraphs.back()->push_back(pLine);
   
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
-  nuiSplitText(rString, ranges, nuiST_ScriptChange, start, length);
+  nuiSplitText(mUnicode, ranges, nuiST_ScriptChange, start, length);
 
   {
     nuiTextRangeList::iterator it = ranges.begin();
@@ -314,7 +329,7 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
       {
         while (pos < origin + len)
         {
-          nglUChar ch = rString.GetNextUChar(pos);
+          nglUChar ch = mUnicode[pos++];
           if (ucisprint(ch))
             charset.insert(ch);
         }
@@ -338,7 +353,7 @@ bool nuiTextLayout::LayoutParagraph(const nglString& rString, int32 start, int32
       uint32 len = range.mLength;
       printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
          
-      nuiTextRun* pRun = new nuiTextRun(range.mScript, rString, pos, len);
+      nuiTextRun* pRun = new nuiTextRun(*this, range.mScript, pos, len);
       pLine->AddRun(pRun);
       
       
@@ -396,4 +411,8 @@ nuiTextRun*  nuiTextLayout::GetRun(int32 Paragraph, int32 Line, int32 Run) const
   return GetLine(Paragraph, Line)->GetRun(Run);
 }
 
+const nglUChar* nuiTextLayout::GetUnicodeChars() const
+{
+  return &mUnicode[0];
+}
 

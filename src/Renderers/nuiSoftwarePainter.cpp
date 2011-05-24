@@ -444,23 +444,28 @@ case eImagePixelIndex: break;
       {
         case nuiBlendTransp:
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
-        {
+          {
             RASTERIZERS(nuiPixelBlender_Transp);
-            
-        }
+            default:
+              break;
+          }
           break;
         case nuiBlendTranspAdd:
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
-        {
+          {
             RASTERIZERS(nuiPixelBlender_TranspAdd);
-        }
+            default:
+              break;
+          }
           break;
         case nuiBlendSource:
         default:
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
-        {
+          {
             RASTERIZERS(nuiPixelBlender_Copy);
-        }
+            default:
+              break;
+          }
           break;
       }
     }
@@ -656,12 +661,16 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray* pArray, int p1, int 
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
           {
             RASTERIZERS(nuiPixelBlender_Transp);
+            default:
+              break;
           }
           break;
         case nuiBlendTranspAdd:
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
           {
             RASTERIZERS(nuiPixelBlender_TranspAdd);
+            default:
+              break;
           }
           break;
         case nuiBlendSource:
@@ -669,6 +678,8 @@ void nuiSoftwarePainter::DrawTriangle(const nuiRenderArray* pArray, int p1, int 
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
           {
             RASTERIZERS(nuiPixelBlender_Copy);
+            default:
+              break;
           }
           break;
       }
@@ -868,22 +879,28 @@ void nuiSoftwarePainter::DrawRectangle(const nuiRenderArray* pArray, int p1, int
       {
         case nuiBlendTransp:
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
-        {
+          {
             RASTERIZERS(nuiPixelBlender_Transp);
-        }
+            default:
+              break;
+          }
           break;
         case nuiBlendTranspAdd:
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
-        {
+          {
             RASTERIZERS(nuiPixelBlender_TranspAdd);
-        }
+            default:
+              break;
+          }
           break;
         case nuiBlendSource:
         default:
           switch (mState.mpTexture->GetImage()->GetPixelFormat())
-        {
+          {
             RASTERIZERS(nuiPixelBlender_Copy);
-        }
+            default:
+              break;
+          }
           break;
       }
     }

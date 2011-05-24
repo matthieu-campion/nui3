@@ -40,7 +40,7 @@ void MainWindow::OnCreation()
   nuiScrollView* pScrollView = new nuiScrollView;
   nuiEditText* pText = new nuiEditText(_T("Type something here\n\n"));
   
-  nglIStream* pStream = nglPath("rsrc:/test.txt").OpenRead();
+  nglIStream* pStream = nglPath("rsrc:/arabic.txt").OpenRead();
   if (pStream)
   {
     pStream->SetTextEncoding(eUTF8);

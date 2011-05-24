@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2009,2010  Red Hat, Inc.
+ * Copyright © 2009,2010  Red Hat, Inc.
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -22,9 +23,17 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  * Red Hat Author(s): Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #include "hb-private.hh"
+
+#include "hb-version.h"
+
+#include "hb-mutex-private.hh"
+#include "hb-object-private.hh"
+
+#include <locale.h>
 
 HB_BEGIN_DECLS
 
@@ -46,6 +55,42 @@ hb_tag_from_string (const char *s)
     tag[i] = ' ';
 
   return HB_TAG_CHAR4 (tag);
+}
+
+
+/* hb_direction_t */
+
+const char direction_strings[][4] = {
+  "ltr",
+  "rtl",
+  "ttb",
+  "btt"
+};
+
+hb_direction_t
+hb_direction_from_string (const char *str)
+{
+  if (unlikely (!str || !*str))
+    return HB_DIRECTION_INVALID;
+
+  /* Lets match loosely: just match the first letter, such that
+   * all of "ltr", "left-to-right", etc work!
+   */
+  char c = TOLOWER (str[0]);
+  for (unsigned int i = 0; i < ARRAY_LENGTH (direction_strings); i++)
+    if (c == direction_strings[i][0])
+      return (hb_direction_t) i;
+
+  return HB_DIRECTION_INVALID;
+}
+
+const char *
+hb_direction_to_string (hb_direction_t direction)
+{
+  if (likely ((unsigned int) direction < ARRAY_LENGTH (direction_strings)))
+    return direction_strings[direction];
+
+  return "invalid";
 }
 
 
@@ -98,46 +143,63 @@ lang_hash (const void *key)
 #endif
 
 
+struct hb_language_item_t {
+
+  hb_language_t lang;
+
+  inline bool operator == (const char *s) const {
+    return lang_equal (lang, s);
+  }
+
+  inline hb_language_item_t & operator = (const char *s) {
+    lang = (hb_language_t) strdup (s);
+    for (unsigned char *p = (unsigned char *) lang; *p; p++)
+      *p = canon_map[*p];
+
+    return *this;
+  }
+
+  void finish (void) { free (lang); }
+};
+
+static hb_static_mutex_t langs_lock;
+static hb_lockable_set_t<hb_language_item_t, hb_static_mutex_t> langs;
+
 hb_language_t
 hb_language_from_string (const char *str)
 {
-  static unsigned int num_langs;
-  static unsigned int num_alloced;
-  static hb_language_t *langs;
-  unsigned int i;
-  unsigned char *p;
-
-  /* TODO Use a hash table or something */
-
   if (!str || !*str)
-    return NULL;
+    return HB_LANGUAGE_INVALID;
 
-  for (i = 0; i < num_langs; i++)
-    if (lang_equal (str, langs[i]->s))
-      return langs[i];
+  hb_language_item_t *item = langs.find_or_insert (str, langs_lock);
 
-  if (unlikely (num_langs == num_alloced)) {
-    unsigned int new_alloced = 2 * (8 + num_alloced);
-    hb_language_t *new_langs = (hb_language_t *) realloc (langs, new_alloced * sizeof (langs[0]));
-    if (!new_langs)
-      return NULL;
-    num_alloced = new_alloced;
-    langs = new_langs;
-  }
-
-  langs[i] = (hb_language_t) strdup (str);
-  for (p = (unsigned char *) langs[i]->s; *p; p++)
-    *p = canon_map[*p];
-
-  num_langs++;
-
-  return langs[i];
+  return likely (item) ? item->lang : HB_LANGUAGE_INVALID;
 }
 
 const char *
 hb_language_to_string (hb_language_t language)
 {
+  /* This is actually NULL-safe! */
   return language->s;
+}
+
+hb_language_t
+hb_language_get_default (void)
+{
+  static hb_language_t default_language;
+
+  if (!default_language) {
+    /* This block is not quite threadsafe, but is not as bad as
+     * it looks since it's idempotent.  As long as pointer ops
+     * are atomic, we are safe. */
+
+    /* I hear that setlocale() doesn't honor env vars on Windows,
+     * but for now we ignore that. */
+
+    default_language = hb_language_from_string (setlocale (LC_CTYPE, NULL));
+  }
+
+  return default_language;
 }
 
 
@@ -153,9 +215,15 @@ hb_script_from_iso15924_tag (hb_tag_t tag)
   tag = (tag & 0xDFDFDFDF) | 0x00202020;
 
   switch (tag) {
+
+    /* These graduated from the 'Q' private-area codes, but
+     * the old code is still aliased by Unicode, and the Qaai
+     * one in use by ICU. */
+    case HB_TAG('Q','a','a','i'): return HB_SCRIPT_INHERITED;
+    case HB_TAG('Q','a','a','c'): return HB_SCRIPT_COPTIC;
+
+    /* Script variants from http://unicode.org/iso15924/ */
     case HB_TAG('C','y','r','s'): return HB_SCRIPT_CYRILLIC;
-    case HB_TAG('G','e','o','a'): return HB_SCRIPT_GEORGIAN;
-    case HB_TAG('G','e','o','n'): return HB_SCRIPT_GEORGIAN;
     case HB_TAG('L','a','t','f'): return HB_SCRIPT_LATIN;
     case HB_TAG('L','a','t','g'): return HB_SCRIPT_LATIN;
     case HB_TAG('S','y','r','e'): return HB_SCRIPT_SYRIAC;
@@ -216,6 +284,76 @@ hb_script_get_horizontal_direction (hb_script_t script)
   }
 
   return HB_DIRECTION_LTR;
+}
+
+
+/* hb_user_data_array_t */
+
+
+/* NOTE: Currently we use a global lock for user_data access
+ * threadsafety.  If one day we add a mutex to any object, we
+ * should switch to using that insted for these too.
+ */
+
+static hb_static_mutex_t user_data_lock;
+
+bool
+hb_user_data_array_t::set (hb_user_data_key_t *key,
+			   void *              data,
+			   hb_destroy_func_t   destroy)
+{
+  if (!key)
+    return false;
+
+  if (!data && !destroy) {
+    items.remove (key, user_data_lock);
+    return true;
+  }
+  hb_user_data_item_t item = {key, data, destroy};
+  bool ret = !!items.replace_or_insert (item, user_data_lock);
+
+  return ret;
+}
+
+void *
+hb_user_data_array_t::get (hb_user_data_key_t *key)
+{
+  hb_user_data_item_t item = {NULL };
+
+  return items.find (key, &item, user_data_lock) ? item.data : NULL;
+}
+
+void
+hb_user_data_array_t::finish (void)
+{
+  items.finish (user_data_lock);
+}
+
+
+/* hb_version */
+
+void
+hb_version (unsigned int *major,
+	    unsigned int *minor,
+	    unsigned int *micro)
+{
+  *major = HB_VERSION_MAJOR;
+  *minor = HB_VERSION_MINOR;
+  *micro = HB_VERSION_MICRO;
+}
+
+const char *
+hb_version_string (void)
+{
+  return HB_VERSION_STRING;
+}
+
+hb_bool_t
+hb_version_check (unsigned int major,
+		  unsigned int minor,
+		  unsigned int micro)
+{
+  return HB_VERSION_CHECK (major, minor, micro);
 }
 
 

@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -22,6 +23,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  * Red Hat Author(s): Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #ifndef HB_COMMON_H
@@ -66,14 +68,13 @@ typedef union _hb_var_int_t {
   int8_t i8[4];
 } hb_var_int_t;
 
-typedef void (*hb_destroy_func_t) (void *user_data);
-
 
 /* hb_tag_t */
 
 typedef uint32_t hb_tag_t;
 
 #define HB_TAG(a,b,c,d) ((hb_tag_t)((((uint8_t)(a))<<24)|(((uint8_t)(b))<<16)|(((uint8_t)(c))<<8)|((uint8_t)(d))))
+#define HB_UNTAG(tag)   ((uint8_t)((tag)>>24)), ((uint8_t)((tag)>>16)), ((uint8_t)((tag)>>8)), ((uint8_t)(tag))
 
 #define HB_TAG_NONE HB_TAG(0,0,0,0)
 
@@ -89,6 +90,12 @@ typedef enum _hb_direction_t {
   HB_DIRECTION_TTB,
   HB_DIRECTION_BTT
 } hb_direction_t;
+
+hb_direction_t
+hb_direction_from_string (const char *str);
+
+const char *
+hb_direction_to_string (hb_direction_t direction);
 
 #define HB_DIRECTION_IS_HORIZONTAL(dir)	((((unsigned int) (dir)) & ~1U) == 0)
 #define HB_DIRECTION_IS_VERTICAL(dir)	((((unsigned int) (dir)) & ~1U) == 2)
@@ -106,6 +113,11 @@ hb_language_from_string (const char *str);
 
 const char *
 hb_language_to_string (hb_language_t language);
+
+#define HB_LANGUAGE_INVALID ((hb_language_t) NULL)
+
+hb_language_t
+hb_language_get_default (void);
 
 
 /* hb_unicode_general_category_t */
@@ -147,16 +159,17 @@ typedef enum
 
 /* hb_script_t */
 
+/* http://unicode.org/iso15924/ */
 typedef enum
 {
   HB_SCRIPT_COMMON                  = HB_TAG ('Z','y','y','y'),
-  HB_SCRIPT_INHERITED               = HB_TAG ('Q','a','a','i'),
+  HB_SCRIPT_INHERITED               = HB_TAG ('Z','i','n','h'),
   HB_SCRIPT_ARABIC                  = HB_TAG ('A','r','a','b'),
   HB_SCRIPT_ARMENIAN                = HB_TAG ('A','r','m','n'),
   HB_SCRIPT_BENGALI                 = HB_TAG ('B','e','n','g'),
   HB_SCRIPT_BOPOMOFO                = HB_TAG ('B','o','p','o'),
   HB_SCRIPT_CHEROKEE                = HB_TAG ('C','h','e','r'),
-  HB_SCRIPT_COPTIC                  = HB_TAG ('Q','a','a','c'),
+  HB_SCRIPT_COPTIC                  = HB_TAG ('C','o','p','t'),
   HB_SCRIPT_CYRILLIC                = HB_TAG ('C','y','r','l'),
   HB_SCRIPT_DESERET                 = HB_TAG ('D','s','r','t'),
   HB_SCRIPT_DEVANAGARI              = HB_TAG ('D','e','v','a'),
@@ -277,6 +290,15 @@ hb_script_to_iso15924_tag (hb_script_t script);
 
 hb_direction_t
 hb_script_get_horizontal_direction (hb_script_t script);
+
+
+/* User data */
+
+typedef struct _hb_user_data_key_t {
+  char unused;
+} hb_user_data_key_t;
+
+typedef void (*hb_destroy_func_t) (void *user_data);
 
 
 HB_END_DECLS

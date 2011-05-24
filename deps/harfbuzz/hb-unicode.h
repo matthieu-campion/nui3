@@ -1,6 +1,7 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
- * Copyright © 2011 Codethink Limited
+ * Copyright © 2009  Red Hat, Inc.
+ * Copyright © 2011  Codethink Limited
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -24,6 +25,7 @@
  *
  * Red Hat Author(s): Behdad Esfahbod
  * Codethink Author(s): Ryan Lortie
+ * Google Author(s): Behdad Esfahbod
  */
 
 #ifndef HB_UNICODE_H
@@ -40,14 +42,37 @@ HB_BEGIN_DECLS
 
 typedef struct _hb_unicode_funcs_t hb_unicode_funcs_t;
 
+
+/*
+ * just give me the best implementation you've got there.
+ */
 hb_unicode_funcs_t *
-hb_unicode_funcs_create (hb_unicode_funcs_t *parent_funcs);
+hb_unicode_funcs_get_default (void);
+
+
+hb_unicode_funcs_t *
+hb_unicode_funcs_create (hb_unicode_funcs_t *parent);
+
+hb_unicode_funcs_t *
+hb_unicode_funcs_get_empty (void);
 
 hb_unicode_funcs_t *
 hb_unicode_funcs_reference (hb_unicode_funcs_t *ufuncs);
 
 void
 hb_unicode_funcs_destroy (hb_unicode_funcs_t *ufuncs);
+
+hb_bool_t
+hb_unicode_funcs_set_user_data (hb_unicode_funcs_t *ufuncs,
+			        hb_user_data_key_t *key,
+			        void *              data,
+			        hb_destroy_func_t   destroy);
+
+
+void *
+hb_unicode_funcs_get_user_data (hb_unicode_funcs_t *ufuncs,
+			        hb_user_data_key_t *key);
+
 
 void
 hb_unicode_funcs_make_immutable (hb_unicode_funcs_t *ufuncs);
@@ -66,47 +91,47 @@ hb_unicode_funcs_get_parent (hb_unicode_funcs_t *ufuncs);
 /* typedefs */
 
 typedef unsigned int                  (*hb_unicode_get_combining_class_func_t)  (hb_unicode_funcs_t *ufuncs,
-                                                                                 hb_codepoint_t      unicode,
-                                                                                 void               *user_data);
+										 hb_codepoint_t      unicode,
+										 void               *user_data);
 typedef unsigned int                  (*hb_unicode_get_eastasian_width_func_t)  (hb_unicode_funcs_t *ufuncs,
-                                                                                 hb_codepoint_t      unicode,
-                                                                                 void               *user_data);
+										 hb_codepoint_t      unicode,
+										 void               *user_data);
 typedef hb_unicode_general_category_t (*hb_unicode_get_general_category_func_t) (hb_unicode_funcs_t *ufuncs,
-                                                                                 hb_codepoint_t      unicode,
-                                                                                 void               *user_data);
+										 hb_codepoint_t      unicode,
+										 void               *user_data);
 typedef hb_codepoint_t                (*hb_unicode_get_mirroring_func_t)        (hb_unicode_funcs_t *ufuncs,
-                                                                                 hb_codepoint_t      unicode,
-                                                                                 void               *user_data);
+										 hb_codepoint_t      unicode,
+										 void               *user_data);
 typedef hb_script_t                   (*hb_unicode_get_script_func_t)           (hb_unicode_funcs_t *ufuncs,
-                                                                                 hb_codepoint_t      unicode,
-                                                                                 void               *user_data);
+										 hb_codepoint_t      unicode,
+										 void               *user_data);
 
 /* setters */
 
 void
 hb_unicode_funcs_set_combining_class_func (hb_unicode_funcs_t *ufuncs,
 					   hb_unicode_get_combining_class_func_t combining_class_func,
-                                           void *user_data, hb_destroy_func_t destroy);
+					   void *user_data, hb_destroy_func_t destroy);
 
 void
 hb_unicode_funcs_set_eastasian_width_func (hb_unicode_funcs_t *ufuncs,
 					   hb_unicode_get_eastasian_width_func_t eastasian_width_func,
-                                           void *user_data, hb_destroy_func_t destroy);
+					   void *user_data, hb_destroy_func_t destroy);
 
 void
 hb_unicode_funcs_set_general_category_func (hb_unicode_funcs_t *ufuncs,
 					    hb_unicode_get_general_category_func_t general_category_func,
-                                            void *user_data, hb_destroy_func_t destroy);
+					    void *user_data, hb_destroy_func_t destroy);
 
 void
 hb_unicode_funcs_set_mirroring_func (hb_unicode_funcs_t *ufuncs,
 				     hb_unicode_get_mirroring_func_t mirroring_func,
-                                     void *user_data, hb_destroy_func_t destroy);
+				     void *user_data, hb_destroy_func_t destroy);
 
 void
 hb_unicode_funcs_set_script_func (hb_unicode_funcs_t *ufuncs,
 				  hb_unicode_get_script_func_t script_func,
-                                  void *user_data, hb_destroy_func_t destroy);
+				  void *user_data, hb_destroy_func_t destroy);
 
 
 

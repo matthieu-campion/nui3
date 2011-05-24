@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright © 2009  Red Hat, Inc.
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -22,6 +23,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  * Red Hat Author(s): Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #include "hb-private.hh"
@@ -218,8 +220,10 @@ hb_glib_get_script (hb_unicode_funcs_t *ufuncs,
   return hb_glib_script_to_script (g_unichar_get_script (unicode));
 }
 
-static hb_unicode_funcs_t glib_ufuncs = {
-  HB_REFERENCE_COUNT_INVALID, /* ref_count */
+extern HB_INTERNAL hb_unicode_funcs_t _hb_unicode_funcs_glib;
+hb_unicode_funcs_t _hb_glib_unicode_funcs = {
+  HB_OBJECT_HEADER_STATIC,
+
   NULL, /* parent */
   TRUE, /* immutable */
   {
@@ -234,7 +238,7 @@ static hb_unicode_funcs_t glib_ufuncs = {
 hb_unicode_funcs_t *
 hb_glib_get_unicode_funcs (void)
 {
-  return &glib_ufuncs;
+  return &_hb_glib_unicode_funcs;
 }
 
 

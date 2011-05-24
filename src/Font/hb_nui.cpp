@@ -14,8 +14,6 @@
 #include "hb_nui.h"
 
 
-HB_BEGIN_DECLS
-
 static unsigned int
 hb_nui_get_combining_class (hb_unicode_funcs_t *ufuncs,
                             hb_codepoint_t      unicode,
@@ -334,5 +332,3 @@ hb_nui_get_unicode_funcs (void)
   return &nui_ufuncs;
 }
 
-
-HB_END_DECLS

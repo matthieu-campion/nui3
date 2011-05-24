@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright © 2009  Red Hat, Inc.
  * Copyright © 2011 Codethink Limited
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -81,7 +81,8 @@ hb_unicode_get_script_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
 
 
 hb_unicode_funcs_t _hb_unicode_funcs_nil = {
-  HB_REFERENCE_COUNT_INVALID, /* ref_count */
+  HB_OBJECT_HEADER_STATIC,
+
   NULL, /* parent */
   TRUE, /* immutable */
   {
@@ -95,43 +96,51 @@ hb_unicode_funcs_t _hb_unicode_funcs_nil = {
 
 
 hb_unicode_funcs_t *
+hb_unicode_funcs_get_default (void)
+{
+  return &_hb_unicode_funcs_default;
+}
+
+hb_unicode_funcs_t *
 hb_unicode_funcs_create (hb_unicode_funcs_t *parent)
 {
   hb_unicode_funcs_t *ufuncs;
 
-  if (!HB_OBJECT_DO_CREATE (hb_unicode_funcs_t, ufuncs))
+  if (!(ufuncs = hb_object_create<hb_unicode_funcs_t> ()))
     return &_hb_unicode_funcs_nil;
 
-  if (parent != NULL)
-  {
-    hb_unicode_funcs_make_immutable (parent);
-    ufuncs->parent = hb_unicode_funcs_reference (parent);
+  if (!parent)
+    parent = &_hb_unicode_funcs_nil;
 
-    ufuncs->get = parent->get;
+  hb_unicode_funcs_make_immutable (parent);
+  ufuncs->parent = hb_unicode_funcs_reference (parent);
 
-    /* We can safely copy user_data from parent since we hold a reference
-     * onto it and it's immutable.  We should not copy the destroy notifiers
-     * though. */
-    ufuncs->user_data = parent->user_data;
-  }
-  else
-  {
-    ufuncs->get = _hb_unicode_funcs_nil.get;
-  }
+  ufuncs->get = parent->get;
+
+  /* We can safely copy user_data from parent since we hold a reference
+   * onto it and it's immutable.  We should not copy the destroy notifiers
+   * though. */
+  ufuncs->user_data = parent->user_data;
 
   return ufuncs;
 }
 
 hb_unicode_funcs_t *
+hb_unicode_funcs_get_empty (void)
+{
+  return &_hb_unicode_funcs_nil;
+}
+
+hb_unicode_funcs_t *
 hb_unicode_funcs_reference (hb_unicode_funcs_t *ufuncs)
 {
-  HB_OBJECT_DO_REFERENCE (ufuncs);
+  return hb_object_reference (ufuncs);
 }
 
 void
 hb_unicode_funcs_destroy (hb_unicode_funcs_t *ufuncs)
 {
-  HB_OBJECT_DO_DESTROY (ufuncs);
+  if (!hb_object_destroy (ufuncs)) return;
 
 #define DESTROY(name) if (ufuncs->destroy.name) ufuncs->destroy.name (ufuncs->user_data.name)
   DESTROY (combining_class);
@@ -141,16 +150,32 @@ hb_unicode_funcs_destroy (hb_unicode_funcs_t *ufuncs)
   DESTROY (script);
 #undef DESTROY
 
-  if (ufuncs->parent != NULL)
-    hb_unicode_funcs_destroy (ufuncs->parent);
+  hb_unicode_funcs_destroy (ufuncs->parent);
 
   free (ufuncs);
 }
 
+hb_bool_t
+hb_unicode_funcs_set_user_data (hb_unicode_funcs_t *ufuncs,
+			        hb_user_data_key_t *key,
+			        void *              data,
+			        hb_destroy_func_t   destroy)
+{
+  return hb_object_set_user_data (ufuncs, key, data, destroy);
+}
+
+void *
+hb_unicode_funcs_get_user_data (hb_unicode_funcs_t *ufuncs,
+			        hb_user_data_key_t *key)
+{
+  return hb_object_get_user_data (ufuncs, key);
+}
+
+
 void
 hb_unicode_funcs_make_immutable (hb_unicode_funcs_t *ufuncs)
 {
-  if (HB_OBJECT_IS_INERT (ufuncs))
+  if (hb_object_is_inert (ufuncs))
     return;
 
   ufuncs->immutable = TRUE;
@@ -165,7 +190,7 @@ hb_unicode_funcs_is_immutable (hb_unicode_funcs_t *ufuncs)
 hb_unicode_funcs_t *
 hb_unicode_funcs_get_parent (hb_unicode_funcs_t *ufuncs)
 {
-  return ufuncs->parent;
+  return ufuncs->parent ? ufuncs->parent : &_hb_unicode_funcs_nil;
 }
 
 
@@ -187,13 +212,9 @@ hb_unicode_funcs_set_##name##_func (hb_unicode_funcs_t             *ufuncs,    \
     ufuncs->get.name = func;                                                   \
     ufuncs->user_data.name = user_data;                                        \
     ufuncs->destroy.name = destroy;                                            \
-  } else if (ufuncs->parent != NULL) {                                         \
+  } else {                                                                     \
     ufuncs->get.name = ufuncs->parent->get.name;                               \
     ufuncs->user_data.name = ufuncs->parent->user_data.name;                   \
-    ufuncs->destroy.name = NULL;                                               \
-  } else {                                                                     \
-    ufuncs->get.name = hb_unicode_get_##name##_nil;                            \
-    ufuncs->user_data.name = NULL;                                             \
     ufuncs->destroy.name = NULL;                                               \
   }                                                                            \
 }                                                                              \

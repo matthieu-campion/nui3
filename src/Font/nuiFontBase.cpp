@@ -2415,21 +2415,11 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_glyph_position_t *hb_position;
   unsigned int num_glyphs, i;
   hb_position_t x;
-  const nglChar* text = NULL;
-  int32 total = 0;
+  const nglUChar* text = NULL;
   int32 len = 0;
-  int32 offset = 0;
 
-  text = pRun->GetString().GetChars();
-  total = pRun->GetString().GetLength();
+  text = pRun->GetUnicodeChars();
   len = pRun->GetLength();
-  offset = pRun->GetPosition();
-
-#ifdef DEBUG
-  const nglChar* debug_text = text + offset;
-  nglString dbgstr(debug_text, len);
-  printf("Debug shape: %s\n", dbgstr.GetChars());
-#endif
   
   pRun->mAdvanceY = 0;
   hb_buffer = hb_buffer_create(len);
@@ -2437,14 +2427,14 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
   
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
-  hb_buffer_add_utf8(hb_buffer, text, total, offset, len);
+  hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
   //if (language)
   //  hb_buffer_set_language(hb_buffer, hb_language_from_string(language));
   
   hb_feature_t* features = NULL;
   int32 num_features = 0;
   
-  hb_shape (hb_font, hb_face, hb_buffer, features, num_features);
+  hb_shape(hb_font, hb_buffer, features, num_features);
   
   num_glyphs = hb_buffer_get_length(hb_buffer);
   hb_glyph = hb_buffer_get_glyph_infos(hb_buffer, NULL);
@@ -2470,9 +2460,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
       // prepare measurements 
     }
   }
-  
-  
-  
+
   pRun->mAdvanceX = x * (1./64);
   pRun->mAdvanceY = GetHeight();
   hb_buffer_destroy(hb_buffer);

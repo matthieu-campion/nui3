@@ -12,6 +12,8 @@
 #include "nuiUnicode.h"
 void TextLayoutTest(const nglString& txt);
 
+class nuiTextLayout;
+
 class nuiTextGlyph
 {
 public:
@@ -23,13 +25,13 @@ public:
 class nuiTextRun : public nuiRefCount
 {
 public:
-  nuiTextRun(nuiUnicodeScript Script, const nglString& rString, int32 Position, int32 Length);
+  nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript Script, int32 Position, int32 Length);
   virtual ~nuiTextRun();
   void SetFont(nuiFont* pFont);
   
   nuiUnicodeScript GetScript() const;
-  const nglString& GetString() const;
   int32 GetPosition() const;
+  const nglUChar* GetUnicodeChars() const;
   int32 GetLength() const;
   float GetAdvanceX() const;
   float GetAdvanceY() const;
@@ -40,7 +42,7 @@ private:
   friend class nuiTextLayout;
   friend class nuiFontBase;
   nuiFont* mpFont;
-  const nglString& mString;
+  const nuiTextLayout& mLayout;
   int32 mPosition;
   int32 mLength;
   nuiUnicodeScript mScript;
@@ -52,7 +54,7 @@ private:
 class nuiTextLine
 {
 public:
-  nuiTextLine(float X, float Y);
+  nuiTextLine(const nuiTextLayout& rLayout, float X, float Y);
   
   virtual ~nuiTextLine();
   
@@ -77,6 +79,7 @@ private:
   void AddRun(nuiTextRun* pRun);
   
   std::vector<nuiTextRun*> mpRuns;
+  const nuiTextLayout& mLayout;
   float mX, mY;
 };
 
@@ -103,6 +106,7 @@ public:
   nuiTextLine* GetLine(int32 Paragraph, int32 Line) const;
   nuiTextRun*  GetRun(int32 Paragraph, int32 Line, int32 Run) const;
   
+  const nglUChar* GetUnicodeChars() const;
 
 private:
   nuiFont* mpFont;
@@ -112,10 +116,13 @@ private:
   bool mJustify;
   float mFlush;
   
-  bool LayoutParagraph(const nglString& rString, int32 start, int32 length);
+  bool LayoutParagraph(int32 start, int32 length);
   
   typedef std::vector<nuiTextLine*> Paragraph;
   std::vector<Paragraph*> mpParagraphs;
   
+  std::vector<nglUChar> mUnicode;
+  std::vector<int32> mOffsetInString;
+  std::vector<int32> mOffsetInUnicode;
 };
 

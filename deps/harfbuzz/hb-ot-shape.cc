@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2009,2010  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2009,2010  Red Hat, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -28,6 +28,8 @@
 
 #include "hb-ot-shape-private.hh"
 #include "hb-ot-shape-complex-private.hh"
+
+#include "hb-font-private.hh"
 
 HB_BEGIN_DECLS
 
@@ -119,7 +121,22 @@ hb_ot_position_complex (hb_ot_shape_context_t *c)
   if (!hb_ot_layout_has_positioning (c->face))
     return;
 
+  unsigned int count = c->buffer->len;
+  for (unsigned int i = 0; i < count; i++) {
+    hb_font_add_glyph_origin_for_direction (c->font, c->buffer->info[i].codepoint,
+					    HB_DIRECTION_LTR,
+					    &c->buffer->pos[i].x_offset,
+					    &c->buffer->pos[i].y_offset);
+  }
+
   c->plan->map.position (c->font, c->face, c->buffer);
+
+  for (unsigned int i = 0; i < count; i++) {
+    hb_font_subtract_glyph_origin_for_direction (c->font, c->buffer->info[i].codepoint,
+						 HB_DIRECTION_LTR,
+						 &c->buffer->pos[i].x_offset,
+						 &c->buffer->pos[i].y_offset);
+  }
 
   hb_ot_layout_position_finish (c->buffer);
 
@@ -167,7 +184,7 @@ hb_ensure_native_direction (hb_ot_shape_context_t *c)
 {
   hb_direction_t direction = c->buffer->props.direction;
 
-  /* TODO vertical */
+  /* XXX vertical */
   if (HB_DIRECTION_IS_HORIZONTAL (direction) &&
       direction != hb_script_get_horizontal_direction (c->buffer->props.script))
   {
@@ -209,31 +226,35 @@ hb_mirror_chars (hb_ot_shape_context_t *c)
 
 static void
 hb_map_glyphs (hb_font_t    *font,
-	       hb_face_t    *face,
 	       hb_buffer_t  *buffer)
 {
   if (unlikely (!buffer->len))
     return;
 
+  hb_codepoint_t glyph;
   buffer->clear_output ();
   unsigned int count = buffer->len - 1;
   for (buffer->i = 0; buffer->i < count;) {
     if (unlikely (is_variation_selector (buffer->info[buffer->i + 1].codepoint))) {
-      buffer->replace_glyph (hb_font_get_glyph (font, face, buffer->info[buffer->i].codepoint, buffer->info[buffer->i + 1].codepoint));
+      hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, buffer->info[buffer->i + 1].codepoint, &glyph);
+      buffer->replace_glyph (glyph);
       buffer->i++;
     } else {
-      buffer->replace_glyph (hb_font_get_glyph (font, face, buffer->info[buffer->i].codepoint, 0));
+      hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, 0, &glyph);
+      buffer->replace_glyph (glyph);
     }
   }
-  if (likely (buffer->i < buffer->len))
-    buffer->replace_glyph (hb_font_get_glyph (font, face, buffer->info[buffer->i].codepoint, 0));
+  if (likely (buffer->i < buffer->len)) {
+    hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, 0, &glyph);
+    buffer->replace_glyph (glyph);
+  }
   buffer->swap ();
 }
 
 static void
 hb_substitute_default (hb_ot_shape_context_t *c)
 {
-  hb_map_glyphs (c->font, c->face, c->buffer);
+  hb_map_glyphs (c->font, c->buffer);
 }
 
 static void
@@ -252,9 +273,14 @@ hb_position_default (hb_ot_shape_context_t *c)
 
   unsigned int count = c->buffer->len;
   for (unsigned int i = 0; i < count; i++) {
-    hb_font_get_glyph_advance (c->font, c->face, c->buffer->info[i].codepoint,
-			       &c->buffer->pos[i].x_advance,
-			       &c->buffer->pos[i].y_advance);
+    hb_font_get_glyph_advance_for_direction (c->font, c->buffer->info[i].codepoint,
+					     c->buffer->props.direction,
+					     &c->buffer->pos[i].x_advance,
+					     &c->buffer->pos[i].y_advance);
+    hb_font_subtract_glyph_origin_for_direction (c->font, c->buffer->info[i].codepoint,
+						 c->buffer->props.direction,
+						 &c->buffer->pos[i].x_offset,
+						 &c->buffer->pos[i].y_offset);
   }
 }
 
@@ -270,13 +296,23 @@ hb_truetype_kern (hb_ot_shape_context_t *c)
   /* TODO Check for kern=0 */
   unsigned int count = c->buffer->len;
   for (unsigned int i = 1; i < count; i++) {
-    hb_position_t kern, kern1, kern2;
-    kern = hb_font_get_kerning (c->font, c->face, c->buffer->info[i - 1].codepoint, c->buffer->info[i].codepoint);
-    kern1 = kern >> 1;
-    kern2 = kern - kern1;
+    hb_position_t x_kern, y_kern, kern1, kern2;
+    hb_font_get_glyph_kerning_for_direction (c->font,
+					     c->buffer->info[i - 1].codepoint, c->buffer->info[i].codepoint,
+					     c->buffer->props.direction,
+					     &x_kern, &y_kern);
+
+    kern1 = x_kern >> 1;
+    kern2 = x_kern - kern1;
     c->buffer->pos[i - 1].x_advance += kern1;
     c->buffer->pos[i].x_advance += kern2;
     c->buffer->pos[i].x_offset += kern2;
+
+    kern1 = y_kern >> 1;
+    kern2 = y_kern - kern1;
+    c->buffer->pos[i - 1].y_advance += kern1;
+    c->buffer->pos[i].y_advance += kern2;
+    c->buffer->pos[i].y_offset += kern2;
   }
 }
 
@@ -355,26 +391,24 @@ hb_ot_shape_plan_internal (hb_ot_shape_plan_t       *plan,
 void
 hb_ot_shape_execute (hb_ot_shape_plan_t *plan,
 		     hb_font_t          *font,
-		     hb_face_t          *face,
 		     hb_buffer_t        *buffer,
 		     const hb_feature_t *user_features,
 		     unsigned int        num_user_features)
 {
-  hb_ot_shape_context_t c = {plan, font, face, buffer, user_features, num_user_features};
+  hb_ot_shape_context_t c = {plan, font, font->face, buffer, user_features, num_user_features};
   hb_ot_shape_execute_internal (&c);
 }
 
 void
 hb_ot_shape (hb_font_t          *font,
-	     hb_face_t          *face,
 	     hb_buffer_t        *buffer,
 	     const hb_feature_t *features,
 	     unsigned int        num_features)
 {
   hb_ot_shape_plan_t plan;
 
-  hb_ot_shape_plan_internal (&plan, face, &buffer->props, features, num_features);
-  hb_ot_shape_execute (&plan, font, face, buffer, features, num_features);
+  hb_ot_shape_plan_internal (&plan, font->face, &buffer->props, features, num_features);
+  hb_ot_shape_execute (&plan, font, buffer, features, num_features);
 }
 
 
