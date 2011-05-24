@@ -13,6 +13,9 @@
 
 #define SCROLL_SIZE 12.0f
 #define NUI_SMOOTH_SCROLL_RATIO (0.2f/1.f)
+#define HIDE_SCROLLBARS_DELAY 0.6
+#define INERTIA_SPEED 1200
+#define EXTRA_OUT_SIZE_RATIO 0.5
 
 
 nuiScrollView::nuiScrollView(bool Horizontal, bool Vertical)
@@ -74,6 +77,11 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   mSmoothScrolling = true;
   mXOffset = 0;
   mYOffset = 0;
+  mSpeedX = 0;
+  mSpeedY = 0;
+  mLastX = 0;
+  mLastY = 0;
+  
   mpSmoothTimer = nuiAnimation::AcquireTimer();
   mSVSink.Connect(mpSmoothTimer->Tick, &nuiScrollView::OnSmoothScrolling);
   mTimerOn = false;
@@ -83,6 +91,12 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
 
   mpHorizontal = NULL;
   mpVertical   = NULL;
+  
+  mDragEnabled = false;
+  mHideScrollBars = false;
+  
+  mLeftClick = false;
+  
 
   if (pHorizontalScrollBar)
   {
@@ -144,6 +158,13 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   
   mSVSink.Connect(ChildAdded, &nuiScrollView::OnChildAdded);
   mSVSink.Connect(ChildDeleted, &nuiScrollView::OnChildRemoved);
+  
+  mpHideTimer = new nuiTimer(HIDE_SCROLLBARS_DELAY);
+  mSVSink.Connect(mpHideTimer->Tick, &nuiScrollView::OnHideTick);
+  
+#ifdef _UIKIT_
+  ActivateMobileMode();
+#endif
 }
 
 bool nuiScrollView::GetEnableHorizontalScroll() const
@@ -211,8 +232,8 @@ nuiRect nuiScrollView::CalcIdealSize()
 
   mChildrenUnionRect = rect;
   ///< take scrollbars in IdealRect calculation if necessary
-  rect.SetSize(rect.GetWidth() + (mpHorizontal && !mHorizontalIsExternal && !mForceNoHorizontal ? mBarSize : 0),
-               rect.GetHeight() + (mpVertical && !mVerticalIsExternal && !mForceNoVertical ? mBarSize : 0));
+  rect.SetSize(rect.GetWidth() + (mpHorizontal && !mHorizontalIsExternal && !mForceNoHorizontal && !mHideScrollBars ? mBarSize : 0),
+               rect.GetHeight() + (mpVertical && !mVerticalIsExternal && !mForceNoVertical && !mHideScrollBars ? mBarSize : 0));
   mIdealRect = rect;
 
   #ifdef _DEBUG_LAYOUT
@@ -317,9 +338,12 @@ bool nuiScrollView::SetRect(const nuiRect& rRect)
 
   if (needh)
   {
-    hrange.SetRange(0,x);
-    hrange.SetPageSize(MAX(0, xx - scrollv));
-    hrange.SetPageIncrement(MAX(0, xx - scrollv));
+    double pagesize = xx - scrollv;
+    if (mHideScrollBars)
+      pagesize = xx;
+    hrange.SetRange(0, x);
+    hrange.SetPageSize(MAX(0, pagesize));
+    hrange.SetPageIncrement(MAX(0, pagesize));
     hrange.SetIncrement(mHIncrement);
     hrange.EnableEvents(false); 
     nuiSize oldv = hrange.GetValue();
@@ -332,9 +356,10 @@ bool nuiScrollView::SetRect(const nuiRect& rRect)
   }
   else
   {
-    hrange.SetRange(0,x);
-    hrange.SetPageSize(MAX(0, x));
-    hrange.SetPageIncrement(MAX(0, x));
+    double pagesize = x;
+    hrange.SetRange(0, x);
+    hrange.SetPageSize(MAX(0, pagesize));
+    hrange.SetPageIncrement(MAX(0, pagesize));
     hrange.SetIncrement(mHIncrement);
     mXOffset = XOffset= 0.f;  
     hrange.EnableEvents(false); 
@@ -344,9 +369,12 @@ bool nuiScrollView::SetRect(const nuiRect& rRect)
   
   if (needv)
   {
-    vrange.SetRange(0,y);
-    vrange.SetPageSize(MAX(0, yy - scrollh));
-    vrange.SetPageIncrement(MAX(0, yy - scrollh));
+    double pagesize = yy - scrollh;
+    if (mHideScrollBars)
+      pagesize = yy;
+    vrange.SetRange(0, y);
+    vrange.SetPageSize(MAX(0, pagesize));
+    vrange.SetPageIncrement(MAX(0, pagesize));
     vrange.SetIncrement(mVIncrement);
     vrange.EnableEvents(false); 
     nuiSize oldv = vrange.GetValue();
@@ -359,9 +387,10 @@ bool nuiScrollView::SetRect(const nuiRect& rRect)
   }
   else
   {
-    vrange.SetRange(0,y);
-    vrange.SetPageSize(MAX(0, y));
-    vrange.SetPageIncrement(MAX(0, y));
+    double pagesize = y;
+    vrange.SetRange(0, y);
+    vrange.SetPageSize(MAX(0, pagesize));
+    vrange.SetPageIncrement(MAX(0, pagesize));
     vrange.SetIncrement(mVIncrement);
     mYOffset = YOffset = 0.f;
     vrange.EnableEvents(false); 
@@ -370,7 +399,14 @@ bool nuiScrollView::SetRect(const nuiRect& rRect)
   }
   OffsetsChanged();
 
-  SetChildrenRect(x, y, xx, yy, scrollv, scrollh);
+  nuiSize scrollbarH = scrollh;
+  nuiSize scrollbarV = scrollv;
+  if (mHideScrollBars)
+  {
+    scrollbarH = 0;
+    scrollbarV = 0;
+  }
+  SetChildrenRect(x, y, xx, yy, scrollbarV, scrollbarH);
 
   if (!mHorizontalIsExternal)
   {
@@ -630,6 +666,8 @@ bool nuiScrollView::GetFillChildren()
 
 bool nuiScrollView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
 {
+  bool res = false;
+  bool autoHideScrollbars = true;
   bool v = IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT);
   if (Button & nglMouseInfo::ButtonWheelUp)
   {
@@ -638,12 +676,12 @@ bool nuiScrollView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
       if (mpHorizontal && !mForceNoHorizontal)
       {
         mpHorizontal->GetRange().Decrement();
-        return true;
+        res = true;
       }
       else if (mpVertical && !mForceNoVertical)
       {
         mpVertical->GetRange().Decrement();
-        return true;
+        res = true;
       }
     }
     else
@@ -651,12 +689,12 @@ bool nuiScrollView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
       if (mpVertical && !mForceNoVertical)
       {
         mpVertical->GetRange().Decrement();
-        return true;
+        res = true;
       }
       else if (mpHorizontal && !mForceNoHorizontal && !mForceNoSmartScroll)
       {
         mpHorizontal->GetRange().Decrement();
-        return true;
+        res = true;
       }
     }
 
@@ -668,12 +706,12 @@ bool nuiScrollView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
       if (mpHorizontal && !mForceNoHorizontal)
       {
         mpHorizontal->GetRange().Increment();
-        return true;
+        res = true;
       }
       else if (mpVertical && !mForceNoVertical)
       {
         mpVertical->GetRange().Increment();
-        return true;
+        res = true;
       }
 
     }
@@ -682,12 +720,12 @@ bool nuiScrollView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
       if (mpVertical && !mForceNoVertical)
       {
         mpVertical->GetRange().Increment();
-        return true;
+        res = true;
       }
       else if (mpHorizontal && !mForceNoHorizontal && !mForceNoSmartScroll)
       {
         mpHorizontal->GetRange().Increment();
-        return true;
+        res = true;
       }
     }
   }
@@ -696,7 +734,7 @@ bool nuiScrollView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
     if (mpHorizontal && !mForceNoHorizontal)
     {
       mpHorizontal->GetRange().Decrement();
-      return true;
+      res = true;
     }
   }
   else if (Button & nglMouseInfo::ButtonWheelRight)
@@ -704,11 +742,149 @@ bool nuiScrollView::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Butto
     if (mpHorizontal && !mForceNoHorizontal)
     {
       mpHorizontal->GetRange().Increment();
-      return true;
+      res = true;
+    }
+  }
+  else if (Button & nglMouseInfo::ButtonLeft && mDragEnabled)
+  {
+    Grab();
+    mLeftClick = true;
+    mClickX = X;
+    mClickY = Y;
+    mLastX = X;
+    mLastY = Y;
+    mClickValueH = GetRange(nuiHorizontal)->GetValue();
+    mClickValueV = GetRange(nuiVertical)->GetValue();
+    
+    if (mHideScrollBars)
+    {
+      ShowScrollBars();
+    }
+
+    res = true;
+    autoHideScrollbars = false;
+    mLastTime = nglTime();
+  }
+  
+  if (res && mHideScrollBars)
+  {
+    ShowScrollBars(autoHideScrollbars);
+  }
+  
+  return res;
+}
+
+bool nuiScrollView::MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
+{
+  if (!mLeftClick)
+    return false;
+
+  Dragged(X, Y);
+  mLeftClick = false;
+
+  Ungrab();
+  
+  nglTime now;
+  double elapsed = now.GetValue() - mLastTime.GetValue();
+  if (elapsed > 0.05)
+  {
+    mSpeedX = 0;
+    mSpeedY = 0;
+  }
+  
+  if (mHideScrollBars)
+  {
+    HideScrollBars();
+  }
+  return true;
+}
+
+bool nuiScrollView::MouseMoved(nuiSize X, nuiSize Y)
+{
+  if (!mLeftClick)
+    return false;
+  
+  nglTime now;
+  double elapsed = now.GetValue() - mLastTime.GetValue();
+  
+  nuiSize vectX = mLastX - X;
+  nuiSize vectY = mLastY - Y;
+  nuiSize module = sqrt(vectX * vectX + vectY * vectY);
+  mSpeedX = (vectX / module) * INERTIA_SPEED * elapsed;
+  mSpeedY = (vectY / module) * INERTIA_SPEED * elapsed;  
+  
+  mLastX = X;
+  mLastY = Y;
+  mLastTime = now;
+  Dragged(X, Y);
+  return true;
+}
+
+void nuiScrollView::Dragged(nuiSize X, nuiSize Y)
+{
+  nuiSize diffX = mClickX - X;
+  nuiSize diffY = mClickY - Y;
+  
+  if (mpHorizontal && !mForceNoHorizontal)
+  {
+    GetRange(nuiHorizontal)->SetValue(mClickValueH + diffX);
+    if (mSmoothScrolling)
+    {
+      nuiSize maxExtraSize = GetRange(nuiHorizontal)->GetPageSize() * EXTRA_OUT_SIZE_RATIO;
+      nuiSize offset = mClickValueH + diffX;
+      
+      if (offset < 0)
+      {
+        nuiSize extra = MIN(-offset, 2 * maxExtraSize);
+        extra *= 0.5;
+        
+        mXOffset = -extra;
+      }
+      else if (offset > GetRange(nuiHorizontal)->GetMaximum() - GetRange(nuiHorizontal)->GetPageSize())
+      {
+        nuiSize extra = MIN(offset - (GetRange(nuiHorizontal)->GetMaximum() - GetRange(nuiHorizontal)->GetPageSize()), 2 * maxExtraSize);
+        extra *= 0.5;
+        
+        mXOffset = GetRange(nuiHorizontal)->GetMaximum() - GetRange(nuiHorizontal)->GetPageSize() + extra;
+      }
+      else
+      {
+        mXOffset = offset;
+      }
+      mTimerOn = true;
     }
   }
   
-  return false;
+  if (mpVertical && !mForceNoVertical)
+  {
+    GetRange(nuiVertical)->SetValue(mClickValueV + diffY);
+    if (mSmoothScrolling)
+    {
+      nuiSize maxExtraSize = GetRange(nuiVertical)->GetPageSize() * EXTRA_OUT_SIZE_RATIO;
+      
+      nuiSize offset = mClickValueV + diffY;
+      
+      if (offset < 0)
+      {
+        nuiSize extra = MIN(-offset, 2 * maxExtraSize);
+        extra *= 0.5;
+        
+        mYOffset = -extra;
+      }
+      else if (offset > GetRange(nuiVertical)->GetMaximum() - GetRange(nuiVertical)->GetPageSize())
+      {
+        nuiSize extra = MIN(offset - (GetRange(nuiVertical)->GetMaximum() - GetRange(nuiVertical)->GetPageSize()), 2 * maxExtraSize);
+        extra *= 0.5;
+        
+        mYOffset = GetRange(nuiVertical)->GetMaximum() - GetRange(nuiVertical)->GetPageSize() + extra;
+      }
+      else
+      {
+        mYOffset = offset;
+      }
+      mTimerOn = true;
+    }
+  }
 }
 
 nuiScrollBar* nuiScrollView::GetScrollBar(nuiOrientation Orientation)
@@ -757,27 +933,45 @@ void nuiScrollView::OnSmoothScrolling(const nuiEvent& rEvent)
   if (!mTimerOn)
     return;
 
-  float XOffset = mpHorizontal->GetRange().GetValue();
-  float YOffset = mpVertical->GetRange().GetValue();
-
-  float xdiff = XOffset - mXOffset;
-  float ydiff = YOffset - mYOffset;
-
-  if (xdiff > 2 || xdiff < -2)
-    mXOffset += xdiff * NUI_SMOOTH_SCROLL_RATIO;
-  else
-    mXOffset = XOffset;
-
-  if (ydiff > 2 || ydiff < -2)
-    mYOffset += ydiff * NUI_SMOOTH_SCROLL_RATIO;
-  else
-    mYOffset = YOffset;
-
-  if (mXOffset == XOffset && mYOffset == YOffset)
+  if (!mLeftClick)
   {
-    mTimerOn = false;
+    float XOffset = mpHorizontal->GetRange().GetValue();
+    float YOffset = mpVertical->GetRange().GetValue();
+
+    float xdiff = XOffset - mXOffset;
+    float ydiff = YOffset - mYOffset;
+
+    if (xdiff > 2 || xdiff < -2)
+      mXOffset += xdiff * NUI_SMOOTH_SCROLL_RATIO;
+    else
+      mXOffset = XOffset;
+
+    if (ydiff > 2 || ydiff < -2)
+      mYOffset += ydiff * NUI_SMOOTH_SCROLL_RATIO;
+    else
+      mYOffset = YOffset;
+
+    if (mXOffset == XOffset && mYOffset == YOffset)
+    {
+      mTimerOn = false;
+    }
+    
+    if (mSpeedX != 0)
+    {
+      SetXPos(GetXPos() + mSpeedX);
+      //mXOffset = GetXPos();
+      mSpeedX *= 0.7;
+    }
+    
+    if (mSpeedY != 0)
+    {
+      SetYPos(GetYPos() + mSpeedY);
+      //mYOffset = GetYPos();
+      mSpeedY *= 0.7;
+    }
   }
 
+  
   UpdateLayout();
   OffsetsChanged();
 }
@@ -882,3 +1076,105 @@ bool nuiScrollView::GetForceNoSmartScroll(bool set) const
   return mForceNoSmartScroll;
 }
 
+void nuiScrollView::ShowScrollBars(bool autoHide)
+{
+  mpHideAnimH->Stop();
+  mpHideAnimV->Stop();
+  
+  if (!mpShowAnimV->IsPlaying() && mpVertical->GetAlpha() != 1)
+  {
+    mpShowAnimV->SetTime(0);  
+    mpShowAnimV->Play();
+  }
+  
+  if (!mpShowAnimH->IsPlaying() && mpHorizontal->GetAlpha() != 1)
+  {
+    mpShowAnimH->SetTime(0);
+    mpShowAnimH->Play();
+  }
+  
+  if (autoHide)
+  {
+    mpHideTimer->Stop();
+    mpHideTimer->Start(false/*immediate*/, true/*reset*/);
+  }
+}
+
+void nuiScrollView::HideScrollBars()
+{  
+  mpShowAnimH->Stop();
+  mpShowAnimV->Stop();
+  
+  mpHideAnimV->Stop();
+  mpHideAnimV->SetTime(0);
+  mpHideAnimV->Play();
+  
+  mpHideAnimH->Stop();
+  mpHideAnimH->SetTime(0);  
+  mpHideAnimH->Play();
+
+}
+
+void nuiScrollView::SetHideScrollBars(bool hide)
+{
+  mHideScrollBars = hide;
+  
+  if (mHideScrollBars)
+  {
+    float inDuration = 0.4;
+    float outDuration = 0.7;
+    mpShowAnimH = new nuiFadeInWidgetAnim(mpHorizontal, inDuration, true);
+    mpShowAnimV = new nuiFadeInWidgetAnim(mpVertical, inDuration, true);
+    mpHideAnimH = new nuiFadeOutWidgetAnim(mpHorizontal, outDuration, true);
+    mpHideAnimV = new nuiFadeOutWidgetAnim(mpVertical, outDuration, true);
+    mpHorizontal->SetAlpha(mLeftClick ? 1 : 0);
+    mpVertical->SetAlpha(mLeftClick ? 1 : 0);
+  }
+  else
+  {
+    delete mpShowAnimH;
+    delete mpShowAnimV;
+    delete mpHideAnimH;
+    delete mpHideAnimV;
+    mpHorizontal->SetAlpha(1);
+    mpVertical->SetAlpha(1);
+  }
+  
+}
+ 
+bool nuiScrollView::GetHideScrollBars()
+{
+  return mHideScrollBars;
+}
+
+void nuiScrollView::OnHideTick(const nuiEvent& rEvent)
+{
+  mpHideTimer->Stop();
+  HideScrollBars();
+}
+
+
+void nuiScrollView::EnableDrag(bool enable)
+{
+  mDragEnabled = enable;
+}
+
+bool nuiScrollView::IsDragEnabled()
+{
+  return mDragEnabled;
+}
+
+
+void nuiScrollView::ActivateMobileMode()
+{
+  EnableDrag(true);
+  SetHideScrollBars(true);
+  
+  mpHorizontal->SetBackgroundDeco(NULL);
+  mpVertical->SetBackgroundDeco(NULL);
+  
+  mpHorizontal->SetForegroundDecoName(_T("nuiDefaultDecorationMobileScrollbarHandle"));
+  mpVertical->SetForegroundDecoName(_T("nuiDefaultDecorationMobileScrollbarHandle"));
+  SetBarSize(13);
+  
+}

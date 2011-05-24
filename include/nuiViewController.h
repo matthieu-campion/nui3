@@ -33,23 +33,13 @@ protected:
   virtual void ViewDidAppear();
   virtual void ViewDidDisappear();
   
-  virtual void SwipeBegan(nuiPosition swipeDirection);
-  virtual void SwipeEnd(nuiPosition swipeDirection);
-  nuiSimpleEventSource<0> EventSwipeBegan;
-  nuiSimpleEventSource<0> EventSwipeEnd;
-  nuiPosition GetSwipeDirection() const;
-  
-
   
   virtual void ConnectTopLevel();
-  virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
-  virtual bool MouseMoved(nuiSize X, nuiSize Y);
 
 private:
   
-  nuiPosition GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const;
-  
+  bool IsOverlayed() const;
+  void SetOverlayed(bool set);
   
   bool mAnimated;
   nuiNavigationBar* mpBar;
@@ -62,5 +52,6 @@ private:
   bool mSwipeInitiated;
   bool mSwipeActivated;
   nuiPosition mSwipeDirection;
+  bool mOverlayed;
   
 };

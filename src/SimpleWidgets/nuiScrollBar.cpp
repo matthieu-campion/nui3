@@ -11,7 +11,6 @@
 #include "nuiScrollBar.h"
 #include "nuiDrawContext.h"
 #include "nuiXML.h"
-#include "nuiTheme.h"
 
 #define SCROLL_IDEAL_WIDTH 12
 #define SCROLL_IDEAL_SIZE 50
@@ -29,6 +28,14 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
     AddAttribute(new nuiAttribute<nuiSize>(nglString(_T("ThumbMinSize")), nuiUnitNone,
                                            nuiMakeDelegate(this, &nuiScrollBar::GetThumbMinSize),
                                            nuiMakeDelegate(this, &nuiScrollBar::SetThumbMinSize)));
+    
+    AddAttribute(new nuiAttribute<const nglString&>(nglString(_T("ForegroundDecoration")), nuiUnitName,
+                                                    nuiMakeDelegate(this, &nuiScrollBar::GetForegroundDecoName),
+                                                    nuiMakeDelegate(this, &nuiScrollBar::SetForegroundDecoName)));
+    
+    AddAttribute(new nuiAttribute<const nglString&>(nglString(_T("BackgroundDecoration")), nuiUnitName,
+                                                    nuiMakeDelegate(this, &nuiScrollBar::GetBackgroundDecoName),
+                                                    nuiMakeDelegate(this, &nuiScrollBar::SetBackgroundDecoName)));
   }
 
   SetRedrawOnHover(true);
@@ -55,6 +62,18 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
 
   if (mpThumb)
     AddChild(mpThumb);
+  
+  
+  if (mOrientation == nuiVertical)
+  {
+    mpBackgroundDeco = nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarVerticalBkg"));
+    mpForegroundDeco = nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarVerticalHdl"));
+  }
+  else
+  {
+    mpBackgroundDeco = nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarHorizontalBkg"));
+    mpForegroundDeco = nuiDecoration::Get(_T("nuiDefaultDecorationScrollBarHorizontalHdl"));
+  }
 
   NUI_ADD_EVENT(ValueChanged);
 }
@@ -179,12 +198,21 @@ bool nuiScrollBar::Draw(nuiDrawContext* pContext)
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(nuiBlendTransp);
   
-  nuiTheme* pTheme = GetTheme();
-  if (mDrawBackground)
-    pTheme->DrawScrollBarBackground(pContext,this);
-  if (!mpThumb)
-    pTheme->DrawScrollBarForeground(pContext,this);
-  pTheme->Release();
+  if (mDrawBackground && mpBackgroundDeco)
+  {
+    const nuiRect& rRect = GetRangeRect();
+    
+    nuiRect rectDest(0.0f, 0.0f, rRect.GetWidth(), rRect.GetHeight());
+    mpBackgroundDeco->Draw(pContext, this, rectDest);
+  }
+  
+  if (!mpThumb && mpForegroundDeco)
+  {
+    nuiRect rRect = GetThumbRect();
+    rRect.Grow(-1.f, -1.f);
+    
+    mpForegroundDeco->Draw(pContext, this, rRect);
+  }
   
   DrawChildren(pContext);
   
@@ -491,6 +519,64 @@ void nuiScrollBar::SetThumbMinSize(nuiSize MinSize)
   InvalidateLayout();
 }
 
+
+void nuiScrollBar::SetForegroundDeco(nuiDecoration* pDeco)
+{
+  if (pDeco)
+    pDeco->Acquire();
+  if (mpForegroundDeco)
+    mpForegroundDeco->Release();
+  mpForegroundDeco = pDeco;
+  Invalidate();
+}
+
+void nuiScrollBar::SetBackgroundDeco(nuiDecoration* pDeco)
+{
+  if (pDeco)
+    pDeco->Acquire();
+  if (mpBackgroundDeco)
+    mpBackgroundDeco->Release();
+  mpBackgroundDeco = pDeco;
+  Invalidate();
+}
+
+nuiDecoration* nuiScrollBar::GetForegroundDeco()
+{
+  return mpForegroundDeco;
+}
+
+nuiDecoration* nuiScrollBar::GetBackgroundDeco()
+{
+  return mpBackgroundDeco;
+}
+
+void nuiScrollBar::SetForegroundDecoName(const nglString& rName)
+{
+  nuiDecoration* pDecoration = nuiDecoration::Get(rName);
+  SetForegroundDeco(pDecoration);
+}
+
+void nuiScrollBar::SetBackgroundDecoName(const nglString& rName)
+{
+  nuiDecoration* pDecoration = nuiDecoration::Get(rName);
+  SetBackgroundDeco(pDecoration);
+}
+
+const nglString& nuiScrollBar::GetForegroundDecoName()
+{
+  if (mpForegroundDeco)
+    return mpForegroundDeco->GetObjectName();
+  
+  return nglString::Null;
+}
+
+const nglString& nuiScrollBar::GetBackgroundDecoName()
+{
+  if (mpBackgroundDeco)
+    return mpBackgroundDeco->GetObjectName();
+  
+  return nglString::Null;
+}
 
 /// Custom ScrollBar
 
