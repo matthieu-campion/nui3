@@ -425,9 +425,9 @@ void nuiPadGestureRecognizer::UpdateDirection()
   
   if (olddir != mRecognizedDirection)
   {
+    //printf("New Pad Direction: %s\n", nuiGetString(mRecognizedDirection));
     SignalDirectionChanged(mRecognizedDirection);
     
-    printf("New Pad Direction: %s\n", nuiGetString(mRecognizedDirection));
   }
 }
 
