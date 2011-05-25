@@ -12,7 +12,7 @@
 
 class nuiGestureRecognizer;
 class nuiSwipeGestureRecognizer;
-
+class nuiPadGestureRecognizer;
 
 
 //**********************************************************************
@@ -94,7 +94,7 @@ const uint32 nuiGestureDirectionVertical = nuiGestureDirectionUp | nuiGestureDir
 const uint32 nuiGestureDirectionDiagonals = nuiGestureDirectionUpRight | nuiGestureDirectionDownRight | nuiGestureDirectionDownLeft | nuiGestureDirectionUpLeft;
 
 
-
+const char* nuiGetString(nuiGestureDirection dir);
 
 
 
@@ -139,5 +139,63 @@ private:
   
   nuiGestureDirection mDirection;
   nuiGestureDirection mRecognizedDirection;
+};
+
+//**********************************************************************
+//
+// class nuiPadGestureRecognizer
+//
+// implements a pad-like gesture recognizer
+//
+class nuiPadGestureRecognizer: public nuiGestureRecognizer
+{
+public:
+  
+  nuiPadGestureRecognizer(nuiGestureDirection direction);
+  ~nuiPadGestureRecognizer();
+  
+  void SetDirections(nuiGestureDirection direction);
+  
+  nuiSignal1<nuiGestureDirection> SignalDirectionChanged;
+  nuiGestureDirection GetRecognizedDirection() const;
+  
+  const nuiVector& GetForce() const;
+  float GetStrength() const;
+  float GetDegrees() const;
+  float GetRadians() const;
+  nuiGestureDirection GetDirectionFromAngle(float angle) const;
+  nuiGestureDirection GetDirection() const;
+
+  float GetFriction() const;
+  void SetFriction(float set);
+
+protected:
+  
+  virtual bool MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseUnclicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button);
+  virtual bool MouseMoved(nuiSize X, nuiSize Y);
+  
+  void UpdateForces(const nuiEvent& rEvent);
+  void UpdateDirection();
+private:
+  
+  //  nuiPosition GetGesturePosition(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const;
+  nuiGestureDirection GetGestureDirection(bool evalOnX, bool evalOnY, nuiSize x1, nuiSize x2, nuiSize y1, nuiSize y2) const;
+  
+  //  static bool DoesPositionMatchesDirection(nuiPosition position, nuiPadGestureRecognizer Direction direction);
+  
+  bool mClicked;
+  nuiSize mLastX;
+  nuiSize mLastY;
+  
+  nuiVector mForce;
+  float mFriction;
+  
+  nuiGestureDirection mDirection;
+  nuiGestureDirection mRecognizedDirection;
+  
+  nuiEventSink<nuiPadGestureRecognizer> mSink;
+  
+  std::map<nuiGestureDirection, std::pair<float, float> > mDirections;
 };
 
