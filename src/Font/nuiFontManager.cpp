@@ -218,7 +218,7 @@ nuiFontRequest::nuiFontRequest(nuiFontBase* pOriginalFont, bool ForcePanoseOnlyF
   {
     if (pOriginalFont->HasPanoseInfo())
     {
-      MustBeSimilar(pOriginalFont->GetPanoseBytes(), 50.0f);
+      MustBeSimilar(pOriginalFont->GetPanoseBytes(), 20.0f);
       if (mItalic.mScore > 0.0)
         mPanose.mElement.SetItalic(pOriginalFont->IsItalic());
       if (mBold.mScore > 0.0)
@@ -915,7 +915,8 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     float sscore = 1.f;
     nuiFontDesc* pFontDesc = *it;
     //pFontDesc->GetPath()
-    
+    if (pFontDesc->GetName().Compare("LastResort", false) == 0)
+      score *= 0.5;
     SET_SCORE2(Name);
     SET_SCORE2(Style);
     SET_SCORE(Face);
@@ -1386,13 +1387,23 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
-  //wprintf(_T("Loading font %s\n"), rRequest.mName.mElement.GetChars());
+  //printf(_T("Loading font %s\n"), rRequest.mName.mElement.GetChars());
   nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
   
   std::list<nuiFontRequestResult> Fonts;
   RequestFont(rRequest, Fonts);
+
+  std::list<nuiFontRequestResult>::iterator it = Fonts.begin();
+  std::list<nuiFontRequestResult>::iterator end = Fonts.end();
+  while (it != end)
+  {
+    const nuiFontRequestResult& res(*it);
+    printf(_T("font result [%s] %f\n"), res.GetPath().GetChars(), res.GetScore());
+    ++it;
+  }
+  
   
   if (Fonts.empty())
   {

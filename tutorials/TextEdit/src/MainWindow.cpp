@@ -38,9 +38,9 @@ MainWindow::~MainWindow()
 void MainWindow::OnCreation()
 {
   nuiScrollView* pScrollView = new nuiScrollView;
-  nuiEditText* pText = new nuiEditText(_T("Type something here\n\n"));
+  nuiEditText* pText = new nuiEditText(_T(""));
   
-  nglIStream* pStream = nglPath("rsrc:/arabic.txt").OpenRead();
+  nglIStream* pStream = nglPath("rsrc:/test.txt").OpenRead();
   if (pStream)
   {
     pStream->SetTextEncoding(eUTF8);
@@ -48,8 +48,8 @@ void MainWindow::OnCreation()
     pStream->ReadText(text);
 
     nuiFontRequest request;
-    request.MustHaveSize(25, 2);
-    request.SetName("Times", 2);
+    request.MustHaveSize(25, 1);
+    request.SetName("Helvetica", 2);
     //request.SetName("/Library/Fonts/AdobeArabic-Regular.otf", 2);
     //request.SetName("Helvetica", 2);
     mpFont = nuiFontManager::GetManager().GetFont(request);
@@ -57,7 +57,7 @@ void MainWindow::OnCreation()
     mpLayout = new nuiTextLayout(mpFont);
     mpLayout->LayoutText(text);
     
-    pText->AddText(text);
+    //pText->AddText(text);
     delete pStream;
   }
   
@@ -75,7 +75,8 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   if (mpLayout)
   {
     pContext->SetTextColor(nuiColor(0, 0, 0));
-    mpFont->Print(pContext, 100, 100, mpLayout, false);
+    mpFont->Print(pContext, 10, 20, mpLayout, true);
+    //mpFont->Print(pContext, 10, 400, mpLayout, false);
   }
   
   return true;

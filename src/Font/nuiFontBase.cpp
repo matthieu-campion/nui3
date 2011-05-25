@@ -315,6 +315,9 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   uint32 glyphcount = 0;
   FT_UInt   gindex = 0;
   
+  FT_Select_Charmap(pFace, ft_encoding_unicode);// == FT_Err_Ok);
+
+  
   charcode = FT_Get_First_Char(pFace, &gindex);
   // Using the vector directly is very slow on gcc so we store the elements in a set and then copy the set to the vector...
   std::vector<nglUChar> tmp;
@@ -323,19 +326,30 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   while ( gindex != 0 )
   {
     glyphcount++;
-    //    if (prevcharcode > 0 && prevcharcode + 1 != charcode)
-    //    {
-    //      //NGL_OUT(_T("range: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
-    //      rangestart = -1;
-    //      rangecount++;
-    //    }
+    if (mName == "Helvetica")
+    {
+      if (prevcharcode > 0 && prevcharcode + 1 != charcode)
+      {
+        NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
+        rangestart = -1;
+        rangecount++;
+      }
+      printf("%d ", gindex);
+    }
     tmp.push_back(charcode);
     prevcharcode = charcode;
-    //    if (rangestart == -1)
-    //      rangestart = prevcharcode;
+
+    if (rangestart == -1)
+      rangestart = prevcharcode;
     
     charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
+  if (prevcharcode > 0)
+  {
+    NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart);
+    rangecount++;
+  }
+  
   
   std::sort(tmp.begin(), tmp.end());
   
@@ -359,12 +373,6 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   NGL_OUT(_T("%d glyphs\n"), glyphcount);
   
-  
-  //  if (prevcharcode > 0)
-  //  {
-  //    //NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart);
-  //    rangecount++;
-  //  }
   
   //NGL_DEBUG( NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount); )
   
@@ -2426,6 +2434,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   
   hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
   
+  //hb_buffer_set_direction(hb_buffer, HB_DIRECTION_TTB);
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
   hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
   //if (language)

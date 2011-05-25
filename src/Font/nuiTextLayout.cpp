@@ -229,6 +229,12 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     position++;
   }
   
+  if (start != position - start)
+  {
+    LayoutParagraph(start, position - start); // Eat the \n char
+    start = position;
+  }
+  
   // Find the needed fonts for each script:
   std::map<nuiUnicodeScript, nuiFont*> FontSet;
   {
@@ -260,7 +266,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
       if (!pFont)
       {
         nuiFontRequest request(mpFont);
-        request.MustHaveGlyphs(charset, 10);
+        request.MustHaveGlyphs(charset, 50, true);
         pFont = nuiFontManager::GetManager().GetFont(request);
       }
       
