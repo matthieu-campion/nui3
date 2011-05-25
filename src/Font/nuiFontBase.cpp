@@ -315,7 +315,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   uint32 glyphcount = 0;
   FT_UInt   gindex = 0;
   
-  FT_Select_Charmap(pFace, ft_encoding_unicode);// == FT_Err_Ok);
+  FT_Select_Charmap(pFace, FT_ENCODING_UNICODE);// == FT_Err_Ok);
 
   
   charcode = FT_Get_First_Char(pFace, &gindex);
@@ -334,7 +334,9 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
         rangestart = -1;
         rangecount++;
       }
-      printf("%d ", gindex);
+      
+      NGL_ASSERT(FT_Get_Char_Index(pFace, charcode) == gindex);
+      printf("%d (%d)  ", gindex, charcode);
     }
     tmp.push_back(charcode);
     prevcharcode = charcode;
@@ -1759,7 +1761,7 @@ bool nuiFontBase::LoadFinish()
    *
    * (see GetGlyphindexes for more info)
    */
-  if (FT_Select_Charmap (mpFace->Face, ft_encoding_unicode) != FT_Err_Ok)
+  if (FT_Select_Charmap (mpFace->Face, FT_ENCODING_UNICODE) != FT_Err_Ok)
   {
 #ifdef USE_WCHAR
     // We can't select Unicode output, we'll do nglChar -> locale and use the first map (if available)
