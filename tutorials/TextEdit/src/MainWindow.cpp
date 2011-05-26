@@ -49,7 +49,7 @@ void MainWindow::OnCreation()
 
     nuiFontRequest request;
     request.MustHaveSize(25, 1);
-    request.SetName("Helvetica", 2);
+    request.SetName("Zapfino", 2);
     //request.SetName("/Library/Fonts/AdobeArabic-Regular.otf", 2);
     //request.SetName("Helvetica", 2);
     mpFont = nuiFontManager::GetManager().GetFont(request);
