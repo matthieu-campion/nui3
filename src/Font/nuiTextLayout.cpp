@@ -242,7 +242,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
     while (it != end)
     {
-      //printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
+      printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
       const std::set<nglUChar>& charset(it->second);
       nuiFont* pFont = NULL;
       // First try the requested font
@@ -266,13 +266,13 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
       if (!pFont)
       {
         nuiFontRequest request(mpFont);
-        request.MustHaveGlyphs(charset, 50, true);
+        request.MustHaveGlyphs(charset, 500, false);
         pFont = nuiFontManager::GetManager().GetFont(request);
       }
       
       FontSet[it->first] = pFont;
       
-      //printf("%s\n", pFont->GetFamilyName().GetChars());
+      printf("%s\n", pFont->GetFamilyName().GetChars());
       
       ++it;
     }

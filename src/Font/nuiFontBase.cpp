@@ -319,7 +319,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 
   
   charcode = FT_Get_First_Char(pFace, &gindex);
-  // Using the vector directly is very slow on gcc so we store the elements in a set and then copy the set to the vector...
+
   std::vector<nglUChar> tmp;
   tmp.reserve(10000);
   
@@ -330,13 +330,13 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     {
       if (prevcharcode > 0 && prevcharcode + 1 != charcode)
       {
-        NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
+        //NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
         rangestart = -1;
         rangecount++;
       }
       
       NGL_ASSERT(FT_Get_Char_Index(pFace, charcode) == gindex);
-      printf("%d (%d)  ", gindex, charcode);
+      //printf("%d (%d)  ", gindex, charcode);
     }
     tmp.push_back(charcode);
     prevcharcode = charcode;
@@ -348,7 +348,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   }
   if (prevcharcode > 0)
   {
-    NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart);
+    //NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart);
     rangecount++;
   }
   

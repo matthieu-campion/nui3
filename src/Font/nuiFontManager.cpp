@@ -909,6 +909,8 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
   std::vector<nuiFontDesc*>::const_iterator end = mpFonts.end();
   
   nglString dump;
+  uint32 glyphcount = rRequest.mMustHaveGlyphs.mElement.size();
+
   while (it != end)
   {
     float score = 1.f;
@@ -964,6 +966,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
         score += _s;
     }
     
+    if (glyphcount)
     {
       uint32 count = 0;  
       std::set<nglUChar>::const_iterator it = rRequest.mMustHaveGlyphs.mElement.begin();
@@ -977,19 +980,15 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
         ++it;
       }
       
-      uint32 glyphcount = rRequest.mMustHaveGlyphs.mElement.size();
-      if (glyphcount)
+      float f = (float)count / (float)glyphcount;
+      float _s = rRequest.mMustHaveGlyphs.mScore * f;
+      if (rRequest.mMustHaveGlyphs.mStrict)
       {
-        float f = (float)count / (float)glyphcount;
-        float _s = rRequest.mMustHaveGlyphs.mScore * f;
-        if (rRequest.mMustHaveGlyphs.mStrict)
-        {
           sscore *= _s;
-        }
-        else
-        {
-          score += _s;
-        }
+      }
+      else
+      {
+        score += _s;
       }
     }
     
