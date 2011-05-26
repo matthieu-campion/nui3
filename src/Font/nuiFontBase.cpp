@@ -245,9 +245,6 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   error = FT_New_Face(gFTLibrary, rPath.GetChars(), Face, &pFace);
 
   if (error)
-    error = FT_New_Face(gFTLibrary, rPath.GetChars(), Face, &pFace);
-
-  if (error)
   {
     nglIStream* pStream = rPath.OpenRead();
     
