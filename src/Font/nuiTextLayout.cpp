@@ -30,7 +30,9 @@ nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, in
   mLength(Length),
   mScript(script),
   mAdvanceX(0),
-  mAdvanceY(0)
+  mAdvanceY(0),
+  mUnderline(false),
+  mStrikeThrough(false)
 {
 }
 
@@ -85,6 +87,26 @@ float nuiTextRun::GetAdvanceY() const
 const nglUChar* nuiTextRun::GetUnicodeChars() const
 {
   return mLayout.GetUnicodeChars() + mPosition;
+}
+
+void nuiTextRun::SetUnderline(bool set)
+{
+  mUnderline = set;
+}
+
+bool nuiTextRun::GetUnderline() const
+{
+  return mUnderline;
+}
+
+void nuiTextRun::SetStrikeThrough(bool set)
+{
+  mStrikeThrough = set;
+}
+
+bool nuiTextRun::GetStrikeThrough() const
+{
+  return mStrikeThrough;
 }
 
 

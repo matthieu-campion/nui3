@@ -38,6 +38,11 @@ public:
   const std::vector<nuiTextGlyph>& GetGlyphs() const;
   nuiFont* GetFont() const;
   
+  void SetUnderline(bool set);
+  bool GetUnderline() const;
+  void SetStrikeThrough(bool set);
+  bool GetStrikeThrough() const;
+  
 private:
   friend class nuiTextLayout;
   friend class nuiFontBase;
@@ -46,6 +51,9 @@ private:
   int32 mPosition;
   int32 mLength;
   nuiUnicodeScript mScript;
+  
+  bool mUnderline;
+  bool mStrikeThrough;
 
   std::vector<nuiTextGlyph> mGlyphs;
   float mAdvanceX, mAdvanceY;

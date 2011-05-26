@@ -2500,11 +2500,13 @@ void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayou
   pContext->EnableTexturing(true);
   
   nuiColor SavedColor = pContext->GetFillColor();
+  nuiColor oldcolor(pContext->GetStrokeColor());
+  pContext->SetStrokeColor(pContext->GetTextColor());
   pContext->SetFillColor(pContext->GetTextColor());
   pContext->SetBlendFunc(nuiBlendTransp);
   
   std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
-
+  
   float x = X;
   float y = Y;
   
@@ -2535,6 +2537,35 @@ void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayou
           pFont->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels);
           Glyphs[glyph.mpTexture].push_back(glyph);
         }
+
+        // Draw underlines and strike through if needed
+        if (pRun->GetUnderline() || pRun->GetStrikeThrough())
+        {
+          nuiFontInfo info;
+          pFont->GetInfo(info);
+          float thickness = ToNearest(info.UnderlineThick);
+          pContext->SetLineWidth(thickness);
+
+          const float x1 = x;
+          const float x2 = x + pRun->GetAdvanceX();
+
+          if (pRun->GetUnderline())
+          {
+            const float pos = -info.UnderlinePos;
+            const float _y = ToNearest(y + pos);
+            if (x1 != x2)
+              pContext->DrawLine(x1, _y, x2, _y);
+          }
+
+          if (pRun->GetStrikeThrough())
+          {
+            const float pos = -info.Ascender * .4f;
+            const float _y = ToNearest(y + pos);
+            if (x1 != x2)
+              pContext->DrawLine(x1, _y, x2, _y);
+          }
+        }
+        
         x += pRun->GetAdvanceX();
       }
       y += pLine->GetAdvanceY();
@@ -2543,61 +2574,10 @@ void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayou
 
   PrintGlyphs(pContext, Glyphs);
 
-#if 0
-  
-  // Draw underlines if needed
-  if (rLayout.GetUnderline())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.UnderlinePos;
-    float thickness = info.UnderlineThick;
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos) - .5f;
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-    
-    pContext->SetStrokeColor(oldcolor);
-  }
-  
-  // Draw underlines if needed
-  if (rLayout.GetStrikeThrough())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.Ascender * .4f;
-    float thickness = ToNearest(info.UnderlineThick);
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos);
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-    
-    pContext->SetStrokeColor(oldcolor);
-  }
-#endif
   
   pContext->EnableBlending(blendsaved);
   pContext->EnableTexturing(texturesaved);
   
   pContext->SetFillColor(SavedColor);
+  pContext->SetStrokeColor(oldcolor);
 }
