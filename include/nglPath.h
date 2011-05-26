@@ -158,6 +158,7 @@ public:
   void Split(std::vector<nglString>& rElements); ///< Split the elements of this path into its elements (folders and eventual file))
 	int32 GetChildren(std::list<nglPath>* pChildren) const; ///< deprecated
 	int32 GetChildren(std::list<nglPath>& pChildren) const; ///< that's the proper api
+	int32 GetChildrenTree(std::list<nglPath>& pChildren) const; ///< Get the children recursively to get a complete tree.
  
 	/*!< Get node's children
 	\param pChildren if non-null, children will be appended to this list

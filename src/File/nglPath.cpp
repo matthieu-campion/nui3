@@ -926,6 +926,29 @@ nglPath::operator const nglChar*() const
 	return mPathName.GetChars();
 }
 
+int32 nglPath::GetChildrenTree(std::list<nglPath>& pChildren) const
+{
+  std::list<nglPath> local;
+  uint32 count = GetChildren(local);
+  
+  std::list<nglPath>::const_iterator it = local.begin();
+  std::list<nglPath>::const_iterator end = local.end();
+  
+  while (it != end)
+  {
+    const nglPath& rP(*it);
+    pChildren.push_back(rP);
+    
+    if (!rP.IsLeaf())
+      count += rP.GetChildrenTree(pChildren);
+    
+    ++it;
+  }
+  
+  return count;
+}
+
+
 
 /*
 * Special paths

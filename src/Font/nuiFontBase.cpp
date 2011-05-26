@@ -230,38 +230,53 @@ static const nglChar* gpFontErrorTable[] =
 //class nuiFontDesc
 nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 {
-  //  NGL_OUT(_T("Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
+  //  NGL_OUT(_T("Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
+  FT_Byte* pBuffer = NULL;
   
   mValid = false;
   
   mPath = rPath;
   mFace = Face;
   
-  nglIStream* pStream = rPath.OpenRead();
-  
-  if (!pStream)
-  {
-    NGL_OUT(_T("Error Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
-    return;
-  }
-  
-  uint32 size = pStream->Available();
-  FT_Byte* pBuffer = new FT_Byte[size];
-  pStream->ReadUInt8(pBuffer, size);
-  delete pStream;
   
   FT_Error error = 0;
   FT_Face pFace = NULL;
   
-  error = FT_New_Memory_Face(gFTLibrary, pBuffer, size, Face, &pFace);
+  error = FT_New_Face(gFTLibrary, rPath.GetChars(), Face, &pFace);
+
+  if (error)
+    error = FT_New_Face(gFTLibrary, rPath.GetChars(), Face, &pFace);
+
+  if (error)
+  {
+    nglIStream* pStream = rPath.OpenRead();
+    
+    if (!pStream)
+    {
+      NGL_OUT(_T("Error Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
+      return;
+    }
+    
+    uint32 size = pStream->Available();
+    pBuffer = new FT_Byte[size];
+    pStream->ReadUInt8(pBuffer, size);
+    delete pStream;
+    
+    error = FT_New_Memory_Face(gFTLibrary, pBuffer, size, Face, &pFace);
+  }
   
   if (error || pFace->num_faces <= Face)
   {
+    if (!Face)
+    {
+      NGL_OUT(_T("ERROR Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
+    }
+
     delete pBuffer;
     return;
   }
   
-  NGL_OUT(_T("Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
+  NGL_OUT(_T("Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
   
   NGL_ASSERT(pFace->num_faces > Face);
   

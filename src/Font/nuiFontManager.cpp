@@ -617,6 +617,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 #elif (defined _CARBON_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/Library/Fonts/");
+  rFolders[_T("System2")] = _T("~/Library/Fonts/");
 #elif TARGET_IPHONE_SIMULATOR
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   //rFolders[_T("System1")] = _T("/Library/Fonts/");
@@ -754,7 +755,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
 {
   std::list<nglPath> children;
-  rBasePath.GetChildren(&children);
+  rBasePath.GetChildrenTree(children);
   
   std::list<nglPath>::const_iterator cit = children.begin();
   std::list<nglPath>::const_iterator cend = children.end();
@@ -918,7 +919,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     nuiFontDesc* pFontDesc = *it;
     //pFontDesc->GetPath()
     if (pFontDesc->GetName().Compare("LastResort", false) == 0)
-      score *= 0.5;
+      score *= 0.1;
     SET_SCORE2(Name);
     SET_SCORE2(Style);
     SET_SCORE(Face);
@@ -1132,7 +1133,6 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
   // compile list of font files
   std::set<nglPath> fontFiles;
   std::set<nglPath>::iterator itf;
-  std::map<nglString, nglPath> folders;
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
@@ -1140,9 +1140,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
   if (scanfolders)
   {
     // All OSes 
-    GetSystemFolders(folders);
-    
-    for (it = folders.begin(); it != folders.end(); ++it)
+    for (it = mFontFolders.begin(); it != mFontFolders.end(); ++it)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
@@ -1150,7 +1148,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
-      pth.GetChildren(&children);
+      pth.GetChildrenTree(children);
       
       for (itc = children.begin(); itc != children.end(); ++itc)
       {
@@ -1251,7 +1249,6 @@ void nuiFontManager::UpdateFonts()
   // compile list of font files
   std::set<nglPath> fontFiles;
   std::set<nglPath>::iterator itf;
-  std::map<nglString, nglPath> folders;
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
@@ -1259,16 +1256,14 @@ void nuiFontManager::UpdateFonts()
   if (scanfolders)
   {
     // All OSes 
-    GetSystemFolders(folders);
-    
-    for (it = folders.begin(); it != folders.end(); ++it)
+    for (it = mFontFolders.begin(); it != mFontFolders.end(); ++it)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
-      pth.GetChildren(&children);
+      pth.GetChildrenTree(children);
       
       for (itc = children.begin(); itc != children.end(); ++itc)
       {
@@ -1361,10 +1356,8 @@ bool nuiFontManager::FindFontInFolders(const nglString& rFontFileName, nglPath& 
 
 bool nuiFontManager::FindFontInSystemFolders(const nglString& rFontFileName, nglPath& rResultFontPath)
 {
-  std::map<nglString, nglPath> folders;
-  nuiFontManager::GetSystemFolders(folders);
-  std::map<nglString, nglPath>::const_iterator it = folders.begin();
-  std::map<nglString, nglPath>::const_iterator end = folders.end();
+  std::map<nglString, nglPath>::const_iterator it = mFontFolders.begin();
+  std::map<nglString, nglPath>::const_iterator end = mFontFolders.end();
   while (it != end)
   {
     nglPath p(it->second);
