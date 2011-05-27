@@ -250,7 +250,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     
     if (!pStream)
     {
-      NGL_OUT(_T("Error Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
+      NGL_LOG("font", NGL_LOG_ERROR, "Error Scanning font '%s' face %d\n", rPath.GetChars(), Face);
       return;
     }
     
@@ -266,14 +266,14 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   {
     if (!Face)
     {
-      NGL_OUT(_T("ERROR Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
+      NGL_LOG("font", NGL_LOG_ERROR, "ERROR Scanning font '%s' face %d\n", rPath.GetChars(), Face);
     }
 
     delete pBuffer;
     return;
   }
   
-  NGL_OUT(_T("Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
+  NGL_LOG("font", NGL_LOG_INFO, "Scanning font '%s' face %d name '%s' style '%s'\n", rPath.GetChars(), Face, pFace->family_name, pFace->style_name);
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -338,23 +338,23 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   while ( gindex != 0 )
   {
     glyphcount++;
-    if (mName == "Helvetica")
-    {
-      if (prevcharcode > 0 && prevcharcode + 1 != charcode)
-      {
-        //NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
-        rangestart = -1;
-        rangecount++;
-      }
-      
-      NGL_ASSERT(FT_Get_Char_Index(pFace, charcode) == gindex);
-      //printf("%d (%d)  ", gindex, charcode);
-    }
+//    if (mName == "Helvetica")
+//    {
+//      if (prevcharcode > 0 && prevcharcode + 1 != charcode)
+//      {
+//        //NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
+//        rangestart = -1;
+//        rangecount++;
+//      }
+//      
+//      NGL_ASSERT(FT_Get_Char_Index(pFace, charcode) == gindex);
+//      //printf("%d (%d)  ", gindex, charcode);
+//    }
     tmp.push_back(charcode);
     prevcharcode = charcode;
 
-    if (rangestart == -1)
-      rangestart = prevcharcode;
+//    if (rangestart == -1)
+//      rangestart = prevcharcode;
     
     charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
@@ -385,10 +385,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     i++;
   }
   
-  NGL_OUT(_T("%d glyphs\n"), glyphcount);
-  
-  
-  //NGL_DEBUG( NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount); )
+  NGL_DEBUG( NGL_LOG("font", NGL_LOG_INFO, "\t%d glyph ranges (%d glyphs)\n", rangecount, glyphcount); )
   
   FT_Done_Face(pFace);
   delete pBuffer;
@@ -427,7 +424,7 @@ bool nuiFontDesc::CheckPath()
   mPath = p;
   if (mPath.Exists())
   {
-    printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
+    NGL_LOG("font", NGL_LOG_INFO, "found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
     return true;
   }
   
@@ -442,7 +439,7 @@ bool nuiFontDesc::CheckPath()
     
     if (mPath.Exists())
     {
-      printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
+      NGL_LOG("font", NGL_LOG_INFO, "found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
       return true;
     }
     
@@ -453,7 +450,7 @@ bool nuiFontDesc::CheckPath()
     mPath = p;
     if (mPath.Exists())
     {
-      printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
+      NGL_LOG("font", NGL_LOG_INFO, "found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
       return true;
     }
   }
@@ -701,7 +698,7 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   // Read the panose bytes for this font:
   rStream.Read(&mPanoseBytes, 10, 1);
   
-  //printf("FontDesc: '%s' (%s)\n", mName.GetChars(), mPath.GetChars());
+  NGL_LOG("font", NGL_LOG_INFO, "Load FontDesc: '%s' / '%s' (%s)\n", mName.GetChars(), mStyle.GetChars(), mPath.GetChars());
   
   return true;
 }

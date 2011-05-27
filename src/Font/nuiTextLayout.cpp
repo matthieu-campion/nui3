@@ -315,7 +315,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
         
-        printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
+        printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s / %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
 
         
         i++;
