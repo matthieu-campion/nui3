@@ -38,6 +38,8 @@ protected:
 
 private:
   
+  bool IsOverlayed() const;
+  void SetOverlayed(bool set);
   
   bool mAnimated;
   nuiNavigationBar* mpBar;
@@ -50,5 +52,6 @@ private:
   bool mSwipeInitiated;
   bool mSwipeActivated;
   nuiPosition mSwipeDirection;
+  bool mOverlayed;
   
 };

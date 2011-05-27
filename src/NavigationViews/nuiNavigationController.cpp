@@ -397,7 +397,9 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
   // init
   mpIn->mAnimated = animated;
   mpIn->SetAlpha(1);
-  mpIn->GetNavigationBar()->SetAlpha(1);
+  
+  if (mShowNavigationBar)
+    mpIn->GetNavigationBar()->SetAlpha(1);
   
   if (mViewControllers.size() >0) 
   {
@@ -410,7 +412,13 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
       mpOut = mViewControllers.back();
       mpOut->mAnimated = animated;
       mpOut->SetAlpha(1);
-      mpOut->GetNavigationBar()->SetAlpha(1);
+      if (mShowNavigationBar)
+        mpOut->GetNavigationBar()->SetAlpha(1);
+    }
+    // if overlay, just store the information for later use
+    else
+    {
+      mViewControllers.back()->SetOverlayed(true);
     }
   }
 
@@ -437,9 +445,11 @@ void nuiNavigationController::_PushViewController(nuiViewController* pViewContro
     mAnimPosition = 0;
     
     mpIn->SetAlpha(0);
-    mpIn->GetNavigationBar()->SetAlpha(0);
+    if (mShowNavigationBar)
+      mpIn->GetNavigationBar()->SetAlpha(0);
     AddChild(mpIn);
-    AddChild(mpIn->GetNavigationBar());
+    if (mShowNavigationBar)
+      AddChild(mpIn->GetNavigationBar());
     
     // FADE IN animation
     TransitionAnimation_Alpha* pAnim = NULL;
@@ -568,11 +578,13 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   nuiRect idealsize = GetRect().Size();
   
   mpOut->SetAlpha(1);
-  mpOut->GetNavigationBar()->SetAlpha(1);
+  if (mShowNavigationBar)
+    mpOut->GetNavigationBar()->SetAlpha(1);
   if (mpIn)
   {
     mpIn->SetAlpha(1);
-    mpIn->GetNavigationBar()->SetAlpha(1);
+    if (mShowNavigationBar)
+      mpIn->GetNavigationBar()->SetAlpha(1);
   }
   
   // virtual cbk
@@ -598,7 +610,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
       if (mShowNavigationBar)
         AddChild(mpIn->GetNavigationBar());
       mpIn->SetAlpha(0);
-      mpIn->GetNavigationBar()->SetAlpha(0);
+      if (mShowNavigationBar)
+        mpIn->GetNavigationBar()->SetAlpha(0);
     
       // FADE IN animation
       TransitionAnimation_Alpha* pAnim = NULL;
@@ -667,8 +680,10 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     }
     mpOut->ViewDidDisappear();
     if (mShowNavigationBar)
+    {
       mpOut->GetNavigationBar()->Release();
-    DelChild(mpOut->GetNavigationBar());
+      DelChild(mpOut->GetNavigationBar());
+    }
     mpOut->Release();
     DelChild(mpOut);
     
@@ -768,12 +783,17 @@ void nuiNavigationController::_PopToViewController(nuiViewController* pViewContr
     
     nuiViewController* pView = *it;
 
-    // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
+    // 1. objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
     // but their references had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
     // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
+    // 2. if the object was overlayed, it means it's still attached to the tree => we need to delete it 
     if (mShowNavigationBar)
       pView->GetNavigationBar()->Release();
+    
+    bool toDelete = pView->IsOverlayed();
     pView->Release();
+    if (toDelete)
+      DelChild(pView);
     
     mViewControllers.erase(it);
   }
@@ -837,12 +857,16 @@ void nuiNavigationController::_PopToRootViewControllerAnimated(bool animated, Tr
     
     nuiViewController* pView = *it;
     
-    // objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
+    // 1. objects have already been detached from the tree (using DelChild, in ::OnViewPushStop (or in ::_PushViewController if no transition)).
     // but their references had not been released to keep the objects alive (in case of specific pop operation, you want those objects come back to the screen)
     // therefore, to delete them here, don't call DelChild, simply call Release for the objects reference to be decreased (and let the nui references system manage the memory).
+    // 2. if the object was overlayed, it means it's still attached to the tree => we need to delete it 
     if (mShowNavigationBar)
       pView->GetNavigationBar()->Release();
+    bool toDelete = pView->IsOverlayed();
     pView->Release();
+    if (toDelete)
+      DelChild(pView);
     
     mViewControllers.erase(it);
   }
