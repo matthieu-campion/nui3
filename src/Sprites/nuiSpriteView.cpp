@@ -217,6 +217,7 @@ nuiSpriteDef::~nuiSpriteDef()
 {
   for (size_t i = 0; i < mpAnimations.size(); i++)
     delete mpAnimations[i];
+  mSpriteMap.erase(GetObjectName());
 }
 
 void nuiSpriteDef::Init()
