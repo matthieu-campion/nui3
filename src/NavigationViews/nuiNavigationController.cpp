@@ -60,6 +60,19 @@ nuiNavigationController::~nuiNavigationController()
   std::list<nuiAnimation*>::iterator it;
   for (it = mCurrentAnims.begin(); it != mCurrentAnims.end(); ++it)
     delete *it;
+  
+  std::vector<nuiViewController*>::iterator itv;
+  for (itv = mViewControllers.begin(); itv != mViewControllers.end(); ++itv)
+  {
+    nuiViewController* pView = *itv;
+    if (mShowNavigationBar)
+      pView->GetNavigationBar()->Release();
+    
+    bool toDelete = pView->IsOverlayed();
+    pView->Release();
+    if (toDelete)
+      DelChild(pView);
+  }
 }
 
 
