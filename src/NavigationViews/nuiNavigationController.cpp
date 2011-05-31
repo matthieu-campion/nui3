@@ -70,8 +70,6 @@ nuiNavigationController::~nuiNavigationController()
     
     bool toDelete = pView->IsOverlayed();
     pView->Release();
-    if (toDelete)
-      pView->Release();
   }
 }
 
