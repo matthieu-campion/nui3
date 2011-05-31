@@ -161,6 +161,7 @@ bool nuiUninit()
       App->CallOnExit(0);
       nuiDecoration::ExitDecorationEngine();
       nuiFont::ClearAll();
+      nuiBuilder::Get().Uninit();
       delete (pApp);
       App = NULL;
       //nuiTexture::ClearAll();
