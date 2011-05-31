@@ -116,13 +116,58 @@ public:
   
   const nglUChar* GetUnicodeChars() const;
 
+  /** @name Metrics */
+  //@{
+  int  GetMetrics (nuiGlyphInfo& rInfo) const;
+  /*!< Returns whole layout metrics (as a composite glyph)
+   \param rInfo metrics info holder
+   \return number of glyphs in the layout
+   */
+  float GetAscender() const;
+  float GetDescender() const;
+  //@}
+  
+  uint  GetGlyphCount() const;
+  const nuiGlyphLayout* GetGlyph   (uint Offset) const;
+  const nuiGlyphLayout* GetGlyphAt (float X, float Y) const;
+  /*!< Identify a glyph at given coordinates
+   \param X abscissa in layout coordinate space
+   \param Y ordinate in layout coordinate space
+   \return located glyph instance, NULL if none match
+   
+   This method searches if a glyph's bounding box in the layout encloses the
+   given coordinates. If such a glyph is found, its localized instance is
+   returned.
+   */
+  nuiRect GetRect() const;
+  void SetDensity(nuiSize X, nuiSize Y);
+  nuiSize GetDensityX() const;
+  nuiSize GetDensityY() const;
+  //@}
+  
+  bool AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float W, float H);
+  
+  void SetSpacesPerTab(int count);
+  int GetSpacesPerTab();
+  
+  void SetUnderline(bool set);
+  bool GetUnderline() const;
+  void SetStrikeThrough(bool set);
+  bool GetStrikeThrough() const;
+  
+  void SetWrapX(nuiSize WrapX);
+  nuiSize GetWrapX() const;
+  
 private:
   nuiFont* mpFont;
   std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;
-
   
   bool mJustify;
   float mFlush;
+  int32 mSpacePerTab;
+  float mXDensity;
+  float mYDensity;
+  nuiRect mRect;
   
   bool LayoutParagraph(int32 start, int32 length);
   
