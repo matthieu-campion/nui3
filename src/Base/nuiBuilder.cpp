@@ -196,6 +196,23 @@ void nuiBuilder::Init()
 #endif
 }
 
+void nuiBuilder::Uninit()
+{
+  //mBuilderMap.clear();
+  {
+    nuiWidgetCreatorMap::iterator it = mCreatorMap.begin();
+    nuiWidgetCreatorMap::iterator end = mCreatorMap.end();
+    while (it != end)
+    {
+      nuiWidgetCreator* pCreator = it->second;
+      delete pCreator;
+      ++it;
+    }
+    
+    mCreatorMap.clear();
+  }
+}
+
 void nuiBuilder::SetHandler(const nglString& ClassName, const nglString& ClassGroup, nuiCreateWidgetFn pHandler)
 {
   //wprintf(_T("Adding Widget handler: %ls\n"), ClassName.GetChars());

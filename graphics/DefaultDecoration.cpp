@@ -43,6 +43,7 @@ licence: see nui3/LICENCE.TXT
 #include "DefaultDecoration/src/RadioButtonUpDisabled.cpp"
 #include "DefaultDecoration/src/ScrollbarHorizontalBkg.cpp"
 #include "DefaultDecoration/src/ScrollbarHorizontalHdl.cpp"
+#include "DefaultDecoration/src/ScrollbarMobile.cpp"
 #include "DefaultDecoration/src/ScrollbarVerticalBkg.cpp"
 #include "DefaultDecoration/src/ScrollbarVerticalHdl.cpp"
 #include "DefaultDecoration/src/SliderHorizontalBkg.cpp"

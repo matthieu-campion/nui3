@@ -316,6 +316,14 @@ nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWi
 
 void nuiImageDecoration::GetBorders(const nuiWidget* pWidget, float& rLeft, float& rRight, float& rTop, float& rBottom, float& rHorizontal, float& rVertical) const
 {
+  if (!mpTexture)
+  {
+    NGL_OUT(_T("nuiImageDecoration::mpTexture should not be NULL!"));
+    NGL_ASSERT(mpTexture);
+    return;
+  }
+    
+  
   if (!mBorderEnabled)
   {
     rLeft = rRight = rTop = rBottom = rHorizontal = rVertical = 0;
