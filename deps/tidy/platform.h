@@ -520,7 +520,7 @@ extern "C" {
 # undef uint
 typedef unsigned int uint;
 #endif
-#if defined(HPUX_OS) || defined(CYGWIN_OS) || defined(MAC_OS) || defined(BSD_BASED_OS) || defined(_WIN32)
+#if defined(HPUX_OS) || defined(CYGWIN_OS) || defined(MAC_OS) || defined(BSD_BASED_OS) || defined(_WIN32) || defined(_ANDROID_)
 # undef ulong
 typedef unsigned long ulong;
 #endif
