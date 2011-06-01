@@ -54,7 +54,7 @@ void MainWindow::OnCreation()
     //request.SetName("/Library/Fonts/AdobeArabic-Regular.otf", 2);
     //request.SetName("Helvetica", 2);
     mpFont = nuiFontManager::GetManager().GetFont(request);
-    printf("Requested font: %s\n", mpFont->GetFamilyName().GetChars());
+    printf("Requested font: %s - %s\n", mpFont->GetFamilyName().GetChars(), mpFont->GetStyleName().GetChars());
     mpLayout = new nuiTextLayout(mpFont);
     mpLayout->LayoutText(text);
     
