@@ -50,6 +50,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BC2F88B7136AA81900EB1F05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84;
+			remoteInfo = nuiPhone_arm7;
+		};
+		BC2F88B9136AA81900EB1F05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD341012E09CA800F1EF4E;
+			remoteInfo = thirdparty;
+		};
+		BC2F88BB136AA81900EB1F05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD3FF412E0B08300F1EF4E;
+			remoteInfo = thirdparty_ios;
+		};
+		BC2F88BD136AA81900EB1F05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84;
+			remoteInfo = thirdparty_ios_arm7;
+		};
 		BC39712712883D4D00061EFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
@@ -306,8 +334,12 @@
 				BCD448B111D2120F00BEF227 /* libnui3.a */,
 				BCD448B511D2120F00BEF227 /* libnuiPhoneD.a */,
 				BCD448B711D2120F00BEF227 /* libnuiPhone.a */,
+				BC2F88B8136AA81900EB1F05 /* libnuiPhone_arm7.a */,
 				BC39712812883D4D00061EFE /* libnui3CocoaD.a */,
 				BC39712A12883D4D00061EFE /* libnui3Cocoa.a */,
+				BC2F88BA136AA81900EB1F05 /* libthirdparty.a */,
+				BC2F88BC136AA81900EB1F05 /* libthirdparty_ios.a */,
+				BC2F88BE136AA81900EB1F05 /* libthirdparty_ios_arm7.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -423,6 +455,34 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		BC2F88B8136AA81900EB1F05 /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = BC2F88B7136AA81900EB1F05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BC2F88BA136AA81900EB1F05 /* libthirdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty.a;
+			remoteRef = BC2F88B9136AA81900EB1F05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BC2F88BC136AA81900EB1F05 /* libthirdparty_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios.a;
+			remoteRef = BC2F88BB136AA81900EB1F05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BC2F88BE136AA81900EB1F05 /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = BC2F88BD136AA81900EB1F05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		BC39712812883D4D00061EFE /* libnui3CocoaD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -706,6 +766,7 @@
 		BCD448CC11D2123000BEF227 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
@@ -729,7 +790,7 @@
 				PREBINDING = YES;
 				PRODUCT_NAME = NavigationViewsD;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",

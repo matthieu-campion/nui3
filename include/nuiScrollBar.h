@@ -67,6 +67,16 @@ public:
   nuiSize GetThumbMinSize() const;
   void SetThumbMinSize(nuiSize MinSize);
   
+  void SetForegroundDeco(nuiDecoration* pDeco);
+  void SetBackgroundDeco(nuiDecoration* pDeco);
+  nuiDecoration* GetForegroundDeco();
+  nuiDecoration* GetBackgroundDeco();
+  
+  void SetForegroundDecoName(const nglString& rName);
+  void SetBackgroundDecoName(const nglString& rName);
+  const nglString& GetForegroundDecoName();
+  const nglString& GetBackgroundDecoName();
+  
   
   nuiSimpleEventSource<0> ThumbPressed;
   nuiSimpleEventSource<0> ThumbDepressed;
@@ -104,6 +114,8 @@ protected:
   nuiRange* mpRange;
 
   nuiWidget*  mpThumb;
+  nuiDecoration* mpForegroundDeco;
+  nuiDecoration* mpBackgroundDeco;
   
   nuiSize mThumbLength;
   nuiSize mThumbPosition;

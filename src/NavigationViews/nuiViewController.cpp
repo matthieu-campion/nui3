@@ -15,6 +15,7 @@ nuiViewController::nuiViewController()
 {
   SetObjectClass(_T("nuiViewController"));
   mAnimated = false;
+  mOverlayed = false;
   
   mpBar = new nuiNavigationBar();
 }
@@ -35,7 +36,7 @@ void nuiViewController::ConnectTopLevel()
 // virtual 
 void nuiViewController::ViewWillAppear()
 {
-
+  
 }
 
 // virtual 
@@ -68,5 +69,21 @@ nuiNavigationBar* nuiViewController::GetNavigationBar()
 {
   return mpBar;
 } 
+
+
+bool nuiViewController::IsOverlayed() const
+{
+  return mOverlayed;
+}
+
+void nuiViewController::SetOverlayed(bool set)
+{
+  mOverlayed = set;
+}
+
+
+
+
+
 
 
