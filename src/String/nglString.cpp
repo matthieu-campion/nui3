@@ -29,13 +29,72 @@ licence: see nui3/LICENCE.TXT
   #define ngl_strnicmp		strnicmp
   #define ngl_mbs_stricmp	stricmp
 #elif defined _CARBON_ || defined _UIKIT_ || defined _COCOA_
-  #define ngl_vsnprintf vsnprintf
-  #define ngl_snprintf	snprintf
-  #define ngl_strcmp strcmp
-  #define ngl_stricmp strcasecmp
-  #define ngl_strncmp strncmp
-  #define ngl_strnicmp strncasecmp
-  #define ngl_mbs_stricmp strcasecmp
+#define ngl_vsnwprintf vswprintf
+#define ngl_snprintf	snprintf
+#define ngl_strcmp wcscmp
+#define ngl_stricmp ngl_wcscasecmp
+#define ngl_strncmp wcsncmp
+#define ngl_strnicmp ngl_wcsncasecmp
+#define ngl_mbs_stricmp strcasecmp
+
+static int ngl_wcscasecmp(const nglChar* s1, const nglChar* s2)
+{
+  nglChar c1;
+  nglChar c2;
+  do
+  {
+    int diff;
+
+    c1 = *s1++;
+    c2 = *s2++;
+    if (!c1)
+      break;
+    diff = c1 - c2;
+    if (diff)
+    {
+      if ((c1 >= L'A') && (c1 <= L'Z'))
+        c1 += 0x20;
+      if ((c2 >= L'A') && (c2 <= L'Z'))
+        c2 += 0x20;
+      if (c1 != c2)
+        break;
+    }
+  } while (1);
+  if (c1 < c2)
+    return -1;
+  return c1 - c2;
+}
+
+static int ngl_wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
+{
+  nglChar c1;
+  nglChar c2;
+  if (!n)
+    return 0;
+  do
+  {
+    int diff;
+
+    c1 = *s1++;
+    c2 = *s2++;
+    if (!c1)
+      break;
+    diff = c1 - c2;
+    if (diff)
+    {
+      if ((c1 >= L'A') && (c1 <= L'Z'))
+        c1 += 0x20;
+      if ((c2 >= L'A') && (c2 <= L'Z'))
+        c2 += 0x20;
+      if (c1 != c2)
+        break;
+    }
+  } while (--n);
+  if (c1 < c2)
+    return -1;
+  return c1 - c2;
+}
+
 #elif defined _LINUX_
   #include <ctype.h>
   #define ngl_vsnwprintf vsprintf
