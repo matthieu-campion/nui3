@@ -25,8 +25,11 @@ nuiSpriteFrame::~nuiSpriteFrame()
 
 bool nuiSpriteFrame::SetTexture(nuiTexture* pTexture, const nuiRect& rRect)
 {
+  //printf("nuiSpriteFrame::SetTexture1 %p %ls\n", pTexture, pTexture->GetSource().GetChars());
   if (mpTexture)
     mpTexture->Release();
+  if (pTexture)
+    pTexture->CheckValid();
   mpTexture = pTexture;
   mpTexture->Acquire();
   mRect = rRect;
@@ -38,6 +41,7 @@ bool nuiSpriteFrame::SetTexture(const nglPath& rPath, const nuiRect& rRect)
   if (mpTexture)
     mpTexture->Release();
   mpTexture = nuiTexture::GetTexture(rPath);
+  //printf("nuiSpriteFrame::SetTexture2 %p %ls\n", mpTexture, mpTexture->GetSource().GetChars());
   mRect = rRect;
   return mpTexture != NULL;
 }
@@ -217,7 +221,12 @@ nuiSpriteDef::~nuiSpriteDef()
 {
   for (size_t i = 0; i < mpAnimations.size(); i++)
     delete mpAnimations[i];
-  mSpriteMap.erase(GetObjectName());
+  nglString name(GetObjectName());
+  //printf("~nuiSpriteDef: %p %ls\n", this, name.GetChars());
+  
+  std::map<nglString, nuiSpriteDef*>::iterator it = mSpriteMap.find(name);
+  NGL_ASSERT(it != mSpriteMap.end());
+  mSpriteMap.erase(it);
 }
 
 void nuiSpriteDef::Init()
@@ -225,11 +234,35 @@ void nuiSpriteDef::Init()
   CheckValid();
   if (SetObjectClass(_T("nuiSpriteDef")))
   {
-    
+    App->AddExit(&nuiSpriteDef::Uninit);
   }
-
 }
-      
+
+void nuiSpriteDef::Uninit()
+{
+  std::map<nglString, nuiSpriteDef*>::iterator it = mSpriteMap.begin();
+  std::map<nglString, nuiSpriteDef*>::iterator end = mSpriteMap.end();
+
+  std::vector<nuiSpriteDef*> temp;
+  
+  while (it != end)
+  {
+    nuiSpriteDef* pDef = it->second;
+    pDef->CheckValid();
+    //pDef->Release();
+    temp.push_back(pDef);
+    ++it;
+  }
+  
+  for (int32 i = 0; i < temp.size(); i++)
+  {
+    nuiSpriteDef* pDef = temp[i];
+    pDef->Release();
+  }
+  
+  mSpriteMap.clear();
+}
+
 void nuiSpriteDef::AddAnimation(nuiSpriteAnimation* pAnim)
 {
   CheckValid();
