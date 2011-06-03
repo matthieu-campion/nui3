@@ -58,6 +58,7 @@ nglKernel::~nglKernel()
 /*
   if (isatty(STDIN_FILENO)) tcsetattr (STDIN_FILENO, TCSANOW, &mTermInfo);
 */
+  Exit(0);
 //  printf("nglKernel::dtor OK\n");
 }
 
