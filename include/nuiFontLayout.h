@@ -69,11 +69,11 @@ public:
     \param rInfo metrics info holder
     \return number of glyphs in the layout
   */
-  //@}
-
   float GetAscender() const;
   float GetDescender() const;
   
+  //@}
+
   /** @name Layout */
   //@{
   int          Layout (const nglString& rText, bool FinalizeLayout = true);

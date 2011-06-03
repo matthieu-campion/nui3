@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<Workspace>
-=======
 <Workspace
    version = "1.0">
->>>>>>> master
    <FileRef
       location = "self:nui3.xcodeproj">
    </FileRef>
