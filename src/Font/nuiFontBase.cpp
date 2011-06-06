@@ -2426,7 +2426,7 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
 
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
-  NGL_ASSERT(this == pRun->mpFont);
+  NGL_ASSERT(this == pRun->mStyle.GetFont());
   
   FT_Face ft_face = mpFace->Face;
   hb_face_t *hb_face = hb_ft_face_create_cached(ft_face);

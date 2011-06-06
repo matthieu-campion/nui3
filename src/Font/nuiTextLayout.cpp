@@ -23,22 +23,21 @@ void TextLayoutTest(const nglString& txt)
 
 
 /////////////
-nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length)
-: mpFont(NULL),
-  mLayout(rLayout),
+nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length, const nuiTextStyle& rStyle)
+: mLayout(rLayout),
   mPosition(Position),
   mLength(Length),
   mScript(script),
   mAdvanceX(0),
   mAdvanceY(0),
   mUnderline(false),
-  mStrikeThrough(false)
+  mStrikeThrough(false),
+  mStyle(rStyle)
 {
 }
 
 nuiTextRun::~nuiTextRun()
 {
-  mpFont->Release();
 }
 
 const std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs() const
@@ -48,9 +47,7 @@ const std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs() const
 
 void nuiTextRun::SetFont(nuiFont* pFont)
 {
-  NGL_ASSERT(!mpFont);
-  pFont->Acquire();
-  mpFont = pFont;
+  mStyle.SetFont(pFont);
 }
 
 nuiUnicodeScript nuiTextRun::GetScript() const
@@ -60,7 +57,7 @@ nuiUnicodeScript nuiTextRun::GetScript() const
 
 nuiFont* nuiTextRun::GetFont() const
 {
-  return mpFont;
+  return mStyle.GetFont();
 }
 
 
@@ -194,14 +191,11 @@ float nuiTextLine::GetAdvanceX() const
 // nuiTextLayout
 nuiTextLayout::nuiTextLayout(nuiFont* pFont)
 {
-  pFont->Acquire();
-  mpFont = pFont;
+  mStyle.SetFont(pFont);
 }
 
 nuiTextLayout::~nuiTextLayout()
 {
-  mpFont->Release();
-
   for (uint32 p = 0; p < mpParagraphs.size(); p++)
   {
     Paragraph* pParagraph = mpParagraphs[p];
@@ -272,12 +266,12 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         std::set<nglUChar>::const_iterator it = charset.begin();
         std::set<nglUChar>::const_iterator end = charset.end();
         
-        while (it != end && mpFont->GetGlyphIndex(*it) > 0)
+        while (it != end && mStyle.GetFont()->GetGlyphIndex(*it) > 0)
           ++it;
         
         // If all the glyphs are available in the font we're done...
         if (it == end)
-          pFont = mpFont;
+          pFont = mStyle.GetFont();
         else
         {
           //printf("[couldn't find glyph %d '%c' in requested font] ", *it, *it);
@@ -287,7 +281,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
       // If the requested font doesn't work, try to find one that does:
       if (!pFont)
       {
-        nuiFontRequest request(mpFont);
+        nuiFontRequest request(mStyle.GetFont());
         request.MustHaveGlyphs(charset, 500, false);
         pFont = nuiFontManager::GetManager().GetFont(request);
       }
@@ -381,7 +375,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
       uint32 len = range.mLength;
       printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
          
-      nuiTextRun* pRun = new nuiTextRun(*this, range.mScript, pos, len);
+      nuiTextRun* pRun = new nuiTextRun(*this, range.mScript, pos, len, mStyle);
       pLine->AddRun(pRun);
       
       
@@ -392,26 +386,6 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
   }
   
   return true;
-}
-
-void nuiTextLayout::SetJustification(bool set)
-{
-  mJustify = set;
-}
-
-bool nuiTextLayout::GetJustification() const
-{
-  return mJustify;
-}
-
-void nuiTextLayout::SetFlush(float set)
-{
-  mFlush = set;
-}
-
-float nuiTextLayout::GetFlush() const
-{
-  return mFlush;
 }
 
 int32 nuiTextLayout::GetParagraphCount() const
@@ -452,12 +426,12 @@ int32  nuiTextLayout::GetMetrics(nuiGlyphInfo& rInfo) const
 
 float nuiTextLayout::GetAscender() const
 {
-  return 0;
+  return mAscender;
 }
 
 float nuiTextLayout::GetDescender() const
 {
-  return 0;
+  return mDescender;
 }
 
 int32 nuiTextLayout::GetGlyphCount() const
@@ -477,57 +451,7 @@ const nuiGlyphLayout* nuiTextLayout::GetGlyphAt(float X, float Y) const
 
 nuiRect nuiTextLayout::GetRect() const
 {
-  return nuiRect();
-}
-
-void nuiTextLayout::SetDensity(nuiSize X, nuiSize Y)
-{
-  
-}
-
-nuiSize nuiTextLayout::GetDensityX() const
-{
-  return 0;
-}
-
-nuiSize nuiTextLayout::GetDensityY() const
-{
-  return 0;
-}
-
-bool nuiTextLayout::AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float W, float H)
-{
-  return false;
-}
-
-void nuiTextLayout::SetSpacesPerTab(int count)
-{
-  
-}
-
-int32 nuiTextLayout::GetSpacesPerTab()
-{
-  return 0;
-}
-
-void nuiTextLayout::SetUnderline(bool set)
-{
-  
-}
-
-bool nuiTextLayout::GetUnderline() const
-{
-  return false;
-}
-
-void nuiTextLayout::SetStrikeThrough(bool set)
-{
-  
-}
-
-bool nuiTextLayout::GetStrikeThrough() const
-{
-  return false;
+  return mRect;
 }
 
 void nuiTextLayout::SetWrapX(nuiSize WrapX)
@@ -540,4 +464,166 @@ nuiSize nuiTextLayout::GetWrapX() const
   return 0;
 }
 
+
+//////////////////////// Text Style:
+nuiTextStyle::nuiTextStyle()
+: mpFont(NULL),
+  mDensityX(1.0f),
+  mDensityY(1.0f),
+  mSpacesPerTab(2),
+  mColor(0, 0, 0),
+  mUnderline(false),
+  mStrikeThrough(false),
+  mBaseline(nuiTextBaselineNormal),
+  mJustify(false),
+  mDirection(nuiLeftToRight)
+{
+  
+}
+
+nuiTextStyle::nuiTextStyle(const nuiTextStyle& rStyle)
+: mpFont(rStyle.mpFont),
+  mDensityX(rStyle.mDensityX),
+  mDensityY(rStyle.mDensityY),
+  mSpacesPerTab(rStyle.mSpacesPerTab),
+  mColor(rStyle.mColor),
+  mUnderline(rStyle.mUnderline),
+  mStrikeThrough(rStyle.mStrikeThrough),
+  mBaseline(rStyle.mBaseline),
+  mJustify(rStyle.mJustify),
+  mDirection(rStyle.mDirection)
+{
+  if (mpFont)
+    mpFont->Acquire();
+}
+
+nuiTextStyle::~nuiTextStyle()
+{
+  if (mpFont)
+    mpFont->Release();
+}
+
+
+nuiTextStyle& nuiTextStyle::operator =(const nuiTextStyle& rStyle)
+{
+  if (rStyle.mpFont)
+    rStyle.mpFont->Acquire();
+  if (mpFont)
+    mpFont->Release();
+
+  mpFont = (rStyle.mpFont);
+  mDensityX = (rStyle.mDensityX);
+  mDensityY = (rStyle.mDensityY);
+  mSpacesPerTab = (rStyle.mSpacesPerTab);
+  mColor = (rStyle.mColor);
+  mUnderline = (rStyle.mUnderline);
+  mStrikeThrough = (rStyle.mStrikeThrough);
+  mBaseline = (rStyle.mBaseline);
+  mJustify = (rStyle.mJustify);
+  mDirection = (rStyle.mDirection);
+  
+  return *this;
+}
+
+
+void nuiTextStyle::SetFont(nuiFont* pFont)
+{
+  if (pFont)
+    pFont->Acquire();
+  if (mpFont)
+    mpFont->Release();
+
+  mpFont = pFont;
+}
+
+nuiFont* nuiTextStyle::GetFont() const
+{
+  return mpFont;
+}
+
+void nuiTextStyle::SetDensity(nuiSize X, nuiSize Y)
+{
+  mDensityX = X;
+  mDensityY = Y;
+}
+
+nuiSize nuiTextStyle::GetDensityX() const
+{
+  return mDensityX;
+}
+
+nuiSize nuiTextStyle::GetDensityY() const
+{
+  return mDensityY;
+}
+
+void nuiTextStyle::SetSpacesPerTab(int count)
+{
+  mSpacesPerTab = count;
+}
+
+int32 nuiTextStyle::GetSpacesPerTab()
+{
+  return mSpacesPerTab;
+}
+
+void nuiTextStyle::SetUnderline(bool set)
+{
+  mUnderline = set;
+}
+
+bool nuiTextStyle::GetUnderline() const
+{
+  return mUnderline;
+}
+
+void nuiTextStyle::SetStrikeThrough(bool set)
+{
+  mStrikeThrough = set;
+}
+
+bool nuiTextStyle::GetStrikeThrough() const
+{
+  return mStrikeThrough;
+}
+
+void nuiTextStyle::SetColor(const nuiColor& rColor)
+{
+  mColor = rColor;
+}
+
+const nuiColor& nuiTextStyle::GetColor() const
+{
+  return mColor;
+}
+
+void nuiTextStyle::SetBaseline(nuiTextBaseline set)
+{
+  mBaseline = set;
+}
+
+nuiTextBaseline nuiTextStyle::GetBaseline() const
+{
+  return mBaseline;
+}
+
+void nuiTextStyle::SetDirection(nuiTextDirection set)
+{
+  mDirection = set;
+}
+
+nuiTextDirection nuiTextStyle::GetDirection() const
+{
+  return mDirection;
+}
+
+void nuiTextStyle::SetJustify(bool set)
+{
+  mJustify = set;
+}
+
+bool nuiTextStyle::GetJustify() const
+{
+  return mJustify;
+}
 

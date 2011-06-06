@@ -10,6 +10,7 @@
 #include "nui.h"
 #include "nuiFont.h"
 #include "nuiUnicode.h"
+
 void TextLayoutTest(const nglString& txt);
 
 class nuiTextLayout;
@@ -22,10 +23,67 @@ public:
   float mX, mY;
 };
 
+enum nuiTextDirection
+{
+  nuiLeftToRight,
+  nuiRightToLeft,
+  nuiTopToBottom,
+  nuiBottomToTop
+};
+
+enum nuiTextBaseline
+{
+  nuiTextBaselineNormal,
+  nuiTextBaselineSuperScript,
+  nuiTextBaselineSubScript
+};
+
+class nuiTextStyle
+{
+public:
+  nuiTextStyle();
+  nuiTextStyle(const nuiTextStyle& rStyle);
+  ~nuiTextStyle();
+  
+  nuiTextStyle& operator=(const nuiTextStyle& rStyle);
+  
+  void SetFont(nuiFont* pFont);
+  nuiFont* GetFont() const;
+  void SetDensity(nuiSize X, nuiSize Y);
+  nuiSize GetDensityX() const;
+  nuiSize GetDensityY() const;
+  void SetSpacesPerTab(int count);
+  int32 GetSpacesPerTab();
+  void SetUnderline(bool set);
+  bool GetUnderline() const;
+  void SetStrikeThrough(bool set);
+  bool GetStrikeThrough() const;
+  void SetColor(const nuiColor& rColor);
+  const nuiColor& GetColor() const;
+  void SetBaseline(nuiTextBaseline set);
+  nuiTextBaseline GetBaseline() const;
+  void SetDirection(nuiTextDirection set);
+  nuiTextDirection GetDirection() const;
+  void SetJustify(bool set);
+  bool GetJustify() const;
+
+private:
+  nuiFont* mpFont;
+  float mDensityX;
+  float mDensityY;
+  int32 mSpacesPerTab;
+  nuiColor mColor;
+  bool mUnderline : 1;
+  bool mStrikeThrough : 1;
+  nuiTextBaseline mBaseline;
+  bool mJustify : 1;
+  nuiTextDirection mDirection;
+};
+
 class nuiTextRun : public nuiRefCount
 {
 public:
-  nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript Script, int32 Position, int32 Length);
+  nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript Script, int32 Position, int32 Length, const nuiTextStyle& rStyle);
   virtual ~nuiTextRun();
   void SetFont(nuiFont* pFont);
   
@@ -46,7 +104,7 @@ public:
 private:
   friend class nuiTextLayout;
   friend class nuiFontBase;
-  nuiFont* mpFont;
+  nuiTextStyle mStyle;
   const nuiTextLayout& mLayout;
   int32 mPosition;
   int32 mLength;
@@ -93,19 +151,15 @@ private:
 
 
 
+
 class nuiTextLayout : public nuiRefCount
 {
 public:
+  nuiTextLayout(const nuiTextStyle& rStyle);
   nuiTextLayout(nuiFont* pFont);
   virtual ~nuiTextLayout();
 
   bool LayoutText(const nglString& rString);
-  
-  void SetJustification(bool set);
-  bool GetJustification() const;
-  
-  void SetFlush(float set);
-  float GetFlush() const;
   
   int32 GetParagraphCount() const;
   int32 GetLineCount(int32 Paragraph) const;
@@ -159,15 +213,12 @@ public:
   nuiSize GetWrapX() const;
   
 private:
-  nuiFont* mpFont;
+  nuiTextStyle mStyle;
   std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;
-  
-  bool mJustify;
-  float mFlush;
-  int32 mSpacePerTab;
-  float mXDensity;
-  float mYDensity;
   nuiRect mRect;
+  
+  float mAscender;
+  float mDescender;
   
   bool LayoutParagraph(int32 start, int32 length);
   
