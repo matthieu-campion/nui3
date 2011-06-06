@@ -444,3 +444,100 @@ const nglUChar* nuiTextLayout::GetUnicodeChars() const
   return &mUnicode[0];
 }
 
+///////////////////////// Old nuiFontLayout interface
+int32  nuiTextLayout::GetMetrics(nuiGlyphInfo& rInfo) const
+{
+  return 0;
+}
+
+float nuiTextLayout::GetAscender() const
+{
+  return 0;
+}
+
+float nuiTextLayout::GetDescender() const
+{
+  return 0;
+}
+
+int32 nuiTextLayout::GetGlyphCount() const
+{
+  return 0;
+}
+
+const nuiGlyphLayout* nuiTextLayout::GetGlyph(uint Offset) const
+{
+  return NULL;
+}
+
+const nuiGlyphLayout* nuiTextLayout::GetGlyphAt(float X, float Y) const
+{
+  return NULL;
+}
+
+nuiRect nuiTextLayout::GetRect() const
+{
+  return nuiRect();
+}
+
+void nuiTextLayout::SetDensity(nuiSize X, nuiSize Y)
+{
+  
+}
+
+nuiSize nuiTextLayout::GetDensityX() const
+{
+  return 0;
+}
+
+nuiSize nuiTextLayout::GetDensityY() const
+{
+  return 0;
+}
+
+bool nuiTextLayout::AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float W, float H)
+{
+  return false;
+}
+
+void nuiTextLayout::SetSpacesPerTab(int count)
+{
+  
+}
+
+int32 nuiTextLayout::GetSpacesPerTab()
+{
+  return 0;
+}
+
+void nuiTextLayout::SetUnderline(bool set)
+{
+  
+}
+
+bool nuiTextLayout::GetUnderline() const
+{
+  return false;
+}
+
+void nuiTextLayout::SetStrikeThrough(bool set)
+{
+  
+}
+
+bool nuiTextLayout::GetStrikeThrough() const
+{
+  return false;
+}
+
+void nuiTextLayout::SetWrapX(nuiSize WrapX)
+{
+  
+}
+
+nuiSize nuiTextLayout::GetWrapX() const
+{
+  return 0;
+}
+
+

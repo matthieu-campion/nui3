@@ -118,7 +118,7 @@ public:
 
   /** @name Metrics */
   //@{
-  int  GetMetrics (nuiGlyphInfo& rInfo) const;
+  int32  GetMetrics (nuiGlyphInfo& rInfo) const;
   /*!< Returns whole layout metrics (as a composite glyph)
    \param rInfo metrics info holder
    \return number of glyphs in the layout
@@ -127,8 +127,8 @@ public:
   float GetDescender() const;
   //@}
   
-  uint  GetGlyphCount() const;
-  const nuiGlyphLayout* GetGlyph   (uint Offset) const;
+  int32  GetGlyphCount() const;
+  const nuiGlyphLayout* GetGlyph   (uint32 Offset) const;
   const nuiGlyphLayout* GetGlyphAt (float X, float Y) const;
   /*!< Identify a glyph at given coordinates
    \param X abscissa in layout coordinate space
@@ -148,7 +148,7 @@ public:
   bool AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float W, float H);
   
   void SetSpacesPerTab(int count);
-  int GetSpacesPerTab();
+  int32 GetSpacesPerTab();
   
   void SetUnderline(bool set);
   bool GetUnderline() const;
