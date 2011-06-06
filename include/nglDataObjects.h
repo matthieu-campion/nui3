@@ -160,7 +160,7 @@ public:
   : nglDataObject(rMimeType), mData(data)
   {
     mNativeType = nglInternalDataObject::RegisterInternalMimeType(rMimeType);
-    NGL_LOG(_T("nglInternalDataObject"), NGL_LOG_DEBUG, _T("0x%p - CTOR(%ls / %d / 0x%p)\n"), this, rMimeType.GetChars(), mNativeType, data);//#FIXME
+    NGL_LOG(_T("nglInternalDataObject"), NGL_LOG_DEBUG, _T("0x%p - CTOR(%s / %d / 0x%p)\n"), this, rMimeType.GetChars(), mNativeType, data);//#FIXME
   }
   
   virtual ~nglInternalDataObject()

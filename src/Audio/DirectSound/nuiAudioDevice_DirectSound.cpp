@@ -1053,7 +1053,7 @@ void nuiAudioDevice_DS_OutputTh::Process(uint pos)
 
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dw, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &lpMsgBuf, 0, NULL );
 
-    //NGL_LOG(_T("nuiAudioDevice_DS_ProcessingTh"), NGL_LOG_ERROR, _T("ERROR : GetOutputBuffer()->Lock failed with error %d: %ls"), dw, lpMsgBuf); 
+    //NGL_LOG(_T("nuiAudioDevice_DS_ProcessingTh"), NGL_LOG_ERROR, _T("ERROR : GetOutputBuffer()->Lock failed with error %d: %s"), dw, lpMsgBuf); 
 
     LocalFree(lpMsgBuf);
 
@@ -1289,7 +1289,7 @@ nuiAudioDevice* nuiAudioDeviceAPI_DirectSound::GetDefaultInputDevice()
 }
 
 
-BOOL nuiAudioDeviceAPI_DirectSound::RealDSEnumInputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule)
+BOOL nuiAudioDeviceAPI_DirectSound::RealDSEnumInputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule)
 {
   if (lpGuid)
   {
@@ -1314,7 +1314,7 @@ BOOL nuiAudioDeviceAPI_DirectSound::RealDSEnumInputCallback(LPGUID lpGuid, LPCWS
 
 
 //static
-BOOL CALLBACK nuiAudioDeviceAPI_DirectSound::DSEnumInputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule, LPVOID lpContext)
+BOOL CALLBACK nuiAudioDeviceAPI_DirectSound::DSEnumInputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule, LPVOID lpContext)
 {
   nuiAudioDeviceAPI_DirectSound* pAPI = (nuiAudioDeviceAPI_DirectSound*)lpContext;
   NGL_ASSERT(pAPI);
@@ -1323,7 +1323,7 @@ BOOL CALLBACK nuiAudioDeviceAPI_DirectSound::DSEnumInputCallback(LPGUID lpGuid, 
 
 
 
-BOOL nuiAudioDeviceAPI_DirectSound::RealDSEnumOutputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule)
+BOOL nuiAudioDeviceAPI_DirectSound::RealDSEnumOutputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule)
 {
   if (lpGuid)
   {
@@ -1348,7 +1348,7 @@ BOOL nuiAudioDeviceAPI_DirectSound::RealDSEnumOutputCallback(LPGUID lpGuid, LPCW
 
 
 // static
-BOOL CALLBACK nuiAudioDeviceAPI_DirectSound::DSEnumOutputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule, LPVOID lpContext)
+BOOL CALLBACK nuiAudioDeviceAPI_DirectSound::DSEnumOutputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule, LPVOID lpContext)
 {
   nuiAudioDeviceAPI_DirectSound* pAPI = (nuiAudioDeviceAPI_DirectSound*)lpContext;
   NGL_ASSERT(pAPI);

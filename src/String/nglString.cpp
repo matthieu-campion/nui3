@@ -13,97 +13,38 @@ licence: see nui3/LICENCE.TXT
 #include "ucdata.h"
 
 #ifdef WINCE
-#define ngl_vsnwprintf	_vswprintf
-#define ngl_snprintf	_snprintf
-#define ngl_strcmp		wcscmp
-#define ngl_stricmp 		wcsicmp
-#define ngl_strncmp 		wcsncmp
-#define ngl_strnicmp		wcsnicmp
-#define ngl_mbs_stricmp	_stricmp
+  #define ngl_vsnprintf	_vsprintf
+  #define ngl_snprintf	_snprintf
+  #define ngl_strcmp		strcmp
+  #define ngl_stricmp 		stricmp
+  #define ngl_strncmp 		strncmp
+  #define ngl_strnicmp		strnicmp
+  #define ngl_mbs_stricmp	_stricmp
 #elif defined _WIN32_
-#define ngl_vsnwprintf	_vsnwprintf
-#define ngl_snprintf	_snprintf
-#define ngl_strcmp		wcscmp
-#define ngl_stricmp 		wcsicmp
-#define ngl_strncmp 		wcsncmp
-#define ngl_strnicmp		wcsnicmp
-#define ngl_mbs_stricmp	stricmp
+  #define ngl_vsnprintf	_vsnprintf
+  #define ngl_snprintf	_snprintf
+  #define ngl_strcmp		strcmp
+  #define ngl_stricmp 		stricmp
+  #define ngl_strncmp 		strncmp
+  #define ngl_strnicmp		strnicmp
+  #define ngl_mbs_stricmp	stricmp
 #elif defined _CARBON_ || defined _UIKIT_ || defined _COCOA_
-#define ngl_vsnwprintf vswprintf
-#define ngl_snprintf	snprintf
-#define ngl_strcmp wcscmp
-#define ngl_stricmp ngl_wcscasecmp
-#define ngl_strncmp wcsncmp
-#define ngl_strnicmp ngl_wcsncasecmp
-#define ngl_mbs_stricmp strcasecmp
-
-static int ngl_wcscasecmp(const nglChar* s1, const nglChar* s2)
-{
-  nglChar c1;
-  nglChar c2;
-  do
-  {
-    int diff;
-
-    c1 = *s1++;
-    c2 = *s2++;
-    if (!c1)
-      break;
-    diff = c1 - c2;
-    if (diff)
-    {
-      if ((c1 >= L'A') && (c1 <= L'Z'))
-        c1 += 0x20;
-      if ((c2 >= L'A') && (c2 <= L'Z'))
-        c2 += 0x20;
-      if (c1 != c2)
-        break;
-    }
-  } while (1);
-  if (c1 < c2)
-    return -1;
-  return c1 - c2;
-}
-
-static int ngl_wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
-{
-  nglChar c1;
-  nglChar c2;
-  if (!n)
-    return 0;
-  do
-  {
-    int diff;
-
-    c1 = *s1++;
-    c2 = *s2++;
-    if (!c1)
-      break;
-    diff = c1 - c2;
-    if (diff)
-    {
-      if ((c1 >= L'A') && (c1 <= L'Z'))
-        c1 += 0x20;
-      if ((c2 >= L'A') && (c2 <= L'Z'))
-        c2 += 0x20;
-      if (c1 != c2)
-        break;
-    }
-  } while (--n);
-  if (c1 < c2)
-    return -1;
-  return c1 - c2;
-}
-
+  #define ngl_vsnprintf vsnprintf
+  #define ngl_snprintf	snprintf
+  #define ngl_strcmp strcmp
+  #define ngl_stricmp strcasecmp
+  #define ngl_strncmp strncmp
+  #define ngl_strnicmp strncasecmp
+  #define ngl_mbs_stricmp strcasecmp
 #elif defined _LINUX_
-#include <wctype.h>
-#define ngl_vsnwprintf vswprintf
-#define ngl_snprintf	snprintf
-#define ngl_strcmp wcscmp
-#define ngl_stricmp wcscasecmp
-#define ngl_strncmp wcsncmp
-#define ngl_strnicmp wcsncasecmp
-#define ngl_mbs_stricmp strcasecmp
+  #include <ctype.h>
+  #define ngl_vsnwprintf vsprintf
+  #define ngl_snprintf	snprintf
+  #define ngl_strcmp strcmp
+  #define ngl_stricmp strcasecmp
+  #define ngl_strncmp strncmp
+  #define ngl_strnicmp strncasecmp
+  #define ngl_mbs_stricmp strcasecmp
 #endif
 
 #ifdef WINCE
@@ -488,55 +429,49 @@ const nglChar nglString::Tab = '\t';
 const nglChar nglString::NewLine = '\n';
 
 nglString nglString::Null;
-nglString nglString::Empty(L"");
-nglString nglString::WhiteSpace(L" \n\t\r");
+nglString nglString::Empty("");
+nglString nglString::WhiteSpace(" \n\t\r");
 
 nglString::nglString()
 : mIsNull(true)
 {
 }
 
-nglString::nglString(nglChar Ch)
+nglString::nglString(nglUChar Ch)
 : mIsNull(false)
 {
   mString = Ch;
 }
 
-nglString::nglString(int32 integer)
-{
-  SetCInt(integer);
-  mIsNull = false;
-}
-
-nglString::nglString(uint32 integer)
-{
-  SetCUInt(integer);
-  mIsNull = false;
-}
-
-nglString::nglString(float fl, int32 precision)
-{
-  SetCFloat(fl, precision);
-  mIsNull = false;
-}
-
-
-nglString::nglString(double db, int32 precision)
-{
-  SetCDouble(db, precision);
-  mIsNull = false;
-}
+//nglString::nglString(int32 integer)
+//{
+//  SetCInt(integer);
+//  mIsNull = false;
+//}
+//
+//nglString::nglString(uint32 integer)
+//{
+//  SetCUInt(integer);
+//  mIsNull = false;
+//}
+//
+//nglString::nglString(float fl, int32 precision)
+//{
+//  SetCFloat(fl, precision);
+//  mIsNull = false;
+//}
+//
+//
+//nglString::nglString(double db, int32 precision)
+//{
+//  SetCDouble(db, precision);
+//  mIsNull = false;
+//}
 
 
 nglString::nglString(const nglString& rSource)
 : mIsNull(rSource.mIsNull),
   mString(rSource.mString)
-{
-}
-
-nglString::nglString(const nglChar* pSource)
-: mIsNull(pSource == NULL),
-  mString(pSource ? std::wstring(pSource, wcslen(pSource)) : std::wstring())
 {
 }
 
@@ -546,15 +481,17 @@ nglString::nglString(const std::string& rSource, nglTextEncoding Encoding)
   mIsNull = false;
 }
 
-nglString::nglString(const std::wstring& rSource)
-: mIsNull(false),
-  mString(rSource)
+nglString::nglString(const nglChar* pSource)
 {
-  mString = rSource;
+  mIsNull = true;
+  if (!pSource)
+    return;
+
+  mString = pSource;
   mIsNull = false;
 }
 
-nglString::nglString(const char* pSource, nglTextEncoding Encoding)
+nglString::nglString(const nglChar* pSource, nglTextEncoding Encoding)
 {
   mIsNull = true;
   if (!pSource)
@@ -564,7 +501,7 @@ nglString::nglString(const char* pSource, nglTextEncoding Encoding)
   mIsNull = false;
 }
 
-nglString::nglString(const char* pSource, int32 Length, nglTextEncoding Encoding)
+nglString::nglString(const nglChar* pSource, int32 Length, nglTextEncoding Encoding)
 {
   mIsNull = true;
   if (!pSource)
@@ -581,6 +518,18 @@ nglString::~nglString()
 int32 nglString::GetLength() const
 {
   return (int32)mString.size();
+}
+
+int32 nglString::GetULength() const
+{
+  int32 len = 0;
+  int32 l = 0;
+  while (l >= 0)
+  {
+    len = l;
+    l = GetNextUChar(l);
+  }
+  return len;
 }
 
 bool nglString::IsEmpty() const
@@ -607,6 +556,78 @@ nglChar nglString::GetLastChar() const
   return mString[(uint32)GetLength()-1];
 }
 
+nglUChar nglString::GetUChar(uint32 Index) const
+{
+  int32 i = Index;
+  return GetNextUChar(i);
+}
+
+nglUChar nglString::GetNextUChar(int32& Index) const
+{
+  if (IsEmpty())
+    return 0;
+
+  int32 len = GetLength();
+  nglUChar UChar = 0;
+  nglChar previous = 0;
+  // Parse an utf-8 char sequence:
+  uint8 c = 0;
+  if (Index >= len)
+    return 0;
+
+  c = mString[Index++];
+  if (!(c & 0x80))
+  {
+    UChar = c;
+  }
+  else
+  {
+    //  0xC0 // 2 bytes
+    //  0xE0 // 3
+    //  0xF0 // 4
+    //  0xF8 // 5
+    //  0xFC // 6
+    uint32 count = 0;
+    if ((c & 0xFC) == 0xFC)
+    {
+      UChar = c & (~0xFC);
+      count = 5;
+    }
+    else if ((c & 0xF8) == 0xF8)
+    {
+      UChar = c & (~0xF8);
+      count = 4;
+    }
+    else if ((c & 0xF0) == 0xF0)
+    {
+      UChar = c & (~0xF0);
+      count = 3;
+    }
+    else if ((c & 0xE0) == 0xE0)
+    {
+      UChar = c & (~0xE0);
+      count = 2;
+    }
+    else if ((c & 0xC0) == 0xC0)
+    {
+      UChar = c & (~0xC0);
+      count = 1;
+    }
+    
+    for (uint32 i = 0; i < count; i++)
+    {
+      if (Index >= len)
+        return UChar;
+      c = mString[Index++];
+      UChar <<= 6;
+      UChar |= c & 0x3F;
+    }
+  }
+  //NGL_OUT(_T("%lc"), UChar);
+  
+  return UChar;
+}
+
 const nglChar* nglString::GetChars() const
 {
   return &mString[0];
@@ -618,11 +639,6 @@ std::string nglString::GetStdString(const nglTextEncoding Encoding) const
   std::string tmp(pTemp);
   free(pTemp);
   return tmp;
-}
-
-std::wstring nglString::GetStdWString() const
-{
-  return mString;
 }
 
 
@@ -680,7 +696,7 @@ char* nglString::Export (const nglTextEncoding Encoding) const
     written += to_write0 - to_write;
 #ifdef DEBUG_EXPORT
     printf("         to_read=%d  to_write=%d  written=%d (" SFORMAT ")\n", to_read, to_write, written, conv.GetErrorStr());
-    printf("         '%ls'\n", buffer);
+    printf("         '%s'\n", buffer);
 #endif
 
     switch (pConv->GetState())
@@ -826,7 +842,7 @@ double nglString::GetCDouble() const
   return (IsEmpty() ? 0.0 : ngl_atof(&mString[0]));
 }
 
-bool nglString::SetChar(nglChar Ch, int32 Index)
+bool nglString::SetChar(nglUChar Ch, int32 Index)
 {
   assert(Index < GetLength());
   mString[Index] = Ch;
@@ -834,7 +850,7 @@ bool nglString::SetChar(nglChar Ch, int32 Index)
 }
 
 
-bool nglString::Fill(nglChar Pattern, int32 RepeatCount)
+bool nglString::Fill(nglUChar Pattern, int32 RepeatCount)
 {
   mString.resize(RepeatCount);
   for (int32 i = 0; i < RepeatCount; i++)
@@ -855,7 +871,7 @@ bool nglString::Fill(const nglString& rPattern, int32 RepeatCount)
   mString.clear();
   mIsNull = false;
   for (int32 i = 0; i < RepeatCount; i++)
-    mString += rPattern.GetStdWString();
+    mString += rPattern.GetStdString();
   return true;
 }
 
@@ -866,7 +882,7 @@ int32 nglString::Import(const char* pBuffer, const nglTextEncoding Encoding)
 
   mIsNull = false;
   int32 offset = 0;
-  int32 len = (int32)strlen(pBuffer);
+  int32 len = (int32)strlen((char*)pBuffer);
 
   return Import(offset, pBuffer, len, Encoding);
 }
@@ -1009,7 +1025,7 @@ bool nglString::Insert(const nglString& rSource, int32 Index)
   return true;
 }
 
-nglString& nglString::Append(nglChar Ch)
+nglString& nglString::Append(nglUChar Ch)
 {
   mIsNull = false;
   Insert(Ch, GetLength());
@@ -1030,7 +1046,7 @@ nglString& nglString::Append(const nglString& rSource)
   return *this;
 }
 
-nglString& nglString::Prepend(nglChar Ch)
+nglString& nglString::Prepend(nglUChar Ch)
 {
   mIsNull = false;
   Insert(Ch, 0);
@@ -1123,7 +1139,7 @@ bool nglString::Trim()
   return true;
 }
 
-bool nglString::Trim (nglChar Ch)
+bool nglString::Trim (nglUChar Ch)
 {
   TrimLeft(Ch);
   TrimRight(Ch);
@@ -1151,7 +1167,7 @@ bool nglString::TrimLeft()
   return true;
 }
 
-bool nglString::TrimLeft(nglChar Ch)
+bool nglString::TrimLeft(nglUChar Ch)
 {
   nglChar tmp[2] = {Ch, 0};
   TrimLeft(tmp);
@@ -1194,7 +1210,7 @@ bool nglString::TrimRight()
   return true;
 }
 
-bool nglString::TrimRight(nglChar Ch)
+bool nglString::TrimRight(nglUChar Ch)
 {
   nglChar tmp[2] = {Ch, 0};
   TrimRight(tmp);
@@ -1243,7 +1259,7 @@ bool nglString::Replace(int32 Index, int32 Length, const nglChar* pSource)
 
 bool nglString::Replace(int32 Index, int32 Length, const nglString& rSource)
 {
-  mString.replace(Index, Length, rSource.GetStdWString());
+  mString.replace(Index, Length, rSource.GetStdString());
   return true;
 }
 
@@ -1555,22 +1571,6 @@ nglString& nglString::Format(const nglChar* pFormat, ...)
   return *this;
 }
 
-nglString& nglString::Format(const char* pFormat, ...)
-{
-  if (!pFormat)
-    return *this;
-
-  mIsNull = false;
-  nglString str(pFormat);
-  va_list args;
-
-  va_start(args, pFormat);
-  Formatv(str.GetChars(), args);
-  va_end(args);
-
-  return *this;
-}
-
 #define FORMAT_BUFSIZE (128)
 
 nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
@@ -1592,7 +1592,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 #endif
 
   // Try to render in stack buffer
-  len = ngl_vsnwprintf(sbuffer, FORMAT_BUFSIZE, pFormat, args_copy);
+  len = ngl_vsnprintf(sbuffer, FORMAT_BUFSIZE, pFormat, args_copy);
   va_end(args_copy);
 
 #ifdef __APPLE__
@@ -1600,7 +1600,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
   // Let's try to workaround the most simple problems while we find a real long term solution:
   if (len == -1)
   {
-    int l = wcslen(sbuffer);
+    int l = strlen(sbuffer);
     if (l < FORMAT_BUFSIZE)
       len = l;
   }
@@ -1633,7 +1633,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 #else
       args_copy = args;
 #endif
-      len = ngl_vsnwprintf(&mString[0], bufsize, pFormat, args_copy);
+      len = ngl_vsnprintf(&mString[0], bufsize, pFormat, args_copy);
       va_end(args_copy);
 
       if (len >= 0 && len <= bufsize)
@@ -1649,13 +1649,6 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
   }
 
   return *this;
-}
-
-nglString& nglString::Formatv(const char* pFormat, va_list Args)
-{
-  mIsNull = false;
-  nglString str(pFormat);
-  return Formatv(str.GetChars(), Args);
 }
 
 nglString& nglString::Formatv(const nglString& rFormat, va_list Args)
@@ -1695,24 +1688,6 @@ nglString& nglString::CFormat(const nglString& rFormat, ...)
   return *this;
 }
 
-nglString& nglString::CFormat(const char* pFormat, ...)
-{
-  if (!pFormat)
-    return *this;
-
-  mIsNull = false;
-  nglString str(pFormat);
-
-  va_list args;
-
-  va_start(args, pFormat);
-  NO_LOCALE( Formatv(str.GetChars(), args) );
-  va_end(args);
-
-  return *this;
-}
-
-
 nglString& nglString::CFormatv(const nglChar* pFormat, va_list Args)
 {
   if (!pFormat)
@@ -1731,41 +1706,6 @@ nglString& nglString::CFormatv(const nglString& rFormat, va_list Args)
   mIsNull = false;
   NO_LOCALE( Formatv(rFormat, Args) );
   return *this;
-}
-
-nglString& nglString::CFormatv(const char* pFormat, va_list Args)
-{
-  if (!pFormat)
-    return *this;
-
-  mIsNull = false;
-  NO_LOCALE( Formatv(pFormat, Args) );
-  return *this;
-}
-
-
-nglString& nglString::AddFormat(const char* pString, ...)
-{
-  nglString tmp;
-  nglString str(pString);
-
-  va_list args;
-
-  va_start(args, pString);
-  NO_LOCALE( tmp.Formatv(str.GetChars(), args) );
-  va_end(args);
-
-  return Add(tmp);
-}
-
-nglString& nglString::AddFormat(const char* pString, va_list Args)
-{
-  nglString tmp;
-  nglString str(pString);
-
-  NO_LOCALE( tmp.Formatv(str.GetChars(), Args) );
-
-  return Add(tmp);
 }
 
 nglString& nglString::AddFormat(const nglChar* pString, ...)
@@ -1791,7 +1731,7 @@ nglString& nglString::AddFormat(const nglChar* pString, va_list Args)
 
 
 
-nglString& nglString::Add(nglChar ch)
+nglString& nglString::Add(nglUChar ch)
 {
   mIsNull = false;
   Append(ch);
@@ -1888,15 +1828,6 @@ nglString& nglString::Add(double s, int32 precision, nglFloatFormatFlag flag)
   return *this;
 }
 
-nglString& nglString::Add(const char* pString, int32 count)
-{
-  mIsNull = false;
-  nglString str(pString);
-  for (int32 i = 0; i < count; i++)
-    Append(str);
-  return *this;
-}
-
 nglString& nglString::Add(const nglChar* pString, int32 count)
 {
   mIsNull = false;
@@ -1943,7 +1874,7 @@ int32 nglString::HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar, i
     int32 i, lpos;
 
     // Offset
-    temp.Format(L"%.8x  ", pos);
+    temp.Format("%.8x  ", pos);
     *this += temp;
 
     // Hex display
@@ -1952,12 +1883,12 @@ int32 nglString::HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar, i
     {
       if (lpos < ByteCount)
       {
-        temp.Format(L"%.2x ", (unsigned char)pBuffer[lpos]);
+        temp.Format("%.2x ", (unsigned char)pBuffer[lpos]);
         lpos++;
         *this += temp;
       }
       else
-        *this += L"   ";
+        *this += "   ";
 
       if (i + 1 == Columns / 2)
         *this += L' ';
@@ -1967,7 +1898,7 @@ int32 nglString::HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar, i
     {
       // nglChar display
       lpos = pos;
-      *this += L" |";
+      *this += " |";
       for (i = 0; i < Columns; i++)
       {
         if (lpos < ByteCount)
@@ -2133,7 +2064,7 @@ int32 nglString::Find(nglChar Ch, int32 Index, bool CaseSensitive) const
 
 int32 nglString::Find(const nglChar* pSource, int32 Index, bool CaseSensitive) const
 {
-  const nglChar* pFound = wcsstr(&mString[Index], pSource);
+  const nglChar* pFound = strstr(&mString[Index], pSource);
   if (!pFound)
     return -1;
   return Index + (int32)(pFound - &mString[Index]);
@@ -2172,7 +2103,7 @@ int32 nglString::FindLast(nglChar Ch, int32 Index, bool CaseSensitive) const
 
 int32 nglString::FindLast(const nglChar* pSource, int32 Index, bool CaseSensitive) const
 {
-  int32 SourceLength = (int32)wcslen(pSource);
+  int32 SourceLength = (int32)strlen(pSource);
   if (IsEmpty() || !pSource || (SourceLength <= 0))
     return -1;
 
@@ -2286,7 +2217,7 @@ int32 nglString::Contains(nglChar Ch, bool CaseSensitive) const
 
 int32 nglString::Contains(const nglChar* pSource, bool CaseSensitive) const
 {
-  int32 SourceLength = (int32)wcslen(pSource);
+  int32 SourceLength = (int32)strlen(pSource);
   if (IsEmpty() || !pSource || (SourceLength <= 0))
     return 0;
 
@@ -2321,7 +2252,7 @@ int32 nglString::Contains(const nglChar* pSource, bool CaseSensitive) const
   int match = 0;
   const nglChar* ptr = buffer;
 
-  while ((ptr = wcsstr(ptr, source)))
+  while ((ptr = strstr(ptr, source)))
   {
     match++;
     ptr += SourceLength;
@@ -2365,7 +2296,7 @@ int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglChar* pSepar
   int32 index = 0, count = 0;
   while (index < GetLength())
   {
-    int32 len = (int32) wcscspn(&(mString[index]), pSeparators);
+    int32 len = (int32) strcspn(&(mString[index]), pSeparators);
     if (len > 0 || (!len && CreateEmptyTokens))
     {
       nglString token;
@@ -2389,15 +2320,9 @@ int32 nglString::Tokenize(std::vector<nglString>& rTokens, const nglString& rSep
 
 
 // Assignment
-const nglString& nglString::operator=(const nglChar Ch)
+const nglString& nglString::operator=(const nglUChar Ch)
 {
   Copy(Ch);
-  return *this;
-}
-
-const nglString& nglString::operator=(const char* pSource)
-{
-  Copy(nglString(pSource));
   return *this;
 }
 
@@ -2705,7 +2630,7 @@ void nglString::ToCanonicalDecomposition()
  
  */
 
-static const std::wstring base64_chars = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
+static const std::string base64_chars = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
 
 
 static inline bool is_base64(nglChar c)
@@ -2860,7 +2785,7 @@ nglString::nglString(CFStringRef str)
 #ifndef _DOXYGEN_
 #define _OP_(x) Append(x); return *this;
 #endif
-const nglString& nglString::operator+=(const nglChar nglChar)       { _OP_(nglChar)    }
+const nglString& nglString::operator+=(const nglUChar nglChar)       { _OP_(nglChar)    }
 const nglString& nglString::operator+=(const nglChar* pSource)   { _OP_(pSource) }
 const nglString& nglString::operator+=(const nglString& rSource) { _OP_(rSource) }
 #undef _OP_
@@ -2869,10 +2794,10 @@ const nglString& nglString::operator+=(const nglString& rSource) { _OP_(rSource)
 #ifndef _DOXYGEN_
 #define _OP_(x, y) nglString result(x); result.Append(y); return result;
 #endif
-nglString operator+(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, Right)  }
+nglString operator+(const nglString& rLeft, const nglUChar Right)     { _OP_(rLeft, Right)  }
 nglString operator+(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
 nglString operator+(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-nglString operator+(const nglChar Left, const nglString& rRight)     { _OP_(Left, rRight)  }
+nglString operator+(const nglUChar Left, const nglString& rRight)     { _OP_(Left, rRight)  }
 nglString operator+(const nglChar* pLeft, const nglString& rRight)   { _OP_(pLeft, rRight) }
 #undef _OP_
 
@@ -2880,10 +2805,10 @@ nglString operator+(const nglChar* pLeft, const nglString& rRight)   { _OP_(pLef
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) == 0);
 #endif
-bool operator==(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator==(const nglString& rLeft, const nglUChar Right)     { _OP_(rLeft, nglString(Right))  }
 bool operator==(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
 bool operator==(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-bool operator==(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator==(const nglUChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
 bool operator==(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
 #undef _OP_
 
@@ -2891,10 +2816,10 @@ bool operator==(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, 
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) != 0);
 #endif
-bool operator!=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator!=(const nglString& rLeft, const nglUChar Right)     { _OP_(rLeft, nglString(Right))  }
 bool operator!=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
 bool operator!=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
-bool operator!=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator!=(const nglUChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
 bool operator!=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
 #undef _OP_
 
@@ -2902,7 +2827,7 @@ bool operator!=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, 
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) < 0);
 #endif
-bool operator<(const nglString& rLeft, const nglChar Right)      { _OP_(rLeft, nglString(Right))  }
+bool operator<(const nglString& rLeft, const nglUChar Right)      { _OP_(rLeft, nglString(Right))  }
 bool operator<(const nglString& rLeft, const nglChar* pRight)    { _OP_(rLeft, pRight) }
 bool operator<(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, rRight) }
 #undef _OP_
@@ -2910,7 +2835,7 @@ bool operator<(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, r
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) > 0);
 #endif
-bool operator<(const nglChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
+bool operator<(const nglUChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
 bool operator<(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, pLeft) }
 #undef _OP_
 
@@ -2918,7 +2843,7 @@ bool operator<(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, 
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) <= 0);
 #endif
-bool operator<=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator<=(const nglString& rLeft, const nglUChar Right)     { _OP_(rLeft, nglString(Right))  }
 bool operator<=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
 bool operator<=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
 #undef _OP_
@@ -2926,7 +2851,7 @@ bool operator<=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, r
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) >= 0);
 #endif
-bool operator<=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator<=(const nglUChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
 bool operator<=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
 #undef _OP_
 
@@ -2934,7 +2859,7 @@ bool operator<=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, 
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) > 0);
 #endif
-bool operator>(const nglString& rLeft, const nglChar Right)      { _OP_(rLeft, nglString(Right))  }
+bool operator>(const nglString& rLeft, const nglUChar Right)      { _OP_(rLeft, nglString(Right))  }
 bool operator>(const nglString& rLeft, const nglChar* pRight)    { _OP_(rLeft, pRight) }
 bool operator>(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, rRight) }
 #undef _OP_
@@ -2942,7 +2867,7 @@ bool operator>(const nglString& rLeft, const nglString& rRight)  { _OP_(rLeft, r
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) < 0);
 #endif
-bool operator>(const nglChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
+bool operator>(const nglUChar Left, const nglString& rRight)      { _OP_(rRight, nglString(Left))  }
 bool operator>(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, pLeft) }
 #undef _OP_
 
@@ -2950,7 +2875,7 @@ bool operator>(const nglChar* pLeft, const nglString& rRight)    { _OP_(rRight, 
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) >= 0);
 #endif
-bool operator>=(const nglString& rLeft, const nglChar Right)     { _OP_(rLeft, nglString(Right))  }
+bool operator>=(const nglString& rLeft, const nglUChar Right)     { _OP_(rLeft, nglString(Right))  }
 bool operator>=(const nglString& rLeft, const nglChar* pRight)   { _OP_(rLeft, pRight) }
 bool operator>=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, rRight) }
 #undef _OP_
@@ -2958,7 +2883,7 @@ bool operator>=(const nglString& rLeft, const nglString& rRight) { _OP_(rLeft, r
 #ifndef _DOXYGEN_
 #define _OP_(x, y) return (x.Compare(y) <= 0);
 #endif
-bool operator>=(const nglChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
+bool operator>=(const nglUChar Left, const nglString& rRight)     { _OP_(rRight, nglString(Left))  }
 bool operator>=(const nglChar* pLeft, const nglString& rRight)   { _OP_(rRight, pLeft) }
 #undef _OP_
 

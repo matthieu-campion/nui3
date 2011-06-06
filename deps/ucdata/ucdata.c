@@ -246,11 +246,11 @@ _ucprop_unload()
     _ucprop_size = 0;
 }
 
-static int32_t
+int32_t
 #ifdef __STDC__
-_ucprop_lookup(uint32_t code, uint32_t n)
+ucprop_lookup(uint32_t code, uint32_t n)
 #else
-_ucprop_lookup(code, n)
+ucprop_lookup(code, n)
 uint32_t code, n;
 #endif
 {
@@ -290,6 +290,29 @@ uint32_t code, n;
     return 0;
 }
 
+void
+#ifdef __STDC__
+ucprop_get(uint32_t code, uint32_t* mask1, uint32_t* mask2)
+#else
+ucprop_get(code, mask1, mask2)
+uint32_t code;
+uint32_t* mask1;
+uint32_t* mask2;
+#endif
+{
+  uint32_t i;
+  for (i = 0; mask1 && i < 32; i++) {
+    if (ucprop_lookup(code, i))
+      *mask1 |= masks32[i];
+  }
+  
+  for (i = 32; mask2 && i < _ucprop_size; i++) {
+    if (ucprop_lookup(code, i))
+      *mask2 |= masks32[i & 31];
+  }
+}
+
+
 int32_t
 #ifdef __STDC__
 ucisprop(uint32_t code, uint32_t mask1, uint32_t mask2)
@@ -304,12 +327,12 @@ uint32_t code, mask1, mask2;
       return 0;
 
     for (i = 0; mask1 && i < 32; i++) {
-        if ((mask1 & masks32[i]) && _ucprop_lookup(code, i))
+        if ((mask1 & masks32[i]) && ucprop_lookup(code, i))
           return 1;
     }
 
     for (i = 32; mask2 && i < _ucprop_size; i++) {
-        if ((mask2 & masks32[i & 31]) && _ucprop_lookup(code, i))
+        if ((mask2 & masks32[i & 31]) && ucprop_lookup(code, i))
           return 1;
     }
 
@@ -1527,26 +1550,26 @@ main()
     }
     
     {
-      uint32_t* str = L"é";
+      uint32_t* str = _T("é");
       int32_t i = 0;
       uint32_t* res = NULL;
       uint32_t len = wcslen(str);
       uint32_t reslen = 0;
       
-      printf("Original: '%ls' (%d)\n", str, len);
+      printf("Original: '%s' (%d)\n", str, len);
       for (i = 0; i < len; i++)
         printf("0x%04x ", str[i]);
       printf("\n");
       
       uccanondecomp(str, len, &res, &reslen);
-      printf("Result: '%ls' (%d)\n", res, reslen);
+      printf("Result: '%s' (%d)\n", res, reslen);
       for (i = 0; i < reslen; i++)
         printf("0x%04x ", res[i]);
       printf("\n");
       
       reslen = uccanoncomp(res, reslen);
       res[reslen] = 0;
-      printf("Back to the original: '%ls' (%d)\n", res, reslen);
+      printf("Back to the original: '%s' (%d)\n", res, reslen);
       for (i = 0; i < reslen; i++)
         printf("0x%04x ", res[i]);
       printf("\n");

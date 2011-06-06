@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -27,7 +27,7 @@
 #ifndef HB_OT_SHAPE_PRIVATE_HH
 #define HB_OT_SHAPE_PRIVATE_HH
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
 #include "hb-ot-shape.h"
 
@@ -37,7 +37,7 @@ HB_BEGIN_DECLS
 
 
 /* buffer var allocations */
-#define general_category() var1.u8[0] /* unicode general_category (hb_category_t) */
+#define general_category() var1.u8[0] /* unicode general_category (hb_unicode_general_category_t) */
 #define combining_class() var1.u8[1] /* unicode combining_class (uint8_t) */
 
 
@@ -51,6 +51,12 @@ struct hb_ot_shape_plan_t
 {
   hb_ot_map_t map;
   hb_ot_complex_shaper_t shaper;
+
+  hb_ot_shape_plan_t (void) : map () {}
+  ~hb_ot_shape_plan_t (void) { map.finish (); }
+
+  private:
+  NO_COPY (hb_ot_shape_plan_t);
 };
 
 

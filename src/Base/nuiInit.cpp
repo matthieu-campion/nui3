@@ -17,7 +17,7 @@
 #include "nglIMemory.h"
 #endif
 
-#define NUI_FONTDB_PATH _T("nuiFonts.db4")
+#define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
 class __NglKernel__ : public nglKernel
 {

@@ -327,7 +327,7 @@ void nuiTheme::DrawWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       
       // window title
       pContext->SetFont(mpWindowTitleFont);
-      nglFontInfo Info;
+      nuiFontInfo Info;
       mpWindowTitleFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionTextLight"), color);
       color.Multiply(alpha);
@@ -396,7 +396,7 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       
       // window title
       pContext->SetFont(mpWindowTitleFont);
-      nglFontInfo Info;
+      nuiFontInfo Info;
       mpWindowTitleFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
       color.Multiply(alpha);
@@ -467,7 +467,7 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       // window title
       nuiFont *pFont = nuiFont::GetFont(11);
       pContext->SetFont(pFont);
-      nglFontInfo Info;
+      nuiFontInfo Info;
       pFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
       color.Multiply(alpha);

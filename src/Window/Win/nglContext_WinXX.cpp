@@ -340,7 +340,7 @@ int nglContextInfo::GetPFD(HDC hDC) const
       DWORD err = GetLastError();
       LPVOID lpMsgBuf;
       FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
-      NGL_OUT(_T("context error: %ls"), lpMsgBuf);
+      NGL_OUT(_T("context error: %s"), lpMsgBuf);
       LocalFree(lpMsgBuf);
 
       NGL_DEBUG( OutputDebugString(_T("NGL: error: unable to create ") NGL_CONTEXT_CLASS _T(" window class\n")); )
@@ -801,7 +801,7 @@ bool nglContext::MakeCurrent() const
         DWORD err = GetLastError();
         LPVOID lpMsgBuf;
         FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, NULL);
-        NGL_OUT(_T("context error: %ls (mDC = 0x%x / mRC = 0x%x)"), lpMsgBuf, mDC, mRC);
+        NGL_OUT(_T("context error: %s (mDC = 0x%x / mRC = 0x%x)"), lpMsgBuf, mDC, mRC);
         LocalFree(lpMsgBuf);
         return false;
       }

@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2009,2010  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2009,2010  Red Hat, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -39,23 +39,28 @@ hb_ot_map_t::add_lookups (hb_face_t    *face,
 			  unsigned int  feature_index,
 			  hb_mask_t     mask)
 {
-  unsigned int i = MAX_LOOKUPS - lookup_count[table_index];
-  lookup_map_t *lookups = lookup_maps[table_index] + lookup_count[table_index];
+  unsigned int lookup_indices[32];
+  unsigned int offset, len;
 
-  unsigned int *lookup_indices = (unsigned int *) lookups;
+  offset = 0;
+  do {
+    len = ARRAY_LENGTH (lookup_indices);
+    hb_ot_layout_feature_get_lookup_indexes (face,
+					     table_tags[table_index],
+					     feature_index,
+					     offset, &len,
+					     lookup_indices);
 
-  hb_ot_layout_feature_get_lookup_indexes (face,
-					   table_tags[table_index],
-					   feature_index,
-					   0, &i,
-					   lookup_indices);
+    for (unsigned int i = 0; i < len; i++) {
+      lookup_map_t *lookup = lookup_maps[table_index].push ();
+      if (unlikely (!lookup))
+        return;
+      lookup->mask = mask;
+      lookup->index = lookup_indices[i];
+    }
 
-  lookup_count[table_index] += i;
-
-  while (i--) {
-    lookups[i].mask = mask;
-    lookups[i].index = lookup_indices[i];
-  }
+    offset += len;
+  } while (len == ARRAY_LENGTH (lookup_indices));
 }
 
 
@@ -64,19 +69,18 @@ hb_ot_map_t::compile (hb_face_t *face,
 		      const hb_segment_properties_t *props)
 {
  global_mask = 1;
- lookup_count[0] = lookup_count[1] = 0;
 
-  if (!feature_count)
+  if (!feature_infos.len)
     return;
 
 
   /* Fetch script/language indices for GSUB/GPOS.  We need these later to skip
    * features not available in either table and not waste precious bits for them. */
 
-  const hb_tag_t *script_tags;
+  hb_tag_t script_tags[3] = {HB_TAG_NONE};
   hb_tag_t language_tag;
 
-  script_tags = hb_ot_tags_from_script (props->script);
+  hb_ot_tags_from_script (props->script, &script_tags[0], &script_tags[1]);
   language_tag = hb_ot_tag_from_language (props->language);
 
   unsigned int script_index[2], language_index[2];
@@ -88,9 +92,9 @@ hb_ot_map_t::compile (hb_face_t *face,
 
 
   /* Sort features and merge duplicates */
-  qsort (feature_infos, feature_count, sizeof (feature_infos[0]), (hb_compare_func_t) feature_info_t::cmp);
+  feature_infos.sort ();
   unsigned int j = 0;
-  for (unsigned int i = 1; i < feature_count; i++)
+  for (unsigned int i = 1; i < feature_infos.len; i++)
     if (feature_infos[i].tag != feature_infos[j].tag)
       feature_infos[++j] = feature_infos[i];
     else {
@@ -102,13 +106,12 @@ hb_ot_map_t::compile (hb_face_t *face,
 	/* Inherit default_value from j */
       }
     }
-  feature_count = j + 1;
+  feature_infos.shrink (j + 1);
 
 
   /* Allocate bits now */
   unsigned int next_bit = 1;
-  j = 0;
-  for (unsigned int i = 0; i < feature_count; i++) {
+  for (unsigned int i = 0; i < feature_infos.len; i++) {
     const feature_info_t *info = &feature_infos[i];
 
     unsigned int bits_needed;
@@ -136,7 +139,9 @@ hb_ot_map_t::compile (hb_face_t *face,
       continue;
 
 
-    feature_map_t *map = &feature_maps[j++];
+    feature_map_t *map = feature_maps.push ();
+    if (unlikely (!map))
+      break;
 
     map->tag = info->tag;
     map->index[0] = feature_index[0];
@@ -155,7 +160,7 @@ hb_ot_map_t::compile (hb_face_t *face,
     map->_1_mask = (1 << map->shift) & map->mask;
 
   }
-  feature_count = j;
+  feature_infos.shrink (0); /* Done with these */
 
 
   for (unsigned int table_index = 0; table_index < 2; table_index++) {
@@ -171,21 +176,20 @@ hb_ot_map_t::compile (hb_face_t *face,
 							  &required_feature_index))
       add_lookups (face, table_index, required_feature_index, 1);
 
-    for (unsigned i = 0; i < feature_count; i++)
+    for (unsigned i = 0; i < feature_maps.len; i++)
       add_lookups (face, table_index, feature_maps[i].index[table_index], feature_maps[i].mask);
 
     /* Sort lookups and merge duplicates */
-    qsort (lookup_maps[table_index], lookup_count[table_index], sizeof (lookup_maps[table_index][0]), (hb_compare_func_t) lookup_map_t::cmp);
-    if (lookup_count[table_index])
+    lookup_maps[table_index].sort ();
+    if (lookup_maps[table_index].len)
     {
       unsigned int j = 0;
-      for (unsigned int i = 1; i < lookup_count[table_index]; i++)
+      for (unsigned int i = 1; i < lookup_maps[table_index].len; i++)
 	if (lookup_maps[table_index][i].index != lookup_maps[table_index][j].index)
 	  lookup_maps[table_index][++j] = lookup_maps[table_index][i];
 	else
 	  lookup_maps[table_index][j].mask |= lookup_maps[table_index][i].mask;
-      j++;
-      lookup_count[table_index] = j;
+      lookup_maps[table_index].shrink (j + 1);
     }
   }
 }

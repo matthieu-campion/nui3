@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2007,2008,2009  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -134,8 +134,8 @@ struct RangeRecord
     return c->check_struct (this);
   }
 
-  hb_GlyphID	start;		/* First hb_GlyphID in the range */
-  hb_GlyphID	end;		/* Last hb_GlyphID in the range */
+  GlyphID	start;		/* First GlyphID in the range */
+  GlyphID	end;		/* Last GlyphID in the range */
   USHORT	value;		/* Value */
   public:
   DEFINE_SIZE_STATIC (6);
@@ -359,8 +359,8 @@ struct CoverageFormat1
 
   private:
   USHORT	coverageFormat;	/* Format identifier--format = 1 */
-  SortedArrayOf<hb_GlyphID>
-		glyphArray;	/* Array of hb_GlyphIDs--in numerical order */
+  SortedArrayOf<GlyphID>
+		glyphArray;	/* Array of GlyphIDs--in numerical order */
   public:
   DEFINE_SIZE_ARRAY (4, glyphArray);
 };
@@ -389,7 +389,7 @@ struct CoverageFormat2
   USHORT	coverageFormat;	/* Format identifier--format = 2 */
   SortedArrayOf<RangeRecord>
 		rangeRecord;	/* Array of glyph ranges--ordered by
-				 * Start hb_GlyphID. rangeCount entries
+				 * Start GlyphID. rangeCount entries
 				 * long */
   public:
   DEFINE_SIZE_ARRAY (4, rangeRecord);
@@ -452,9 +452,9 @@ struct ClassDefFormat1
   }
 
   USHORT	classFormat;		/* Format identifier--format = 1 */
-  hb_GlyphID	startGlyph;		/* First hb_GlyphID of the classValueArray */
+  GlyphID	startGlyph;		/* First GlyphID of the classValueArray */
   ArrayOf<USHORT>
-		classValue;		/* Array of Class Values--one per hb_GlyphID */
+		classValue;		/* Array of Class Values--one per GlyphID */
   public:
   DEFINE_SIZE_ARRAY (6, classValue);
 };
@@ -480,7 +480,7 @@ struct ClassDefFormat2
   USHORT	classFormat;	/* Format identifier--format = 2 */
   SortedArrayOf<RangeRecord>
 		rangeRecord;	/* Array of glyph ranges--ordered by
-				 * Start hb_GlyphID */
+				 * Start GlyphID */
   public:
   DEFINE_SIZE_ARRAY (4, rangeRecord);
 };
@@ -526,13 +526,13 @@ struct ClassDef
 struct Device
 {
 
-  inline hb_position_t get_x_delta (hb_ot_layout_context_t *c) const
-  { return get_delta (c->font->x_ppem, c->font->x_scale); }
+  inline hb_position_t get_x_delta (hb_font_t *font) const
+  { return get_delta (font->x_ppem, font->x_scale); }
 
-  inline hb_position_t get_y_delta (hb_ot_layout_context_t *c) const
-  { return get_delta (c->font->y_ppem, c->font->y_scale); }
+  inline hb_position_t get_y_delta (hb_font_t *font) const
+  { return get_delta (font->y_ppem, font->y_scale); }
 
-  inline int get_delta (unsigned int ppem, unsigned int scale) const
+  inline int get_delta (unsigned int ppem, int scale) const
   {
     if (!ppem) return 0;
 
@@ -540,10 +540,6 @@ struct Device
 
     if (!pixels) return 0;
 
-    /* pixels is at most in the -8..7 range.  So 64-bit arithmetic is
-     * not really necessary here.  A simple cast to int may just work
-     * as well.  But since this code is not reached that often and
-     * for the sake of correctness, we do a 64bit operation. */
     return pixels * (int64_t) scale / ppem;
   }
 

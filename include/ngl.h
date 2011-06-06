@@ -441,11 +441,13 @@ allow it).
   #undef _T
 #endif
 
-typedef wchar_t nglChar;
+typedef char nglChar;
+typedef wchar_t nglUChar;
 /*!< Portable char type
   See nglString for more info
 */
-#define _T(x) L##x
+//#define _T(x) L##x
+#define _T(x) x
 /*!< Portable string declaration macro
   Use for literals to support both <i>char</i> and <i>wide char</i> modes :
   \code

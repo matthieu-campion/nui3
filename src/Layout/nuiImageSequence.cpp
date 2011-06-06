@@ -174,7 +174,7 @@ bool nuiImageSequence::CreateTextures()
     for (uint32 i = 0; i < mNbFrames; i++)
     {
       nglString filename;
-      filename.CFormat(_T("%ls/%d.png"), mTexturePath.GetChars(), i);
+      filename.CFormat(_T("%s/%d.png"), mTexturePath.GetChars(), i);
       nglPath path(filename);
       nuiTexture* pTex = nuiTexture::GetTexture(path, NULL);
       //pTex->SetTrace(true);

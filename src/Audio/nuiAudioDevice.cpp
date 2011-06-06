@@ -204,7 +204,7 @@ nuiAudioDeviceManager::nuiAudioDeviceManager()
 
 void nuiAudioDeviceManager::RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI)
 {
-  NGL_LOG(_T("nuiAudioDeviceManager"), NGL_LOG_DEBUG, _T("RegisterAPI('%ls') [0x%x]\n"), rAPIName.GetChars(), pAPI);
+  NGL_LOG(_T("nuiAudioDeviceManager"), NGL_LOG_DEBUG, _T("RegisterAPI('%s') [0x%x]\n"), rAPIName.GetChars(), pAPI);
   APIMap::const_iterator end = mAPIs.end();
   APIMap::const_iterator it = mAPIs.find(rAPIName);
   if (it != end)

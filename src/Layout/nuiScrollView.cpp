@@ -239,7 +239,7 @@ nuiRect nuiScrollView::CalcIdealSize()
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
-    NGL_OUT(_T("nuiScrollView::CalcIdealSize: %ls\n"), mIdealRect.GetValue().GetChars());
+    NGL_OUT(_T("nuiScrollView::CalcIdealSize: %s\n"), mIdealRect.GetValue().GetChars());
   }
   #endif
   
@@ -251,7 +251,7 @@ bool nuiScrollView::SetRect(const nuiRect& rRect)
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
-    NGL_OUT(_T("nuiScrollView::SetRect: %ls\n"), rRect.GetValue().GetChars());
+    NGL_OUT(_T("nuiScrollView::SetRect: %s\n"), rRect.GetValue().GetChars());
   }
   #endif
       
@@ -479,7 +479,7 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         #ifdef _DEBUG_LAYOUT
         if (GetDebug())
         {
-          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%ls)\n"), rect.GetValue().GetChars());
+          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%s)\n"), rect.GetValue().GetChars());
         }
         #endif
 
@@ -520,7 +520,7 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         #ifdef _DEBUG_LAYOUT
         if (GetDebug())
         {
-          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%ls)\n"), rect.GetValue().GetChars());
+          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%s)\n"), rect.GetValue().GetChars());
         }
         #endif
         

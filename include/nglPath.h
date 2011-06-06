@@ -88,15 +88,9 @@ public:
 	/*!<
 	nglPath default constructor
 	*/
-	nglPath(const char* pPathName);
-	/*!< nglPath constructor
-	\param pPathName path name, using current locale's encoding
-
-	For portability reasons, any '\\' (anti-slash) characters are replaced by '/' (slash).
-	*/
 	nglPath(const nglChar* pPathName);
 	/*!< nglPath constructor
-	\param pPathName path name
+	\param pPathName path name, using current locale's encoding
 
 	For portability reasons, any '\\' (anti-slash) characters are replaced by '/' (slash).
 	*/
@@ -164,6 +158,7 @@ public:
   void Split(std::vector<nglString>& rElements); ///< Split the elements of this path into its elements (folders and eventual file))
 	int32 GetChildren(std::list<nglPath>* pChildren) const; ///< deprecated
 	int32 GetChildren(std::list<nglPath>& pChildren) const; ///< that's the proper api
+	int32 GetChildrenTree(std::list<nglPath>& pChildren) const; ///< Get the children recursively to get a complete tree.
  
 	/*!< Get node's children
 	\param pChildren if non-null, children will be appended to this list
@@ -218,8 +213,7 @@ public:
 
 	/** @name Operators */
 	//@{
-	const nglPath& operator=(const char* pSource);       ///< Initialize a path from a string using locale's encoding
-	const nglPath& operator=(const nglChar* pSource);    ///< Initialize a path from a string
+	const nglPath& operator=(const nglChar* pSource);       ///< Initialize a path from a string using locale's encoding
 	const nglPath& operator=(const nglString& rSource);  ///< Initialize a path from a string
 	const nglPath& operator=(const nglPath& rSource);    ///< Copy a path
 
@@ -307,7 +301,6 @@ protected:
 	static MimeMap mMimeType;
 #endif // _UNIX_ || _CARBON_ || _UIKIT_ || _COCOA_
 
-	bool InternalSetPath (const char* pPath);
 	bool InternalSetPath (const nglChar* pPath);
 	//  bool ValidateChars();
 	int32 GetRootPart() const;

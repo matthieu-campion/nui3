@@ -55,10 +55,10 @@ the NGL_APP_CREATE macro for instance.
 #define __TFILE__ __T(__FILE__)
 
 #define __NGL_ASSERT(test) \
-  if (!(test)) { NGL_OUT(_T("%ls(%d): ") _T(#test) _T(" failed\n"), __TFILE__, __LINE__); __ASSERT_SYS(test) }
+  if (!(test)) { NGL_OUT(_T("%s(%d): ") _T(#test) _T(" failed\n"), __TFILE__, __LINE__); __ASSERT_SYS(test) }
 
 #define __NGL_ASSERTR(test, result) \
-  if (!(test)) { NGL_OUT(_T("%ls(%d): ") _T(#test) _T(" failed\n"), __TFILE__, __LINE__); __ASSERT_SYS(test) return result; }
+  if (!(test)) { NGL_OUT(_T("%s(%d): ") _T(#test) _T(" failed\n"), __TFILE__, __LINE__); __ASSERT_SYS(test) return result; }
 
 /* ASSERT(R) facility
 */

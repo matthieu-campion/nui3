@@ -430,7 +430,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
 
   if (pResponse)
   {
-    //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+    //NGL_OUT(_T("\n\nHTTP Headers:\n%s\n\n"), pResponse->GetHeadersRep().GetChars());
     const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
     nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
     if (it != rHeaders.end())
@@ -445,7 +445,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
       {
         url = newurl;
       }
-      //NGL_OUT(_T("\n\nNew location: %ls\n\n"), url.GetChars());
+      //NGL_OUT(_T("\n\nNew location: %s\n\n"), url.GetChars());
       
       SetURL(url);
       return;
@@ -463,7 +463,7 @@ void nuiHTMLView::StreamDone(nuiAsyncIStream* pStream)
         nglString enc(contents.Extract(pos + 8));
         enc.Trim();
         encoding = nuiGetTextEncodingFromString(enc);
-        //NGL_OUT(_T("\n\nHTTP Encoding: %ls - %d\n\n"), enc.GetChars(), encoding);
+        //NGL_OUT(_T("\n\nHTTP Encoding: %s - %d\n\n"), enc.GetChars(), encoding);
         
       }
     }
@@ -524,7 +524,7 @@ void nuiHTMLView::ParseTree(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
       default:
         {
-//          printf("tree??? '%ls'\n", pChild->GetName().GetChars());
+//          printf("tree??? '%s'\n", pChild->GetName().GetChars());
 //          ParseTree(pChild, pBox); // Try all children!!!
         }
         break;
@@ -554,7 +554,7 @@ void nuiHTMLView::ParseHTML(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         
       default:
         {        
-          //printf("html??? '%ls'\n", pChild->GetName().GetChars());
+          //printf("html??? '%s'\n", pChild->GetName().GetChars());
         }
         break;
     }
@@ -580,7 +580,7 @@ void nuiHTMLView::ParseHead(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         break;
       default:
         {        
-          //printf("head??? '%ls'\n", pChild->GetName().GetChars());
+          //printf("head??? '%s'\n", pChild->GetName().GetChars());
         }
         break;
     }
@@ -691,7 +691,7 @@ void nuiHTMLView::ParseBody(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
             ParseText(pChild, pBox);
           else
           {
-            //printf("body??? '%ls'\n", pChild->GetName().GetChars());
+            //printf("body??? '%s'\n", pChild->GetName().GetChars());
             ParseBody(pChild, pBox);
           }
         }

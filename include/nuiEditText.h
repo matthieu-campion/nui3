@@ -14,6 +14,7 @@
 #include "nglDataObjects.h"
 
 #include "nuiFontBase.h"
+#include "nuiFontLayout.h"
 
 class nuiFont;
 class nuiXMLNode;
@@ -209,10 +210,10 @@ protected:
   class NUI_API FontLayout : public nuiFontLayout
   {
   public:
-    FontLayout(nglFontBase& rFont, float PenX = 0.0f, float PenY = 0.0f);
+    FontLayout(nuiFontBase& rFont, float PenX = 0.0f, float PenY = 0.0f);
     virtual ~FontLayout();
 
-    virtual void OnGlyph(nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph);
+    virtual void OnGlyph(nuiFontBase* pFont, const nglString& rString, int Pos, nuiGlyphInfo* pGlyph);
 
     const std::vector<uint>& GetLines()
     {

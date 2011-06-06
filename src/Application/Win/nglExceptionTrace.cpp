@@ -48,13 +48,13 @@ void SendSomeMail()
   _snprintf(pStrMessage, 1024, "pouet! :-)");
 
   //char pStrAttachmentFilePath[1024];
-  //_snprintf(pStrAttachmentFilePath, 1024, "%ls", pcszRptPath);;
+  //_snprintf(pStrAttachmentFilePath, 1024, "%s", pcszRptPath);;
   //char* pStrAttachmentFilePath = NULL;
   char* pStrAttachmentFilePath = "C:\\Users\\meeloo\\Documents\\work\\mxp4\\MXEditor-v2\\Release\\CrashReport.txt";
 
   char* pStrAttachmentFile = NULL;
 //  char pStrAttachmentFile[1024];
- // _snprintf(pStrAttachmentFile, 1024, "%ls", pcszRptFileName);;
+ // _snprintf(pStrAttachmentFile, 1024, "%s", pcszRptFileName);;
 
   char pStrRecipient[1024];
   _snprintf(pStrRecipient, 1024, "meeloo@meeloo.net");;

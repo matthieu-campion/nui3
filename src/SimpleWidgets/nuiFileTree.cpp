@@ -362,7 +362,7 @@ nuiTreeNode* nuiFileTree::GetNewNode(const nglPath& rPath)
         pBox = new nuiHBox(2);
         pIcon = new nuiImage();
         nglString objectName;
-        objectName.Format(_T("nuiFileTree::FileIcon::%ls"), rPath.GetExtension().ToLower().GetChars());
+        objectName.Format(_T("nuiFileTree::FileIcon::%s"), rPath.GetExtension().ToLower().GetChars());
         pIcon->SetObjectName(objectName);
         pIcon->SetObjectClass(objectName);
         pLabel = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        

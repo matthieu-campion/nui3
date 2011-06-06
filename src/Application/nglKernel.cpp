@@ -311,7 +311,7 @@ const nglChar* nglKernel::OnError (uint& rError) const
 void nglKernel::CallOnInit()
 {
   ucdata_init_static();
-  NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%ls)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
+  NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%s)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);
   nuiTimer* pTimer = nuiAnimation::AcquireTimer();
@@ -384,7 +384,7 @@ void nglKernel::SetCrashReportEmail(const nglString& rEmail)
 void nglKernel::ProcessMessages(const nuiEvent& rEvent)
 {
   nuiNotification* pNotif;
-  while (pNotif = Get(0))
+  while ((pNotif = Get(0)))
   {
     nuiCommand* pCommand = NULL;
     nuiGetTokenValue<nuiCommand*>(pNotif->GetToken(), pCommand);

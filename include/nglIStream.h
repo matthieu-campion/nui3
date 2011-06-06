@@ -79,9 +79,9 @@ void DumpLines(nglIStream& rInput)
   uint count = 0;
 
   while (rInput.ReadLine(line))
-    NGL_OUT (_T("%d: %ls\n"), ++count, line.GetChars());
+    NGL_OUT (_T("%d: %s\n"), ++count, line.GetChars());
 
-  NGL_OUT(_T("Total: %d line%ls\n"), count, PLURAL(count));
+  NGL_OUT(_T("Total: %d line%s\n"), count, PLURAL(count));
 }
 \endcode
   */

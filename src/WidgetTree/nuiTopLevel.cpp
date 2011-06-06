@@ -34,7 +34,7 @@
     if (!(it->second)) {\
       NGL_OUT(_T("NULL\n"));\
     } else {\
-      NGL_OUT(_T("%ls\n"),\
+      NGL_OUT(_T("%s\n"),\
       it->second->GetObjectClass().GetChars());\
     }\
   }\
@@ -527,7 +527,7 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
   {
 
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.TouchId) );
-  NGL_TOUCHES_DEBUG( NGL_OUT(_T("%ls of type %ls already grabbed from other touch(es)\n"), 
+  NGL_TOUCHES_DEBUG( NGL_OUT(_T("%s of type %s already grabbed from other touch(es)\n"), 
           pWidget->GetObjectName().GetChars(),
           pWidget->GetObjectClass().GetChars()) );
 
@@ -536,7 +536,7 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
   if (pWidget)
   {
     NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.TouchId) );
-    NGL_TOUCHES_DEBUG( NGL_OUT(_T("Grab from %ls of type %ls\n"),
+    NGL_TOUCHES_DEBUG( NGL_OUT(_T("Grab from %s of type %s\n"),
             pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
   }
 
@@ -570,7 +570,7 @@ bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
   if (pWidget)
   {
   //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("TouchId[%d] "), mMouseInfo.TouchId) );
-    NGL_TOUCHES_DEBUG( NGL_OUT(_T("Ungrab from %ls of type %ls\n"), pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
+    NGL_TOUCHES_DEBUG( NGL_OUT(_T("Ungrab from %s of type %s\n"), pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
   }
 
   nuiWidgetPtr pGrab = GetGrab();
@@ -728,7 +728,7 @@ void nuiTopLevel::SetToolTipOn(bool AutoStop)
   if (mpToolTipSource)
   {
     /*
-    NGL_OUT(_T("ToolTipOn class %ls / Text: %ls\n"),
+    NGL_OUT(_T("ToolTipOn class %s / Text: %s\n"),
         mpToolTipSource->GetObjectClass().GetChars(),
         mpToolTipSource->GetToolTip().GetChars()
        );
@@ -753,7 +753,7 @@ void nuiTopLevel::ToolTipOn(const nuiEvent& rEvent)
   if (mpToolTipSource)
   {
     /*
-    NGL_OUT(_T("ToolTipOn class %ls / Text: %ls\n"),
+    NGL_OUT(_T("ToolTipOn class %s / Text: %s\n"),
         mpToolTipSource->GetObjectClass().GetChars(),
         mpToolTipSource->GetToolTip().GetChars()
        );
@@ -1299,7 +1299,7 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
   {
     nuiWidget* pWidget = *tt;
     res = pWidget->ActivateToolTip(pWidget);
-    //printf("%3ls - %ls\n", YESNO(res), pWidget->GetObjectClass().GetChars());
+    //printf("%3ls - %s\n", YESNO(res), pWidget->GetObjectClass().GetChars());
     ++tt;
   }
   if (!res && mpToolTipSource)
@@ -1356,7 +1356,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
         pHandled = containers[i];
     }
     
-    //NGL_OUT(_T("grabbed mouse move on '%ls' / '%ls'\n"), mpGrab->GetObjectClass().GetChars(), mpGrab->GetObjectName().GetChars());
+    //NGL_OUT(_T("grabbed mouse move on '%s' / '%s'\n"), mpGrab->GetObjectClass().GetChars(), mpGrab->GetObjectName().GetChars());
     NGL_ASSERT(mpGrab[mMouseInfo.TouchId]);
     if (mpGrab[mMouseInfo.TouchId]->MouseEventsEnabled() && !hook)
     {
@@ -1581,7 +1581,7 @@ bool nuiTopLevel::DrawTree(class nuiDrawContext *pContext)
     
     for (int i = 0; i < count; i++)
     {
-//      printf("\t%d: %ls\n", i, mDirtyRects[i].GetValue().GetChars());
+//      printf("\t%d: %s\n", i, mDirtyRects[i].GetValue().GetChars());
       pContext->ResetState();
       pContext->ResetClipRect();
       pContext->Clip(mDirtyRects[i]);
@@ -1711,7 +1711,7 @@ void nuiTopLevel::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& r
 
   r.Set(vec1[0], vec1[1], vec2[0], vec2[1], false);
 
-//  printf("nuiTopLevel::BroadcastInvalidateRect %ls / %ls / 0x%x RECT:%ls\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender, rRect.GetValue().GetChars());
+//  printf("nuiTopLevel::BroadcastInvalidateRect %s / %s / 0x%x RECT:%s\n", pSender->GetObjectClass().GetChars(), pSender->GetObjectName().GetChars(), pSender, rRect.GetValue().GetChars());
   AddInvalidRect(r);
   mNeedRender = true;
   DebugRefreshInfo();
@@ -1772,7 +1772,7 @@ bool nuiTopLevel::InitHotKeys(nuiXMLNode* pHotKeys)
   nglString nodeName = pHotKeys->GetName();
   if (nodeName.Compare(NUIHOTKEYS_XML_NODEID))
   {
-    NGL_OUT(_T("Not a hotkeys node\n : %ls"), nodeName.GetChars());
+    NGL_OUT(_T("Not a hotkeys node\n : %s"), nodeName.GetChars());
     return false;
   }
   
@@ -1995,7 +1995,7 @@ void nuiTopLevel::PrintHotKeyMap(const nglString& rText)
     nglString name = it->first;
     nuiHotKey* pHotKey = it->second;
     NGL_OUT(_T("%s -> %s\n"), name.GetStdString().c_str(), pHotKey->ShortcutToString().GetStdString().c_str());
-    //NGL_OUT(_T("%ls -> %ls\n"), it->first.GetChars(), it->second->ShortcutToString().GetChars());
+    //NGL_OUT(_T("%s -> %s\n"), it->first.GetChars(), it->second->ShortcutToString().GetChars());
     ++it;
   }
   NGL_OUT(_T("\n"));

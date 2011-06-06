@@ -22,7 +22,7 @@ nuiStopWatch::~nuiStopWatch()
     nglTime Diff = DestructionTime - mCreationTime;
     seconds = Diff.GetValue();
     
-    NGL_LOG(_T("StopWatch"), NGL_LOG_DEBUG, _T("%ls\t\t%lf sec (%f Hz)\n"), mLogTitle.GetChars(), seconds, 1.0f / seconds);
+    NGL_LOG(_T("StopWatch"), NGL_LOG_DEBUG, _T("%s\t\t%lf sec (%f Hz)\n"), mLogTitle.GetChars(), seconds, 1.0f / seconds);
   }
   
   nglTime ref = mCreationTime;

@@ -53,7 +53,7 @@ void nuiHTMLText::Draw(nuiDrawContext* pContext)
     mpCompositeLayout->SetStrikeThrough(mStrikeThrough);
     mpCompositeLayout->Layout(str);
     
-    //NGL_OUT(_T("Draw HTMLText: %ls\n"), str.GetChars());
+    //NGL_OUT(_T("Draw HTMLText: %s\n"), str.GetChars());
   }
   
   pContext->DrawText(0, mpCompositeLayout->GetAscender() , *mpCompositeLayout);
@@ -80,7 +80,7 @@ void nuiHTMLText::Layout(nuiHTMLContext& rContext)
 
   mTextFgColor = rContext.mTextFgColor;
   mTextBgColor = rContext.mTextBgColor;
-  //printf("text layout done (%ls)\n", mIdealRect.GetValue().GetChars());
+  //printf("text layout done (%s)\n", mIdealRect.GetValue().GetChars());
   
   delete mpCompositeLayout;
   mpCompositeLayout = NULL;

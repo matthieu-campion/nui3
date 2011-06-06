@@ -227,7 +227,7 @@ bool ngl3DSLoader::OnMesh (const ngl3DSMesh& rMesh)
 
     for (i = 0; i < rMesh.mFaceCnt; i++) accum |= rMesh.mpSmoothing[i];
     for (i = 0; i < 32; i++) if ((accum >> i) & 0x1) count++;
-    NGL_LOG(_T("3ds"), NGL_LOG_INFO, _T("smoothing: %d group%ls\n"), count, (count > 1) ? _T("s") : _T(""));
+    NGL_LOG(_T("3ds"), NGL_LOG_INFO, _T("smoothing: %d group%s\n"), count, (count > 1) ? _T("s") : _T(""));
   }
   for (i=0; i < rMesh.mMaterialCnt; i++)
   {

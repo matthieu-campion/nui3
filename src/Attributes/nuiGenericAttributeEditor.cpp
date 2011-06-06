@@ -21,7 +21,7 @@ nuiGenericAttributeEditor::nuiGenericAttributeEditor(const nuiAttribBase& rAttri
 {
 	SetObjectClass(_T("nuiGenericAttributeEditor"));
 	
-	//NGL_OUT(_T("Generic Attrib editor '%ls': '%ls'\n"), rAttribute.GetName().GetChars(), contents.GetChars());
+	//NGL_OUT(_T("Generic Attrib editor '%s': '%s'\n"), rAttribute.GetName().GetChars(), contents.GetChars());
 	if (!mAttribute.IsReadOnly())
 	{
 		nuiPane* pPane = new nuiPane();

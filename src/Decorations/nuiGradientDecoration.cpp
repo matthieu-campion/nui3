@@ -212,7 +212,7 @@ bool nuiGradientDecoration::Load(const nuiXMLNode* pNode)
 nuiXMLNode* nuiGradientDecoration::Serialize(nuiXMLNode* pNode)
 {
   pNode->SetName(_T("nuiGradientDecoration"));
-  pNode->SetAttribute(_T("GradientType"), (int)mGradientType);
+  pNode->SetAttribute(_T("GradientType"), (int64)mGradientType);
   pNode->SetAttribute(_T("Color1"), mColor1.GetValue());
   pNode->SetAttribute(_T("Color2"), mColor2.GetValue());
   pNode->SetAttribute(_T("Color3"), mColor3.GetValue());

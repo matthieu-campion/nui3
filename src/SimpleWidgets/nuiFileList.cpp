@@ -68,7 +68,7 @@ void nuiFileList::Selected(const nuiEvent& rEvent)
       nglPath path(pItem->GetProperty(_T("Path")));
       if (!path.IsLeaf())
       {
-//        NGL_OUT(_T("Exploring %ls\n"),path.GetAbsolutePath().GetChars());
+//        NGL_OUT(_T("Exploring %s\n"),path.GetAbsolutePath().GetChars());
         Clear();
         nuiLabel* pLabel = new nuiLabel(_T(".."));
         pLabel->SetProperty(_T("Path"),path.GetParent().GetAbsolutePath().GetPathName());
@@ -77,7 +77,7 @@ void nuiFileList::Selected(const nuiEvent& rEvent)
       }
 //      else
 //      {
-//        NGL_OUT(_T("'%ls' is a file:\nSize: %d\nType: %ls\n\n"),path.GetAbsolutePath().GetChars(),path.GetSize(),path.GetMimeType().GetChars());
+//        NGL_OUT(_T("'%s' is a file:\nSize: %d\nType: %s\n\n"),path.GetAbsolutePath().GetChars(),path.GetSize(),path.GetMimeType().GetChars());
 //      }
     }
 //    else

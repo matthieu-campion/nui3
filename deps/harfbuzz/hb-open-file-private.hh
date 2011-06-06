@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2007,2008,2009  Red Hat, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -44,11 +44,11 @@ HB_BEGIN_DECLS
  */
 
 struct OpenTypeFontFile;
-struct hb_OffsetTable;
+struct OffsetTable;
 struct TTCHeader;
 
 
-typedef struct TableDirectory
+typedef struct TableRecord
 {
   inline bool sanitize (hb_sanitize_context_t *c) {
     TRACE_SANITIZE ();
@@ -64,16 +64,16 @@ typedef struct TableDirectory
   DEFINE_SIZE_STATIC (16);
 } OpenTypeTable;
 
-typedef struct hb_OffsetTable
+typedef struct OffsetTable
 {
   friend struct OpenTypeFontFile;
 
   inline unsigned int get_table_count (void) const
   { return numTables; }
-  inline const TableDirectory& get_table (unsigned int i) const
+  inline const TableRecord& get_table (unsigned int i) const
   {
-    if (unlikely (i >= numTables)) return Null(TableDirectory);
-    return tableDir[i];
+    if (unlikely (i >= numTables)) return Null(TableRecord);
+    return tables[i];
   }
   inline bool find_table_index (hb_tag_t tag, unsigned int *table_index) const
   {
@@ -82,7 +82,7 @@ typedef struct hb_OffsetTable
     unsigned int count = numTables;
     for (unsigned int i = 0; i < count; i++)
     {
-      if (t == tableDir[i].tag)
+      if (t == tables[i].tag)
       {
         if (table_index) *table_index = i;
         return true;
@@ -91,7 +91,7 @@ typedef struct hb_OffsetTable
     if (table_index) *table_index = Index::NOT_FOUND_INDEX;
     return false;
   }
-  inline const TableDirectory& get_table_by_tag (hb_tag_t tag) const
+  inline const TableRecord& get_table_by_tag (hb_tag_t tag) const
   {
     unsigned int table_index;
     find_table_index (tag, &table_index);
@@ -102,7 +102,7 @@ typedef struct hb_OffsetTable
   inline bool sanitize (hb_sanitize_context_t *c) {
     TRACE_SANITIZE ();
     return c->check_struct (this)
-	&& c->check_array (tableDir, TableDirectory::static_size, numTables);
+	&& c->check_array (tables, TableRecord::static_size, numTables);
   }
 
   private:
@@ -111,9 +111,9 @@ typedef struct hb_OffsetTable
   USHORT	searchRange;	/* (Maximum power of 2 <= numTables) x 16 */
   USHORT	entrySelector;	/* Log2(maximum power of 2 <= numTables). */
   USHORT	rangeShift;	/* NumTables x 16-searchRange. */
-  TableDirectory tableDir[VAR];	/* TableDirectory entries. numTables items */
+  TableRecord	tables[VAR];	/* TableRecord entries. numTables items */
   public:
-  DEFINE_SIZE_ARRAY (12, tableDir);
+  DEFINE_SIZE_ARRAY (12, tables);
 } OpenTypeFontFace;
 
 
@@ -137,8 +137,8 @@ struct TTCHeaderVersion1
   Tag		ttcTag;		/* TrueType Collection ID string: 'ttcf' */
   FixedVersion	version;	/* Version of the TTC Header (1.0),
 				 * 0x00010000 */
-  LongOffsetLongArrayOf<hb_OffsetTable>
-		table;		/* Array of offsets to the hb_OffsetTable for each font
+  LongOffsetLongArrayOf<OffsetTable>
+		table;		/* Array of offsets to the OffsetTable for each font
 				 * from the beginning of the file */
   public:
   DEFINE_SIZE_ARRAY (12, table);

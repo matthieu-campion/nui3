@@ -33,7 +33,7 @@ WCHAR strOut[512];
 #define PROFILE_CHRONO_IN(a) QueryPerformanceCounter(&start[a])
 #define PROFILE_CHRONO_RESET(a) cumul[a] = 0
 #define PROFILE_CHRONO_OUT(a) {LARGE_INTEGER stop,freq;QueryPerformanceCounter(&stop);QueryPerformanceFrequency(&freq);stop.QuadPart -=start[a].QuadPart;cumul[a] += (double)((stop.QuadPart*1000000)/freq.QuadPart);}
-#define PROFILE_CHRONO_LOG(a,str) wsprintf(strOut, L"%s chrono(%d) = %d ms \n", _T(str), a, (int)(cumul[a]));NGL_OUT(strOut);
+#define PROFILE_CHRONO_LOG(a,str) wsprintf(strOut, "%s chrono(%d) = %d ms \n", _T(str), a, (int)(cumul[a]));NGL_OUT(strOut);
 int drawArrayCount = 0;
 int setStateCount = 0;
 #else

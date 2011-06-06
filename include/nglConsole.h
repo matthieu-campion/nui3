@@ -98,7 +98,7 @@ possible (there is no sooner than the first line of application's \a OnInit() !)
 \par Using Output
 
 You might want to intercept the default console output, to display it in a
-nglWindow with the help of nglFont for instance. All you have to do is to
+nglWindow with the help of nuiFont for instance. All you have to do is to
 overload the OnOutput() callback and code a drawing routine.
 Here is a little example showing how to code a GL console based on this principle :
 
@@ -190,8 +190,6 @@ public:
   //@{
   void Output  (const nglChar* pFormat, ...);
   void Outputv (const nglChar* pFormat, va_list Args);
-  void Output  (const char* pFormat, ...);
-  void Outputv (const char* pFormat, va_list Args);
   void Output  (const nglString& rText);
   void Show    (bool IsVisible = true);
   /*!<

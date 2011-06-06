@@ -54,7 +54,7 @@ nuiRect nuiPositioner::CalcIdealSize()
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     nuiRect wrect(pItem->GetIdealRect());
-    //NGL_OUT(_T("  WRect %ls\n"), wrect.GetValue().GetChars());
+    //NGL_OUT(_T("  WRect %s\n"), wrect.GetValue().GetChars());
     rect.Union(rect,wrect.Size());
   }
   delete pIt;
@@ -134,7 +134,7 @@ void nuiPositioner::Invalidate()
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
     nuiRect wrect(pItem->GetIdealRect());
-    //NGL_OUT(_T("  WRect %ls\n"), wrect.GetValue().GetChars());
+    //NGL_OUT(_T("  WRect %s\n"), wrect.GetValue().GetChars());
     rect.Union(rect,wrect.Size());
   }
   delete pIt;

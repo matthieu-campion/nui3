@@ -227,7 +227,7 @@ nglPathVolume nglPathVolume::AddVolume(std::list<nglPathVolume>& rVolumes, int32
   vol.mRefNum = volnum;
   rVolumes.push_back(vol);
   
-  //printf("Added volume '%ls' from '%ls'.\n", vol.Comment.GetChars(), vol.Path.GetChars());
+  //printf("Added volume '%s' from '%s'.\n", vol.Comment.GetChars(), vol.Path.GetChars());
   return vol;
 }
 
@@ -245,7 +245,7 @@ nglPathVolume nglPathVolume::DelVolume(std::list<nglPathVolume>& rVolumes, int32
     {
       nglPathVolume v(vol);
       rVolumes.erase(it);
-      //printf("Removed volume '%ls' from '%ls'.\n", v.Comment.GetChars(), v.Path.GetChars());
+      //printf("Removed volume '%s' from '%s'.\n", v.Comment.GetChars(), v.Path.GetChars());
       return v;
     }
     
@@ -314,7 +314,7 @@ int nglPath::GetChildren (std::list<nglPath>& rChildren) const
   {
     if (strcmp (entry->d_name, ".") && strcmp (entry->d_name, ".."))
     {
-      //printf("nglpath - base = '%ls' - child = '%ls'\n", GetChars(), entry->d_name);
+      //printf("nglpath - base = '%s' - child = '%s'\n", GetChars(), entry->d_name);
       nglPath path = *this;
       path += nglPath(entry->d_name);
       rChildren.push_back (path);
@@ -455,7 +455,7 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
     int controler = (rDevice[7] - 'a') / 2 + 1;
     int channel = (rDevice[7] - 'a') % 2;
     int partition = rDevice[8] - '0';
-    rVolume.mComment.Format(_T("%ls on %d%ls partition (%ls on %d%ls IDE controler)"),
+    rVolume.mComment.Format(_T("%s on %d%s partition (%s on %d%s IDE controler)"),
       rFSType.GetChars(),
       partition, _intrank(partition),
       channel ? _T("slave") : _T("master"),
@@ -466,7 +466,7 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
   {
     int dev = rDevice[7] - 'a';
     int partition = rDevice[8] - '0';
-    rVolume.mComment.Format(_T("%ls on %d%ls partition (%d%ls SCSI device)"),
+    rVolume.mComment.Format(_T("%s on %d%s partition (%d%s SCSI device)"),
       rFSType.GetChars(),
       partition, _intrank(partition),
       dev, _intrank(dev));
@@ -477,7 +477,7 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
       (!rDevice.Compare(_T("/dev/sg"), 0, 7)))
   {
     int dev = rDevice[7] - '0' + 1;
-    rVolume.mComment.Format(_T("%ls (%d%ls SCSI device)"),
+    rVolume.mComment.Format(_T("%s (%d%s SCSI device)"),
       rFSType.GetChars(),
       dev, _intrank(dev));
       rVolume.mFlags |= nglPathVolume::Removable;
@@ -487,20 +487,20 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
   if (!rDevice.Compare(_T("/dev/fd"), 0, 7))
   {
     int dev = rDevice[7] - '0' + 1;
-    rVolume.mComment.Format(_T("%d%ls floppy"), dev, _intrank(dev));
+    rVolume.mComment.Format(_T("%d%s floppy"), dev, _intrank(dev));
     rVolume.mFlags |= nglPathVolume::Removable;
     rVolume.mType = nglPathVolume::eTypeFloppy;
   }
 
   if (rFSType == _T("smbfs"))
   {
-    rVolume.mComment.Format(_T("%ls (SMB)"), rDevice.GetChars());
+    rVolume.mComment.Format(_T("%s (SMB)"), rDevice.GetChars());
     rVolume.mType = nglPathVolume::eTypeNetwork;
   }
   else
   if (rFSType == _T("nfs"))
   {
-    rVolume.mComment.Format(_T("%ls (NFS)"), rDevice.GetChars());
+    rVolume.mComment.Format(_T("%s (NFS)"), rDevice.GetChars());
     rVolume.mType = nglPathVolume::eTypeNetwork;
   }
   else

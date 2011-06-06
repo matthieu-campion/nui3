@@ -595,7 +595,7 @@ mat1 = mat1 * mat2;
 
     if (pTitle)
     {
-      NGL_LOG(_T("math"), Level, _T("%ls :"), pTitle);
+      NGL_LOG(_T("math"), Level, _T("%s :"), pTitle);
     }
     for (i = 0; i < 4; i++)
     {

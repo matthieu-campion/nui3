@@ -89,13 +89,13 @@ nglPath nuiGetNativeResourcePath()
   if (!p.Exists() || p.IsLeaf())
   {
     p = nglPath(ePathApp);
-    NGL_OUT(_T("application path: %ls\n"), p.GetChars());
+    NGL_OUT(_T("application path: %s\n"), p.GetChars());
     p = p.GetParent();
-    NGL_OUT(_T("application folder: %ls\n"), p.GetChars());
+    NGL_OUT(_T("application folder: %s\n"), p.GetChars());
     p = p + nglPath(_T("resources"));
-    NGL_OUT(_T("Couldn't find global resource path, looking for it next to the application: %ls\n"), p.GetChars());
+    NGL_OUT(_T("Couldn't find global resource path, looking for it next to the application: %s\n"), p.GetChars());
   }
-  NGL_OUT(_T("NUI_RESOURCE_PATH: %ls\n"), p.GetChars());
+  NGL_OUT(_T("NUI_RESOURCE_PATH: %s\n"), p.GetChars());
   return p;
 }
 #endif //_LINUX_
@@ -146,7 +146,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   {
     mpIStream = resourcePath.OpenRead();
     if (!mpIStream)
-      NGL_OUT(_T("nuiNativeResource opening failed with path '%ls'\n"), resourcePath.GetChars());
+      NGL_OUT(_T("nuiNativeResource opening failed with path '%s'\n"), resourcePath.GetChars());
     NGL_ASSERT(mpIStream);
     mValid = true;
   }
@@ -181,11 +181,11 @@ bool nuiNativeResource::GetResourcesList(std::vector<nglPath>& rResources)
 #else
 void RecurseChildren(std::vector<nglPath>& rResources, nglPath ResPath, nglPath BasePath)
 {
-//wprintf(_T("Enum resources BasePath '%ls'\n"), BasePath.GetChars());
+//wprintf(_T("Enum resources BasePath '%s'\n"), BasePath.GetChars());
   if (BasePath.IsLeaf())
   {
     nglString str(ResPath.GetPathName());
-    //wprintf(_T("Added '%ls'\n"), str.GetChars());
+    //wprintf(_T("Added '%s'\n"), str.GetChars());
     rResources.push_back(str);
     return;
   }

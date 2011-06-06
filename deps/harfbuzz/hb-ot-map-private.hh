@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2009,2010  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2009,2010  Red Hat, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -35,9 +35,6 @@
 
 HB_BEGIN_DECLS
 
-
-#define MAX_FEATURES 100 /* FIXME */
-#define MAX_LOOKUPS 1000 /* FIXME */
 
 static const hb_tag_t table_tags[2] = {HB_OT_TAG_GSUB, HB_OT_TAG_GPOS};
 
@@ -83,13 +80,12 @@ struct hb_ot_map_t {
 
   public:
 
-  hb_ot_map_t (void) : feature_count (0) {}
-
   void add_feature (hb_tag_t tag, unsigned int value, bool global)
   {
-    feature_info_t *info = &feature_infos[feature_count++];
+    feature_info_t *info = feature_infos.push();
+    if (unlikely (!info)) return;
     info->tag = tag;
-    info->seq = feature_count;
+    info->seq = feature_infos.len;
     info->max_value = value;
     info->global = global;
     info->default_value = global ? value : 0;
@@ -104,36 +100,41 @@ struct hb_ot_map_t {
   inline hb_mask_t get_global_mask (void) const { return global_mask; }
 
   inline hb_mask_t get_mask (hb_tag_t tag, unsigned int *shift = NULL) const {
-    const feature_map_t *map = (const feature_map_t *) bsearch (&tag, feature_maps, feature_count, sizeof (feature_maps[0]), (hb_compare_func_t) feature_map_t::cmp);
+    const feature_map_t *map = feature_maps.bsearch (&tag);
     if (shift) *shift = map ? map->shift : 0;
     return map ? map->mask : 0;
   }
 
   inline hb_mask_t get_1_mask (hb_tag_t tag) const {
-    const feature_map_t *map = (const feature_map_t *) bsearch (&tag, feature_maps, feature_count, sizeof (feature_maps[0]), (hb_compare_func_t) feature_map_t::cmp);
+    const feature_map_t *map = feature_maps.bsearch (&tag);
     return map ? map->_1_mask : 0;
   }
 
   inline void substitute (hb_face_t *face, hb_buffer_t *buffer) const {
-    for (unsigned int i = 0; i < lookup_count[0]; i++)
+    for (unsigned int i = 0; i < lookup_maps[0].len; i++)
       hb_ot_layout_substitute_lookup (face, buffer, lookup_maps[0][i].index, lookup_maps[0][i].mask);
   }
 
   inline void position (hb_font_t *font, hb_face_t *face, hb_buffer_t *buffer) const {
-    for (unsigned int i = 0; i < lookup_count[1]; i++)
-      hb_ot_layout_position_lookup (font, face, buffer, lookup_maps[1][i].index, lookup_maps[1][i].mask);
+    for (unsigned int i = 0; i < lookup_maps[1].len; i++)
+      hb_ot_layout_position_lookup (font, buffer, lookup_maps[1][i].index, lookup_maps[1][i].mask);
+  }
+
+  inline void finish (void) {
+    feature_infos.finish ();
+    feature_maps.finish ();
+    lookup_maps[0].finish ();
+    lookup_maps[1].finish ();
   }
 
   private:
 
   hb_mask_t global_mask;
 
-  unsigned int feature_count;
-  feature_info_t feature_infos[MAX_FEATURES]; /* used before compile() only */
-  feature_map_t feature_maps[MAX_FEATURES];
+  hb_prealloced_array_t<feature_info_t,8> feature_infos; /* used before compile() only */
+  hb_prealloced_array_t<feature_map_t, 8> feature_maps;
 
-  lookup_map_t lookup_maps[2][MAX_LOOKUPS]; /* GSUB/GPOS */
-  unsigned int lookup_count[2];
+  hb_prealloced_array_t<lookup_map_t, 32> lookup_maps[2]; /* GSUB/GPOS */
 };
 
 

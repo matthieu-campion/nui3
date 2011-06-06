@@ -114,7 +114,6 @@ public:
 
   /** @name Output methods */
   //@{
-  void       Log (const char* pDomain, uint Level, const char* pText, ...);
   void       Log (const nglChar* pDomain, uint Level, const nglChar* pText, ...);
   /*!<
     Log an event
@@ -134,7 +133,6 @@ public:
     Trailing newlines are automaticaly removed, and multiples lines message have each of their
     lines properly stamped.
   */
-  void       Logv (const char* pDomain, uint Level, const char* pText, va_list Args);
   void       Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_list Args);
   /*!<
     Log an event

@@ -93,7 +93,7 @@ void nuiImageDropZone::OnDropped(nglDragAndDrop* pDragObject, nuiSize X, nuiSize
   
   nglPath imgpath = rFiles.front();
 
-  printf("dropped file: %ls\n", imgpath.GetChars());
+  printf("dropped file: %s\n", imgpath.GetChars());
 
   nuiImage* pImage = new nuiImage(imgpath);
   if (pImage == NULL)

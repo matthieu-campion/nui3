@@ -114,7 +114,7 @@ nuiDecoration* nuiDecoration::Get(const nglString& rName, bool silent)
   if (it == end)
   {
 //    if (!silent)
-//      NGL_OUT(_T("nuiDecoration warning : could not retrieve '%ls'\n"), rName.GetChars());
+//      NGL_OUT(_T("nuiDecoration warning : could not retrieve '%s'\n"), rName.GetChars());
     return NULL;
   }
   
@@ -260,7 +260,7 @@ nglString nuiDecoration::GetCSSDeclaration() const
     if (!ShouldSkipAttrib(pname))
     {
       
-      //printf("\tattr: %ls\n", pname.GetChars());
+      //printf("\tattr: %s\n", pname.GetChars());
       nuiAttribBase Base = it_a->second;
       
       nglString value;

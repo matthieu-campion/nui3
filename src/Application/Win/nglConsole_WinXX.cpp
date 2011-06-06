@@ -186,7 +186,7 @@ void nglConsole::Append(const nglChar* pText)
   int eol_cnt = 0;
   const nglChar* eol = pText;
 
-  while ((eol = wcschr(eol, '\n')))
+  while ((eol = strchr(eol, '\n')))
   {
     eol++;
     eol_cnt++;
@@ -197,7 +197,7 @@ void nglConsole::Append(const nglChar* pText)
    *   + eol_cnt (\n's become \r\n)
    *   + ending zero
    */
-  int out_bytes = wcslen(pText) + eol_cnt + 1;
+  int out_bytes = strlen(pText) + eol_cnt + 1;
   nglChar* buffer  = (nglChar*)alloca(out_bytes * sizeof(nglChar));
 
   const nglChar* src = pText;
@@ -515,7 +515,7 @@ LRESULT nglConsole::InputProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 //            PlaySound("SystemExclamation", NULL, SND_SYNC);
             Output(_T("\n"));
             for (it=templist.begin(); it!=end; ++it)
-              Output(_T("%ls\t"), (*it).GetChars());
+              Output(_T("%s\t"), (*it).GetChars());
 
             Output(_T("\n"));
           }

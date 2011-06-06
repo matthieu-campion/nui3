@@ -927,6 +927,7 @@ void nuiWin::CreateText2Window(const nuiEvent& rEvent)
 
   if (pFile->ReadText(text))
   {
+    //printf("Read text:\n\n%s\n\n", text.GetChars());
     pText->SetText(text);
   }
 
@@ -1665,7 +1666,7 @@ public:
       mpFont = nuiFont::GetFont(&XML);
     }
 
-    nglFontInfo fontinfo;
+    nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
     fontinfo.Dump();
   }
@@ -1685,7 +1686,7 @@ public:
     pContext->DrawRect(r, eFillShape);
 
     // Draw the text layout construction lines:
-    nglFontInfo fontinfo;
+    nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
 
     nuiSize y = r.GetHeight()/2;
@@ -1747,7 +1748,7 @@ public:
 
   nuiRect CalcIdealSize()
   {
-    nglFontInfo fontinfo;
+    nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
 
     nuiFontLayout layout(*mpFont, 0, 0, nuiHorizontal);

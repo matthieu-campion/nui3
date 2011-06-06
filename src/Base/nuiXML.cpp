@@ -65,7 +65,7 @@ xmlLexer::~xmlLexer()
 nglSize xmlLexer::ReadLine (nglString& rLine, nglTextFormat* pFormat)
 {
   nglSize size = mpStream->ReadLine(rLine, pFormat);
-  //wprintf(_T("Read line from XML: %d chars '%ls'\n"), size, rLine.GetChars());
+  //wprintf(_T("Read line from XML: %d chars '%s'\n"), size, rLine.GetChars());
   return size;
 }
 
@@ -833,7 +833,7 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
   {
     XMLizeString(name, mName);
     //#FIXME
-    //DUMPT(("<%ls",name.GetChars()));
+    //DUMPT(("<%s",name.GetChars()));
     res += rStream.WriteText(tab);
     res += rStream.WriteText(nglString(_T(" <")));
     res += rStream.WriteText(name);
@@ -852,7 +852,7 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
       
       
       
-      //      DUMP((" %ls=\"%ls\"",
+      //      DUMP((" %s=\"%s\"",
       //        scratch1.GetChars(),
       //        scratch2.GetChars()
       //        ));
@@ -885,14 +885,14 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
       }
       
       //#FIXME
-      //DUMPT(("</%ls>\n",name.GetChars()));
+      //DUMPT(("</%s>\n",name.GetChars()));
       //res.Add(tab).Add(_T("</")).Add(name).Add(_T(">\n"));
       res += rStream.WriteText(tab);
       res += rStream.WriteText(nglString(_T("</")));
       res += rStream.WriteText(name);
       res += rStream.WriteText(nglString(_T(">\n")));
       
-      //      printf("res [%d]:\n%ls\n**************\n\n", res.GetLength(), res.GetChars());
+      //      printf("res [%d]:\n%s\n**************\n\n", res.GetLength(), res.GetChars());
     }
     else
     {
@@ -909,7 +909,7 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
     if (mName == _T("##text"))
     {
       //#FIXME
-      //DUMPT(("%ls\n",value.GetChars()));
+      //DUMPT(("%s\n",value.GetChars()));
       //res.Add(tab).Add(value).Add(_T("\n"));
       res += rStream.WriteText(tab);
       res += rStream.WriteText(value);
@@ -918,7 +918,7 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
     else if (mName == _T("##comment"))
     {
       //#FIXME
-      //DUMPT(("<!-- %ls -->\n",value.GetChars()));
+      //DUMPT(("<!-- %s -->\n",value.GetChars()));
       //res.Add(tab).Add(_T("<!-- ")).Add(value).Add(_T(" -->\n"));
       res += rStream.WriteText(tab);
       res += rStream.WriteText(nglString(_T("<!-- ")));
@@ -928,7 +928,7 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
     else if (mName == _T("##command"))
     {
       //#FIXME
-      //DUMPT(("<!%ls>\n",value.GetChars()));
+      //DUMPT(("<!%s>\n",value.GetChars()));
       //res.Add(tab).Add(_T("<!")).Add(value).Add(_T(">\n"));
       res += rStream.WriteText(tab);
       res += rStream.WriteText(nglString(_T("<!")));
@@ -953,7 +953,7 @@ nglString nuiXMLNode::Dump(uint level) const
   {
     XMLizeString(name, mName);
     //#FIXME
-    //DUMPT(("<%ls",name.GetChars()));
+    //DUMPT(("<%s",name.GetChars()));
     res.Add(tab).Add(_T(" <")).Add(name);
     
     //    uint i;
@@ -969,7 +969,7 @@ nglString nuiXMLNode::Dump(uint level) const
       
       
       
-      //      DUMP((" %ls=\"%ls\"",
+      //      DUMP((" %s=\"%s\"",
       //        scratch1.GetChars(),
       //        scratch2.GetChars()
       //        ));
@@ -997,10 +997,10 @@ nglString nuiXMLNode::Dump(uint level) const
       }
       
       //#FIXME
-      //DUMPT(("</%ls>\n",name.GetChars()));
+      //DUMPT(("</%s>\n",name.GetChars()));
       res.Add(tab).Add(_T("</")).Add(name).Add(_T(">\n"));
       
-      //      printf("res [%d]:\n%ls\n**************\n\n", res.GetLength(), res.GetChars());
+      //      printf("res [%d]:\n%s\n**************\n\n", res.GetLength(), res.GetChars());
     }
     else
     {
@@ -1016,19 +1016,19 @@ nglString nuiXMLNode::Dump(uint level) const
     if (mName == _T("##text"))
     {
       //#FIXME
-      //DUMPT(("%ls\n",value.GetChars()));
+      //DUMPT(("%s\n",value.GetChars()));
       res.Add(tab).Add(value).Add(_T("\n"));
     }
     else if (mName == _T("##comment"))
     {
       //#FIXME
-      //DUMPT(("<!-- %ls -->\n",value.GetChars()));
+      //DUMPT(("<!-- %s -->\n",value.GetChars()));
       res.Add(tab).Add(_T("<!-- ")).Add(value).Add(_T(" -->\n"));
     }
     else if (mName == _T("##command"))
     {
       //#FIXME
-      //DUMPT(("<!%ls>\n",value.GetChars()));
+      //DUMPT(("<!%s>\n",value.GetChars()));
       res.Add(tab).Add(_T("<!")).Add(value).Add(_T(">\n"));
     }
   }
@@ -1079,7 +1079,7 @@ void* nuiXMLNode::GetTag() const
 bool GetToken(nglString& src, nglString& dest)
 {
   int idx;
-  //  OUT("%ls\n",src.GetChars());
+  //  OUT("%s\n",src.GetChars());
   dest.Wipe();
   
   src.TrimLeft(); // Eat the starting blank
@@ -1462,7 +1462,7 @@ bool nuiXML::Load(nglIStream& rStream)
   
   nglTime End;
   
-  //  NGL_OUT(_T("XML %ls Parsing took %g seconds"), mName.GetChars(), End - Start);
+  //  NGL_OUT(_T("XML %s Parsing took %g seconds"), mName.GetChars(), End - Start);
   return true;
 }
 
@@ -1487,14 +1487,14 @@ nglString nuiXML::Dump(uint level) const
   if( !mDTDName.IsEmpty()  && !mDTDFile.IsEmpty())
   {
     nglString dtd;
-    dtd.CFormat(_T("<!DOCTYPE %ls  SYSTEM '%ls'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
+    dtd.CFormat(_T("<!DOCTYPE %s  SYSTEM '%s'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
     res += dtd;
   }
   
   if( !mStyleSheetType.IsEmpty() && !mStyleSheetFile.IsEmpty())
   {
     nglString styleSheet;
-    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%ls\" href=\"%ls\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
+    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%s\" href=\"%s\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
     res+= styleSheet;
   }
   
@@ -1511,14 +1511,14 @@ int64 nuiXML::Write(nglOStream& rStream, uint level) const
   if (!mDTDName.IsEmpty()  && !mDTDFile.IsEmpty())
   {
     nglString dtd;
-    dtd.CFormat(_T("<!DOCTYPE %ls  SYSTEM '%ls'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
+    dtd.CFormat(_T("<!DOCTYPE %s  SYSTEM '%s'>\n"), mDTDName.GetChars(), mDTDFile.GetChars());
     res += dtd;
   }
   
   if( !mStyleSheetType.IsEmpty() && !mStyleSheetFile.IsEmpty())
   {
     nglString styleSheet;
-    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%ls\" href=\"%ls\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
+    styleSheet.CFormat(_T("<?xml-stylesheet type=\"%s\" href=\"%s\" ?>\n"), mStyleSheetType.GetChars(), mStyleSheetFile.GetChars());
     res+= styleSheet;
   }
   

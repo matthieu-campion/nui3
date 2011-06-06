@@ -335,7 +335,7 @@ bool nuiCommandManager::Undo()
   
   if (!last->CanUndo())
   {
-      NGL_OUT(_T("command manager : %ls can't undo!\n"), last->GetName().GetChars());
+      NGL_OUT(_T("command manager : %s can't undo!\n"), last->GetName().GetChars());
       return false;
   }
   
@@ -460,7 +460,7 @@ bool nuiCommandManager::Repeat()
   
   if (!last->CanRepeat())
   {
-      NGL_OUT(_T("command manager : %ls can't repeat!\n"), last->GetName().GetChars());
+      NGL_OUT(_T("command manager : %s can't repeat!\n"), last->GetName().GetChars());
       return false;
   }
   
@@ -580,7 +580,7 @@ nglString row;
     inst->DumpFormat(dStr);
     inst->DumpFormat(uStr);
     
-    res.Format(_T("-%ls-\n|%ls|%ls|\n"), row.GetChars(), dStr.GetChars(), uStr.GetChars());
+    res.Format(_T("-%s-\n|%s|%s|\n"), row.GetChars(), dStr.GetChars(), uStr.GetChars());
     res.Append(_T("-")).Append(row).Append(_T("-\n"));
     
     
@@ -614,7 +614,7 @@ nglString row;
         inst->DumpFormat(dStr);
         inst->DumpFormat(uStr);
         
-        tmp.Format(_T("|%ls|%ls|\n"), dStr.GetChars(), uStr.GetChars());
+        tmp.Format(_T("|%s|%s|\n"), dStr.GetChars(), uStr.GetChars());
         res.Append(tmp);
 
     }

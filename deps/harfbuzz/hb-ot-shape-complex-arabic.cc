@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -55,9 +55,9 @@ enum {
  * Joining types:
  */
 
-#include "hb-ot-shape-complex-arabic-table.h"
+#include "hb-ot-shape-complex-arabic-table.hh"
 
-static unsigned int get_joining_type (hb_codepoint_t u, hb_category_t gen_cat)
+static unsigned int get_joining_type (hb_codepoint_t u, hb_unicode_general_category_t gen_cat)
 {
   /* TODO Macroize the magic bit operations */
 
@@ -67,11 +67,19 @@ static unsigned int get_joining_type (hb_codepoint_t u, hb_category_t gen_cat)
       return j_type;
   }
 
+  /* Mongolian joining data is not in ArabicJoining.txt yet */
+  if (unlikely (0x1800 <= u && u <= 0x18AF))
+  {
+    /* All letters, SIBE SYLLABLE BOUNDARY MARKER, and NIRUGU are D */
+    if (gen_cat == HB_UNICODE_GENERAL_CATEGORY_OTHER_LETTER || u == 0x1807 || u == 0x180A)
+      return JOINING_TYPE_D;
+  }
+
   if (unlikely ((u & ~(0x200C^0x200D)) == 0x200C)) {
     return u == 0x200C ? JOINING_TYPE_U : JOINING_TYPE_C;
   }
 
-  return ((1<<gen_cat) & ((1<<HB_CATEGORY_NON_SPACING_MARK)|(1<<HB_CATEGORY_ENCLOSING_MARK)|(1<<HB_CATEGORY_FORMAT))) ?
+  return ((1<<gen_cat) & ((1<<HB_UNICODE_GENERAL_CATEGORY_NON_SPACING_MARK)|(1<<HB_UNICODE_GENERAL_CATEGORY_ENCLOSING_MARK)|(1<<HB_UNICODE_GENERAL_CATEGORY_FORMAT))) ?
 	 JOINING_TYPE_T : JOINING_TYPE_U;
 }
 
@@ -146,6 +154,9 @@ static const struct arabic_state_table_entry {
 void
 _hb_ot_shape_complex_collect_features_arabic	(hb_ot_shape_plan_t *plan, const hb_segment_properties_t  *props)
 {
+  /* ArabicOT spec enables 'cswh' for Arabic where as for basic shaper it's disabled by default. */
+  plan->map.add_bool_feature (HB_TAG('c','s','w','h'));
+
   unsigned int num_features = props->script == HB_SCRIPT_SYRIAC ? SYRIAC_NUM_FEATURES : COMMON_NUM_FEATURES;
   for (unsigned int i = 0; i < num_features; i++)
     plan->map.add_bool_feature (arabic_syriac_features[i], false);
@@ -159,7 +170,7 @@ _hb_ot_shape_complex_setup_masks_arabic	(hb_ot_shape_context_t *c)
 
   for (unsigned int i = 0; i < count; i++)
   {
-    unsigned int this_type = get_joining_type (c->buffer->info[i].codepoint, (hb_category_t) c->buffer->info[i].general_category());
+    unsigned int this_type = get_joining_type (c->buffer->info[i].codepoint, (hb_unicode_general_category_t) c->buffer->info[i].general_category());
 
     if (unlikely (this_type == JOINING_TYPE_T)) {
       c->buffer->info[i].arabic_shaping_action() = NONE;

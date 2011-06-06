@@ -198,7 +198,7 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
 #endif
     }
     
-    NGL_LOG(_T("network"), 0, _T("nuiNetworkHost::Resolve error: %ls\n"), err.GetChars());
+    NGL_LOG(_T("network"), 0, _T("nuiNetworkHost::Resolve error: %s\n"), err.GetChars());
   }
   
 

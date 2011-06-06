@@ -91,7 +91,7 @@ void nglDataFilesObject::SetDragItemFlavorData(DragRef dragRef, DragItemRef& ite
       err = ::SetDragItemFlavorData(dragRef, itemRef, kDragFlavorTypeHFS, &hfsInfo, sizeof (hfsInfo), 0);
       NGL_ASSERT(!err);
         
-      //NGL_OUT("Adding file to drag data, itemRef is %d: %ls\n", itemRef, (*i).GetChars());
+      //NGL_OUT("Adding file to drag data, itemRef is %d: %s\n", itemRef, (*i).GetChars());
       return;
     }
   }
@@ -238,7 +238,7 @@ void nglDataTextObject::SetDragItemFlavorData(DragRef dragRef, DragItemRef& item
   memcpy(dataPtr, (const void*)(GetData().GetChars()), dataSize);
   ((char*)dataPtr)[dataSize] = '\0';
   ::SetDragItemFlavorData(dragRef, itemRef, flavorType, dataPtr, dataSize, 0);
-  //NGL_OUT("DragSendDataFunction() Size: %d Text: [%ls]\n", dataSize, (char*)dataPtr);
+  //NGL_OUT("DragSendDataFunction() Size: %d Text: [%s]\n", dataSize, (char*)dataPtr);
 }
 
 void nglDataTextObject::GetFlavorData(DragRef dragRef, DragItemRef& itemRef, FlavorType flavorType)

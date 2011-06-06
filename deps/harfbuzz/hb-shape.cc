@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright © 2009  Red Hat, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -24,7 +24,7 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#include "hb-private.h"
+#include "hb-private.hh"
 
 #include "hb-shape.h"
 
@@ -39,26 +39,54 @@
 HB_BEGIN_DECLS
 
 
-void
-hb_shape (hb_font_t    *font,
-	  hb_face_t    *face,
-	  hb_buffer_t  *buffer,
-	  hb_feature_t *features,
-	  unsigned int  num_features)
+static void
+hb_shape_internal (hb_font_t          *font,
+		   hb_buffer_t        *buffer,
+		   const hb_feature_t *features,
+		   unsigned int        num_features)
 {
-#if 0 && defined(HAVE_GRAPHITE)
-  hb_blob_t *silf_blob;
-  silf_blob = hb_face_get_table (face, HB_GRAPHITE_TAG_Silf);
-  if (hb_blob_get_length(silf_blob))
-  {
-    hb_graphite_shape(font, face, buffer, features, num_features);
-    hb_blob_destroy(silf_blob);
-    return;
-  }
-  hb_blob_destroy(silf_blob);
-#endif
+  hb_ot_shape (font, buffer, features, num_features);
+}
 
-  hb_ot_shape (font, face, buffer, features, num_features);
+void
+hb_shape (hb_font_t          *font,
+	  hb_buffer_t        *buffer,
+	  const hb_feature_t *features,
+	  unsigned int        num_features)
+{
+  hb_segment_properties_t orig_props;
+
+  orig_props = buffer->props;
+
+  /* If script is set to INVALID, guess from buffer contents */
+  if (buffer->props.script == HB_SCRIPT_INVALID) {
+    hb_unicode_funcs_t *unicode = buffer->unicode;
+    unsigned int count = buffer->len;
+    for (unsigned int i = 0; i < count; i++) {
+      hb_script_t script = unicode->get_script (buffer->info[i].codepoint);
+      if (likely (script != HB_SCRIPT_COMMON &&
+		  script != HB_SCRIPT_INHERITED &&
+		  script != HB_SCRIPT_UNKNOWN)) {
+        buffer->props.script = script;
+        break;
+      }
+    }
+  }
+
+  /* If direction is set to INVALID, guess from script */
+  if (buffer->props.direction == HB_DIRECTION_INVALID) {
+    buffer->props.direction = hb_script_get_horizontal_direction (buffer->props.script);
+  }
+
+  /* If language is not set, use default language from locale */
+  if (buffer->props.language == HB_LANGUAGE_INVALID) {
+    /* TODO get_default_for_script? using $LANGUAGE */
+    buffer->props.language = hb_language_get_default ();
+  }
+
+  hb_shape_internal (font, buffer, features, num_features);
+
+  buffer->props = orig_props;
 }
 
 

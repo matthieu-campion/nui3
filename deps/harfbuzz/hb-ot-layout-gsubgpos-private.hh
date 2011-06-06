@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2007,2008,2009,2010  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2007,2008,2009,2010  Red Hat, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -53,8 +53,10 @@ HB_BEGIN_DECLS
 struct hb_apply_context_t
 {
   unsigned int debug_depth;
-  hb_ot_layout_context_t *layout;
+  hb_font_t *font;
+  hb_face_t *face;
   hb_buffer_t *buffer;
+  hb_direction_t direction;
   hb_mask_t lookup_mask;
   unsigned int context_length;
   unsigned int nesting_level_left;
@@ -133,7 +135,7 @@ static inline bool match_input (hb_apply_context_t *c,
 
   for (i = 1, j = c->buffer->i + 1; i < count; i++, j++)
   {
-    while (_hb_ot_layout_skip_mark (c->layout->face, &c->buffer->info[j], c->lookup_props, NULL))
+    while (_hb_ot_layout_skip_mark (c->face, &c->buffer->info[j], c->lookup_props, NULL))
     {
       if (unlikely (j + count - i == end))
 	return false;
@@ -155,12 +157,12 @@ static inline bool match_backtrack (hb_apply_context_t *c,
 				    match_func_t match_func,
 				    const void *match_data)
 {
-  if (unlikely (c->buffer->out_len < count))
+  if (unlikely (c->buffer->backtrack_len () < count))
     return false;
 
-  for (unsigned int i = 0, j = c->buffer->out_len - 1; i < count; i++, j--)
+  for (unsigned int i = 0, j = c->buffer->backtrack_len () - 1; i < count; i++, j--)
   {
-    while (_hb_ot_layout_skip_mark (c->layout->face, &c->buffer->out_info[j], c->lookup_props, NULL))
+    while (_hb_ot_layout_skip_mark (c->face, &c->buffer->out_info[j], c->lookup_props, NULL))
     {
       if (unlikely (j + 1 == count - i))
 	return false;
@@ -188,7 +190,7 @@ static inline bool match_lookahead (hb_apply_context_t *c,
 
   for (i = 0, j = c->buffer->i + offset; i < count; i++, j++)
   {
-    while (_hb_ot_layout_skip_mark (c->layout->face, &c->buffer->info[j], c->lookup_props, NULL))
+    while (_hb_ot_layout_skip_mark (c->face, &c->buffer->info[j], c->lookup_props, NULL))
     {
       if (unlikely (j + count - i == end))
 	return false;
@@ -242,7 +244,7 @@ static inline bool apply_lookup (hb_apply_context_t *c,
    */
   for (unsigned int i = 0; i < count; /* NOP */)
   {
-    while (_hb_ot_layout_skip_mark (c->layout->face, &c->buffer->info[c->buffer->i], c->lookup_props, NULL))
+    while (_hb_ot_layout_skip_mark (c->face, &c->buffer->info[c->buffer->i], c->lookup_props, NULL))
     {
       if (unlikely (c->buffer->i == end))
 	return true;
@@ -562,7 +564,7 @@ static inline bool chain_context_lookup (hb_apply_context_t *c,
 					 ChainContextLookupContext &lookup_context)
 {
   /* First guess */
-  if (unlikely (c->buffer->out_len < backtrackCount ||
+  if (unlikely (c->buffer->backtrack_len () < backtrackCount ||
 		c->buffer->i + inputCount + lookaheadCount > c->buffer->len ||
 		inputCount + lookaheadCount > c->context_length))
     return false;

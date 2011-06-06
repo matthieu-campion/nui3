@@ -135,7 +135,7 @@ nglThread::nglThread(const nglString& rName, Priority priority)
 //
 nglThread::~nglThread()
 {
- // NGL_OUT(_T("nglThread::~nglThread() [this=0x%x '%ls']\n"), this, GetName().GetChars());
+ // NGL_OUT(_T("nglThread::~nglThread() [this=0x%x '%s']\n"), this, GetName().GetChars());
   CloseHandle(mpData->mThread);
   delete mpData;
   mpData = NULL;
