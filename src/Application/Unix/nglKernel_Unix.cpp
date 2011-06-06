@@ -55,6 +55,8 @@ nglKernel::~nglKernel()
 /*
   if (isatty(STDIN_FILENO)) tcsetattr (STDIN_FILENO, TCSANOW, &mTermInfo);
 */
+  Exit(0);
+
 }
 
 

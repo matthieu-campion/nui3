@@ -443,19 +443,34 @@ void nuiTexture::ClearAll()
   // Now we can release the other textures...
   nuiTextureMap::iterator it = mpTextures.begin();
   nuiTextureMap::iterator end = mpTextures.end();
-
+  std::vector<nuiTexture*> temp;
   while (it != end)
   {
     nglString TexName(it->first);
     nuiTexture* pTex = it->second;
+    temp.push_back(pTex);
     //delete pTex; // the destructor of an nuiTexture removes that texture from the nuiTextureMap automatically so the only way not to get lost with the next it is to restart at the begining.
-    pTex->Release();
-    it = mpTextures.begin();
+    //pTex->Release();
+    //it = mpTextures.begin();
+    ++it;
   }
 
+  for (int32 i = 0; i < temp.size(); i++)
+  {
+    nuiTexture* pTex = temp[i];
+    if (pTex->GetRefCount() > 1)
+    {
+      NGL_OUT(_T("nuiTexture::ClearAll() - '%ls' %p still had %d references\n"), pTex->GetObjectName().GetChars(), pTex, pTex->GetRefCount());
+    }
+    
+    pTex->Release();
+  }
+  
   mpTextures.clear();
   mpSharedContext = NULL;
+  mTextureCaches.clear();
   TexturesChanged();
+
 }
 
 void nuiTexture::InitTextures()

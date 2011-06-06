@@ -301,7 +301,10 @@ void nuiDrawContext::SetTexture(nuiTexture* pTex)
   
   mCurrentState.mpTexture = pTex ;
   if (pTex)
+  {
+    pTex->CheckValid();
     pTex->Acquire();
+  }
   if (pOld)
     pOld->Release();
   mStateChanges++;

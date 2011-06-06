@@ -76,6 +76,8 @@ public:
   {
     return mBuilder;
   }
+
+  void Uninit();
 protected:
   nuiBuilderMap mBuilderMap;
   nuiWidgetCreatorMap mCreatorMap;

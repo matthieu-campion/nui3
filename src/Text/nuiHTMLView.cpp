@@ -737,6 +737,8 @@ void nuiHTMLView::ParseTable(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
         ParseTableRow(pChild, pNewBox, index);
         index++;
         break;
+      default:
+        break;
     }
   }
 }
@@ -776,6 +778,8 @@ void nuiHTMLView::ParseTableRow(nuiHTMLNode* pNode, nuiHTMLTable* pBox, int32 ro
           colindex++;
         }
       break;
+      default:
+        break;
     }
   }
 }
@@ -816,12 +820,16 @@ void nuiHTMLView::ParseList(nuiHTMLNode* pNode, nuiHTMLBox* pBox)
             break;
           case nuiHTMLNode::eTag_DL:
             break;
+          default:
+            break;
         }
         nuiHTMLText* pText = new nuiHTMLText(pListItem, mpCurrentAnchor, txt);
         pListItemBox->AddItem(pText);
         ParseBody(pListItem, pListItemBox);
       }
       break;
+      default:
+        break;
     }
     
     items++;

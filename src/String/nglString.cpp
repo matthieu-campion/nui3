@@ -32,13 +32,12 @@ licence: see nui3/LICENCE.TXT
 #define ngl_vsnwprintf vswprintf
 #define ngl_snprintf	snprintf
 #define ngl_strcmp wcscmp
-#define ngl_stricmp wcscasecmp
+#define ngl_stricmp ngl_wcscasecmp
 #define ngl_strncmp wcsncmp
-#define ngl_strnicmp wcsncasecmp
+#define ngl_strnicmp ngl_wcsncasecmp
 #define ngl_mbs_stricmp strcasecmp
 
-#if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_6) || (__IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_3_0)
-static int wcscasecmp(const nglChar* s1, const nglChar* s2)
+static int ngl_wcscasecmp(const nglChar* s1, const nglChar* s2)
 {
   nglChar c1;
   nglChar c2;
@@ -66,7 +65,7 @@ static int wcscasecmp(const nglChar* s1, const nglChar* s2)
   return c1 - c2;
 }
 
-static int wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
+static int ngl_wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
 {
   nglChar c1;
   nglChar c2;
@@ -95,7 +94,6 @@ static int wcsncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
     return -1;
   return c1 - c2;
 }
-#endif
 
 #elif defined _LINUX_
 #include <wctype.h>

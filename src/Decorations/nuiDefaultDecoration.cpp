@@ -117,8 +117,6 @@ void nuiDefaultDecoration::Exit()
 
   mIcons.clear();
   mImages.clear();
-  
-  nuiTexture::ClearAll();
 }
 
 

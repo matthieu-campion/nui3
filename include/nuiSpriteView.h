@@ -78,6 +78,7 @@ public:
 protected:
   static std::map<nglString, nuiSpriteDef*> mSpriteMap;
   void Init();
+  static void Uninit();
   std::vector<nuiSpriteAnimation*> mpAnimations;
 };
 
