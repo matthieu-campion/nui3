@@ -83,7 +83,7 @@ nglFile::nglFile (const nglPath& rPath, nglFileMode Mode, bool OpenNow)
 	mMode      = Mode;
 	mEndian    = eEndianNative;
 	mAutoFlush = false;
-#if (defined _LINUX_) || (defined __APPLE__)
+#if (defined _LINUX_) || (defined __APPLE__) || (defined _ANDROID_)
 	mFD        = -1;
 #endif
 #ifdef WINCE
@@ -99,7 +99,7 @@ nglFile::nglFile (const nglPath& rPath, nglFileMode Mode, bool OpenNow)
 nglFile::~nglFile()
 {
   bool close = true;
-#if (defined _LINUX_) || (defined __APPLE__)
+#if (defined _LINUX_) || (defined __APPLE__) || (defined _ANDROID_)
 	close = (mFD != -1);
 #endif
 #ifdef WINCE
@@ -774,7 +774,7 @@ int64 nglFile::Write (const void* pData, int64 WordCount, uint WordSize)
 #endif // _WIN32_
 
 
-#if ((defined __APPLE__)||(defined _LINUX_))
+#if ((defined __APPLE__)||(defined _LINUX_)) || (defined _ANDROID_)
 
 /* Implemented in file/File_shr.cpp */
 extern const nglChar* File_mode(nglFileMode mode);

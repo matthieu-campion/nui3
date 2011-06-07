@@ -19,12 +19,20 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := libnui3
 LOCAL_CFLAGS    := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DNGL_STATIC_BUILD -DHAVE_BCOPY -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DFT_CONFIG_OPTION_SYSTEM_ZLIB -DHAVE_BCOPY -DFEATURE_NANOJIT -DJS_TRACER -DXP_UNIX -DAVMPLUS_IA32 -D_DEBUG -DDEBUG -D_ANDROID_ -fexceptions -fvisibility=hidden -fno-threadsafe-statics -Wno-deprecated-declarations -I. -Iinclude -Ideps/libpng -Ideps/gameswf -Ideps/zlib -Ideps/ungif -Ideps/ucdata -Ideps/libjpeg -Isrc/Application/Carbon -Isrc/Stream/Zip -Ideps/freetype2/include -Ideps/expat/include -Ideps/harfbuzz -Ideps/expat/lib -Ideps/tracemonkey -Ideps/libcss/src -Ideps/libcss/src/libwapcaplet -Ideps/libcss/src/libparserutils -Ideps/libcss/include -Ideps/tidy -Ideps -Ideps/glu -Isrc/Text/HTML -Isrc/Application/Unix
 
+LOCAL_ARM_MODE := arm
+
 NUI_LOCAL_SRC_FILES_ANIMATIONS := ../src/Base/nuiAnimation.cpp \
                                   ../src/Animations/nuiAttributeAnimation.cpp \
                                   ../src/Animations/nuiWidgetAnimation.cpp
 
 
 NUI_LOCAL_SRC_FILES_APPLICATION := ../src/Application/nglApplication.cpp \
+                                   ../src/Application/Android/nglApplication_Android.cpp \
+                                   ../src/Application/Android/nglClipBoard_Android.cpp \
+                                   ../src/Application/Android/nglConsole_Android.cpp \
+                                   ../src/Application/Android/nglDataObjects_Android.cpp \
+                                   ../src/Application/Android/nglKernel_Android.cpp \
+                                   ../src/Application/Android/nglModule_Android.cpp \
                                    ../src/Application/nglClipBoard.cpp \
                                    ../src/Application/nglConsole.cpp \
                                    ../src/Application/nglCPUInfo.cpp \
@@ -36,11 +44,7 @@ NUI_LOCAL_SRC_FILES_APPLICATION := ../src/Application/nglApplication.cpp \
                                    ../src/Application/nglMimeSource.cpp \
                                    ../src/Application/nglModule.cpp \
                                    ../src/Application/nuiLocale.cpp \
-                                   ../src/Application/Unix/nglClipBoard_Unix.cpp \
-                                   ../src/Application/Unix/nglConsole_Unix.cpp \
-                                   ../src/Application/Unix/nglDataObjects_Unix.cpp \
-                                   ../src/Application/Unix/nglKernel_Unix.cpp \
-                                   ../src/Application/Unix/nglModule_Unix.cpp \
+
 
 
 NUI_LOCAL_SRC_FILES_ATTRIBUTES := ../src/Attributes/nuiAttribute.cpp \
@@ -116,6 +120,7 @@ NUI_LOCAL_SRC_FILES_BASE := ../src/Base/nuiBindingManager.cpp \
                             ../src/Base/nuiXML.cpp \
                             ../src/Base/nuiApplication.cpp \
                             ../src/Base/nuiTask.cpp \
+                            ../src/Base/nuiHTML.cpp \
 
 
 NUI_LOCAL_SRC_FILES_BINDINGS := ../src/Bindings/nuiBindings.cpp \
@@ -156,7 +161,7 @@ NUI_LOCAL_SRC_FILES_FONT := ../src/Font/nuiFont.cpp \
                             ../src/Font/nuiFontInstance.cpp \
                             ../src/Font/nuiFontLayout.cpp \
                             ../src/Font/nuiPanose.cpp \
-
+                            ../src/Font/ngl_default_font.cpp \
 
 NUI_LOCAL_SRC_FILES_IMAGE := ../src/Image/nglBitmapTools.cpp \
                              ../src/Image/nglImage.cpp \
@@ -221,7 +226,8 @@ NUI_LOCAL_SRC_FILES_NAVIGATIONS_VIEWS := ../src/NavigationViews/nuiViewControlle
 
 
 NUI_LOCAL_SRC_FILES_NET := ../src/Net/nuiNetworkHost.cpp \
-../src/Net/Unix/nuiURL_Unix.cpp \
+                           ../src/Net/Android/nuiURL_Android.cpp \
+                           ../src/Net/Android/nuiHTTP_Android.cpp \
                            ../src/Net/nuiSocket.cpp \
                            ../src/Net/nuiTCPClient.cpp \
                            ../src/Net/nuiTCPServer.cpp \
@@ -254,6 +260,7 @@ NUI_LOCAL_SRC_FILES_RENDERERS := ../src/Renderers/nuiDrawContext.cpp \
                                  ../src/Renderers/nuiSurface.cpp \
                                  ../src/Renderers/nuiTexture.cpp \
                                  ../src/Renderers/nuiTextureHelpers.cpp \
+                                 ../src/Renderers/AAPrimitives.cpp \
                                  $(NUI_LOCAL_SRC_FILES_RENDERERS_PAINTERS) \
                                  $(NUI_LOCAL_SRC_FILES_RENDERERS_SHAPES_CONTOURS) \
 
@@ -304,9 +311,13 @@ NUI_LOCAL_SRC_FILES_STREAM := ../src/Stream/nglIFile.cpp \
                               ../src/Stream/nglStream.cpp \
                               ../src/Stream/nglZipFS.cpp \
                               ../src/Stream/nuiAsyncIStream.cpp \
+                              ../src/Stream/Zip/ioapi.c \
+                              ../src/Stream/Zip/unzip.c \
+                              ../src/Stream/Zip/zip.c \
 
 
 NUI_LOCAL_SRC_FILES_STRING := ../src/String/nglString.cpp \
+                              ../src/String/nglStringConv_Android.cpp \
                               ../src/String/nuiRegExp.cpp \
                               ../src/String/nuiTranslator.cpp \
                               ../src/String/ConvertUTF.cpp \
@@ -349,6 +360,7 @@ NUI_LOCAL_SRC_FILES_THREADING := ../src/Threading/posix/nglCondition_posix.cpp \
 
 NUI_LOCAL_SRC_FILES_TIME := ../src/Time/nglTime.cpp \
                             ../src/Time/nglTimer.cpp \
+                            ../src/Time/Android/nglTimer_Android.cpp \
 
 
 NUI_LOCAL_SRC_FILES_TREE_VIEWS := ../src/TreeViews/nuiPopupMenu.cpp \
@@ -380,8 +392,12 @@ NUI_LOCAL_SRC_FILES_WIDGET_TREE := ../src/WidgetTree/nuiContainer.cpp \
 
 
 NUI_LOCAL_SRC_FILES_WINDOW := ../src/Window/nglContext.cpp \
-                              ../src/Window/Unix/nglEvent_Unix.cpp \
-                              ../src/Window/Unix/nuiMainMenu_Unix.cpp \
+                              ../src/Window/Android/nglContext_Android.cpp \
+                              ../src/Window/Android/nglEvent_Android.cpp \
+                              ../src/Window/Android/nglInputDevice_Android.cpp \
+                              ../src/Window/Android/nglVideoMode_Android.cpp \
+                              ../src/Window/Android/nglWindow_Android.cpp \
+                              ../src/Window/Android/nuiMainMenu_Android.cpp \
                               ../src/Window/nglDeviceInfo.cpp \
                               ../src/Window/nglInputDevice.cpp \
                               ../src/Window/nglInputDeviceInstance.cpp \
@@ -397,22 +413,22 @@ NUI_LOCAL_SRC_FILES_WINDOW := ../src/Window/nglContext.cpp \
 
 
 LOCAL_SRC_FILES := ../src/Application/Win/ngl.cpp \
+                   $(NUI_LOCAL_SRC_FILES_BASE) \
+                   $(NUI_LOCAL_SRC_FILES_RENDERERS) \
+                   $(NUI_LOCAL_SRC_FILES_TIME) \
                    $(NUI_LOCAL_SRC_FILES_WINDOW) \
                    $(NUI_LOCAL_SRC_FILES_NET) \
                    $(NUI_LOCAL_SRC_FILES_APPLICATION) \
-                   $(NUI_LOCAL_SRC_FILES_BASE) \
                    $(NUI_LOCAL_SRC_FILES_STREAM) \
                    $(NUI_LOCAL_SRC_FILES_THREADING) \
                    $(NUI_LOCAL_SRC_FILES_WIDGET_TREE) \
                    $(NUI_LOCAL_SRC_FILES_VIDEO) \
                    $(NUI_LOCAL_SRC_FILES_UTILS) \
                    $(NUI_LOCAL_SRC_FILES_TREE_VIEWS) \
-                   $(NUI_LOCAL_SRC_FILES_TIME) \
                    $(NUI_LOCAL_SRC_FILES_TEXT) \
                    $(NUI_LOCAL_SRC_FILES_STRING) \
                    $(NUI_LOCAL_SRC_FILES_SPRITES) \
                    $(NUI_LOCAL_SRC_FILES_SIMPLE_WIDGETS) \
-                   $(NUI_LOCAL_SRC_FILES_RENDERERS) \
                    $(NUI_LOCAL_SRC_FILES_NAVIGATIONS_VIEWS) \
                    $(NUI_LOCAL_SRC_FILES_LAYOUT) \
                    $(NUI_LOCAL_SRC_FILES_JSON) \

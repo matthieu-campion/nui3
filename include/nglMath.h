@@ -32,17 +32,19 @@
   #define M_2_SQRTPI     1.12837916709551257390  /* 2/sqrt(pi) */
   #define M_SQRT2        1.41421356237309504880  /* sqrt(2) */
   #define M_SQRT1_2      0.70710678118654752440  /* 1/sqrt(2) */
-
-  inline double log2(double x)
-  {
-    return log(x)/0.30102999566398119521373889472449; // log2(x) = log10(x)/log10(2)
-  }
-
-  inline float log2f(float x)
-  {
-    return logf(x)/0.30102999566398119521373889472449f; // log2(x) = log10(x)/log10(2)
-  }
 #endif // _WIN32 || __MWERKS__
+
+#if (defined WIN32) || (defined _ANDROID_)
+inline double log2(double x)
+{
+  return log(x)/0.30102999566398119521373889472449; // log2(x) = log10(x)/log10(2)
+}
+
+inline float log2f(float x)
+{
+  return logf(x)/0.30102999566398119521373889472449f; // log2(x) = log10(x)/log10(2)
+}
+#endif
 
 #define DEG2RAD(x) ((x) * M_PI / 180.0f)
 #define RAD2DEG(x) ((x) * 180.0f / M_PI)
