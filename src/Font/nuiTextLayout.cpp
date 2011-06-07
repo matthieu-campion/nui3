@@ -122,7 +122,7 @@ nuiRect nuiTextRun::GetRect() const
 {
   nuiFontInfo finfo;
   mStyle.GetFont()->GetInfo(finfo);
-  
+  /*
   const nuiGlyphLayout& rGlyph(*it);
   nuiGlyphInfo info;
   rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
@@ -134,6 +134,7 @@ nuiRect nuiTextRun::GetRect() const
   
   nuiRect rr(r);
   r.Union(rr, nuiRect(x, y, w, h));
+   */
 
 }
 

@@ -105,7 +105,9 @@ public:
   bool GetUnderline() const;
   void SetStrikeThrough(bool set);
   bool GetStrikeThrough() const;
-  
+
+  nuiRect GetRect() const;
+
 private:
   friend class nuiTextLayout;
   friend class nuiFontBase;
@@ -147,6 +149,8 @@ public:
   
   float GetAscender() const;
   float GetDescender() const;
+
+  nuiRect GetRect() const;
 
 private:
   friend class nuiTextLayout;

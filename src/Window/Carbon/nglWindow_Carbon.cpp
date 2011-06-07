@@ -248,12 +248,6 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
   err = SetDragSendProc(mDragRef, mSendProc, this);
   NGL_ASSERT(!err);
   
-  mDragRgn = NewRgn();
-  Point offsetPt;
-  SetPt(&offsetPt, 0, 0);
-  LocalToGlobal(&offsetPt);
-  OffsetRgn(mDragRgn, offsetPt.h, offsetPt.v);
-	
 	const nglImage *pImage = pDragObject->GetFeedbackImage();
 	
 	if (pImage)
@@ -298,12 +292,10 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
 	}
   
   
-  err = TrackDrag(mDragRef, &mEventRecord, mDragRgn);
+  err = TrackDrag(mDragRef, &mEventRecord, NULL);
 
 
   bool res = !err ? true : false;
-  
-  DisposeRgn (mDragRgn);
   
   err = DisposeDrag(mDragRef);
   
@@ -389,10 +381,13 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
   
   
   Point mouse;
-  err = GetDragMouse(theDrag, &mouse, NULL);
+  err = ::GetDragMouse(theDrag, &mouse, NULL);
   NGL_ASSERT(!err);
-	SetPort(GetWindowPort(pDnd->mpWin->mWindow));
-  GlobalToLocal(&mouse);
+	Rect rect;
+	GetWindowBounds(pDnd->mpWin->mWindow, kWindowContentRgn, &rect);
+	mouse.h -= rect.left;
+	mouse.v -= rect.top;
+
   nglMouseInfo::Flags Button;
 	
 	DragAttributes flags;
@@ -481,8 +476,10 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         //NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingInWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
         Point mouse;
         err = GetDragMouse (theDrag, &mouse, NULL);
-        SetPort(GetWindowPort(pDnd->mpWin->mWindow));
-        GlobalToLocal(&mouse);
+        Rect rect;
+        GetWindowBounds(pDnd->mpWin->mWindow, kWindowContentRgn, &rect);
+        mouse.h -= rect.left;
+        mouse.v -= rect.top;
         nglMouseInfo::Flags Button;
         
         NGL_ASSERT(pDnd->GetDropObject());
@@ -1418,7 +1415,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   // set bounding rectangle
   if (rInfo.Pos == nglWindowInfo::ePosUser)
   {
-    SetRect(&wRect,rInfo.XPos,rInfo.YPos,rInfo.XPos+rInfo.Width,rInfo.YPos+rInfo.Height); /* left, top, right, bottom */
+    wRect.left = rInfo.XPos;
+    wRect.top = rInfo.YPos;
+    wRect.right = rInfo.XPos + rInfo.Width;
+    wRect.bottom = rInfo.YPos+rInfo.Height; /* left, top, right, bottom */
   }
   else if (rInfo.Pos == nglWindowInfo::ePosCenter)
   {
@@ -1429,7 +1429,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     int x = (w - rInfo.Width)/2;
     int y = (h - rInfo.Height)/2;
     
-    SetRect(&wRect,x,y,x+rInfo.Width,y+rInfo.Height); /* left, top, right, bottom */
+    wRect.left = x;
+    wRect.top = y;
+    wRect.right = x + rInfo.Width;
+    wRect.bottom = y + rInfo.Height; /* left, top, right, bottom */
   }
   else if (rInfo.Pos == nglWindowInfo::ePosMouse)
   {
@@ -1437,7 +1440,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   else if (rInfo.Pos == nglWindowInfo::ePosAuto)
   {
     // TODO: implement correct behaviour
-    SetRect(&wRect,50,50,50+rInfo.Width,50+rInfo.Height); /* left, top, right, bottom */
+    wRect.left = 50;
+    wRect.top = 50;
+    wRect.right = 50 + rInfo.Width;
+    wRect.bottom = 50 + rInfo.Height; /* left, top, right, bottom */
   }
   
   // set title
@@ -1498,7 +1504,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
         y = (h - rInfo.Height)/2;      
       }
       
-      SetRect(&wRect,x,y,x+rInfo.Width,y+rInfo.Height); /* left, top, right, bottom */
+      wRect.left = x;
+      wRect.top = y;
+      wRect.right = x + rInfo.Width;
+      wRect.bottom = y + rInfo.Height; /* left, top, right, bottom */
     }
     else
     {
@@ -1604,7 +1613,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     WindowAttributes attributes = kWindowNoAttributes;//kWindowStandardHandlerAttribute;
     //attributes |= kWindowNoConstrainAttribute;
     
-    SetRect(&wRect,0,0,rInfo.Width,rInfo.Height); /* left, top, right, bottom */
+    wRect.left = 0;
+    wRect.top = 0;
+    wRect.right = rInfo.Width;
+    wRect.bottom = rInfo.Height; /* left, top, right, bottom */
     
     mOSInfo.WindowHandle = NULL;
     OSStatus err = CreateNewWindow (windowClass, attributes, &wRect, &(mOSInfo.WindowHandle));
