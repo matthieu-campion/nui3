@@ -81,6 +81,18 @@ float nuiTextRun::GetAdvanceY() const
   return mAdvanceY;
 }
 
+float nuiTextRun::GetAscender() const
+{
+  return mStyle.GetFont()->GetAscender();
+}
+
+float nuiTextRun::GetDescender() const
+{
+  return mStyle.GetFont()->GetDescender();
+}
+
+
+
 const nglUChar* nuiTextRun::GetUnicodeChars() const
 {
   return mLayout.GetUnicodeChars() + mPosition;
@@ -186,10 +198,36 @@ float nuiTextLine::GetAdvanceX() const
   return x;
 }
 
+float nuiTextLine::GetAscender() const
+{
+  float v = 0;
+  for (uint32 i = 0; i < mpRuns.size(); i++)
+  {
+    v = MAX(v, mpRuns[i]->GetAscender());
+  }
+  
+  return v;
+}
+
+float nuiTextLine::GetDescender() const
+{
+  float v = 0;
+  for (uint32 i = 0; i < mpRuns.size(); i++)
+  {
+    v = MIN(v, mpRuns[i]->GetAscender());
+  }
+  
+  return v;
+}
+
 
 /////////////////
 // nuiTextLayout
 nuiTextLayout::nuiTextLayout(nuiFont* pFont)
+:
+  mXMin(0), mXMax(0), mYMin(0), mYMax(0),
+  mAscender(0),
+  mDescender(0)
 {
   mStyle.SetFont(pFont);
 }
@@ -250,6 +288,9 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     LayoutParagraph(start, position - start); // Eat the \n char
     start = position;
   }
+
+  mAscender = 0;
+  mDescender = 0;
   
   // Find the needed fonts for each script:
   std::map<nuiUnicodeScript, nuiFont*> FontSet;
@@ -286,6 +327,8 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         pFont = nuiFontManager::GetManager().GetFont(request);
       }
       
+      mAscender = MAX(mAscender, pFont->GetAscender());
+      mDescender = MAX(mDescender, pFont->GetDescender());
       FontSet[it->first] = pFont;
       
       printf("%s\n", pFont->GetFamilyName().GetChars());
@@ -302,6 +345,8 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     for (uint32 l = 0; l < pParagraph->size(); l++)
     {
       nuiTextLine* pLine = (*pParagraph)[l];
+      float x = 0;
+      float y = 0;
       for (uint32 r = 0; r < pLine->GetRunCount(); r++)
       { 
         nuiTextRun* pRun = pLine->GetRun(r);
@@ -309,9 +354,16 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
         
-        printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s / %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
+        x += pRun->GetAdvanceX();
+        y += pRun->GetAdvanceY();
 
+        mXMin = MIN(mXMin, x);
+        mXMax = MAX(mXMax, x);
+        mYMin = MIN(mYMin, y);
+        mYMax = MAX(mYMax, y);
         
+        //printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s / %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
+
         i++;
       }
     }
@@ -419,9 +471,46 @@ const nglUChar* nuiTextLayout::GetUnicodeChars() const
 }
 
 ///////////////////////// Old nuiFontLayout interface
-int32  nuiTextLayout::GetMetrics(nuiGlyphInfo& rInfo) const
+int32 nuiTextLayout::GetMetrics(nuiGlyphInfo& rInfo) const
 {
-  return 0;
+  int32 count = GetGlyphCount();
+  rInfo.Index = -count;
+  if (count > 0)
+  {
+    rInfo.Width    = mXMax - mXMin;
+    rInfo.Height   = mYMax - mYMin;
+    rInfo.BearingX = mXMin;
+    rInfo.BearingY = mYMax;
+    
+    float penx = 0;
+    float peny = 0;
+    
+    if (!mpParagraphs.empty())
+    {
+      Paragraph* pLastParagraph = mpParagraphs.back();
+      if (!pLastParagraph->empty())
+      {
+        nuiTextLine* pLastLine = pLastParagraph->back();
+        penx = pLastLine->GetAdvanceX();
+        peny = pLastLine->GetAdvanceY();
+      }
+      
+      
+    }
+    
+    rInfo.AdvanceX = penx;
+    rInfo.AdvanceY = peny;
+  }
+  else
+  {
+    rInfo.Width    = 0.0f;
+    rInfo.Height   = 0.0f;
+    rInfo.BearingX = 0.0f;
+    rInfo.BearingY = 0.0f;
+    rInfo.AdvanceX = 0.0f;
+    rInfo.AdvanceY = 0.0f;
+  }
+  return count;
 }
 
 float nuiTextLayout::GetAscender() const
@@ -451,7 +540,25 @@ const nuiGlyphLayout* nuiTextLayout::GetGlyphAt(float X, float Y) const
 
 nuiRect nuiTextLayout::GetRect() const
 {
-  return mRect;
+  nuiRect r;
+  
+  nuiFontInfo finfo;
+  mStyle.GetFont().GetInfo(finfo);
+  
+  const nuiGlyphLayout& rGlyph(*it);
+  nuiGlyphInfo info;
+  rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
+  nuiSize w = info.AdvanceX;
+  //    nuiSize h = finfo.AdvanceMaxH;
+  nuiSize x = rGlyph.X + info.BearingX;
+  nuiSize y = rGlyph.Y - finfo.Ascender;
+  nuiSize h = finfo.Height;
+  
+  nuiRect rr(r);
+  r.Union(rr, nuiRect(x, y, w, h));
+  
+  
+  return r.Size();
 }
 
 void nuiTextLayout::SetWrapX(nuiSize WrapX)

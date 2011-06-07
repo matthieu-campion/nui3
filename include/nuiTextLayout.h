@@ -91,8 +91,13 @@ public:
   int32 GetPosition() const;
   const nglUChar* GetUnicodeChars() const;
   int32 GetLength() const;
+  
   float GetAdvanceX() const;
   float GetAdvanceY() const;
+  
+  float GetAscender() const;
+  float GetDescender() const;
+
   const std::vector<nuiTextGlyph>& GetGlyphs() const;
   nuiFont* GetFont() const;
   
@@ -139,6 +144,10 @@ public:
   
   float GetAdvanceX() const;
   float GetAdvanceY() const;
+  
+  float GetAscender() const;
+  float GetDescender() const;
+
 private:
   friend class nuiTextLayout;
   
@@ -181,7 +190,7 @@ public:
   float GetDescender() const;
   //@}
   
-  int32  GetGlyphCount() const;
+  int32 GetGlyphCount() const;
   const nuiGlyphLayout* GetGlyph   (uint32 Offset) const;
   const nuiGlyphLayout* GetGlyphAt (float X, float Y) const;
   /*!< Identify a glyph at given coordinates
@@ -199,8 +208,6 @@ public:
   nuiSize GetDensityY() const;
   //@}
   
-  bool AddDummyGlyph(int32 ReferencePos, void* pUserPointer, float W, float H);
-  
   void SetSpacesPerTab(int count);
   int32 GetSpacesPerTab();
   
@@ -215,10 +222,12 @@ public:
 private:
   nuiTextStyle mStyle;
   std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;
-  nuiRect mRect;
   
   float mAscender;
   float mDescender;
+  
+  float mXMin, mXMax;
+  float mYMin, mYMax;
   
   bool LayoutParagraph(int32 start, int32 length);
   
