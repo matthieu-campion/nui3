@@ -17,6 +17,7 @@ precompiled header central file and everything should be rolling. (lookup precom
 #ifndef __nui_all_h__
 #define __nui_all_h__
 
+#include "nglLog.h"
 #include "nuiSignalsSlots.h"
 #include "nuiApplication.h"
 #include "nuiProperty.h"

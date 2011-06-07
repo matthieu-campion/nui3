@@ -38,7 +38,16 @@ licence: see nui3/LICENCE.TXT
   #define ngl_mbs_stricmp strcasecmp
 #elif defined _LINUX_
   #include <ctype.h>
-  #define ngl_vsnwprintf vsprintf
+  #define ngl_vsnprintf vsnprintf
+  #define ngl_snprintf	snprintf
+  #define ngl_strcmp strcmp
+  #define ngl_stricmp strcasecmp
+  #define ngl_strncmp strncmp
+  #define ngl_strnicmp strncasecmp
+  #define ngl_mbs_stricmp strcasecmp
+#elif defined _ANDROID_
+  #include <ctype.h>
+  #define ngl_vsnprintf vsnprintf
   #define ngl_snprintf	snprintf
   #define ngl_strcmp strcmp
   #define ngl_stricmp strcasecmp

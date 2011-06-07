@@ -75,7 +75,7 @@ nglPath nuiGetNativeResourcePath()
   return nglPath(nglString(buffer));
 }
 #endif // _CARBON_
-#ifdef _LINUX_
+#if defined _LINUX_ || defined _ANDROID_
 nglPath nuiGetNativeResourcePath()
 {
   nglString ResourcePathName(getenv("NUI_RESOURCE_PATH"));
@@ -98,7 +98,7 @@ nglPath nuiGetNativeResourcePath()
   NGL_OUT(_T("NUI_RESOURCE_PATH: %s\n"), p.GetChars());
   return p;
 }
-#endif //_LINUX_
+#endif //_LINUX_ || _ANDROID_
 
 
 nuiNativeResource::nuiNativeResource(const nglPath& rPath)
@@ -138,7 +138,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   
   mValid = true;
 #endif
-#if defined _CARBON_ || defined _UIKIT_ || defined _COCOA_ || defined _LINUX_
+#if defined _CARBON_ || defined _UIKIT_ || defined _COCOA_ || defined _LINUX_ || defined _ANDROID_
   nglPath resourcePath(nuiGetNativeResourcePath());
   resourcePath += rPath;
 
@@ -150,7 +150,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
     NGL_ASSERT(mpIStream);
     mValid = true;
   }
-#endif // _CARBON_ || _UIKIT_ || _COCOA_ || _LINUX_
+#endif // _CARBON_ || _UIKIT_ || _COCOA_ || _LINUX_ || _ANDROID_
 }
 
 nuiNativeResource::~nuiNativeResource()

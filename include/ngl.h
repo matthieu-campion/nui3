@@ -252,7 +252,7 @@ and in NGL user application code.
 
 /* Unices
  */
-#if defined(_LINUX_) || defined(_FREEBSD_) || defined(_CYGWIN_) || defined(_DARWIN_) 
+#if defined(_LINUX_) || defined(_FREEBSD_) || defined(_CYGWIN_) || defined(_DARWIN_) || defined (_ANDROID_)
 #define _UNIX_
 #endif
 
@@ -276,11 +276,10 @@ and in NGL user application code.
   typedef u_int32_t uint32;
   typedef u_int64_t uint64;
 
-  #ifndef _NOGFX_
+  #if (!defined _NOGFX_) && (!defined _ANDROID_)
   #define _X11_
   #endif
 #endif // _UNIX_
-
 
 /*
  MacOS/UIKit
@@ -490,7 +489,33 @@ typedef wchar_t nglUChar;
 
 #   define __NUI_NO_GLES__
 
-#  ifdef _UIKIT_
+#ifdef _ANDROID_
+
+#    define _OPENGL_ES_
+// Make our GLES Painter available, and disable other Painters...
+#    define  __NUI_NO_GLES__
+#    define __NUI_NO_SOFTWARE__
+#    define __NUI_NO_D3D__
+#    undef __NUI_NO_GL__
+
+// Disable Anti-Aliasing
+//#    define __NUI_NO_AA__
+
+#include <EGL/egl.h>
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+
+// Fake GLU for OpenGLES
+typedef double GLdouble;
+typedef double GLclampd;
+/* TessWinding */
+#define GLU_TESS_WINDING_ODD               100130
+#define GLU_TESS_WINDING_NONZERO           100131
+#define GLU_TESS_WINDING_POSITIVE          100132
+#define GLU_TESS_WINDING_NEGATIVE          100133
+#define GLU_TESS_WINDING_ABS_GEQ_TWO       100134
+
+#  elif defined _UIKIT_
 #    define _OPENGL_ES_
 // Make our GLES Painter available, and disable other Painters...
 #    define  __NUI_NO_GLES__
@@ -552,7 +577,13 @@ typedef wchar_t nglUChar;
 
 #  elif defined _ANDROID_
 #   include <GLES/gl.h>
+#   include <GL/glu.h>
 #   include <GLES/glext.h>
+
+// Dummy BGR flags. Beware! GLES on Android doesn't seem to handle BGR!!!
+#   define GL_BGR  0x80E0
+#   define GL_BGRA 0x80E1
+
 
 #  else
 #    include <GL/gl.h>

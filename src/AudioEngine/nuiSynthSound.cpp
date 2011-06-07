@@ -111,7 +111,7 @@ void nuiSynthSound::InitTables()
     int i;
     float incr;
     float p;
-    Type type = (Type)t;   
+    SignalType type = (SignalType)t;   
     switch (type) 
     {
         // Sinus

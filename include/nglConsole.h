@@ -310,7 +310,7 @@ private:
   nglCriticalSection mCS;
 
   nglConsole(const nglConsole&)
-#ifdef __LINUX__
+#if defined __LINUX__ || defined _ANDROID_
 #ifdef USE_WCHAR
   : mOutputConv(eEncodingInternal, eEncodingNative)
 #endif
@@ -381,7 +381,7 @@ private:
   nglString mLine;
 
   static DWORD WINAPI ThreadProc(LPVOID lpParameter);
-#elif defined(__LINUX__)
+#elif defined(__LINUX__) || defined(_ANDROID_)
 	#ifdef USE_WCHAR
 	  nglStringConv mOutputConv;
 	#endif

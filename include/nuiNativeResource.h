@@ -52,7 +52,7 @@ private:
   bool mValid; 
 };
 
-#if (defined _LINUX_) || (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
+#if (defined _LINUX_) || (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_) || (defined _ANDROID_)
 nglPath nuiGetNativeResourcePath();
 #endif
 

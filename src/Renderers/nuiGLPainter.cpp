@@ -1151,7 +1151,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       for (uint32 i = 0; i < arraycount; i++)
       {
         nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
-#ifdef _UIKIT_
+#if (defined _UIKIT) || (defined _ANDROID_)
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, &(array.mIndices[0]));
 #else
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, &(array.mIndices[0]));
@@ -1171,7 +1171,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       for (uint32 i = 0; i < arraycount; i++)
       {
         nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
-#ifdef _UIKIT_
+#if (defined _UIKIT) || (defined _ANDROID_)
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, &(array.mIndices[0]));
 #else
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, &(array.mIndices[0]));
@@ -1195,7 +1195,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       for (uint32 i = 0; i < arraycount; i++)
       {
         nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
-#ifdef _UIKIT_
+#if (defined _UIKIT) || (defined _ANDROID_)
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, &(array.mIndices[0]));
 #else
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, &(array.mIndices[0]));
@@ -1513,7 +1513,8 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         internalPixelformat = pImage->GetPixelFormat();
         pBuffer = (GLbyte*)pImage->GetBuffer();
         
-#ifndef NUI_IOS
+//#ifndef NUI_IOS
+#if (!defined NUI_IOS) && (!defined _ANDROID_)
         if (pixelformat == GL_BGR)
           internalPixelformat = GL_RGB;
 #endif
