@@ -118,6 +118,24 @@ bool nuiTextRun::GetStrikeThrough() const
   return mStrikeThrough;
 }
 
+nuiRect nuiTextRun::GetRect() const
+{
+  nuiFontInfo finfo;
+  mStyle.GetFont()->GetInfo(finfo);
+  
+  const nuiGlyphLayout& rGlyph(*it);
+  nuiGlyphInfo info;
+  rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
+  nuiSize w = info.AdvanceX;
+  //    nuiSize h = finfo.AdvanceMaxH;
+  nuiSize x = rGlyph.X + info.BearingX;
+  nuiSize y = rGlyph.Y - finfo.Ascender;
+  nuiSize h = finfo.Height;
+  
+  nuiRect rr(r);
+  r.Union(rr, nuiRect(x, y, w, h));
+
+}
 
 ////////////
 //nuiTextLine
@@ -542,20 +560,6 @@ nuiRect nuiTextLayout::GetRect() const
 {
   nuiRect r;
   
-  nuiFontInfo finfo;
-  mStyle.GetFont().GetInfo(finfo);
-  
-  const nuiGlyphLayout& rGlyph(*it);
-  nuiGlyphInfo info;
-  rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
-  nuiSize w = info.AdvanceX;
-  //    nuiSize h = finfo.AdvanceMaxH;
-  nuiSize x = rGlyph.X + info.BearingX;
-  nuiSize y = rGlyph.Y - finfo.Ascender;
-  nuiSize h = finfo.Height;
-  
-  nuiRect rr(r);
-  r.Union(rr, nuiRect(x, y, w, h));
   
   
   return r.Size();
