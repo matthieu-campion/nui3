@@ -8,10 +8,12 @@ LOCAL_SRC_FILES := my_native_code.c
 LOCAL_LDLIBS := -lGLESv1_CM -lEGL -landroid -llog
 
 LOCAL_STATIC_LIBRARIES := android_native_app_glue freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif
+LOCAL_SHARED_LIBRARY := libnui
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,android/native_app_glue)
+$(call import-module,jni)
 $(call import-module,deps/freetype2/jni)
 $(call import-module,deps/expat/jni)
 $(call import-module,deps/glu/libtess/jni)

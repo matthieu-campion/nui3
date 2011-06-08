@@ -17,9 +17,20 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := libnui3
-LOCAL_CFLAGS    := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DNGL_STATIC_BUILD -DHAVE_BCOPY -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DFT_CONFIG_OPTION_SYSTEM_ZLIB -DHAVE_BCOPY -DFEATURE_NANOJIT -DJS_TRACER -DXP_UNIX -DAVMPLUS_IA32 -D_DEBUG -DDEBUG -D_ANDROID_ -fexceptions -fvisibility=hidden -fno-threadsafe-statics -Wno-deprecated-declarations -I. -Iinclude -Ideps/libpng -Ideps/gameswf -Ideps/zlib -Ideps/ungif -Ideps/ucdata -Ideps/libjpeg -Isrc/Application/Carbon -Isrc/Stream/Zip -Ideps/freetype2/include -Ideps/expat/include -Ideps/harfbuzz -Ideps/expat/lib -Ideps/tracemonkey -Ideps/libcss/src -Ideps/libcss/src/libwapcaplet -Ideps/libcss/src/libparserutils -Ideps/libcss/include -Ideps/tidy -Ideps -Ideps/glu -Isrc/Text/HTML -Isrc/Application/Unix
+LOCAL_CFLAGS    := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DNGL_STATIC_BUILD -DHAVE_BCOPY -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DFT_CONFIG_OPTION_SYSTEM_ZLIB -DHAVE_BCOPY -DFEATURE_NANOJIT -DJS_TRACER -DXP_UNIX -DAVMPLUS_IA32 -D_DEBUG -DDEBUG -D_ANDROID_ -fexceptions -fvisibility=hidden -fno-threadsafe-statics -Wno-deprecated-declarations 
 
 LOCAL_ARM_MODE := arm
+
+MY_INCLUDE_FILES :=   \
+                      $(LOCAL_PATH)/.. \
+                      $(LOCAL_PATH)/../include \
+                      $(LOCAL_PATH)/../src/Stream/Zip \
+                      $(LOCAL_PATH)/../src/Text/HTML \
+                      $(LOCAL_PATH)/../src/Application/Unix \
+                      $(LOCAL_PATH)/../deps \
+
+LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
+LOCAL_EXPORT_C_INCLUDES := $(MY_INCLUDE_FILES)
 
 LOCAL_LDLIBS    := -llog -lGLESv1_CM -lz
 LOCAL_STATIC_LIBRARIES := freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif
