@@ -3560,6 +3560,20 @@
 		E53645E40CDF7C8000838C78 /* nuiPopupView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */; };
 		E53645E90CDF7CE300838C78 /* nuiPopupView.h in Headers */ = {isa = PBXBuildFile; fileRef = E53645E80CDF7CE300838C78 /* nuiPopupView.h */; };
 		E53645EA0CDF7CE300838C78 /* nuiPopupView.h in Headers */ = {isa = PBXBuildFile; fileRef = E53645E80CDF7CE300838C78 /* nuiPopupView.h */; };
+		E5396AFD139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E5396AFE139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E5396AFF139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E5396B00139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E5396B01139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E5396B02139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E5396B03139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E5396B04139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E5396B05139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E5396B06139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E5396B07139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E5396B08139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E5396B09139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E5396B0A139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
 		E539DD300C9C8DC50099449B /* nglSyncEvent_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */; };
 		E539DD310C9C8DC50099449B /* nglSyncEvent_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */; };
 		E539DD330C9C8EE80099449B /* nglSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E539DD320C9C8EE80099449B /* nglSyncEvent.h */; };
@@ -7970,6 +7984,8 @@
 		E5354C0A113832B8008F5402 /* nuiObjectInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiObjectInspector.cpp; path = Introspector/nuiObjectInspector.cpp; sourceTree = "<group>"; };
 		E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiPopupView.cpp; sourceTree = "<group>"; };
 		E53645E80CDF7CE300838C78 /* nuiPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPopupView.h; path = include/nuiPopupView.h; sourceTree = SOURCE_ROOT; };
+		E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-ot-shape-complex-indic-table.hh"; path = "harfbuzz/hb-ot-shape-complex-indic-table.hh"; sourceTree = "<group>"; };
+		E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ot-shape-complex-indic.cc"; path = "harfbuzz/hb-ot-shape-complex-indic.cc"; sourceTree = "<group>"; };
 		E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglSyncEvent_posix.cpp; path = src/Threading/posix/nglSyncEvent_posix.cpp; sourceTree = SOURCE_ROOT; };
 		E539DD320C9C8EE80099449B /* nglSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglSyncEvent.h; path = include/nglSyncEvent.h; sourceTree = SOURCE_ROOT; };
 		E540AB5C10DFAC5000791FBA /* nuiAsyncIStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiAsyncIStream.cpp; sourceTree = "<group>"; };
@@ -11684,6 +11700,8 @@
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
+				E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */,
+				E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */,
 				E5B5CC641388968800A3A65D /* hb-version.h */,
 				E56A44691388959B00F053D4 /* hb-mutex-private.hh */,
 				E56A446A1388959B00F053D4 /* hb-ot-maxp-private.hh */,
@@ -12125,6 +12143,7 @@
 				E5345F3D12F3317500F435D9 /* TextureAtlas.h in Headers */,
 				E51C806D136ADE1F004C3FFB /* nuiTextLayout.h in Headers */,
 				E51C807D136ADE98004C3FFB /* hb_nui.h in Headers */,
+				E5396B01139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12960,6 +12979,7 @@
 				E51C807B136ADE98004C3FFB /* hb_nui.h in Headers */,
 				BCF87562137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E41381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
+				E5396AFF139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13344,6 +13364,7 @@
 				E51C807C136ADE98004C3FFB /* hb_nui.h in Headers */,
 				BCF87563137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E51381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
+				E5396B00139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13727,6 +13748,7 @@
 				BC2475041377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 				BCF87561137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E31381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
+				E5396AFE139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14110,6 +14132,7 @@
 				BC2475031377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 				BCF87560137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E21381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
+				E5396AFD139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14491,6 +14514,7 @@
 				E57D214C1318B35B007B3B7A /* nuiNavigationViewDecoration.h in Headers */,
 				E51C806E136ADE1F004C3FFB /* nuiTextLayout.h in Headers */,
 				E51C807E136ADE98004C3FFB /* hb_nui.h in Headers */,
+				E5396B02139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14872,6 +14896,7 @@
 				E57D214D1318B35E007B3B7A /* nuiNavigationViewDecoration.h in Headers */,
 				E51C806F136ADE1F004C3FFB /* nuiTextLayout.h in Headers */,
 				E51C807F136ADE98004C3FFB /* hb_nui.h in Headers */,
+				E5396B03139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16316,6 +16341,7 @@
 				E56399C713703760006920F5 /* nuiFont.cpp in Sources */,
 				E56399C813703760006920F5 /* nuiFontBase.cpp in Sources */,
 				E56399C913703760006920F5 /* nuiFontManager.cpp in Sources */,
+				E5396B08139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16934,6 +16960,7 @@
 				E56399C31370375B006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87567137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684DF1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
+				E5396B06139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17275,6 +17302,7 @@
 				E56399C61370375C006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87568137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684E01381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
+				E5396B07139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17619,6 +17647,7 @@
 				E56399C01370375A006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87566137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684DE1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
+				E5396B05139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17962,6 +17991,7 @@
 				E56399BD13703756006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87565137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684DD1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
+				E5396B04139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18305,6 +18335,7 @@
 				E56399CA13703761006920F5 /* nuiFont.cpp in Sources */,
 				E56399CB13703761006920F5 /* nuiFontBase.cpp in Sources */,
 				E56399CC13703761006920F5 /* nuiFontManager.cpp in Sources */,
+				E5396B09139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18648,6 +18679,7 @@
 				E56399CD13703762006920F5 /* nuiFont.cpp in Sources */,
 				E56399CE13703762006920F5 /* nuiFontBase.cpp in Sources */,
 				E56399CF13703762006920F5 /* nuiFontManager.cpp in Sources */,
+				E5396B0A139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
