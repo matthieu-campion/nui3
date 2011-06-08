@@ -129,7 +129,6 @@ NUI_LOCAL_SRC_FILES_BASE := ../src/Base/nuiBindingManager.cpp \
 
 NUI_LOCAL_SRC_FILES_BINDINGS := ../src/Bindings/nuiBindings.cpp \
                                 ../src/Bindings/nuiScriptEngine.cpp \
-                                ../src/Bindings/Android/nuiSpiderMonkey_Android.cpp \
 
 
 NUI_LOCAL_SRC_FILES_DECORATIONS := ../src/Decorations/nuiBorderDecoration.cpp \
