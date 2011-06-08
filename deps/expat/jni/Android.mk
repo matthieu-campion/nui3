@@ -17,6 +17,7 @@ MY_CFLAGS := \
 LOCAL_MODULE := libexpat
 LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
 LOCAL_CFLAGS    := $(MY_CFLAGS)
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
 lib/xmlparse.c \

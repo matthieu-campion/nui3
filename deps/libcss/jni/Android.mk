@@ -13,6 +13,7 @@ $(LOCAL_PATH)/src/libwapcaplet \
 
 LOCAL_MODULE    := libcss
 LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
 src/charset/detect.c \

@@ -21,6 +21,9 @@ LOCAL_CFLAGS    := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID
 
 LOCAL_ARM_MODE := arm
 
+LOCAL_LDLIBS    := -llog -lGLESv1_CM -lz
+LOCAL_STATIC_LIBRARIES := freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif
+
 NUI_LOCAL_SRC_FILES_ANIMATIONS := ../src/Base/nuiAnimation.cpp \
                                   ../src/Animations/nuiAttributeAnimation.cpp \
                                   ../src/Animations/nuiWidgetAnimation.cpp
@@ -83,6 +86,7 @@ NUI_LOCAL_SRC_FILES_AUDIO_ENGINE := ../src/AudioEngine/nuiAudioDb.cpp \
 NUI_LOCAL_SRC_FILES_AUDIO_SAMPLES := ../src/AudioSamples/nuiAiffReader.cpp \
                                      ../src/AudioSamples/nuiAiffWriter.cpp \
                                      ../src/AudioSamples/nuiAudioDecoder.cpp \
+                                     ../src/AudioSamples/Android/nuiAudioDecoder_Android.cpp \
                                      ../src/AudioSamples/nuiChunkSampleReader.cpp \
                                      ../src/AudioSamples/nuiSample.cpp \
                                      ../src/AudioSamples/nuiSampleInfo.cpp \
@@ -125,6 +129,7 @@ NUI_LOCAL_SRC_FILES_BASE := ../src/Base/nuiBindingManager.cpp \
 
 NUI_LOCAL_SRC_FILES_BINDINGS := ../src/Bindings/nuiBindings.cpp \
                                 ../src/Bindings/nuiScriptEngine.cpp \
+                                ../src/Bindings/Android/nuiSpiderMonkey_Android.cpp \
 
 
 NUI_LOCAL_SRC_FILES_DECORATIONS := ../src/Decorations/nuiBorderDecoration.cpp \
@@ -279,7 +284,6 @@ NUI_LOCAL_SRC_FILES_SIMPLE_WIDGETS := ../src/SimpleWidgets/nuiButton.cpp \
                                       ../src/SimpleWidgets/nuiImage.cpp \
                                       ../src/SimpleWidgets/nuiImageDropZone.cpp \
                                       ../src/SimpleWidgets/nuiKnob.cpp \
-                                      ../src/SimpleWidgets/nuiMesh.cpp \
                                       ../src/SimpleWidgets/nuiOffscreenView.cpp \
                                       ../src/SimpleWidgets/nuiProgressBar.cpp \
                                       ../src/SimpleWidgets/nuiRadioButton.cpp \
@@ -409,10 +413,13 @@ NUI_LOCAL_SRC_FILES_WINDOW := ../src/Window/nglContext.cpp \
                               ../src/Window/glext/ngl_glext_table.cpp \
 
 
+NUI_LOCAL_SRC_FILES_DEFAULT_DECORATION := ../graphics/DefaultDecoration.cpp \
+
 
 
 
 LOCAL_SRC_FILES := ../src/Application/Win/ngl.cpp \
+                   $(NUI_LOCAL_SRC_FILES_DEFAULT_DECORATION) \
                    $(NUI_LOCAL_SRC_FILES_BASE) \
                    $(NUI_LOCAL_SRC_FILES_RENDERERS) \
                    $(NUI_LOCAL_SRC_FILES_TIME) \
@@ -447,7 +454,15 @@ LOCAL_SRC_FILES := ../src/Application/Win/ngl.cpp \
                    $(NUI_LOCAL_SRC_FILES_MATH) \
 
 
-
-LOCAL_LDLIBS    := -llog -lGLESv1_CM
-
 include $(BUILD_SHARED_LIBRARY)
+
+$(call import-module,deps/freetype2/jni)
+$(call import-module,deps/expat/jni)
+$(call import-module,deps/glu/libtess/jni)
+$(call import-module,deps/harfbuzz/jni)
+$(call import-module,deps/libcss/jni)
+$(call import-module,deps/libpng/jni)
+$(call import-module,deps/libjpeg/jni)
+$(call import-module,deps/tidy/jni)
+$(call import-module,deps/ucdata/jni)
+$(call import-module,deps/ungif/jni)

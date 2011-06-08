@@ -234,4 +234,10 @@ void fill_fopen64_filefunc (zlib_filefunc64_def*  pzlib_filefunc_def)
     pzlib_filefunc_def->opaque = NULL;
 }
 
+//#FIXME mat temp hack
+#else
+void fill_fopen64_filefunc (zlib_filefunc64_def*  pzlib_filefunc_def)
+{
+}
+//
 #endif

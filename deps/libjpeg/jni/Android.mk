@@ -9,6 +9,7 @@ MY_INCLUDE_FILES := $(LOCAL_PATH)
 
 LOCAL_MODULE    := libjpeg
 LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
 jcapimin.c \

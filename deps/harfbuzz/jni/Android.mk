@@ -9,23 +9,23 @@ MY_INCLUDE_FILES := $(LOCAL_PATH) $(LOCAL_PATH)/../freetype2/include
 
 LOCAL_MODULE := harfbuzz
 LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
+LOCAL_ARM_MODE := arm
 
 LOCAL_CPP_EXTENSION := .cc
 
 LOCAL_SRC_FILES := \
-hb-blob.c \
+hb-blob.cc \
 hb-buffer.cc \
-hb-common.c \
+hb-common.cc \
 hb-font.cc \
-hb-ft.c \
-hb-language.c \
+hb-ft.cc \
 hb-ot-layout.cc \
 hb-ot-map.cc \
 hb-ot-shape-complex-arabic.cc \
 hb-ot-shape.cc \
-hb-ot-tag.c \
+hb-ot-tag.cc \
 hb-shape.cc \
-hb-unicode.c \
+hb-unicode.cc \
 
 LOCAL_EXPORT_C_INCLUDES := $(MY_INCLUDE_FILES)
 
