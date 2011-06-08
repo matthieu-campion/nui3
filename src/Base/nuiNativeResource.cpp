@@ -75,7 +75,8 @@ nglPath nuiGetNativeResourcePath()
   return nglPath(nglString(buffer));
 }
 #endif // _CARBON_
-#if defined _LINUX_ || defined _ANDROID_
+
+#if defined _LINUX_
 nglPath nuiGetNativeResourcePath()
 {
   nglString ResourcePathName(getenv("NUI_RESOURCE_PATH"));
@@ -96,6 +97,14 @@ nglPath nuiGetNativeResourcePath()
     NGL_OUT(_T("Couldn't find global resource path, looking for it next to the application: %s\n"), p.GetChars());
   }
   NGL_OUT(_T("NUI_RESOURCE_PATH: %s\n"), p.GetChars());
+  return p;
+}
+#endif //_LINUX_
+
+#if defined _ANDROID_
+nglPath nuiGetNativeResourcePath()
+{
+  nglPath p("/data/data");
   return p;
 }
 #endif //_LINUX_ || _ANDROID_

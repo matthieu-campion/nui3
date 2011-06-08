@@ -18,7 +18,7 @@ and in NGL user application code.
 #include "nuiVersion.h"
 
 
-#define USE_WCHAR
+//#define USE_WCHAR
 //#define __NUI_NO_SOFTWARE__
 
 
@@ -668,6 +668,14 @@ typedef unsigned int GLhandleARB;  /* shader object handle */
 #else
 #define NGL_CONFIG_H <ngl_config.tux.h>
 #endif
+
+#ifdef _ANDROID_
+#include "android/log.h"
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "nui", __VA_ARGS__))
+#else
+#define LOGI
+#endif
+
 
 #include "ngl_all.h"
 

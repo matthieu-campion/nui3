@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
+#include "android/log.h"
 
 #define NGL_CONSOLE_PROMPT "> "
 
@@ -33,6 +34,7 @@ nglConsole::nglConsole(bool IsVisible)
   : mOutputConv(eEncodingInternal, eEncodingNative)
 #endif
 {
+  LOGI("Android console ctor");
   Setup(); // Portable code init
 
   mIsVisible = IsVisible;
@@ -40,13 +42,16 @@ nglConsole::nglConsole(bool IsVisible)
   if (!isatty (mFD))
   {
     mFlags = 0;
-    NGL_LOG(_T("console"), NGL_LOG_WARNING, _T("Warning: not connected to a tty, interactive console disabled\n"));
+    //NGL_LOG(_T("console"), NGL_LOG_WARNING, _T("Warning: not connected to a tty, interactive console disabled\n"));
+    LOGI("OK");
     return;
   }
   mFlags = nglEvent::Read | nglEvent::Error;
   App->AddEvent (this);
 
-  if (mIsVisible) NGL_OUT (nglString(NGL_CONSOLE_PROMPT));
+  if (mIsVisible)
+    LOGI(NGL_CONSOLE_PROMPT);
+  LOGI("OK");
 }
 
 nglConsole::~nglConsole()
@@ -71,28 +76,8 @@ void nglConsole::Show (bool IsVisible)
 
 void nglConsole::OnOutput (const nglString& rText)
 {
-#ifdef USE_WCHAR
-  #define NGL_OUTPUT_BUFFER_SIZE 1024
-
-  // 'wchar_t' mode : string buffer is in unicode, convert with fault tolerance
-  int offset = 0;
-  char buffer[NGL_OUTPUT_BUFFER_SIZE + 1];
-
-  do
-  {
-    int to_write = NGL_OUTPUT_BUFFER_SIZE;
-    int to_write0 = to_write;
-
-    rText.Export(offset, buffer, to_write, mOutputConv);
-    buffer[to_write0 - to_write] = '\0';
-    printf (buffer);
-  }
-  while (mOutputConv.GetState() != eStringConv_OK);
-#else
   // 'char' mode : string buffer is considered to use the locale's encoding
-  wprintf (rText.GetChars());
-#endif
-  fflush (stdout);
+  __android_log_print(ANDROID_LOG_INFO, "nui", rText.GetChars());
 }
 
 #define IN_BUFFER_SIZE 1024

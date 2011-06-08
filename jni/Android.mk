@@ -17,7 +17,6 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := libnui3
-LOCAL_CFLAGS    := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DNGL_STATIC_BUILD -DHAVE_BCOPY -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DFT_CONFIG_OPTION_SYSTEM_ZLIB -DHAVE_BCOPY -DFEATURE_NANOJIT -DJS_TRACER -DXP_UNIX -DAVMPLUS_IA32 -D_DEBUG -DDEBUG -D_ANDROID_ -fexceptions -fvisibility=hidden -fno-threadsafe-statics -Wno-deprecated-declarations 
 
 LOCAL_ARM_MODE := arm
 
@@ -29,10 +28,20 @@ MY_INCLUDE_FILES :=   \
                       $(LOCAL_PATH)/../src/Application/Unix \
                       $(LOCAL_PATH)/../deps \
 
+MY_C_FLAGS := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DNGL_STATIC_BUILD -DHAVE_BCOPY -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DFT_CONFIG_OPTION_SYSTEM_ZLIB -DHAVE_BCOPY -DFEATURE_NANOJIT -DJS_TRACER -DXP_UNIX -DAVMPLUS_IA32 -D_DEBUG -DDEBUG -fexceptions -fvisibility=hidden -fno-threadsafe-statics -Wno-deprecated-declarations
+
+MY_LDLIBS := -llog -lGLESv1_CM -lz
+
+
 LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
 LOCAL_EXPORT_C_INCLUDES := $(MY_INCLUDE_FILES)
 
-LOCAL_LDLIBS    := -llog -lGLESv1_CM -lz
+LOCAL_CFLAGS    :=  $(MY_C_FLAGS)
+LOCAL_EXPORT_CFLAGS    :=  $(MY_C_FLAGS)
+
+LOCAL_LDLIBS := $(MY_LDLIBS)
+LOCAL_EXPORT_LDLIBS := $(MY_LDLIBS)
+
 LOCAL_STATIC_LIBRARIES := freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif
 
 NUI_LOCAL_SRC_FILES_ANIMATIONS := ../src/Base/nuiAnimation.cpp \
@@ -463,6 +472,13 @@ LOCAL_SRC_FILES := ../src/Application/Win/ngl.cpp \
                    $(NUI_LOCAL_SRC_FILES_DECORATIONS) \
                    $(NUI_LOCAL_SRC_FILES_MATH) \
 
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libnui3Shared
+LOCAL_STATIC_LIBRARIES := libnui3
 
 include $(BUILD_SHARED_LIBRARY)
 

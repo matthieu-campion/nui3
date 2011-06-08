@@ -11,7 +11,7 @@
 
 #pragma once
 
-#ifndef _UIKIT_
+#if (!defined _UIKIT_) && (!defined _ANDROID_)
 class nuiNativeResourceVolume : public nglVolume
 {
 public:

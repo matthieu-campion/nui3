@@ -77,7 +77,7 @@ static uint32 gNUIReferences = 0;
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 {
-  //printf("nuiInit(%d)\n", gNUIReferences);
+  LOGI("nuiInit(%d)\n", gNUIReferences);
   if (gNUIReferences == 0)
   {
 #ifdef WIN32
@@ -89,11 +89,13 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 
     if (!App)
     {      
+      LOGI("Create __nglKernel proxy app");
 #ifdef _WIN32_
       App = new __NglKernel__(OSHandle, pKernel);
 #else
       App = new __NglKernel__(pKernel);
 #endif
+      LOGI("CallOnInit on __nglKernel proxy app");
       App->CallOnInit();
     }
   }
@@ -101,9 +103,11 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   gNUIReferences++;
 
   // Init the texture manager:
+  LOGI("Init textures");
   nuiTexture::InitTextures();
   
   // Init the font manager:
+  LOGI("Init Fonts");
 
 #if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
   nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
@@ -126,9 +130,11 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   //#endif
 #endif
   
+  LOGI("Init decorations");
   nuiDecoration::InitDecorationEngine();
   
   
+  LOGI("nuiInit done");
   return App != NULL && !App->GetError();
 }
 

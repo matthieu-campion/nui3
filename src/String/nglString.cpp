@@ -56,6 +56,9 @@ licence: see nui3/LICENCE.TXT
   #define ngl_mbs_stricmp strcasecmp
 #endif
 
+#undef LOGI
+#define LOGI
+
 #ifdef WINCE
 #define NO_LOCALE(x) \
 { \

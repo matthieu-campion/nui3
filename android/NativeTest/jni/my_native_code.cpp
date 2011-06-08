@@ -8,14 +8,17 @@
 #include <android/log.h>
 #include <android_native_app_glue.h>
 
-#include "ft2build.h"
-#include FT_FREETYPE_H
+//#include "ft2build.h"
+//#include FT_FREETYPE_H
+//
+//#include "expat.h"
+//
+//typedef double GLdouble; // defined in ngl.h
+//#include "GL/glu.h"
 
-#include "expat.h"
 
-typedef double GLdouble; // defined in ngl.h
-#include "GL/glu.h"
-
+#include "nui.h"
+#include "nuiInit.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
@@ -172,6 +175,18 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event)
   struct engine* engine = (struct engine*)app->userData;
   if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) 
   {
+    if ((AMOTION_EVENT_ACTION_MASK & AMotionEvent_getAction( event )) == AMOTION_EVENT_ACTION_UP)
+    {
+      LOGI("nuiInit");
+      nuiInit(NULL);
+      LOGI("nuiInit OK");
+      
+      LOGI("nuiUninit");
+      nuiUninit();
+      LOGI("nuiUninit OK");
+    }
+
+    
     engine->animating = 1;
     engine->state.x = AMotionEvent_getX(event, 0);
     engine->state.y = AMotionEvent_getY(event, 0);
@@ -200,37 +215,37 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
         engine_init_display(engine);
         engine_draw_frame(engine);
         
-        LOGI("init freetype");
-        FT_Library ftLib;
-        FT_Init_FreeType(&ftLib);
-        LOGI("init freetype OK");
-        
-        FT_Int major;
-        FT_Int minor;
-        FT_Int patch;
-        FT_Library_Version(ftLib, &major, &minor, &patch);
-        LOGI("freetype version %d.%d.%d", major, minor, patch);
-        
-        LOGI("release freetype");
-        FT_Done_FreeType(ftLib);
-        LOGI("release freetype OK");
-        
-        
-        LOGI("create expat xml parser");
-        XML_Parser xmlParser = XML_ParserCreate(NULL);
-        LOGI("create expat xml parser OK");
-        
-        const XML_LChar* expatVersion = XML_ExpatVersion();
-        LOGI("expat version %s", expatVersion);
-        
-        
-        LOGI("create libtess tesselator");
-        GLUtesselator * tesselator = gluNewTess();
-        LOGI("create libtess tesselator OK (0x%d)", tesselator);
-        
-        LOGI("create libtess tesselator");
-
-        LOGI("create libtess tesselator OK (0x%d)", tesselator);
+//        LOGI("init freetype");
+//        FT_Library ftLib;
+//        FT_Init_FreeType(&ftLib);
+//        LOGI("init freetype OK");
+//        
+//        FT_Int major;
+//        FT_Int minor;
+//        FT_Int patch;
+//        FT_Library_Version(ftLib, &major, &minor, &patch);
+//        LOGI("freetype version %d.%d.%d", major, minor, patch);
+//        
+//        LOGI("release freetype");
+//        FT_Done_FreeType(ftLib);
+//        LOGI("release freetype OK");
+//        
+//        
+//        LOGI("create expat xml parser");
+//        XML_Parser xmlParser = XML_ParserCreate(NULL);
+//        LOGI("create expat xml parser OK");
+//        
+//        const XML_LChar* expatVersion = XML_ExpatVersion();
+//        LOGI("expat version %s", expatVersion);
+//        
+//        
+//        LOGI("create libtess tesselator");
+//        GLUtesselator * tesselator = gluNewTess();
+//        LOGI("create libtess tesselator OK (0x%d)", tesselator);
+//        
+//        LOGI("create libtess tesselator");
+//
+//        LOGI("create libtess tesselator OK (0x%d)", tesselator);
 
       }
       break;
@@ -270,7 +285,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
   * event loop for receiving input events and doing other things.
   */
 void android_main(struct android_app* state) 
-{
+{  
   struct engine engine;
   
   // Make sure glue isn't stripped.

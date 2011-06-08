@@ -11,7 +11,7 @@
 
 #include "nuiStopWatch.h"
 
-#ifndef _UIKIT_
+#if (!defined _UIKIT_) && (!defined _ANDROID_)
 nuiNativeResourceVolume::nuiNativeResourceVolume()
 : nglVolume(_T("rsrc"), nglPath(), _T("Native resources"), nglPathVolume::ReadOnly, nglPathVolume::eTypeUnknown)
 {
