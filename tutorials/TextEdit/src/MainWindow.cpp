@@ -76,7 +76,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   if (mpLayout)
   {
     pContext->SetTextColor(nuiColor(0, 0, 0));
-    mpFont->Print(pContext, 10, 20, mpLayout, true);
+    mpLayout->Print(pContext, 10, 20, true);
     //mpFont->Print(pContext, 10, 400, mpLayout, false);
   }
   

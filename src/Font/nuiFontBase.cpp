@@ -2263,6 +2263,44 @@ bool nuiFontBase::PrepareGlyph (int32 Index, nuiGlyphLayout& rGlyph, bool AlignG
   return true;
 }
 
+bool nuiFontBase::PrepareGlyph(nuiTextGlyph& rGlyph, bool AlignGlyphPixels)
+{
+  // Fetch rendered glyph
+  GlyphHandle glyph = GetGlyph(rGlyph.mIndex, eGlyphBitmap);
+  
+  // If we don't have this glyph, assert it has not been rendered
+  if (!glyph)
+    return false;
+  
+  GlyphBitmap bmp;
+  if (!GetGlyphBitmap(glyph, bmp))
+    return false;
+  
+  nuiFontBase::GlyphLocation GlyphLocation;
+  GetCacheGlyph(rGlyph.mIndex, GlyphLocation);
+  
+  float w = GlyphLocation.mWidth;
+  float h = GlyphLocation.mHeight;
+  
+  float x = rGlyph.mX + bmp.Left * NUI_INV_SCALE_FACTOR;
+  float y = rGlyph.mY - bmp.Top * NUI_INV_SCALE_FACTOR;
+  
+  rGlyph.mpTexture = mTextures[GlyphLocation.mOffsetTexture];
+  
+  float ww = w * NUI_INV_SCALE_FACTOR;
+  float hh = h * NUI_INV_SCALE_FACTOR;
+  if (AlignGlyphPixels)
+  {
+    x = ToNearest(x * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
+    y = ToNearest(y * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
+  }
+  
+  rGlyph.mDestRect.Set(x - 1, y - 1, ww + 2, hh + 2);
+  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - NUI_SCALE_FACTOR, GlyphLocation.mOffsetY - NUI_SCALE_FACTOR, w + 2 * NUI_SCALE_FACTOR, h + 2 * NUI_SCALE_FACTOR);
+  
+  return true;
+}
+
 
 int nuiFontBase::GetTextSize (float& X, float& Y, const nglChar* pText)
 {
@@ -2423,7 +2461,6 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
   return true;
 }
 
-
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
   NGL_ASSERT(this == pRun->mStyle.GetFont());
@@ -2490,93 +2527,3 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_face_destroy(hb_face);
 }
 
-void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayout* pLayout, bool AlignGlyphPixels)
-{
-  bool blendsaved = pContext->GetState().mBlending;
-  bool texturesaved = pContext->GetState().mTexturing;
-  
-  pContext->EnableBlending(true);
-  pContext->EnableTexturing(true);
-  
-  nuiColor SavedColor = pContext->GetFillColor();
-  nuiColor oldcolor(pContext->GetStrokeColor());
-  pContext->SetStrokeColor(pContext->GetTextColor());
-  pContext->SetFillColor(pContext->GetTextColor());
-  pContext->SetBlendFunc(nuiBlendTransp);
-  
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
-  
-  float x = X;
-  float y = Y;
-  
-  // Iterate runs:
-  for (int32 p = 0; p < pLayout->GetParagraphCount(); p++)
-  {
-    for (int32 l = 0; l < pLayout->GetLineCount(p); l++)
-    {
-      x = X;
-      nuiTextLine* pLine = pLayout->GetLine(p, l);
-      for (int32 r = 0; r < pLine->GetRunCount(); r++)
-      {
-        nuiTextRun* pRun = pLine->GetRun(r);
-        const std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
-        nuiFont* pFont = pRun->GetFont();
-        
-        for (int32 g = 0; g < rGlyphs.size(); g++)
-        {
-          const nuiTextGlyph& rGlyph(rGlyphs.at(g));
-          
-          nuiGlyphLayout glyph;
-          
-          glyph.X     = x + rGlyph.mX;
-          glyph.Y     = y + rGlyph.mY;
-          glyph.Pos   = rGlyph.mCluster;
-          glyph.Index = rGlyph.mIndex;
-          
-          pFont->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels);
-          Glyphs[glyph.mpTexture].push_back(glyph);
-        }
-
-        // Draw underlines and strike through if needed
-        if (pRun->GetUnderline() || pRun->GetStrikeThrough())
-        {
-          nuiFontInfo info;
-          pFont->GetInfo(info);
-          float thickness = ToNearest(info.UnderlineThick);
-          pContext->SetLineWidth(thickness);
-
-          const float x1 = x;
-          const float x2 = x + pRun->GetAdvanceX();
-
-          if (pRun->GetUnderline())
-          {
-            const float pos = -info.UnderlinePos;
-            const float _y = ToNearest(y + pos);
-            if (x1 != x2)
-              pContext->DrawLine(x1, _y, x2, _y);
-          }
-
-          if (pRun->GetStrikeThrough())
-          {
-            const float pos = -info.Ascender * .4f;
-            const float _y = ToNearest(y + pos);
-            if (x1 != x2)
-              pContext->DrawLine(x1, _y, x2, _y);
-          }
-        }
-        
-        x += pRun->GetAdvanceX();
-      }
-      y += pLine->GetAdvanceY();
-    }
-  }
-
-  PrintGlyphs(pContext, Glyphs);
-
-  
-  pContext->EnableBlending(blendsaved);
-  pContext->EnableTexturing(texturesaved);
-  
-  pContext->SetFillColor(SavedColor);
-  pContext->SetStrokeColor(oldcolor);
-}

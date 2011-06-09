@@ -25,14 +25,15 @@ void TextLayoutTest(const nglString& txt)
 /////////////
 nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length, const nuiTextStyle& rStyle)
 : mLayout(rLayout),
-mPosition(Position),
-mLength(Length),
-mScript(script),
-mAdvanceX(0),
-mAdvanceY(0),
-mUnderline(false),
-mStrikeThrough(false),
-mStyle(rStyle)
+  mPosition(Position),
+  mLength(Length),
+  mScript(script),
+  mAdvanceX(0),
+  mAdvanceY(0),
+  mUnderline(false),
+  mStrikeThrough(false),
+  mPrepared(false),
+  mStyle(rStyle)
 {
 }
 
@@ -40,7 +41,7 @@ nuiTextRun::~nuiTextRun()
 {
 }
 
-const std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs() const
+std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs()
 {
   return mGlyphs;
 }
@@ -123,7 +124,7 @@ nuiRect nuiTextRun::GetRect() const
   nuiFontInfo finfo;
   mStyle.GetFont()->GetInfo(finfo);
   /*
-   const nuiGlyphLayout& rGlyph(*it);
+   const nuiTextGlyph& rGlyph(*it);
    nuiGlyphInfo info;
    rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
    nuiSize w = info.AdvanceX;
@@ -136,5 +137,15 @@ nuiRect nuiTextRun::GetRect() const
    r.Union(rr, nuiRect(x, y, w, h));
    */
   
+}
+
+bool nuiTextRun::IsPrepared() const
+{
+  return mPrepared;
+}
+
+void nuiTextRun::SetPrepared(bool set)
+{
+  mPrepared = set;
 }
 

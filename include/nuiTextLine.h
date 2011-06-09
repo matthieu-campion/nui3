@@ -14,11 +14,6 @@ public:
   
   virtual ~nuiTextLine();
   
-  /** @name Drawing the Line */
-  //@{
-  void Draw(nuiDrawContext* pContext);
-  //@}
-  
   int32 GetRunCount() const;
   nuiTextRun* GetRun(int32 index) const;
   

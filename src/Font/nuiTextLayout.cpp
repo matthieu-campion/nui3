@@ -347,3 +347,192 @@ nuiSize nuiTextLayout::GetWrapX() const
 }
 
 
+bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs)
+{
+  std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator it = rGlyphs.begin();
+  std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator end = rGlyphs.end();
+  
+  bool texturing = pContext->GetState().mTexturing;
+  nuiTexture* pOldTexture = pContext->GetTexture();
+  if (pOldTexture)
+    pOldTexture->Acquire();
+  
+  pContext->EnableTexturing(true);
+  
+  while (it != end)
+  {
+    nuiTexture* pTexture = it->first;
+    pContext->SetTexture(pTexture);
+    int size = (int)it->second.size();
+    int i;
+    
+    nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+    pArray->EnableArray(nuiRenderArray::eVertex);
+    pArray->EnableArray(nuiRenderArray::eTexCoord);
+    pArray->Reserve(6 * size);
+    
+    for (i = 0; i < size; i++)
+    {
+      const nuiRect& rDest = it->second[i]->mDestRect;
+      const nuiRect& rSource = it->second[i]->mSourceRect;
+      
+      nuiSize x1,y1,x2,y2;
+      nuiSize tx,ty,tw,th;
+      
+      x1 = rDest.mLeft;
+      y1 = rDest.mTop;
+      x2 = rDest.mRight;
+      y2 = rDest.mBottom;
+      
+      tx = rSource.mLeft;
+      ty = rSource.mTop;
+      tw = rSource.mRight;
+      th = rSource.mBottom;
+      
+      pTexture->ImageToTextureCoord(tx, ty);
+      pTexture->ImageToTextureCoord(tw,th);
+      
+      ///////////////////////////////////////////
+      pArray->SetVertex(x1, y1);
+      pArray->SetTexCoords(tx, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x2, y1);
+      pArray->SetTexCoords(tw, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x2, y2);
+      pArray->SetTexCoords(tw, th);
+      pArray->PushVertex();
+      
+      ///////////////////////////////////////////
+      pArray->SetVertex(x1, y1);
+      pArray->SetTexCoords(tx, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x2, y2);
+      pArray->SetTexCoords(tw, th);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x1, y2);
+      pArray->SetTexCoords(tx, th);
+      pArray->PushVertex();
+    }
+    
+    //nglString str = pArray->Dump();
+    //NGL_OUT("%s", str.GetChars());
+    pContext->DrawArray(pArray);
+    
+    ++it;
+  }
+  
+  pContext->EnableTexturing(texturing);
+  pContext->SetTexture(pOldTexture);
+  if (pOldTexture)
+    pOldTexture->Release();
+  
+  return true;
+}
+
+void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool AlignGlyphPixels)
+{
+  bool blendsaved = pContext->GetState().mBlending;
+  bool texturesaved = pContext->GetState().mTexturing;
+  
+  pContext->EnableBlending(true);
+  pContext->EnableTexturing(true);
+  
+  nuiColor SavedColor = pContext->GetFillColor();
+  nuiColor oldcolor(pContext->GetStrokeColor());
+  pContext->SetStrokeColor(pContext->GetTextColor());
+  pContext->SetFillColor(pContext->GetTextColor());
+  pContext->SetBlendFunc(nuiBlendTransp);
+  
+  std::map<nuiTexture*, std::vector<nuiTextGlyph*> > Glyphs;
+  
+  float x = X;
+  float y = Y;
+  
+  // Iterate runs:
+  for (int32 p = 0; p < GetParagraphCount(); p++)
+  {
+    for (int32 l = 0; l < GetLineCount(p); l++)
+    {
+      x = X;
+      nuiTextLine* pLine = GetLine(p, l);
+      for (int32 r = 0; r < pLine->GetRunCount(); r++)
+      {
+        nuiTextRun* pRun = pLine->GetRun(r);
+        std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
+        nuiFont* pFont = pRun->GetFont();
+        
+        if (pRun->IsPrepared())
+        {
+          for (int32 g = 0; g < rGlyphs.size(); g++)
+          {
+            nuiTextGlyph& rGlyph(rGlyphs.at(g));
+            Glyphs[rGlyph.mpTexture].push_back(&rGlyph);
+          }
+        }
+        else
+        {
+          for (int32 g = 0; g < rGlyphs.size(); g++)
+          {
+            nuiTextGlyph& rGlyph(rGlyphs.at(g));
+            
+            rGlyph.mX += x;
+            rGlyph.mY += y;
+            
+            pFont->PrepareGlyph(rGlyph, AlignGlyphPixels);
+            Glyphs[rGlyph.mpTexture].push_back(&rGlyph);
+          }
+          
+          pRun->SetPrepared(true);
+        }
+        
+        // Draw underlines and strike through if needed
+        if (pRun->GetUnderline() || pRun->GetStrikeThrough())
+        {
+          nuiFontInfo info;
+          pFont->GetInfo(info);
+          float thickness = ToNearest(info.UnderlineThick);
+          pContext->SetLineWidth(thickness);
+          
+          const float x1 = x;
+          const float x2 = x + pRun->GetAdvanceX();
+          
+          if (pRun->GetUnderline())
+          {
+            const float pos = -info.UnderlinePos;
+            const float _y = ToNearest(y + pos);
+            if (x1 != x2)
+              pContext->DrawLine(x1, _y, x2, _y);
+          }
+          
+          if (pRun->GetStrikeThrough())
+          {
+            const float pos = -info.Ascender * .4f;
+            const float _y = ToNearest(y + pos);
+            if (x1 != x2)
+              pContext->DrawLine(x1, _y, x2, _y);
+          }
+        }
+        
+        x += pRun->GetAdvanceX();
+      }
+      y += pLine->GetAdvanceY();
+    }
+  }
+  
+  PrintGlyphs(pContext, Glyphs);
+  
+  
+  pContext->EnableBlending(blendsaved);
+  pContext->EnableTexturing(texturesaved);
+  
+  pContext->SetFillColor(SavedColor);
+  pContext->SetStrokeColor(oldcolor);
+}
+
+
+

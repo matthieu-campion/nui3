@@ -20,13 +20,6 @@ nuiTextLine::~nuiTextLine()
     mpRuns[i]->Release();
 }
 
-/** @name Drawing the Line */
-//@{
-void nuiTextLine::Draw(nuiDrawContext* pContext)
-{
-}
-//@}
-
 const std::vector<nuiTextRun*>& nuiTextLine::GetGlyphRuns() const
 {
   return mpRuns;

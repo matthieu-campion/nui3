@@ -7,13 +7,18 @@
 
 #pragma once
 
+#include "nuiTextStyle.h"
+#include "nuiUnicode.h"
 
 class nuiTextGlyph
 {
 public:
-  int32 mIndex;
-  int32 mCluster;
-  float mX, mY;
+  int32 mIndex; ///< Glyph index in the font
+  int32 mCluster; ///< Position of the source char in the original unicode code point vector
+  float mX, mY; ///< Position on screen
+  nuiTexture* mpTexture; ///< Texture that contains this glyph
+  nuiRect mDestRect; ///< Destination rectangle of the laid ou glyph
+  nuiRect mSourceRect; ///< Rectangle of the glyph in the texture
 };
 
 
@@ -36,7 +41,7 @@ public:
   float GetAscender() const;
   float GetDescender() const;
   
-  const std::vector<nuiTextGlyph>& GetGlyphs() const;
+  std::vector<nuiTextGlyph>& GetGlyphs();
   nuiFont* GetFont() const;
   
   void SetUnderline(bool set);
@@ -46,6 +51,8 @@ public:
   
   nuiRect GetRect() const;
   
+  bool IsPrepared() const;
+  void SetPrepared(bool set);
 private:
   friend class nuiTextLayout;
   friend class nuiFontBase;
@@ -55,8 +62,9 @@ private:
   int32 mLength;
   nuiUnicodeScript mScript;
   
-  bool mUnderline;
-  bool mStrikeThrough;
+  bool mUnderline : 1;
+  bool mStrikeThrough : 1;
+  bool mPrepared : 1;
   
   std::vector<nuiTextGlyph> mGlyphs;
   float mAdvanceX, mAdvanceY;

@@ -23,6 +23,7 @@ public:
   virtual ~nuiTextLayout();
 
   bool LayoutText(const nglString& rString);
+  void Print(nuiDrawContext* pContext, float X, float Y, bool AlignGlyphPixels);
   
   int32 GetParagraphCount() const;
   int32 GetLineCount(int32 Paragraph) const;
@@ -74,6 +75,7 @@ public:
   nuiSize GetWrapX() const;
   
 private:
+  bool PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs);
   nuiTextStyle mStyle;
   std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;
   
