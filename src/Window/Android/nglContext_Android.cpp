@@ -65,6 +65,8 @@ bool nglContextInfo::Enum (uint Index, nglContextInfo& rInfo)
 
 nglContext::nglContext()
 {
+  LOGI("nglContext::nglContext()");
+  LOGI("nglContext::nglContext() OK");
 }
 
 nglContext::~nglContext()

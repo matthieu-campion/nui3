@@ -3,7 +3,8 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := my_native_module
-LOCAL_SRC_FILES := my_native_code.cpp
+LOCAL_SRC_FILES := my_native_code.cpp \
+                   nuiAndroidBridge.cpp
 
 LOCAL_ARM_MODE := arm
 

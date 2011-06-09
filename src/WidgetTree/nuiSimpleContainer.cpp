@@ -70,7 +70,9 @@ typedef nuiSimpleContainerConstIterator* nuiSimpleContainerConstIteratorPtr;
 nuiSimpleContainer::nuiSimpleContainer()
 : nuiContainer()
 {
+  LOGI("nuiSimpleContainer::nuiSimpleContainer()");
   SetObjectClass(_T("nuiSimpleContainer"));
+  LOGI("nuiSimpleContainer::nuiSimpleContainer() OK");
 }
 
 bool nuiSimpleContainer::Load(const nuiXMLNode* pNode)

@@ -892,4 +892,3 @@ protected:
   class nglStringCodec* mpCodec;
   nglStringConvState mState;
 };
-

@@ -156,6 +156,8 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
     mIsDrawing(false),
     mpCSS(NULL)
 {
+  LOGI("nuiTopLevel::nuiTopLevel(const nglPath& rResPath)");
+  
   //EnableRenderCache(false);
   mReleased = false;
   mNeedInvalidateOnSetRect = true;
@@ -189,6 +191,8 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   SetWantKeyboardFocus(true);
   SetFocusVisible(false);
   SetMouseCursor(eCursorArrow);
+  
+  LOGI("nuiTopLevel::nuiTopLevel(const nglPath& rResPath) OK");
 }
 
 bool nuiTopLevel::Load(const nuiXMLNode* pNode)

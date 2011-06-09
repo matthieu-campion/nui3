@@ -45,7 +45,7 @@ using namespace std;
 
 
 #ifndef _T
-#define _T(X) L##X
+#define _T(X) X
 #endif
 
 const nglChar nglPath::PortableCharset[] = _T("/.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_");

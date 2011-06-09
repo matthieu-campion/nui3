@@ -85,6 +85,7 @@ static nuiWidgetCounter gWidgetCounter;
 nuiWidget::nuiWidget()
 : nuiObject(), mGenericWidgetSink(this)
 {
+  LOGI("nuiWidget::nuiWidget()");
   InitDefaultValues();
   
   if (SetObjectClass(_T("nuiWidget")))
@@ -103,6 +104,7 @@ nuiWidget::nuiWidget()
   // Property bindings:
   InitProperties();
   
+  LOGI("nuiWidget::nuiWidget() OK");
 }
 
 

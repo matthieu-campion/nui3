@@ -503,7 +503,7 @@ public:
 #define NGL_OUTV App->GetConsole().Outputv
 
 // NGL_LOG(_T("net"), NGL_LOG_INFO, "i=%d\n", i)
-#define NGL_LOG  App->GetLog().Log
+#define NGL_LOG  {NGL_OUT("%s %d", __FILE__, __LINE__);} App->GetLog().Log
 #define NGL_LOGV App->GetLog().Logv
 
 //! From C++ Coding Standards

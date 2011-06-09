@@ -1,0 +1,4 @@
+~/work/dev/android/android-ndk-r5b/ndk-build -j 8 NDK_DEBUG=1
+ant debug
+adb uninstall com.example.native_activity
+adb install bin/NativeActivity-debug.apk

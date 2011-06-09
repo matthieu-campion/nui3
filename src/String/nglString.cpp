@@ -59,7 +59,7 @@ licence: see nui3/LICENCE.TXT
 #undef LOGI
 #define LOGI
 
-#ifdef WINCE
+#if (defined WINCE) || (defined _ANDROID_)
 #define NO_LOCALE(x) \
 { \
   x; \
@@ -67,10 +67,15 @@ licence: see nui3/LICENCE.TXT
 #else
 #define NO_LOCALE(x) \
 { \
+  LOGI("NOLOCALE 1");\
   int nui_locale_test = ngl_mbs_stricmp(setlocale(LC_NUMERIC, NULL), "C"); \
+LOGI("NOLOCALE 2");\
   if (nui_locale_test) setlocale(LC_NUMERIC, "C"); \
+LOGI("NOLOCALE 3");\
   x; \
+LOGI("NOLOCALE 4");\
   if (nui_locale_test) setlocale(LC_NUMERIC, ""); \
+LOGI("NOLOCALE OK");\
 }
 #endif
 
@@ -1587,8 +1592,12 @@ nglString& nglString::Format(const nglChar* pFormat, ...)
 
 nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 {
+  LOGI("nglString& nglString::Formatv(const nglChar* pFormat, va_list args)");
   if (!pFormat)
+  {
+    LOGI("nglString& nglString::Formatv(const nglChar* pFormat, va_list args) OK short");
     return *this;
+  }
 
   mIsNull = false;
   nglChar sbuffer[FORMAT_BUFSIZE+1];
@@ -1660,6 +1669,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
     while (len == -1); // Does not fit (yet), try again. Otherwise an error occured, exit.
   }
 
+  LOGI("nglString& nglString::Formatv(const nglChar* pFormat, va_list args) OK");
   return *this;
 }
 
@@ -1672,8 +1682,12 @@ nglString& nglString::Formatv(const nglString& rFormat, va_list Args)
 
 nglString& nglString::CFormat(const nglChar* pFormat, ...)
 {
+  LOGI("nglString& nglString::CFormat(const nglChar* pFormat, ...)");
   if (!pFormat)
+  {
+    LOGI("nglString& nglString::CFormat(const nglChar* pFormat, ...) OK short");
     return *this;
+  }
 
   mIsNull = false;
   va_list args;
@@ -1682,13 +1696,18 @@ nglString& nglString::CFormat(const nglChar* pFormat, ...)
   NO_LOCALE( Formatv(pFormat, args) );
   va_end(args);
 
+  LOGI("nglString& nglString::CFormat(const nglChar* pFormat, ...) OK");
   return *this;
 }
 
 nglString& nglString::CFormat(const nglString& rFormat, ...)
 {
+  LOGI("nglString& nglString::CFormat(const nglString& rFormat, ...)");
   if (rFormat.IsNull())
+  {
+    LOGI("nglString& nglString::CFormat(const nglString& rFormat, ...) OK");
     return *this;
+  }
 
   mIsNull = false;
   va_list args;
@@ -1697,6 +1716,7 @@ nglString& nglString::CFormat(const nglString& rFormat, ...)
   NO_LOCALE( Formatv(rFormat, args) );
   va_end(args);
 
+  LOGI("nglString& nglString::CFormat(const nglString& rFormat, ...) OK");
   return *this;
 }
 
