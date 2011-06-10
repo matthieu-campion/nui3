@@ -145,6 +145,9 @@ public:
   
   void SetColor(const nuiColor& rColor);
   const nuiColor& GetColor() const;
+
+  void SetAlpha(float Alpha);
+  float GetAlpha() const;
   
   void SetBlendFunc(nuiBlendFunc f);
   nuiBlendFunc GetBlendFunc() const;
