@@ -175,14 +175,7 @@ bool nglContext::Build(WindowRef Win, const nglContextInfo& rInfo, const nglCont
   attribs.push_back(AGL_NONE);
      
   /* Choose pixel format */
-#ifdef __NGL_MACHO__
-  GDHandle gdhDisplay = NULL;
-  CGDirectDisplayID DisplayID = CGMainDisplayID();
-  DMGetGDeviceByDisplayID ( (DisplayIDType)DisplayID, &gdhDisplay, false);
-  AGLPixelFormat Format = aglChoosePixelFormat(&gdhDisplay, 1, &attribs[0]);
-#else
-  AGLPixelFormat Format = aglChoosePixelFormat(NULL, 0, &attribs[0]);
-#endif
+  AGLPixelFormat Format = aglChoosePixelFormat(NULL, 1, &attribs[0]);
   
   //NGL_OUT("Pixel Format: 0x%x\n", Format);
   
@@ -191,12 +184,7 @@ bool nglContext::Build(WindowRef Win, const nglContextInfo& rInfo, const nglCont
     if (rInfo.CopyOnSwap)
     {
       attribs[attribs.size() - 2] = AGL_NONE;
-#ifdef __NGL_MACHO__
-      DMGetGDeviceByDisplayID ( (DisplayIDType)DisplayID, &gdhDisplay, false);
-      Format = aglChoosePixelFormat(&gdhDisplay, 1, &attribs[0]);
-#else
-      Format = aglChoosePixelFormat(NULL, 0, &attribs[0]);
-#endif
+      Format = aglChoosePixelFormat(NULL, 1, &attribs[0]);
     } 
 
     if (!Format)

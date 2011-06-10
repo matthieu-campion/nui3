@@ -34,34 +34,52 @@
 HB_BEGIN_DECLS
 
 
-/* XXX vertical */
-hb_tag_t default_features[] = {
-  HB_TAG('c','a','l','t'),
+hb_tag_t early_features[] = {
   HB_TAG('c','c','m','p'),
+  HB_TAG('l','o','c','l'),
+};
+
+hb_tag_t common_features[] = {
+  HB_TAG('m','a','r','k'),
+  HB_TAG('m','k','m','k'),
+  HB_TAG('r','l','i','g'),
+};
+
+hb_tag_t horizontal_features[] = {
+  HB_TAG('c','a','l','t'),
   HB_TAG('c','l','i','g'),
   HB_TAG('c','u','r','s'),
   HB_TAG('k','e','r','n'),
   HB_TAG('l','i','g','a'),
-  HB_TAG('l','o','c','l'),
-  HB_TAG('m','a','r','k'),
-  HB_TAG('m','k','m','k'),
-  HB_TAG('r','l','i','g')
+};
+
+/* Note:
+ * Technically speaking, vrt2 and vert are mutually exclusive.
+ * According to the spec, valt and vpal are also mutually exclusive.
+ * But we apply them all for now.
+ */
+hb_tag_t vertical_features[] = {
+  HB_TAG('v','a','l','t'),
+  HB_TAG('v','e','r','t'),
+  HB_TAG('v','k','r','n'),
+  HB_TAG('v','p','a','l'),
+  HB_TAG('v','r','t','2'),
 };
 
 static void
-hb_ot_shape_collect_features (hb_ot_shape_plan_t       *plan,
+hb_ot_shape_collect_features (hb_ot_shape_planner_t          *planner,
 			      const hb_segment_properties_t  *props,
-			      const hb_feature_t       *user_features,
-			      unsigned int              num_user_features)
+			      const hb_feature_t             *user_features,
+			      unsigned int                    num_user_features)
 {
   switch (props->direction) {
     case HB_DIRECTION_LTR:
-      plan->map.add_bool_feature (HB_TAG ('l','t','r','a'));
-      plan->map.add_bool_feature (HB_TAG ('l','t','r','m'));
+      planner->map.add_bool_feature (HB_TAG ('l','t','r','a'));
+      planner->map.add_bool_feature (HB_TAG ('l','t','r','m'));
       break;
     case HB_DIRECTION_RTL:
-      plan->map.add_bool_feature (HB_TAG ('r','t','l','a'));
-      plan->map.add_bool_feature (HB_TAG ('r','t','l','m'), false);
+      planner->map.add_bool_feature (HB_TAG ('r','t','l','a'));
+      planner->map.add_bool_feature (HB_TAG ('r','t','l','m'), false);
       break;
     case HB_DIRECTION_TTB:
     case HB_DIRECTION_BTT:
@@ -70,14 +88,28 @@ hb_ot_shape_collect_features (hb_ot_shape_plan_t       *plan,
       break;
   }
 
-  for (unsigned int i = 0; i < ARRAY_LENGTH (default_features); i++)
-    plan->map.add_bool_feature (default_features[i]);
+#define ADD_FEATURES(array) \
+  HB_STMT_START { \
+    for (unsigned int i = 0; i < ARRAY_LENGTH (array); i++) \
+      planner->map.add_bool_feature (array[i]); \
+  } HB_STMT_END
 
-  hb_ot_shape_complex_collect_features (plan, props);
+  ADD_FEATURES (early_features);
+
+  hb_ot_shape_complex_collect_features (planner, props);
+
+  ADD_FEATURES (common_features);
+
+  if (HB_DIRECTION_IS_HORIZONTAL (props->direction))
+    ADD_FEATURES (horizontal_features);
+  else
+    ADD_FEATURES (vertical_features);
+
+#undef ADD_FEATURES
 
   for (unsigned int i = 0; i < num_user_features; i++) {
     const hb_feature_t *feature = &user_features[i];
-    plan->map.add_feature (feature->tag, feature->value, (feature->start == 0 && feature->end == (unsigned int) -1));
+    planner->map.add_feature (feature->tag, feature->value, (feature->start == 0 && feature->end == (unsigned int) -1));
   }
 }
 
@@ -377,21 +409,23 @@ hb_ot_shape_execute_internal (hb_ot_shape_context_t *c)
   c->buffer->props.direction = c->target_direction;
 }
 
-void
+static void
 hb_ot_shape_plan_internal (hb_ot_shape_plan_t       *plan,
 			   hb_face_t                *face,
 			   const hb_segment_properties_t  *props,
 			   const hb_feature_t       *user_features,
 			   unsigned int              num_user_features)
 {
-  plan->shaper = hb_ot_shape_complex_categorize (props);
+  hb_ot_shape_planner_t planner;
 
-  hb_ot_shape_collect_features (plan, props, user_features, num_user_features);
+  planner.shaper = hb_ot_shape_complex_categorize (props);
 
-  plan->map.compile (face, props);
+  hb_ot_shape_collect_features (&planner, props, user_features, num_user_features);
+
+  planner.compile (face, props, *plan);
 }
 
-void
+static void
 hb_ot_shape_execute (hb_ot_shape_plan_t *plan,
 		     hb_font_t          *font,
 		     hb_buffer_t        *buffer,

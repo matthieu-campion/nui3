@@ -52,7 +52,7 @@ hb_ot_map_t::add_lookups (hb_face_t    *face,
 					     lookup_indices);
 
     for (unsigned int i = 0; i < len; i++) {
-      lookup_map_t *lookup = lookup_maps[table_index].push ();
+      hb_ot_map_t::lookup_map_t *lookup = lookups[table_index].push ();
       if (unlikely (!lookup))
         return;
       lookup->mask = mask;
@@ -64,11 +64,23 @@ hb_ot_map_t::add_lookups (hb_face_t    *face,
 }
 
 
-void
-hb_ot_map_t::compile (hb_face_t *face,
-		      const hb_segment_properties_t *props)
+void hb_ot_map_builder_t::add_feature (hb_tag_t tag, unsigned int value, bool global)
 {
- global_mask = 1;
+  feature_info_t *info = feature_infos.push();
+  if (unlikely (!info)) return;
+  info->tag = tag;
+  info->seq = feature_infos.len;
+  info->max_value = value;
+  info->global = global;
+  info->default_value = global ? value : 0;
+}
+
+void
+hb_ot_map_builder_t::compile (hb_face_t *face,
+			      const hb_segment_properties_t *props,
+			      hb_ot_map_t &m)
+{
+ m.global_mask = 1;
 
   if (!feature_infos.len)
     return;
@@ -139,7 +151,7 @@ hb_ot_map_t::compile (hb_face_t *face,
       continue;
 
 
-    feature_map_t *map = feature_maps.push ();
+    hb_ot_map_t::feature_map_t *map = m.features.push ();
     if (unlikely (!map))
       break;
 
@@ -155,7 +167,7 @@ hb_ot_map_t::compile (hb_face_t *face,
       map->mask = (1 << (next_bit + bits_needed)) - (1 << next_bit);
       next_bit += bits_needed;
       if (info->global)
-	global_mask |= (info->default_value << map->shift) & map->mask;
+	m.global_mask |= (info->default_value << map->shift) & map->mask;
     }
     map->_1_mask = (1 << map->shift) & map->mask;
 
@@ -174,22 +186,22 @@ hb_ot_map_t::compile (hb_face_t *face,
 							  script_index[table_index],
 							  language_index[table_index],
 							  &required_feature_index))
-      add_lookups (face, table_index, required_feature_index, 1);
+      m.add_lookups (face, table_index, required_feature_index, 1);
 
-    for (unsigned i = 0; i < feature_maps.len; i++)
-      add_lookups (face, table_index, feature_maps[i].index[table_index], feature_maps[i].mask);
+    for (unsigned i = 0; i < m.features.len; i++)
+      m.add_lookups (face, table_index, m.features[i].index[table_index], m.features[i].mask);
 
     /* Sort lookups and merge duplicates */
-    lookup_maps[table_index].sort ();
-    if (lookup_maps[table_index].len)
+    m.lookups[table_index].sort ();
+    if (m.lookups[table_index].len)
     {
       unsigned int j = 0;
-      for (unsigned int i = 1; i < lookup_maps[table_index].len; i++)
-	if (lookup_maps[table_index][i].index != lookup_maps[table_index][j].index)
-	  lookup_maps[table_index][++j] = lookup_maps[table_index][i];
+      for (unsigned int i = 1; i < m.lookups[table_index].len; i++)
+	if (m.lookups[table_index][i].index != m.lookups[table_index][j].index)
+	  m.lookups[table_index][++j] = m.lookups[table_index][i];
 	else
-	  lookup_maps[table_index][j].mask |= lookup_maps[table_index][i].mask;
-      lookup_maps[table_index].shrink (j + 1);
+	  m.lookups[table_index][j].mask |= m.lookups[table_index][i].mask;
+      m.lookups[table_index].shrink (j + 1);
     }
   }
 }
