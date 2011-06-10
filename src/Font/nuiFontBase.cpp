@@ -863,7 +863,6 @@ nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
   
   mSize        = rFont.mSize;
   mResolution  = rFont.mResolution;
-  mpConv       = rFont.mpConv;
   mRenderMode  = rFont.mRenderMode;
   
   Init();
@@ -1289,7 +1288,7 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
   /*
    * The internal LoadFinish() method automatically tries to find a Unicode charmap,
    * and decides if a charset conversion (Unicode to locale or locale to Unicode) must be
-   * performed (using mpConv). We must also handle the case where the font has no charmap.
+   * performed. We must also handle the case where the font has no charmap.
    */
   
   int todo = MIN(SourceLength, IndexesLength);
@@ -1322,49 +1321,6 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
   NGL_OUT(_T("' [%d], 0x%p [%d])\n"), SourceLength, pIndexes, IndexesLength);
 #endif
   
-  if (mpConv)
-  {
-    // nglChar -> locale
-    int to_write0 = SourceLength;
-    char* buffer = (char*) alloca(to_write0);
-    
-    const char* source   = (const char*) pSource;
-    int         to_read  = SourceLength;
-    char*       dest     = (char*) buffer;
-    int         to_write = to_write0;
-    
-#ifdef DBG_INDEX
-    NGL_OUT(_T("  to_write: %d bytes (buffer: 0x%p)\n"), to_write, dest);
-#endif
-    mpConv->Process(source, to_read, dest, to_write);
-    
-    // Convert from byte count to glyph count
-    todo = to_write0 - to_write;
-    
-    todo /= sizeof(nglChar);
-    
-#ifdef DBG_INDEX
-    NGL_OUT(_T("  todo    : %d glyphs\n"), todo);
-    NGL_OUT(_T("  codes   :"));
-    for (i = 0; i < todo; i++) NGL_OUT(_T(" %d"), buffer[i]);
-    NGL_OUT(_T("\n"));
-    
-    NGL_OUT(_T("  indexes :"));
-#endif
-    done = todo;
-    while (todo > 0)
-    {
-      *pIndexes++ = FTC_CMapCache_Lookup (gFTCMapCache, face_id, mCharMap, *buffer++);
-#ifdef DBG_INDEX
-      NGL_OUT(_T(" %d"), pIndexes[-1]);
-#endif
-      todo--;
-    }
-#ifdef DBG_INDEX
-    NGL_OUT(_T("\n"));
-#endif
-  }
-  else
   {
     done = todo;
     while (todo > 0)
@@ -1605,7 +1561,6 @@ void nuiFontBase::Defaults()
   
   // Will be set at Load() time
   mCharMap    = 0;
-  mpConv      = NULL;
   mRenderMode = 0;
   
   mLastResort = false;
@@ -1772,23 +1727,12 @@ bool nuiFontBase::LoadFinish()
    */
   if (FT_Select_Charmap (mpFace->Face, FT_ENCODING_UNICODE) != FT_Err_Ok)
   {
-#ifdef USE_WCHAR
-    // We can't select Unicode output, we'll do nglChar -> locale and use the first map (if available)
-    mpConv = nglString::GetStringConv(nglEncodingPair(eEncodingInternal, eEncodingNative));
-#else
     // We expect that the first charmap is actually the right one for the locale's encoding
-#endif
     FT_Set_Charmap (mpFace->Face, mpFace->Face->charmaps[0]);
   }
-#ifndef USE_WCHAR
-  else
-    // We have a Unicode charmap, we'll do locale -> UCS-2 conversion
-    mpConv = nglString::GetStringConv(nglEncodingPair(eEncodingInternal, eUCS2));
-#endif
   mCharMap = FT_Get_Charmap_Index(mpFace->Face->charmap);
   
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  selected charmap   : %s (#%d)"), GetCharMapName(), GetCharMap()); )
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  charmap conversion : %s"), YESNO(mpConv)); )
   
   return true;
 }

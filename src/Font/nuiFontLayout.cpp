@@ -863,8 +863,11 @@ nuiFontBase* nuiFontLayout::FindFontForMissingGlyph(nuiFontBase* pOriginalFont, 
     NGL_OUT(_T("pFont '%p' path = '%s'   size = %f   face = %d\n"), pFont, path.GetPathName().GetChars(), size, face);
     
     uint index = 0;
+    nuiFont* pTempFont = pFont;
+    NGL_OUT("pTempFont %p", pTempFont);
     if (pFont->GetGlyphIndexes(&Glyph, 1, &index, 1) > 0)
     {
+      pFont = pTempFont;
       NGL_OUT(_T("Found font '%s' with glyph index %d\n"), pFont->GetFamilyName().GetChars(), index);
       
       NGL_ASSERT(rResult.GetFontDesc()->HasGlyph(Glyph));

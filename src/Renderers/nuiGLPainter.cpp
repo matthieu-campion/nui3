@@ -296,7 +296,6 @@ nuiGLPainter::~nuiGLPainter()
 
 void nuiGLPainter::SetViewport()
 {
-  LOGI("SetViewPort");
   //GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   GLuint Angle = GetAngle();
   GLuint Width = GetCurrentWidth();
@@ -361,12 +360,10 @@ void nuiGLPainter::SetViewport()
   
   glMatrixMode (GL_MODELVIEW);
   nuiCheckForGLErrors();
-  LOGI("SetViewPort OK");
 }
 
 void nuiGLPainter::StartRendering()
 {
-  LOGI("StartRendering");
   BeginSession();
   //NUI_RETURN_IF_RENDERING_DISABLED;
   nuiCheckForGLErrors();
@@ -430,12 +427,10 @@ void nuiGLPainter::StartRendering()
   mTexEnvMode = 0;
   
   nuiCheckForGLErrors();
-  LOGI("StartRendering OK");
 }
 
 void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
 {
-  LOGI("ApplyState");
   //TEST_FBO_CREATION();
   NUI_RETURN_IF_RENDERING_DISABLED;
   //ForceApply = true;
@@ -580,7 +575,6 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   mForceApply = false;
   
   nuiCheckForGLErrors();
-  LOGI("ApplyState OK");
 }
 
 void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
@@ -848,7 +842,6 @@ void nuiGLPainter::ClearColor()
 
 void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
 {
-  LOGI("DrawArray");
   mRenderOperations++;
   mBatches++;
   
@@ -1271,8 +1264,6 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   
   pArray->Release();
   nuiCheckForGLErrors();
-  LOGI("DrawArray OK");
-
 }
 
 void nuiGLPainter::BeginSession()
@@ -1426,7 +1417,6 @@ void nuiGLPainter::CreateTexture(nuiTexture* pTexture)
 
 void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 {
-  LOGI("Upload Texture");
 
   nuiTexture* pProxy = pTexture->GetProxyTexture();
   if (pProxy)
@@ -1728,8 +1718,6 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   
   glMatrixMode(GL_MODELVIEW);
   nuiCheckForGLErrors();
-  LOGI("Upload Texture OK");
-
 }
 
 void nuiGLPainter::DestroyTexture(nuiTexture* pTexture)

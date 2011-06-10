@@ -540,7 +540,6 @@ private:
   
   class FaceHandle*     mpFace;         // Opaque handle to FreeType's face handle
   int                   mCharMap;       // Selected charmap (index)
-  nglStringConv*        mpConv;         // Conversion context
   float                 mSize;          // Current font size in pixels
   float                 mResolution;    // Current resolution in dpi
   RenderMode            mRenderMode;    // Antialiasing/hinting, also encoded into mFTDesc.type

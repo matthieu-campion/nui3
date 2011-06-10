@@ -27,9 +27,6 @@
 
 #include "nuiAndroidBridge.h"
 
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
-#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
-
 
 nuiAndroidBridge* gpBridge = NULL;
 
@@ -112,7 +109,7 @@ static int engine_init_display(struct engine* engine)
   
   if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) 
   {
-    LOGW("Unable to eglMakeCurrent");
+    LOGI("Unable to eglMakeCurrent");
     return -1;
   }
   
@@ -253,7 +250,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
         gpBridge->AddChild(pButton);
 
         engine_draw_frame(engine);
-
+        engine->animating = 1;
       }
       break;
     case APP_CMD_TERM_WINDOW:
@@ -280,7 +277,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
                                         engine->accelerometerSensor);
       }
       // Also stop animating.
-      engine->animating = 0;
+      engine->animating = 1;
       engine_draw_frame(engine);
       break;
   }
