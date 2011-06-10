@@ -22,6 +22,7 @@ hb-ft.cc \
 hb-ot-layout.cc \
 hb-ot-map.cc \
 hb-ot-shape-complex-arabic.cc \
+hb-ot-shape-complex-indic.cc \
 hb-ot-shape.cc \
 hb-ot-tag.cc \
 hb-shape.cc \

@@ -1427,8 +1427,6 @@ bool nuiFontBase::SetRenderMode (nuiFontBase::RenderMode Mode)
   if (!(Mode & Hinting))
     flags |= FT_LOAD_NO_HINTING;
   
-  //flags |= FT_LOAD_TARGET_LCD;
-  
   mpFace->Desc.flags = flags;
   mRenderMode = Mode;
   

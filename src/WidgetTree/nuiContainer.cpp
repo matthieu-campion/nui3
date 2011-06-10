@@ -21,11 +21,9 @@
 nuiContainer::nuiContainer()
 : nuiWidget()
 {
-  LOGI("nuiContainer::nuiContainer()");
   SetObjectClass(_T("nuiContainer"));
   NUI_ADD_EVENT(ChildAdded);
   NUI_ADD_EVENT(ChildDeleted);
-  LOGI("nuiContainer::nuiContainer() OK");
 }
 
 bool nuiContainer::Load(const nuiXMLNode* pNode)

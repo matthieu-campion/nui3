@@ -182,6 +182,9 @@ NUI_LOCAL_SRC_FILES_FONT := ../src/Font/nuiFont.cpp \
                             ../src/Font/nuiFontManager.cpp \
                             ../src/Font/hb_nui.cpp \
                             ../src/Font/nuiTextLayout.cpp \
+                            ../src/Font/nuiTextStyle.cpp \
+                            ../src/Font/nuiTextRun.cpp \
+                            ../src/Font/nuiTextLine.cpp \
                             ../src/Font/nuiFontInstance.cpp \
                             ../src/Font/nuiFontLayout.cpp \
                             ../src/Font/nuiPanose.cpp \

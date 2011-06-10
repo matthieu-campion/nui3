@@ -372,13 +372,13 @@
 				ARCHS = i386;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ../../include;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
 				);
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Default;

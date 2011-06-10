@@ -1,4 +1,27 @@
-~/work/android-ndk/ndk-build -j 8 NDK_DEBUG=1
+export NDK_MODULE_PATH=$(pwd)/../../
+export NDK_PATH=$(pwd)/../../../android-ndk
+export SDK_PATH=$(pwd)/../../../android-sdk
+echo ----------------------------------------------------------------------------------------
+echo Build lib
+echo ----------------------------------------------------------------------------------------
+#~/work/dev/android/android-ndk-r5b/ndk-build -j 8 NDK_DEBUG=1
+$NDK_PATH/ndk-build -j 8 NDK_DEBUG=1
+
+echo ----------------------------------------------------------------------------------------
+echo Build app
+echo ----------------------------------------------------------------------------------------
 ant debug
-adb uninstall com.example.native_activity
-adb install bin/NativeActivity-debug.apk
+
+echo ----------------------------------------------------------------------------------------
+echo Uninstall old app
+echo ----------------------------------------------------------------------------------------
+$SDK_PATH/platform-tools/adb uninstall com.example.native_activity
+
+echo ----------------------------------------------------------------------------------------
+echo Install new app
+echo ----------------------------------------------------------------------------------------
+$SDK_PATH/platform-tools/adb install bin/NativeActivity-debug.apk
+
+echo ----------------------------------------------------------------------------------------
+echo Build OK
+echo ----------------------------------------------------------------------------------------
