@@ -22,45 +22,30 @@ using namespace std;
 nuiObject::nuiObject()
 : mpTrace(NULL)
 {	
-  LOGI("nuiObject::nuiObject()");
   nglString name;
-  LOGI("nuiObject::nuiObject() 1 CFormat");
   name.CFormat("%d", this);
-  LOGI("nuiObject::nuiObject() 2");
   Init(name);
-  LOGI("nuiObject::nuiObject() OK");
 }
 
 nuiObject::nuiObject(const nglString& rObjectName)
 : mpTrace(NULL)
 {
-  LOGI("nuiObject::nuiObject(const nglString& rObjectName)");
   Init(rObjectName);
-  LOGI("nuiObject::nuiObject(const nglString& rObjectName) OK");
 }
 
 
 void nuiObject::Init(const nglString& rObjectName)
 {	
-  LOGI("void nuiObject::Init(const nglString& rObjectName)");
 #ifdef _NUI_DEBUG_OBJECTS_
   {
-    LOGI("void nuiObject::Init 1");
     nglCriticalSectionGuard g(gObjectTraceCS);
-    LOGI("void nuiObject::Init 2");
     std::pair<std::map<nuiObject*, Trace>::iterator, bool> p = mObjects.insert(std::pair<nuiObject*, Trace>(this, Trace()));
-    LOGI("void nuiObject::Init 3");
     NGL_ASSERT(p.first != mObjects.end());
-    LOGI("void nuiObject::Init 4");
     std::map<nuiObject*, Trace>::iterator it = p.first; //mObjects.find(this);
-    LOGI("void nuiObject::Init 5");
     mpTrace = &(it->second);
-    LOGI("void nuiObject::Init 6");
     mpTrace->mAlive = true;
-    LOGI("void nuiObject::Init 7");
 
     uint32 s = mObjects.size();
-    LOGI("void nuiObject::Init 8");
     if (!(s % 500))
     {
       NGL_OUT(_T("Objects total count %d\n"), s);
@@ -71,18 +56,13 @@ void nuiObject::Init(const nglString& rObjectName)
   mClassNameIndex = -1;
   if (SetObjectClass(_T("nuiObject")))
   {
-    LOGI("void nuiObject::Init 9");
     InitAttributes();
   }
-  LOGI("void nuiObject::Init 10");
   SetObjectName(rObjectName);
-  LOGI("void nuiObject::Init 11");
   
   mSerializeMode = eSaveNode;
   
   mpToken = NULL;
-  
-  LOGI("void nuiObject::Init(const nglString& rObjectName) OK");
 }
 
 

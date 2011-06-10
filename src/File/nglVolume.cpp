@@ -10,14 +10,11 @@
 
 nglVolume::nglVolume(const nglString& rVolumeName, const nglPath& rPath, const nglString& rComment, nglPathVolume::VolumeFlags Flags, nglPathVolume::MediaType rType)
 {
-  LOGI("nglVolume");
-
   mName = rVolumeName;
   mInfos.mPath = rPath;
   mInfos.mComment = rComment;
   mInfos.mFlags = Flags;
   mInfos.mType = rType;
-  LOGI("nglVolume OK");
 }
 
 nglVolume::~nglVolume()

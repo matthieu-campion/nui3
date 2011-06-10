@@ -313,22 +313,14 @@ const nglChar* nglKernel::OnError (uint& rError) const
 
 void nglKernel::CallOnInit()
 {
-  LOGI("nglKernel::CallOnInit()");
   ucdata_init_static();
-  LOGI("log some shit");
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%s)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
-  LOGI("init resources");
   nglVolume* pResources = new nuiNativeResourceVolume();
-  LOGI("mount resources");
   nglVolume::Mount(pResources);
-  LOGI("init timer");
   nuiTimer* pTimer = nuiAnimation::AcquireTimer();
-  LOGI("connect timer");
   mKernelEventSink.Connect(pTimer->Tick, &nglKernel::ProcessMessages);
   
-  LOGI("Call OnInit()");
   OnInit();
-  LOGI("CallOnInit OK");
 }
 
 void nglKernel::CallOnExit(int Code)

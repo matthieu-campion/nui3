@@ -248,7 +248,9 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
         engine_init_display(engine);
 
         nuiAndroidBridge::androidResize(ANativeWindow_getWidth(app->window), ANativeWindow_getHeight(app->window));
-        gpBridge->AddChild(new nuiButton("Prout!"));
+        nuiButton* pButton = new nuiButton("Prout!");
+//        pButton->SetPosition(nuiCenter);
+        gpBridge->AddChild(pButton);
 
         engine_draw_frame(engine);
 
@@ -290,9 +292,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
   * event loop for receiving input events and doing other things.
   */
 void android_main(struct android_app* state) 
-{  
-  sleep(5);
-  
+{ 
   LOGI("nuiInit");
   nuiInit(NULL);
   LOGI("nuiInit OK");
@@ -358,9 +358,9 @@ void android_main(struct android_app* state)
           while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
                                              &event, 1) > 0) 
           {
-            LOGI("accelerometer: x=%f y=%f z=%f",
-                 event.acceleration.x, event.acceleration.y,
-                 event.acceleration.z);
+//            LOGI("accelerometer: x=%f y=%f z=%f",
+//                 event.acceleration.x, event.acceleration.y,
+//                 event.acceleration.z);
           }
         }
       }
