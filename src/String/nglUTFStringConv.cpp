@@ -48,7 +48,6 @@ nglUTFStringConv::~nglUTFStringConv()
 
 UTFConverter nglUTFStringConv::GetUTFConverter(nglTextEncoding From, nglTextEncoding To)
 {
-#ifdef _WIN32_
   if (From == eEncodingNative)
     From = eUTF8;
   if (From == eEncodingInternal)
@@ -57,28 +56,6 @@ UTFConverter nglUTFStringConv::GetUTFConverter(nglTextEncoding From, nglTextEnco
     To = eUTF8;
   if (To == eEncodingInternal)
     To = eUTF8;
-#endif
-#if (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_) || (defined _ANDROID_)
-  if (From == eEncodingNative)
-    From = eUTF8;
-  if (From == eEncodingInternal)
-    From = eUTF8;
-  if (To == eEncodingNative)
-    To = eUTF8;
-  if (To == eEncodingInternal)
-    To = eUTF8;
-#endif
-//TODO check these are good values (at least, no more segfault) 
-#ifdef _LINUX_
-  if (From == eEncodingNative)
-    From = eUTF8;
-  if (From == eEncodingInternal)
-    From = eUTF8;
-  if (To == eEncodingNative)
-    To = eUTF8;
-  if (To == eEncodingInternal)
-    To = eUTF8;
-#endif
 
   if (From == To)
     return (UTFConverter)NoConversion;
@@ -150,6 +127,10 @@ int32 nglUTFStringConv::Process(const char*& pSource, int32& rToRead, char*& pTa
   rToRead = pSourceEnd - pSource;
   rToWrite = pTargetEnd - pTarget;
   
+  if (rToWrite < 0)
+  {
+    NGL_OUT("rToWrite < 0 !!!");
+  }
   NGL_ASSERT(rToWrite >= 0);
   
   switch (res)

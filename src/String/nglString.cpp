@@ -794,7 +794,7 @@ nglString nglString::Extract(int32 Index, int32 Length) const
     return nglString();
   if (Index + Length > len)
     Length = len - Index;
-  return nglString(mString.substr(Index, Length));
+  return nglString(mString.substr(Index, Length), eEncodingInternal);
 }
 
 
