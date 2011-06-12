@@ -769,7 +769,7 @@ const nuiColor& nuiSprite::GetColor() const
   return mColor;
 }
 
-float nuiSprite::GetAlpha()
+float nuiSprite::GetAlpha() const
 {
   float v = GetColor().Alpha();
   return v;
