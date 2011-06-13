@@ -27,6 +27,10 @@
   #include <CoreFoundation/CoreFoundation.h>
 #endif
 
+#ifdef _ANDROID_
+#include <signal.h>
+#endif // _ANDROID_
+
 //! Low resolution, general purpose timer
 /*!
 nglTimer can trigger a user-event at a given frequency. Here is a simple example
@@ -170,6 +174,16 @@ private:
 
   friend class nglKernel;
 #endif // _WIN32_
+  
+  
+#ifdef _ANDROID_
+  timer_t mTimerID;
+  static bool sMainSignalConnected;
+  nglTime mLastTime;
+  void TimerAction();
+  
+  friend void nglTimerAndroidHandler(int sig, siginfo_t *si, void *uc);
+#endif // _ANDROID_
 };
 
 #endif // __nglTimer_h__

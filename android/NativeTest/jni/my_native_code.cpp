@@ -12,6 +12,9 @@
 #include <unistd.h>
 #include <sys/time.h>
 
+//#include <signal.h>
+//#include <time.h>
+
 
 //#include "ft2build.h"
 //#include FT_FREETYPE_H
@@ -27,6 +30,8 @@
 
 #include "nuiAndroidBridge.h"
 
+
+#define SIG SIGRTMIN
 
 nuiAndroidBridge* gpBridge = NULL;
 
@@ -193,6 +198,19 @@ static void engine_term_display(struct engine* engine)
   LOGI("nuiUninit OK");
 }
 
+
+//static void TimerHandler(int sig, siginfo_t *si, void *uc)
+//{
+//  /* Note: calling printf() from a signal handler is not
+//   strictly correct, since printf() is not async-signal-safe;
+//   see signal(7) */
+//  
+//  LOGI("timer handler");
+//  LOGI("sig = %d   si_signo = %d   si_value = %d", sig, si->si_signo, si->si_value);
+//  
+//  LOGI("timer handler OK");
+//}
+
 /**
   * Process the next input event.
   */
@@ -209,7 +227,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event)
     }
     else if ((AMOTION_EVENT_ACTION_MASK & AMotionEvent_getAction( event )) == AMOTION_EVENT_ACTION_UP)
     {
-      nuiAndroidBridge::androidMouse(0, 1, x, y);
+      nuiAndroidBridge::androidMouse(0, 1, x, y);      
     }
     else if ((AMOTION_EVENT_ACTION_MASK & AMotionEvent_getAction( event )) == AMOTION_EVENT_ACTION_MOVE)
     {
@@ -251,6 +269,64 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 
         engine_draw_frame(engine);
         engine->animating = 1;
+        
+        
+        
+        gpBridge->TimerTest();
+        
+        //
+//        LOGI("try to create a timer and connect a signal handler");      
+//        timer_t timer;
+//        
+//        LOGI("SIGRTMIN = %d  SIGRTMAX = %d  RTSIG_MAX = %d  SIG = %d", SIGRTMIN, SIGRTMAX, RTSIG_MAX, SIG);
+//        
+//        struct sigaction sa;
+//        sa.sa_flags = SA_SIGINFO;
+//        sigemptyset(&sa.sa_mask);
+//        sa.sa_sigaction = TimerHandler;
+//        
+//        if (sigaction(SIG, &sa, NULL) == -1)
+//          LOGI("error 1");
+//        
+//        sigevent event;
+//        //      event.sigev_notify = SIGEV_NONE;
+//        //      event.sigev_signo = 0;
+//        
+//        event.sigev_notify = SIGEV_SIGNAL;
+//        event.sigev_signo = SIG;
+//        event.sigev_value.sival_ptr = &timer;
+//        LOGI("sigev_signo = %d  sigev_value.sival_ptr = %d", event.sigev_signo, event.sigev_value.sival_ptr);
+//        
+//        
+//        LOGI("timer_create");
+//        int res = timer_create(CLOCK_REALTIME, &event, &timer);
+//        LOGI("timer_create   res = %d", res);
+//        
+//        
+//        
+//        itimerspec its;
+//        its.it_value.tv_sec = 3;
+//        its.it_value.tv_nsec = 1;
+//        its.it_interval.tv_sec = 1;
+//        its.it_interval.tv_nsec = 1;
+//        
+//        
+//        LOGI("start the timer");
+//        if (timer_settime(timer, 0, &its, NULL) == -1)
+//          LOGI("error 2");
+        //
+        
+//        LOGI("create timer");
+//        nuiTimer* pTimer = new nuiTimer(1);
+//        LOGI("timer created %p", pTimer);
+//        pTimer->Start();
+        
+        //
+        
+        
+        
+        
+        
       }
       break;
     case APP_CMD_TERM_WINDOW:

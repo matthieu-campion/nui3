@@ -23,12 +23,44 @@
 #include <math.h>
 
 #define TIMER_MIN_PERIOD     0.050 // 50ms (somewhat 'reasonable')
+#define NGL_TIMER_ANDROID_SIGNAL SIGRTMIN
+
+bool nglTimer::sMainSignalConnected = false;
 
 
-nglTimer::nglTimer(nglTime Period) : mPeriod(Period), mLastTick(0), mNextTick(0)
+void nglTimerAndroidHandler(int sig, siginfo_t *si, void *uc)
+{
+  nglTimer* pTimer = (nglTimer*)si->si_value.sival_ptr;
+  pTimer->TimerAction();
+}
+
+nglTimer::nglTimer(nglTime Period) : mPeriod(Period), mLastTime(0)
 {
   mCallCnt = 0;
   mRunning = false;
+  
+  mTimerID = 0;
+
+  if (!sMainSignalConnected)
+  {
+    struct sigaction sa;
+    sa.sa_flags = SA_SIGINFO;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_sigaction = nglTimerAndroidHandler;
+    
+    if (sigaction(NGL_TIMER_ANDROID_SIGNAL, &sa, NULL) == -1)
+    {
+      return;
+    }
+    sMainSignalConnected = true;
+  }
+  
+  sigevent event;
+  event.sigev_notify = SIGEV_SIGNAL;
+  event.sigev_signo = NGL_TIMER_ANDROID_SIGNAL;
+  event.sigev_value.sival_ptr = this;
+  
+  int res = timer_create(CLOCK_REALTIME, &event, &mTimerID);
 
   App->AddTimer (this);
 }
@@ -36,6 +68,8 @@ nglTimer::nglTimer(nglTime Period) : mPeriod(Period), mLastTick(0), mNextTick(0)
 nglTimer::~nglTimer()
 {
   App->DelTimer (this);
+  if (mTimerID)
+    timer_delete(mTimerID);
 }
 
 
@@ -68,14 +102,39 @@ bool nglTimer::SetPeriod(nglTime Period)
 bool nglTimer::Start(bool Immediate, bool Reset)
 {
   nglTime now;
-
+  mLastTime = now;
+  
   if (Reset)
     mCallCnt = 0;
-
-  mLastTick = now;
-  mNextTick = now;
-  if (!Immediate)
-    mNextTick += mPeriod;
+  
+  int sec = ToBelow(mPeriod.GetValue());
+  int nanosec = ToBelow(((double)sec - mPeriod.GetValue()) * 1000000000);
+  
+  itimerspec its;
+  its.it_interval.tv_sec = sec;
+  its.it_interval.tv_nsec = nanosec;
+  
+  if (Immediate)
+  {
+    its.it_value.tv_sec = 0;
+    its.it_value.tv_nsec = 1;
+  }
+  else
+  {
+    its.it_value.tv_sec = sec;
+    its.it_value.tv_nsec = nanosec;
+  }
+  
+  
+  if (mTimerID < 0)
+  {
+    return false;
+  }
+  
+  if (timer_settime(mTimerID, 0, &its, NULL) == -1)
+  {
+    return false;
+  }
 
   mRunning = true;
   return true;
@@ -84,38 +143,29 @@ bool nglTimer::Start(bool Immediate, bool Reset)
 void nglTimer::Stop()
 {
   mRunning = false;
+  
+  itimerspec its;
+  its.it_value.tv_sec = 0;
+  its.it_value.tv_nsec = 0;
+  its.it_interval.tv_sec = 0;
+  its.it_interval.tv_nsec = 0;
+  if (mTimerID < 0)
+  {
+    return;
+  }
+  
+  timer_settime(mTimerID, 0, &its, NULL);
+}
+
+void nglTimer::TimerAction()
+{
+  nglTime now;
+  OnTick(now - mLastTime);
+  mLastTime = now;
+  mCallCnt++;
 }
 
 bool nglTimer::IsRunning()
 {
   return mRunning;
-}
-
-
-/*
- * Internals
- */
-
-nglTime nglTimer::GetTimeOut (nglTime Now)
-{
-  nglTime timeout = mNextTick - Now;
-
-  return (timeout < nglTime::Zero) ? nglTime::Zero : timeout;
-}
-
-void nglTimer::Update()
-{
-  nglTime now;
-
-  if (now < mNextTick) return;
-
-  CallOnTick(now - mLastTick);
-
-  mLastTick = now;
-  mNextTick = now + mPeriod; // Simple reload
-}
-
-void nglTimer::CallOnTick(nglTime Elapsed)
-{
-  OnTick (Elapsed);
 }

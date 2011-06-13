@@ -15,7 +15,8 @@ class nuiAndroidBridge : public nglContext, public nuiTopLevel
 {
 public:
   nuiAndroidBridge()
-  : nuiTopLevel(_T(""))
+  : nuiTopLevel(_T("")),
+    mEventSink(this)
   {
     LOGI("nuiAndroidBridge() 1");
     *((nuiAndroidBridge**)&gmpNUI_AndroidBridge) = this;
@@ -45,6 +46,10 @@ public:
   {
     *((nuiAndroidBridge**)&gmpNUI_AndroidBridge) = this;
   }
+  
+  void TimerTest();
+  void OnTimerTick(const nuiEvent& rEvent);
+  nuiEventSink<nuiAndroidBridge> mEventSink;
   
   void Display()
   {

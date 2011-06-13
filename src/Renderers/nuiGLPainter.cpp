@@ -333,6 +333,7 @@ void nuiGLPainter::SetViewport()
 //    glViewport(x, y, w, h);
 
 //  if (mViewPort[0] != x || mViewPort[1] != y || mViewPort[2] != w || mViewPort[3] != h)
+  nuiCheckForGLErrors();
   {
     mViewPort[0] = x;
     mViewPort[1] = y;
@@ -761,6 +762,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       nuiCheckForGLErrors();
     }
   }
+  
 }
 
 
@@ -1412,12 +1414,10 @@ nuiGLPainter::TextureInfo::TextureInfo()
 
 void nuiGLPainter::CreateTexture(nuiTexture* pTexture)
 {
-  
 }
 
 void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 {
-
   nuiTexture* pProxy = pTexture->GetProxyTexture();
   if (pProxy)
     pTexture = pProxy;
@@ -1765,7 +1765,6 @@ nuiGLPainter::FramebufferInfo::FramebufferInfo()
 
 void nuiGLPainter::CreateSurface(nuiSurface* pSurface)
 {
-  
 }
 
 void nuiGLPainter::DestroySurface(nuiSurface* pSurface)
@@ -1791,7 +1790,6 @@ void nuiGLPainter::DestroySurface(nuiSurface* pSurface)
 
 void nuiGLPainter::InvalidateSurface(nuiSurface* pSurface, bool ForceReload)
 {
-  
 }
 
 void nuiGLPainter::SetSurface(nuiSurface* pSurface)
@@ -1986,51 +1984,42 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
   }
 }
 
-void nuiCheckForGLErrors()
+bool nuiCheckForGLErrorsReal()
 {
 #if 1 // Globally enable/disable OpenGL error checking
 #ifdef _DEBUG_
   bool error = false;
   GLenum err = glGetError();
-  while (err != GL_NO_ERROR)
+  switch (err)
   {
-    switch (err)
-    {
-        /*
-         case GL_NO_ERROR:
-         NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, "error has been recorded. The value of this symbolic constant is guaranteed to be zero.");
-         */
-        break;
-      case GL_INVALID_ENUM: 
-        NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("An unacceptable value is specified for an enumerated argument. The offending function is ignored, having no side effect other than to set the error flag."));
-        NGL_ASSERT(0);
-        break;
-      case GL_INVALID_VALUE: 
-        NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("A numeric argument is out of range. The offending function is ignored, having no side effect other than to set the error flag."));
-        NGL_ASSERT(0);
-        break;
-      case GL_INVALID_OPERATION:
-        NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("The specified operation is not allowed in the current state. The offending function is ignored, having no side effect other than to set the error flag."));
-        //NGL_ASSERT(0);
-        break;
-      case GL_STACK_OVERFLOW:
-        NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("This function would cause a stack overflow. The offending function is ignored, having no side effect other than to set the error flag."));
-        NGL_ASSERT(0);
-        break;
-      case GL_STACK_UNDERFLOW:
-        NGL_ASSERT(0);
-        NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("This function would cause a stack underflow. The offending function is ignored, having no side effect other than to set the error flag."));
-        NGL_ASSERT(0);
-        break;
-      case GL_OUT_OF_MEMORY:
-        NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
-        NGL_ASSERT(0);
-        break;
-    }
-    err = glGetError();
+      /*
+       case GL_NO_ERROR:
+       NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, "error has been recorded. The value of this symbolic constant is guaranteed to be zero.");
+       */
+      break;
+    case GL_INVALID_ENUM: 
+      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("An unacceptable value is specified for an enumerated argument. The offending function is ignored, having no side effect other than to set the error flag."));
+      break;
+    case GL_INVALID_VALUE: 
+      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("A numeric argument is out of range. The offending function is ignored, having no side effect other than to set the error flag."));
+      break;
+    case GL_INVALID_OPERATION:
+      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("The specified operation is not allowed in the current state. The offending function is ignored, having no side effect other than to set the error flag."));
+      break;
+    case GL_STACK_OVERFLOW:
+      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("This function would cause a stack overflow. The offending function is ignored, having no side effect other than to set the error flag."));
+      break;
+    case GL_STACK_UNDERFLOW:
+      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("This function would cause a stack underflow. The offending function is ignored, having no side effect other than to set the error flag."));
+      break;
+    case GL_OUT_OF_MEMORY:
+      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
+      break;
   }
 #endif
 #endif
+  
+  return err == GL_NO_ERROR;
 }
 
 
