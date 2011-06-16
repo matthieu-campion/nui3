@@ -22,6 +22,8 @@ public:
   virtual bool IsValid() const;
   virtual uint32 GetChannels() const;
   
+  uint32 GetSampleFrames() const;
+  
 protected:
   virtual uint32 ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames);
   
