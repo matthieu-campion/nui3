@@ -422,6 +422,11 @@ void nuiSprite::InitAttributes()
                (nglString(_T("Color")), nuiUnitColor,
                 nuiMakeDelegate(this, &nuiSprite::GetColor),
                 nuiMakeDelegate(this, &nuiSprite::SetColor)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Alpha")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetAlpha),
+                nuiMakeDelegate(this, &nuiSprite::SetAlpha)));
+
 }
 
 
@@ -762,6 +767,19 @@ const nuiColor& nuiSprite::GetColor() const
 {
   CheckValid();
   return mColor;
+}
+
+float nuiSprite::GetAlpha() const
+{
+  float v = GetColor().Alpha();
+  return v;
+}
+
+void nuiSprite::SetAlpha(float value)
+{
+  nuiColor color = mColor;
+  color.Multiply(value, true);
+  SetColor(color);
 }
 
 void nuiSprite::SetBlendFunc(nuiBlendFunc f)

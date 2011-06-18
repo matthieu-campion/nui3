@@ -9,199 +9,20 @@
 #include "nuiFontManager.h"
 #include "ucdata.h"
 
-void TextLayoutTest(const nglString& txt)
-{
-  nuiFontRequest request;
-  request.MustHaveSize(14, 2);
-  request.SetName("Times", 2);
-  nuiFont* pFont = nuiFontManager::GetManager().GetFont(request);
-  //printf("Requested font: %s\n", pFont->GetFamilyName().GetChars());
-  nuiTextLayout* layout = new nuiTextLayout(pFont);
-  layout->LayoutText(txt);
-  delete layout;
-}
-
-
-/////////////
-nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length)
-: mpFont(NULL),
-  mLayout(rLayout),
-  mPosition(Position),
-  mLength(Length),
-  mScript(script),
-  mAdvanceX(0),
-  mAdvanceY(0),
-  mUnderline(false),
-  mStrikeThrough(false)
-{
-}
-
-nuiTextRun::~nuiTextRun()
-{
-  mpFont->Release();
-}
-
-const std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs() const
-{
-  return mGlyphs;
-}
-
-void nuiTextRun::SetFont(nuiFont* pFont)
-{
-  NGL_ASSERT(!mpFont);
-  pFont->Acquire();
-  mpFont = pFont;
-}
-
-nuiUnicodeScript nuiTextRun::GetScript() const
-{
-  return mScript;
-}
-
-nuiFont* nuiTextRun::GetFont() const
-{
-  return mpFont;
-}
-
-
-int32 nuiTextRun::GetPosition() const
-{
-  return mPosition;
-}
-
-int32 nuiTextRun::GetLength() const
-{
-  return mLength;
-}
-
-float nuiTextRun::GetAdvanceX() const
-{
-  return mAdvanceX;
-}
-
-float nuiTextRun::GetAdvanceY() const
-{
-  return mAdvanceY;
-}
-
-const nglUChar* nuiTextRun::GetUnicodeChars() const
-{
-  return mLayout.GetUnicodeChars() + mPosition;
-}
-
-void nuiTextRun::SetUnderline(bool set)
-{
-  mUnderline = set;
-}
-
-bool nuiTextRun::GetUnderline() const
-{
-  return mUnderline;
-}
-
-void nuiTextRun::SetStrikeThrough(bool set)
-{
-  mStrikeThrough = set;
-}
-
-bool nuiTextRun::GetStrikeThrough() const
-{
-  return mStrikeThrough;
-}
-
-
-////////////
-//nuiTextLine
-nuiTextLine::nuiTextLine(const nuiTextLayout& rLayout, float X, float Y)
-: mLayout(rLayout), mX(X), mY(Y)
-{
-}
-
-nuiTextLine::~nuiTextLine()
-{
-  for (uint32 i = 0; i < mpRuns.size(); i++)
-    mpRuns[i]->Release();
-}
-
-/** @name Drawing the Line */
-//@{
-void nuiTextLine::Draw(nuiDrawContext* pContext)
-{
-}
-//@}
-
-const std::vector<nuiTextRun*>& nuiTextLine::GetGlyphRuns() const
-{
-  return mpRuns;
-}
-
-float nuiTextLine::GetX() const
-{
-  return mX;
-}
-
-float nuiTextLine::GetY() const
-{
-  return mY;
-}
-
-void nuiTextLine::SetPosition(float X, float Y)
-{
-  mX = X;
-  mY = Y;
-}
-
-void nuiTextLine::AddRun(nuiTextRun* pRun)
-{
-  pRun->Acquire();
-  mpRuns.push_back(pRun);
-}
-
-int32 nuiTextLine::GetRunCount() const
-{
-  return mpRuns.size();
-}
-
-nuiTextRun* nuiTextLine::GetRun(int32 index) const
-{
-  return mpRuns[index];
-}
-
-float nuiTextLine::GetAdvanceY() const
-{
-  float y = 0;
-  for (uint32 i = 0; i < mpRuns.size(); i++)
-  {
-    y = MAX(y, mpRuns[i]->GetAdvanceY());
-  }
-
-  return y;
-}
-
-float nuiTextLine::GetAdvanceX() const
-{
-  float x = 0;
-  for (uint32 i = 0; i < mpRuns.size(); i++)
-  {
-    x += mpRuns[i]->GetAdvanceX();
-  }
-  
-  return x;
-}
-
 
 /////////////////
 // nuiTextLayout
 nuiTextLayout::nuiTextLayout(nuiFont* pFont)
+:
+  mXMin(0), mXMax(0), mYMin(0), mYMax(0),
+  mAscender(0),
+  mDescender(0)
 {
-  pFont->Acquire();
-  mpFont = pFont;
+  mStyle.SetFont(pFont);
 }
 
 nuiTextLayout::~nuiTextLayout()
 {
-  mpFont->Release();
-
   for (uint32 p = 0; p < mpParagraphs.size(); p++)
   {
     Paragraph* pParagraph = mpParagraphs[p];
@@ -256,6 +77,9 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     LayoutParagraph(start, position - start); // Eat the \n char
     start = position;
   }
+
+  mAscender = 0;
+  mDescender = 0;
   
   // Find the needed fonts for each script:
   std::map<nuiUnicodeScript, nuiFont*> FontSet;
@@ -272,12 +96,12 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         std::set<nglUChar>::const_iterator it = charset.begin();
         std::set<nglUChar>::const_iterator end = charset.end();
         
-        while (it != end && mpFont->GetGlyphIndex(*it) > 0)
+        while (it != end && mStyle.GetFont()->GetGlyphIndex(*it) > 0)
           ++it;
         
         // If all the glyphs are available in the font we're done...
         if (it == end)
-          pFont = mpFont;
+          pFont = mStyle.GetFont();
         else
         {
           //printf("[couldn't find glyph %d '%c' in requested font] ", *it, *it);
@@ -287,11 +111,13 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
       // If the requested font doesn't work, try to find one that does:
       if (!pFont)
       {
-        nuiFontRequest request(mpFont);
+        nuiFontRequest request(mStyle.GetFont());
         request.MustHaveGlyphs(charset, 500, false);
         pFont = nuiFontManager::GetManager().GetFont(request);
       }
       
+      mAscender = MAX(mAscender, pFont->GetAscender());
+      mDescender = MAX(mDescender, pFont->GetDescender());
       FontSet[it->first] = pFont;
       
       printf("%s\n", pFont->GetFamilyName().GetChars());
@@ -308,6 +134,8 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     for (uint32 l = 0; l < pParagraph->size(); l++)
     {
       nuiTextLine* pLine = (*pParagraph)[l];
+      float x = 0;
+      float y = 0;
       for (uint32 r = 0; r < pLine->GetRunCount(); r++)
       { 
         nuiTextRun* pRun = pLine->GetRun(r);
@@ -315,9 +143,16 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
         
-        printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s / %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
+        x += pRun->GetAdvanceX();
+        y += pRun->GetAdvanceY();
 
+        mXMin = MIN(mXMin, x);
+        mXMax = MAX(mXMax, x);
+        mYMin = MIN(mYMin, y);
+        mYMax = MAX(mYMax, y);
         
+        //printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s / %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
+
         i++;
       }
     }
@@ -381,7 +216,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
       uint32 len = range.mLength;
       printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
          
-      nuiTextRun* pRun = new nuiTextRun(*this, range.mScript, pos, len);
+      nuiTextRun* pRun = new nuiTextRun(*this, range.mScript, pos, len, mStyle);
       pLine->AddRun(pRun);
       
       
@@ -392,26 +227,6 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
   }
   
   return true;
-}
-
-void nuiTextLayout::SetJustification(bool set)
-{
-  mJustify = set;
-}
-
-bool nuiTextLayout::GetJustification() const
-{
-  return mJustify;
-}
-
-void nuiTextLayout::SetFlush(float set)
-{
-  mFlush = set;
-}
-
-float nuiTextLayout::GetFlush() const
-{
-  return mFlush;
 }
 
 int32 nuiTextLayout::GetParagraphCount() const
@@ -443,4 +258,281 @@ const nglUChar* nuiTextLayout::GetUnicodeChars() const
 {
   return &mUnicode[0];
 }
+
+///////////////////////// Old nuiFontLayout interface
+int32 nuiTextLayout::GetMetrics(nuiGlyphInfo& rInfo) const
+{
+  int32 count = GetGlyphCount();
+  rInfo.Index = -count;
+  if (count > 0)
+  {
+    rInfo.Width    = mXMax - mXMin;
+    rInfo.Height   = mYMax - mYMin;
+    rInfo.BearingX = mXMin;
+    rInfo.BearingY = mYMax;
+    
+    float penx = 0;
+    float peny = 0;
+    
+    if (!mpParagraphs.empty())
+    {
+      Paragraph* pLastParagraph = mpParagraphs.back();
+      if (!pLastParagraph->empty())
+      {
+        nuiTextLine* pLastLine = pLastParagraph->back();
+        penx = pLastLine->GetAdvanceX();
+        peny = pLastLine->GetAdvanceY();
+      }
+      
+      
+    }
+    
+    rInfo.AdvanceX = penx;
+    rInfo.AdvanceY = peny;
+  }
+  else
+  {
+    rInfo.Width    = 0.0f;
+    rInfo.Height   = 0.0f;
+    rInfo.BearingX = 0.0f;
+    rInfo.BearingY = 0.0f;
+    rInfo.AdvanceX = 0.0f;
+    rInfo.AdvanceY = 0.0f;
+  }
+  return count;
+}
+
+float nuiTextLayout::GetAscender() const
+{
+  return mAscender;
+}
+
+float nuiTextLayout::GetDescender() const
+{
+  return mDescender;
+}
+
+int32 nuiTextLayout::GetGlyphCount() const
+{
+  return 0;
+}
+
+const nuiGlyphLayout* nuiTextLayout::GetGlyph(uint Offset) const
+{
+  return NULL;
+}
+
+const nuiGlyphLayout* nuiTextLayout::GetGlyphAt(float X, float Y) const
+{
+  return NULL;
+}
+
+nuiRect nuiTextLayout::GetRect() const
+{
+  nuiRect r;
+  
+  
+  
+  return r.Size();
+}
+
+void nuiTextLayout::SetWrapX(nuiSize WrapX)
+{
+  
+}
+
+nuiSize nuiTextLayout::GetWrapX() const
+{
+  return 0;
+}
+
+
+bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs)
+{
+  std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator it = rGlyphs.begin();
+  std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator end = rGlyphs.end();
+  
+  bool texturing = pContext->GetState().mTexturing;
+  nuiTexture* pOldTexture = pContext->GetTexture();
+  if (pOldTexture)
+    pOldTexture->Acquire();
+  
+  pContext->EnableTexturing(true);
+  
+  while (it != end)
+  {
+    nuiTexture* pTexture = it->first;
+    pContext->SetTexture(pTexture);
+    int size = (int)it->second.size();
+    int i;
+    
+    nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
+    pArray->EnableArray(nuiRenderArray::eVertex);
+    pArray->EnableArray(nuiRenderArray::eTexCoord);
+    pArray->Reserve(6 * size);
+    
+    for (i = 0; i < size; i++)
+    {
+      const nuiRect& rDest = it->second[i]->mDestRect;
+      const nuiRect& rSource = it->second[i]->mSourceRect;
+      
+      nuiSize x1,y1,x2,y2;
+      nuiSize tx,ty,tw,th;
+      
+      x1 = rDest.mLeft;
+      y1 = rDest.mTop;
+      x2 = rDest.mRight;
+      y2 = rDest.mBottom;
+      
+      tx = rSource.mLeft;
+      ty = rSource.mTop;
+      tw = rSource.mRight;
+      th = rSource.mBottom;
+      
+      pTexture->ImageToTextureCoord(tx, ty);
+      pTexture->ImageToTextureCoord(tw,th);
+      
+      ///////////////////////////////////////////
+      pArray->SetVertex(x1, y1);
+      pArray->SetTexCoords(tx, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x2, y1);
+      pArray->SetTexCoords(tw, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x2, y2);
+      pArray->SetTexCoords(tw, th);
+      pArray->PushVertex();
+      
+      ///////////////////////////////////////////
+      pArray->SetVertex(x1, y1);
+      pArray->SetTexCoords(tx, ty);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x2, y2);
+      pArray->SetTexCoords(tw, th);
+      pArray->PushVertex();
+      
+      pArray->SetVertex(x1, y2);
+      pArray->SetTexCoords(tx, th);
+      pArray->PushVertex();
+    }
+    
+    //nglString str = pArray->Dump();
+    //NGL_OUT("%s", str.GetChars());
+    pContext->DrawArray(pArray);
+    
+    ++it;
+  }
+  
+  pContext->EnableTexturing(texturing);
+  pContext->SetTexture(pOldTexture);
+  if (pOldTexture)
+    pOldTexture->Release();
+  
+  return true;
+}
+
+void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool AlignGlyphPixels)
+{
+  bool blendsaved = pContext->GetState().mBlending;
+  bool texturesaved = pContext->GetState().mTexturing;
+  
+  pContext->EnableBlending(true);
+  pContext->EnableTexturing(true);
+  
+  nuiColor SavedColor = pContext->GetFillColor();
+  nuiColor oldcolor(pContext->GetStrokeColor());
+  pContext->SetStrokeColor(pContext->GetTextColor());
+  pContext->SetFillColor(pContext->GetTextColor());
+  pContext->SetBlendFunc(nuiBlendTransp);
+  
+  std::map<nuiTexture*, std::vector<nuiTextGlyph*> > Glyphs;
+  
+  float x = X;
+  float y = Y;
+  
+  // Iterate runs:
+  for (int32 p = 0; p < GetParagraphCount(); p++)
+  {
+    for (int32 l = 0; l < GetLineCount(p); l++)
+    {
+      x = X;
+      nuiTextLine* pLine = GetLine(p, l);
+      for (int32 r = 0; r < pLine->GetRunCount(); r++)
+      {
+        nuiTextRun* pRun = pLine->GetRun(r);
+        std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
+        nuiFont* pFont = pRun->GetFont();
+        
+        if (pRun->IsPrepared())
+        {
+          for (int32 g = 0; g < rGlyphs.size(); g++)
+          {
+            nuiTextGlyph& rGlyph(rGlyphs.at(g));
+            Glyphs[rGlyph.mpTexture].push_back(&rGlyph);
+          }
+        }
+        else
+        {
+          for (int32 g = 0; g < rGlyphs.size(); g++)
+          {
+            nuiTextGlyph& rGlyph(rGlyphs.at(g));
+            
+            rGlyph.mX += x;
+            rGlyph.mY += y;
+            
+            pFont->PrepareGlyph(rGlyph, AlignGlyphPixels);
+            Glyphs[rGlyph.mpTexture].push_back(&rGlyph);
+          }
+          
+          pRun->SetPrepared(true);
+        }
+        
+        // Draw underlines and strike through if needed
+        if (pRun->GetUnderline() || pRun->GetStrikeThrough())
+        {
+          nuiFontInfo info;
+          pFont->GetInfo(info);
+          float thickness = ToNearest(info.UnderlineThick);
+          pContext->SetLineWidth(thickness);
+          
+          const float x1 = x;
+          const float x2 = x + pRun->GetAdvanceX();
+          
+          if (pRun->GetUnderline())
+          {
+            const float pos = -info.UnderlinePos;
+            const float _y = ToNearest(y + pos);
+            if (x1 != x2)
+              pContext->DrawLine(x1, _y, x2, _y);
+          }
+          
+          if (pRun->GetStrikeThrough())
+          {
+            const float pos = -info.Ascender * .4f;
+            const float _y = ToNearest(y + pos);
+            if (x1 != x2)
+              pContext->DrawLine(x1, _y, x2, _y);
+          }
+        }
+        
+        x += pRun->GetAdvanceX();
+      }
+      y += pLine->GetAdvanceY();
+    }
+  }
+  
+  PrintGlyphs(pContext, Glyphs);
+  
+  
+  pContext->EnableBlending(blendsaved);
+  pContext->EnableTexturing(texturesaved);
+  
+  pContext->SetFillColor(SavedColor);
+  pContext->SetStrokeColor(oldcolor);
+}
+
+
 
