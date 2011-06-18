@@ -141,6 +141,7 @@ void nuiAudioEngine::UnsetOutputProcessDelegate()
 
 void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
 {
+  /*
   std::vector<nuiVoice*> voicesToAdd;
   std::vector<nuiVoice*> voicesToRemove;
   mCs.Lock();
@@ -255,6 +256,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   
   for (uint32 c = 0; c < channels; c++)
     delete[] buffers[c];
+   */
 }
 
 void nuiAudioEngine::ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
