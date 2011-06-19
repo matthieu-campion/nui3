@@ -151,7 +151,7 @@ ASSERT_STATIC (Type::min_size + 1 <= sizeof (_Null##Type))
 
 template <int max_depth>
 struct hb_trace_t {
-  explicit hb_trace_t (unsigned int *pdepth, const char *what, const char *function, const void *obj) : pdepth(pdepth) {
+  explicit hb_trace_t (unsigned int *pdepth_, const char *what, const char *function, const void *obj) : pdepth(pdepth_) {
     (void) (*pdepth < max_depth &&
 	    fprintf (stderr, "%s(%p) %-*d-> %s\n", what, obj, *pdepth, *pdepth, function));
     if (max_depth) ++*pdepth;
@@ -183,9 +183,9 @@ struct hb_trace_t<0> {
 
 struct hb_sanitize_context_t
 {
-  inline void init (hb_blob_t *blob)
+  inline void init (hb_blob_t *b)
   {
-    this->blob = hb_blob_reference (blob);
+    this->blob = hb_blob_reference (b);
     this->writable = false;
   }
 
@@ -198,7 +198,7 @@ struct hb_sanitize_context_t
 
     (void) (HB_DEBUG_SANITIZE &&
       fprintf (stderr, "sanitize %p init [%p..%p] (%lu bytes)\n",
-	       this->blob, this->start, this->end,
+	       (void *) this->blob, this->start, this->end,
 	       (unsigned long) (this->end - this->start)));
   }
 
@@ -206,7 +206,7 @@ struct hb_sanitize_context_t
   {
     (void) (HB_DEBUG_SANITIZE &&
       fprintf (stderr, "sanitize %p fini [%p..%p] %u edit requests\n",
-	       this->blob, this->start, this->end, this->edit_count));
+	       (void *) this->blob, this->start, this->end, this->edit_count));
 
     hb_blob_destroy (this->blob);
     this->blob = NULL;
@@ -293,7 +293,7 @@ struct Sanitizer
 
   retry:
     (void) (HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "Sanitizer %p start %s\n", blob, HB_FUNC));
+      fprintf (stderr, "Sanitizer %p start %s\n", (void *) blob, HB_FUNC));
 
     c->setup ();
 
@@ -309,7 +309,7 @@ struct Sanitizer
       if (c->edit_count) {
 	(void) (HB_DEBUG_SANITIZE &&
 	  fprintf (stderr, "Sanitizer %p passed first round with %d edits; doing a second round %s\n",
-		   blob, c->edit_count, HB_FUNC));
+		   (void *) blob, c->edit_count, HB_FUNC));
 
         /* sanitize again to ensure no toe-stepping */
         c->edit_count = 0;
@@ -317,7 +317,7 @@ struct Sanitizer
 	if (c->edit_count) {
 	  (void) (HB_DEBUG_SANITIZE &&
 	    fprintf (stderr, "Sanitizer %p requested %d edits in second round; FAILLING %s\n",
-		     blob, c->edit_count, HB_FUNC));
+		     (void *) blob, c->edit_count, HB_FUNC));
 	  sane = false;
 	}
       }
@@ -331,7 +331,7 @@ struct Sanitizer
 	  c->writable = true;
 	  /* ok, we made it writable by relocating.  try again */
 	  (void) (HB_DEBUG_SANITIZE &&
-	    fprintf (stderr, "Sanitizer %p retry %s\n", blob, HB_FUNC));
+	    fprintf (stderr, "Sanitizer %p retry %s\n", (void *) blob, HB_FUNC));
 	  goto retry;
 	}
       }
@@ -340,7 +340,7 @@ struct Sanitizer
     c->finish ();
 
     (void) (HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "Sanitizer %p %s %s\n", blob, sane ? "passed" : "FAILED", HB_FUNC));
+      fprintf (stderr, "Sanitizer %p %s %s\n", (void *) blob, sane ? "passed" : "FAILED", HB_FUNC));
     if (sane)
       return blob;
     else {

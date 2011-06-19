@@ -179,11 +179,11 @@ struct _hb_object_header_t {
 
   inline bool set_user_data (hb_user_data_key_t *key,
 			     void *              data,
-			     hb_destroy_func_t   destroy) {
+			     hb_destroy_func_t   destroy_func) {
     if (unlikely (!this || this->is_inert ()))
       return false;
 
-    return user_data.set (key, data, destroy);
+    return user_data.set (key, data, destroy_func);
   }
 
   inline void *get_user_data (hb_user_data_key_t *key) {
@@ -193,7 +193,7 @@ struct _hb_object_header_t {
   inline void trace (const char *function) const {
     (void) (HB_DEBUG_OBJECT &&
 	    fprintf (stderr, "OBJECT(%p) refcount=%d %s\n",
-		     this,
+		     (void *) this,
 		     this ? ref_count.get () : 0,
 		     function));
   }

@@ -23027,7 +23027,7 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>330166384.98771799</real>
+		<real>330166606.72781098</real>
 		<string>{1523, 2328}</string>
 		<string>{3780, 0}</string>
 		<string>hb_nui_get_general_category (hb_unicode_funcs_t *ufuncs, hb_codepoint_t unicode, void *user_data)</string>
@@ -36464,7 +36464,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>330166384.98978001</real>
+		<real>330166606.72845501</real>
 		<string>{306, 1707}</string>
 		<string>{1264, 0}</string>
 		<string>GetGlyph (int32 Offset)</string>
@@ -146855,7 +146855,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>330166384.986292</real>
+		<real>330166606.72713399</real>
 		<string>{306, 1707}</string>
 		<string>{1264, 0}</string>
 		<dict>
@@ -149321,7 +149321,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>330166384.986669</real>
+		<real>330166606.72723198</real>
 		<string>{1523, 2328}</string>
 		<string>{3780, 0}</string>
 		<dict>
@@ -151173,7 +151173,7 @@
 				<integer>8069</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>330166379.983298</real>
+			<real>330166601.72540599</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -151184,7 +151184,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 10:52 AM</string>
+		<string>Today at 10:56 AM</string>
 		<integer>234</integer>
 		<string>thirdparty</string>
 		<dict>
