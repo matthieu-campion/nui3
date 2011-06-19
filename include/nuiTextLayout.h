@@ -46,8 +46,8 @@ public:
   //@}
   
   int32 GetGlyphCount() const;
-  const nuiGlyphLayout* GetGlyph   (uint32 Offset) const;
-  const nuiGlyphLayout* GetGlyphAt (float X, float Y) const;
+  const nuiTextGlyph* GetGlyph   (int32 Offset) const;
+  const nuiTextGlyph* GetGlyphAt (float X, float Y) const;
   /*!< Identify a glyph at given coordinates
    \param X abscissa in layout coordinate space
    \param Y ordinate in layout coordinate space

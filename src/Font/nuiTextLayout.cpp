@@ -314,16 +314,57 @@ float nuiTextLayout::GetDescender() const
 
 int32 nuiTextLayout::GetGlyphCount() const
 {
-  return 0;
+  int32 count = 0;
+  // Iterate runs:
+  for (int32 p = 0; p < GetParagraphCount(); p++)
+  {
+    for (int32 l = 0; l < GetLineCount(p); l++)
+    {
+      nuiTextLine* pLine = GetLine(p, l);
+      
+      count += pLine->GetGlyphCount();
+    }
+  }
+  
+  return count;
 }
 
-const nuiGlyphLayout* nuiTextLayout::GetGlyph(uint Offset) const
+const nuiTextGlyph* nuiTextLayout::GetGlyph(int32 Offset) const
 {
+  for (int32 p = 0; p < GetParagraphCount(); p++)
+  {
+    for (int32 l = 0; l < GetLineCount(p); l++)
+    {
+      nuiTextLine* pLine = GetLine(p, l);
+      
+      int32 s = pLine->GetGlyphCount();
+
+      if (Offset < s)
+      {
+        return pLine->GetGlyph(Offset);
+      }
+
+      Offset -= s;
+    }
+  }
+  
   return NULL;
 }
 
-const nuiGlyphLayout* nuiTextLayout::GetGlyphAt(float X, float Y) const
+const nuiTextGlyph* nuiTextLayout::GetGlyphAt(float X, float Y) const
 {
+  for (int32 p = 0; p < GetParagraphCount(); p++)
+  {
+    for (int32 l = 0; l < GetLineCount(p); l++)
+    {
+      nuiTextLine* pLine = GetLine(p, l);
+      const nuiTextGlyph* pGlyph = pLine->GetGlyphAt(X, Y);
+
+      if (pGlyph)
+        return pGlyph;
+    }
+  }
+  
   return NULL;
 }
 

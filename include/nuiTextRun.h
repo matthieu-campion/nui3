@@ -42,6 +42,10 @@ public:
   float GetDescender() const;
   
   std::vector<nuiTextGlyph>& GetGlyphs();
+  const nuiTextGlyph* GetGlyph   (int32 Offset) const;
+  const nuiTextGlyph* GetGlyphAt (float X, float Y) const;
+
+  int32 GetGlyphCount() const;
   nuiFont* GetFont() const;
   
   void SetUnderline(bool set);
@@ -67,6 +71,9 @@ private:
   bool mPrepared : 1;
   
   std::vector<nuiTextGlyph> mGlyphs;
-  float mAdvanceX, mAdvanceY;
+  float mX;
+  float mY;
+  float mAdvanceX;
+  float mAdvanceY;
 };
 

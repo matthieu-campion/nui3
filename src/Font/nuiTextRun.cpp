@@ -9,25 +9,14 @@
 #include "nuiFontManager.h"
 #include "nuiTextLayout.h"
 
-void TextLayoutTest(const nglString& txt)
-{
-  nuiFontRequest request;
-  request.MustHaveSize(14, 2);
-  request.SetName("Times", 2);
-  nuiFont* pFont = nuiFontManager::GetManager().GetFont(request);
-  //printf("Requested font: %s\n", pFont->GetFamilyName().GetChars());
-  nuiTextLayout* layout = new nuiTextLayout(pFont);
-  layout->LayoutText(txt);
-  delete layout;
-}
-
-
 /////////////
 nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length, const nuiTextStyle& rStyle)
 : mLayout(rLayout),
   mPosition(Position),
   mLength(Length),
   mScript(script),
+  mX(0),
+  mY(0),
   mAdvanceX(0),
   mAdvanceY(0),
   mUnderline(false),
@@ -148,4 +137,30 @@ void nuiTextRun::SetPrepared(bool set)
 {
   mPrepared = set;
 }
+
+int32 nuiTextRun::GetGlyphCount() const
+{
+  return mGlyphs.size();
+}
+
+const nuiTextGlyph* nuiTextRun::GetGlyph(int32 Offset) const
+{
+  return &(mGlyphs.at(Offset));
+}
+
+const nuiTextGlyph* nuiTextRun::GetGlyphAt (float X, float Y) const
+{
+  X -= mX;
+  Y -= mY;
+  
+  for (int32 i = 0; i < mGlyphs.size(); i++)
+  {
+    const nuiTextGlyph* pGlyph = &mGlyphs[i];
+    if (pGlyph->mDestRect.IsInside(X, Y))
+      return pGlyph;
+  }
+  
+  return NULL;
+}
+
 
