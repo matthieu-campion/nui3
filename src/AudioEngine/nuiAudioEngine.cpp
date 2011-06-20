@@ -10,6 +10,10 @@
 #include "nuiAudioEngine.h"
 
 //#define AUDIO_LOG
+//#define AUDIO_PROFILE
+
+
+
 
 nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize, ChannelConfig inputConfig)
 : mSampleRate(SampleRate),
@@ -141,7 +145,11 @@ void nuiAudioEngine::UnsetOutputProcessDelegate()
 
 void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
 {
-  /*
+#ifdef AUDIO_PROFILE
+  double beginTime = nglTime();
+  {
+#endif
+
   std::vector<nuiVoice*> voicesToAdd;
   std::vector<nuiVoice*> voicesToRemove;
   mCs.Lock();
@@ -256,7 +264,16 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   
   for (uint32 c = 0; c < channels; c++)
     delete[] buffers[c];
-   */
+
+    
+#ifdef AUDIO_PROFILE
+    }
+    double endTime = nglTime();
+    double diff = endTime - beginTime;
+    NGL_OUT(_T("AUDIO_PROFILE [%.2f] : %.3fms\n"), endTime, diff * 1000.f);
+#endif
+    
+   
 }
 
 void nuiAudioEngine::ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
