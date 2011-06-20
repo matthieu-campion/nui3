@@ -23,28 +23,28 @@ public:
   virtual void OnDeviceRemoved(const nglDeviceInfo* pDeviceInfo);
 };
 
-/* Class __NglKernel__
+/* Class nuiManualKernel
  * This class cann be used to control nui when it is not used as a full nui application, that is when you use nuiInit()/nuiUninit() by hand.
- * You can call *(__NglKernel__*)App->XXX() to access this class' API.
+ * You can call *(nuiManualKernel*)App->XXX() to access this class' API.
  */
-class __NglKernel__ : public nglKernel
+class nuiManualKernel : public nglKernel
 {
 public:
 #ifdef _WIN32_
-  __NglKernel__(void* hInstance, nuiKernel* pKernel) 
+  nuiManualKernel(void* hInstance, nuiKernel* pKernel) 
   { 
     mpKernel = pKernel;
     SysInit((HINSTANCE)hInstance); 
   }
 #else
-  __NglKernel__(nuiKernel* pKernel) 
+  nuiManualKernel(nuiKernel* pKernel) 
   { 
     mpKernel = pKernel;
     SysInit(); 
   }
   
 #endif
-  ~__NglKernel__() 
+  virtual ~nuiManualKernel() 
   {
     if (mpKernel)
       delete mpKernel;
@@ -84,6 +84,11 @@ public:
   void Deactivate()
   {
     CallOnDeactivation();
+  }
+  
+  static nuiManualKernel* Get()
+  {
+    return dynamic_cast<nuiManualKernel*>(App);
   }
   
 private:
