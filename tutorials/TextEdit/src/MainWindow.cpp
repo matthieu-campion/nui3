@@ -58,7 +58,7 @@ void MainWindow::OnCreation()
     mpLayout = new nuiTextLayout(mpFont);
     mpLayout->Layout(text);
     
-    //pText->AddText(text);
+    pText->AddText(text);
     delete pStream;
   }
   
@@ -76,7 +76,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   if (mpLayout)
   {
     pContext->SetTextColor(nuiColor(0, 0, 0));
-    mpLayout->Print(pContext, 10, 20, true);
+    //mpLayout->Print(pContext, 10, 20, true);
     //mpFont->Print(pContext, 10, 400, mpLayout, false);
   }
   

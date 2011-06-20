@@ -99,7 +99,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
     while (it != end)
     {
-      printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
+      //printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
       const std::set<nglUChar>& charset(it->second);
       nuiFont* pFont = NULL;
       // First try the requested font
@@ -131,13 +131,14 @@ bool nuiTextLayout::Layout(const nglString& rString)
       mDescender = MAX(mDescender, pFont->GetDescender());
       FontSet[it->first] = pFont;
       
-      printf("%s\n", pFont->GetFamilyName().GetChars());
+      //printf("%s\n", pFont->GetFamilyName().GetChars());
       
       ++it;
     }
   }
 
   i = 0;
+  nuiRect rect;
   float PenX = 0;
   float PenY = 0;
   // Assign the correct font to each run
@@ -157,6 +158,10 @@ bool nuiTextLayout::Layout(const nglString& rString)
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
 
+        nuiFontInfo finfo;
+        pFont->GetInfo(finfo);
+
+        
         // Prepare glyphs:
         std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
         for (int32 g = 0; g < rGlyphs.size(); g++)
@@ -164,16 +169,21 @@ bool nuiTextLayout::Layout(const nglString& rString)
           nuiTextGlyph& rGlyph(rGlyphs.at(g));
           
           pFont->PrepareGlyph(PenX + x, PenY + y, rGlyph);
+
+          const nuiSize W = rGlyph.AdvanceX;
+          //    nuiSize h = finfo.AdvanceMaxH;
+          const nuiSize X = rGlyph.mX + rGlyph.BearingX;
+          const nuiSize Y = rGlyph.mY - finfo.Ascender;
+          const nuiSize H = finfo.Height;
+          
+          nuiRect rr(rect);
+          rect.Union(rr, nuiRect(X, Y, W, H));
         }
         
         x += pRun->GetAdvanceX();
         //y += pRun->GetAdvanceY();
 
-        mXMin = MIN(mXMin, x);
-        mXMax = MAX(mXMax, x);
-        mYMin = MIN(mYMin, y);
-        mYMax = MAX(mYMax, y);
-        
+
         //printf("\trange %d <%d.%d.%d> (%d - %d) (%s --> %s / %s) (advance: %f / %f)\n", i, p, l, r, pRun->GetPosition(), pRun->GetLength(), nuiGetUnicodeScriptName(pRun->GetScript()).GetChars(), pFont->GetFamilyName().GetChars(), pFont->GetStyleName().GetChars(), pRun->GetAdvanceX(), pRun->GetAdvanceY());
 
         i++;
@@ -181,7 +191,12 @@ bool nuiTextLayout::Layout(const nglString& rString)
       PenY += pLine->GetAdvanceY();
     }
   }
-  
+
+  mXMin = rect.Left();
+  mXMax = rect.Right();
+  mYMin = rect.Top();
+  mYMax = rect.Bottom();
+
   mCharsets.clear();
   return true;
 }
@@ -237,7 +252,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
     {
       const nuiTextRange& range(*it);
       uint32 len = range.mLength;
-      printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+      //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
          
       nuiTextRun* pRun = new nuiTextRun(*this, range.mScript, pos, len, mStyle);
       pLine->AddRun(pRun);
@@ -393,10 +408,7 @@ const nuiTextGlyph* nuiTextLayout::GetGlyphAt(float X, float Y) const
 
 nuiRect nuiTextLayout::GetRect() const
 {
-  nuiRect r;
-  
-  
-  
+  nuiRect r(mXMin, mYMin, mXMax, mYMax, false);
   return r.Size();
 }
 
@@ -422,6 +434,9 @@ bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, cons
     pOldTexture->Acquire();
   
   pContext->EnableTexturing(true);
+  
+  const float f = nuiGetScaleFactor();
+  const float i_f = nuiGetInvScaleFactor()
   
   while (it != end)
   {
@@ -450,10 +465,10 @@ bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, cons
 
       if (AlignGlyphPixels)
       {
-        x1 = ToNearest(x1 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
-        y1 = ToNearest(y1 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
-        x2 = ToNearest(x2 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
-        y2 = ToNearest(y2 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
+        x1 = ToNearest(x1 * f) * i_f;
+        y1 = ToNearest(y1 * f) * i_f;
+        x2 = ToNearest(x2 * f) * i_f;
+        y2 = ToNearest(y2 * f) * i_f;
       }
       
       tx = rSource.mLeft;

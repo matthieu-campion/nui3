@@ -130,7 +130,7 @@ hb_nui_get_general_category (hb_unicode_funcs_t *ufuncs,
 
 #undef TEST
 
-  printf("category %x -> %s\n", unicode, HB_UnicodeCats[res]);
+  //printf("category %x -> %s\n", unicode, HB_UnicodeCats[res]);
   return res;
 }
 

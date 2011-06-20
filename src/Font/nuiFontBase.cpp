@@ -866,13 +866,13 @@ nuiFontBase::~nuiFontBase()
 {
   delete mpFace;
 
-  NGL_OUT(_T("DestroyFont: %p\n"), this);
+  //NGL_OUT(_T("DestroyFont: %p\n"), this);
   Textures::iterator it;
   Textures::iterator end = mTextures.end();
   for(it = mTextures.begin(); it != end; ++it)
   {
     nuiTexture* pTexture = *it;
-    NGL_OUT(_T("DestroyFontTexture: %p / %p\n"), this, pTexture);
+    //NGL_OUT(_T("DestroyFontTexture: %p / %p\n"), this, pTexture);
     pTexture->Release();
   }
   mTextures.clear();
