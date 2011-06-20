@@ -19,60 +19,6 @@
 
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
-class __NglKernel__ : public nglKernel
-{
-public:
-#ifdef _WIN32_
-  __NglKernel__(void* hInstance, nuiKernel* pKernel) 
-  { 
-    mpKernel = pKernel;
-    SysInit((HINSTANCE)hInstance); 
-  }
-#else
-  __NglKernel__(nuiKernel* pKernel) 
-  { 
-    mpKernel = pKernel;
-    SysInit(); 
-  }
-
-#endif
-  ~__NglKernel__() 
-  {
-    if (mpKernel)
-      delete mpKernel;
-  }
-
-  // Hooks:
-  void OnInit()
-  {
-    if (mpKernel)
-      mpKernel->OnInit();
-  }
-
-  void OnExit(int Code)
-  {
-    if (mpKernel)
-      mpKernel->OnExit(Code);
-  }
-
-  // Device management:
-  void OnDeviceAdded(const nglDeviceInfo* pDeviceInfo)
-  {
-    if (mpKernel)
-      mpKernel->OnDeviceAdded(pDeviceInfo);
-  }
-
-  void OnDeviceRemoved(const nglDeviceInfo* pDeviceInfo)
-  {
-    if (mpKernel)
-      mpKernel->OnDeviceRemoved(pDeviceInfo);
-  }
-
-private:
-  nuiKernel* mpKernel;
-};
-
-
 static uint32 gNUIReferences = 0;
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
