@@ -37,6 +37,10 @@ std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs()
 void nuiTextRun::SetFont(nuiFont* pFont)
 {
   mStyle.SetFont(pFont);
+  
+  nuiFontInfo info;
+  pFont->GetInfo(info);
+  mAdvanceY = info.AdvanceMaxH;
 }
 
 nuiUnicodeScript nuiTextRun::GetScript() const

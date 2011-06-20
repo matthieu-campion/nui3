@@ -477,7 +477,7 @@ public:
 
   
   bool PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
-  bool PrepareGlyph(nuiTextGlyph& rGlyph);
+  bool PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph);
   
   void Shape(nuiTextRun* pRun);
 protected:

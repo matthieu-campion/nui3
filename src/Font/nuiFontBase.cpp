@@ -2216,7 +2216,7 @@ bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rG
   return true;
 }
 
-bool nuiFontBase::PrepareGlyph (int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
+bool nuiFontBase::PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
 {
   // Fetch rendered glyph
   GlyphHandle glyph = GetGlyph(Index, eGlyphBitmap);
@@ -2255,7 +2255,7 @@ bool nuiFontBase::PrepareGlyph (int32 Index, nuiGlyphLayout& rGlyph, bool AlignG
   return true;
 }
 
-bool nuiFontBase::PrepareGlyph(nuiTextGlyph& rGlyph)
+bool nuiFontBase::PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph)
 {
   // Fetch rendered glyph
   GlyphHandle glyph = GetGlyph(rGlyph.mIndex, eGlyphBitmap);
@@ -2282,7 +2282,7 @@ bool nuiFontBase::PrepareGlyph(nuiTextGlyph& rGlyph)
   float ww = w * nuiGetInvScaleFactor();
   float hh = h * nuiGetInvScaleFactor();
   
-  rGlyph.mDestRect.Set(x - 1, y - 1, ww + 2, hh + 2);
+  rGlyph.mDestRect.Set(X + x - 1, Y + y - 1, ww + 2, hh + 2);
   rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - nuiGetScaleFactor(), GlyphLocation.mOffsetY - nuiGetScaleFactor(), w + 2 * nuiGetScaleFactor(), h + 2 * nuiGetScaleFactor());
   
   return true;
@@ -2466,7 +2466,6 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   text = pRun->GetUnicodeChars();
   len = pRun->GetLength();
   
-  pRun->mAdvanceY = 0;
   hb_buffer = hb_buffer_create(len);
   
   hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
@@ -2508,7 +2507,6 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   }
 
   pRun->mAdvanceX = x * (1./64);
-  pRun->mAdvanceY = GetHeight();
   hb_buffer_destroy(hb_buffer);
   hb_font_destroy(hb_font);
   hb_face_destroy(hb_face);

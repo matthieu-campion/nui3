@@ -127,6 +127,8 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
   }
 
   i = 0;
+  float PenX = 0;
+  float PenY = 0;
   // Assign the correct font to each run
   for (uint32 p = 0; p < mpParagraphs.size(); p++)
   {
@@ -134,6 +136,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
     for (uint32 l = 0; l < pParagraph->size(); l++)
     {
       nuiTextLine* pLine = (*pParagraph)[l];
+      PenX = 0;
       float x = 0;
       float y = 0;
       for (uint32 r = 0; r < pLine->GetRunCount(); r++)
@@ -149,11 +152,11 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         {
           nuiTextGlyph& rGlyph(rGlyphs.at(g));
           
-          pFont->PrepareGlyph(rGlyph);
+          pFont->PrepareGlyph(PenX + x, PenY + y, rGlyph);
         }
         
         x += pRun->GetAdvanceX();
-        y += pRun->GetAdvanceY();
+        //y += pRun->GetAdvanceY();
 
         mXMin = MIN(mXMin, x);
         mXMax = MAX(mXMax, x);
@@ -164,6 +167,7 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
 
         i++;
       }
+      PenY += pLine->GetAdvanceY();
     }
   }
   
