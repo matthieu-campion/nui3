@@ -36,9 +36,9 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     if (!App)
     {      
 #ifdef _WIN32_
-      App = new __NglKernel__(OSHandle, pKernel);
+      App = new nuiManualKernel(OSHandle, pKernel);
 #else
-      App = new __NglKernel__(pKernel);
+      App = new nuiManualKernel(pKernel);
 #endif
       App->CallOnInit();
     }
@@ -101,7 +101,7 @@ bool nuiUninit()
     // because those have been destroyed at the same time than the opengl context
     nuiDecoration::ExitDecorationEngine();
     
-    __NglKernel__* pApp = dynamic_cast<__NglKernel__*>(App);
+    nuiManualKernel* pApp = nuiManualKernel::Get();
     if (pApp)
     {
       App->CallOnExit(0);
