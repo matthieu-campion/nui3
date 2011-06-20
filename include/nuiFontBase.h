@@ -143,32 +143,6 @@ public:
 };
 
 
-//! Glyph metrics
-/*!
- All glyph metrics are given in pixels, they depend on the current font size and
- resolution. See :
- 
- - nuiFontBase::GetGlyphInfo() for more informations
- - the insightfull introduction to digital typography on FreeType's site :
- http://www.freetype.org/freetype2/docs/glyphs/
- - the font/metrics example bundled with the regular NGL distribution
- */
-class NGL_API nuiGlyphInfo
-{
-public:
-  int   Index;     ///< Glyph index in font face
-  float Width;     ///< Bounding box width
-  float Height;    ///< Bounding box height
-  float BearingX;  ///< X bearing
-  float BearingY;  ///< Y bearing
-  float AdvanceX;  ///< Horizontal advance
-  float AdvanceY;  ///< Vertical advance
-  
-  nuiGlyphInfo();
-  virtual ~nuiGlyphInfo();
-  void Dump (uint Level = 0) const;  ///< Dumps informations to the application log using \p Level verbosity
-};
-
 
 // Errors
 #define NGL_FONT_ENONE  0  ///< No error

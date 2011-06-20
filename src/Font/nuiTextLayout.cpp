@@ -12,13 +12,24 @@
 
 /////////////////
 // nuiTextLayout
-nuiTextLayout::nuiTextLayout(nuiFont* pFont)
+nuiTextLayout::nuiTextLayout(nuiFont* pFont, nuiOrientation Orientation)
 :
-  mXMin(0), mXMax(0), mYMin(0), mYMax(0),
-  mAscender(0),
-  mDescender(0)
+mXMin(0), mXMax(0), mYMin(0), mYMax(0),
+mAscender(0),
+mDescender(0),
+mOrientation(Orientation)
 {
   mStyle.SetFont(pFont);
+}
+
+nuiTextLayout::nuiTextLayout(const nuiTextStyle& rStyle, nuiOrientation Orientation)
+:
+mXMin(0), mXMax(0), mYMin(0), mYMax(0),
+mAscender(0),
+mDescender(0),
+mStyle(rStyle),
+mOrientation(Orientation)
+{
 }
 
 nuiTextLayout::~nuiTextLayout()
@@ -36,7 +47,7 @@ nuiTextLayout::~nuiTextLayout()
   }
 }
 
-bool nuiTextLayout::LayoutText(const nglString& rString)
+bool nuiTextLayout::Layout(const nglString& rString)
 {
   // Transform the string in a vector of nglUChar, also keep the offsets from the original chars to the nglUChar and vice versa
   int32 len = rString.GetLength();
@@ -400,7 +411,7 @@ nuiSize nuiTextLayout::GetWrapX() const
 }
 
 
-bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs, bool AlignGlyphPixels)
+bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs, bool AlignGlyphPixels) const
 {
   std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator it = rGlyphs.begin();
   std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator end = rGlyphs.end();
@@ -495,7 +506,7 @@ bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, cons
   return true;
 }
 
-void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool AlignGlyphPixels)
+void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool AlignGlyphPixels) const
 {
   bool blendsaved = pContext->GetState().mBlending;
   bool texturesaved = pContext->GetState().mTexturing;
@@ -576,6 +587,40 @@ void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool Align
   pContext->SetFillColor(SavedColor);
   pContext->SetStrokeColor(oldcolor);
 }
+
+void nuiTextLayout::GetLines(std::vector<uint>& rLines) const
+{
+  for (int32 p = 0; p < GetParagraphCount(); p++)
+  {
+    for (int32 l = 0; l < GetLineCount(p); l++)
+    {
+      nuiTextLine* pLine = GetLine(p, l);
+      rLines.push_back(pLine->GetRun(0)->GetPosition());
+    }
+  }
+}
+
+void nuiTextLayout::SetUnderline(bool set)
+{
+  mStyle.SetUnderline(set);
+}
+
+bool nuiTextLayout::GetUnderline() const
+{
+  return mStyle.GetUnderline();
+}
+
+void nuiTextLayout::SetStrikeThrough(bool set)
+{
+  mStyle.SetStrikeThrough(set);
+}
+
+bool nuiTextLayout::GetStrikeThrough() const
+{
+  return mStyle.GetStrikeThrough();
+}
+
+
 
 
 

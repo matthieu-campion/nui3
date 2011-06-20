@@ -504,9 +504,10 @@ void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nglString& rString, bo
   mCurrentState.mpFont->Print(this,x,y,rString, AlignGlyphPixels);
 }
 
-void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiFontLayout& rLayout, bool AlignGlyphPixels)
+void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiTextLayout& rLayout, bool AlignGlyphPixels)
 {
-  mCurrentState.mpFont->Print(this,x,y,rLayout, AlignGlyphPixels);
+  rLayout.Print(this, x, y, AlignGlyphPixels);
+  //mCurrentState.mpFont->Print(this,x,y,rLayout, AlignGlyphPixels);
 }
 
 void nuiDrawContext::PermitAntialiasing(bool Set)

@@ -18,12 +18,12 @@
 class nuiTextLayout : public nuiRefCount
 {
 public:
-  nuiTextLayout(const nuiTextStyle& rStyle);
-  nuiTextLayout(nuiFont* pFont);
+  nuiTextLayout(const nuiTextStyle& rStyle, nuiOrientation Orientation = nuiHorizontal);
+  nuiTextLayout(nuiFont* pFont, nuiOrientation Orientation = nuiHorizontal);
   virtual ~nuiTextLayout();
 
-  bool LayoutText(const nglString& rString);
-  void Print(nuiDrawContext* pContext, float X, float Y, bool AlignGlyphPixels);
+  bool Layout(const nglString& rString);
+  void Print(nuiDrawContext* pContext, float X, float Y, bool AlignGlyphPixels) const;
   
   int32 GetParagraphCount() const;
   int32 GetLineCount(int32 Paragraph) const;
@@ -31,6 +31,9 @@ public:
   
   nuiTextLine* GetLine(int32 Paragraph, int32 Line) const;
   nuiTextRun*  GetRun(int32 Paragraph, int32 Line, int32 Run) const;
+  
+  void GetLines(std::vector<uint>& rLines) const;
+
   
   const nglUChar* GetUnicodeChars() const;
 
@@ -75,9 +78,11 @@ public:
   nuiSize GetWrapX() const;
   
 private:
-  bool PrintGlyphs(nuiDrawContext *pContext, float X, float Y, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs, bool AlignGlyphPixels);
+  bool PrintGlyphs(nuiDrawContext *pContext, float X, float Y, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs, bool AlignGlyphPixels) const;
   nuiTextStyle mStyle;
   std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;
+  
+  nuiOrientation mOrientation;
   
   float mAscender;
   float mDescender;

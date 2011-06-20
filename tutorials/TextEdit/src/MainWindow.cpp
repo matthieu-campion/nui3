@@ -56,7 +56,7 @@ void MainWindow::OnCreation()
     mpFont = nuiFontManager::GetManager().GetFont(request);
     printf("Requested font: %s - %s\n", mpFont->GetFamilyName().GetChars(), mpFont->GetStyleName().GetChars());
     mpLayout = new nuiTextLayout(mpFont);
-    mpLayout->LayoutText(text);
+    mpLayout->Layout(text);
     
     //pText->AddText(text);
     delete pStream;

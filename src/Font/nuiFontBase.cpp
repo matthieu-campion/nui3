@@ -2258,7 +2258,7 @@ bool nuiFontBase::PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGl
 bool nuiFontBase::PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph)
 {
   // Fetch rendered glyph
-  GlyphHandle glyph = GetGlyph(rGlyph.mIndex, eGlyphBitmap);
+  GlyphHandle glyph = GetGlyph(rGlyph.Index, eGlyphBitmap);
   
   // If we don't have this glyph, assert it has not been rendered
   if (!glyph)
@@ -2269,7 +2269,7 @@ bool nuiFontBase::PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph)
     return false;
   
   nuiFontBase::GlyphLocation GlyphLocation;
-  GetCacheGlyph(rGlyph.mIndex, GlyphLocation);
+  GetCacheGlyph(rGlyph.Index, GlyphLocation);
   
   float w = GlyphLocation.mWidth;
   float h = GlyphLocation.mHeight;
@@ -2490,7 +2490,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   x = 0;
   for (i = 0; i < num_glyphs; i++)
   {
-    pRun->mGlyphs[i].mIndex = hb_glyph->codepoint;
+    GetGlyphInfo(pRun->mGlyphs[i], hb_glyph->codepoint, eGlyphNative);
     pRun->mGlyphs[i].mCluster = hb_glyph->cluster;
     pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * (1./64);
     pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * (1./64);

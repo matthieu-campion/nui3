@@ -90,8 +90,8 @@ protected:
   nuiSize mHMargin;
 
   nglString mText;
-  nuiFontLayout* mpLayout;
-  nuiFontLayout* mpIdealLayout;
+  nuiTextLayout* mpLayout;
+  nuiTextLayout* mpIdealLayout;
   bool mTextChanged;
   bool mFontChanged;
   bool mUseEllipsis;

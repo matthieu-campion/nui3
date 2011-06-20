@@ -14,7 +14,7 @@
 #include "nglDataObjects.h"
 
 #include "nuiFontBase.h"
-#include "nuiFontLayout.h"
+#include "nuiTextLayout.h"
 
 class nuiFont;
 class nuiXMLNode;
@@ -207,22 +207,6 @@ protected:
   bool InsertText(nuiObject* pParams);
   bool NewLine(nuiObject* pParams);
 
-  class NUI_API FontLayout : public nuiFontLayout
-  {
-  public:
-    FontLayout(nuiFontBase& rFont, float PenX = 0.0f, float PenY = 0.0f);
-    virtual ~FontLayout();
-
-    virtual void OnGlyph(nuiFontBase* pFont, const nglString& rString, int Pos, nuiGlyphInfo* pGlyph);
-
-    const std::vector<uint>& GetLines()
-    {
-      return mLineIndices;
-    }
-  protected:
-    std::vector<uint> mLineIndices;
-  };
-
   class NUI_API TextBlock
   {
   public:
@@ -261,7 +245,7 @@ protected:
   protected:
     uint mBegin;
     uint mEnd;
-    FontLayout* mpLayout;
+    nuiTextLayout* mpLayout;
     nuiRect mRect;
     nuiRect mIdealRect;
     const nglString& mrString;

@@ -26,8 +26,8 @@ public:
   void SetFirstInRun(bool set);
 private:
   nglString mText;
-  nuiFontLayout* mpLayout;
-  nuiFontLayout* mpCompositeLayout;
+  nuiTextLayout* mpLayout;
+  nuiTextLayout* mpCompositeLayout;
   nuiFont* mpFont;
   
   nuiColor mTextFgColor;
