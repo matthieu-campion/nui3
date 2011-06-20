@@ -43,9 +43,6 @@ using namespace std;
 #include FT_CACHE_H
 #include FT_TRUETYPE_TABLES_H
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-
 /* Globals
  */
 FT_Library     gFTLibrary      = NULL;  // Global FT library instance
@@ -188,11 +185,6 @@ nglTextEncoding nuiGetCharMapEncoding (FT_CharMap CharMap)
 
 
 using namespace std;
-
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-//static float NUI_SCALE_FACTOR = 1.0;
-//static float NUI_INV_SCALE_FACTOR = 1.0 / NUI_SCALE_FACTOR;
 
 static const nglChar* gpFontErrorTable[] =
 {
@@ -915,7 +907,7 @@ bool nuiFontBase::GetInfo (nuiFontInfo& rInfo, nuiFontUnit Unit) const
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
+    case eFontUnitEM    : ratio = nuiGetInvScaleFactor() * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
@@ -998,7 +990,7 @@ float nuiFontBase::GetAscender(nuiFontUnit Unit) const
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
+    case eFontUnitEM    : ratio = nuiGetInvScaleFactor() * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
@@ -1010,7 +1002,7 @@ float nuiFontBase::GetDescender(nuiFontUnit Unit) const
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
+    case eFontUnitEM    : ratio = nuiGetInvScaleFactor() * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
@@ -1099,7 +1091,7 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
     case eFontUnitPixel : pixels = (FT_UInt)roundf (Size); break;
   }
   
-  pixels *= NUI_SCALE_FACTOR;
+  pixels *= nuiGetScaleFactor();
   
   NGL_ASSERT(pixels > 0);
   
@@ -1140,7 +1132,7 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
   mpFace->Desc.face_id = ftscaler.face_id;
   mpFace->Desc.width   = pixels;
   mpFace->Desc.height  = pixels;
-  mSize = pixels * NUI_INV_SCALE_FACTOR;
+  mSize = pixels * nuiGetInvScaleFactor();
   
   return true;
 }
@@ -1175,10 +1167,10 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
     case FT_GLYPH_FORMAT_BITMAP:
     {
       FT_BitmapGlyph bitmap = (FT_BitmapGlyph)glyph;
-      rInfo.Width    = NUI_INV_SCALE_FACTOR * (float)bitmap->bitmap.width;
-      rInfo.Height   = NUI_INV_SCALE_FACTOR * (float)bitmap->bitmap.rows;
-      rInfo.BearingX = NUI_INV_SCALE_FACTOR * (float)bitmap->left;
-      rInfo.BearingY = NUI_INV_SCALE_FACTOR * (float)bitmap->top;
+      rInfo.Width    = nuiGetInvScaleFactor() * (float)bitmap->bitmap.width;
+      rInfo.Height   = nuiGetInvScaleFactor() * (float)bitmap->bitmap.rows;
+      rInfo.BearingX = nuiGetInvScaleFactor() * (float)bitmap->left;
+      rInfo.BearingY = nuiGetInvScaleFactor() * (float)bitmap->top;
     }
       break;
       
@@ -1187,10 +1179,10 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
       FT_BBox bbox;
       
       FT_Glyph_Get_CBox(glyph, ft_glyph_bbox_pixels, &bbox);
-      rInfo.Width    = NUI_INV_SCALE_FACTOR * (float)(bbox.xMax - bbox.xMin);
-      rInfo.Height   = NUI_INV_SCALE_FACTOR * (float)(bbox.yMax - bbox.yMin);
-      rInfo.BearingX = NUI_INV_SCALE_FACTOR * (float)bbox.xMin;
-      rInfo.BearingY = NUI_INV_SCALE_FACTOR * (float)bbox.yMax;
+      rInfo.Width    = nuiGetInvScaleFactor() * (float)(bbox.xMax - bbox.xMin);
+      rInfo.Height   = nuiGetInvScaleFactor() * (float)(bbox.yMax - bbox.yMin);
+      rInfo.BearingX = nuiGetInvScaleFactor() * (float)bbox.xMin;
+      rInfo.BearingY = nuiGetInvScaleFactor() * (float)bbox.yMax;
     }
       break;
       
@@ -1199,8 +1191,8 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
   }
   
   rInfo.Index = Index;
-  rInfo.AdvanceX = NUI_INV_SCALE_FACTOR * glyph->advance.x / 65536.0f;
-  rInfo.AdvanceY = NUI_INV_SCALE_FACTOR * glyph->advance.y / 65536.0f;
+  rInfo.AdvanceX = nuiGetInvScaleFactor() * glyph->advance.x / 65536.0f;
+  rInfo.AdvanceY = nuiGetInvScaleFactor() * glyph->advance.y / 65536.0f;
   
   return true;
 }
@@ -1224,8 +1216,8 @@ bool nuiFontBase::GetKerning (uint Left, uint Right, float& rX, float& rY) const
     }
   }
   
-  rX *= NUI_INV_SCALE_FACTOR;
-  rY *= NUI_INV_SCALE_FACTOR;
+  rX *= nuiGetInvScaleFactor();
+  rY *= nuiGetInvScaleFactor();
   
   return true;
 }
@@ -1862,7 +1854,7 @@ bool nuiFontBase::IsLastResort() const
 
 nuiTexture *nuiFontBase::AllocateTexture(int size)
 {
-  size *= NUI_SCALE_FACTOR;
+  size *= nuiGetScaleFactor();
   nglImageInfo ImageInfo(false);
   ImageInfo.mBufferFormat = eImageFormatRaw;
   ImageInfo.mPixelFormat = eImagePixelAlpha;
@@ -2207,8 +2199,8 @@ bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rG
   float y = rGlyph.Y - bmp.Top;
   if (AlignGlyphPixels)
   {
-    x = ToNearest(x * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-    y = ToNearest(y * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
+    x = ToNearest(x * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
+    y = ToNearest(y * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
   }
   
   nuiTexture *texture;
@@ -2216,7 +2208,7 @@ bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rG
 
   pContext->SetTexture(texture);
 
-  nuiRect DestRect(x - 1, y - 1, w * NUI_INV_SCALE_FACTOR + 2, h * NUI_INV_SCALE_FACTOR + 2);
+  nuiRect DestRect(x - 1, y - 1, w * nuiGetInvScaleFactor() + 2, h * nuiGetInvScaleFactor() + 2);
   nuiRect SourceRect((float)GlyphLocation.mOffsetX - 1, (float)GlyphLocation.mOffsetY - 1, w + 2, h + 2);
 
   pContext->DrawImage(DestRect, SourceRect);
@@ -2244,26 +2236,26 @@ bool nuiFontBase::PrepareGlyph (int32 Index, nuiGlyphLayout& rGlyph, bool AlignG
   float w = GlyphLocation.mWidth;
   float h = GlyphLocation.mHeight;
 
-  float x = rGlyph.X + bmp.Left * NUI_INV_SCALE_FACTOR;
-  float y = rGlyph.Y - bmp.Top * NUI_INV_SCALE_FACTOR;
+  float x = rGlyph.X + bmp.Left * nuiGetInvScaleFactor();
+  float y = rGlyph.Y - bmp.Top * nuiGetInvScaleFactor();
 
   rGlyph.mpTexture = mTextures[GlyphLocation.mOffsetTexture];
 
-  float ww = w * NUI_INV_SCALE_FACTOR;
-  float hh = h * NUI_INV_SCALE_FACTOR;
+  float ww = w * nuiGetInvScaleFactor();
+  float hh = h * nuiGetInvScaleFactor();
   if (AlignGlyphPixels)
   {
-    x = ToNearest(x * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-    y = ToNearest(y * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
+    x = ToNearest(x * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
+    y = ToNearest(y * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
   }
 
   rGlyph.mDestRect.Set(x - 1, y - 1, ww + 2, hh + 2);
-  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - NUI_SCALE_FACTOR, GlyphLocation.mOffsetY - NUI_SCALE_FACTOR, w + 2 * NUI_SCALE_FACTOR, h + 2 * NUI_SCALE_FACTOR);
+  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - nuiGetScaleFactor(), GlyphLocation.mOffsetY - nuiGetScaleFactor(), w + 2 * nuiGetScaleFactor(), h + 2 * nuiGetScaleFactor());
 
   return true;
 }
 
-bool nuiFontBase::PrepareGlyph(nuiTextGlyph& rGlyph, bool AlignGlyphPixels)
+bool nuiFontBase::PrepareGlyph(nuiTextGlyph& rGlyph)
 {
   // Fetch rendered glyph
   GlyphHandle glyph = GetGlyph(rGlyph.mIndex, eGlyphBitmap);
@@ -2282,21 +2274,16 @@ bool nuiFontBase::PrepareGlyph(nuiTextGlyph& rGlyph, bool AlignGlyphPixels)
   float w = GlyphLocation.mWidth;
   float h = GlyphLocation.mHeight;
   
-  float x = rGlyph.mX + bmp.Left * NUI_INV_SCALE_FACTOR;
-  float y = rGlyph.mY - bmp.Top * NUI_INV_SCALE_FACTOR;
+  float x = rGlyph.mX + bmp.Left * nuiGetInvScaleFactor();
+  float y = rGlyph.mY - bmp.Top * nuiGetInvScaleFactor();
   
   rGlyph.mpTexture = mTextures[GlyphLocation.mOffsetTexture];
   
-  float ww = w * NUI_INV_SCALE_FACTOR;
-  float hh = h * NUI_INV_SCALE_FACTOR;
-  if (AlignGlyphPixels)
-  {
-    x = ToNearest(x * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-    y = ToNearest(y * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-  }
+  float ww = w * nuiGetInvScaleFactor();
+  float hh = h * nuiGetInvScaleFactor();
   
   rGlyph.mDestRect.Set(x - 1, y - 1, ww + 2, hh + 2);
-  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - NUI_SCALE_FACTOR, GlyphLocation.mOffsetY - NUI_SCALE_FACTOR, w + 2 * NUI_SCALE_FACTOR, h + 2 * NUI_SCALE_FACTOR);
+  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - nuiGetScaleFactor(), GlyphLocation.mOffsetY - nuiGetScaleFactor(), w + 2 * nuiGetScaleFactor(), h + 2 * nuiGetScaleFactor());
   
   return true;
 }

@@ -93,6 +93,8 @@ while (nglVideoMode::Get(i, mode))
   uint GetDepth() const;       ///< Color bits per pixel
   uint GetFrequency() const;   ///< Vertical monitor refresh rate in Hz
   nglString Dump() const;      ///< Dumps a textual description
+  float GetScaleFactor() const;
+  float GetInvScaleFactor() const;
   //@}
 
 #ifdef _WIN32_
@@ -139,10 +141,19 @@ private:
   long mHeight, mWidth, mRate, mBPP;
 
 #endif//_UIKIT_
+
+private:
+  float mScaleFactor;
+  float mInvScaleFactor;
   
 friend class nglApplication;
 friend class nglWindow;
 };
+
+
+float nuiGetScaleFactor(); ///< return the current scale factor
+float nuiGetInvScaleFactor(); ///< return the inverse of the current scale factor
+
 
 #endif // !_NOGFX_
 #endif // __nglVideoMode_h__

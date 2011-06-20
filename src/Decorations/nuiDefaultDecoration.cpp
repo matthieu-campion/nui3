@@ -714,9 +714,6 @@ void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 }
 
 
-extern float NUI_SCALE_FACTOR;
-
-
 //**************************************************************************************************************
 //
 // nuiButton

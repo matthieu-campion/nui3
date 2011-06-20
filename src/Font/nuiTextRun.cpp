@@ -21,7 +21,6 @@ nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, in
   mAdvanceY(0),
   mUnderline(false),
   mStrikeThrough(false),
-  mPrepared(false),
   mStyle(rStyle)
 {
 }
@@ -126,16 +125,6 @@ nuiRect nuiTextRun::GetRect() const
    r.Union(rr, nuiRect(x, y, w, h));
    */
   
-}
-
-bool nuiTextRun::IsPrepared() const
-{
-  return mPrepared;
-}
-
-void nuiTextRun::SetPrepared(bool set)
-{
-  mPrepared = set;
 }
 
 int32 nuiTextRun::GetGlyphCount() const

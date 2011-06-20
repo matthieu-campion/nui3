@@ -142,6 +142,15 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
         nuiFont* pFont = FontSet[pRun->GetScript()];
         pRun->SetFont(pFont);
         pFont->Shape(pRun);
+
+        // Prepare glyphs:
+        std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
+        for (int32 g = 0; g < rGlyphs.size(); g++)
+        {
+          nuiTextGlyph& rGlyph(rGlyphs.at(g));
+          
+          pFont->PrepareGlyph(rGlyph);
+        }
         
         x += pRun->GetAdvanceX();
         y += pRun->GetAdvanceY();
@@ -157,7 +166,6 @@ bool nuiTextLayout::LayoutText(const nglString& rString)
       }
     }
   }
-  
   
   mCharsets.clear();
   return true;
@@ -388,7 +396,7 @@ nuiSize nuiTextLayout::GetWrapX() const
 }
 
 
-bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs)
+bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs, bool AlignGlyphPixels)
 {
   std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator it = rGlyphs.begin();
   std::map<nuiTexture*, std::vector<nuiTextGlyph*> >::const_iterator end = rGlyphs.end();
@@ -420,10 +428,18 @@ bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiText
       nuiSize x1,y1,x2,y2;
       nuiSize tx,ty,tw,th;
       
-      x1 = rDest.mLeft;
-      y1 = rDest.mTop;
-      x2 = rDest.mRight;
-      y2 = rDest.mBottom;
+      x1 = rDest.mLeft + X;
+      y1 = rDest.mTop + Y;
+      x2 = rDest.mRight + X;
+      y2 = rDest.mBottom + Y;
+
+      if (AlignGlyphPixels)
+      {
+        x1 = ToNearest(x1 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
+        y1 = ToNearest(y1 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
+        x2 = ToNearest(x2 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
+        y2 = ToNearest(y2 * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
+      }
       
       tx = rSource.mLeft;
       ty = rSource.mTop;
@@ -507,28 +523,10 @@ void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool Align
         std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
         nuiFont* pFont = pRun->GetFont();
         
-        if (pRun->IsPrepared())
+        for (int32 g = 0; g < rGlyphs.size(); g++)
         {
-          for (int32 g = 0; g < rGlyphs.size(); g++)
-          {
-            nuiTextGlyph& rGlyph(rGlyphs.at(g));
-            Glyphs[rGlyph.mpTexture].push_back(&rGlyph);
-          }
-        }
-        else
-        {
-          for (int32 g = 0; g < rGlyphs.size(); g++)
-          {
-            nuiTextGlyph& rGlyph(rGlyphs.at(g));
-            
-            rGlyph.mX += x;
-            rGlyph.mY += y;
-            
-            pFont->PrepareGlyph(rGlyph, AlignGlyphPixels);
-            Glyphs[rGlyph.mpTexture].push_back(&rGlyph);
-          }
-          
-          pRun->SetPrepared(true);
+          nuiTextGlyph& rGlyph(rGlyphs.at(g));
+          Glyphs[rGlyph.mpTexture].push_back(&rGlyph);
         }
         
         // Draw underlines and strike through if needed
@@ -565,7 +563,7 @@ void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool Align
     }
   }
   
-  PrintGlyphs(pContext, Glyphs);
+  PrintGlyphs(pContext, X, Y, Glyphs, AlignGlyphPixels);
   
   
   pContext->EnableBlending(blendsaved);

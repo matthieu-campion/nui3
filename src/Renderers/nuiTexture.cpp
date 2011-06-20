@@ -17,8 +17,6 @@
 
 #include "../Utils/TextureAtlas.h"
 
-extern float NUI_SCALE_FACTOR;
-
 using namespace std;
 
 nuiTextureMap nuiTexture::mpTextures;
@@ -214,7 +212,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
       if (p.IsLeaf())
       {
         nglString path(p.GetRemovedExtension());
-        if (NUI_SCALE_FACTOR > 1)
+        if (nuiGetScaleFactor() > 1)
         {
           nglString ext(p.GetExtension());
           nglString res(path);
@@ -307,8 +305,8 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
 bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize, bool AutoTrim)
 {
   //NGL_OUT(_T("nuiTexture::CreateAtlasFromPath(rPath = '%s', MaxTextureSize = %d, ForceAtlasSize = %d, AutoTrim = '%s')\n"), rPath.GetChars(), MaxTextureSize, ForceAtlasSize, YESNO(AutoTrim));
-  MaxTextureSize *= NUI_SCALE_FACTOR;
-  ForceAtlasSize *= NUI_SCALE_FACTOR;
+  MaxTextureSize *= nuiGetScaleFactor();
+  ForceAtlasSize *= nuiGetScaleFactor();
   int32 offset = 0;
   if (ForceAtlasSize)
     offset = 1;
@@ -528,7 +526,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   float scale = 1.0f;
   nglPath p(rPath);
   nglString path(p.GetRemovedExtension());
-  if (NUI_SCALE_FACTOR > 1)
+  if (nuiGetScaleFactor() > 1)
   {
     nglString ext(p.GetExtension());
     nglString res(path);

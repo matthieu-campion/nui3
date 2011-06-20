@@ -20,9 +20,6 @@
 #include "nuiTexture.h"
 #include "nuiSurface.h"
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-
 
 /****************************************************************************
  *
@@ -805,7 +802,7 @@ static void nuiDrawRect(const nuiRect& out, nuiRenderArray& rArray)
   rArray.SetMode(GL_TRIANGLE_STRIP);
   rArray.Reserve(8);
   nuiRect in(out);
-  in.Grow(-NUI_INV_SCALE_FACTOR, -NUI_INV_SCALE_FACTOR);
+  in.Grow(-nuiGetInvScaleFactor(), -nuiGetInvScaleFactor());
   
   rArray.SetVertex(out.Left(), out.Top()); rArray.PushVertex();
   rArray.SetVertex(in.Left(), in.Top()); rArray.PushVertex();
@@ -874,7 +871,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     else
     {
       nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
-      if (NUI_SCALE_FACTOR != 1.0f)
+      if (nuiGetScaleFactor() != 1.0f)
       {
         nuiDrawRect(rRect, *pStrokeArray);
       }

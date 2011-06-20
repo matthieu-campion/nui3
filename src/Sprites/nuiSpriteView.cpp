@@ -96,9 +96,6 @@ nuiSpriteAnimation::nuiSpriteAnimation()
 
 }
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-
 nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
 : mFPS(10)
 {

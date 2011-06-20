@@ -13,9 +13,6 @@
 #include "nuiFontBase.h"
 #include "nglMath.h"
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-
 /*
  * nuiFontLayout
  */

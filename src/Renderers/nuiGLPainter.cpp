@@ -15,9 +15,6 @@
 #include "AAPrimitives.h"
 #include "nuiTexture.h"
 
-float NUI_SCALE_FACTOR = 1.0f;
-float NUI_INV_SCALE_FACTOR = 1.0f / NUI_SCALE_FACTOR;
-
 #ifndef __NUI_NO_GL__
 
 //#define NUI_RETURN_IF_RENDERING_DISABLED return;
@@ -323,11 +320,11 @@ void nuiGLPainter::SetViewport()
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
   if (!mpSurface)
   {
-    //glViewport(x * NUI_SCALE_FACTOR, y * NUI_SCALE_FACTOR, w * NUI_SCALE_FACTOR, h * NUI_SCALE_FACTOR);
-    x *= NUI_SCALE_FACTOR;
-    y *= NUI_SCALE_FACTOR;
-    w *= NUI_SCALE_FACTOR;
-    h *= NUI_SCALE_FACTOR;
+    //glViewport(x * nuiGetScaleFactor(), y * nuiGetScaleFactor(), w * nuiGetScaleFactor(), h * nuiGetScaleFactor());
+    x *= nuiGetScaleFactor();
+    y *= nuiGetScaleFactor();
+    w *= nuiGetScaleFactor();
+    h *= nuiGetScaleFactor();
   }
 //  else
 //    glViewport(x, y, w, h);
@@ -345,7 +342,7 @@ void nuiGLPainter::SetViewport()
   
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  //glScalef(NUI_SCALE_FACTOR, NUI_SCALE_FACTOR, 1.0f);
+  //glScalef(nuiGetScaleFactor(), nuiGetScaleFactor(), 1.0f);
   if (Angle != 0.0f)
   {
     glRotatef(Angle, 0.f,0.f,1.f);
@@ -550,10 +547,10 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
       
       if (!mpSurface)
       {
-        x *= NUI_SCALE_FACTOR;
-        y *= NUI_SCALE_FACTOR;
-        w *= NUI_SCALE_FACTOR;
-        h *= NUI_SCALE_FACTOR;
+        x *= nuiGetScaleFactor();
+        y *= nuiGetScaleFactor();
+        w *= nuiGetScaleFactor();
+        h *= nuiGetScaleFactor();
       }
       glScissor(x, y, w, h);
     }
@@ -984,7 +981,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   if (NeedTranslateHack)
   {
     //    const float ratio=0.5f;
-    const float ratio= NUI_INV_SCALE_FACTOR/2.f;
+    const float ratio = nuiGetInvScaleFactor() / 2.f;
 #ifdef _UIKIT_
     hackX = ratio;
     hackY = ratio;

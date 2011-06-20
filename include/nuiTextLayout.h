@@ -75,7 +75,7 @@ public:
   nuiSize GetWrapX() const;
   
 private:
-  bool PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs);
+  bool PrintGlyphs(nuiDrawContext *pContext, float X, float Y, const std::map<nuiTexture*, std::vector<nuiTextGlyph*> >& rGlyphs, bool AlignGlyphPixels);
   nuiTextStyle mStyle;
   std::map<nuiUnicodeScript, std::set<nglUChar> > mCharsets;
   

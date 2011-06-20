@@ -40,6 +40,10 @@ nglVideoMode::nglVideoMode()
   mBPP = 32;
   mRate = 60;
 #endif
+  
+  mScaleFactor = 1.0f;
+  mInvScaleFactor = 1.0f / mScaleFactor;
+
 }
 
 nglVideoMode::nglVideoMode (const nglVideoMode& rMode)
@@ -129,3 +133,18 @@ bool nglVideoMode::SetMode (nglVideoMode* pVideoMode, bool Lock)
   return false;
 #endif
 }
+
+static float gScaleFactor = 1.0f;
+static float gInvScaleFactor = 1.0f;
+
+float nuiGetScaleFactor()
+{
+  return gScaleFactor;
+}
+
+float nuiGetInvScaleFactor()
+{
+  return gInvScaleFactor;
+}
+
+

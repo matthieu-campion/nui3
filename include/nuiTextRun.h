@@ -68,7 +68,6 @@ private:
   
   bool mUnderline : 1;
   bool mStrikeThrough : 1;
-  bool mPrepared : 1;
   
   std::vector<nuiTextGlyph> mGlyphs;
   float mX;
