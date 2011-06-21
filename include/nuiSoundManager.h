@@ -18,6 +18,7 @@ public:
   static nuiSoundManager Instance;
   
   nuiSound* GetSound(const nglPath& rPath, nuiSound::Type type = nuiSound::eStream);
+  nuiSound* GetSound(const nglString& rSoundID, nglIStream* pStream);
   nuiSynthSound* GetSynthSound();
   
 private:

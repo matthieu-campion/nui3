@@ -20,11 +20,12 @@ public:
   
 protected:
   nuiMemorySound(const nglPath& rPath);
+  nuiMemorySound(const nglString& rStringID, nglIStream* pStream);
   virtual ~nuiMemorySound();
   
   virtual nuiVoice* GetVoiceInternal();
   
-  bool LoadSamples();
+  bool LoadSamples(nglIStream* pStream = NULL);
   std::vector<float*> mSamples;
   int64 mLength;
   nglPath mPath;
