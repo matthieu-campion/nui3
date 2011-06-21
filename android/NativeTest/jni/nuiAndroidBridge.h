@@ -15,41 +15,23 @@ class nuiAndroidBridge : public nglContext, public nuiTopLevel
 {
 public:
   nuiAndroidBridge()
-  : nuiTopLevel(_T("")),
-    mEventSink(this)
+  : nuiTopLevel(_T(""))
   {
-    LOGI("nuiAndroidBridge() 1");
     *((nuiAndroidBridge**)&gmpNUI_AndroidBridge) = this;
 
-//    mWidth = glutGet(GLUT_WINDOW_WIDTH);
-//    mHeight = glutGet(GLUT_WINDOW_HEIGHT);
-    
-    LOGI("nuiAndroidBridge() 2");
     mWidth = 100;
     mHeight = 200;
     mClearBackground = false;
-    
-    LOGI("nuiAndroidBridge() 3");
+
     EnableRenderCache(true);
-    LOGI("nuiAndroidBridge() 4");
     EnablePartialRedraw(false);    
-    LOGI("nuiAndroidBridge() 5");
     SetRect(nuiRect(0.0f, 0.0f, (nuiSize)mWidth, (nuiSize)mHeight));
-    
-//    LOGI("nuiAndroidBridge() 6");
-//    BuildOpenGLFromExisting(NULL, NULL);
-    
-    LOGI("nuiAndroidBridge() OK");
   }
   
   virtual ~nuiAndroidBridge()
   {
     *((nuiAndroidBridge**)&gmpNUI_AndroidBridge) = this;
   }
-  
-  void TimerTest();
-  void OnTimerTick(const nuiEvent& rEvent);
-  nuiEventSink<nuiAndroidBridge> mEventSink;
   
   void Display()
   {

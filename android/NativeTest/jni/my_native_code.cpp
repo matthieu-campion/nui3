@@ -1,4 +1,4 @@
-#include <jni.h>
+  #include <jni.h>
 #include <errno.h>
 
 #include <EGL/egl.h>
@@ -12,28 +12,85 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-//#include <signal.h>
-//#include <time.h>
-
-
-//#include "ft2build.h"
-//#include FT_FREETYPE_H
-//
-//#include "expat.h"
-//
-//typedef double GLdouble; // defined in ngl.h
-//#include "GL/glu.h"
-
 
 #include "nui.h"
 #include "nuiInit.h"
 
 #include "nuiAndroidBridge.h"
 
+#include <SLES/OpenSLES.h>
+#include "SLES/OpenSLES_Android.h"
 
-#define SIG SIGRTMIN
+#include "nuiWaveReader.h"
+
+//#include "mp3_dec.h"
 
 nuiAndroidBridge* gpBridge = NULL;
+
+nglIStream* gpStream = NULL;
+nuiWaveReader* gpReader = NULL;
+
+// this callback handler is called every time a buffer finishes playing
+void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
+{
+  static nglTime last;
+  nglTime now;
+  double elapsed = now.GetValue() - last.GetValue();
+  last = now;
+  LOGI("audio callback  elapsed %lf (%lf samples)", elapsed, elapsed * 44100);
+  
+  int sampleframes = 1024;
+  int channels = 1;
+  int bytes = sampleframes * channels * sizeof(short);
+  uint8* pBuffer = new uint8[bytes];
+  
+  if (gpReader)
+  {
+    gpReader->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
+  }
+  else
+  {
+    float freq = 440;
+    int period = ToBelow(44100.f / freq);
+    int semiperiod = period / 2;
+    static int signalDone = 0;
+    static float sign = 1;
+    int frames = sampleframes;
+    int done = 0;
+    
+    while (frames)
+    {
+      int todo = MIN(frames, semiperiod - signalDone);
+      for (int i = 0; i < todo; i++)
+      {
+        short val = 20000 * sign;
+        for (int c = 0; c < channels; c++)
+        {
+          pBuffer[(i + done) * channels + c] = val;
+        }
+      }
+      
+      frames -= todo;
+      done += todo;
+      signalDone += todo;
+      if (signalDone >= semiperiod)
+      {
+        sign *= -1;
+        signalDone = 0;
+      }
+    }
+  }
+  
+  
+  SLresult result;
+  // enqueue another buffer
+  result = (*bq)->Enqueue(bq, pBuffer, bytes);
+  if (result == SL_RESULT_SUCCESS)
+    LOGI("Enqueue OK");
+  else
+    LOGI("Enqueue ERROR");
+  
+}
 
 
 /**
@@ -198,19 +255,6 @@ static void engine_term_display(struct engine* engine)
   LOGI("nuiUninit OK");
 }
 
-
-//static void TimerHandler(int sig, siginfo_t *si, void *uc)
-//{
-//  /* Note: calling printf() from a signal handler is not
-//   strictly correct, since printf() is not async-signal-safe;
-//   see signal(7) */
-//  
-//  LOGI("timer handler");
-//  LOGI("sig = %d   si_signo = %d   si_value = %d", sig, si->si_signo, si->si_value);
-//  
-//  LOGI("timer handler OK");
-//}
-
 /**
   * Process the next input event.
   */
@@ -272,58 +316,180 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
         
         
         
-        gpBridge->TimerTest();
+        
+        // AUDIO tests
+        
+//        nglPath path("/data/mat/rock.wav");
+//        gpStream = path.OpenRead();
+//        if (gpStream)
+//        {
+//          gpReader = new nuiWaveReader(*gpStream);    
+//          nuiSampleInfo info;
+//          gpReader->GetInfo(info);
+//          LOGI("bits per sample: %d", info.GetBitsPerSample());
+//        }
+//        else
+//        {
+//          LOGI("stream not open");
+//        }
+
+        
+        
+        
+        
+        
+        
+        SLObjectItf engineObject = NULL;
+        SLEngineItf engineEngine;
+        SLObjectItf outputMixObject = NULL;
+        SLObjectItf bqPlayerObject = NULL;
+        SLPlayItf bqPlayerPlay;
+        SLAndroidSimpleBufferQueueItf bqPlayerBufferQueue;
+        SLresult result;
+        
+        // create engine
+        result = slCreateEngine(&engineObject, 0, NULL, 0, NULL, NULL);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("create audio engine OK");
+        else if (result == SL_RESULT_PARAMETER_INVALID)
+          LOGI("create audio engine ERROR: parameter invalid");
+        else if (result == SL_RESULT_MEMORY_FAILURE)
+          LOGI("create audio engine ERROR: memory failure");
+        else if (result == SL_RESULT_FEATURE_UNSUPPORTED)
+          LOGI("create audio engine ERROR: feature unsupported");
+        else if (result == SL_RESULT_RESOURCE_ERROR)
+          LOGI("create audio engine ERROR: resource error");
+        else
+          LOGI("create audio engine ERROR: unknown error");
+        
+        
+        result = (*engineObject)->Realize(engineObject, SL_BOOLEAN_FALSE);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("realize audio engine OK");
+        else
+          LOGI("realize audio engine ERROR");
+        
+        
+        result = (*engineObject)->GetInterface(engineObject, SL_IID_ENGINE, &engineEngine);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("get engine interface OK");
+        else
+          LOGI("get engine interface ERROR");
+        
+        
+        
+        result = (*engineEngine)->CreateOutputMix(engineEngine, &outputMixObject, 0, NULL, NULL);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("create output mix OK");
+        else
+          LOGI("create output mix ERROR");
+        
+        result = (*outputMixObject)->Realize(outputMixObject, SL_BOOLEAN_FALSE);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("realize output mix OK");
+        else
+          LOGI("realize output mix ERROR");
+        
+//        LOGI("create MP3 decoder");
+//        Mp3Decoder* pDecoder = new Mp3Decoder();
+//        LOGI("create MP3 decoder OK");
+        
+//        // configure audio source
+//        SLDataLocator_AndroidSimpleBufferQueue loc_bufq = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 2};
+//        SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM, 1, SL_SAMPLINGRATE_44_1, SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16, SL_SPEAKER_FRONT_CENTER, SL_BYTEORDER_LITTLEENDIAN};
+//        SLDataSource audioSrc = {&loc_bufq, &format_pcm};
+//        
+//        // configure audio sink
+//        SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputMixObject};
+//        SLDataSink audioSnk = {&loc_outmix, NULL};
+//        
+//        // create audio player
+//        const SLInterfaceID ids[1] = {SL_IID_BUFFERQUEUE};
+//        const SLboolean req[1] = {SL_BOOLEAN_TRUE};
+//        result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 1, ids, req);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("create player OK");
+//        else
+//          LOGI("create player ERROR");
+//        
+//        result = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("realize player OK");
+//        else
+//          LOGI("realize player ERROR");
+//        
+//        // get the play interface
+//        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("get play interface OK");
+//        else
+//          LOGI("get play interface ERROR");
+//        
+//        // get the buffer queue interface
+//        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_BUFFERQUEUE, &bqPlayerBufferQueue);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("get buffer queue interface OK");
+//        else
+//          LOGI("get buffer queue interface ERROR");
+//        
+//        // register callback on the buffer queue
+//        result = (*bqPlayerBufferQueue)->RegisterCallback(bqPlayerBufferQueue, bqPlayerCallback, NULL);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("register callback OK");
+//        else
+//          LOGI("register callback ERROR");
+//        
+//        // set the player's state to playing
+//        result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay, SL_PLAYSTATE_PLAYING);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("play OK");
+//        else
+//          LOGI("play ERROR");
+//        
+//        
+//        LOGI("first fill");
+//        bqPlayerCallback(bqPlayerBufferQueue, NULL);
+//        LOGI("first fill done");
+
+        SLDataLocator_URI loc_uri = {SL_DATALOCATOR_URI, (SLchar *)"file://data/mat/rock.mp3"};
+        SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
+        SLDataSource audioSrc = {&loc_uri, &format_mime};
+        
+        // configure audio sink
+        SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputMixObject};
+        SLDataSink audioSnk = {&loc_outmix, NULL};
+        
+        // create audio player
+        const SLInterfaceID ids[1] = {SL_IID_SEEK};
+        const SLboolean req[1] = {SL_BOOLEAN_TRUE};
+        result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 1, ids, req);
+        // note that an invalid URI is not detected here, but during prepare/prefetch on Android,
+        // or possibly during Realize on other platforms
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("audio player OK");
+        else
+          LOGI("audio player ERROR");
+        
+        // realize the player
+        result = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
+        
+        // get the play interface
+        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("get play interface OK");
+        else
+          LOGI("get play interface ERROR");
+        
+        // set the player's state to playing
+        result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay, SL_PLAYSTATE_PLAYING);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("play OK");
+        else
+          LOGI("play ERROR");
+
+        LOGI("MP3 MP3 MP3");
         
         //
-//        LOGI("try to create a timer and connect a signal handler");      
-//        timer_t timer;
-//        
-//        LOGI("SIGRTMIN = %d  SIGRTMAX = %d  RTSIG_MAX = %d  SIG = %d", SIGRTMIN, SIGRTMAX, RTSIG_MAX, SIG);
-//        
-//        struct sigaction sa;
-//        sa.sa_flags = SA_SIGINFO;
-//        sigemptyset(&sa.sa_mask);
-//        sa.sa_sigaction = TimerHandler;
-//        
-//        if (sigaction(SIG, &sa, NULL) == -1)
-//          LOGI("error 1");
-//        
-//        sigevent event;
-//        //      event.sigev_notify = SIGEV_NONE;
-//        //      event.sigev_signo = 0;
-//        
-//        event.sigev_notify = SIGEV_SIGNAL;
-//        event.sigev_signo = SIG;
-//        event.sigev_value.sival_ptr = &timer;
-//        LOGI("sigev_signo = %d  sigev_value.sival_ptr = %d", event.sigev_signo, event.sigev_value.sival_ptr);
-//        
-//        
-//        LOGI("timer_create");
-//        int res = timer_create(CLOCK_REALTIME, &event, &timer);
-//        LOGI("timer_create   res = %d", res);
-//        
-//        
-//        
-//        itimerspec its;
-//        its.it_value.tv_sec = 3;
-//        its.it_value.tv_nsec = 1;
-//        its.it_interval.tv_sec = 1;
-//        its.it_interval.tv_nsec = 1;
-//        
-//        
-//        LOGI("start the timer");
-//        if (timer_settime(timer, 0, &its, NULL) == -1)
-//          LOGI("error 2");
-        //
-        
-//        LOGI("create timer");
-//        nuiTimer* pTimer = new nuiTimer(1);
-//        LOGI("timer created %p", pTimer);
-//        pTimer->Start();
-        
-        //
-        
-        
         
         
         
