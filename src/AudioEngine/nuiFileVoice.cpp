@@ -113,6 +113,12 @@ uint32 nuiFileVoice::GetChannels() const
   return mInfo.GetChannels();
 }
 
+uint32 nuiFileVoice::GetSampleFrames() const
+{
+  return mInfo.GetSampleFrames();
+}
+
+
 
 uint32 nuiFileVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames)
 {
