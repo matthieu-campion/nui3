@@ -17,7 +17,6 @@ LOCAL_LDLIBS :=
 
 LOCAL_SRC_FILES := \
   libmpg123.c \
-  compat.c \
   parse.c \
   frame.c \
   format.c \
@@ -32,6 +31,15 @@ LOCAL_SRC_FILES := \
   layer2.c \
   layer3.c \
   ntom.c \
+  synth.c \
+  stringbuf.c \
+  icy2utf8.c \
+  icy.c \
+  synth_real.c \
+  synth_8bit.c \
+  synth_arm.S \
+  synth_s32.c \
+  compat.c \
 
 LOCAL_EXPORT_C_INCLUDES := $(MY_INCLUDE_FILES)
 

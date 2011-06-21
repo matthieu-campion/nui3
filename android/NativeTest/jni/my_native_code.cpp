@@ -23,12 +23,13 @@
 
 #include "nuiWaveReader.h"
 
-//#include "mp3_dec.h"
+#include "mpg123.h"
 
 nuiAndroidBridge* gpBridge = NULL;
 
 nglIStream* gpStream = NULL;
 nuiWaveReader* gpReader = NULL;
+mpg123_handle* gpDecoder = NULL;
 
 // this callback handler is called every time a buffer finishes playing
 void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
@@ -46,10 +47,17 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
   
   if (gpReader)
   {
+    // WAV
     gpReader->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
+  }
+  else if (gpStream)
+  {
+    // MP3
+    
   }
   else
   {
+    // SYNTH
     float freq = 440;
     int period = ToBelow(44100.f / freq);
     int semiperiod = period / 2;
@@ -334,9 +342,34 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 //        }
 
         
+        nglPath path("/data/mat/rock.mp3");
+        gpStream = path.OpenRead();
+        if (!gpStream)
+        {
+          LOGI("mp3 stream not open");
+        }
+
+        //
+        LOGI("init mpg123");
+        int mpgRes = mpg123_init();
+        if (mpgRes == MPG123_OK)
+          LOGI("init mpg123 OK");
+        else
+          LOGI("init mpg123 error %d", mpgRes);
         
+        LOGI("new decoder");
+        gpDecoder = mpg123_new(NULL, &mpgRes);
+        if (!gpDecoder)
+          LOGI("new decoder error %d", mpgRes);
+        else 
+          LOGI("new decoder OK");
         
-        
+        LOGI("open decoder");
+        mpgRes = mpg123_open_feed(gpDecoder);
+        if (mpgRes == MPG123_OK)
+          LOGI("open decoder OK");
+        else
+          LOGI("open decoder error %d", mpgRes);
         
         
         SLObjectItf engineObject = NULL;
@@ -390,88 +423,29 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
         else
           LOGI("realize output mix ERROR");
         
-//        LOGI("create MP3 decoder");
-//        Mp3Decoder* pDecoder = new Mp3Decoder();
-//        LOGI("create MP3 decoder OK");
-        
-//        // configure audio source
-//        SLDataLocator_AndroidSimpleBufferQueue loc_bufq = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 2};
-//        SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM, 1, SL_SAMPLINGRATE_44_1, SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16, SL_SPEAKER_FRONT_CENTER, SL_BYTEORDER_LITTLEENDIAN};
-//        SLDataSource audioSrc = {&loc_bufq, &format_pcm};
-//        
-//        // configure audio sink
-//        SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputMixObject};
-//        SLDataSink audioSnk = {&loc_outmix, NULL};
-//        
-//        // create audio player
-//        const SLInterfaceID ids[1] = {SL_IID_BUFFERQUEUE};
-//        const SLboolean req[1] = {SL_BOOLEAN_TRUE};
-//        result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 1, ids, req);
-//        if (result == SL_RESULT_SUCCESS)
-//          LOGI("create player OK");
-//        else
-//          LOGI("create player ERROR");
-//        
-//        result = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
-//        if (result == SL_RESULT_SUCCESS)
-//          LOGI("realize player OK");
-//        else
-//          LOGI("realize player ERROR");
-//        
-//        // get the play interface
-//        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
-//        if (result == SL_RESULT_SUCCESS)
-//          LOGI("get play interface OK");
-//        else
-//          LOGI("get play interface ERROR");
-//        
-//        // get the buffer queue interface
-//        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_BUFFERQUEUE, &bqPlayerBufferQueue);
-//        if (result == SL_RESULT_SUCCESS)
-//          LOGI("get buffer queue interface OK");
-//        else
-//          LOGI("get buffer queue interface ERROR");
-//        
-//        // register callback on the buffer queue
-//        result = (*bqPlayerBufferQueue)->RegisterCallback(bqPlayerBufferQueue, bqPlayerCallback, NULL);
-//        if (result == SL_RESULT_SUCCESS)
-//          LOGI("register callback OK");
-//        else
-//          LOGI("register callback ERROR");
-//        
-//        // set the player's state to playing
-//        result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay, SL_PLAYSTATE_PLAYING);
-//        if (result == SL_RESULT_SUCCESS)
-//          LOGI("play OK");
-//        else
-//          LOGI("play ERROR");
-//        
-//        
-//        LOGI("first fill");
-//        bqPlayerCallback(bqPlayerBufferQueue, NULL);
-//        LOGI("first fill done");
-
-        SLDataLocator_URI loc_uri = {SL_DATALOCATOR_URI, (SLchar *)"file://data/mat/rock.mp3"};
-        SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
-        SLDataSource audioSrc = {&loc_uri, &format_mime};
+        // configure audio source
+        SLDataLocator_AndroidSimpleBufferQueue loc_bufq = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 2};
+        SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM, 1, SL_SAMPLINGRATE_44_1, SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16, SL_SPEAKER_FRONT_CENTER, SL_BYTEORDER_LITTLEENDIAN};
+        SLDataSource audioSrc = {&loc_bufq, &format_pcm};
         
         // configure audio sink
         SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputMixObject};
         SLDataSink audioSnk = {&loc_outmix, NULL};
         
         // create audio player
-        const SLInterfaceID ids[1] = {SL_IID_SEEK};
+        const SLInterfaceID ids[1] = {SL_IID_BUFFERQUEUE};
         const SLboolean req[1] = {SL_BOOLEAN_TRUE};
         result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 1, ids, req);
-        // note that an invalid URI is not detected here, but during prepare/prefetch on Android,
-        // or possibly during Realize on other platforms
         if (result == SL_RESULT_SUCCESS)
-          LOGI("audio player OK");
+          LOGI("create player OK");
         else
-          LOGI("audio player ERROR");
+          LOGI("create player ERROR");
         
-        // realize the player
         result = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("realize player OK");
+        else
+          LOGI("realize player ERROR");
         
         // get the play interface
         result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
@@ -480,14 +454,67 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
         else
           LOGI("get play interface ERROR");
         
+        // get the buffer queue interface
+        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_BUFFERQUEUE, &bqPlayerBufferQueue);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("get buffer queue interface OK");
+        else
+          LOGI("get buffer queue interface ERROR");
+        
+        // register callback on the buffer queue
+        result = (*bqPlayerBufferQueue)->RegisterCallback(bqPlayerBufferQueue, bqPlayerCallback, NULL);
+        if (result == SL_RESULT_SUCCESS)
+          LOGI("register callback OK");
+        else
+          LOGI("register callback ERROR");
+        
         // set the player's state to playing
         result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay, SL_PLAYSTATE_PLAYING);
         if (result == SL_RESULT_SUCCESS)
           LOGI("play OK");
         else
           LOGI("play ERROR");
+//        
+//        
+//        LOGI("first fill");
+//        bqPlayerCallback(bqPlayerBufferQueue, NULL);
+//        LOGI("first fill done");
 
-        LOGI("MP3 MP3 MP3");
+//        SLDataLocator_URI loc_uri = {SL_DATALOCATOR_URI, (SLchar *)"file://data/mat/rock.mp3"};
+//        SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
+//        SLDataSource audioSrc = {&loc_uri, &format_mime};
+//        
+//        // configure audio sink
+//        SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputMixObject};
+//        SLDataSink audioSnk = {&loc_outmix, NULL};
+//        
+//        // create audio player
+//        const SLInterfaceID ids[1] = {SL_IID_SEEK};
+//        const SLboolean req[1] = {SL_BOOLEAN_TRUE};
+//        result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 1, ids, req);
+//        // note that an invalid URI is not detected here, but during prepare/prefetch on Android,
+//        // or possibly during Realize on other platforms
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("audio player OK");
+//        else
+//          LOGI("audio player ERROR");
+//        
+//        // realize the player
+//        result = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
+//        
+//        // get the play interface
+//        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("get play interface OK");
+//        else
+//          LOGI("get play interface ERROR");
+//        
+//        // set the player's state to playing
+//        result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay, SL_PLAYSTATE_PLAYING);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("play OK");
+//        else
+//          LOGI("play ERROR");
         
         //
         
