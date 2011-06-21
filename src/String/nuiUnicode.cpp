@@ -352,7 +352,11 @@ nuiTextRange::nuiTextRange()
   mBlank = false;
 }
 
-bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+nuiTextRange::~nuiTextRange()
+{
+}
+
+bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length, const nuiTextSplitterDelegate& rSplitDelegate)
 {
   int32 size = Iterator.GetLength();
   if (length < 0)
@@ -472,6 +476,9 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
         brk = true;
     }
     
+    if (!brk && rSplitDelegate)
+      brk = rSplitDelegate(ch, pos);
+    
     if (brk)
     {
       nuiTextRange r;
@@ -507,16 +514,16 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
   return true;
 }
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length, const nuiTextSplitterDelegate& rDelegate)
 {
   nuiUCharIterator_String it(rSourceString);
-  return nuiSplitText(it, rRanges, flags, start, length);
+  return nuiSplitText(it, rRanges, flags, start, length, rDelegate);
 }
 
-bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length, const nuiTextSplitterDelegate& rDelegate)
 {
   nuiUCharIterator_Vector it(rSourceString);
-  return nuiSplitText(it, rRanges, flags, start, length);
+  return nuiSplitText(it, rRanges, flags, start, length, rDelegate);
 }
 
 

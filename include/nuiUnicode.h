@@ -292,7 +292,8 @@ class nuiTextRange
 {
 public:
   nuiTextRange();
-  
+  ~nuiTextRange();
+
   uint32 mLength; // Count of unicode code points
   int32 mDirection; // Even: Left to right, Odd: right to left
   nuiUnicodeScript mScript; // What script is this range of text
@@ -314,9 +315,11 @@ const nuiSplitTextFlag nuiST_ScriptChange    = nuiST_StrictScriptChange | nuiST_
 const nuiSplitTextFlag nuiST_Natural         = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange | nuiST_MergeCommonScript;
 const nuiSplitTextFlag nuiST_All             = nuiST_Natural | nuiST_RangeChange;
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1);
-bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1);
-bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1);
+typedef nuiFastDelegate2<nglUChar, int32, bool> nuiTextSplitterDelegate;
+
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);
+bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);
+bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);
 
 nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString);
 

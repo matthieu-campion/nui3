@@ -73,6 +73,8 @@ bool nuiTextLayout::Layout(const nglString& rString)
   {
     // Scan through the text and look for end of line markers
     nglUChar ch = mUnicode[position];
+    if (ch < 32)
+      printf("control code: %d\n", ch);
     if (ch == '\n' || ch == 0xb || ch == 0x2028 || ch == 0x2029)
     {
       // Found a paragraph
@@ -91,7 +93,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
 
   mAscender = 0;
   mDescender = 0;
-  
+
   // Find the needed fonts for each script:
   std::map<nuiUnicodeScript, nuiFont*> FontSet;
   {
@@ -127,8 +129,6 @@ bool nuiTextLayout::Layout(const nglString& rString)
         pFont = nuiFontManager::GetManager().GetFont(request);
       }
       
-      mAscender = MAX(mAscender, pFont->GetAscender());
-      mDescender = MAX(mDescender, pFont->GetDescender());
       FontSet[it->first] = pFont;
       
       //printf("%s\n", pFont->GetFamilyName().GetChars());
@@ -191,6 +191,23 @@ bool nuiTextLayout::Layout(const nglString& rString)
       PenY += pLine->GetAdvanceY();
     }
   }
+  
+  nuiTextLine* pFirstLine = NULL;
+  if (GetParagraphCount() > 0)
+    if (GetLineCount(0) > 0)
+      pFirstLine = GetLine(0, 0);
+  
+  if (pFirstLine)
+    mAscender = pFirstLine->GetAscender();
+    
+  nuiTextLine* pLastLine = NULL;
+  if (GetParagraphCount() > 0)
+    if (GetLineCount(GetParagraphCount() - 1) > 0)
+      pLastLine = GetLine(GetParagraphCount() - 1, GetLineCount(GetParagraphCount() - 1) - 1);
+  
+  if (pLastLine)
+    mDescender = pLastLine->GetDescender();
+
 
   mXMin = rect.Left();
   mXMax = rect.Right();
@@ -200,6 +217,15 @@ bool nuiTextLayout::Layout(const nglString& rString)
   mCharsets.clear();
   return true;
 }
+
+class Splitter
+{
+public:
+  Splitter()
+  {
+    mSkip = false;
+  }
+};
 
 bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
 {
@@ -212,7 +238,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
   
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
-  nuiSplitText(mUnicode, ranges, nuiST_ScriptChange, start, length);
+  nuiSplitText(mUnicode, ranges, nuiST_ScriptChange, start, length, nuiMakeDelegate(&splitter, &Splitter::Split));
 
   {
     nuiTextRangeList::iterator it = ranges.begin();
@@ -436,7 +462,7 @@ bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, cons
   pContext->EnableTexturing(true);
   
   const float f = nuiGetScaleFactor();
-  const float i_f = nuiGetInvScaleFactor()
+  const float i_f = nuiGetInvScaleFactor();
   
   while (it != end)
   {

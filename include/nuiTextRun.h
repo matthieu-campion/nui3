@@ -52,6 +52,7 @@ class nuiTextRun : public nuiRefCount
 {
 public:
   nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript Script, int32 Position, int32 Length, const nuiTextStyle& rStyle);
+  nuiTextRun(const nuiTextLayout& rLayout, int32 Position, int32 Length, float AdvanceX, float AdvanceY); ///< Create a blank (dummy) layout
   virtual ~nuiTextRun();
   void SetFont(nuiFont* pFont);
   
@@ -80,8 +81,8 @@ public:
   
   nuiRect GetRect() const;
   
-  bool IsPrepared() const;
-  void SetPrepared(bool set);
+  bool IsDummy() const;
+ 
 private:
   friend class nuiTextLayout;
   friend class nuiFontBase;
@@ -93,6 +94,7 @@ private:
   
   bool mUnderline : 1;
   bool mStrikeThrough : 1;
+  bool mDummy : 1;
   
   std::vector<nuiTextGlyph> mGlyphs;
   float mX;
