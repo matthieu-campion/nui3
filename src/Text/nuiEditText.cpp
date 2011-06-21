@@ -2047,7 +2047,7 @@ void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y
   }
   
   pContext->SetFont(mpFont);
-  pContext->DrawText(X, Y, *mpLayout);
+  pContext->DrawText(X, Y + mpLayout->GetAscender(), *mpLayout);
 
 }
 

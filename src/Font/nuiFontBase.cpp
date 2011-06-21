@@ -2450,6 +2450,8 @@ bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTextur
 
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
+  if (pRun->IsDummy())
+    return;
   NGL_ASSERT(this == pRun->mStyle.GetFont());
   
   FT_Face ft_face = mpFace->Face;
@@ -2499,11 +2501,11 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
     hb_glyph++;
     hb_position++;
     
-    nuiGlyphInfo Info;
-    if (GetGlyphInfo(Info, hb_glyph->codepoint, nuiFontBase::eGlyphBitmap))
-    {
-      // prepare measurements 
-    }
+//    nuiGlyphInfo Info;
+//    if (GetGlyphInfo(Info, hb_glyph->codepoint, nuiFontBase::eGlyphBitmap))
+//    {
+//      // prepare measurements 
+//    }
   }
 
   pRun->mAdvanceX = x * (1./64);

@@ -21,7 +21,23 @@ nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, in
   mAdvanceY(0),
   mUnderline(false),
   mStrikeThrough(false),
+  mDummy(false),
   mStyle(rStyle)
+{
+}
+
+nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, int32 Position, int32 Length, float AdvanceX, float AdvanceY)
+: mLayout(rLayout),
+  mPosition(Position),
+  mLength(Length),
+  mScript(eScriptCommon),
+  mX(0),
+  mY(0),
+  mAdvanceX(AdvanceX),
+  mAdvanceY(AdvanceY),
+  mUnderline(false),
+  mStrikeThrough(false),
+  mDummy(true)
 {
 }
 
@@ -154,6 +170,11 @@ const nuiTextGlyph* nuiTextRun::GetGlyphAt (float X, float Y) const
   }
   
   return NULL;
+}
+
+bool nuiTextRun::IsDummy() const
+{
+  return mDummy;
 }
 
 

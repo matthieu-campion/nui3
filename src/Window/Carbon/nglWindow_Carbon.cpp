@@ -881,7 +881,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
         {
           case kEventTextInputUnicodeText:
             {
-              printf("kEventTextInputUnicodeText\n");
+              //printf("kEventTextInputUnicodeText\n");
 
               nglString str;
               result = GetText(eventRef, str);
@@ -893,7 +893,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               }
               else
               {
-                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                //printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
                 if (CallOnTextInput(str))
                 result = noErr;
               }
@@ -901,7 +901,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
             break;
           case kEventTextInputUnicodeForKeyEvent:
             {
-              printf("kEventTextInputUnicodeForKeyEvent\n");
+              //printf("kEventTextInputUnicodeForKeyEvent\n");
                           
               nglString str;
               result = GetText(eventRef, str);
@@ -913,7 +913,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               }
               else
               {
-                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                //printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
                 if (CallOnTextInput(str))
                   result = noErr;
               }
@@ -952,7 +952,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                 OnTextCompositionStarted();
               }
               
-              printf("kEventTextInputUpdateActiveInputArea\n");            
+              //printf("kEventTextInputUpdateActiveInputArea\n");            
               uint32 fixLength;
               OSStatus err = ::GetEventParameter(eventRef, kEventParamTextInputSendFixLen, typeLongInteger, NULL, sizeof(fixLength), NULL, &fixLength);
               if (noErr != err)
@@ -983,11 +983,11 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                   NGL_ASSERT(noErr == err);
                 }                          
               }                     
-              printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n", mComposedText.GetLength());
-              printf("\t\tscript=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / sizeof(UniChar));
+              //printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n", mComposedText.GetLength());
+              //printf("\t\tscript=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / sizeof(UniChar));
               //err = aBrowserShell->HandleUpdateActiveInputArea(text, slr.fScript, slr.fLanguage, fixLength / sizeof(PRUnichar), hiliteRng);
 //              nglString str(fixLength == -1 ? text : text.GetRight(text.GetLength() - fixLength));
-              printf("\t\tstr = '%s'\n", mComposedText.GetStdString().c_str());
+              //printf("\t\tstr = '%s'\n", mComposedText.GetStdString().c_str());
 //              printf("\t\tpartial  str = '%s'\n", str.GetStdString().c_str());
               
               
@@ -1013,13 +1013,13 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               float x, y;
               x = y = 0;
               OnTextCompositionIndexToPoint(0, x, y);
-              printf("kEventTextInputPosToOffset -> %d %d\n", ToBelow(x), ToBelow(y));
+              //printf("kEventTextInputPosToOffset -> %d %d\n", ToBelow(x), ToBelow(y));
             }
             break;
             
           case kEventTextInputGetSelectedText:
             {
-              printf("kEventTextInputGetSelectedText\n");
+              //printf("kEventTextInputGetSelectedText\n");
               UniChar* pBuf = (UniChar*)mComposedText.Export(eUCS2);
               result = ::SetEventParameter(eventRef, kEventParamTextInputReplyText, typeUnicodeText, mComposedText.GetLength() * sizeof(UniChar), pBuf);
               free(pBuf);
@@ -1029,7 +1029,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           case kEventTextInputOffsetToPos:
             {
               float x = 0, y = 0;
-              printf("kEventTextInputOffsetToPos\n");
+              //printf("kEventTextInputOffsetToPos\n");
 
               
               long byte_offset;
@@ -1055,7 +1055,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //              SetEventParameter (event, kEventParamTextInputReplyLineHeight, typeShortInteger, sizeof (short), &height);
               //              SetEventParameter (event, kEventParamTextInputReplyLineAscent, typeShortInteger, sizeof (short), &ascent);
               err = SetEventParameter (eventRef, kEventParamTextInputReplyPoint, typeHIPoint, sizeof (HIPoint), &p);
-              printf("kEventTextInputOffsetToPos %d -> %d %d\n", byte_offset, ToBelow(x), ToBelow(y));
+              //printf("kEventTextInputOffsetToPos %d -> %d %d\n", byte_offset, ToBelow(x), ToBelow(y));
               if (err == noErr)
                 result = noErr;
             }
