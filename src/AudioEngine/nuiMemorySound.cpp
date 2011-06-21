@@ -19,6 +19,7 @@ nuiMemorySound::nuiMemorySound(const nglPath& rPath)
 {
   mType = eMemory;
   LoadSamples();
+  mID = nuiSound::GetStringID(rPath, mType);
 }
 
 nuiMemorySound::~nuiMemorySound()
@@ -30,11 +31,17 @@ nuiMemorySound::~nuiMemorySound()
 bool nuiMemorySound::LoadSamples()
 {
   if (!mPath.Exists())
+  {
+    NGL_OUT("nuiMemorySound: file '%ls' does not exist\n", mPath.GetPathName().GetChars());
     return false;
+  }
   
   nglIStream* pStream = mPath.OpenRead();
   if (!pStream)
+  {
+    NGL_OUT("nuiMemorySound: stream '%ls' can't be open\n", mPath.GetPathName().GetChars());
     return false;
+  }
   
   nuiSampleReader* pReader = NULL;
   nuiSampleInfo info;

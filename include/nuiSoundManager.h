@@ -25,13 +25,10 @@ private:
   nuiSoundManager();
   virtual ~nuiSoundManager();
   
-  void RemoveSound(nuiSound* pSound);
-  void RemoveSound(const nglPath& rPath, nuiSound::Type type); ///< Remove the given sound from the manager without deleting it (this method is called when the Sound instance is destroyed)
-  nglString GetStringID(const nglPath& rPath, nuiSound::Type type);
+  void RemoveSound(nuiSound* pSound); ///< Remove the given sound from the manager without deleting it (this method is called when the Sound instance is destroyed)
   
   typedef std::map<nglString, nuiSound*> SoundMap;
   SoundMap mSounds;
-  
-  std::list<nuiSynthSound*> mSynthSounds;
-  
+
+  nglCriticalSection mCS;
 };

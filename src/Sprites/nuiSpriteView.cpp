@@ -256,8 +256,10 @@ void nuiSpriteDef::Uninit()
     nuiSpriteDef* pDef = temp[i];
     pDef->Release();
   }
-  
-  mSpriteMap.clear();
+
+  NGL_ASSERT(mSpriteMap.empty());
+  NGL_ASSERT(nuiSprite::mSpriteCounter);
+
 }
 
 void nuiSpriteDef::AddAnimation(nuiSpriteAnimation* pAnim)
@@ -308,6 +310,10 @@ nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 // class nuiSprite
 nuiMatrix nuiSprite::mIdentityMatrix;
 
+// static 
+uint32 nuiSprite::mSpriteCounter = 0;
+
+
 nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
 : mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
@@ -337,6 +343,10 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 nuiSprite::~nuiSprite()
 {
   LoadIdentityMatrix();
+
+  // static counter
+  mSpriteCounter--;
+  
   if (mpSpriteDef)
     mpSpriteDef->Release();
   for (size_t i = 0; i < mpChildren.size(); i++)
@@ -350,6 +360,9 @@ void nuiSprite::Init()
   {
     InitAttributes();
   }
+  
+  // static counter
+  mSpriteCounter++;
   
   if (mpSpriteDef)
     mpSpriteDef->Acquire();

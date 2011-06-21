@@ -84,6 +84,8 @@ protected:
 
 class nuiSprite : public nuiObject
 {
+  friend class nuiSpriteDef;
+  
 public:
   nuiSprite(const nglString& rSpriteDefName);
   nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace);
@@ -187,6 +189,7 @@ protected:
 private:
   
   void _SetAnimation(const nglString& rAnimationName);
+  static uint32 mSpriteCounter;
 
 };
 
