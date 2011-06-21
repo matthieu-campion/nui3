@@ -19,6 +19,7 @@ nuiMemorySound::nuiMemorySound(const nglPath& rPath)
 {
   mType = eMemory;
   LoadSamples();
+  mID = nuiSound::GetStringID(rPath, mType);
 }
 
 nuiMemorySound::~nuiMemorySound()

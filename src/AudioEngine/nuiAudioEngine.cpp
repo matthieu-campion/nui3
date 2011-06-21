@@ -174,6 +174,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
         pCurrent->Release();
         break;
       }
+      ++it;
     }
   }
   
