@@ -261,7 +261,7 @@ void nuiSpriteDef::Uninit()
   }
 
   NGL_ASSERT(mSpriteMap.empty());
-  NGL_ASSERT(nuiSprite::mSpriteCounter);
+  NGL_ASSERT(!nuiSprite::mSpriteCounter);
 
 }
 
