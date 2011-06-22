@@ -46,6 +46,26 @@ nuiSound* nuiSoundManager::GetSound(const nglPath& rPath, nuiSound::Type type)
   return pSound;
 }
 
+nuiSound* nuiSoundManager::GetSound(const nglString& rSoundID, nglIStream* pStream)
+{
+  nglCriticalSectionGuard gaurd(mCS);
+  nglString ID = rSoundID;
+  SoundMap::iterator it = mSounds.find(ID);
+  if (it != mSounds.end())
+  {
+    nuiSound* pSound = it->second;
+    delete pStream;
+    return pSound;
+  }
+  
+  nuiSound* pSound = NULL;
+  pSound = new nuiMemorySound(rSoundID, pStream);
+  
+  mSounds[ID] = pSound;
+  return pSound;
+}
+
+
 nuiSynthSound* nuiSoundManager::GetSynthSound()
 {
   nglCriticalSectionGuard gaurd(mCS);
