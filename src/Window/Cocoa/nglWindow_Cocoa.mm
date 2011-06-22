@@ -724,6 +724,7 @@ nglWindow::OSInfo::OSInfo()
 
 nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 {
+  Register();
   mpNSWindow = NULL;
   nglContextInfo context; // Get default context
   nglWindowInfo info(Width, Height, IsFullScreen);
@@ -732,6 +733,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 
 nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  Register();
   mpNSWindow = NULL;
   InternalInit (rContext, rInfo, pShared);
 }
@@ -811,6 +813,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
 nglWindow::~nglWindow()
 {
+  Unregister();
 }
 
 

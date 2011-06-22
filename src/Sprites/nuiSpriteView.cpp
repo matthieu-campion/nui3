@@ -367,9 +367,6 @@ void nuiSprite::Init()
   // static counter
   mSpriteCounter++;
   
-  if (mpSpriteDef)
-    mpSpriteDef->Acquire();
-  
   mpParent = NULL;
   mpMatrixNodes = NULL;
   mCurrentAnimation = 0;

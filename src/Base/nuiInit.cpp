@@ -86,6 +86,9 @@ bool nuiUninit()
   
   if (!gNUIReferences)
   {
+    // Destroy all the windows that are still alive:
+    nuiMainWindow::DestroyAllWindows();
+    
     nglPath fontdb(ePathUserAppSettings);
     fontdb += nglString(NUI_FONTDB_PATH);
     
