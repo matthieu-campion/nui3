@@ -13,6 +13,7 @@ nuiFileSound::nuiFileSound(const nglPath& rPath)
 : mPath(rPath)
 {
   mType = eStream;
+  mID = nuiSound::GetStringID(rPath, mType);
 }
 nuiFileSound::~nuiFileSound()
 {

@@ -10,6 +10,10 @@
 #include "nui.h"
 #include "nuiSampleReader.h"
 
+#define STREAM_SUFFIX _T("_stream")
+#define MEMORY_SUFFIX _T("_memory")
+#define SYNTH_SUFFIX _T("_synth")
+
 class nuiVoice;
 
 class nuiSound : public nuiRefCount
@@ -25,6 +29,8 @@ public:
     eUnknown
   };
   
+  static nglString GetStringID(const nglPath& rPath, nuiSound::Type type);
+  
   nuiVoice* GetVoice();
   
   float GetGainDb() const;
@@ -38,13 +44,16 @@ public:
   void SetLoop(bool loop);
   bool IsLooping();
   
+  const nglString& GetID();
+  
 protected:
   nuiSound();
   virtual ~nuiSound();
   
   virtual nuiVoice* GetVoiceInternal() = 0;
   
-  Type mType;  
+  Type mType; 
+  nglString mID;
   
   float mGain;
   float mPan;
