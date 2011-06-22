@@ -1,9 +1,9 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
-
-  licence: see nui3/LICENCE.TXT
-*/
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 #include "nui.h"
 #include "nuiInit.h"
@@ -32,7 +32,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     // MAKEWORD(1,1) for Winsock 1.1, MAKEWORD(2,0) for Winsock 2.0:
     int res = WSAStartup(MAKEWORD(1,1), &wsaData);
 #endif
-
+    
     if (!App)
     {      
 #ifdef _WIN32_
@@ -43,19 +43,19 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
       App->CallOnInit();
     }
   }
-
+  
   gNUIReferences++;
-
+  
   // Init the texture manager:
   nuiTexture::InitTextures();
   
   // Init the font manager:
-
+  
 #if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
   nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
   nuiFontManager::LoadManager(Memory, nglTime());
 #else
-
+  
   //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
   nglPath fontdb(ePathUserAppSettings);
   fontdb += nglString(NUI_FONTDB_PATH);
@@ -83,7 +83,7 @@ bool nuiUninit()
   //printf("nuiUnInit(%d)\n", gNUIReferences);
   NGL_ASSERT(gNUIReferences != 0);
   gNUIReferences--;
-
+  
   if (!gNUIReferences)
   {
     nglPath fontdb(ePathUserAppSettings);
@@ -96,7 +96,7 @@ bool nuiUninit()
       if (db.IsOpen())
         rManager.Save(db);
     }
-
+    
     // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
     // because those have been destroyed at the same time than the opengl context
     nuiDecoration::ExitDecorationEngine();
