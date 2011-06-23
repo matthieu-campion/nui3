@@ -1,6 +1,5 @@
 icon.icns        NUI_RESOURCE    "resources/icon.icns"
 icon.ico        NUI_RESOURCE    "resources/icon.ico"
 decorations/background.png        NUI_RESOURCE    "resources/decorations/background.png"
-decorations/background@2x.png        NUI_RESOURCE    "resources/decorations/background@2x.png"
 decorations/image.png        NUI_RESOURCE    "resources/decorations/image.png"
 0 ICON "resources/icon.ico"

@@ -19,7 +19,7 @@
 
 /* This file was generated with glext_gen.pl, please do not edit.  */
 
-#include "ngl.h"
+#include "nui.h"
 #include "ngl_glext_table.h"
 
 #ifdef GL_OES_VERSION_1_1

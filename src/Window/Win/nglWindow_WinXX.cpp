@@ -12,7 +12,7 @@
 #include "nuiMainMenu.h"
 #include <string.h>
 #include <set>
-#include <gl/wglext.h>
+#include "nui_GL/wglext.h"
 
 #define HAVE_NV_PERFKIT 0
 #define NGL_ENABLE_FBO_COPYONSWAP 1

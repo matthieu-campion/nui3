@@ -560,7 +560,7 @@ typedef wchar_t nglChar;
       */
 #    include "nui_GL/glext.h"
 //#    include <GL/glext.h>
-#    include <GL/wglext.h>
+#    include "nui_GL/wglext.h"
 #    include <d3d9.h>
 #  endif
 #endif // _NOGFX_
