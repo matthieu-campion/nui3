@@ -38,7 +38,7 @@ nuiMemorySound::~nuiMemorySound()
 
 bool nuiMemorySound::LoadSamples(nglIStream* pStream)
 {
-  if (!mPath.Exists())
+  if (!mPath.Exists() && !pStream)
     return false;
   
   if (!pStream)
