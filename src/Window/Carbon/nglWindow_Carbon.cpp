@@ -562,6 +562,8 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
 
 nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 {
+  Register();
+
   mInited = false;
   mTitle = "";
   
@@ -582,6 +584,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 
 nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  Register();
   mInited = false;
   mTitle = "";
 	
@@ -1712,6 +1715,8 @@ nglWindow::~nglWindow()
     //NGL_OUT("nglWindow: Destroying the gl context!\n");
     Destroy();
   }
+  
+  Unregister();
 }
 
 

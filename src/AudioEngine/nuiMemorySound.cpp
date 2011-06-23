@@ -23,7 +23,7 @@ nuiMemorySound::nuiMemorySound(const nglPath& rPath)
 }
 
 nuiMemorySound::nuiMemorySound(const nglString& rSoundID, nglIStream* pStream)
-: mLength(0),
+: mLength(0)
 {
   mType = eMemory;
   LoadSamples(pStream);

@@ -80,7 +80,7 @@ public:
   {
     CallOnActivation();  
   }
-
+  
   void Deactivate()
   {
     CallOnDeactivation();

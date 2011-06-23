@@ -258,7 +258,7 @@ void nuiSpriteDef::Uninit()
   }
 
   NGL_ASSERT(mSpriteMap.empty());
-  NGL_ASSERT(nuiSprite::mSpriteCounter);
+  NGL_ASSERT(!nuiSprite::mSpriteCounter);
 
 }
 
@@ -363,9 +363,6 @@ void nuiSprite::Init()
   
   // static counter
   mSpriteCounter++;
-  
-  if (mpSpriteDef)
-    mpSpriteDef->Acquire();
   
   mpParent = NULL;
   mpMatrixNodes = NULL;

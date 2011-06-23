@@ -200,6 +200,7 @@ void nglKernel::Init()
 
 void nglKernel::Exit(int32 ExitCode)
 {
+  nuiMainWindow::DestroyAllWindows();
   mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
   nuiAnimation::ReleaseTimer();
