@@ -319,7 +319,10 @@ nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
 {
   mpSpriteDef = nuiSpriteDef::GetSprite(rSpriteDefPath.GetNodeName());
   if (!mpSpriteDef || forceReplace)
+  {
     mpSpriteDef = new nuiSpriteDef(rSpriteDefPath);
+    mpSpriteDef->Acquire();
+  }
 
   NGL_ASSERT(mpSpriteDef);
   Init();  

@@ -25,7 +25,7 @@ Application::Application()
 
 Application::~Application()
 {
-}
+}                                                        q
 
 void Application::OnExit (int Code)
 {
