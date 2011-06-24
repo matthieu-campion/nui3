@@ -315,7 +315,7 @@ const nuiSplitTextFlag nuiST_ScriptChange    = nuiST_StrictScriptChange | nuiST_
 const nuiSplitTextFlag nuiST_Natural         = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange | nuiST_MergeCommonScript;
 const nuiSplitTextFlag nuiST_All             = nuiST_Natural | nuiST_RangeChange;
 
-typedef nuiFastDelegate2<nglUChar, int32, bool> nuiTextSplitterDelegate;
+typedef nuiFastDelegate3<nglUChar, nglUChar, int32, bool> nuiTextSplitterDelegate;
 
 bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);
 bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);

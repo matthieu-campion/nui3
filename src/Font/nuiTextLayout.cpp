@@ -218,19 +218,26 @@ bool nuiTextLayout::Layout(const nglString& rString)
   return true;
 }
 
-class Splitter
+bool Split(nglUChar previousch, nglUChar ch, int32 index)
 {
-public:
-  Splitter()
-  {
-    mSkip = false;
-  }
-};
+  if ((previousch < 32) != (ch < 32))
+    return true;
+  return false;
+}
 
 bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
 {
   //printf("new paragraph: %d + %d\n", start, length);
 
+  float spacewidth = 0;
+  {
+    nuiFont* pFont = mStyle.GetFont();
+    nuiGlyphInfo glyphinfo;
+    uint32 space = pFont->GetGlyphIndex(32);
+    pFont->GetGlyphInfo(glyphinfo, space, nuiFontBase::eGlyphNative);
+    spacewidth = glyphinfo.AdvanceX;
+  }
+  
   mpParagraphs.push_back(new Paragraph());
 
   nuiTextLine* pLine = new nuiTextLine(*this, 0, 0);
@@ -238,7 +245,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
   
   // Split the paragraph into ranges:
   nuiTextRangeList ranges;
-  nuiSplitText(mUnicode, ranges, nuiST_ScriptChange, start, length, nuiMakeDelegate(&splitter, &Splitter::Split));
+  nuiSplitText(mUnicode, ranges, nuiST_ScriptChange, start, length, &Split);
 
   {
     nuiTextRangeList::iterator it = ranges.begin();
@@ -279,9 +286,31 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
       const nuiTextRange& range(*it);
       uint32 len = range.mLength;
       //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
-         
-      nuiTextRun* pRun = new nuiTextRun(*this, range.mScript, pos, len, mStyle);
-      pLine->AddRun(pRun);
+      nglUChar ch = mUnicode[pos];
+      
+      nuiTextRun* pRun = NULL;
+      
+      if (ch < 32)
+      {
+        int32 tabs = 0;
+        for (uint32 i = pos; i < pos + range.mLength; i++)
+        {
+          if (mUnicode[i] == 9)
+            tabs++;
+        }
+        
+        if (tabs > 0)
+        {
+          pRun = new nuiTextRun(*this, pos, len, spacewidth * (float)tabs, 0.0f);
+        }
+      }
+      else
+      {
+        pRun = new nuiTextRun(*this, range.mScript, pos, len, mStyle);
+      }
+      
+      if (pRun)
+        pLine->AddRun(pRun);
       
       
       pos += len;

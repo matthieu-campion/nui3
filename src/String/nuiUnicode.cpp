@@ -377,6 +377,7 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
   
   int32 lastpos = start;
   int32 curpos = start;
+  nglUChar oldch = 0;
   nglUChar ch = Iterator.GetNextUChar(curpos);
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
@@ -477,7 +478,7 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
     }
     
     if (!brk && rSplitDelegate)
-      brk = rSplitDelegate(ch, pos);
+      brk = rSplitDelegate(oldch, ch, pos);
     
     if (brk)
     {
@@ -498,6 +499,8 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
       blank = newblank;
       print = newprint;
     }
+    
+    oldch = ch;
   }
 
   // Last range:
