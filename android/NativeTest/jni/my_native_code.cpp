@@ -22,14 +22,15 @@
 #include "SLES/OpenSLES_Android.h"
 
 #include "nuiWaveReader.h"
-
-#include "mpg123.h"
+#include "nuiAudioDecoder.h"
+//#include "mpg123.h"
 
 nuiAndroidBridge* gpBridge = NULL;
 
 nglIStream* gpStream = NULL;
 nuiWaveReader* gpReader = NULL;
-mpg123_handle* gpDecoder = NULL;
+//mpg123_handle* gpDecoder = NULL;
+nuiAudioDecoder* gpMp3Decoder = NULL;
 
 // this callback handler is called every time a buffer finishes playing
 void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
@@ -38,26 +39,63 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
   nglTime now;
   double elapsed = now.GetValue() - last.GetValue();
   last = now;
-  LOGI("audio callback  elapsed %lf (%lf samples)", elapsed, elapsed * 44100);
   
-  int sampleframes = 1024;
+  int sampleframes = 44100;
   int channels = 1;
-  int bytes = sampleframes * channels * sizeof(short);
-  uint8* pBuffer = new uint8[bytes];
+  if (gpMp3Decoder)
+  {
+    nuiSampleInfo info;
+    gpMp3Decoder->GetInfo(info);
+    channels = info.GetChannels();
+  }
+  int frameSize = channels * sizeof(short);
+  int size = sampleframes * frameSize;
+  uint8* pBuffer = new uint8[size];
+  memset(pBuffer, 0, size);
   
   if (gpReader)
   {
     // WAV
     gpReader->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
   }
-  else if (gpStream)
+//  else if (gpDecoder)
+//  {
+//    // MP3
+//    LOGI("fill callback buffer with mp3 decoded data");
+//    int inSize = 16384;
+//    int outSize = size;
+//    unsigned char* pInput = new unsigned char[inSize];
+//    unsigned char* pOutput = (unsigned char*)pBuffer;
+//    
+//    int done = 0;
+//    int res = MPG123_OK;
+//    while (outSize && res != MPG123_DONE)
+//    {
+//      size_t outBytesDone = 0;
+//      unsigned char* pOut = pOutput + done;
+//      res = mpg123_decode(gpDecoder, NULL, 0, pOut, outSize, &outBytesDone);
+//      LOGI("read %d bytes (%d requested)  res = %d", outBytesDone, outSize, res);
+//      
+//      outSize -= outBytesDone;
+//      done += outBytesDone;
+//      
+//      if (res == MPG123_NEED_MORE)
+//      {
+//        int inSizeRead = gpStream->ReadUInt8(pInput, inSize);
+//        mpg123_decode(gpDecoder, pInput, inSizeRead, NULL, 0, &outBytesDone);
+//        LOGI("feed %d bytes (%X %X %X %X %X)", inSizeRead, pInput[0], pInput[1], pInput[2], pInput[3], pInput[4]);
+//      }
+//      LOGI("fill callback buffer with mp3 decoded data OK");
+//    }
+//  }
+  else if (gpMp3Decoder)
   {
-    // MP3
-    
+    gpMp3Decoder->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
   }
   else
   {
     // SYNTH
+    LOGI("synth");
     float freq = 440;
     int period = ToBelow(44100.f / freq);
     int semiperiod = period / 2;
@@ -66,6 +104,7 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
     int frames = sampleframes;
     int done = 0;
     
+    short* pOut = (short*)pBuffer;
     while (frames)
     {
       int todo = MIN(frames, semiperiod - signalDone);
@@ -74,7 +113,7 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
         short val = 20000 * sign;
         for (int c = 0; c < channels; c++)
         {
-          pBuffer[(i + done) * channels + c] = val;
+          pOut[(i + done) * channels + c] = val;
         }
       }
       
@@ -87,17 +126,24 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
         signalDone = 0;
       }
     }
+    LOGI("synth OK");
   }
   
   
   SLresult result;
   // enqueue another buffer
-  result = (*bq)->Enqueue(bq, pBuffer, bytes);
-  if (result == SL_RESULT_SUCCESS)
-    LOGI("Enqueue OK");
-  else
-    LOGI("Enqueue ERROR");
+  result = (*bq)->Enqueue(bq, pBuffer, size);
+//  if (result == SL_RESULT_SUCCESS)
+//    LOGI("Enqueue OK (%d bytes)", size);
+//  else
+//    LOGI("Enqueue ERROR");
   
+  
+  
+  nglTime end;
+  double processTime = end.GetValue() - now.GetValue();
+  
+  LOGI("audio callback  (elapsed since last call %lf (%lf samples))  (processing time %lf (%lf samples) for %d samples %lf\%", elapsed, elapsed * 44100.0, processTime, processTime * 44100.0, sampleframes, (processTime * 44100.0) / sampleframes);
 }
 
 
@@ -342,34 +388,183 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 //        }
 
         
-        nglPath path("/data/mat/rock.mp3");
+        nglPath path("/data/mat/test.mp3");
         gpStream = path.OpenRead();
         if (!gpStream)
         {
           LOGI("mp3 stream not open");
         }
+        else
+        {
+          gpMp3Decoder = new nuiAudioDecoder(*gpStream);
+          nuiSampleInfo info;
+          if (gpMp3Decoder->GetInfo(info))
+          {
+            LOGI("mp3 decoder info:");
+            LOGI("length: %d", (int)(info.GetSampleFrames()));
+            LOGI("channels: %d", info.GetChannels());
+            LOGI("sample rate: %lf", info.GetSampleRate());
+            LOGI("bits per sample: %d", info.GetBitsPerSample());
+          }
+          else
+          {
+            LOGI("can't get info from mp3 decoder");
+          }
+        }
+        
 
         //
-        LOGI("init mpg123");
-        int mpgRes = mpg123_init();
-        if (mpgRes == MPG123_OK)
-          LOGI("init mpg123 OK");
-        else
-          LOGI("init mpg123 error %d", mpgRes);
+//        LOGI("init mpg123");
+//        int mpgRes = mpg123_init();
+//        if (mpgRes == MPG123_OK)
+//          LOGI("init mpg123 OK");
+//        else
+//          LOGI("init mpg123 error %d", mpgRes);
+//        
+//        LOGI("new decoder");
+//        gpDecoder = mpg123_new(NULL, &mpgRes);
+//        if (!gpDecoder)
+//          LOGI("new decoder error %d", mpgRes);
+//        else 
+//          LOGI("new decoder OK");
+//        
+//        LOGI("open decoder");
+//        mpgRes = mpg123_open_feed(gpDecoder);
+//        if (mpgRes == MPG123_OK)
+//          LOGI("open decoder OK");
+//        else
+//          LOGI("open decoder error %d", mpgRes);
+//        
+//        
+//        //
+//        int sizeread = 1;
+//        while (mpgRes != MPG123_NEW_FORMAT && sizeread > 0)
+//        {
+//          int size = 16384;
+//          unsigned char* pInput = new unsigned char[size];
+//          sizeread = gpStream->ReadUInt8(pInput, size);
+//          LOGI("read %d bytes in stream (%X %X %X %X %X)", sizeread, pInput[0], pInput[1], pInput[2], pInput[3], pInput[4]);
+//          
+//          size_t done = 0;
+//          mpgRes = mpg123_decode(gpDecoder, pInput, sizeread, NULL, 0, &done);
+//          LOGI("decode until new format result (%d)", mpgRes);
+//        }
+//        //
+//        
+//        
+//        long r = 0;
+//        int c = 0;
+//        int e = 0;
+//        mpgRes = mpg123_getformat(gpDecoder, &r, &c, &e);
+//        if (mpgRes == MPG123_OK)
+//          LOGI("get initial format OK");
+//        else
+//          LOGI("get initial format error %d", mpgRes);
+//        LOGI("initial format: rate = %ld  channels = %d  encoding = %d", r, c, e);
+//        
+//        
+//        LOGI("test format support");
+//        int channels = 0;
+//        long rate = 44100;
+//        int encoding = MPG123_ENC_SIGNED_16;
+//        int channelConfig = mpg123_format_support(gpDecoder, rate, encoding);
+//        if (channelConfig == 0)
+//          LOGI("test format support error");
+//        else if (channelConfig & MPG123_MONO)
+//        {
+//          channels = 1;
+//          channelConfig = MPG123_MONO;
+//          LOGI("test format support   mono OK");
+//        }else if (channelConfig & MPG123_STEREO)
+//        {
+//          channels = 2;
+//          channelConfig = MPG123_STEREO;
+//          LOGI("test format support   stereo OK");
+//        }
+//        LOGI("test format support OK");
+//        
+//        LOGI("set format");
+//        mpgRes = mpg123_format(gpDecoder, rate, channelConfig, encoding);
+//        if (mpgRes == MPG123_OK)
+//          LOGI("set format OK");
+//        else
+//          LOGI("set format error %d", mpgRes);
+//        
+//        
+//        mpgRes = mpg123_getformat(gpDecoder, &r, &c, &e);
+//        if (mpgRes == MPG123_OK)
+//          LOGI("get format OK");
+//        else
+//          LOGI("get format error %d", mpgRes);
+//        LOGI("format: rate = %ld  channels = %d  encoding = %d", r, c, e);
+//        
+//        const char** decoders = mpg123_supported_decoders();
+//        int index = 0;
+//        const char* decoder = decoders[index];
+//        while (decoder)
+//        {
+//          LOGI("supported decoder '%s'", decoder);
+//          index++;
+//          decoder = decoders[index];
+//        }
+//        
+//        const char* decodername = mpg123_current_decoder(gpDecoder);
+//        LOGI("current decoder '%s'", decodername);
+//        
+//        
+//        
+//        
+//        int layer1Enabled = mpg123_feature(MPG123_FEATURE_DECODE_LAYER1);
+//        int layer2Enabled = mpg123_feature(MPG123_FEATURE_DECODE_LAYER2);
+//        int layer3Enabled = mpg123_feature(MPG123_FEATURE_DECODE_LAYER3);
+//        LOGI("features enabled: layer1=%d layer2=%d layer3=%d", layer1Enabled, layer2Enabled, layer3Enabled);
+//        
         
-        LOGI("new decoder");
-        gpDecoder = mpg123_new(NULL, &mpgRes);
-        if (!gpDecoder)
-          LOGI("new decoder error %d", mpgRes);
-        else 
-          LOGI("new decoder OK");
         
-        LOGI("open decoder");
-        mpgRes = mpg123_open_feed(gpDecoder);
-        if (mpgRes == MPG123_OK)
-          LOGI("open decoder OK");
-        else
-          LOGI("open decoder error %d", mpgRes);
+        
+        //
+//        nglPath log("/data/mat/log_audio");
+//        nglIOStream* pLog = log.OpenWrite();
+//        LOGI("decode mp3 file to '%s'", log.GetPathName().GetChars());
+//        if (pLog)
+//        {
+//          int in = 16384;
+//          int out = 16384;
+//          unsigned char* pIn = new unsigned char[in];
+//          unsigned char* pOut = new unsigned char[out];
+//          
+//          int res = MPG123_OK;
+//          int read = 1;
+//          while (read)
+//          {
+//            memset(pOut, 0, out);
+//            
+//            size_t outBytesDone = 0;
+//            res = mpg123_decode(gpDecoder, NULL, 0, pOut, out, &outBytesDone);
+//            pLog->WriteUInt8(pOut, outBytesDone);
+//            LOGI("write %d decoded bytes  to raw (%d requested)", outBytesDone, out);
+//            
+//            if (res == MPG123_NEED_MORE)
+//            {
+//              read = gpStream->ReadUInt8(pIn, in);
+//              res = mpg123_decode(gpDecoder, pIn, read, NULL, 0, &outBytesDone);
+//              LOGI("read %d bytes from mp3 (%d requested) and feed decoder", read, in);
+//            }
+//          }
+//          //
+//          
+//          delete[] pIn;
+//          delete[] pOut;
+//          delete pLog;
+//          gpDecoder = NULL;
+//          LOGI("decode mp3 file to '%s' OK", log.GetPathName().GetChars());
+//        }
+//        else
+//        {
+//          LOGI("can't open writable file '%s'", log.GetPathName().GetChars());
+//        }
+        //
+        
         
         
         SLObjectItf engineObject = NULL;
@@ -424,8 +619,17 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
           LOGI("realize output mix ERROR");
         
         // configure audio source
+        int channels = 2;
+        if (gpMp3Decoder)
+        {
+          nuiSampleInfo info;
+          gpMp3Decoder->GetInfo(info);
+          channels = info.GetChannels();
+          LOGI("engine channels %d", channels);
+        }
+        int channelMask = (channels == 1) ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
         SLDataLocator_AndroidSimpleBufferQueue loc_bufq = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 2};
-        SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM, 1, SL_SAMPLINGRATE_44_1, SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16, SL_SPEAKER_FRONT_CENTER, SL_BYTEORDER_LITTLEENDIAN};
+        SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM, channels, SL_SAMPLINGRATE_44_1, SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16, channelMask, SL_BYTEORDER_LITTLEENDIAN};
         SLDataSource audioSrc = {&loc_bufq, &format_pcm};
         
         // configure audio sink
@@ -474,11 +678,11 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
           LOGI("play OK");
         else
           LOGI("play ERROR");
-//        
-//        
-//        LOGI("first fill");
-//        bqPlayerCallback(bqPlayerBufferQueue, NULL);
-//        LOGI("first fill done");
+        
+        
+        LOGI("first fill");
+        bqPlayerCallback(bqPlayerBufferQueue, NULL);
+        LOGI("first fill done");
 
 //        SLDataLocator_URI loc_uri = {SL_DATALOCATOR_URI, (SLchar *)"file://data/mat/rock.mp3"};
 //        SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};

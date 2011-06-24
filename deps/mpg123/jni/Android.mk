@@ -6,7 +6,7 @@ LOCAL_PATH := $(call my-dir)/..
 include $(CLEAR_VARS)
 
 MY_INCLUDE_FILES := $(LOCAL_PATH)
-MY_CFLAGS := -DOPT_ARM
+MY_CFLAGS := -DOPT_ARM -DACCURATE_ROUNDING
 
 LOCAL_MODULE    := libmpg123
 LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
@@ -38,10 +38,13 @@ LOCAL_SRC_FILES := \
   synth_real.c \
   synth_8bit.c \
   synth_arm.S \
+  synth_arm_accurate.S \
   synth_s32.c \
   compat.c \
+  feature.c \
 
 LOCAL_EXPORT_C_INCLUDES := $(MY_INCLUDE_FILES)
+LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 
 include $(BUILD_STATIC_LIBRARY)
 

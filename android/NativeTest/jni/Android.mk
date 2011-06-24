@@ -18,7 +18,7 @@ LOCAL_STATIC_LIBRARIES := android_native_app_glue libnui3 freetype expat tess ha
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,deps/mpg123/jni)
+#$(call import-module,deps/mpg123/jni)
 $(call import-module,android/native_app_glue)
 $(call import-module,jni)
 
