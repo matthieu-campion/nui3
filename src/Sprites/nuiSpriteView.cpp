@@ -367,6 +367,9 @@ void nuiSprite::Init()
     InitAttributes();
   }
   
+  if (mpSpriteDef)
+    mpSpriteDef->Acquire();
+  
   // static counter
   mSpriteCounter++;
   
