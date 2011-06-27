@@ -52,9 +52,12 @@ bool nuiTextLayout::Layout(const nglString& rString)
   // Transform the string in a vector of nglUChar, also keep the offsets from the original chars to the nglUChar and vice versa
   int32 len = rString.GetLength();
   int32 i = 0;
+  
+  printf("layout ");
   while (i < len)
   {
     nglUChar ch = rString.GetNextUChar(i);
+    printf("'%c' (%d) ", (char)ch, ch);
     mUnicode.push_back(ch);
     mOffsetInString.push_back(i);
     mOffsetInUnicode.push_back(mUnicode.size() - 1);

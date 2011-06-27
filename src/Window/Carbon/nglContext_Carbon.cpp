@@ -175,7 +175,7 @@ bool nglContext::Build(WindowRef Win, const nglContextInfo& rInfo, const nglCont
   attribs.push_back(AGL_NONE);
      
   /* Choose pixel format */
-  AGLPixelFormat Format = aglChoosePixelFormat(NULL, 1, &attribs[0]);
+  AGLPixelFormat Format = aglChoosePixelFormat(NULL, 0, &attribs[0]);
   
   //NGL_OUT("Pixel Format: 0x%x\n", Format);
   
@@ -184,7 +184,7 @@ bool nglContext::Build(WindowRef Win, const nglContextInfo& rInfo, const nglCont
     if (rInfo.CopyOnSwap)
     {
       attribs[attribs.size() - 2] = AGL_NONE;
-      Format = aglChoosePixelFormat(NULL, 1, &attribs[0]);
+      Format = aglChoosePixelFormat(NULL, 0, &attribs[0]);
     } 
 
     if (!Format)

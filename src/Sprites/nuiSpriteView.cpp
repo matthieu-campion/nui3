@@ -339,6 +339,8 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 : mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   NGL_ASSERT(mpSpriteDef);
+  mpSpriteDef->Acquire();
+  
   Init();
 }
 
