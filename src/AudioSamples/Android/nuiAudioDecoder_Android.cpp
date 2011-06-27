@@ -11,7 +11,7 @@
 
 #include "mpg123.h"
 
-#define DECODER_INPUT_SIZE 8192
+#define DECODER_INPUT_SIZE 256
 
 //
 //
@@ -294,6 +294,7 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
     // feed decoder if needed
     if (err == MPG123_NEED_MORE)
     {
+      LOGI("nuiAudioDecoder::ReadIN read and feed");
       uint32 inBytes = DECODER_INPUT_SIZE;
       if (!pIn)
       {

@@ -40,7 +40,7 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
   double elapsed = now.GetValue() - last.GetValue();
   last = now;
   
-  int sampleframes = 44100;
+  int sampleframes = 512;
   int channels = 1;
   if (gpMp3Decoder)
   {
@@ -264,10 +264,7 @@ static void engine_draw_frame(struct engine* engine)
                ((float)engine->state.y)/engine->height, 1);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  
-  LOGI("android bridge: display");
   gpBridge->Display();
-  LOGI("android bridge: display OK");
   
   eglSwapBuffers(engine->display, engine->surface);
 }
@@ -388,7 +385,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 //        }
 
         
-        nglPath path("/data/mat/test.mp3");
+        nglPath path("/sdcard/mat/test.mp3");
         gpStream = path.OpenRead();
         if (!gpStream)
         {
