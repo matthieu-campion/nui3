@@ -57,7 +57,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
   while (i < len)
   {
     nglUChar ch = rString.GetNextUChar(i);
-    printf("'%c' (%d) ", (char)ch, ch);
+    //printf("'%c' (%d) ", (char)ch, ch);
     mUnicode.push_back(ch);
     mOffsetInString.push_back(i);
     mOffsetInUnicode.push_back(mUnicode.size() - 1);
@@ -107,7 +107,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
     while (it != end)
     {
-      //printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
+      printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
       const std::set<nglUChar>& charset(it->second);
       nuiFont* pFont = NULL;
       // First try the requested font
@@ -123,7 +123,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
           pFont = mStyle.GetFont();
         else
         {
-          //printf("[couldn't find glyph %d '%c' in requested font] ", *it, *it);
+          printf("[couldn't find glyph %d '%c' in requested font] ", *it, *it);
         }
       }
 
@@ -137,7 +137,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
       
       FontSet[it->first] = pFont;
       
-      //printf("%s\n", pFont->GetFamilyName().GetChars());
+      printf("%s\n", pFont->GetFamilyName().GetChars());
       
       ++it;
     }
@@ -161,30 +161,35 @@ bool nuiTextLayout::Layout(const nglString& rString)
       { 
         nuiTextRun* pRun = pLine->GetRun(r);
         nuiFont* pFont = FontSet[pRun->GetScript()];
-        pRun->SetFont(pFont);
-        pFont->Shape(pRun);
-
-        nuiFontInfo finfo;
-        pFont->GetInfo(finfo);
-
-        
-        // Prepare glyphs:
-        std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
-        for (int32 g = 0; g < rGlyphs.size(); g++)
+        if (!pRun->IsDummy())
         {
-          nuiTextGlyph& rGlyph(rGlyphs.at(g));
-          
-          pFont->PrepareGlyph(PenX + x, PenY + y, rGlyph);
+          // Only shape real runs.
+          pRun->SetFont(pFont);
+          pFont->Shape(pRun);
 
-          const nuiSize W = rGlyph.AdvanceX;
-          //    nuiSize h = finfo.AdvanceMaxH;
-          const nuiSize X = rGlyph.mX + rGlyph.BearingX;
-          const nuiSize Y = rGlyph.mY - finfo.Ascender;
-          const nuiSize H = finfo.Height;
+          nuiFontInfo finfo;
+          pFont->GetInfo(finfo);
           
-          nuiRect rr(rect);
-          rect.Union(rr, nuiRect(X, Y, W, H));
+          
+          // Prepare glyphs:
+          std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
+          for (int32 g = 0; g < rGlyphs.size(); g++)
+          {
+            nuiTextGlyph& rGlyph(rGlyphs.at(g));
+            
+            pFont->PrepareGlyph(PenX + x, PenY + y, rGlyph);
+            
+            const nuiSize W = rGlyph.AdvanceX;
+            //    nuiSize h = finfo.AdvanceMaxH;
+            const nuiSize X = rGlyph.mX + rGlyph.BearingX;
+            const nuiSize Y = rGlyph.mY - finfo.Ascender;
+            const nuiSize H = finfo.Height;
+            
+            nuiRect rr(rect);
+            rect.Union(rr, nuiRect(X, Y, W, H));
+          }
         }
+
         
         x += pRun->GetAdvanceX();
         //y += pRun->GetAdvanceY();

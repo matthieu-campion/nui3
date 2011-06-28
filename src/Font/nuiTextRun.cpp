@@ -92,11 +92,15 @@ float nuiTextRun::GetAdvanceY() const
 
 float nuiTextRun::GetAscender() const
 {
+  if (IsDummy())
+    return 0;
   return mStyle.GetFont()->GetAscender();
 }
 
 float nuiTextRun::GetDescender() const
 {
+  if (IsDummy())
+    return 0;
   return mStyle.GetFont()->GetDescender();
 }
 
@@ -129,6 +133,8 @@ bool nuiTextRun::GetStrikeThrough() const
 
 nuiRect nuiTextRun::GetRect() const
 {
+  if (IsDummy())
+    return nuiRect(mAdvanceX, mAdvanceY);
   nuiFontInfo finfo;
   mStyle.GetFont()->GetInfo(finfo);
   /*
