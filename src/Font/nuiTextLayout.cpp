@@ -62,13 +62,15 @@ bool nuiTextLayout::Layout(const nglString& rString)
     mOffsetInString.push_back(i);
     mOffsetInUnicode.push_back(mUnicode.size() - 1);
   }
-
+  
+  printf("\n");
+  
   // General algorithm:
   // 1. Split text into paragraphs (LayoutText)
   // 2. Split paragraphs into ranges (LayoutParagraph)
   // 3. Split ranges into fonts
   // 4. Split ranges into lines / words if needed
-
+  
   int32 start = 0;
   int32 position = 0;
   int32 count = mUnicode.size();
@@ -81,14 +83,16 @@ bool nuiTextLayout::Layout(const nglString& rString)
     if (ch == '\n' || ch == 0xb || ch == 0x2028 || ch == 0x2029)
     {
       // Found a paragraph
+      printf("Paragraph %d -> %d (%d chars)\n", start, position, position - start);
       LayoutParagraph(start, position - start); // Eat the \n char
       start = position + 1;
     }
     position++;
   }
   
-  if (start != position - start)
+  if (start < position)
   {
+    printf("last Paragraph %d -> %d (%d chars)\n", start, position, position - start);
     LayoutParagraph(start, position - start); // Eat the \n char
     start = position;
   }
@@ -259,7 +263,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
       const nuiTextRange& range(*it);
       int32 len = range.mLength;
       int32 pos = origin;
-      //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+      printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
       
       std::set<nglUChar>& charset(mCharsets[range.mScript]);
       {
