@@ -82,8 +82,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
     {
       // Found a paragraph
       LayoutParagraph(start, position - start); // Eat the \n char
-      position++;
-      start = position;
+      start = position + 1;
     }
     position++;
   }
@@ -223,7 +222,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
 
 bool Split(nglUChar previousch, nglUChar ch, int32 index)
 {
-  if ((previousch < 32) != (ch < 32))
+  if (previousch && ((previousch < 32) != (ch < 32)))
     return true;
   return false;
 }

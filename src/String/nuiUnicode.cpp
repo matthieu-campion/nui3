@@ -504,15 +504,17 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
   }
 
   // Last range:
-  nuiTextRange r;
-  r.mLength = curpos - lastpos; // count of unicode code points
-  r.mDirection = direction; // even: Left to right, odd: right to left
-  r.mScript = script; // What script if this range of text
-  r.mRange = range; // What script if this range of text
-  r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
-  
-  rRanges.push_back(r);
-  
+  if (curpos > lastpos)
+  {
+    nuiTextRange r;
+    r.mLength = curpos - lastpos; // count of unicode code points
+    r.mDirection = direction; // even: Left to right, odd: right to left
+    r.mScript = script; // What script if this range of text
+    r.mRange = range; // What script if this range of text
+    r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+    
+    rRanges.push_back(r);
+  }  
   
   return true;
 }
