@@ -248,6 +248,8 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext, const nuiRect& rRect)
     nuiCheckForGLErrors();
     mpContext->CheckExtension(_T("GL_VERSION_1_5"));
     nuiCheckForGLErrors();
+    mpContext->CheckExtension(_T("GL_VERSION_2_0"));
+    nuiCheckForGLErrors();
     mpContext->CheckExtension(_T("GL_ARB_vertex_buffer_object"));
     nuiCheckForGLErrors();
     mpContext->CheckExtension(_T("GL_EXT_framebuffer_object"));

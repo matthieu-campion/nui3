@@ -74,6 +74,7 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
     mPaintEnabled(true)
 
 {
+  Register();
   mFullFrameRedraw = 2;
   mpNGLWindow = new NGLWindow(this, Width, Height, Fullscreen);
 
@@ -119,6 +120,7 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
     mpDragSource(NULL),
     mPaintEnabled(true)
 {
+  Register();
   mFullFrameRedraw = 2;
   mpNGLWindow = new NGLWindow(this, rContextInfo, rInfo, pShared);
   nuiRect rect(0.0f, 0.0f, (nuiSize)rInfo.Width, (nuiSize)rInfo.Height);
@@ -256,6 +258,8 @@ nuiMainWindow::~nuiMainWindow()
   
   mMainWinSink.DisconnectAll();
   nuiAnimation::ReleaseTimer();
+  
+  Unregister();
 }
 
 
@@ -1304,4 +1308,39 @@ bool nuiMainWindow::IsPaintEnabled() const
 {
   return mPaintEnabled;
 }
+
+std::vector<nuiMainWindow*> nuiMainWindow::mpWindows;
+
+void nuiMainWindow::Register()
+{
+  mpWindows.push_back(this);
+}
+
+void nuiMainWindow::Unregister()
+{
+  for (uint32 i = 0; i < mpWindows.size(); i++)
+  {
+    if (mpWindows[i] == this)
+    {
+      std::vector<nuiMainWindow*>::iterator it = mpWindows.begin() + i;
+      mpWindows.erase(it);
+      return;
+    }
+  }
+  
+  // We should always be able to unregister a window!
+  NGL_ASSERT(0);
+}
+
+
+void nuiMainWindow::DestroyAllWindows()
+{
+  std::vector<nuiMainWindow*> wins(mpWindows);
+  std::reverse(wins.begin(), wins.end());
+  for (int32 i = 0; i < mpWindows.size(); i++)
+  {
+    delete wins[i];
+  }
+}
+
 

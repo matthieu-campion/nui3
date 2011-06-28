@@ -322,7 +322,10 @@ nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
 {
   mpSpriteDef = nuiSpriteDef::GetSprite(rSpriteDefPath.GetNodeName());
   if (!mpSpriteDef || forceReplace)
+  {
     mpSpriteDef = new nuiSpriteDef(rSpriteDefPath);
+    mpSpriteDef->Acquire();
+  }
 
   NGL_ASSERT(mpSpriteDef);
   Init();  
@@ -366,9 +369,6 @@ void nuiSprite::Init()
   
   // static counter
   mSpriteCounter++;
-  
-  if (mpSpriteDef)
-    mpSpriteDef->Acquire();
   
   mpParent = NULL;
   mpMatrixNodes = NULL;

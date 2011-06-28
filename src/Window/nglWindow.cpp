@@ -464,3 +464,38 @@ void nglWindow::ForceRepaint()
 {
   CallOnPaint();
 }
+
+std::vector<nglWindow*> nglWindow::mpWindows;
+
+void nglWindow::Register()
+{
+  mpWindows.push_back(this);
+}
+
+void nglWindow::Unregister()
+{
+  for (uint32 i = 0; i < mpWindows.size(); i++)
+  {
+    if (mpWindows[i] == this)
+    {
+      std::vector<nglWindow*>::iterator it = mpWindows.begin() + i;
+      mpWindows.erase(it);
+      return;
+    }
+  }
+
+  // We should always be able to unregister a window!
+  NGL_ASSERT(0);
+}
+
+
+void nglWindow::DestroyAllWindows()
+{
+  std::vector<nglWindow*> wins(mpWindows);
+  std::reverse(wins.begin(), wins.end());
+  for (int32 i = 0; i < mpWindows.size(); i++)
+  {
+    delete wins[i];
+  }
+}
+

@@ -529,7 +529,8 @@ typedef wchar_t nglChar;
 #     include <OpenGL/OpenGL.h>
 #    endif
 #    include <OpenGL/gl.h>
-#    include <OpenGL/glext.h>
+#    include "nui_GL/glext.h"
+//#    include <OpenGL/glext.h>
 #    include <OpenGL/glu.h>
 
 
@@ -546,17 +547,20 @@ typedef wchar_t nglChar;
 #      include <AGL/agl.h>
 #      include <OpenGL/glu.h>
 #      include <OpenGL/OpenGL.h>
+#      include "nui_GL/glext.h"
 #    endif
 #  else
 #    include <GL/gl.h>
 #    include <GL/glu.h>
+#    include "nui_GL/glext.h"
 #  endif
 #  ifdef _WIN32_
      /* The latest glext.h file can be fetched from :
       *   http://oss.sgi.com/projects/ogl-sample/registry/index.html
       */
-#    include <GL/glext.h>
-#    include <GL/wglext.h>
+#    include "nui_GL/glext.h"
+//#    include <GL/glext.h>
+#    include "nui_GL/wglext.h"
 #    include <d3d9.h>
 #  endif
 #endif // _NOGFX_
@@ -567,7 +571,7 @@ typedef wchar_t nglChar;
 /* GL type for program/shader text */
 typedef char GLchar;
 #endif
-#ifndef GL_VERSION_1_5
+#if !(defined GL_VERSION_1_5) && (!defined GL_OES_VERSION_1_1)
 typedef ptrdiff_t GLintptr;
 typedef ptrdiff_t GLsizeiptr;
 #endif
