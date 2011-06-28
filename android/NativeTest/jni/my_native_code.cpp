@@ -23,13 +23,11 @@
 
 #include "nuiWaveReader.h"
 #include "nuiAudioDecoder.h"
-//#include "mpg123.h"
 
 nuiAndroidBridge* gpBridge = NULL;
 
 nglIStream* gpStream = NULL;
 nuiWaveReader* gpReader = NULL;
-//mpg123_handle* gpDecoder = NULL;
 nuiAudioDecoder* gpMp3Decoder = NULL;
 
 // this callback handler is called every time a buffer finishes playing
@@ -58,36 +56,6 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
     // WAV
     gpReader->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
   }
-//  else if (gpDecoder)
-//  {
-//    // MP3
-//    LOGI("fill callback buffer with mp3 decoded data");
-//    int inSize = 16384;
-//    int outSize = size;
-//    unsigned char* pInput = new unsigned char[inSize];
-//    unsigned char* pOutput = (unsigned char*)pBuffer;
-//    
-//    int done = 0;
-//    int res = MPG123_OK;
-//    while (outSize && res != MPG123_DONE)
-//    {
-//      size_t outBytesDone = 0;
-//      unsigned char* pOut = pOutput + done;
-//      res = mpg123_decode(gpDecoder, NULL, 0, pOut, outSize, &outBytesDone);
-//      LOGI("read %d bytes (%d requested)  res = %d", outBytesDone, outSize, res);
-//      
-//      outSize -= outBytesDone;
-//      done += outBytesDone;
-//      
-//      if (res == MPG123_NEED_MORE)
-//      {
-//        int inSizeRead = gpStream->ReadUInt8(pInput, inSize);
-//        mpg123_decode(gpDecoder, pInput, inSizeRead, NULL, 0, &outBytesDone);
-//        LOGI("feed %d bytes (%X %X %X %X %X)", inSizeRead, pInput[0], pInput[1], pInput[2], pInput[3], pInput[4]);
-//      }
-//      LOGI("fill callback buffer with mp3 decoded data OK");
-//    }
-//  }
   else if (gpMp3Decoder)
   {
     gpMp3Decoder->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
@@ -133,10 +101,6 @@ void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
   SLresult result;
   // enqueue another buffer
   result = (*bq)->Enqueue(bq, pBuffer, size);
-//  if (result == SL_RESULT_SUCCESS)
-//    LOGI("Enqueue OK (%d bytes)", size);
-//  else
-//    LOGI("Enqueue ERROR");
   
   
   
@@ -364,25 +328,6 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 
         engine_draw_frame(engine);
         engine->animating = 1;
-        
-        
-        
-        
-        // AUDIO tests
-        
-//        nglPath path("/data/mat/rock.wav");
-//        gpStream = path.OpenRead();
-//        if (gpStream)
-//        {
-//          gpReader = new nuiWaveReader(*gpStream);    
-//          nuiSampleInfo info;
-//          gpReader->GetInfo(info);
-//          LOGI("bits per sample: %d", info.GetBitsPerSample());
-//        }
-//        else
-//        {
-//          LOGI("stream not open");
-//        }
 
         
         nglPath path("/sdcard/mat/test.mp3");
