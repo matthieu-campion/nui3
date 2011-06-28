@@ -2491,7 +2491,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   pRun->mGlyphs.resize(num_glyphs);
   x = 0;
   
-  printf("Shape %p\n", pRun);
+  //printf("Shape %p\n", pRun);
   for (i = 0; i < num_glyphs; i++)
   {
     GetGlyphInfo(pRun->mGlyphs[i], hb_glyph->codepoint, eGlyphNative);
@@ -2500,14 +2500,14 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
     pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * (1./64);
     x += hb_position->x_advance;
     
-    printf("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
+    //printf("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
 
     hb_glyph++;
     hb_position++;
 
   }
 
-  printf("\n");
+  //printf("\n");
   
   pRun->mAdvanceX = x * (1./64);
   hb_buffer_destroy(hb_buffer);

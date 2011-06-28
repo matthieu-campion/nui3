@@ -42,7 +42,10 @@ nuiTextStyle::nuiTextStyle(const nuiTextStyle& rStyle)
 nuiTextStyle::~nuiTextStyle()
 {
   if (mpFont)
+  {
+    mpFont->CheckValid();
     mpFont->Release();
+  }
 }
 
 

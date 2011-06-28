@@ -1335,12 +1335,15 @@ void nuiMainWindow::Unregister()
 
 void nuiMainWindow::DestroyAllWindows()
 {
-  std::vector<nuiMainWindow*> wins(mpWindows);
-  std::reverse(wins.begin(), wins.end());
-  for (int32 i = 0; i < mpWindows.size(); i++)
+  int32 count = 0;
+  while (mpWindows.size() > 0)
   {
-    delete wins[i];
+    nuiMainWindow* pWin = mpWindows.front();
+    NGL_LOG("window", NGL_LOG_ALWAYS, "Destroying window #%d '%s'\n", count, pWin->GetNGLWindow()->GetTitle().GetChars());
+    delete pWin;
+    count++;
   }
+  NGL_ASSERT(mpWindows.empty());
 }
 
 

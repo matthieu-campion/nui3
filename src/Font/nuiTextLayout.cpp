@@ -53,7 +53,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
   int32 len = rString.GetLength();
   int32 i = 0;
   
-  printf("layout ");
+  //printf("layout ");
   while (i < len)
   {
     nglUChar ch = rString.GetNextUChar(i);
@@ -63,7 +63,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
     mOffsetInUnicode.push_back(mUnicode.size() - 1);
   }
   
-  printf("\n");
+  //printf("\n");
   
   // General algorithm:
   // 1. Split text into paragraphs (LayoutText)
@@ -78,12 +78,10 @@ bool nuiTextLayout::Layout(const nglString& rString)
   {
     // Scan through the text and look for end of line markers
     nglUChar ch = mUnicode[position];
-    if (ch < 32)
-      printf("control code: %d\n", ch);
     if (ch == '\n' || ch == 0xb || ch == 0x2028 || ch == 0x2029)
     {
       // Found a paragraph
-      printf("Paragraph %d -> %d (%d chars)\n", start, position, position - start);
+      //printf("Paragraph %d -> %d (%d chars)\n", start, position, position - start);
       LayoutParagraph(start, position - start); // Eat the \n char
       start = position + 1;
     }
@@ -92,7 +90,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
   
   if (start < position)
   {
-    printf("last Paragraph %d -> %d (%d chars)\n", start, position, position - start);
+    //printf("last Paragraph %d -> %d (%d chars)\n", start, position, position - start);
     LayoutParagraph(start, position - start); // Eat the \n char
     start = position;
   }
@@ -107,7 +105,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
     while (it != end)
     {
-      printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
+      //printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
       const std::set<nglUChar>& charset(it->second);
       nuiFont* pFont = NULL;
       // First try the requested font
@@ -123,7 +121,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
           pFont = mStyle.GetFont();
         else
         {
-          printf("[couldn't find glyph %d '%c' in requested font] ", *it, *it);
+          //printf("[couldn't find glyph %d '%c' in requested font] ", *it, *it);
         }
       }
 
@@ -137,7 +135,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
       
       FontSet[it->first] = pFont;
       
-      printf("%s\n", pFont->GetFamilyName().GetChars());
+      //printf("%s\n", pFont->GetFamilyName().GetChars());
       
       ++it;
     }
@@ -268,7 +266,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
       const nuiTextRange& range(*it);
       int32 len = range.mLength;
       int32 pos = origin;
-      printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
+      //printf("\trange %d (%d - %d) (%s - %s)\n", i, pos, len, nuiGetUnicodeScriptName(range.mScript).GetChars(), nuiGetUnicodeRangeName(range.mRange).GetChars());
       
       std::set<nglUChar>& charset(mCharsets[range.mScript]);
       {
