@@ -40,6 +40,12 @@ void objCCallOnMemoryWarning();
   [super sendEvent: pEvent];
 }
 
+- (void) didReceiveMemoryWarning
+{
+  printf("[nglUIApplication didReceiveMemoryWarning]\n");
+  [super didReceiveMemoryWarning];
+}
+
 @end///< nglUIApplication
 
 
@@ -125,7 +131,7 @@ void objCCallOnMemoryWarning();
 
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApplication
 {
-  NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidReceiveMemoryWarning]\n")); )
+  printf("[nglUIApplicationDelegate applicationDidReceiveMemoryWarning]\n");
 	NGL_ASSERT(App);
   objCCallOnMemoryWarning();
 }
