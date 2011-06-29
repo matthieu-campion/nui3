@@ -1,4 +1,4 @@
-  #include <jni.h>
+#include <jni.h>
 #include <errno.h>
 
 #include <EGL/egl.h>
@@ -18,97 +18,97 @@
 
 #include "nuiAndroidBridge.h"
 
-#include <SLES/OpenSLES.h>
-#include "SLES/OpenSLES_Android.h"
-
-#include "nuiWaveReader.h"
-#include "nuiAudioDecoder.h"
+//#include <SLES/OpenSLES.h>
+//#include "SLES/OpenSLES_Android.h"
+//
+//#include "nuiWaveReader.h"
+//#include "nuiAudioDecoder.h"
 
 nuiAndroidBridge* gpBridge = NULL;
 
-nglIStream* gpStream = NULL;
-nuiWaveReader* gpReader = NULL;
-nuiAudioDecoder* gpMp3Decoder = NULL;
+//nglIStream* gpStream = NULL;
+//nuiWaveReader* gpReader = NULL;
+//nuiAudioDecoder* gpMp3Decoder = NULL;
 
 // this callback handler is called every time a buffer finishes playing
-void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
-{
-  static nglTime last;
-  nglTime now;
-  double elapsed = now.GetValue() - last.GetValue();
-  last = now;
-  
-  int sampleframes = 512;
-  int channels = 1;
-  if (gpMp3Decoder)
-  {
-    nuiSampleInfo info;
-    gpMp3Decoder->GetInfo(info);
-    channels = info.GetChannels();
-  }
-  int frameSize = channels * sizeof(short);
-  int size = sampleframes * frameSize;
-  uint8* pBuffer = new uint8[size];
-  memset(pBuffer, 0, size);
-  
-  if (gpReader)
-  {
-    // WAV
-    gpReader->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
-  }
-  else if (gpMp3Decoder)
-  {
-    gpMp3Decoder->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
-  }
-  else
-  {
-    // SYNTH
-    LOGI("synth");
-    float freq = 440;
-    int period = ToBelow(44100.f / freq);
-    int semiperiod = period / 2;
-    static int signalDone = 0;
-    static float sign = 1;
-    int frames = sampleframes;
-    int done = 0;
-    
-    short* pOut = (short*)pBuffer;
-    while (frames)
-    {
-      int todo = MIN(frames, semiperiod - signalDone);
-      for (int i = 0; i < todo; i++)
-      {
-        short val = 20000 * sign;
-        for (int c = 0; c < channels; c++)
-        {
-          pOut[(i + done) * channels + c] = val;
-        }
-      }
-      
-      frames -= todo;
-      done += todo;
-      signalDone += todo;
-      if (signalDone >= semiperiod)
-      {
-        sign *= -1;
-        signalDone = 0;
-      }
-    }
-    LOGI("synth OK");
-  }
-  
-  
-  SLresult result;
-  // enqueue another buffer
-  result = (*bq)->Enqueue(bq, pBuffer, size);
-  
-  
-  
-  nglTime end;
-  double processTime = end.GetValue() - now.GetValue();
-  
-  LOGI("audio callback  (elapsed since last call %lf (%lf samples))  (processing time %lf (%lf samples) for %d samples %lf\%", elapsed, elapsed * 44100.0, processTime, processTime * 44100.0, sampleframes, (processTime * 44100.0) / sampleframes);
-}
+//void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
+//{
+//  static nglTime last;
+//  nglTime now;
+//  double elapsed = now.GetValue() - last.GetValue();
+//  last = now;
+//  
+//  int sampleframes = 512;
+//  int channels = 1;
+//  if (gpMp3Decoder)
+//  {
+//    nuiSampleInfo info;
+//    gpMp3Decoder->GetInfo(info);
+//    channels = info.GetChannels();
+//  }
+//  int frameSize = channels * sizeof(short);
+//  int size = sampleframes * frameSize;
+//  uint8* pBuffer = new uint8[size];
+//  memset(pBuffer, 0, size);
+//  
+//  if (gpReader)
+//  {
+//    // WAV
+//    gpReader->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
+//  }
+//  else if (gpMp3Decoder)
+//  {
+//    gpMp3Decoder->ReadIN((void*)pBuffer, sampleframes, eSampleInt16);
+//  }
+//  else
+//  {
+//    // SYNTH
+//    LOGI("synth");
+//    float freq = 440;
+//    int period = ToBelow(44100.f / freq);
+//    int semiperiod = period / 2;
+//    static int signalDone = 0;
+//    static float sign = 1;
+//    int frames = sampleframes;
+//    int done = 0;
+//    
+//    short* pOut = (short*)pBuffer;
+//    while (frames)
+//    {
+//      int todo = MIN(frames, semiperiod - signalDone);
+//      for (int i = 0; i < todo; i++)
+//      {
+//        short val = 20000 * sign;
+//        for (int c = 0; c < channels; c++)
+//        {
+//          pOut[(i + done) * channels + c] = val;
+//        }
+//      }
+//      
+//      frames -= todo;
+//      done += todo;
+//      signalDone += todo;
+//      if (signalDone >= semiperiod)
+//      {
+//        sign *= -1;
+//        signalDone = 0;
+//      }
+//    }
+//    LOGI("synth OK");
+//  }
+//  
+//  
+//  SLresult result;
+//  // enqueue another buffer
+//  result = (*bq)->Enqueue(bq, pBuffer, size);
+//  
+//  
+//  
+//  nglTime end;
+//  double processTime = end.GetValue() - now.GetValue();
+//  
+//  LOGI("audio callback  (elapsed since last call %lf (%lf samples))  (processing time %lf (%lf samples) for %d samples %lf\%", elapsed, elapsed * 44100.0, processTime, processTime * 44100.0, sampleframes, (processTime * 44100.0) / sampleframes);
+//}
 
 
 /**
@@ -330,29 +330,29 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
         engine->animating = 1;
 
         
-        nglPath path("/sdcard/mat/test.mp3");
-        gpStream = path.OpenRead();
-        if (!gpStream)
-        {
-          LOGI("mp3 stream not open");
-        }
-        else
-        {
-          gpMp3Decoder = new nuiAudioDecoder(*gpStream);
-          nuiSampleInfo info;
-          if (gpMp3Decoder->GetInfo(info))
-          {
-            LOGI("mp3 decoder info:");
-            LOGI("length: %d", (int)(info.GetSampleFrames()));
-            LOGI("channels: %d", info.GetChannels());
-            LOGI("sample rate: %lf", info.GetSampleRate());
-            LOGI("bits per sample: %d", info.GetBitsPerSample());
-          }
-          else
-          {
-            LOGI("can't get info from mp3 decoder");
-          }
-        }
+//        nglPath path("/sdcard/mat/test.mp3");
+//        gpStream = path.OpenRead();
+//        if (!gpStream)
+//        {
+//          LOGI("mp3 stream not open");
+//        }
+//        else
+//        {
+//          gpMp3Decoder = new nuiAudioDecoder(*gpStream);
+//          nuiSampleInfo info;
+//          if (gpMp3Decoder->GetInfo(info))
+//          {
+//            LOGI("mp3 decoder info:");
+//            LOGI("length: %d", (int)(info.GetSampleFrames()));
+//            LOGI("channels: %d", info.GetChannels());
+//            LOGI("sample rate: %lf", info.GetSampleRate());
+//            LOGI("bits per sample: %d", info.GetBitsPerSample());
+//          }
+//          else
+//          {
+//            LOGI("can't get info from mp3 decoder");
+//          }
+//        }
         
 
         //
@@ -507,124 +507,130 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 //        }
         //
         
-        
-        
-        SLObjectItf engineObject = NULL;
-        SLEngineItf engineEngine;
-        SLObjectItf outputMixObject = NULL;
-        SLObjectItf bqPlayerObject = NULL;
-        SLPlayItf bqPlayerPlay;
-        SLAndroidSimpleBufferQueueItf bqPlayerBufferQueue;
-        SLresult result;
-        
-        // create engine
-        result = slCreateEngine(&engineObject, 0, NULL, 0, NULL, NULL);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("create audio engine OK");
-        else if (result == SL_RESULT_PARAMETER_INVALID)
-          LOGI("create audio engine ERROR: parameter invalid");
-        else if (result == SL_RESULT_MEMORY_FAILURE)
-          LOGI("create audio engine ERROR: memory failure");
-        else if (result == SL_RESULT_FEATURE_UNSUPPORTED)
-          LOGI("create audio engine ERROR: feature unsupported");
-        else if (result == SL_RESULT_RESOURCE_ERROR)
-          LOGI("create audio engine ERROR: resource error");
-        else
-          LOGI("create audio engine ERROR: unknown error");
-        
-        
-        result = (*engineObject)->Realize(engineObject, SL_BOOLEAN_FALSE);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("realize audio engine OK");
-        else
-          LOGI("realize audio engine ERROR");
-        
-        
-        result = (*engineObject)->GetInterface(engineObject, SL_IID_ENGINE, &engineEngine);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("get engine interface OK");
-        else
-          LOGI("get engine interface ERROR");
-        
-        
-        
-        result = (*engineEngine)->CreateOutputMix(engineEngine, &outputMixObject, 0, NULL, NULL);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("create output mix OK");
-        else
-          LOGI("create output mix ERROR");
-        
-        result = (*outputMixObject)->Realize(outputMixObject, SL_BOOLEAN_FALSE);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("realize output mix OK");
-        else
-          LOGI("realize output mix ERROR");
-        
-        // configure audio source
-        int channels = 2;
-        if (gpMp3Decoder)
-        {
-          nuiSampleInfo info;
-          gpMp3Decoder->GetInfo(info);
-          channels = info.GetChannels();
-          LOGI("engine channels %d", channels);
-        }
-        int channelMask = (channels == 1) ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
-        SLDataLocator_AndroidSimpleBufferQueue loc_bufq = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 2};
-        SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM, channels, SL_SAMPLINGRATE_44_1, SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16, channelMask, SL_BYTEORDER_LITTLEENDIAN};
-        SLDataSource audioSrc = {&loc_bufq, &format_pcm};
-        
-        // configure audio sink
-        SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputMixObject};
-        SLDataSink audioSnk = {&loc_outmix, NULL};
-        
-        // create audio player
-        const SLInterfaceID ids[1] = {SL_IID_BUFFERQUEUE};
-        const SLboolean req[1] = {SL_BOOLEAN_TRUE};
-        result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 1, ids, req);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("create player OK");
-        else
-          LOGI("create player ERROR");
-        
-        result = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("realize player OK");
-        else
-          LOGI("realize player ERROR");
-        
-        // get the play interface
-        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("get play interface OK");
-        else
-          LOGI("get play interface ERROR");
-        
-        // get the buffer queue interface
-        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_BUFFERQUEUE, &bqPlayerBufferQueue);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("get buffer queue interface OK");
-        else
-          LOGI("get buffer queue interface ERROR");
-        
-        // register callback on the buffer queue
-        result = (*bqPlayerBufferQueue)->RegisterCallback(bqPlayerBufferQueue, bqPlayerCallback, NULL);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("register callback OK");
-        else
-          LOGI("register callback ERROR");
-        
-        // set the player's state to playing
-        result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay, SL_PLAYSTATE_PLAYING);
-        if (result == SL_RESULT_SUCCESS)
-          LOGI("play OK");
-        else
-          LOGI("play ERROR");
-        
-        
-        LOGI("first fill");
-        bqPlayerCallback(bqPlayerBufferQueue, NULL);
-        LOGI("first fill done");
+//        
+//        
+//        SLObjectItf engineObject = NULL;
+//        SLEngineItf engineEngine;
+//        SLObjectItf outputMixObject = NULL;
+//        SLObjectItf bqPlayerObject = NULL;
+//        SLPlayItf bqPlayerPlay;
+//        SLAndroidSimpleBufferQueueItf bqPlayerBufferQueue;
+//        SLresult result;
+//        
+//        // create engine
+//        result = slCreateEngine(&engineObject, 0, NULL, 0, NULL, NULL);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("create audio engine OK");
+//        else if (result == SL_RESULT_PARAMETER_INVALID)
+//          LOGI("create audio engine ERROR: parameter invalid");
+//        else if (result == SL_RESULT_MEMORY_FAILURE)
+//          LOGI("create audio engine ERROR: memory failure");
+//        else if (result == SL_RESULT_FEATURE_UNSUPPORTED)
+//          LOGI("create audio engine ERROR: feature unsupported");
+//        else if (result == SL_RESULT_RESOURCE_ERROR)
+//          LOGI("create audio engine ERROR: resource error");
+//        else
+//          LOGI("create audio engine ERROR: unknown error");
+//        
+//        
+//        result = (*engineObject)->Realize(engineObject, SL_BOOLEAN_FALSE);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("realize audio engine OK");
+//        else
+//          LOGI("realize audio engine ERROR");
+//        
+//        
+//        result = (*engineObject)->GetInterface(engineObject, SL_IID_ENGINE, &engineEngine);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("get engine interface OK");
+//        else
+//          LOGI("get engine interface ERROR");
+//        
+//        SLAudioIODeviceCapabilitiesItf deviceCapabilities;
+//        result = (*engineObject)->GetInterface(engineObject, SL_IID_AUDIOIODEVICECAPABILITIES, &deviceCapabilities);
+//        if (result != SL_RESULT_SUCCESS)
+//          LOGI("get device capabilities ERROR %d", result);
+//        else
+//          LOGI("get device capabilities OK");
+//        
+//        
+//        result = (*engineEngine)->CreateOutputMix(engineEngine, &outputMixObject, 0, NULL, NULL);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("create output mix OK");
+//        else
+//          LOGI("create output mix ERROR");
+//        
+//        result = (*outputMixObject)->Realize(outputMixObject, SL_BOOLEAN_FALSE);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("realize output mix OK");
+//        else
+//          LOGI("realize output mix ERROR");
+//        
+//        // configure audio source
+//        int channels = 2;
+//        if (gpMp3Decoder)
+//        {
+//          nuiSampleInfo info;
+//          gpMp3Decoder->GetInfo(info);
+//          channels = info.GetChannels();
+//          LOGI("engine channels %d", channels);
+//        }
+//        int channelMask = (channels == 1) ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
+//        SLDataLocator_AndroidSimpleBufferQueue loc_bufq = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 2};
+//        SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM, channels, SL_SAMPLINGRATE_44_1, SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16, channelMask, SL_BYTEORDER_LITTLEENDIAN};
+//        SLDataSource audioSrc = {&loc_bufq, &format_pcm};
+//        
+//        // configure audio sink
+//        SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputMixObject};
+//        SLDataSink audioSnk = {&loc_outmix, NULL};
+//        
+//        // create audio player
+//        const SLInterfaceID ids[1] = {SL_IID_BUFFERQUEUE};
+//        const SLboolean req[1] = {SL_BOOLEAN_TRUE};
+//        result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 1, ids, req);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("create player OK");
+//        else
+//          LOGI("create player ERROR");
+//        
+//        result = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("realize player OK");
+//        else
+//          LOGI("realize player ERROR");
+//        
+//        // get the play interface
+//        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("get play interface OK");
+//        else
+//          LOGI("get play interface ERROR");
+//        
+//        // get the buffer queue interface
+//        result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_BUFFERQUEUE, &bqPlayerBufferQueue);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("get buffer queue interface OK");
+//        else
+//          LOGI("get buffer queue interface ERROR");
+//        
+//        // register callback on the buffer queue
+//        result = (*bqPlayerBufferQueue)->RegisterCallback(bqPlayerBufferQueue, bqPlayerCallback, NULL);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("register callback OK");
+//        else
+//          LOGI("register callback ERROR");
+//        
+//        // set the player's state to playing
+//        result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay, SL_PLAYSTATE_PLAYING);
+//        if (result == SL_RESULT_SUCCESS)
+//          LOGI("play OK");
+//        else
+//          LOGI("play ERROR");
+//        
+//        
+//        LOGI("first fill");
+//        bqPlayerCallback(bqPlayerBufferQueue, NULL);
+//        LOGI("first fill done");
 
 //        SLDataLocator_URI loc_uri = {SL_DATALOCATOR_URI, (SLchar *)"file://data/mat/rock.mp3"};
 //        SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
@@ -663,6 +669,8 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 //          LOGI("play ERROR");
         
         //
+        
+        
         
         
         

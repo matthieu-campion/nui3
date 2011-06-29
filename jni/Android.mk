@@ -89,6 +89,7 @@ NUI_LOCAL_SRC_FILES_ATTRIBUTES := ../src/Attributes/nuiAttribute.cpp \
 NUI_LOCAL_SRC_FILES_AUDIO := ../src/Audio/nuiAudioConvert.cpp \
                              ../src/Audio/nuiAudioFifo.cpp \
                              ../src/Audio/nuiAudioDevice.cpp \
+                             ../src/Audio/Android/nuiAudioDevice_Android.cpp \
 
 NUI_LOCAL_SRC_FILES_AUDIO_ENGINE := ../src/AudioEngine/nuiAudioDb.cpp \
                                     ../src/AudioEngine/nuiAudioEngine.cpp \

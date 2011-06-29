@@ -72,21 +72,6 @@ bool nuiAudioDecoderPrivate::Init()
     return false;
   }
   
-  /////////////////////////////
-  const char** decoders = mpg123_supported_decoders();
-  int index = 0;
-  const char* decoder = decoders[index];
-  while (decoder)
-  {
-    LOGI("supported decoder '%s'", decoder);
-    index++;
-    decoder = decoders[index];
-  }
-  
-  const char* decodername = mpg123_current_decoder(mpHandle);
-  LOGI("current decoder '%s'", decodername);
-  /////////////////////////////
-  
 	return true;
 }
 
@@ -279,7 +264,6 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
     size_t outBytesDone = 0;
     unsigned char* pOut = pTemp + bytesDone;
     err = mpg123_decode(mpPrivate->mpHandle, NULL, 0, pOut, outBytes, &outBytesDone);
-//    err = mpg123_read(mpPrivate->mpHandle, pOut, outBytes, &outBytesDone);
     outBytes  -= outBytesDone;
     bytesDone += outBytesDone;
     
@@ -294,7 +278,6 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
     // feed decoder if needed
     if (err == MPG123_NEED_MORE)
     {
-      LOGI("nuiAudioDecoder::ReadIN read and feed");
       uint32 inBytes = DECODER_INPUT_SIZE;
       if (!pIn)
       {
@@ -302,7 +285,6 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
       }
       uint32 bytesRead = mrStream.ReadUInt8(pIn, inBytes);
       mpg123_decode(mpPrivate->mpHandle, pIn, bytesRead, NULL, 0, &outBytesDone);
-//      mpg123_feed(mpPrivate->mpHandle, pIn, bytesRead);
     }
   }
   
@@ -312,7 +294,7 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
   {
     // convert '16 bits int' samples in pTemp to '32 bits float' samples in pBuffer
     int16* pSrc = (int16*)pTemp;
-    float* pCopy  = (float*)( ((int16*)pBuffer) + frames * channels / 2 );
+    float* pCopy  = (float*)( ((int16*)pBuffer) + frames * channels );
     float* pFloat = (float*)pBuffer;
     
     // copy int16 data to the second half of the output buffer
