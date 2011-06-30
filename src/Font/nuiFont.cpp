@@ -26,13 +26,13 @@ nuiFont* nuiFont::GetFont(const nglPath& rPath, nuiSize size, int face, const ng
 
     pFont = new nuiFont(rPath, size, face, id);
     
-    if (!pFont || pFont->GetError())
+    if (!pFont || !pFont->IsValid())
     {
       delete pFont;
       return NULL;
     }
 
-    if (pFont && !pFont->GetError() && pFont->GetSize() == 0 && !pFont->IsScalable()) 
+    if (pFont && pFont->IsValid() && pFont->GetSize() == 0 && !pFont->IsScalable()) 
     {
       std::set<int32> sizes;
       pFont->GetSizes(sizes);
@@ -76,7 +76,7 @@ nuiFont* nuiFont::GetFont(const nglString& rName, uint8* pBuffer, uint BufferSiz
       NGL_ASSERT(pFont->SetSize(*sizes.begin()));
     }
 
-    if (pFont->GetError())
+    if (!pFont->IsValid())
     {
       delete pFont;
       return GetFont(Size);
@@ -105,7 +105,7 @@ nuiFont* nuiFont::GetFont(nuiXMLNode* pNode, const nglString& rID)
     {
       pFont = new nuiFont(pNode, id);
       
-      if (pFont && pFont->GetError())
+      if (pFont && !pFont->IsValid())
       {
         delete pFont;
         pFont = NULL;
@@ -168,7 +168,7 @@ nuiFont* nuiFont::GetFont(nuiSize size, const nglString& rID)
   if (mpFonts.find(id) == mpFonts.end())
   { 
     pFont = new nuiFont(size, face, id);
-    if (pFont->GetError())
+    if (!pFont->IsValid())
     {
       delete pFont;
       pFont = NULL;

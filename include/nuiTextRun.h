@@ -54,7 +54,7 @@ public:
   nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript Script, int32 Position, int32 Length, const nuiTextStyle& rStyle);
   nuiTextRun(const nuiTextLayout& rLayout, int32 Position, int32 Length, float AdvanceX, float AdvanceY); ///< Create a blank (dummy) layout
   virtual ~nuiTextRun();
-  void SetFont(nuiFont* pFont);
+  void SetFont(nuiFontBase* pFont);
   
   nuiUnicodeScript GetScript() const;
   int32 GetPosition() const;
@@ -72,7 +72,7 @@ public:
   const nuiTextGlyph* GetGlyphAt (float X, float Y) const;
 
   int32 GetGlyphCount() const;
-  nuiFont* GetFont() const;
+  nuiFontBase* GetFont() const;
   
   void SetUnderline(bool set);
   bool GetUnderline() const;

@@ -12,7 +12,7 @@
 
 /////////////////
 // nuiTextLayout
-nuiTextLayout::nuiTextLayout(nuiFont* pFont, nuiOrientation Orientation)
+nuiTextLayout::nuiTextLayout(nuiFontBase* pFont, nuiOrientation Orientation)
 :
 mXMin(0), mXMax(0), mYMin(0), mYMax(0),
 mAscender(0),
@@ -23,12 +23,11 @@ mOrientation(Orientation)
 }
 
 nuiTextLayout::nuiTextLayout(const nuiTextStyle& rStyle, nuiOrientation Orientation)
-:
-mXMin(0), mXMax(0), mYMin(0), mYMax(0),
-mAscender(0),
-mDescender(0),
-mStyle(rStyle),
-mOrientation(Orientation)
+: mXMin(0), mXMax(0), mYMin(0), mYMax(0),
+  mAscender(0),
+  mDescender(0),
+  mStyle(rStyle),
+  mOrientation(Orientation)
 {
 }
 
@@ -99,7 +98,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
   mDescender = 0;
 
   // Find the needed fonts for each script:
-  std::map<nuiUnicodeScript, nuiFont*> FontSet;
+  std::map<nuiUnicodeScript, nuiFontBase*> FontSet;
   {
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator it = mCharsets.begin();
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
@@ -107,7 +106,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
     {
       //printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
       const std::set<nglUChar>& charset(it->second);
-      nuiFont* pFont = NULL;
+      nuiFontBase* pFont = NULL;
       // First try the requested font
       {
         std::set<nglUChar>::const_iterator it = charset.begin();
@@ -152,13 +151,18 @@ bool nuiTextLayout::Layout(const nglString& rString)
     for (uint32 l = 0; l < pParagraph->size(); l++)
     {
       nuiTextLine* pLine = (*pParagraph)[l];
+      
+      pLine->SetPosition(PenX, PenY);
+      
       PenX = 0;
       float x = 0;
       float y = 0;
       for (uint32 r = 0; r < pLine->GetRunCount(); r++)
       { 
         nuiTextRun* pRun = pLine->GetRun(r);
-        nuiFont* pFont = FontSet[pRun->GetScript()];
+        pRun->mX = x;
+        pRun->mY = y;
+        nuiFontBase* pFont = FontSet[pRun->GetScript()];
         if (!pRun->IsDummy())
         {
           // Only shape real runs.
@@ -184,10 +188,9 @@ bool nuiTextLayout::Layout(const nglString& rString)
             const nuiSize H = finfo.Height;
             
             nuiRect rr(rect);
-            rect.Union(rr, nuiRect(X, Y, W, H));
+            rect.Union(rr, nuiRect(PenX + x + X, PenY + y + Y, W, H));
           }
         }
-
         
         x += pRun->GetAdvanceX();
         //y += pRun->GetAdvanceY();
@@ -240,7 +243,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
 
   float spacewidth = 0;
   {
-    nuiFont* pFont = mStyle.GetFont();
+    nuiFontBase* pFont = mStyle.GetFont();
     nuiGlyphInfo glyphinfo;
     uint32 space = pFont->GetGlyphIndex(32);
     pFont->GetGlyphInfo(glyphinfo, space, nuiFontBase::eGlyphNative);
@@ -615,7 +618,7 @@ void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool Align
       {
         nuiTextRun* pRun = pLine->GetRun(r);
         std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
-        nuiFont* pFont = pRun->GetFont();
+        nuiFontBase* pFont = pRun->GetFont();
         
         for (int32 g = 0; g < rGlyphs.size(); g++)
         {
@@ -651,9 +654,9 @@ void nuiTextLayout::Print(nuiDrawContext* pContext, float X, float Y, bool Align
           }
         }
         
-        x += pRun->GetAdvanceX();
+        //x += pRun->GetAdvanceX();
       }
-      y += pLine->GetAdvanceY();
+      //y += pLine->GetAdvanceY();
     }
   }
   

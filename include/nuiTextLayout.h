@@ -19,7 +19,7 @@ class nuiTextLayout : public nuiRefCount
 {
 public:
   nuiTextLayout(const nuiTextStyle& rStyle, nuiOrientation Orientation = nuiHorizontal);
-  nuiTextLayout(nuiFont* pFont, nuiOrientation Orientation = nuiHorizontal);
+  nuiTextLayout(nuiFontBase* pFont, nuiOrientation Orientation = nuiHorizontal);
   virtual ~nuiTextLayout();
 
   bool Layout(const nglString& rString);

@@ -8,17 +8,14 @@
 
 #pragma once
 
-#include "nglError.h"
 #include "nuiRect.h"
 #include "nuiPanose.h"
 
-class nuiFontLayout;
 class nglPath;
 class nuiTexture;
 class nuiDrawContext;
 class nuiTexture;
 class nuiFont;
-class nuiGlyphLayout;
 class nuiTextLayout;
 class nuiTextLine;
 #include "nuiTextRun.h"
@@ -143,14 +140,7 @@ public:
 };
 
 
-
-// Errors
-#define NGL_FONT_ENONE  0  ///< No error
-#define NGL_FONT_EINIT  1  ///< FreeType library initialisation failed
-#define NGL_FONT_ELOAD  2  ///< Couldn't load font ressource
-
-
-class NUI_API nuiFontBase: public nglError
+class NUI_API nuiFontBase: public nuiObject
 {
 
 public:
@@ -218,6 +208,8 @@ public:
   /*!< Release the font ressource
    */
   //@}
+  
+  bool IsValid() const;
   
   /** @name Global font info & metrics */
   //@{
@@ -322,7 +314,7 @@ public:
    If \p Char does not have a corresponding glyph, returns false (see SetCharMap()).
    Output metrics are always in pixels. See nuiGlyphInfo for more info.
    
-   To retrieve string metrics, use nuiFontLayout::GetMetrics().
+   To retrieve string metrics, use nuiTextLayout::GetMetrics().
    */
   bool GetKerning (uint Left, uint Right, float& rX, float& rY) const;
   /*!< Fetch kerning values from a glyph pair
@@ -333,7 +325,7 @@ public:
    \return true if \p rX and \p rY represent a valid kerning vector
    
    This methods work on raw glyph indexes because it is expected to be called
-   from a layout implementation (see nuiFontLayout), where indexes are proper
+   from a layout implementation (see nuiTextLayout), where indexes are proper
    glyph handlers.
    */
   //@}
@@ -443,20 +435,13 @@ public:
   void SetAlphaTest(float Threshold = 0.01f);
 
 
-  int  Print (nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels = true);
-  int  Print (nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout, bool AlignGlyphPixels = true);
-
-  int  GetTextSize (float& X, float& Y, const nglChar* pText); ///< Calculate the bounding of the string in texels and returns it in X & Y.
-  int  GetTextPos (float X, const nglChar* pText); ///< Calculate the bounding of the char pos in the given text where the pixel (X,?) lies and returns it.
-
+  void Print(nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels = true);
   
-  bool PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
   bool PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph);
   
   void Shape(nuiTextRun* pRun);
 protected:
   GLclampf mAlphaTest;  ///< Alpha test threshold as set by SetAlphaTest()
-  const nglChar* OnError (uint& rError) const;
   
   bool  SetSize (float Size, nuiFontUnit Unit = eFontUnitPixel);
   /*!< Set current font size
@@ -471,8 +456,6 @@ protected:
   
 
 private:
-  bool PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
-  bool PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiGlyphLayout> >& rGlyphs);
   class NUI_API GlyphLocation
   {
   public:
@@ -529,6 +512,7 @@ private:
   nuiFontPanoseBytes    mPanoseBytes;
   bool                  mHasPanoseInfo;
   bool                  mLastResort;
+  bool                  mValid;
   
   /* Init/setup
    */

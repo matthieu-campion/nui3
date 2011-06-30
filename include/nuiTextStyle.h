@@ -7,6 +7,8 @@
 
 #pragma once
 
+class nuiFontBase;
+
 enum nuiTextDirection
 {
   nuiLeftToRight,
@@ -31,8 +33,8 @@ public:
   
   nuiTextStyle& operator=(const nuiTextStyle& rStyle);
   
-  void SetFont(nuiFont* pFont);
-  nuiFont* GetFont() const;
+  void SetFont(nuiFontBase* pFont);
+  nuiFontBase* GetFont() const;
   void SetDensity(nuiSize X, nuiSize Y);
   nuiSize GetDensityX() const;
   nuiSize GetDensityY() const;
@@ -52,7 +54,7 @@ public:
   bool GetJustify() const;
   
 private:
-  nuiFont* mpFont;
+  nuiFontBase* mpFont;
   float mDensityX;
   float mDensityY;
   int32 mSpacesPerTab;

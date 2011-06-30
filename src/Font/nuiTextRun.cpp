@@ -50,7 +50,7 @@ std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs()
   return mGlyphs;
 }
 
-void nuiTextRun::SetFont(nuiFont* pFont)
+void nuiTextRun::SetFont(nuiFontBase* pFont)
 {
   mStyle.SetFont(pFont);
   
@@ -64,7 +64,7 @@ nuiUnicodeScript nuiTextRun::GetScript() const
   return mScript;
 }
 
-nuiFont* nuiTextRun::GetFont() const
+nuiFontBase* nuiTextRun::GetFont() const
 {
   return mStyle.GetFont();
 }

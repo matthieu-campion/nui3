@@ -14,7 +14,6 @@
 #include "nglMath.h"
 #include "nuiTexture.h"
 
-#include "nuiFontLayout.h"
 #include "nuiTextLayout.h"
 #include "nglImage.h"
 
@@ -27,7 +26,6 @@
 #include "nglVideoMode.h"
 #include "nuiFontBase.h"
 #include "nuiFontInstance.h"
-#include "nuiFontLayout.h"
 #include "nglMath.h"
 #include "ngl_default_font.h"
 
@@ -50,14 +48,6 @@ FTC_Manager    gFTCacheManager = NULL;  // Global FT cache manager
 FTC_CMapCache  gFTCMapCache    = NULL;  // Charmap lookup cache
 FTC_ImageCache gFTImageCache   = NULL;  // Generic client-side glyph cache
 FTC_SBitCache  gFTSBitmapCache = NULL;
-
-static const nglChar* gpFontBaseErrorTable[] =
-{
-  /*  0 */ _T("No error"),
-  /*  1 */ _T("FreeType library initialisation failed"),
-  /*  2 */ _T("Couldn't load font ressource"),
-  NULL
-};
 
 /* Pick a default pixel size which is very legible for the default (embedded) font
  */
@@ -1571,6 +1561,11 @@ bool nuiFontBase::GetBitmap8 (const GlyphBitmap& rSrc, GlyphBitmap& rDst) const
   return true;
 }
 
+bool nuiFontBase::IsValid() const
+{
+  return mValid;
+}
+
 
 /*
  * Internals
@@ -1578,6 +1573,8 @@ bool nuiFontBase::GetBitmap8 (const GlyphBitmap& rSrc, GlyphBitmap& rDst) const
 
 void nuiFontBase::Defaults()
 {
+  mValid = false;
+
   /* The face object (is managed by the cache)
    */
   mpFace = new FaceHandle();
@@ -1702,11 +1699,13 @@ bool nuiFontBase::Load (FaceID ID)
 
 bool nuiFontBase::LoadFinish()
 {
+  mValid = false;
+
   /* Fetch generic (maybe unsized) face
    */
   if (FTC_Manager_LookupFace (gFTCacheManager, mpFace->Desc.face_id, &mpFace->Face) != FT_Err_Ok)
   {
-    SetError(_T("font"), NGL_FONT_ELOAD);
+    //SetError(_T("font"), NGL_FONT_ELOAD);
     return false;
   }
   
@@ -1784,6 +1783,8 @@ bool nuiFontBase::LoadFinish()
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  selected charmap   : %s (#%d)"), GetCharMapName(), GetCharMap()); )
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  charmap conversion : %s"), YESNO(mpConv)); )
   
+  mValid = true;
+
   return true;
 }
 
@@ -2056,203 +2057,11 @@ void nuiFontBase::SetAlphaTest(float Threshold)
   mAlphaTest = Threshold;
 }
 
-int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels)
+void nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels)
 {
-  nuiFontLayout layout(*this);
-
+  nuiTextLayout layout(this);
   layout.Layout(rText);
-
-  int c = 0;
-  int lines = 0;
-  while (c >= 0)
-  {
-    c = rText.Find('\n',c);
-    if (c!=-1)
-      c++;
-    lines++;
-  }
-
-  Y -= GetHeight() * (lines-1);
-  return Print(pContext, X, Y, layout, AlignGlyphPixels);
-}
-
-int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout, bool AlignGlyphPixels)
-{
-  int todo = rLayout.GetGlyphCount();
-  if (!todo)
-    return 0;
-  int i;
-  int done = 0;
-
-  bool blendsaved = pContext->GetState().mBlending;
-  bool texturesaved = pContext->GetState().mTexturing;
-
-  pContext->EnableBlending(true);
-  pContext->EnableTexturing(true);
-
-  nuiColor SavedColor = pContext->GetFillColor();
-  pContext->SetFillColor(pContext->GetTextColor());
-  pContext->SetBlendFunc(nuiBlendTransp);
-
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
-  for (i = 0; i < todo; i++)
-  {
-    // Fetch i-th glyph in layout
-    const nuiGlyphLayout* pglyph = rLayout.GetGlyph(i);
-    if (!pglyph)
-      break;
-
-    nuiGlyphLayout glyph;
-
-    glyph.X     = X + pglyph->X;
-    glyph.Y     = Y + pglyph->Y;
-    glyph.Pos   = pglyph->Pos;
-    glyph.Index = pglyph->Index;
-
-    if (((nuiFontBase*)pglyph->mpFont)->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels))
-      done++;
-
-    Glyphs[glyph.mpTexture].push_back(glyph);
-  }
-
-  PrintGlyphs(pContext, Glyphs);
-
-  // Draw underlines if needed
-  if (rLayout.GetUnderline())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.UnderlinePos;
-    float thickness = info.UnderlineThick;
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos) - .5f;
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-
-    pContext->SetStrokeColor(oldcolor);
-  }
-  
-  // Draw underlines if needed
-  if (rLayout.GetStrikeThrough())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.Ascender * .4f;
-    float thickness = ToNearest(info.UnderlineThick);
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos);
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-    
-    pContext->SetStrokeColor(oldcolor);
-  }
-  
-  pContext->EnableBlending(blendsaved);
-  pContext->EnableTexturing(texturesaved);
-
-  pContext->SetFillColor(SavedColor);
-
-  return done;
-}
-
-
-bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
-{
-  // Fetch rendered glyph
-  GlyphHandle glyph = rGlyph.mpFont->GetGlyph(rGlyph.Index, eGlyphBitmap);
-
-  // If we don't have this glyph, assert it has not been rendered
-  if (!glyph)
-    return false;
-
-  GlyphBitmap bmp;
-  if (!rGlyph.mpFont->GetGlyphBitmap(glyph, bmp))
-    return false;
-
-  nuiFontBase::GlyphLocation GlyphLocation;
-  ((nuiFontBase*)rGlyph.mpFont)->GetCacheGlyph(rGlyph.Index, GlyphLocation);
-
-  float w = GlyphLocation.mWidth;
-  float h = GlyphLocation.mHeight;
-
-  float x = rGlyph.X + bmp.Left;
-  float y = rGlyph.Y - bmp.Top;
-  if (AlignGlyphPixels)
-  {
-    x = ToNearest(x * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
-    y = ToNearest(y * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
-  }
-  
-  nuiTexture *texture;
-  texture = mTextures[GlyphLocation.mOffsetTexture];
-
-  pContext->SetTexture(texture);
-
-  nuiRect DestRect(x - 1, y - 1, w * nuiGetInvScaleFactor() + 2, h * nuiGetInvScaleFactor() + 2);
-  nuiRect SourceRect((float)GlyphLocation.mOffsetX - 1, (float)GlyphLocation.mOffsetY - 1, w + 2, h + 2);
-
-  pContext->DrawImage(DestRect, SourceRect);
-
-  return true;
-}
-
-bool nuiFontBase::PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
-{
-  // Fetch rendered glyph
-  GlyphHandle glyph = GetGlyph(Index, eGlyphBitmap);
-  rGlyph.Index = Index;
-  
-  // If we don't have this glyph, assert it has not been rendered
-  if (!glyph)
-    return false;
-
-  GlyphBitmap bmp;
-  if (!GetGlyphBitmap(glyph, bmp))
-    return false;
-
-  nuiFontBase::GlyphLocation GlyphLocation;
-  GetCacheGlyph(Index, GlyphLocation);
-
-  float w = GlyphLocation.mWidth;
-  float h = GlyphLocation.mHeight;
-
-  float x = rGlyph.X + bmp.Left * nuiGetInvScaleFactor();
-  float y = rGlyph.Y - bmp.Top * nuiGetInvScaleFactor();
-
-  rGlyph.mpTexture = mTextures[GlyphLocation.mOffsetTexture];
-
-  float ww = w * nuiGetInvScaleFactor();
-  float hh = h * nuiGetInvScaleFactor();
-  if (AlignGlyphPixels)
-  {
-    x = ToNearest(x * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
-    y = ToNearest(y * nuiGetScaleFactor()) * nuiGetInvScaleFactor();
-  }
-
-  rGlyph.mDestRect.Set(x - 1, y - 1, ww + 2, hh + 2);
-  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - nuiGetScaleFactor(), GlyphLocation.mOffsetY - nuiGetScaleFactor(), w + 2 * nuiGetScaleFactor(), h + 2 * nuiGetScaleFactor());
-
-  return true;
+  layout.Print(pContext, X, Y, AlignGlyphPixels);
 }
 
 bool nuiFontBase::PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph)
@@ -2289,65 +2098,6 @@ bool nuiFontBase::PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph)
 }
 
 
-int nuiFontBase::GetTextSize (float& X, float& Y, const nglChar* pText)
-{
-
-  nuiFontLayout Layout(*this);
-
-  int done = Layout.Layout(pText);
-
-  nuiGlyphInfo GlyphInfo;
-  Layout.GetMetrics(GlyphInfo);
-
-  Y = MAX(GlyphInfo.Height, GlyphInfo.AdvanceY);
-  X = MAX(GlyphInfo.Width,  GlyphInfo.AdvanceX);
-
-  return done;
-
-}
-
-int nuiFontBase::GetTextPos (float x, const nglChar* pText)
-{
-  nuiFontLayout Layout(*this);
-
-  int done =  Layout.Layout(pText);
-
-  if (done == -1) 
-    return -1;
-
-  if (!done)
-  {
-    return 0;
-  }
-
-  nuiGlyphInfo Info;
-  Layout.GetMetrics(Info);
-  
-  if (!Layout.GetGlyphCount())
-    return 0;
-
-  if (x > Layout.GetGlyph(done-1)->X) 
-  {
-    return (done-1);
-  }
-
-  for (int i = 0; i < done; i++) 
-  {
-    const nuiGlyphLayout * pGlyphLayout = Layout.GetGlyph(i);
-
-    if (x <= (pGlyphLayout->X))
-    {
-      return i;
-    }
-  }
-  return done;
-}
-
-const nglChar* nuiFontBase::OnError (uint& rError) const
-{
-  return FetchError(gpFontBaseErrorTable, NULL, rError);
-}
-
 nuiFontBase::GlyphLocation::GlyphLocation()
 {
 }
@@ -2359,93 +2109,6 @@ nuiFontBase::GlyphLocation::GlyphLocation(int OffsetX, int OffsetY, int Width, i
 
 nuiFontBase::GlyphLocation::~GlyphLocation()
 {
-}
-
-bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiGlyphLayout> >& rGlyphs)
-{
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> >::const_iterator it = rGlyphs.begin();
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> >::const_iterator end = rGlyphs.end();
-
-  bool texturing = pContext->GetState().mTexturing;
-  nuiTexture* pOldTexture = pContext->GetTexture();
-  if (pOldTexture)
-    pOldTexture->Acquire();
-
-  pContext->EnableTexturing(true);
-
-  while (it != end)
-  {
-    nuiTexture* pTexture = it->first;
-    pContext->SetTexture(pTexture);
-    int size = (int)it->second.size();
-    int i;
-
-    nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
-    pArray->EnableArray(nuiRenderArray::eVertex);
-    pArray->EnableArray(nuiRenderArray::eTexCoord);
-    pArray->Reserve(6 * size);
-    
-    for (i = 0; i < size; i++)
-    {
-      const nuiRect& rDest = it->second[i].mDestRect;
-      const nuiRect& rSource = it->second[i].mSourceRect;
-
-      nuiSize x1,y1,x2,y2;
-      nuiSize tx,ty,tw,th;
-
-      x1 = rDest.mLeft;
-      y1 = rDest.mTop;
-      x2 = rDest.mRight;
-      y2 = rDest.mBottom;
-      
-      tx = rSource.mLeft;
-      ty = rSource.mTop;
-      tw = rSource.mRight;
-      th = rSource.mBottom;
-
-      pTexture->ImageToTextureCoord(tx, ty);
-      pTexture->ImageToTextureCoord(tw,th);
-
-      ///////////////////////////////////////////
-      pArray->SetVertex(x1, y1);
-      pArray->SetTexCoords(tx, ty);
-      pArray->PushVertex();
-      
-      pArray->SetVertex(x2, y1);
-      pArray->SetTexCoords(tw, ty);
-      pArray->PushVertex();
-      
-      pArray->SetVertex(x2, y2);
-      pArray->SetTexCoords(tw, th);
-      pArray->PushVertex();
-
-      ///////////////////////////////////////////
-      pArray->SetVertex(x1, y1);
-      pArray->SetTexCoords(tx, ty);
-      pArray->PushVertex();
-
-      pArray->SetVertex(x2, y2);
-      pArray->SetTexCoords(tw, th);
-      pArray->PushVertex();
-
-      pArray->SetVertex(x1, y2);
-      pArray->SetTexCoords(tx, th);
-      pArray->PushVertex();
-    }
-
-    //nglString str = pArray->Dump();
-    //NGL_OUT("%s", str.GetChars());
-    pContext->DrawArray(pArray);
-
-    ++it;
-  }
-
-  pContext->EnableTexturing(texturing);
-  pContext->SetTexture(pOldTexture);
-  if (pOldTexture)
-    pOldTexture->Release();
-
-  return true;
 }
 
 void nuiFontBase::Shape(nuiTextRun* pRun)

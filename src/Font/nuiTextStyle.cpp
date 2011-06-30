@@ -71,7 +71,7 @@ nuiTextStyle& nuiTextStyle::operator =(const nuiTextStyle& rStyle)
 }
 
 
-void nuiTextStyle::SetFont(nuiFont* pFont)
+void nuiTextStyle::SetFont(nuiFontBase* pFont)
 {
   if (pFont)
     pFont->Acquire();
@@ -81,7 +81,7 @@ void nuiTextStyle::SetFont(nuiFont* pFont)
   mpFont = pFont;
 }
 
-nuiFont* nuiTextStyle::GetFont() const
+nuiFontBase* nuiTextStyle::GetFont() const
 {
   return mpFont;
 }
