@@ -138,7 +138,7 @@ static void ngl_ftoa(double x, nglString& _String, int32 precision, nglFloatForm
   else if (flag & Condensed)
     t = L'g';
 
-  fmt.Add(t);
+  fmt.Add((nglUChar)t);
 
   // Use the standard display with the 'C' locale:
   _String.CFormat(fmt.GetChars(), x);
