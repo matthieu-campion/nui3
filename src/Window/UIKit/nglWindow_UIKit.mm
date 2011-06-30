@@ -467,7 +467,12 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   
 	static double sOldTimestamp = 0.0;
   NSSet* pSet = [pEvent allTouches];
-  NGL_ASSERT(pSet);
+  if (!pSet)
+  {
+    NGL_ASSERT(pSet);
+    return;
+  }
+    
   NSArray* pArray = [pSet allObjects];
   NGL_ASSERT(pArray);
   NSUInteger count = [pArray count];
