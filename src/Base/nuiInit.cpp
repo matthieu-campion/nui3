@@ -28,6 +28,12 @@ public:
     mpKernel = pKernel;
     SysInit((HINSTANCE)hInstance); 
   }
+#elif defined(_ANDROID_)
+  __NglKernel__(void* app, nuiKernel* pKernel) 
+  { 
+    mpKernel = pKernel;
+    SysInit((android_app*)app); 
+  }
 #else
   __NglKernel__(nuiKernel* pKernel) 
   { 
@@ -89,6 +95,8 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     if (!App)
     {      
 #ifdef _WIN32_
+      App = new __NglKernel__(OSHandle, pKernel);
+#elif defined(_ANDROID_)
       App = new __NglKernel__(OSHandle, pKernel);
 #else
       App = new __NglKernel__(pKernel);

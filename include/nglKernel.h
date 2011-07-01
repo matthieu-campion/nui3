@@ -93,6 +93,10 @@ the NGL_APP_CREATE macro for instance.
 
 class nglDeviceInfo;
 
+#ifdef _ANDROID_
+struct android_app;
+#endif
+
 //! Kernel, application abstraction base class
 /*!
 NGL is a framework which can run in various environments. The most trivial one
@@ -488,6 +492,15 @@ public:
 	void * GetNSApplication() { return mpNSApplication; }
   
 #endif//_UIKIT_
+  
+#ifdef _ANDROID_
+public:
+  android_app* GetAndroidApp();
+protected:
+  bool SysInit(android_app* app);
+private:
+  android_app* mpAndroidApp;
+#endif
   
 };
 

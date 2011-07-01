@@ -26,56 +26,19 @@ public:
     mHeight = 200;
     mClearBackground = false;
     
-    mpAudioStream = NULL;
-    mpReader = NULL;
-
     EnableRenderCache(true);
     EnablePartialRedraw(false);    
     SetRect(nuiRect(0.0f, 0.0f, (nuiSize)mWidth, (nuiSize)mHeight));
     
     
-    mpAudioDevice = nuiAudioDeviceManager::Get().GetDefaultOutputDevice();
-    NGL_OUT(_T("Default output: %s\n"), mpAudioDevice->GetName().GetChars());
-    
-    std::vector<uint32> InputChannels;
-    std::vector<uint32> OutputChannels;
-    OutputChannels.push_back(0);
-    OutputChannels.push_back(1);
-    
-    nglPath audioPath(_T("/sdcard/mat/test.mp3"));
-    mpAudioStream = audioPath.OpenRead();
-    if (mpAudioStream)
-    {
-      LOGI("mpAudioStream OK");
-      mpReader = new nuiAudioDecoder(*mpAudioStream);
-      nuiSampleInfo info;
-      if (!mpReader->GetInfo(info))
-      {
-        LOGI("mpReader ERROR");
-        delete mpReader;
-        mpReader = NULL;
-        delete mpAudioStream;
-        mpAudioStream = NULL;
-      }
-      else
-      {
-        LOGI("mpReader OK");
-      }
-    }
-    else
-      LOGI("can't open %ls", audioPath.GetPathName().GetChars());
-    
-    bool res = mpAudioDevice->Open(InputChannels, OutputChannels, 44100, 1024, nuiMakeDelegate(this, &nuiAndroidBridge::ProcessAudio));
+    mpAudioEngine = new nuiAudioEngine(44100, 1024);
+    mpAudioEngine->PlaySound(_T("rsrc:/audio/test.mp3"), nuiSound::eStream);
   }
   
   virtual ~nuiAndroidBridge()
   {
-    if (mpAudioDevice)
-      delete mpAudioDevice;
-    if(mpReader)
-      delete mpReader;
-    if (mpAudioStream)
-      delete mpAudioStream;
+    if (mpAudioEngine)
+      delete mpAudioEngine;
     
     
     *((nuiAndroidBridge**)&gmpNUI_AndroidBridge) = this;
@@ -323,26 +286,10 @@ protected:
   {
     return const_cast<nglContext*>((nglContext*)this);
   }
-  
-  
-  void ProcessAudio(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
-  {
-    if (mpReader)
-    {
-      uint32 channels = rOutput.size();      
-      std::vector<void*> temp;
-      for (uint32 c = 0; c < channels; c++)
-        temp.push_back(rOutput[c]);
-      mpReader->ReadDE(temp, SampleFrames, eSampleFloat32);
-    }
-  }
-  
-  
+
 protected:
   uint32 mWidth, mHeight;
   
-  nuiAudioDevice* mpAudioDevice;
-  nglIStream* mpAudioStream;
-  nuiSampleReader* mpReader;
+  nuiAudioEngine* mpAudioEngine;
 };
 

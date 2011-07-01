@@ -1572,7 +1572,9 @@ nglIStream* nglPath::OpenRead() const
   {
     nglVolume* pVolume = nglVolume::GetVolume(volume);
     if (pVolume)
+    {
       return pVolume->OpenRead(*this);
+    }
   }
   
   nglIFile* pFile = new nglIFile(*this);

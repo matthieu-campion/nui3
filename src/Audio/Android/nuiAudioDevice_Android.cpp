@@ -240,8 +240,6 @@ void nuiAudioDevice_Android::Process()
   
   nglTime end;
   double processTime = end.GetValue() - now.GetValue();
-
-  LOGI("audio callback  (elapsed since last call %lf (%lf samples))  (processing time %lf (%lf samples) for %d samples %lf\%", elapsed, elapsed * 44100.0, processTime, processTime * 44100.0, mBufferSize, (processTime * 44100.0) / mBufferSize);
 }
 
 void nuiAudioDevice_Android::EnumSampleRates()
