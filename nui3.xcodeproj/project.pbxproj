@@ -2028,6 +2028,9 @@
 		E50DB8460D7783EC005B9316 /* nuiHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = E50DB8440D7783EC005B9316 /* nuiHTML.h */; };
 		E50DB84C0D779C4B005B9316 /* nuiHTML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50DB84A0D779C4B005B9316 /* nuiHTML.cpp */; };
 		E50DB84E0D779C4B005B9316 /* nuiHTML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50DB84A0D779C4B005B9316 /* nuiHTML.cpp */; };
+		E50F79F913C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */ = {isa = PBXBuildFile; fileRef = E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */; };
+		E50F79FA13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */ = {isa = PBXBuildFile; fileRef = E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */; };
+		E50F79FB13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */ = {isa = PBXBuildFile; fileRef = E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */; };
 		E511F7411367149000DE93B0 /* hb-blob-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E511F5C11367145700DE93B0 /* hb-blob-private.hh */; };
 		E511F7421367149000DE93B0 /* hb-blob.cc in Sources */ = {isa = PBXBuildFile; fileRef = E511F5C21367145700DE93B0 /* hb-blob.cc */; };
 		E511F7431367149000DE93B0 /* hb-blob.h in Headers */ = {isa = PBXBuildFile; fileRef = E511F5C31367145700DE93B0 /* hb-blob.h */; };
@@ -7558,6 +7561,7 @@
 		E50DB7AD0D75D8E7005B9316 /* clean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = clean.h; path = deps/tidy/clean.h; sourceTree = SOURCE_ROOT; };
 		E50DB8440D7783EC005B9316 /* nuiHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTML.h; path = include/nuiHTML.h; sourceTree = SOURCE_ROOT; };
 		E50DB84A0D779C4B005B9316 /* nuiHTML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTML.cpp; sourceTree = "<group>"; };
+		E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-ot-shape-complex-indic-machine.hh"; path = "harfbuzz/hb-ot-shape-complex-indic-machine.hh"; sourceTree = "<group>"; };
 		E511F5C11367145700DE93B0 /* hb-blob-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-blob-private.hh"; path = "harfbuzz/hb-blob-private.hh"; sourceTree = "<group>"; };
 		E511F5C21367145700DE93B0 /* hb-blob.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-blob.cc"; path = "harfbuzz/hb-blob.cc"; sourceTree = "<group>"; };
 		E511F5C31367145700DE93B0 /* hb-blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-blob.h"; path = "harfbuzz/hb-blob.h"; sourceTree = "<group>"; };
@@ -11772,6 +11776,7 @@
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
+				E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */,
 				E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */,
 				E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */,
 				E5B5CC641388968800A3A65D /* hb-version.h */,
@@ -12672,6 +12677,7 @@
 				E511F7CE1367149100DE93B0 /* hb-unicode.h in Headers */,
 				E511F7D01367149100DE93B0 /* hb.h in Headers */,
 				E5B5CC671388968800A3A65D /* hb-version.h in Headers */,
+				E50F79FB13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15434,6 +15440,7 @@
 				E511F76E1367149000DE93B0 /* hb-unicode.h in Headers */,
 				E511F7701367149000DE93B0 /* hb.h in Headers */,
 				E5B5CC651388968800A3A65D /* hb-version.h in Headers */,
+				E50F79F913C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15885,6 +15892,7 @@
 				E511F79E1367149100DE93B0 /* hb-unicode.h in Headers */,
 				E511F7A01367149100DE93B0 /* hb.h in Headers */,
 				E5B5CC661388968800A3A65D /* hb-version.h in Headers */,
+				E50F79FA13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

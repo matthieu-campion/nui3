@@ -59,6 +59,7 @@ void MainWindow::OnCreation()
     //text = "blah\nbleh\nblu\n";
     mpLayout->Layout(text);
     
+    pText->SetFont(mpFont);
     pText->AddText(text);
     delete pStream;
   }
