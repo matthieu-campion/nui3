@@ -84,28 +84,30 @@ bool nuiSimpleContainer::Load(const nuiXMLNode* pNode)
 
 bool nuiSimpleContainer::LoadChildren(const nuiXMLNode* pNode)
 {
-  CheckValid();
-	bool res=true;
-  uint i, count = pNode->GetChildrenCount();
-  for (i = 0; i < count; i++)
-  {
-    nuiXMLNode* pChild = pNode->GetChild(i);
-    nuiWidget* pWidget = nuiBuilder::Get().CreateWidget(pChild->GetName());
-    if (!pWidget)
-    {
-      // If the child is not a creatable element then may be a text property of the object.
-      nuiXMLNode* pText = pChild->GetChild(nglString("##text"));
-      if (pText)
-        SetProperty(pChild->GetName(),pText->GetValue());
-    }
-    else
-    {
-      pWidget->Load(pChild);
-      AddChild(pWidget);
-    }
-  }
-  
-  return res;
+  return false;
+//
+//  CheckValid();
+//	bool res=true;
+//  uint i, count = pNode->GetChildrenCount();
+//  for (i = 0; i < count; i++)
+//  {
+//    nuiXMLNode* pChild = pNode->GetChild(i);
+//    nuiWidget* pWidget = nuiBuilder::Get().CreateWidget(pChild->GetName());
+//    if (!pWidget)
+//    {
+//      // If the child is not a creatable element then may be a text property of the object.
+//      nuiXMLNode* pText = pChild->GetChild(nglString("##text"));
+//      if (pText)
+//        SetProperty(pChild->GetName(),pText->GetValue());
+//    }
+//    else
+//    {
+//      pWidget->Load(pChild);
+//      AddChild(pWidget);
+//    }
+//  }
+//  
+//  return res;
 }
 
 

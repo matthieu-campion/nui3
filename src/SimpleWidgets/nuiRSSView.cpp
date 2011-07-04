@@ -211,7 +211,6 @@ void nuiRSSView::Update(const nuiEvent& rEvent)
       if (pWidget)
         mpBox->AddCell(pWidget);
     }
-    
   }
 }
 

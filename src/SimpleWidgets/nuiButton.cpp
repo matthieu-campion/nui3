@@ -217,7 +217,6 @@ bool nuiButton::Draw(nuiDrawContext* pContext)
 nuiRect nuiButton::CalcIdealSize()
 {
   nuiDecoration* pDeco = GetDecoration();
-    
   if (pDeco)
   {
     mIdealRect = pDeco->GetIdealClientRect(this);
@@ -246,8 +245,13 @@ nuiRect nuiButton::CalcIdealSize()
       mIdealRect = mRect;
 
   if (pDeco)
+  {
     mIdealRect.Union(mIdealRect, pDeco->GetIdealClientRect(this));
-
+//    float left, right, top, bottom, horizontal, vertical;
+//    pDeco->GetBorders(this, left, right, top, bottom, horizontal, vertical);
+//    mIdealRect.SetWidth(mIdealRect.GetWidth()+left+right);
+//    mIdealRect.SetHeight(mIdealRect.GetHeight()+top+bottom);
+  }
   return mIdealRect;
 }
 
