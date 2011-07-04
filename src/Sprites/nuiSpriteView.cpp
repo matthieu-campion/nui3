@@ -259,8 +259,10 @@ void nuiSpriteDef::Uninit()
     nuiSpriteDef* pDef = temp[i];
     pDef->Release();
   }
-  
-  mSpriteMap.clear();
+
+  NGL_ASSERT(mSpriteMap.empty());
+  NGL_ASSERT(!nuiSprite::mSpriteCounter);
+
 }
 
 void nuiSpriteDef::AddAnimation(nuiSpriteAnimation* pAnim)
@@ -311,12 +313,19 @@ nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 // class nuiSprite
 nuiMatrix nuiSprite::mIdentityMatrix;
 
+// static 
+uint32 nuiSprite::mSpriteCounter = 0;
+
+
 nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
 : mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   mpSpriteDef = nuiSpriteDef::GetSprite(rSpriteDefPath.GetNodeName());
   if (!mpSpriteDef || forceReplace)
+  {
     mpSpriteDef = new nuiSpriteDef(rSpriteDefPath);
+    mpSpriteDef->Acquire();
+  }
 
   NGL_ASSERT(mpSpriteDef);
   Init();  
@@ -340,6 +349,10 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 nuiSprite::~nuiSprite()
 {
   LoadIdentityMatrix();
+
+  // static counter
+  mSpriteCounter--;
+  
   if (mpSpriteDef)
     mpSpriteDef->Release();
   for (size_t i = 0; i < mpChildren.size(); i++)
@@ -354,8 +367,8 @@ void nuiSprite::Init()
     InitAttributes();
   }
   
-  if (mpSpriteDef)
-    mpSpriteDef->Acquire();
+  // static counter
+  mSpriteCounter++;
   
   mpParent = NULL;
   mpMatrixNodes = NULL;
@@ -422,6 +435,11 @@ void nuiSprite::InitAttributes()
                (nglString(_T("Color")), nuiUnitColor,
                 nuiMakeDelegate(this, &nuiSprite::GetColor),
                 nuiMakeDelegate(this, &nuiSprite::SetColor)));
+  AddAttribute(new nuiAttribute<float>
+               (nglString(_T("Alpha")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetAlpha),
+                nuiMakeDelegate(this, &nuiSprite::SetAlpha)));
+
 }
 
 
@@ -762,6 +780,19 @@ const nuiColor& nuiSprite::GetColor() const
 {
   CheckValid();
   return mColor;
+}
+
+float nuiSprite::GetAlpha() const
+{
+  float v = GetColor().Alpha();
+  return v;
+}
+
+void nuiSprite::SetAlpha(float value)
+{
+  nuiColor color = mColor;
+  color.Multiply(value, true);
+  SetColor(color);
 }
 
 void nuiSprite::SetBlendFunc(nuiBlendFunc f)

@@ -19,6 +19,15 @@ nuiMemorySound::nuiMemorySound(const nglPath& rPath)
 {
   mType = eMemory;
   LoadSamples();
+  mID = nuiSound::GetStringID(rPath, mType);
+}
+
+nuiMemorySound::nuiMemorySound(const nglString& rSoundID, nglIStream* pStream)
+: mLength(0)
+{
+  mType = eMemory;
+  LoadSamples(pStream);
+  mID = rSoundID;
 }
 
 nuiMemorySound::~nuiMemorySound()
@@ -27,12 +36,14 @@ nuiMemorySound::~nuiMemorySound()
     delete[] mSamples[c];
 }
 
-bool nuiMemorySound::LoadSamples()
+bool nuiMemorySound::LoadSamples(nglIStream* pStream)
 {
-  if (!mPath.Exists())
+  if (!mPath.Exists() && !pStream)
     return false;
   
-  nglIStream* pStream = mPath.OpenRead();
+  if (!pStream)
+    pStream = mPath.OpenRead();
+
   if (!pStream)
     return false;
   

@@ -12,7 +12,7 @@
 #include "nuiMainMenu.h"
 #include <string.h>
 #include <set>
-#include <gl/wglext.h>
+#include "nui_GL/wglext.h"
 
 #define HAVE_NV_PERFKIT 0
 #define NGL_ENABLE_FBO_COPYONSWAP 1
@@ -1046,6 +1046,7 @@ HRESULT STDMETHODCALLTYPE nglDropTarget::Drop(IDataObject *pDataObj, DWORD grfKe
 
 nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 {
+  Register();
   mpMainMenu = NULL;
   nglContextInfo context; // Get default context
   nglWindowInfo info(Width, Height, IsFullScreen);
@@ -1055,6 +1056,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 
 nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  Register();
   mpMainMenu = NULL;
   InternalInit (rContext, rInfo, pShared);
 }
@@ -1353,6 +1355,8 @@ nglWindow::~nglWindow()
     mSavedVideoMode.SetMode();
   GetSystemMenu(mHWnd,TRUE);
   DestroyWindow(mHWnd);
+  
+  Unregister();
 }
 
 void nglWindow::SetState (StateChange State)

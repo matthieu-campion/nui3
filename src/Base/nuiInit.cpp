@@ -1,9 +1,9 @@
 /*
-  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
-  Copyright (C) 2002-2003 Sebastien Metrot
-
-  licence: see nui3/LICENCE.TXT
-*/
+ NUI3 - C++ cross-platform GUI framework for OpenGL based applications
+ Copyright (C) 2002-2003 Sebastien Metrot
+ 
+ licence: see nui3/LICENCE.TXT
+ */
 
 #include "nui.h"
 #include "nuiInit.h"
@@ -19,6 +19,7 @@
 
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
+<<<<<<< HEAD
 class __NglKernel__ : public nglKernel
 {
 public:
@@ -79,6 +80,8 @@ private:
 };
 
 
+=======
+>>>>>>> c547d3c5742bb5a4e7039ecc146b5e9879457921
 static uint32 gNUIReferences = 0;
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
@@ -91,32 +94,32 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     // MAKEWORD(1,1) for Winsock 1.1, MAKEWORD(2,0) for Winsock 2.0:
     int res = WSAStartup(MAKEWORD(1,1), &wsaData);
 #endif
-
+    
     if (!App)
     {      
 #ifdef _WIN32_
-      App = new __NglKernel__(OSHandle, pKernel);
+      App = new nuiManualKernel(OSHandle, pKernel);
 #elif defined(_ANDROID_)
-      App = new __NglKernel__(OSHandle, pKernel);
+      App = new nuiManualKernel(OSHandle, pKernel);
 #else
-      App = new __NglKernel__(pKernel);
+      App = new nuiManualKernel(pKernel);
 #endif
       App->CallOnInit();
     }
   }
-
+  
   gNUIReferences++;
-
+  
   // Init the texture manager:
   nuiTexture::InitTextures();
   
   // Init the font manager:
-
+  
 #if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
   nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
   nuiFontManager::LoadManager(Memory, nglTime());
 #else
-
+  
   //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
   nglPath fontdb(ePathUserAppSettings);
   fontdb += nglString(NUI_FONTDB_PATH);
@@ -143,9 +146,12 @@ bool nuiUninit()
   //printf("nuiUnInit(%d)\n", gNUIReferences);
   NGL_ASSERT(gNUIReferences != 0);
   gNUIReferences--;
-
+  
   if (!gNUIReferences)
   {
+    // Destroy all the windows that are still alive:
+    nuiMainWindow::DestroyAllWindows();
+    
     nglPath fontdb(ePathUserAppSettings);
     fontdb += nglString(NUI_FONTDB_PATH);
     
@@ -156,12 +162,12 @@ bool nuiUninit()
       if (db.IsOpen())
         rManager.Save(db);
     }
-
+    
     // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
     // because those have been destroyed at the same time than the opengl context
     nuiDecoration::ExitDecorationEngine();
     
-    __NglKernel__* pApp = dynamic_cast<__NglKernel__*>(App);
+    nuiManualKernel* pApp = nuiManualKernel::Get();
     if (pApp)
     {
       App->CallOnExit(0);

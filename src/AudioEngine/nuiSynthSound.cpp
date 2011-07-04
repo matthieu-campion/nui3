@@ -21,6 +21,8 @@ nuiSynthSound::nuiSynthSound(double sampleRate, double releaseTime)
   
   if (mWaveTables.empty())
     InitTables();
+  
+  mID.Format("%p%ls", this, nglString(SYNTH_SUFFIX).GetChars());
 }
 
 nuiSynthSound::~nuiSynthSound()
