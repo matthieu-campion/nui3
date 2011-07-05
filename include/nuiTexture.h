@@ -32,6 +32,7 @@ public:
   static nuiTexture* GetTexture(nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
   static nuiTexture* GetTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
   static nuiTexture* GetTexture(const nglString& rName); ///< Get a texture from its ID only
+  static nuiTexture* GetTexture(const nglChar* pName); ///< Get a texture from its ID only
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   static nuiTexture* BindTexture(GLuint TextureID, GLenum Target); ///< Returns a texture that will use an existing OpenGL Texture.
   static nuiTexture* CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotatedToTheRight); ///< Create a proxy texture that is at subtexture in an atlas.

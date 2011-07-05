@@ -13,8 +13,8 @@
 
 class MainWindow;
 
-#define APP_WIDTH 400
-#define APP_HEIGHT 200
+//#define APP_WIDTH 400
+//#define APP_HEIGHT 200
 
 #define APP_FULL_WIDTH 1024
 #define APP_FULL_HEIGHT 768

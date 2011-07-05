@@ -111,8 +111,8 @@ void Application::OnInit()
     }
     else
     {
-      Width = APP_WIDTH;
-      Height = APP_HEIGHT;
+      Width = APP_FULL_WIDTH;
+      Height = APP_FULL_HEIGHT;
     }
   }
 

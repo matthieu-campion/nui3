@@ -159,6 +159,13 @@ nuiTexture* nuiTexture::GetTexture(const nglString& rName)
   return pTexture;
 }
 
+nuiTexture* nuiTexture::GetTexture(const nglChar* pName)
+{
+  return nuiTexture::GetTexture(nglString(pName));
+}
+
+
+
 nuiTexture* nuiTexture::BindTexture(GLuint TextureID, GLenum Target)
 {
   nuiTexture* pTexture = NULL;

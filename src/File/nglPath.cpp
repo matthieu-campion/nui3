@@ -1022,6 +1022,14 @@ const nglPath& nglPath::operator+=(const nglString& rAppend)
 	return *this;
 }
 
+const nglPath& nglPath::operator+=(const nglChar* pAppend)
+{
+	nglPath temp(pAppend);
+	*this += temp;
+  
+	return *this;
+}
+
 NGL_API nglPath operator+ (const nglPath& rPath, const nglPath& rAppend)
 {
 	nglPath result(rPath);

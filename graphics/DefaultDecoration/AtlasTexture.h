@@ -7,6 +7,6 @@
 
 #pragma once
 
-extern const char* gpSliderHorizontalHdl;
-const long         gSliderHorizontalHdlSize = 640;
+extern const char* gpAtlasTexture;
+const long         gAtlasTextureSize = 23632;
 

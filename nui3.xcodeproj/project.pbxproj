@@ -3523,6 +3523,21 @@
 		E52E1A260CD7EEAF006FBCDD /* nuiAudioDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E52E1A240CD7EEAF006FBCDD /* nuiAudioDevice.h */; };
 		E52E1A280CD7F397006FBCDD /* nuiAudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A270CD7F397006FBCDD /* nuiAudioDevice.cpp */; };
 		E52E1A570CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52E1A550CD80280006FBCDD /* nuiAudioDevice_CoreAudio.cpp */; };
+		E533392613C372FE0080C465 /* Atlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392513C372FE0080C465 /* Atlas.h */; };
+		E533392A13C373B60080C465 /* AtlasTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E533392813C373B60080C465 /* AtlasTexture.cpp */; };
+		E533392B13C373B60080C465 /* AtlasTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E533392813C373B60080C465 /* AtlasTexture.cpp */; };
+		E533392C13C373B60080C465 /* AtlasTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E533392813C373B60080C465 /* AtlasTexture.cpp */; };
+		E533392D13C373B60080C465 /* AtlasTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E533392813C373B60080C465 /* AtlasTexture.cpp */; };
+		E533392E13C373B60080C465 /* AtlasTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E533392813C373B60080C465 /* AtlasTexture.cpp */; };
+		E533392F13C373B60080C465 /* AtlasTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E533392813C373B60080C465 /* AtlasTexture.cpp */; };
+		E533393013C373B60080C465 /* AtlasTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E533392813C373B60080C465 /* AtlasTexture.cpp */; };
+		E533393113C373B60080C465 /* AtlasTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392913C373B60080C465 /* AtlasTexture.h */; };
+		E533393213C373B60080C465 /* AtlasTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392913C373B60080C465 /* AtlasTexture.h */; };
+		E533393313C373B60080C465 /* AtlasTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392913C373B60080C465 /* AtlasTexture.h */; };
+		E533393413C373B60080C465 /* AtlasTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392913C373B60080C465 /* AtlasTexture.h */; };
+		E533393513C373B60080C465 /* AtlasTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392913C373B60080C465 /* AtlasTexture.h */; };
+		E533393613C373B60080C465 /* AtlasTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392913C373B60080C465 /* AtlasTexture.h */; };
+		E533393713C373B60080C465 /* AtlasTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E533392913C373B60080C465 /* AtlasTexture.h */; };
 		E5345F3112F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
 		E5345F3212F3317500F435D9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
 		E5345F3312F3317500F435D9 /* TextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E5345F2F12F3317500F435D9 /* TextureAtlas.h */; };
@@ -8016,6 +8031,9 @@
 		E52EA7DD106D688C008598F5 /* nglApplication_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglApplication_Cocoa.h; path = Cocoa/nglApplication_Cocoa.h; sourceTree = "<group>"; };
 		E52EA7F1106D6DF5008598F5 /* nglWindow_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglWindow_Cocoa.h; path = src/Window/Cocoa/nglWindow_Cocoa.h; sourceTree = SOURCE_ROOT; };
 		E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglWindow_Cocoa.mm; path = src/Window/Cocoa/nglWindow_Cocoa.mm; sourceTree = SOURCE_ROOT; };
+		E533392513C372FE0080C465 /* Atlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Atlas.h; path = graphics/DefaultDecoration/Atlas.h; sourceTree = SOURCE_ROOT; };
+		E533392813C373B60080C465 /* AtlasTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AtlasTexture.cpp; path = graphics/DefaultDecoration/AtlasTexture.cpp; sourceTree = SOURCE_ROOT; };
+		E533392913C373B60080C465 /* AtlasTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtlasTexture.h; path = graphics/DefaultDecoration/AtlasTexture.h; sourceTree = SOURCE_ROOT; };
 		E5345F2F12F3317500F435D9 /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
 		E5345F3012F3317500F435D9 /* TextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlas.cpp; sourceTree = "<group>"; };
 		E5354C0611383244008F5402 /* nuiObjectInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiObjectInspector.h; path = include/nuiObjectInspector.h; sourceTree = SOURCE_ROOT; };
@@ -9232,6 +9250,9 @@
 		BC80B32C0E8B99EA00ECDCE7 /* Embeded */ = {
 			isa = PBXGroup;
 			children = (
+				E533392813C373B60080C465 /* AtlasTexture.cpp */,
+				E533392913C373B60080C465 /* AtlasTexture.h */,
+				E533392513C372FE0080C465 /* Atlas.h */,
 				BC80B3640E8BBB2600ECDCE7 /* DefaultDecoration.cpp */,
 				BC80B2510E8B99C000ECDCE7 /* DefaultDecoration.h */,
 			);
@@ -12209,6 +12230,7 @@
 				E57D818313B386F200348211 /* nuiNavigationBarStyle.h in Headers */,
 				E57D818713B386FD00348211 /* nuiImageAnimation.h in Headers */,
 				E57D818913B386FD00348211 /* nuiGestureRecognizer.h in Headers */,
+				E533393513C373B60080C465 /* AtlasTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13047,6 +13069,7 @@
 				E5F0C25F13A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C26F13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
 				E57D818113B386F000348211 /* nuiNavigationBarStyle.h in Headers */,
+				E533393313C373B60080C465 /* AtlasTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13433,6 +13456,7 @@
 				E5F0C26013A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C27013A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
 				E57D818213B386F100348211 /* nuiNavigationBarStyle.h in Headers */,
+				E533393413C373B60080C465 /* AtlasTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13817,6 +13841,7 @@
 				E5F0C24E13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C25E13A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C26E13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
+				E533393213C373B60080C465 /* AtlasTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14201,6 +14226,8 @@
 				E5F0C24D13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C25D13A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C26D13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
+				E533392613C372FE0080C465 /* Atlas.h in Headers */,
+				E533393113C373B60080C465 /* AtlasTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14587,6 +14614,7 @@
 				E57D818B13B386FE00348211 /* nuiNavigationButton.h in Headers */,
 				E57D818D13B386FE00348211 /* nuiImageAnimation.h in Headers */,
 				E57D818F13B386FE00348211 /* nuiGestureRecognizer.h in Headers */,
+				E533393613C373B60080C465 /* AtlasTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14973,6 +15001,7 @@
 				E57D819113B386FF00348211 /* nuiNavigationButton.h in Headers */,
 				E57D819313B386FF00348211 /* nuiImageAnimation.h in Headers */,
 				E57D819513B386FF00348211 /* nuiGestureRecognizer.h in Headers */,
+				E533393713C373B60080C465 /* AtlasTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16425,6 +16454,7 @@
 				E57D818813B386FD00348211 /* nuiGestureRecognizer.cpp in Sources */,
 				E57D81B313B38A9700348211 /* ngl_glext_table.cpp in Sources */,
 				E596F92E13C2898200C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
+				E533392E13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17046,6 +17076,7 @@
 				E5F0C27713A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
 				E57D81B113B38A9500348211 /* ngl_glext_table.cpp in Sources */,
 				E596F92C13C2898100C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
+				E533392C13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17390,6 +17421,7 @@
 				E5F0C27813A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
 				E57D81B213B38A9600348211 /* ngl_glext_table.cpp in Sources */,
 				E596F92D13C2898100C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
+				E533392D13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17736,6 +17768,7 @@
 				E5F0C26613A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27613A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
 				E596F92B13C2898000C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
+				E533392B13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18082,6 +18115,7 @@
 				E5F0C26513A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27513A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
 				E596F92A13C2897F00C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
+				E533392A13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18431,6 +18465,7 @@
 				E57D818C13B386FE00348211 /* nuiImageAnimation.cpp in Sources */,
 				E57D818E13B386FE00348211 /* nuiGestureRecognizer.cpp in Sources */,
 				E596F92F13C2898300C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
+				E533392F13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18780,6 +18815,7 @@
 				E57D819213B386FF00348211 /* nuiImageAnimation.cpp in Sources */,
 				E57D819413B386FF00348211 /* nuiGestureRecognizer.cpp in Sources */,
 				E596F93013C2898400C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
+				E533393013C373B60080C465 /* AtlasTexture.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
