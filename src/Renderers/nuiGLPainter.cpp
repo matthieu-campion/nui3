@@ -1636,10 +1636,11 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       
       if (allocated)
         free(pBuffer);
-      //#FIXME
-      //      if (!pTexture->IsBufferRetained()) { 
-      //        pTexture->ReleaseBuffer();
-      //      }
+
+      if (!pTexture->IsBufferRetained())
+      { 
+        pTexture->ReleaseBuffer();
+      }
       
     }
   }

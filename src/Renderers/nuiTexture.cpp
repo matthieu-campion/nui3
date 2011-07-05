@@ -1297,7 +1297,11 @@ void nuiTexture::DelCache(nuiTextureCache* pCache)
   mTextureCaches.erase(pCache);
 }
 
+#ifdef NUI_PHONE
 bool nuiTexture::mRetainBuffers = false;
+#else
+bool nuiTexture::mRetainBuffers = true;
+#endif
 
 void nuiTexture::RetainBuffers(bool Set)
 {

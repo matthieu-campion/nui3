@@ -992,10 +992,11 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 // nuiKnob
 //
 
-nuiImageSequence* nuiDefaultDecoration::mpKnobSequence;
+nuiImageSequence* nuiDefaultDecoration::mpKnobSequence = NULL;
 
 void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
 {
+#if 0
   nuiKnob* pKnob = (nuiKnob*)pWidget;
 
   if (!pKnob->GetImageSequence() && !mpKnobSequence)
@@ -1011,6 +1012,7 @@ void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
 
   if (!pKnob->GetImageSequence())
     pKnob->SetImageSequence(mpKnobSequence);
+#endif
 }
 
 

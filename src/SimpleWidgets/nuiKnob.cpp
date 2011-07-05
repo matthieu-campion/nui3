@@ -417,7 +417,7 @@ nuiRect nuiKnob::CalcIdealSize()
   if (mpChildren.empty())
   {
     if (!mpImageSequence)
-      return nuiRect(0,0,0,0);
+      return nuiRect(0,0,32,32);
     
     const nuiRect& rect = mpImageSequence->CalcIdealSize();
     return rect;
@@ -442,6 +442,33 @@ bool nuiKnob::Draw(nuiDrawContext* pContext)
     
     mpImageSequence->SetFrameIndex(mFrameIndex);
     mpImageSequence->Draw(pContext, this);
+  }
+  else
+  {
+    nuiRect R(GetRect().Size());
+    float linewidth = 3;
+    
+    pContext->SetStrokeColor(nuiColor(0.3, 0.3, 0.5, GetMixedAlpha()));
+    
+    nuiShape shp;
+    float mx = R.GetWidth() / 2;
+    float my = R.GetHeight() / 2;
+    float r = (MIN(mx, my) - linewidth *.5) * .9;
+    float rr = r * .8;
+
+    float range = .8;
+    float a = (-( 1 - range ) / 2 - (range * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum()));
+    float a1 = (-( 1 - range ) / 2) * 360 - 90;
+    float a2 = (-( 1 - range ) / 2 - range) * 360 - 90;
+    a *= 2 * M_PI;
+
+    shp.AddArc(mx, my, r, r, a1, a2, 0);
+    pContext->SetLineWidth(linewidth);
+    pContext->DrawShape(&shp, eStrokeShape);
+    
+    
+    pContext->SetLineWidth(linewidth * .7);
+    pContext->DrawLine(mx, my, mx + rr * sin(a), my + rr * cos(a));
   }
   
   return nuiSimpleContainer::Draw(pContext);
