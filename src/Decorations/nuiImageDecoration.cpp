@@ -275,8 +275,8 @@ nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWi
   if (!mBorderEnabled)
     return 0;
   
-  nuiSize w = 1.0, h = 1.0;
-  mpTexture->TextureToImageCoord(w, h);
+  float w = mpTexture->GetWidth();
+  float h = mpTexture->GetHeight();
   switch (position)
   {
     case nuiLeft:

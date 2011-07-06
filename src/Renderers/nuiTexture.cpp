@@ -964,7 +964,7 @@ void nuiTexture::ImageToTextureCoord(nuiAltSize& x, nuiAltSize& y) const
 void nuiTexture::TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const
 {
   nuiSize _x = x, _y = y;
-  ImageToTextureCoord(_x, _y);
+  TextureToImageCoord(_x, _y);
   x = _x;
   y = _y;
 }

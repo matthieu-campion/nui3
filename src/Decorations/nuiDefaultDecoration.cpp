@@ -518,8 +518,7 @@ void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
       pTex = nuiTexture::GetTexture("SplitterVerticalHandle");
       NGL_ASSERT(pTex);
       
-      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"), 
-                                                          pTex, nuiRect(0,0,7,6), nuiCenter);
+      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"), pTex, nuiRect(0,0,7,6), nuiCenter);
 
       // build meta decoration
       pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationVerticalSplitter"));
