@@ -314,59 +314,35 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   
   charcode = FT_Get_First_Char(pFace, &gindex);
 
-  std::vector<nglUChar> tmp;
-  tmp.reserve(10000);
+//  std::vector<nglUChar> tmp;
+//  tmp.reserve(10000);
   
   while ( gindex != 0 )
   {
     glyphcount++;
-//    if (mName == "Helvetica")
-//    {
-//      if (prevcharcode > 0 && prevcharcode + 1 != charcode)
-//      {
-//        //NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
-//        rangestart = -1;
-//        rangecount++;
-//      }
-//      
-//      NGL_ASSERT(FT_Get_Char_Index(pFace, charcode) == gindex);
-//      //printf("%d (%d)  ", gindex, charcode);
-//    }
-    tmp.push_back(charcode);
+    if (rangestart >= 0 && (prevcharcode != charcode - 1))
+    {
+      NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
+      rangecount++;
+      
+      mGlyphs.push_back(std::make_pair(rangestart, prevcharcode));
+      rangestart = charcode;
+    }
     prevcharcode = charcode;
 
-//    if (rangestart == -1)
-//      rangestart = prevcharcode;
+    if (rangestart < 0)
+      rangestart = charcode;
     
     charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
+
   if (prevcharcode > 0)
   {
-    //NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart);
+    NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
     rangecount++;
+    mGlyphs.push_back(std::make_pair(rangestart, prevcharcode));
   }
-  
-  
-  std::sort(tmp.begin(), tmp.end());
-  
-  std::vector<nglUChar>::iterator it = tmp.begin();
-  std::vector<nglUChar>::iterator end = tmp.end();
-  
-  //mGlyphs.resize(tmpset.size());
-  
-  uint i = 0;
-  nglUChar prevc = -1;
-  while (it != end)
-  {
-    nglUChar c = *it;
-    if (prevc != c)
-      mGlyphs.push_back(c);
-    
-    prevc = c;
-    ++it;
-    i++;
-  }
-  
+
   NGL_DEBUG( NGL_LOG("font", NGL_LOG_INFO, "\t%d glyph ranges (%d glyphs)\n", rangecount, glyphcount); )
   
   FT_Done_Face(pFace);
@@ -483,6 +459,7 @@ bool nuiFontDesc::HasEncoding(nglTextEncoding Encoding) const
 
 bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
 {
+#if 0
   // Dichotomic lookup of the charcode:
   
   int32 len = mGlyphs.size();
@@ -492,17 +469,17 @@ bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
   
   while (len > 0)
   {
-    nglUChar middleglyph = mGlyphs[middle];
-    nglUChar firstglyph = mGlyphs[start];
-    nglUChar lastglyph = mGlyphs[end];
+    const GlyphRange& middleglyph = mGlyphs[middle];
+    const GlyphRange& firstglyph = mGlyphs[start];
+    const GlyphRange& lastglyph = mGlyphs[end];
     
-    if (Glyph < firstglyph || lastglyph < Glyph)
+    if (Glyph < firstglyph.first || lastglyph.second < Glyph)
       return false;
     
-    if (middleglyph == Glyph)
+    if (middleglyph.first <= Glyph && Glyph <= middleglyph.second)
       return true;
     
-    if (middleglyph < Glyph) 
+    if (middleglyph.first < Glyph) 
     {
       // Return right hand part
       start = middle + 1;
@@ -517,6 +494,15 @@ bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
     middle = (start + end) >> 1;
   }
   return false;
+#endif
+  
+  for (uint32 i = 0; i < mGlyphs.size(); i++)
+  {
+    if (mGlyphs[i].first <= Glyph && Glyph <= mGlyphs[i].second)
+      return true;
+  }
+  
+  return false;
 }
 
 bool nuiFontDesc::HasSize(int32 Size) const
@@ -528,11 +514,6 @@ bool nuiFontDesc::HasSize(int32 Size) const
 const std::set<nglTextEncoding>& nuiFontDesc::GetEncodings() const
 {
   return mEncodings;
-}
-
-const std::vector<nglUChar>& nuiFontDesc::GetGlyphs() const
-{
-  return mGlyphs;
 }
 
 const std::set<int32>& nuiFontDesc::GetSizes() const
@@ -592,7 +573,7 @@ bool nuiFontDesc::Save(nglOStream& rStream)
   s = mGlyphs.size();
   rStream.WriteUInt32(&s);
   if (s)
-    rStream.Write(&mGlyphs[0], s, sizeof(nglUChar));
+    rStream.Write(&mGlyphs[0], s, sizeof(GlyphRange));
   
   s = mSizes.size();
   rStream.WriteUInt32(&s);
@@ -665,7 +646,7 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   rStream.ReadUInt32(&s);
   mGlyphs.resize(s);
   if (s)
-    rStream.Read(&mGlyphs[0], s, sizeof(nglUChar));
+    rStream.Read(&mGlyphs[0], s, sizeof(GlyphRange));
   
   rStream.ReadUInt32(&s);
   std::vector<uint32> Sizes;
