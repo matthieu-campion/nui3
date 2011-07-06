@@ -322,7 +322,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
     glyphcount++;
     if (rangestart >= 0 && (prevcharcode != charcode - 1))
     {
-      NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
+      //NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
       rangecount++;
       
       mGlyphs.push_back(std::make_pair(rangestart, prevcharcode));
@@ -338,7 +338,7 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 
   if (prevcharcode > 0)
   {
-    NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
+    //NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
     rangecount++;
     mGlyphs.push_back(std::make_pair(rangestart, prevcharcode));
   }
@@ -494,7 +494,7 @@ bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
     middle = (start + end) >> 1;
   }
   return false;
-#endif
+#else
   
   for (uint32 i = 0; i < mGlyphs.size(); i++)
   {
@@ -503,6 +503,7 @@ bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
   }
   
   return false;
+#endif
 }
 
 bool nuiFontDesc::HasSize(int32 Size) const
