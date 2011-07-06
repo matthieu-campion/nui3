@@ -9,3 +9,5 @@ licence: see nui3/LICENCE.TXT
 #pragma once
 
 void nuiInitDefaultDecorationAtlas();
+
+#include "DefaultDecoration/ImageDraggedFile.h"

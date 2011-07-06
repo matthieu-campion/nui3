@@ -346,21 +346,22 @@ std::map<nglString, char*> nuiDefaultDecoration::mImages;
 
 void nuiDefaultDecoration::InitImages()
 {
-  mImages[_T("nuiFileTree::DraggedFileIcon")] = "ImageDraggedFile";
+  mImages[_T("nuiFileTree::DraggedFileIcon")] = std::make_pair(gpImageDraggedFile, gImageDraggedFileSize);
 }
 
 
 //static 
 nglImage* nuiDefaultDecoration::GetImage(const nglString& rRef)
 {
-  std::map<nglString, char*>::iterator it = mImages.find(rRef);
+  std::map<nglString, std::pair<void*, int32> >::iterator it = mImages.find(rRef);
   if (it == mImages.end())
     return NULL;
   
-//  const char* pMem = it->second;
-//  nglIMemory* pIMem = new nglIMemory(pMem, size);
-//  nglImage* pImage = new nglImage(pIMem);
-//  return pImage;
+  const char* pMem = (const char*)(it->second.first);
+  int32 size = it->second.second;
+  nglIMemory* pIMem = new nglIMemory(pMem, size);
+  nglImage* pImage = new nglImage(pIMem);
+  return pImage;
 }
 
 

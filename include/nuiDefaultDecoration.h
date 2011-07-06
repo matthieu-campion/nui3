@@ -111,7 +111,7 @@ private:
   
   static nuiImageSequence* mpKnobSequence;
   static std::list<nuiTexture*> mIcons;
-  static std::map<nglString, char*> mImages;
+  static std::map<nglString, std::pair<void*, int32> > mImages;
 
   nuiDefaultDecoration();
   ~nuiDefaultDecoration();

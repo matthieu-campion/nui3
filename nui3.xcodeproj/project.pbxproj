@@ -7118,6 +7118,20 @@
 		E5DD3FF112E0B08300F1EF4E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59DF6CC1196396000E46CF8 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		E5DD45A012E0B18000F1EF4E /* libthirdparty_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD3FF412E0B08300F1EF4E /* libthirdparty_ios.a */; };
 		E5DD45E412E0B5E100F1EF4E /* libthirdparty_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD3FF412E0B08300F1EF4E /* libthirdparty_ios.a */; };
+		E5DE7A1D13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */; };
+		E5DE7A1E13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */; };
+		E5DE7A1F13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */; };
+		E5DE7A2013C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */; };
+		E5DE7A2113C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */; };
+		E5DE7A2213C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */; };
+		E5DE7A2313C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */; };
+		E5DE7A2413C3EAB80018CD6C /* ImageDraggedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */; };
+		E5DE7A2513C3EAB80018CD6C /* ImageDraggedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */; };
+		E5DE7A2613C3EAB80018CD6C /* ImageDraggedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */; };
+		E5DE7A2713C3EAB80018CD6C /* ImageDraggedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */; };
+		E5DE7A2813C3EAB80018CD6C /* ImageDraggedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */; };
+		E5DE7A2913C3EAB80018CD6C /* ImageDraggedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */; };
+		E5DE7A2A13C3EAB80018CD6C /* ImageDraggedFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */; };
 		E5EA30190F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
 		E5EA301B0F55926F0057CCA7 /* nuiCoverFlow.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */; };
 		E5EA301D0F55963C0057CCA7 /* nuiCoverFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */; };
@@ -8920,6 +8934,8 @@
 		E5D9FEEC1082B382008D0F11 /* nuiGLUTBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiGLUTBridge.cpp; sourceTree = "<group>"; };
 		E5DD341012E09CA800F1EF4E /* libthirdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthirdparty.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5DD3FF412E0B08300F1EF4E /* libthirdparty_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libthirdparty_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageDraggedFile.cpp; path = graphics/DefaultDecoration/ImageDraggedFile.cpp; sourceTree = SOURCE_ROOT; };
+		E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDraggedFile.h; path = graphics/DefaultDecoration/ImageDraggedFile.h; sourceTree = SOURCE_ROOT; };
 		E5EA30180F55926F0057CCA7 /* nuiCoverFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiCoverFlow.h; path = include/nuiCoverFlow.h; sourceTree = SOURCE_ROOT; };
 		E5EA301C0F55963C0057CCA7 /* nuiCoverFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiCoverFlow.cpp; sourceTree = "<group>"; };
 		E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiBindingManager.cpp; sourceTree = "<group>"; };
@@ -9250,6 +9266,8 @@
 		BC80B32C0E8B99EA00ECDCE7 /* Embeded */ = {
 			isa = PBXGroup;
 			children = (
+				E5DE7A1B13C3EAB70018CD6C /* ImageDraggedFile.cpp */,
+				E5DE7A1C13C3EAB80018CD6C /* ImageDraggedFile.h */,
 				E533392813C373B60080C465 /* AtlasTexture.cpp */,
 				E533392913C373B60080C465 /* AtlasTexture.h */,
 				E533392513C372FE0080C465 /* Atlas.h */,
@@ -12231,6 +12249,7 @@
 				E57D818713B386FD00348211 /* nuiImageAnimation.h in Headers */,
 				E57D818913B386FD00348211 /* nuiGestureRecognizer.h in Headers */,
 				E533393513C373B60080C465 /* AtlasTexture.h in Headers */,
+				E5DE7A2813C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13070,6 +13089,7 @@
 				E5F0C26F13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
 				E57D818113B386F000348211 /* nuiNavigationBarStyle.h in Headers */,
 				E533393313C373B60080C465 /* AtlasTexture.h in Headers */,
+				E5DE7A2613C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13457,6 +13477,7 @@
 				E5F0C27013A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
 				E57D818213B386F100348211 /* nuiNavigationBarStyle.h in Headers */,
 				E533393413C373B60080C465 /* AtlasTexture.h in Headers */,
+				E5DE7A2713C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13842,6 +13863,7 @@
 				E5F0C25E13A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C26E13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
 				E533393213C373B60080C465 /* AtlasTexture.h in Headers */,
+				E5DE7A2513C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14228,6 +14250,7 @@
 				E5F0C26D13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
 				E533392613C372FE0080C465 /* Atlas.h in Headers */,
 				E533393113C373B60080C465 /* AtlasTexture.h in Headers */,
+				E5DE7A2413C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14615,6 +14638,7 @@
 				E57D818D13B386FE00348211 /* nuiImageAnimation.h in Headers */,
 				E57D818F13B386FE00348211 /* nuiGestureRecognizer.h in Headers */,
 				E533393613C373B60080C465 /* AtlasTexture.h in Headers */,
+				E5DE7A2913C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15002,6 +15026,7 @@
 				E57D819313B386FF00348211 /* nuiImageAnimation.h in Headers */,
 				E57D819513B386FF00348211 /* nuiGestureRecognizer.h in Headers */,
 				E533393713C373B60080C465 /* AtlasTexture.h in Headers */,
+				E5DE7A2A13C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16455,6 +16480,7 @@
 				E57D81B313B38A9700348211 /* ngl_glext_table.cpp in Sources */,
 				E596F92E13C2898200C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392E13C373B60080C465 /* AtlasTexture.cpp in Sources */,
+				E5DE7A2113C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17077,6 +17103,7 @@
 				E57D81B113B38A9500348211 /* ngl_glext_table.cpp in Sources */,
 				E596F92C13C2898100C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392C13C373B60080C465 /* AtlasTexture.cpp in Sources */,
+				E5DE7A1F13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17422,6 +17449,7 @@
 				E57D81B213B38A9600348211 /* ngl_glext_table.cpp in Sources */,
 				E596F92D13C2898100C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392D13C373B60080C465 /* AtlasTexture.cpp in Sources */,
+				E5DE7A2013C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17769,6 +17797,7 @@
 				E5F0C27613A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
 				E596F92B13C2898000C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392B13C373B60080C465 /* AtlasTexture.cpp in Sources */,
+				E5DE7A1E13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18116,6 +18145,7 @@
 				E5F0C27513A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
 				E596F92A13C2897F00C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392A13C373B60080C465 /* AtlasTexture.cpp in Sources */,
+				E5DE7A1D13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18466,6 +18496,7 @@
 				E57D818E13B386FE00348211 /* nuiGestureRecognizer.cpp in Sources */,
 				E596F92F13C2898300C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392F13C373B60080C465 /* AtlasTexture.cpp in Sources */,
+				E5DE7A2213C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18816,6 +18847,7 @@
 				E57D819413B386FF00348211 /* nuiGestureRecognizer.cpp in Sources */,
 				E596F93013C2898400C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533393013C373B60080C465 /* AtlasTexture.cpp in Sources */,
+				E5DE7A2313C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
