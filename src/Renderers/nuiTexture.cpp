@@ -193,6 +193,7 @@ nuiTexture* nuiTexture::CreateTextureProxy(const nglString& rName, const nglStri
     pTexture = it->second;
   
   LOG_GETTEXTURE(pTexture);
+  pTexture->Acquire();
   return pTexture;  
 }
 

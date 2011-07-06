@@ -1080,7 +1080,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscan
 }
 
 
-#define NUI_FONTDB_MARKER "nuiFontDatabase4"
+#define NUI_FONTDB_MARKER "nuiFontDatabase5"
 
 bool nuiFontManager::Save(nglOStream& rStream)
 {
