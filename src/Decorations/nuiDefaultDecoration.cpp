@@ -342,7 +342,7 @@ void nuiDefaultDecoration::InitIcons()
 //
 
 // static 
-std::map<nglString, std::pair<const char* const, int32> > nuiDefaultDecoration::mImages;
+std::map<nglString, std::pair<const char*, int32> > nuiDefaultDecoration::mImages;
 
 void nuiDefaultDecoration::InitImages()
 {
@@ -353,7 +353,7 @@ void nuiDefaultDecoration::InitImages()
 //static 
 nglImage* nuiDefaultDecoration::GetImage(const nglString& rRef)
 {
-  std::map<nglString, std::pair<const char* const, int32> >::iterator it = mImages.find(rRef);
+  std::map<nglString, std::pair<const char*, int32> >::iterator it = mImages.find(rRef);
   if (it == mImages.end())
     return NULL;
   
