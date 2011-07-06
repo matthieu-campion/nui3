@@ -88,6 +88,12 @@ public:
 
   void SetAttribute(const char* pName, const nglString& rValue);
   void SetAttribute(const char* pName, const nglChar* pValue); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, uint8 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, int8 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, uint16 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, int16 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, uint32 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, int32 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, uint64 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, int64 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, bool value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
