@@ -684,7 +684,8 @@ static nuiLabel* gpFontPathLabel = NULL;
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
-#ifdef _UIKIT_
+//#ifdef _UIKIT_
+#if 0
   UpdateFonts();
   return;
 #endif

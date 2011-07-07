@@ -51,10 +51,10 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   
   // Init the font manager:
   
-#if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
-  nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
-  nuiFontManager::LoadManager(Memory, nglTime());
-#else
+//#if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
+//  nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
+//  nuiFontManager::LoadManager(Memory, nglTime());
+//#else
   
   //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
   nglPath fontdb(ePathUserAppSettings);
@@ -67,10 +67,26 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   }  
   else
   {
+#ifndef _UIKIT_
     nuiFontManager::GetManager();
+#endif
   }
   //#endif
-#endif
+//#endif
+  
+  
+//  nglPath fontdb(ePathUserAppSettings);
+//  fontdb += nglString(NUI_FONTDB_PATH);
+  
+  nuiFontManager& rManager(nuiFontManager::GetManager(false));
+  if (rManager.GetFontCount())
+  {
+    nglOFile db(fontdb, eOFileCreate);
+    if (db.IsOpen())
+      rManager.Save(db);
+  }
+  
+  
   
   nuiDecoration::InitDecorationEngine();
   
