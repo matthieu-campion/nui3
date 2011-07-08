@@ -599,7 +599,6 @@
 		73F0856E12E9BA0700656E84 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417F711CB86C40025CA71 /* ngl_uikit.h */; };
 		73F0856F12E9BA0700656E84 /* nglApplication_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */; };
 		73F0857012E9BA0700656E84 /* nglDragAndDrop_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */; };
-		73F0857112E9BA0700656E84 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */; };
 		73F0857212E9BA0700656E84 /* nglWindow_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524181311CB87E80025CA71 /* nglWindow_UIKit.h */; };
 		73F0857312E9BA0700656E84 /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DA11CB9D3C0025CA71 /* nglImageCGCodec.h */; };
 		73F0857412E9BA0700656E84 /* nglPath_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DD11CB9D540025CA71 /* nglPath_Cocoa.h */; };
@@ -928,7 +927,6 @@
 		73F086C112E9BA0700656E84 /* nglKernel_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FC11CB86C40025CA71 /* nglKernel_UIKit.mm */; };
 		73F086C212E9BA0700656E84 /* nglModule_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FD11CB86C40025CA71 /* nglModule_UIKit.mm */; };
 		73F086C312E9BA0700656E84 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */; };
-		73F086C412E9BA0700656E84 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
 		73F086C512E9BA0700656E84 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		73F086C612E9BA0700656E84 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
 		73F086C712E9BA0700656E84 /* nglWindow_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181511CB87E80025CA71 /* nglWindow_UIKit.mm */; };
@@ -2841,8 +2839,6 @@
 		E524180811CB86C40025CA71 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */; };
 		E524180911CB86C40025CA71 /* nglApplication_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */; };
 		E524180A11CB86C40025CA71 /* nglDragAndDrop_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */; };
-		E524180D11CB875B0025CA71 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
-		E524180E11CB875B0025CA71 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */; };
 		E524181711CB87E80025CA71 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		E524181811CB87E80025CA71 /* nglWindow_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524181311CB87E80025CA71 /* nglWindow_UIKit.h */; };
 		E524181911CB87E80025CA71 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
@@ -3185,7 +3181,6 @@
 		E5241E8C11CBCE9E0025CA71 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417F711CB86C40025CA71 /* ngl_uikit.h */; };
 		E5241E8D11CBCE9E0025CA71 /* nglApplication_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */; };
 		E5241E8E11CBCE9E0025CA71 /* nglDragAndDrop_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */; };
-		E5241E8F11CBCE9E0025CA71 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */; };
 		E5241E9011CBCE9E0025CA71 /* nglWindow_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524181311CB87E80025CA71 /* nglWindow_UIKit.h */; };
 		E5241E9E11CBCE9E0025CA71 /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DA11CB9D3C0025CA71 /* nglImageCGCodec.h */; };
 		E5241E9F11CBCE9E0025CA71 /* nglPath_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DD11CB9D540025CA71 /* nglPath_Cocoa.h */; };
@@ -3482,7 +3477,6 @@
 		E52420C411CBCE9E0025CA71 /* nglKernel_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FC11CB86C40025CA71 /* nglKernel_UIKit.mm */; };
 		E52420C511CBCE9E0025CA71 /* nglModule_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FD11CB86C40025CA71 /* nglModule_UIKit.mm */; };
 		E52420C611CBCE9E0025CA71 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */; };
-		E52420C711CBCE9E0025CA71 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
 		E52420C911CBCE9E0025CA71 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		E52420CA11CBCE9E0025CA71 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
 		E52420CB11CBCE9E0025CA71 /* nglWindow_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181511CB87E80025CA71 /* nglWindow_UIKit.mm */; };
@@ -7660,8 +7654,6 @@
 		E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglPlugin_UIKit.mm; path = src/Application/UIKit/nglPlugin_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglApplication_UIKit.h; path = UIKit/nglApplication_UIKit.h; sourceTree = "<group>"; };
 		E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglDragAndDrop_UIKit.h; path = UIKit/nglDragAndDrop_UIKit.h; sourceTree = "<group>"; };
-		E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPhoneFontDB.cpp; path = src/Font/nuiPhoneFontDB.cpp; sourceTree = SOURCE_ROOT; };
-		E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPhoneFontDB.h; path = src/Font/nuiPhoneFontDB.h; sourceTree = SOURCE_ROOT; };
 		E524180F11CB87860025CA71 /* nuiURL_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiURL_UIKit.mm; path = src/Net/UIKit/nuiURL_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E524181211CB87E80025CA71 /* nglContext_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglContext_UIKit.mm; path = src/Window/UIKit/nglContext_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E524181311CB87E80025CA71 /* nglWindow_UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglWindow_UIKit.h; path = UIKit/nglWindow_UIKit.h; sourceTree = "<group>"; };
@@ -10905,8 +10897,6 @@
 				E56399BA13703756006920F5 /* nuiFontManager.cpp */,
 				E51C8070136ADE98004C3FFB /* hb_nui.cpp */,
 				E51C8071136ADE98004C3FFB /* hb_nui.h */,
-				E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */,
-				E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */,
 				E5816D790C3CECAB00902DFE /* ngl_default_font.cpp */,
 				E5816D7A0C3CECAB00902DFE /* ngl_default_font.h */,
 				E5816D7E0C3CECAB00902DFE /* nuiFontInstance.cpp */,
@@ -12202,7 +12192,6 @@
 				73F0856E12E9BA0700656E84 /* ngl_uikit.h in Headers */,
 				73F0856F12E9BA0700656E84 /* nglApplication_UIKit.h in Headers */,
 				73F0857012E9BA0700656E84 /* nglDragAndDrop_UIKit.h in Headers */,
-				73F0857112E9BA0700656E84 /* nuiPhoneFontDB.h in Headers */,
 				73F0857212E9BA0700656E84 /* nglWindow_UIKit.h in Headers */,
 				73F0857312E9BA0700656E84 /* nglImageCGCodec.h in Headers */,
 				73F0857412E9BA0700656E84 /* nglPath_Cocoa.h in Headers */,
@@ -13042,7 +13031,6 @@
 				E524180111CB86C40025CA71 /* ngl_uikit.h in Headers */,
 				E524180911CB86C40025CA71 /* nglApplication_UIKit.h in Headers */,
 				E524180A11CB86C40025CA71 /* nglDragAndDrop_UIKit.h in Headers */,
-				E524180E11CB875B0025CA71 /* nuiPhoneFontDB.h in Headers */,
 				E524181811CB87E80025CA71 /* nglWindow_UIKit.h in Headers */,
 				E52419DC11CB9D3C0025CA71 /* nglImageCGCodec.h in Headers */,
 				E52419DF11CB9D540025CA71 /* nglPath_Cocoa.h in Headers */,
@@ -13430,7 +13418,6 @@
 				E5241E8C11CBCE9E0025CA71 /* ngl_uikit.h in Headers */,
 				E5241E8D11CBCE9E0025CA71 /* nglApplication_UIKit.h in Headers */,
 				E5241E8E11CBCE9E0025CA71 /* nglDragAndDrop_UIKit.h in Headers */,
-				E5241E8F11CBCE9E0025CA71 /* nuiPhoneFontDB.h in Headers */,
 				E5241E9011CBCE9E0025CA71 /* nglWindow_UIKit.h in Headers */,
 				E5241E9E11CBCE9E0025CA71 /* nglImageCGCodec.h in Headers */,
 				E5241E9F11CBCE9E0025CA71 /* nglPath_Cocoa.h in Headers */,
@@ -16435,7 +16422,6 @@
 				73F086C112E9BA0700656E84 /* nglKernel_UIKit.mm in Sources */,
 				73F086C212E9BA0700656E84 /* nglModule_UIKit.mm in Sources */,
 				73F086C312E9BA0700656E84 /* nglPlugin_UIKit.mm in Sources */,
-				73F086C412E9BA0700656E84 /* nuiPhoneFontDB.cpp in Sources */,
 				73F086C512E9BA0700656E84 /* nglContext_UIKit.mm in Sources */,
 				73F086C612E9BA0700656E84 /* nglVideoMode_UIKit.mm in Sources */,
 				73F086C712E9BA0700656E84 /* nglWindow_UIKit.mm in Sources */,
@@ -17058,7 +17044,6 @@
 				E524180611CB86C40025CA71 /* nglKernel_UIKit.mm in Sources */,
 				E524180711CB86C40025CA71 /* nglModule_UIKit.mm in Sources */,
 				E524180811CB86C40025CA71 /* nglPlugin_UIKit.mm in Sources */,
-				E524180D11CB875B0025CA71 /* nuiPhoneFontDB.cpp in Sources */,
 				E524181711CB87E80025CA71 /* nglContext_UIKit.mm in Sources */,
 				E524181911CB87E80025CA71 /* nglVideoMode_UIKit.mm in Sources */,
 				E524181A11CB87E80025CA71 /* nglWindow_UIKit.mm in Sources */,
@@ -17404,7 +17389,6 @@
 				E52420C411CBCE9E0025CA71 /* nglKernel_UIKit.mm in Sources */,
 				E52420C511CBCE9E0025CA71 /* nglModule_UIKit.mm in Sources */,
 				E52420C611CBCE9E0025CA71 /* nglPlugin_UIKit.mm in Sources */,
-				E52420C711CBCE9E0025CA71 /* nuiPhoneFontDB.cpp in Sources */,
 				E52420C911CBCE9E0025CA71 /* nglContext_UIKit.mm in Sources */,
 				E52420CA11CBCE9E0025CA71 /* nglVideoMode_UIKit.mm in Sources */,
 				E52420CB11CBCE9E0025CA71 /* nglWindow_UIKit.mm in Sources */,
