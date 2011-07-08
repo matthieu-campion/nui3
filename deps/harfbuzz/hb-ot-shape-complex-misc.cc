@@ -1,5 +1,5 @@
 /*
- * Copyright © 2011  Google, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -24,39 +24,28 @@
  * Google Author(s): Behdad Esfahbod
  */
 
-#ifndef HB_VERSION_H
-#define HB_VERSION_H
-
-#include "hb-common.h"
+#include "hb-ot-shape-complex-private.hh"
 
 HB_BEGIN_DECLS
 
+/* TODO Add kana, hangul, and other small sahpers here */
 
-#define HB_VERSION_MAJOR 0
-#define HB_VERSION_MINOR 7
-#define HB_VERSION_MICRO 0
-
-#define HB_VERSION_STRING "0.7.0"
-
-#define HB_VERSION_CHECK(major,minor,micro) \
-	((major)*10000+(minor)*100+(micro) >= \
-	 HB_VERSION_MAJOR*10000+HB_VERSION_MINOR*100+HB_VERSION_MICRO)
-
+/* When adding trivial shapers, eg. kana, hangul, etc, we can either
+ * add a full shaper enum value for them, or switch on the script in
+ * the default complex shaper.  The former is faster, so I think that's
+ * what we would do, and hence the default complex shaper shall remain
+ * empty.
+ */
 
 void
-hb_version (unsigned int *major,
-	    unsigned int *minor,
-	    unsigned int *micro);
+_hb_ot_shape_complex_collect_features_default (hb_ot_map_builder_t *map, const hb_segment_properties_t  *props)
+{
+}
 
-const char *
-hb_version_string (void);
-
-hb_bool_t
-hb_version_check (unsigned int major,
-		  unsigned int minor,
-		  unsigned int micro);
+void
+_hb_ot_shape_complex_setup_masks_default (hb_ot_map_t *map, hb_buffer_t *buffer)
+{
+}
 
 
 HB_END_DECLS
-
-#endif /* HB_VERSION_H */
