@@ -176,21 +176,23 @@ public:
   
   /** @name Life cycle */
   //@{
-  nuiFontBase ();
+  nuiFontBase (float Size = 14.0f);
   /*!< Create default font
    Create a font from an embedded description. It implements all ASCII characters
    using a monospace, lightly serifed, legible scalable font.
+   \param Size size of the font
    */
   
-  nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer);
+  nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer, float Size = 14.0f);
   /*!< Create font from memory.
    Create a font from a memory buffer.
    */
   
-  nuiFontBase (const nglPath& rFontFile, uint Face = 0);
+  nuiFontBase (const nglPath& rFontFile, uint Face = 0, float Size = 14.0);
   /*!< Create a font from a file
    \param rFontFile path to font file
    \param Face face index for multi-face fonts
+   \param Size size of the font
    
    This will load a font file using any of the FreeType's supported file formats,
    including TrueType, PostScript Type1, Type42, PCF and Windows' FON (among others).
@@ -517,10 +519,10 @@ private:
   /* Init/setup
    */
   static bool Init();                                  // Mandatory init for all instances
-  bool Load (const nglPath& rPath, uint Face);  // Create font object from font file
-  bool Load (const uint8* pBase, int32 Size, uint Face, bool StaticBuffer); // Create font object from memory
-  bool Load (FaceID ID);                        // Clone font object from font ID (font already 'installed')
-  bool LoadFinish();                            // Setup some defaults (size, charmap, rendering)
+  bool Load (const nglPath& rPath, uint Face, float Size);  // Create font object from font file
+  bool Load (const uint8* pBase, int32 BufferSize, uint Face, bool StaticBuffer, float Size); // Create font object from memory
+  bool Load (FaceID ID, float Size);                        // Clone font object from font ID (font already 'installed')
+  bool LoadFinish(float Size);                            // Setup some defaults (size, charmap, rendering)
   
   /* Internal callbacks
    */
