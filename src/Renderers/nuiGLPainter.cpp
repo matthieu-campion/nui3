@@ -1155,7 +1155,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       for (uint32 i = 0; i < arraycount; i++)
       {
         nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
-#if (defined _UIKIT) || (defined _ANDROID_)
+#if (defined _UIKIT_) || (defined _ANDROID_)
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, &(array.mIndices[0]));
 #else
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, &(array.mIndices[0]));
@@ -1175,7 +1175,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       for (uint32 i = 0; i < arraycount; i++)
       {
         nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
-#if (defined _UIKIT) || (defined _ANDROID_)
+#if (defined _UIKIT_) || (defined _ANDROID_)
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, &(array.mIndices[0]));
 #else
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, &(array.mIndices[0]));
@@ -1199,7 +1199,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       for (uint32 i = 0; i < arraycount; i++)
       {
         nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
-#if (defined _UIKIT) || (defined _ANDROID_)
+#if (defined _UIKIT_) || (defined _ANDROID_)
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, &(array.mIndices[0]));
 #else
         glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, &(array.mIndices[0]));
@@ -1988,10 +1988,12 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
 bool nuiCheckForGLErrorsReal()
 {
+  GLenum err = GL_NO_ERROR;
 #if 1 // Globally enable/disable OpenGL error checking
 #ifdef _DEBUG_
   bool error = false;
-  GLenum err = glGetError();
+  err = glGetError();
+  App->GetLog().SetLevel("nuiGLPainter", 0);
   switch (err)
   {
       /*

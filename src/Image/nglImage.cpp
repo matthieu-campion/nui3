@@ -219,17 +219,22 @@ nglImage::nglImage (nglIStream* pInput, nglImageCodec* pCodec)
 
 nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
 {
+  LOGI("load image %s\n", rPath.GetChars());
   StaticInit();
   mpCodec = pCodec;
   mOwnCodec = (pCodec == NULL);
 
   nglIStream* pIFile = rPath.OpenRead();
   if (!pIFile)
+  {
+    LOGI("    ERROR Unable to open file\n");
     return;
+  }
   
   if (pIFile->GetState() != eStreamReady)
   {
     delete pIFile;
+    LOGI("    ERROR Unable to read file\n");
     return;
   }
 
@@ -288,6 +293,11 @@ nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
 
   if (IsValid() && !mInfo.mPreMultAlpha)
     PreMultiply();
+  
+  if (!IsValid())
+  {
+    LOGI("    ERROR Unable to decode file\n");
+  }
 }
 
 nglImage::nglImage(nglImageInfo& rInfo, nuiCopyPolicy policy)

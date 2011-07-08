@@ -36,6 +36,12 @@ public:
     mpKernel = pKernel;
     SysInit((HINSTANCE)hInstance); 
   }
+#elif defined(_ANDROID_)
+  nuiManualKernel(void* app, nuiKernel* pKernel) 
+  { 
+    mpKernel = pKernel;
+    SysInit((android_app*)app); 
+  }
 #else
   nuiManualKernel(nuiKernel* pKernel) 
   { 

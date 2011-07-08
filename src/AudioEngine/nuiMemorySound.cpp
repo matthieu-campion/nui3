@@ -39,13 +39,19 @@ nuiMemorySound::~nuiMemorySound()
 bool nuiMemorySound::LoadSamples(nglIStream* pStream)
 {
   if (!mPath.Exists() && !pStream)
+  {
     return false;
+  }
   
   if (!pStream)
+  {
     pStream = mPath.OpenRead();
+  }
 
   if (!pStream)
+  {
     return false;
+  }
   
   nuiSampleReader* pReader = NULL;
   nuiSampleInfo info;

@@ -177,8 +177,17 @@ private:
   
   
 #ifdef _ANDROID_
-  timer_t mTimerID;
-  static bool sMainSignalConnected;
+public:
+  static void DispatchTimers();
+  static double DispatchPeriod;
+private:
+  static nglTime sLastDispatch;
+  static std::list<nglTimer*> sTimers;
+  
+  void CallOnDispatch();
+  uint32 mCounter;
+  uint32 mRoundsPerTick;
+  
   nglTime mLastTime;
   void TimerAction();
   

@@ -23,53 +23,67 @@
 #include <math.h>
 
 #define TIMER_MIN_PERIOD     0.050 // 50ms (somewhat 'reasonable')
-#define NGL_TIMER_ANDROID_SIGNAL SIGRTMIN
 
-bool nglTimer::sMainSignalConnected = false;
+nglTime nglTimer::sLastDispatch;
+std::list<nglTimer*> nglTimer::sTimers;
+double nglTimer::DispatchPeriod = 1; // 1 millisecond
 
-
-void nglTimerAndroidHandler(int sig, siginfo_t *si, void *uc)
+void nglTimer::DispatchTimers()
 {
-  nglTimer* pTimer = (nglTimer*)si->si_value.sival_ptr;
-  pTimer->TimerAction();
+  nglTime now;
+  
+  double elapsed = now.GetValue() - sLastDispatch.GetValue();
+//  LOGI("DispatchTimers elapsed = %lf milliseconds", elapsed * 1000.0);
+  if ((elapsed) < 0.001) // at least 1 millisecond between to updates
+  {
+    return;
+  }
+  
+  std::list<nglTimer*>::iterator it;
+  std::list<nglTimer*>::iterator end = sTimers.end();
+  for (it = sTimers.begin(); it != end; ++it)
+  {
+    nglTimer* pTimer = *it;
+    if (pTimer->IsRunning())
+      pTimer->CallOnDispatch();
+  }
+  
+  sLastDispatch = now;
 }
 
-nglTimer::nglTimer(nglTime Period) : mPeriod(Period), mLastTime(0)
+nglTimer::nglTimer(nglTime Period) : mLastTime(0)
 {
   mCallCnt = 0;
   mRunning = false;
+  mCounter = 0;
+  mRoundsPerTick = 0;
   
-  mTimerID = 0;
-
-  if (!sMainSignalConnected)
-  {
-    struct sigaction sa;
-    sa.sa_flags = SA_SIGINFO;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_sigaction = nglTimerAndroidHandler;
-    
-    if (sigaction(NGL_TIMER_ANDROID_SIGNAL, &sa, NULL) == -1)
-    {
-      return;
-    }
-    sMainSignalConnected = true;
-  }
-  
-  sigevent event;
-  event.sigev_notify = SIGEV_SIGNAL;
-  event.sigev_signo = NGL_TIMER_ANDROID_SIGNAL;
-  event.sigev_value.sival_ptr = this;
-  
-  int res = timer_create(CLOCK_REALTIME, &event, &mTimerID);
+  SetPeriod(Period);
 
   App->AddTimer (this);
+  sTimers.push_back(this);
 }
 
 nglTimer::~nglTimer()
 {
   App->DelTimer (this);
-  if (mTimerID)
-    timer_delete(mTimerID);
+  sTimers.remove(this);
+}
+
+
+void nglTimer::CallOnDispatch()
+{
+  if (!mRunning)
+  {
+    return;
+  }
+  
+  mCounter--;
+  if (!mCounter)
+  {
+    TimerAction();
+    mCounter = mRoundsPerTick;
+  }
 }
 
 
@@ -90,52 +104,41 @@ nglTime nglTimer::GetPeriod()
 
 bool nglTimer::SetPeriod(nglTime Period)
 {
-  if (Period < TIMER_MIN_PERIOD)
+  if (mRunning) 
   {
-    mPeriod = TIMER_MIN_PERIOD;
     return false;
   }
-  mPeriod = Period;
+  
+  mPeriod = MAX(TIMER_MIN_PERIOD, Period.GetValue());
+  
+  mRoundsPerTick = ToBelow(mPeriod.GetValue() / (DispatchPeriod / 1000.0));
+  if (!mRoundsPerTick)
+    mRoundsPerTick = 1;
   return true;
 }
 
 bool nglTimer::Start(bool Immediate, bool Reset)
 {
+  if (mRunning)
+  {
+    return false;
+  }
+  
   nglTime now;
   mLastTime = now;
   
+  if (mCounter == 0)
+    mCounter = mRoundsPerTick;
+  mCounter = MIN(mRoundsPerTick, mCounter);
   if (Reset)
+  {
     mCallCnt = 0;
-  
-  int sec = ToBelow(mPeriod.GetValue());
-  int nanosec = ToBelow(((double)sec - mPeriod.GetValue()) * 1000000000);
-  
-  itimerspec its;
-  its.it_interval.tv_sec = sec;
-  its.it_interval.tv_nsec = nanosec;
+    mCounter = mRoundsPerTick;
+  }
   
   if (Immediate)
-  {
-    its.it_value.tv_sec = 0;
-    its.it_value.tv_nsec = 1;
-  }
-  else
-  {
-    its.it_value.tv_sec = sec;
-    its.it_value.tv_nsec = nanosec;
-  }
+    TimerAction();
   
-  
-  if (mTimerID < 0)
-  {
-    return false;
-  }
-  
-  if (timer_settime(mTimerID, 0, &its, NULL) == -1)
-  {
-    return false;
-  }
-
   mRunning = true;
   return true;
 }
@@ -143,24 +146,13 @@ bool nglTimer::Start(bool Immediate, bool Reset)
 void nglTimer::Stop()
 {
   mRunning = false;
-  
-  itimerspec its;
-  its.it_value.tv_sec = 0;
-  its.it_value.tv_nsec = 0;
-  its.it_interval.tv_sec = 0;
-  its.it_interval.tv_nsec = 0;
-  if (mTimerID < 0)
-  {
-    return;
-  }
-  
-  timer_settime(mTimerID, 0, &its, NULL);
 }
 
 void nglTimer::TimerAction()
 {
   nglTime now;
-  OnTick(now - mLastTime);
+  double elapsed = now.GetValue() - mLastTime.GetValue();
+  OnTick(elapsed);
   mLastTime = now;
   mCallCnt++;
 }

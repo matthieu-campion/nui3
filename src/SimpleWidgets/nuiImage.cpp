@@ -217,9 +217,13 @@ void nuiImage::ForceReload()
 
 bool nuiImage::Draw(nuiDrawContext* pContext)
 {
+  LOGI("nuiImage::Draw");
 //  int x=0,y=0;
   if (!mpTexture)
+  {
+    LOGI("nuiImage::Draw FAILED");
     return false;
+  }
 
   pContext->PushState();
   pContext->ResetState();
@@ -241,13 +245,20 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
 
   nuiColor c(mColor);
   c.Multiply(alpha);
+  
+  LOGI("nuiImage::Draw rect(%f, %f, %f, %f)", (float)rect.Left(), (float)rect.Top(), (float)rect.GetWidth(), (float)rect.GetHeight());
+  LOGI("nuiImage::Draw mTextureRect(%f, %f, %f, %f)", (float)mTextureRect.Left(), (float)mTextureRect.Top(), (float)mTextureRect.GetWidth(), (float)mTextureRect.GetHeight());
+  LOGI("nuiImage::Draw color (%f, %f, %f, %f)", c.Red(), c.Green(), c.Blue(), c.Alpha());
+  
   pContext->SetFillColor(c);
   pContext->DrawImage(rect, mTextureRect);
-
+  
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);
 
   pContext->PopState();
+  
+  LOGI("nuiImage::Draw OK");
   return true;
 }
 

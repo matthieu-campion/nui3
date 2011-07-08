@@ -19,69 +19,6 @@
 
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
-<<<<<<< HEAD
-class __NglKernel__ : public nglKernel
-{
-public:
-#ifdef _WIN32_
-  __NglKernel__(void* hInstance, nuiKernel* pKernel) 
-  { 
-    mpKernel = pKernel;
-    SysInit((HINSTANCE)hInstance); 
-  }
-#elif defined(_ANDROID_)
-  __NglKernel__(void* app, nuiKernel* pKernel) 
-  { 
-    mpKernel = pKernel;
-    SysInit((android_app*)app); 
-  }
-#else
-  __NglKernel__(nuiKernel* pKernel) 
-  { 
-    mpKernel = pKernel;
-    SysInit(); 
-  }
-
-#endif
-  ~__NglKernel__() 
-  {
-    if (mpKernel)
-      delete mpKernel;
-  }
-
-  // Hooks:
-  void OnInit()
-  {
-    if (mpKernel)
-      mpKernel->OnInit();
-  }
-
-  void OnExit(int Code)
-  {
-    if (mpKernel)
-      mpKernel->OnExit(Code);
-  }
-
-  // Device management:
-  void OnDeviceAdded(const nglDeviceInfo* pDeviceInfo)
-  {
-    if (mpKernel)
-      mpKernel->OnDeviceAdded(pDeviceInfo);
-  }
-
-  void OnDeviceRemoved(const nglDeviceInfo* pDeviceInfo)
-  {
-    if (mpKernel)
-      mpKernel->OnDeviceRemoved(pDeviceInfo);
-  }
-
-private:
-  nuiKernel* mpKernel;
-};
-
-
-=======
->>>>>>> c547d3c5742bb5a4e7039ecc146b5e9879457921
 static uint32 gNUIReferences = 0;
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)

@@ -18,7 +18,8 @@ class nuiAndroidBridge : public nglContext, public nuiTopLevel
 {
 public:
   nuiAndroidBridge()
-  : nuiTopLevel(_T(""))
+  : nuiTopLevel(_T("")),
+    mEventSink(this)
   {
     *((nuiAndroidBridge**)&gmpNUI_AndroidBridge) = this;
 
@@ -31,8 +32,14 @@ public:
     SetRect(nuiRect(0.0f, 0.0f, (nuiSize)mWidth, (nuiSize)mHeight));
     
     
-    mpAudioEngine = new nuiAudioEngine(44100, 1024);
-    mpAudioEngine->PlaySound(_T("rsrc:/audio/test.mp3"), nuiSound::eStream);
+//    mpAudioEngine = new nuiAudioEngine(44100, 1024);
+//    mpAudioEngine->PlaySound(_T("rsrc:/audio/test.mp3"), nuiSound::eStream);
+
+  
+    nuiTimer* pTimer = new nuiTimer(0.1);
+    mEventSink.Connect(pTimer->Tick, &nuiAndroidBridge::OnTimer);
+    pTimer->Start();
+    
   }
   
   virtual ~nuiAndroidBridge()
@@ -103,6 +110,11 @@ public:
     else
       ((nuiAndroidBridge*)gmpNUI_AndroidBridge)->OnMouseClick(Info);
     
+  }
+  
+  void OnTimer(const nuiEvent& rEvent)
+  {
+    LOGI("nuiAndroidBridge::OnTimer");
   }
   
   
@@ -291,5 +303,7 @@ protected:
   uint32 mWidth, mHeight;
   
   nuiAudioEngine* mpAudioEngine;
+  
+  nuiEventSink<nuiAndroidBridge> mEventSink;
 };
 
