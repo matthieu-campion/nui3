@@ -15,7 +15,7 @@
 
 
 static unsigned int
-hb_nui_get_combining_class (hb_unicode_funcs_t *ufuncs,
+nui_hb_get_combining_class (hb_unicode_funcs_t *ufuncs,
                             hb_codepoint_t      unicode,
                             void               *user_data)
 
@@ -24,7 +24,7 @@ hb_nui_get_combining_class (hb_unicode_funcs_t *ufuncs,
 }
 
 static unsigned int
-hb_nui_get_eastasian_width (hb_unicode_funcs_t *ufuncs,
+nui_hb_get_eastasian_width (hb_unicode_funcs_t *ufuncs,
                             hb_codepoint_t      unicode,
                             void               *user_data)
 {
@@ -80,7 +80,7 @@ static const char* HB_UnicodeCats[] =
 };
 
 static hb_unicode_general_category_t
-hb_nui_get_general_category (hb_unicode_funcs_t *ufuncs,
+nui_hb_get_general_category (hb_unicode_funcs_t *ufuncs,
                              hb_codepoint_t      unicode,
                              void               *user_data)
 {
@@ -135,7 +135,7 @@ hb_nui_get_general_category (hb_unicode_funcs_t *ufuncs,
 }
 
 static hb_codepoint_t
-hb_nui_get_mirroring (hb_unicode_funcs_t *ufuncs,
+nui_hb_get_mirroring (hb_unicode_funcs_t *ufuncs,
                       hb_codepoint_t      unicode,
                       void               *user_data)
 {
@@ -305,7 +305,7 @@ hb_script_t hb_get_script_from_nui(nuiUnicodeScript script)
 }
 
 static hb_script_t
-hb_nui_get_script (hb_unicode_funcs_t *ufuncs,
+nui_hb_get_script (hb_unicode_funcs_t *ufuncs,
                    hb_codepoint_t      unicode,
                    void               *user_data)
 {
@@ -318,16 +318,16 @@ static hb_unicode_funcs_t nui_ufuncs = {
   NULL, /* parent */
   TRUE, /* immutable */
   {
-    hb_nui_get_combining_class,
-    hb_nui_get_eastasian_width,
-    hb_nui_get_general_category,
-    hb_nui_get_mirroring,
-    hb_nui_get_script
+    nui_hb_get_combining_class,
+    nui_hb_get_eastasian_width,
+    nui_hb_get_general_category,
+    nui_hb_get_mirroring,
+    nui_hb_get_script
   }
 };
 
 hb_unicode_funcs_t *
-hb_nui_get_unicode_funcs (void)
+nui_hb_get_unicode_funcs (void)
 {
   return &nui_ufuncs;
 }

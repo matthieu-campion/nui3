@@ -1,6 +1,6 @@
 /*
  * Copyright © 2009,2010  Red Hat, Inc.
- * Copyright © 2010  Google, Inc.
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -96,7 +96,7 @@ hb_ot_shape_collect_features (hb_ot_shape_planner_t          *planner,
 
   ADD_FEATURES (early_features);
 
-  hb_ot_shape_complex_collect_features (planner, props);
+  hb_ot_shape_complex_collect_features (planner->shaper, &planner->map, props);
 
   ADD_FEATURES (common_features);
 
@@ -120,7 +120,7 @@ hb_ot_shape_setup_masks (hb_ot_shape_context_t *c)
   hb_mask_t global_mask = c->plan->map.get_global_mask ();
   c->buffer->reset_masks (global_mask);
 
-  hb_ot_shape_complex_setup_masks (c); /* BUFFER: Clobbers var2 */
+  hb_ot_shape_complex_setup_masks (c->plan->shaper, &c->plan->map, c->buffer); /* BUFFER: Clobbers var2 */
 
   for (unsigned int i = 0; i < c->num_user_features; i++)
   {
@@ -197,8 +197,8 @@ hb_set_unicode_props (hb_ot_shape_context_t *c)
 
   unsigned int count = c->buffer->len;
   for (unsigned int i = 1; i < count; i++) {
-    info[i].general_category() = unicode->get_general_category (info[i].codepoint);
-    info[i].combining_class() = unicode->get_combining_class (info[i].codepoint);
+    info[i].general_category() = hb_unicode_general_category (unicode, info[i].codepoint);
+    info[i].combining_class() = hb_unicode_combining_class (unicode, info[i].codepoint);
   }
 }
 
@@ -252,7 +252,7 @@ hb_mirror_chars (hb_ot_shape_context_t *c)
 
   unsigned int count = c->buffer->len;
   for (unsigned int i = 0; i < count; i++) {
-    hb_codepoint_t codepoint = unicode->get_mirroring (c->buffer->info[i].codepoint);
+    hb_codepoint_t codepoint = hb_unicode_mirroring (unicode, c->buffer->info[i].codepoint);
     if (likely (codepoint == c->buffer->info[i].codepoint))
       c->buffer->info[i].mask |= rtlm_mask; /* XXX this should be moved to before setting user-feature masks */
     else

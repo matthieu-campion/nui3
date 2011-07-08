@@ -139,7 +139,7 @@ static const int indic_syllable_machine_en_main = 6;
 
 
 
-#line 80 "hb-ot-shape-complex-indic-machine.rl"
+#line 81 "hb-ot-shape-complex-indic-machine.rl"
 
 
 
@@ -147,7 +147,7 @@ static const int indic_syllable_machine_en_main = 6;
 #include <string.h>
 
 static void
-find_syllables (hb_ot_shape_context_t *c)
+find_syllables (hb_ot_map_t *map, hb_buffer_t *buffer)
 {
   unsigned int p, pe, eof;
   int cs;
@@ -157,14 +157,15 @@ find_syllables (hb_ot_shape_context_t *c)
 	cs = indic_syllable_machine_start;
 	}
 
-#line 94 "hb-ot-shape-complex-indic-machine.rl"
+#line 95 "hb-ot-shape-complex-indic-machine.rl"
 
 
   p = 0;
-  pe = eof = c->buffer->len;
+  pe = eof = buffer->len;
 
+  unsigned int last = 0;
   
-#line 168 "hb-ot-shape-complex-indic-machine.hh"
+#line 169 "hb-ot-shape-complex-indic-machine.hh"
 	{
 	int _slen;
 	int _trans;
@@ -179,9 +180,9 @@ _resume:
 	_inds = _indic_syllable_machine_indicies + _indic_syllable_machine_index_offsets[cs];
 
 	_slen = _indic_syllable_machine_key_spans[cs];
-	_trans = _inds[ _slen > 0 && _keys[0] <=( c->buffer->info[p].indic_category()) &&
-		( c->buffer->info[p].indic_category()) <= _keys[1] ?
-		( c->buffer->info[p].indic_category()) - _keys[0] : _slen ];
+	_trans = _inds[ _slen > 0 && _keys[0] <=( buffer->info[p].indic_category()) &&
+		( buffer->info[p].indic_category()) <= _keys[1] ?
+		( buffer->info[p].indic_category()) - _keys[0] : _slen ];
 
 	cs = _indic_syllable_machine_trans_targs[_trans];
 
@@ -192,10 +193,11 @@ _resume:
 	case 1:
 #line 62 "hb-ot-shape-complex-indic-machine.rl"
 	{
-  //fprintf (stderr, "Syll %d\n", p);
+  found_syllable (map, buffer, last, p);
+  last = p;
 }
 	break;
-#line 199 "hb-ot-shape-complex-indic-machine.hh"
+#line 201 "hb-ot-shape-complex-indic-machine.hh"
 	}
 
 _again:
@@ -210,17 +212,18 @@ _again:
 	case 1:
 #line 62 "hb-ot-shape-complex-indic-machine.rl"
 	{
-  //fprintf (stderr, "Syll %d\n", p);
+  found_syllable (map, buffer, last, p);
+  last = p;
 }
 	break;
-#line 217 "hb-ot-shape-complex-indic-machine.hh"
+#line 220 "hb-ot-shape-complex-indic-machine.hh"
 	}
 	}
 
 	_out: {}
 	}
 
-#line 101 "hb-ot-shape-complex-indic-machine.rl"
+#line 103 "hb-ot-shape-complex-indic-machine.rl"
 
 }
 

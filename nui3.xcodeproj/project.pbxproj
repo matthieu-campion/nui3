@@ -5074,6 +5074,9 @@
 		E5A8D19411E33A54004E14CE /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E5A8D19811E33A54004E14CE /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		E5A8D1C711E33A54004E14CE /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
+		E5AA571813C70FA300245C10 /* hb-ot-shape-complex-misc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */; };
+		E5AA571913C70FA400245C10 /* hb-ot-shape-complex-misc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */; };
+		E5AA571A13C70FA500245C10 /* hb-ot-shape-complex-misc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */; };
 		E5AFA4D7117548CD0021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E5AFA4D8117548CD0021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E5AFA4E1117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
@@ -8862,6 +8865,7 @@
 		E5A8BF6411C277A400ECE5FF /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utils.c; path = deps/libcss/src/utils/utils.c; sourceTree = SOURCE_ROOT; };
 		E5A8BF6511C277A400ECE5FF /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utils.h; path = deps/libcss/src/utils/utils.h; sourceTree = SOURCE_ROOT; };
 		E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3CocoaD.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ot-shape-complex-misc.cc"; path = "harfbuzz/hb-ot-shape-complex-misc.cc"; sourceTree = "<group>"; };
 		E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMimeMultiPart.h; path = include/nuiMimeMultiPart.h; sourceTree = SOURCE_ROOT; };
 		E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMimeMultiPart.cpp; path = src/Net/nuiMimeMultiPart.cpp; sourceTree = SOURCE_ROOT; };
 		E5B5CC641388968800A3A65D /* hb-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-version.h"; path = "harfbuzz/hb-version.h"; sourceTree = "<group>"; };
@@ -11800,6 +11804,7 @@
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
+				E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */,
 				E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */,
 				E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */,
 				E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */,
@@ -16758,6 +16763,7 @@
 				E511F7C61367149100DE93B0 /* hb-ot-tag.cc in Sources */,
 				E511F7CA1367149100DE93B0 /* hb-shape.cc in Sources */,
 				E511F7CD1367149100DE93B0 /* hb-unicode.cc in Sources */,
+				E5AA571813C70FA300245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19114,6 +19120,7 @@
 				E511F7661367149000DE93B0 /* hb-ot-tag.cc in Sources */,
 				E511F76A1367149000DE93B0 /* hb-shape.cc in Sources */,
 				E511F76D1367149000DE93B0 /* hb-unicode.cc in Sources */,
+				E5AA571A13C70FA500245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19391,6 +19398,7 @@
 				E511F7961367149000DE93B0 /* hb-ot-tag.cc in Sources */,
 				E511F79A1367149000DE93B0 /* hb-shape.cc in Sources */,
 				E511F79D1367149100DE93B0 /* hb-unicode.cc in Sources */,
+				E5AA571913C70FA400245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

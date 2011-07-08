@@ -2115,7 +2115,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   
   hb_buffer = hb_buffer_create(len);
   
-  hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
+  hb_buffer_set_unicode_funcs(hb_buffer, nui_hb_get_unicode_funcs());
   
   //hb_buffer_set_direction(hb_buffer, HB_DIRECTION_TTB);
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
