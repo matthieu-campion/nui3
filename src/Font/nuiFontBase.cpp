@@ -183,30 +183,6 @@ static const nglChar* gpFontErrorTable[] =
   NULL
 };
 
-/////////////////////////////////////////////
-//nuiFontBase::nuiFontBase()
-//{
-//  Defaults();
-//}
-//
-//nuiFontBase::nuiFontBase(uint8* pBuffer, uint BufferSize, uint Face, bool StaticBuffer)
-//: nuiFontBase(pBuffer, BufferSize, Face, StaticBuffer)
-//{
-//  Defaults();
-//}
-//
-//nuiFontBase::nuiFontBase (const nglPath& rFontFile, uint Face)
-//: nuiFontBase (rFontFile, Face)
-//{
-//  Defaults();
-//}
-//
-//nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
-//: nuiFontBase (rFont)
-//{
-//  mAlphaTest = rFont.mAlphaTest;
-//}
-
 
 ///! nuiFontDesc
 //class nuiFontDesc
@@ -798,25 +774,25 @@ void nuiGlyphInfo::Dump (uint Level) const
  * Life cycle
  */
 
-nuiFontBase::nuiFontBase()
+nuiFontBase::nuiFontBase(float Size)
 {
   Defaults();
   Init();
-  Load((FT_Byte*)gpDefaultFontBase, gDefaultFontSize, 0, true);
+  Load((FT_Byte*)gpDefaultFontBase, gDefaultFontSize, 0, true, Size);
 }
 
-nuiFontBase::nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer)
+nuiFontBase::nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer, float Size)
 {
   Defaults();
   Init();
-  Load((FT_Byte*)pBuffer, BufferSize, Face, StaticBuffer);
+  Load((FT_Byte*)pBuffer, BufferSize, Face, StaticBuffer, Size);
 }
 
-nuiFontBase::nuiFontBase (const nglPath& rFontFile, uint Face)
+nuiFontBase::nuiFontBase (const nglPath& rFontFile, uint Face, float Size)
 {
   Defaults();
   Init();
-  Load(rFontFile, Face);
+  Load(rFontFile, Face, Size);
 }
 
 nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
@@ -831,7 +807,7 @@ nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
   mRenderMode  = rFont.mRenderMode;
   
   Init();
-  Load(rFont.mpFace->Desc.face_id);
+  Load(rFont.mpFace->Desc.face_id, mSize);
 }
 
 nuiFontBase::~nuiFontBase()
@@ -1100,12 +1076,18 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
     return false;
   }
   
+  printf("SetSize of '%s' from %f (face: %p -> %p / face_id: %p -> %p) [%p]\n", 
+         mpFace->Face->family_name, 
+         Size, 
+         mpFace->Face, ftsize->face,
+         mpFace->Desc.face_id, ftscaler.face_id,
+         mpFace->GetFontInstance());
   mpFace->Face = ftsize->face;
   mpFace->Desc.face_id = ftscaler.face_id;
   mpFace->Desc.width   = pixels;
   mpFace->Desc.height  = pixels;
   mSize = pixels * nuiGetInvScaleFactor();
-  
+
   return true;
 }
 
@@ -1645,27 +1627,27 @@ bool nuiFontBase::Init()
   return true;
 }
 
-bool nuiFontBase::Load (const nglPath& rPath, uint Face)
+bool nuiFontBase::Load (const nglPath& rPath, uint Face, float Size)
 {
   // Load face from file spec
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font '%s' (face %d)"), rPath.GetNodeName().GetChars(), Face); )
   mpFace->SetFontInstance(new nuiFontInstance(rPath, Face));
   mpFace->Desc.face_id = nuiFontInstance::Install(mpFace->GetFontInstance());
   
-  return LoadFinish();
+  return LoadFinish(Size);
 }
 
-bool nuiFontBase::Load (const uint8* pBase, int32 Size, uint Face, bool StaticBuffer)
+bool nuiFontBase::Load (const uint8* pBase, int32 BufferSize, uint Face, bool StaticBuffer, float Size)
 {
   // Load face from memory
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font at %p (face %d, %d bytes)"), pBase, Face, Size); )
-  mpFace->SetFontInstance(new nuiFontInstance(pBase, Size, Face, StaticBuffer));
+  mpFace->SetFontInstance(new nuiFontInstance(pBase, BufferSize, Face, StaticBuffer));
   mpFace->Desc.face_id = nuiFontInstance::Install(mpFace->GetFontInstance());
   
-  return LoadFinish();
+  return LoadFinish(Size);
 }
 
-bool nuiFontBase::Load (FaceID ID)
+bool nuiFontBase::Load (FaceID ID, float Size)
 {
   // Load face from FreeType cache ID
 #ifdef _DEBUG_
@@ -1676,10 +1658,10 @@ bool nuiFontBase::Load (FaceID ID)
   
   mpFace->Desc.face_id = (FTC_FaceID)ID;
   
-  return LoadFinish();
+  return LoadFinish(Size);
 }
 
-bool nuiFontBase::LoadFinish()
+bool nuiFontBase::LoadFinish(float Size)
 {
   mValid = false;
 
@@ -1718,7 +1700,7 @@ bool nuiFontBase::LoadFinish()
    */
   if (IsScalable())
   {
-    if (!SetSize(DefaultPixelSize, eFontUnitPixel))
+    if (!SetSize(Size, eFontUnitPixel))
       return false;
     SetRenderMode(AntiAliasing | Hinting);
   }
@@ -1726,10 +1708,12 @@ bool nuiFontBase::LoadFinish()
   {
     if (mpFace->Face->num_fixed_sizes > 0)
     {
-      // Take first available size
-      FT_Bitmap_Size* size = mpFace->Face->available_sizes;
-      
-      if (!SetSize ((float)size->height, eFontUnitPixel))
+//      // Take first available size
+//      FT_Bitmap_Size* size = mpFace->Face->available_sizes;
+//      
+//      if (!SetSize ((float)size->height, eFontUnitPixel))
+//        return false;
+      if (!SetSize (Size, eFontUnitPixel))
         return false;
     }
 #ifdef _DEBUG_
@@ -2100,7 +2084,6 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   NGL_ASSERT(this == pRun->mStyle.GetFont());
   
   FT_Face ft_face = mpFace->Face;
-  hb_face_t *hb_face = hb_ft_face_create_cached(ft_face);
   hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
   hb_buffer_t *hb_buffer;
   hb_glyph_info_t *hb_glyph;
@@ -2115,7 +2098,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   
   hb_buffer = hb_buffer_create(len);
   
-  hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
+  hb_buffer_set_unicode_funcs(hb_buffer, nui_hb_get_unicode_funcs());
   
   //hb_buffer_set_direction(hb_buffer, HB_DIRECTION_TTB);
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
@@ -2157,6 +2140,5 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   pRun->mAdvanceX = x * (1./64);
   hb_buffer_destroy(hb_buffer);
   hb_font_destroy(hb_font);
-  hb_face_destroy(hb_face);
 }
 
