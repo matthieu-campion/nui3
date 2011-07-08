@@ -40,6 +40,11 @@ void objCCallOnMemoryWarning();
   [super sendEvent: pEvent];
 }
 
+- (void) didReceiveMemoryWarning
+{
+  [super didReceiveMemoryWarning];
+}
+
 @end///< nglUIApplication
 
 
