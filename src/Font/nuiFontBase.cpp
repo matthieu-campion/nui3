@@ -2084,6 +2084,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   NGL_ASSERT(this == pRun->mStyle.GetFont());
   
   FT_Face ft_face = mpFace->Face;
+  ft_face->
   hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
   hb_buffer_t *hb_buffer;
   hb_glyph_info_t *hb_glyph;
