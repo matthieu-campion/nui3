@@ -133,6 +133,9 @@ public:
       return NULL;
     }
     
+    Face = ftsize->face;
+    Desc.face_id = ftscaler.face_id;
+
     return ftsize->face;
   }
   
@@ -1099,6 +1102,8 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
       return false;
   }
   
+  mpFace->Desc.width   = pixels;
+  mpFace->Desc.height  = pixels;
   mSize = pixels * nuiGetInvScaleFactor();
   return true;
 }
@@ -1408,6 +1413,7 @@ bool nuiFontBase::SetRenderMode (nuiFontBase::RenderMode Mode)
 
 nuiFontBase::GlyphHandle nuiFontBase::GetGlyph (uint Index, GlyphType Type) const
 {
+  FT_Face face = mpFace->GetFace();
   FT_Glyph glyph;
   FTC_ImageTypeRec desc = mpFace->Desc; // Our query, with .flags = FT_LOAD_DEFAULT
   
@@ -1687,7 +1693,21 @@ bool nuiFontBase::LoadFinish(float Size)
 
   /* Fetch generic (maybe unsized) face
    */
-  FT_Face face = mpFace->GetFace();
+  if (FTC_Manager_LookupFace (gFTCacheManager, mpFace->Desc.face_id, &mpFace->Face) != FT_Err_Ok)
+  {
+    //SetError(_T("font"), NGL_FONT_ELOAD);
+    return false;
+  }
+  
+  /* Select a default size
+   */
+  if (!SetSize(Size, eFontUnitPixel))
+    return false;
+  if (IsScalable())
+    SetRenderMode(AntiAliasing | Hinting);
+  
+
+  FT_Face face = mpFace->Face;
   if (!face)
     return false;
   
@@ -1712,35 +1732,6 @@ bool nuiFontBase::LoadFinish(float Size)
     NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("Warning: font '%s (%s)' has no panose information.\n"), mFamilyName.GetChars(), mStyleName.GetChars()); )
     memset(&mPanoseBytes, 0, 10);
     mHasPanoseInfo = false;
-  }
-  
-  /* Select a default size
-   */
-  if (IsScalable())
-  {
-    if (!SetSize(Size, eFontUnitPixel))
-      return false;
-    SetRenderMode(AntiAliasing | Hinting);
-  }
-  else
-  {
-    if (face->num_fixed_sizes > 0)
-    {
-//      // Take first available size
-//      FT_Bitmap_Size* size = face->available_sizes;
-//      
-//      if (!SetSize ((float)size->height, eFontUnitPixel))
-//        return false;
-      if (!SetSize (Size, eFontUnitPixel))
-        return false;
-    }
-#ifdef _DEBUG_
-    else
-    {
-      NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("Oddity: fixed font with no available sizes"));
-    }
-#endif // _DEBUG_
-       // No SetRenderMode() since this is a bitmap font
   }
   
   /* Select a default charmap
@@ -1844,8 +1835,6 @@ nuiTexture *nuiFontBase::AllocateTexture(int size)
   nglImageInfo ImageInfo(false);
   ImageInfo.mBufferFormat = eImageFormatRaw;
   ImageInfo.mPixelFormat = eImagePixelAlpha;
-  nuiFontInfo FontInfo;
-  GetInfo(FontInfo);
   ImageInfo.mWidth = size;
   ImageInfo.mHeight = size;
   ImageInfo.mBitDepth = 8;
@@ -1902,8 +1891,6 @@ void nuiFontBase::Blit8BitsBitmapToTexture(const GlyphBitmap &rBitmap, nuiTextur
 
 bool nuiFontBase::CopyBitmapToTexture(const GlyphBitmap &rBitmap, nuiTexture *pTexture, unsigned int OffsetX, unsigned int OffsetY)
 {
-  OffsetX;
-  OffsetY;
   int32 Width = rBitmap.Width;
   int32 Height = rBitmap.Height;
   switch (rBitmap.Depth)
