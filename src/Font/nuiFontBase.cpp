@@ -84,10 +84,11 @@ class FaceHandle
 public:
   FT_Face          Face;  // FreeType face object handler
   FTC_ImageTypeRec Desc;  // Font description, for image cache (pixel size, rendering mode)
-  
-  
+  FTC_ScalerRec ftscaler;  
+
   FaceHandle()
-  : Face(NULL), mpFontInstance(new nuiFontInstance(nglPath(), 0))
+  : Face(NULL),
+    mpFontInstance(new nuiFontInstance(nglPath(), 0))
   {
     Desc.face_id = 0;
     Desc.width = 0;
@@ -115,9 +116,28 @@ public:
   {
     return mpFontInstance;
   }
+  
+
+  bool GetSize(FT_Size& ftsize)
+  {
+    return FTC_Manager_LookupSize(gFTCacheManager, &ftscaler, &ftsize) != 0;
+  }
+  
+  FT_Face GetFace()
+  {
+    FT_Size ftsize;
+    bool res = GetSize(ftsize);
+    if (res)
+    {
+      NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, "Couldn't change font size"); )
+      return NULL;
+    }
+    
+    return ftsize->face;
+  }
+  
 private:
   nuiFontInstance* mpFontInstance;
-  
 };
 
 
@@ -834,7 +854,8 @@ nuiFontBase::~nuiFontBase()
 
 bool nuiFontBase::GetInfo (nuiFontInfo& rInfo, nuiFontUnit Unit) const
 {
-  if (!mpFace->Face)
+  FT_Face face = mpFace->GetFace();
+  if (!face)
     return false;
   
   rInfo.pFont = this;
@@ -847,7 +868,7 @@ bool nuiFontBase::GetInfo (nuiFontInfo& rInfo, nuiFontUnit Unit) const
   rInfo.IsItalic   = IsItalic();
   rInfo.GlyphCount = GetGlyphCount();
   rInfo.Unit       = Unit;
-  rInfo.FaceCount  = mpFace->Face->num_faces;
+  rInfo.FaceCount  = face->num_faces;
   
   /* The following fields should contain valuable information only for scalable fonts.
    * We copy them anyway.
@@ -859,17 +880,17 @@ bool nuiFontBase::GetInfo (nuiFontInfo& rInfo, nuiFontUnit Unit) const
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
-  rInfo.BBoxMinX       = mpFace->Face->bbox.xMin * ratio;
-  rInfo.BBoxMinY       = mpFace->Face->bbox.yMin * ratio;
-  rInfo.BBoxMaxX       = mpFace->Face->bbox.xMax * ratio;
-  rInfo.BBoxMaxY       = mpFace->Face->bbox.yMax * ratio;
-  rInfo.Ascender       = mpFace->Face->ascender * ratio;
-  rInfo.Descender      = mpFace->Face->descender * ratio;
-  rInfo.Height         = mpFace->Face->height * ratio;
-  rInfo.AdvanceMaxW    = mpFace->Face->max_advance_width * ratio;
-  rInfo.AdvanceMaxH    = mpFace->Face->max_advance_height * ratio;
-  rInfo.UnderlinePos   = mpFace->Face->underline_position * ratio;
-  rInfo.UnderlineThick = mpFace->Face->underline_thickness * ratio;
+  rInfo.BBoxMinX       = face->bbox.xMin * ratio;
+  rInfo.BBoxMinY       = face->bbox.yMin * ratio;
+  rInfo.BBoxMaxX       = face->bbox.xMax * ratio;
+  rInfo.BBoxMaxY       = face->bbox.yMax * ratio;
+  rInfo.Ascender       = face->ascender * ratio;
+  rInfo.Descender      = face->descender * ratio;
+  rInfo.Height         = face->height * ratio;
+  rInfo.AdvanceMaxW    = face->max_advance_width * ratio;
+  rInfo.AdvanceMaxH    = face->max_advance_height * ratio;
+  rInfo.UnderlinePos   = face->underline_position * ratio;
+  rInfo.UnderlineThick = face->underline_thickness * ratio;
   
   return true;
 }
@@ -886,27 +907,32 @@ nglString nuiFontBase::GetStyleName() const
 
 bool nuiFontBase::IsScalable() const
 {
-  return mpFace->Face ? FT_IS_SCALABLE(mpFace->Face) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? FT_IS_SCALABLE(face) : false;
 }
 
 bool nuiFontBase::IsBold() const
 {
-  return mpFace->Face ? ((mpFace->Face->style_flags & FT_STYLE_FLAG_BOLD) != 0) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? ((face->style_flags & FT_STYLE_FLAG_BOLD) != 0) : false;
 }
 
 bool nuiFontBase::IsMonospace() const
 {
-  return mpFace->Face ? ((mpFace->Face->face_flags & FT_FACE_FLAG_FIXED_WIDTH) != 0) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? ((face->face_flags & FT_FACE_FLAG_FIXED_WIDTH) != 0) : false;
 }
 
 bool nuiFontBase::IsItalic() const
 {
-  return mpFace->Face ? ((mpFace->Face->style_flags & FT_STYLE_FLAG_ITALIC) != 0) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? ((face->style_flags & FT_STYLE_FLAG_ITALIC) != 0) : false;
 }
 
 uint nuiFontBase::GetFaceCount() const
 {
-  return mpFace->Face ? mpFace->Face->num_faces : 0;
+  FT_Face face = mpFace->GetFace();
+  return face ? face->num_faces : 0;
 }
 
 float nuiFontBase::GetHeight (nuiFontUnit Unit, float DefaultSpacing) const
@@ -935,6 +961,7 @@ float nuiFontBase::GetHeight (nuiFontUnit Unit, float DefaultSpacing) const
 
 float nuiFontBase::GetAscender(nuiFontUnit Unit) const
 {
+  FT_Face face = mpFace->GetFace();
   float ratio = 0.f;
   switch (Unit)
   {
@@ -942,11 +969,12 @@ float nuiFontBase::GetAscender(nuiFontUnit Unit) const
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
-  return mpFace->Face->ascender * ratio;
+  return face->ascender * ratio;
 }
 
 float nuiFontBase::GetDescender(nuiFontUnit Unit) const
 {
+  FT_Face face = mpFace->GetFace();
   float ratio = 0.f;
   switch (Unit)
   {
@@ -954,26 +982,28 @@ float nuiFontBase::GetDescender(nuiFontUnit Unit) const
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
-  return mpFace->Face->ascender * ratio;
+  return face->ascender * ratio;
 }
 
 uint nuiFontBase::GetGlyphCount() const
 {
-  return mpFace->Face ? (uint)mpFace->Face->num_glyphs : 0;
+  FT_Face face = mpFace->GetFace();
+  return face ? (uint)face->num_glyphs : 0;
 }
 
 void nuiFontBase::GetGlyphs(std::set<nglUChar>& rGlyphs) const
 {
+  FT_Face face = mpFace->GetFace();
   rGlyphs.clear();
   
   FT_ULong  charcode = 0;
   FT_UInt   gindex = 0;
   
-  charcode = FT_Get_First_Char( mpFace->Face, &gindex );
+  charcode = FT_Get_First_Char( face, &gindex );
   while ( gindex != 0 )
   {
     //rGlyphs.insert(charcode);
-    charcode = FT_Get_Next_Char( mpFace->Face, charcode, &gindex );     
+    charcode = FT_Get_Next_Char( face, charcode, &gindex );     
   }
 }
 
@@ -1023,15 +1053,14 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
   if (!mpFace->Face)
     return false;
   
-  FTC_ScalerRec ftscaler;
   FT_Size       ftsize;
   FT_UShort     pixels = 0;
   
   // Fetch font ID
-  ftscaler.face_id  = mpFace->Desc.face_id;
+  mpFace->ftscaler.face_id  = mpFace->Desc.face_id;
   
   // Fetch font size in pixel units
-  ftscaler.pixel = 1; // TRUE
+  mpFace->ftscaler.pixel = 1; // TRUE
   switch (Unit)
   {
     case eFontUnitEM    : pixels = (FT_UInt)roundf (EMToPixel(Size)); break;
@@ -1045,8 +1074,8 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
   
   if (IsScalable())
   {
-    ftscaler.width  = pixels;
-    ftscaler.height = pixels;
+    mpFace->ftscaler.width  = pixels;
+    mpFace->ftscaler.height = pixels;
   }
   else
   {
@@ -1061,8 +1090,8 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
       
       if (pixels == size.height)
       {
-        ftscaler.width  = size.width;
-        ftscaler.height = size.height;
+        mpFace->ftscaler.width  = size.width;
+        mpFace->ftscaler.height = size.height;
         break;
       }
     }
@@ -1070,24 +1099,7 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
       return false;
   }
   
-  if (FTC_Manager_LookupSize (gFTCacheManager, &ftscaler, &ftsize))
-  {
-    NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("Couldn't change font size (to %dpx)"), pixels); )
-    return false;
-  }
-  
-  printf("SetSize of '%s' from %f (face: %p -> %p / face_id: %p -> %p) [%p]\n", 
-         mpFace->Face->family_name, 
-         Size, 
-         mpFace->Face, ftsize->face,
-         mpFace->Desc.face_id, ftscaler.face_id,
-         mpFace->GetFontInstance());
-  mpFace->Face = ftsize->face;
-  mpFace->Desc.face_id = ftscaler.face_id;
-  mpFace->Desc.width   = pixels;
-  mpFace->Desc.height  = pixels;
   mSize = pixels * nuiGetInvScaleFactor();
-
   return true;
 }
 
@@ -1116,15 +1128,16 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
   if (!(glyph = (FT_Glyph)GetGlyph(Index, Type)))
     return false;
   
+  const float f = nuiGetInvScaleFactor();
   switch (glyph->format)
   {
     case FT_GLYPH_FORMAT_BITMAP:
     {
       FT_BitmapGlyph bitmap = (FT_BitmapGlyph)glyph;
-      rInfo.Width    = nuiGetInvScaleFactor() * (float)bitmap->bitmap.width;
-      rInfo.Height   = nuiGetInvScaleFactor() * (float)bitmap->bitmap.rows;
-      rInfo.BearingX = nuiGetInvScaleFactor() * (float)bitmap->left;
-      rInfo.BearingY = nuiGetInvScaleFactor() * (float)bitmap->top;
+      rInfo.Width    = f * (float)bitmap->bitmap.width;
+      rInfo.Height   = f * (float)bitmap->bitmap.rows;
+      rInfo.BearingX = f * (float)bitmap->left;
+      rInfo.BearingY = f * (float)bitmap->top;
     }
       break;
       
@@ -1133,10 +1146,10 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
       FT_BBox bbox;
       
       FT_Glyph_Get_CBox(glyph, ft_glyph_bbox_pixels, &bbox);
-      rInfo.Width    = nuiGetInvScaleFactor() * (float)(bbox.xMax - bbox.xMin);
-      rInfo.Height   = nuiGetInvScaleFactor() * (float)(bbox.yMax - bbox.yMin);
-      rInfo.BearingX = nuiGetInvScaleFactor() * (float)bbox.xMin;
-      rInfo.BearingY = nuiGetInvScaleFactor() * (float)bbox.yMax;
+      rInfo.Width    = f * (float)(bbox.xMax - bbox.xMin);
+      rInfo.Height   = f * (float)(bbox.yMax - bbox.yMin);
+      rInfo.BearingX = f * (float)bbox.xMin;
+      rInfo.BearingY = f * (float)bbox.yMax;
     }
       break;
       
@@ -1145,8 +1158,8 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
   }
   
   rInfo.Index = Index;
-  rInfo.AdvanceX = nuiGetInvScaleFactor() * glyph->advance.x / 65536.0f;
-  rInfo.AdvanceY = nuiGetInvScaleFactor() * glyph->advance.y / 65536.0f;
+  rInfo.AdvanceX = f * glyph->advance.x / 65536.0f;
+  rInfo.AdvanceY = f * glyph->advance.y / 65536.0f;
   
   return true;
 }
@@ -1183,7 +1196,8 @@ bool nuiFontBase::GetKerning (uint Left, uint Right, float& rX, float& rY) const
 
 int nuiFontBase::GetCharMapCount() const
 {
-  return mpFace->Face ? mpFace->Face->num_charmaps : 0;
+  FT_Face face = mpFace->GetFace();
+  return face ? face->num_charmaps : 0;
 }
 
 int nuiFontBase::GetCharMap() const
@@ -1193,10 +1207,11 @@ int nuiFontBase::GetCharMap() const
 
 bool nuiFontBase::SetCharMap (int Index)
 {
-  if (!mpFace->Face || (Index < -1) || (Index >= mpFace->Face->num_charmaps))
+  FT_Face face = mpFace->GetFace();
+  if (!face || (Index < -1) || (Index >= face->num_charmaps))
     return false;
   
-  if (FT_Set_Charmap (mpFace->Face, mpFace->Face->charmaps[Index]) != 0)
+  if (FT_Set_Charmap (face, face->charmaps[Index]) != 0)
     return false;
   
   mCharMap = Index;
@@ -1205,15 +1220,17 @@ bool nuiFontBase::SetCharMap (int Index)
 
 const nglChar* nuiFontBase::GetCharMapName ()  const
 {
-  return mpFace->Face ? ::nuiGetCharMapName(mpFace->Face->charmap) : NULL;
+  FT_Face face = mpFace->GetFace();
+  return face ? ::nuiGetCharMapName(face->charmap) : NULL;
 }
 
 const nglChar* nuiFontBase::GetCharMapName (int Index)  const
 {
-  if (!mpFace->Face || (Index < 0) || (Index >= mpFace->Face->num_charmaps))
+  FT_Face face = mpFace->GetFace();
+  if (!face || (Index < 0) || (Index >= face->num_charmaps))
     return NULL;
   
-  return ::nuiGetCharMapName(mpFace->Face->charmaps[Index]);
+  return ::nuiGetCharMapName(face->charmaps[Index]);
 }
 
 
@@ -1229,7 +1246,8 @@ int nuiFontBase::GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint
 
 int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uint* pIndexes, int IndexesLength) const
 {
-  if (!mpFace->Face)
+  FT_Face face = mpFace->GetFace();
+  if (!face)
     return -1;
   
   /*
@@ -1242,8 +1260,8 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
   
   /* No selected or available charmap, or charmap conversion turned off : do a dumb copy
    */
-  if (!mpFace->Face->charmap ||
-      (mpFace->Face->charmap->encoding == ft_encoding_none))
+  if (!face->charmap ||
+      (face->charmap->encoding == ft_encoding_none))
   {
 #ifdef DBG_INDEX
     NGL_OUT(_T("GetGlyphIndexes => Font encoding = none, using chars as glyph indices\n"));
@@ -1329,13 +1347,14 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
 
 int32 nuiFontBase::GetGlyphIndex(nglUChar Source, nglUChar VariationSelector) const
 {
-  if (!mpFace->Face)
+  FT_Face face = mpFace->GetFace();
+  if (!face)
     return -1;
   
   /* No selected or available charmap, or charmap conversion turned off : do a dumb copy
    */
-  if (!mpFace->Face->charmap ||
-      (mpFace->Face->charmap->encoding == ft_encoding_none))
+  if (!face->charmap ||
+      (face->charmap->encoding == ft_encoding_none))
   {
 #ifdef DBG_INDEX
     NGL_OUT(_T("GetGlyphIndexes => Font encoding = none, using chars as glyph indices\n"));
@@ -1362,7 +1381,8 @@ nuiFontBase::RenderMode nuiFontBase::GetRenderMode() const
 
 bool nuiFontBase::SetRenderMode (nuiFontBase::RenderMode Mode)
 {
-  if (!mpFace->Face || !IsScalable())
+  FT_Face face = mpFace->GetFace();
+  if (!face || !IsScalable())
     return false;
   
   FT_Int32 flags = FT_LOAD_DEFAULT;
@@ -1667,23 +1687,21 @@ bool nuiFontBase::LoadFinish(float Size)
 
   /* Fetch generic (maybe unsized) face
    */
-  if (FTC_Manager_LookupFace (gFTCacheManager, mpFace->Desc.face_id, &mpFace->Face) != FT_Err_Ok)
-  {
-    //SetError(_T("font"), NGL_FONT_ELOAD);
+  FT_Face face = mpFace->GetFace();
+  if (!face)
     return false;
-  }
   
   /* Initialize some global info fields
    */
-  mFamilyName.Import (mpFace->Face->family_name);
+  mFamilyName.Import (face->family_name);
   if (mFamilyName == _T("LastResort"))
     mLastResort = true;
-  mStyleName.Import (mpFace->Face->style_name);
-  mUnitsPerEM = (float)mpFace->Face->units_per_EM;
-  mGlobalHeight = (float)mpFace->Face->height; // Only valid for scalable fonts (see GetHeight())
+  mStyleName.Import (face->style_name);
+  mUnitsPerEM = (float)face->units_per_EM;
+  mGlobalHeight = (float)face->height; // Only valid for scalable fonts (see GetHeight())
   
   // Get Panose information from the TT OS/2 tables
-  TT_OS2* pOS2 = (TT_OS2*)FT_Get_Sfnt_Table(mpFace->Face, ft_sfnt_os2);
+  TT_OS2* pOS2 = (TT_OS2*)FT_Get_Sfnt_Table(face, ft_sfnt_os2);
   if (pOS2)
   {
     memcpy(&mPanoseBytes, pOS2->panose, 10);
@@ -1706,10 +1724,10 @@ bool nuiFontBase::LoadFinish(float Size)
   }
   else
   {
-    if (mpFace->Face->num_fixed_sizes > 0)
+    if (face->num_fixed_sizes > 0)
     {
 //      // Take first available size
-//      FT_Bitmap_Size* size = mpFace->Face->available_sizes;
+//      FT_Bitmap_Size* size = face->available_sizes;
 //      
 //      if (!SetSize ((float)size->height, eFontUnitPixel))
 //        return false;
@@ -1729,7 +1747,7 @@ bool nuiFontBase::LoadFinish(float Size)
    *
    * (see GetGlyphindexes for more info)
    */
-  if (FT_Select_Charmap (mpFace->Face, FT_ENCODING_UNICODE) != FT_Err_Ok)
+  if (FT_Select_Charmap (face, FT_ENCODING_UNICODE) != FT_Err_Ok)
   {
 #ifdef USE_WCHAR
     // We can't select Unicode output, we'll do nglChar -> locale and use the first map (if available)
@@ -1737,14 +1755,14 @@ bool nuiFontBase::LoadFinish(float Size)
 #else
     // We expect that the first charmap is actually the right one for the locale's encoding
 #endif
-    FT_Set_Charmap (mpFace->Face, mpFace->Face->charmaps[0]);
+    FT_Set_Charmap (face, face->charmaps[0]);
   }
 #ifndef USE_WCHAR
   else
     // We have a Unicode charmap, we'll do locale -> UCS-2 conversion
     mpConv = nglString::GetStringConv(nglEncodingPair(eEncodingInternal, eUCS2));
 #endif
-  mCharMap = FT_Get_Charmap_Index(mpFace->Face->charmap);
+  mCharMap = FT_Get_Charmap_Index(face->charmap);
   
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  selected charmap   : %s (#%d)"), GetCharMapName(), GetCharMap()); )
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  charmap conversion : %s"), YESNO(mpConv)); )
@@ -1756,13 +1774,14 @@ bool nuiFontBase::LoadFinish(float Size)
 
 void nuiFontBase::GetEncodings(std::set<nglTextEncoding>& rEncodings)
 {
+  FT_Face face = mpFace->GetFace();
   rEncodings.clear();
   
   int32 count = GetCharMapCount();
   
   for (int32 i = 0; i < count; i++)
   {
-    FT_CharMap charmap = mpFace->Face->charmaps[i];
+    FT_CharMap charmap = face->charmaps[i];
     rEncodings.insert(nuiGetCharMapEncoding(charmap));
   }
 }
@@ -2077,14 +2096,17 @@ nuiFontBase::GlyphLocation::~GlyphLocation()
 {
 }
 
+
+////////////
+
+
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
   if (pRun->IsDummy())
     return;
   NGL_ASSERT(this == pRun->mStyle.GetFont());
   
-  FT_Face ft_face = mpFace->Face;
-  ft_face->
+  FT_Face ft_face = mpFace->GetFace();
   hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
   hb_buffer_t *hb_buffer;
   hb_glyph_info_t *hb_glyph;

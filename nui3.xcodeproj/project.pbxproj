@@ -4038,12 +4038,6 @@
 		E57ECB641110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */; };
 		E57ECB661110A6E300AE0A3A /* nuiTextureInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E57ECB651110A6E300AE0A3A /* nuiTextureInspector.h */; };
 		E57ECB681110A6E300AE0A3A /* nuiTextureInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E57ECB651110A6E300AE0A3A /* nuiTextureInspector.h */; };
-		E57EFAF213C7CC8200EB3583 /* hb-ftc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E57EFAF013C7CC8200EB3583 /* hb-ftc.cc */; };
-		E57EFAF313C7CC8200EB3583 /* hb-ftc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E57EFAF013C7CC8200EB3583 /* hb-ftc.cc */; };
-		E57EFAF413C7CC8200EB3583 /* hb-ftc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E57EFAF013C7CC8200EB3583 /* hb-ftc.cc */; };
-		E57EFAF513C7CC8200EB3583 /* hb-ftc.h in Headers */ = {isa = PBXBuildFile; fileRef = E57EFAF113C7CC8200EB3583 /* hb-ftc.h */; };
-		E57EFAF613C7CC8200EB3583 /* hb-ftc.h in Headers */ = {isa = PBXBuildFile; fileRef = E57EFAF113C7CC8200EB3583 /* hb-ftc.h */; };
-		E57EFAF713C7CC8200EB3583 /* hb-ftc.h in Headers */ = {isa = PBXBuildFile; fileRef = E57EFAF113C7CC8200EB3583 /* hb-ftc.h */; };
 		E58176540C3D110A00902DFE /* nuiShape.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CFE0C3CECAB00902DFE /* nuiShape.h */; };
 		E58176550C3D110A00902DFE /* nglZipFS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CAB0C3CECAB00902DFE /* nglZipFS.h */; };
 		E58176560C3D110A00902DFE /* nuiArc.h in Headers */ = {isa = PBXBuildFile; fileRef = E5816CB10C3CECAB00902DFE /* nuiArc.h */; };
@@ -8228,8 +8222,6 @@
 		E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLTable.cpp; sourceTree = "<group>"; };
 		E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTextureInspector.cpp; path = Introspector/nuiTextureInspector.cpp; sourceTree = "<group>"; };
 		E57ECB651110A6E300AE0A3A /* nuiTextureInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiTextureInspector.h; path = include/nuiTextureInspector.h; sourceTree = SOURCE_ROOT; };
-		E57EFAF013C7CC8200EB3583 /* hb-ftc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ftc.cc"; path = "harfbuzz/hb-ftc.cc"; sourceTree = "<group>"; };
-		E57EFAF113C7CC8200EB3583 /* hb-ftc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-ftc.h"; path = "harfbuzz/hb-ftc.h"; sourceTree = "<group>"; };
 		E58167980C3CECA800902DFE /* ft2unix.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ft2unix.h; path = deps/freetype2/builds/unix/ft2unix.h; sourceTree = SOURCE_ROOT; };
 		E581679A0C3CECA800902DFE /* ftsystem.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = ftsystem.c; path = deps/freetype2/builds/unix/ftsystem.c; sourceTree = SOURCE_ROOT; };
 		E58167C20C3CECA800902DFE /* ft2build.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ft2build.h; path = deps/freetype2/devel/ft2build.h; sourceTree = SOURCE_ROOT; };
@@ -11826,8 +11818,6 @@
 				E511F5CB1367145700DE93B0 /* hb-font.h */,
 				E511F5CC1367145700DE93B0 /* hb-ft.cc */,
 				E511F5CD1367145700DE93B0 /* hb-ft.h */,
-				E57EFAF013C7CC8200EB3583 /* hb-ftc.cc */,
-				E57EFAF113C7CC8200EB3583 /* hb-ftc.h */,
 				E511F5CE1367145700DE93B0 /* hb-glib.cc */,
 				E511F5CF1367145700DE93B0 /* hb-glib.h */,
 				E511F5D01367145700DE93B0 /* hb-icu.cc */,
@@ -12706,7 +12696,6 @@
 				E511F7D01367149100DE93B0 /* hb.h in Headers */,
 				E5B5CC671388968800A3A65D /* hb-version.h in Headers */,
 				E50F79FB13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
-				E57EFAF713C7CC8200EB3583 /* hb-ftc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15469,7 +15458,6 @@
 				E511F7701367149000DE93B0 /* hb.h in Headers */,
 				E5B5CC651388968800A3A65D /* hb-version.h in Headers */,
 				E50F79F913C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
-				E57EFAF513C7CC8200EB3583 /* hb-ftc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15922,7 +15910,6 @@
 				E511F7A01367149100DE93B0 /* hb.h in Headers */,
 				E5B5CC661388968800A3A65D /* hb-version.h in Headers */,
 				E50F79FA13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
-				E57EFAF613C7CC8200EB3583 /* hb-ftc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16763,7 +16750,6 @@
 				E511F7CA1367149100DE93B0 /* hb-shape.cc in Sources */,
 				E511F7CD1367149100DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571813C70FA300245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
-				E57EFAF413C7CC8200EB3583 /* hb-ftc.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19119,7 +19105,6 @@
 				E511F76A1367149000DE93B0 /* hb-shape.cc in Sources */,
 				E511F76D1367149000DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571A13C70FA500245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
-				E57EFAF213C7CC8200EB3583 /* hb-ftc.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19398,7 +19383,6 @@
 				E511F79A1367149000DE93B0 /* hb-shape.cc in Sources */,
 				E511F79D1367149100DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571913C70FA400245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
-				E57EFAF313C7CC8200EB3583 /* hb-ftc.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
