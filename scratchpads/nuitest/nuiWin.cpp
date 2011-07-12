@@ -1706,7 +1706,7 @@ public:
     */
 
     // Draw the text:
-    nuiFontLayout layout(*mpFont, 0, 0, nuiHorizontal);
+    nuiTextLayout layout(mpFont, nuiHorizontal);
     layout.Layout(mString);
 
     nuiRect lrect = layout.GetRect();
@@ -1751,7 +1751,7 @@ public:
     nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
 
-    nuiFontLayout layout(*mpFont, 0, 0, nuiHorizontal);
+    nuiTextLayout layout(mpFont, nuiHorizontal);
     layout.Layout(mString);
 
     nuiSize height = fontinfo.Ascender - fontinfo.Descender;
