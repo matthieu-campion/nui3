@@ -2153,12 +2153,11 @@ bool nuiEditText::TextBlock::GetCoordsFromPos(uint Pos, nuiSize& rX, nuiSize& rY
 
   const nuiTextGlyph* pGlyph = mpLayout->GetGlyph(index);
   rX = pGlyph->mX + mRect.Left();
-  rY = pGlyph->mY + mRect.Top();
+  rY = pGlyph->mY + mRect.Bottom();
 
   if (Pos == count)
   {
     nuiGlyphInfo glyphinfo;
-    pGlyph->AdvanceX;
     rX += glyphinfo.AdvanceX;
   }
   return true;
