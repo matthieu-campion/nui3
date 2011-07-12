@@ -2086,6 +2086,20 @@ nuiFontBase::GlyphLocation::~GlyphLocation()
 
 ////////////
 
+static hb_bool_t
+nui_hb_get_glyph (hb_font_t *font,
+                 void *font_data,
+                 hb_codepoint_t unicode,
+                 hb_codepoint_t variation_selector,
+                 hb_codepoint_t *glyph,
+                 void *user_data)
+
+{
+  nuiFontBase* pFont = (nuiFontBase*)user_data;
+  NGL_ASSERT(pFont);
+  *glyph = pFont->GetGlyphIndex(unicode, variation_selector);
+  return *glyph != 0;
+}
 
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
@@ -2094,7 +2108,27 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   NGL_ASSERT(this == pRun->mStyle.GetFont());
   
   FT_Face ft_face = mpFace->GetFace();
-  hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
+  
+  hb_font_t *hb_font;
+  hb_face_t *face;
+  
+  face = hb_ft_face_create (ft_face, NULL);
+  hb_font = hb_font_create (face);
+  hb_face_destroy (face);
+  
+  hb_font_funcs_t* funcs = hb_ft_get_font_funcs();
+  hb_font_funcs_set_glyph_func(funcs, &nui_hb_get_glyph, this, NULL);
+  hb_font_set_funcs (hb_font,
+                     funcs,
+                     ft_face, NULL);
+  hb_font_set_scale (hb_font,
+                     ((uint64_t) ft_face->size->metrics.x_scale * (uint64_t) ft_face->units_per_EM) >> 16,
+                     ((uint64_t) ft_face->size->metrics.y_scale * (uint64_t) ft_face->units_per_EM) >> 16);
+  hb_font_set_ppem (hb_font,
+                    ft_face->size->metrics.x_ppem,
+                    ft_face->size->metrics.y_ppem);
+
+  //hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
   hb_buffer_t *hb_buffer;
   hb_glyph_info_t *hb_glyph;
   hb_glyph_position_t *hb_position;
