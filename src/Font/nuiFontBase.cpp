@@ -1603,9 +1603,9 @@ void nuiFontBase::Defaults()
   mTextures.push_back(texture);
 }
 
-#define NGL_FTCACHE_MAX_FACES 5000
-#define NGL_FTCACHE_MAX_SIZES 400
-#define NGL_FTCACHE_MAX_BYTES (1024*1024*100)
+#define NGL_FTCACHE_MAX_FACES 10
+#define NGL_FTCACHE_MAX_SIZES 20
+#define NGL_FTCACHE_MAX_BYTES (1024*1024*5)
 
 bool nuiFontBase::Init()
 {
