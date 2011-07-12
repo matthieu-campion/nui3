@@ -254,6 +254,7 @@ ucprop_lookup(code, n)
 uint32_t code, n;
 #endif
 {
+  //printf("ucprop_lookup %d %d\n", code, n);
     int32_t l, r, m;
 
     /*
