@@ -2101,6 +2101,20 @@ nui_hb_get_glyph (hb_font_t *font,
   return *glyph != 0;
 }
 
+static hb_position_t
+nui_hb_get_glyph_h_advance(hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t glyph,
+                           void *user_data)
+{
+  nuiFontBase* pFont = (nuiFontBase*)user_data;
+  NGL_ASSERT(pFont);
+  nuiGlyphInfo info;
+  pFont->GetGlyphInfo(info, glyph, nuiFontBase::eGlyphNative);
+  return info.AdvanceX;
+}
+
+
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
   if (pRun->IsDummy())
@@ -2118,6 +2132,8 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   
   hb_font_funcs_t* funcs = hb_ft_get_font_funcs();
   hb_font_funcs_set_glyph_func(funcs, &nui_hb_get_glyph, this, NULL);
+  hb_font_funcs_set_glyph_h_advance_func(funcs, &nui_hb_get_glyph_h_advance, this, NULL);
+
   hb_font_set_funcs (hb_font,
                      funcs,
                      ft_face, NULL);
