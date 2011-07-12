@@ -12,11 +12,6 @@
 #include "nglThreadChecker.h"
 #include "nuiDecoration.h"
 
-#if (defined _UIKIT_)
-#include "../Font/nuiPhoneFontDB.h"
-#include "nglIMemory.h"
-#endif
-
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
 static uint32 gNUIReferences = 0;

@@ -599,7 +599,6 @@
 		73F0856E12E9BA0700656E84 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417F711CB86C40025CA71 /* ngl_uikit.h */; };
 		73F0856F12E9BA0700656E84 /* nglApplication_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */; };
 		73F0857012E9BA0700656E84 /* nglDragAndDrop_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */; };
-		73F0857112E9BA0700656E84 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */; };
 		73F0857212E9BA0700656E84 /* nglWindow_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524181311CB87E80025CA71 /* nglWindow_UIKit.h */; };
 		73F0857312E9BA0700656E84 /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DA11CB9D3C0025CA71 /* nglImageCGCodec.h */; };
 		73F0857412E9BA0700656E84 /* nglPath_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DD11CB9D540025CA71 /* nglPath_Cocoa.h */; };
@@ -928,7 +927,6 @@
 		73F086C112E9BA0700656E84 /* nglKernel_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FC11CB86C40025CA71 /* nglKernel_UIKit.mm */; };
 		73F086C212E9BA0700656E84 /* nglModule_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FD11CB86C40025CA71 /* nglModule_UIKit.mm */; };
 		73F086C312E9BA0700656E84 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */; };
-		73F086C412E9BA0700656E84 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
 		73F086C512E9BA0700656E84 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		73F086C612E9BA0700656E84 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
 		73F086C712E9BA0700656E84 /* nglWindow_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181511CB87E80025CA71 /* nglWindow_UIKit.mm */; };
@@ -2841,8 +2839,6 @@
 		E524180811CB86C40025CA71 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */; };
 		E524180911CB86C40025CA71 /* nglApplication_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */; };
 		E524180A11CB86C40025CA71 /* nglDragAndDrop_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */; };
-		E524180D11CB875B0025CA71 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
-		E524180E11CB875B0025CA71 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */; };
 		E524181711CB87E80025CA71 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		E524181811CB87E80025CA71 /* nglWindow_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524181311CB87E80025CA71 /* nglWindow_UIKit.h */; };
 		E524181911CB87E80025CA71 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
@@ -3185,7 +3181,6 @@
 		E5241E8C11CBCE9E0025CA71 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417F711CB86C40025CA71 /* ngl_uikit.h */; };
 		E5241E8D11CBCE9E0025CA71 /* nglApplication_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */; };
 		E5241E8E11CBCE9E0025CA71 /* nglDragAndDrop_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */; };
-		E5241E8F11CBCE9E0025CA71 /* nuiPhoneFontDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */; };
 		E5241E9011CBCE9E0025CA71 /* nglWindow_UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = E524181311CB87E80025CA71 /* nglWindow_UIKit.h */; };
 		E5241E9E11CBCE9E0025CA71 /* nglImageCGCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DA11CB9D3C0025CA71 /* nglImageCGCodec.h */; };
 		E5241E9F11CBCE9E0025CA71 /* nglPath_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52419DD11CB9D540025CA71 /* nglPath_Cocoa.h */; };
@@ -3482,7 +3477,6 @@
 		E52420C411CBCE9E0025CA71 /* nglKernel_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FC11CB86C40025CA71 /* nglKernel_UIKit.mm */; };
 		E52420C511CBCE9E0025CA71 /* nglModule_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FD11CB86C40025CA71 /* nglModule_UIKit.mm */; };
 		E52420C611CBCE9E0025CA71 /* nglPlugin_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */; };
-		E52420C711CBCE9E0025CA71 /* nuiPhoneFontDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */; };
 		E52420C911CBCE9E0025CA71 /* nglContext_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181211CB87E80025CA71 /* nglContext_UIKit.mm */; };
 		E52420CA11CBCE9E0025CA71 /* nglVideoMode_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181411CB87E80025CA71 /* nglVideoMode_UIKit.mm */; };
 		E52420CB11CBCE9E0025CA71 /* nglWindow_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E524181511CB87E80025CA71 /* nglWindow_UIKit.mm */; };
@@ -3560,20 +3554,6 @@
 		E53645E40CDF7C8000838C78 /* nuiPopupView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53645E20CDF7C8000838C78 /* nuiPopupView.cpp */; };
 		E53645E90CDF7CE300838C78 /* nuiPopupView.h in Headers */ = {isa = PBXBuildFile; fileRef = E53645E80CDF7CE300838C78 /* nuiPopupView.h */; };
 		E53645EA0CDF7CE300838C78 /* nuiPopupView.h in Headers */ = {isa = PBXBuildFile; fileRef = E53645E80CDF7CE300838C78 /* nuiPopupView.h */; };
-		E5396AFD139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
-		E5396AFE139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
-		E5396AFF139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
-		E5396B00139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
-		E5396B01139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
-		E5396B02139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
-		E5396B03139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
-		E5396B04139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
-		E5396B05139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
-		E5396B06139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
-		E5396B07139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
-		E5396B08139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
-		E5396B09139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
-		E5396B0A139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
 		E539DD300C9C8DC50099449B /* nglSyncEvent_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */; };
 		E539DD310C9C8DC50099449B /* nglSyncEvent_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E539DD2F0C9C8DC50099449B /* nglSyncEvent_posix.cpp */; };
 		E539DD330C9C8EE80099449B /* nglSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E539DD320C9C8EE80099449B /* nglSyncEvent.h */; };
@@ -4040,6 +4020,18 @@
 		E57DDB6011ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E57DDB6111ADE86A00C0E4DE /* nuiHTMLTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E57DDB5B11ADE86A00C0E4DE /* nuiHTMLTable.h */; };
 		E57DDB6211ADE86A00C0E4DE /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
+		E57E571313CC8ED50021055F /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E57E571413CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E57E571513CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5396AFC139F67EA009CB047 /* hb-ot-shape-complex-indic.cc */; };
+		E57E58AC13CC8EEC0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E57E58AD13CC8EEC0021055F /* hb-mutex-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E56A44691388959B00F053D4 /* hb-mutex-private.hh */; };
+		E57E58AE13CC8EEC0021055F /* hb-ot-maxp-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E56A446A1388959B00F053D4 /* hb-ot-maxp-private.hh */; };
+		E57E58B813CC8EED0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E57E58B913CC8EED0021055F /* hb-mutex-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E56A44691388959B00F053D4 /* hb-mutex-private.hh */; };
+		E57E58BA13CC8EED0021055F /* hb-ot-maxp-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E56A446A1388959B00F053D4 /* hb-ot-maxp-private.hh */; };
+		E57E58C413CC8EEE0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */ = {isa = PBXBuildFile; fileRef = E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */; };
+		E57E58C513CC8EEE0021055F /* hb-mutex-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E56A44691388959B00F053D4 /* hb-mutex-private.hh */; };
+		E57E58C613CC8EEE0021055F /* hb-ot-maxp-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E56A446A1388959B00F053D4 /* hb-ot-maxp-private.hh */; };
 		E57ECB621110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */; };
 		E57ECB641110A6BA00AE0A3A /* nuiTextureInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57ECB611110A6BA00AE0A3A /* nuiTextureInspector.cpp */; };
 		E57ECB661110A6E300AE0A3A /* nuiTextureInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = E57ECB651110A6E300AE0A3A /* nuiTextureInspector.h */; };
@@ -7663,8 +7655,6 @@
 		E52417FE11CB86C40025CA71 /* nglPlugin_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglPlugin_UIKit.mm; path = src/Application/UIKit/nglPlugin_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E52417FF11CB86C40025CA71 /* nglApplication_UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglApplication_UIKit.h; path = UIKit/nglApplication_UIKit.h; sourceTree = "<group>"; };
 		E524180011CB86C40025CA71 /* nglDragAndDrop_UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglDragAndDrop_UIKit.h; path = UIKit/nglDragAndDrop_UIKit.h; sourceTree = "<group>"; };
-		E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiPhoneFontDB.cpp; path = src/Font/nuiPhoneFontDB.cpp; sourceTree = SOURCE_ROOT; };
-		E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPhoneFontDB.h; path = src/Font/nuiPhoneFontDB.h; sourceTree = SOURCE_ROOT; };
 		E524180F11CB87860025CA71 /* nuiURL_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiURL_UIKit.mm; path = src/Net/UIKit/nuiURL_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E524181211CB87E80025CA71 /* nglContext_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglContext_UIKit.mm; path = src/Window/UIKit/nglContext_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E524181311CB87E80025CA71 /* nglWindow_UIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglWindow_UIKit.h; path = UIKit/nglWindow_UIKit.h; sourceTree = "<group>"; };
@@ -10909,8 +10899,6 @@
 				E56399BA13703756006920F5 /* nuiFontManager.cpp */,
 				E51C8070136ADE98004C3FFB /* hb_nui.cpp */,
 				E51C8071136ADE98004C3FFB /* hb_nui.h */,
-				E524180B11CB875B0025CA71 /* nuiPhoneFontDB.cpp */,
-				E524180C11CB875B0025CA71 /* nuiPhoneFontDB.h */,
 				E5816D790C3CECAB00902DFE /* ngl_default_font.cpp */,
 				E5816D7A0C3CECAB00902DFE /* ngl_default_font.h */,
 				E5816D7E0C3CECAB00902DFE /* nuiFontInstance.cpp */,
@@ -12207,7 +12195,6 @@
 				73F0856E12E9BA0700656E84 /* ngl_uikit.h in Headers */,
 				73F0856F12E9BA0700656E84 /* nglApplication_UIKit.h in Headers */,
 				73F0857012E9BA0700656E84 /* nglDragAndDrop_UIKit.h in Headers */,
-				73F0857112E9BA0700656E84 /* nuiPhoneFontDB.h in Headers */,
 				73F0857212E9BA0700656E84 /* nglWindow_UIKit.h in Headers */,
 				73F0857312E9BA0700656E84 /* nglImageCGCodec.h in Headers */,
 				73F0857412E9BA0700656E84 /* nglPath_Cocoa.h in Headers */,
@@ -12246,7 +12233,6 @@
 				E5345F3D12F3317500F435D9 /* TextureAtlas.h in Headers */,
 				E51C806D136ADE1F004C3FFB /* nuiTextLayout.h in Headers */,
 				E51C807D136ADE98004C3FFB /* hb_nui.h in Headers */,
-				E5396B01139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E5F0C25113A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C26113A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C27113A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
@@ -12707,6 +12693,9 @@
 				E511F7D01367149100DE93B0 /* hb.h in Headers */,
 				E5B5CC671388968800A3A65D /* hb-version.h in Headers */,
 				E50F79FB13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
+				E57E58C413CC8EEE0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */,
+				E57E58C513CC8EEE0021055F /* hb-mutex-private.hh in Headers */,
+				E57E58C613CC8EEE0021055F /* hb-ot-maxp-private.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13047,7 +13036,6 @@
 				E524180111CB86C40025CA71 /* ngl_uikit.h in Headers */,
 				E524180911CB86C40025CA71 /* nglApplication_UIKit.h in Headers */,
 				E524180A11CB86C40025CA71 /* nglDragAndDrop_UIKit.h in Headers */,
-				E524180E11CB875B0025CA71 /* nuiPhoneFontDB.h in Headers */,
 				E524181811CB87E80025CA71 /* nglWindow_UIKit.h in Headers */,
 				E52419DC11CB9D3C0025CA71 /* nglImageCGCodec.h in Headers */,
 				E52419DF11CB9D540025CA71 /* nglPath_Cocoa.h in Headers */,
@@ -13088,7 +13076,6 @@
 				E51C807B136ADE98004C3FFB /* hb_nui.h in Headers */,
 				BCF87562137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E41381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
-				E5396AFF139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E5F0C24F13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C25F13A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C26F13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
@@ -13435,7 +13422,6 @@
 				E5241E8C11CBCE9E0025CA71 /* ngl_uikit.h in Headers */,
 				E5241E8D11CBCE9E0025CA71 /* nglApplication_UIKit.h in Headers */,
 				E5241E8E11CBCE9E0025CA71 /* nglDragAndDrop_UIKit.h in Headers */,
-				E5241E8F11CBCE9E0025CA71 /* nuiPhoneFontDB.h in Headers */,
 				E5241E9011CBCE9E0025CA71 /* nglWindow_UIKit.h in Headers */,
 				E5241E9E11CBCE9E0025CA71 /* nglImageCGCodec.h in Headers */,
 				E5241E9F11CBCE9E0025CA71 /* nglPath_Cocoa.h in Headers */,
@@ -13476,7 +13462,6 @@
 				E51C807C136ADE98004C3FFB /* hb_nui.h in Headers */,
 				BCF87563137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E51381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
-				E5396B00139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E5F0C25013A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C26013A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C27013A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
@@ -13863,7 +13848,6 @@
 				BC2475041377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 				BCF87561137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E31381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
-				E5396AFE139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E5F0C24E13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C25E13A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C26E13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
@@ -14249,7 +14233,6 @@
 				BC2475031377D7EA000F1ABB /* nuiNavigationBarStyle.h in Headers */,
 				BCF87560137D27570092DAAD /* nuiImageAnimation.h in Headers */,
 				BC1684E21381606C00A605E6 /* nuiGestureRecognizer.h in Headers */,
-				E5396AFD139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E5F0C24D13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C25D13A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C26D13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
@@ -14634,7 +14617,6 @@
 				E57D214C1318B35B007B3B7A /* nuiNavigationViewDecoration.h in Headers */,
 				E51C806E136ADE1F004C3FFB /* nuiTextLayout.h in Headers */,
 				E51C807E136ADE98004C3FFB /* hb_nui.h in Headers */,
-				E5396B02139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E5F0C25213A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C26213A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C27213A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
@@ -15022,7 +15004,6 @@
 				E57D214D1318B35E007B3B7A /* nuiNavigationViewDecoration.h in Headers */,
 				E51C806F136ADE1F004C3FFB /* nuiTextLayout.h in Headers */,
 				E51C807F136ADE98004C3FFB /* hb_nui.h in Headers */,
-				E5396B03139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E5F0C25313A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */,
 				E5F0C26313A0ADBE00EC0FB0 /* nuiTextRun.h in Headers */,
 				E5F0C27313A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
@@ -15471,6 +15452,9 @@
 				E511F7701367149000DE93B0 /* hb.h in Headers */,
 				E5B5CC651388968800A3A65D /* hb-version.h in Headers */,
 				E50F79F913C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
+				E57E58AC13CC8EEC0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */,
+				E57E58AD13CC8EEC0021055F /* hb-mutex-private.hh in Headers */,
+				E57E58AE13CC8EEC0021055F /* hb-ot-maxp-private.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15923,6 +15907,9 @@
 				E511F7A01367149100DE93B0 /* hb.h in Headers */,
 				E5B5CC661388968800A3A65D /* hb-version.h in Headers */,
 				E50F79FA13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */,
+				E57E58B813CC8EED0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */,
+				E57E58B913CC8EED0021055F /* hb-mutex-private.hh in Headers */,
+				E57E58BA13CC8EED0021055F /* hb-ot-maxp-private.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16440,7 +16427,6 @@
 				73F086C112E9BA0700656E84 /* nglKernel_UIKit.mm in Sources */,
 				73F086C212E9BA0700656E84 /* nglModule_UIKit.mm in Sources */,
 				73F086C312E9BA0700656E84 /* nglPlugin_UIKit.mm in Sources */,
-				73F086C412E9BA0700656E84 /* nuiPhoneFontDB.cpp in Sources */,
 				73F086C512E9BA0700656E84 /* nglContext_UIKit.mm in Sources */,
 				73F086C612E9BA0700656E84 /* nglVideoMode_UIKit.mm in Sources */,
 				73F086C712E9BA0700656E84 /* nglWindow_UIKit.mm in Sources */,
@@ -16476,7 +16462,6 @@
 				E56399C713703760006920F5 /* nuiFont.cpp in Sources */,
 				E56399C813703760006920F5 /* nuiFontBase.cpp in Sources */,
 				E56399C913703760006920F5 /* nuiFontManager.cpp in Sources */,
-				E5396B08139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5F0C25913A0AD2C00EC0FB0 /* nuiTextStyle.cpp in Sources */,
 				E5F0C26913A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27913A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
@@ -16764,6 +16749,7 @@
 				E511F7CA1367149100DE93B0 /* hb-shape.cc in Sources */,
 				E511F7CD1367149100DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571813C70FA300245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
+				E57E571313CC8ED50021055F /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17064,7 +17050,6 @@
 				E524180611CB86C40025CA71 /* nglKernel_UIKit.mm in Sources */,
 				E524180711CB86C40025CA71 /* nglModule_UIKit.mm in Sources */,
 				E524180811CB86C40025CA71 /* nglPlugin_UIKit.mm in Sources */,
-				E524180D11CB875B0025CA71 /* nuiPhoneFontDB.cpp in Sources */,
 				E524181711CB87E80025CA71 /* nglContext_UIKit.mm in Sources */,
 				E524181911CB87E80025CA71 /* nglVideoMode_UIKit.mm in Sources */,
 				E524181A11CB87E80025CA71 /* nglWindow_UIKit.mm in Sources */,
@@ -17102,7 +17087,6 @@
 				E56399C31370375B006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87567137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684DF1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
-				E5396B06139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5F0C25713A0AD2C00EC0FB0 /* nuiTextStyle.cpp in Sources */,
 				E5F0C26713A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27713A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
@@ -17410,7 +17394,6 @@
 				E52420C411CBCE9E0025CA71 /* nglKernel_UIKit.mm in Sources */,
 				E52420C511CBCE9E0025CA71 /* nglModule_UIKit.mm in Sources */,
 				E52420C611CBCE9E0025CA71 /* nglPlugin_UIKit.mm in Sources */,
-				E52420C711CBCE9E0025CA71 /* nuiPhoneFontDB.cpp in Sources */,
 				E52420C911CBCE9E0025CA71 /* nglContext_UIKit.mm in Sources */,
 				E52420CA11CBCE9E0025CA71 /* nglVideoMode_UIKit.mm in Sources */,
 				E52420CB11CBCE9E0025CA71 /* nglWindow_UIKit.mm in Sources */,
@@ -17448,7 +17431,6 @@
 				E56399C61370375C006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87568137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684E01381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
-				E5396B07139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5F0C25813A0AD2C00EC0FB0 /* nuiTextStyle.cpp in Sources */,
 				E5F0C26813A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27813A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
@@ -17797,7 +17779,6 @@
 				E56399C01370375A006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87566137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684DE1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
-				E5396B05139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5F0C25613A0AD2C00EC0FB0 /* nuiTextStyle.cpp in Sources */,
 				E5F0C26613A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27613A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
@@ -18145,7 +18126,6 @@
 				E56399BD13703756006920F5 /* nuiFontManager.cpp in Sources */,
 				BCF87565137D27630092DAAD /* nuiImageAnimation.cpp in Sources */,
 				BC1684DD1381605F00A605E6 /* nuiGestureRecognizer.cpp in Sources */,
-				E5396B04139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5F0C25513A0AD2C00EC0FB0 /* nuiTextStyle.cpp in Sources */,
 				E5F0C26513A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27513A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
@@ -18493,7 +18473,6 @@
 				E56399CA13703761006920F5 /* nuiFont.cpp in Sources */,
 				E56399CB13703761006920F5 /* nuiFontBase.cpp in Sources */,
 				E56399CC13703761006920F5 /* nuiFontManager.cpp in Sources */,
-				E5396B09139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5F0C25A13A0AD2C00EC0FB0 /* nuiTextStyle.cpp in Sources */,
 				E5F0C26A13A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27A13A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
@@ -18844,7 +18823,6 @@
 				E56399CD13703762006920F5 /* nuiFont.cpp in Sources */,
 				E56399CE13703762006920F5 /* nuiFontBase.cpp in Sources */,
 				E56399CF13703762006920F5 /* nuiFontManager.cpp in Sources */,
-				E5396B0A139F67EA009CB047 /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5F0C25B13A0AD2C00EC0FB0 /* nuiTextStyle.cpp in Sources */,
 				E5F0C26B13A0AE1500EC0FB0 /* nuiTextRun.cpp in Sources */,
 				E5F0C27B13A0AE9E00EC0FB0 /* nuiTextLine.cpp in Sources */,
@@ -19121,6 +19099,7 @@
 				E511F76A1367149000DE93B0 /* hb-shape.cc in Sources */,
 				E511F76D1367149000DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571A13C70FA500245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
+				E57E571513CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19399,6 +19378,7 @@
 				E511F79A1367149000DE93B0 /* hb-shape.cc in Sources */,
 				E511F79D1367149100DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571913C70FA400245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
+				E57E571413CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19464,7 +19444,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_THUMB_SUPPORT = YES;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -19524,7 +19504,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_THUMB_SUPPORT = YES;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = 4.2;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -19680,7 +19660,6 @@
 		E542A1AD0C3F0A5900225219 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -19756,7 +19735,6 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/ungif deps/ucdata deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib deps/tracemonkey deps/libcss/src deps/libcss/src/libwapcaplet deps/libcss/src/libparserutils deps/libcss/include";
@@ -19766,7 +19744,6 @@
 		E58173AC0C3D108900902DFE /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -19778,7 +19755,6 @@
 				);
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				ONLY_ACTIVE_ARCH = NO;
 				PRELINK_LIBS = "-liconv -lz";
 				PRODUCT_NAME = nui3D;
 				SDKROOT = macosx;
@@ -19789,7 +19765,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				COPY_PHASE_STRIP = NO;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = "";
@@ -19837,7 +19812,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -19884,8 +19858,11 @@
 		E5DD340F12E09CA800F1EF4E /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
+				ARCHS = (
+					x86_64,
+					ppc,
+					i386,
+				);
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
@@ -19921,17 +19898,15 @@
 					AVMPLUS_AMD64,
 					_COCOA_,
 				);
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
 				);
 				PRELINK_LIBS = "-liconv";
 				PRODUCT_NAME = thirdparty;
-				SDKROOT = "";
 				ZERO_LINK = NO;
 			};
 			name = Default;
