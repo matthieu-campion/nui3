@@ -38,6 +38,7 @@ static char rcsid[] = "$Id: ucdata.c,v 1.4 2001/01/02 18:46:20 mleisher Exp $";
 #include "ucdata.h"
 #include "ucdata_static.h"
 
+#include <map>
 
 /**************************************************************************
  *
@@ -112,7 +113,7 @@ char *paths, *filename, *mode;
  *
  **************************************************************************/
 
-static uint32_t  _ucprop_size;
+static uint32_t  _ucprop_size = 0;
 static uint16_t *_ucprop_offsets;
 static uint32_t  *_ucprop_ranges;
 
@@ -219,11 +220,13 @@ int32_t reload;
 /*
  * Return -1 on error, 0 if okay
  */
+
 static int32_t
 _ucprop_load_static()
 {
   _ucprop_offsets = (uint16_t*)ctype_props_offsets;
   _ucprop_ranges = (uint32_t*)ctype_props;
+  _ucprop_size = sizeof(ctype_props_offsets) / sizeof(ctype_props_offsets[0]);
   return 1;
 }
 
@@ -244,6 +247,7 @@ _ucprop_unload()
      */
     free((char *) _ucprop_offsets);
     _ucprop_size = 0;
+  fast_props.clear();
 }
 
 int32_t
@@ -290,6 +294,7 @@ uint32_t code, n;
     }
     return 0;
 }
+
 
 void
 #ifdef __STDC__
@@ -978,7 +983,7 @@ int32_t *outlen;
 #endif
 {
     int32_t i, j, k, l, size;
-    uint32_t num, class, *decomp, hangdecomp[3];
+    uint32_t num, klass, *decomp, hangdecomp[3];
 
     size = inlen;
     *out = (uint32_t *) malloc(size * sizeof(**out));
@@ -995,12 +1000,12 @@ int32_t *outlen;
                     return *outlen = -1;
             }
             for (k = 0; k < num; k++) {
-                class = uccombining_class(decomp[k]);
-                if (class == 0) {
+                klass = uccombining_class(decomp[k]);
+                if (klass == 0) {
                     (*out)[i] = decomp[k];
                 } else {
                     for (l = i; l > 0; l--)
-                        if (class >= uccombining_class((*out)[l-1]))
+                        if (klass >= uccombining_class((*out)[l-1]))
                             break;
                     memmove(*out + l + 1, *out + l, (i - l) * sizeof(**out));
                     (*out)[l] = decomp[k];
@@ -1025,12 +1030,12 @@ int32_t *outlen;
                 if (*out == NULL)
                     return *outlen = -1;
             }
-            class = uccombining_class(in[j]);
-            if (class == 0) {
+            klass = uccombining_class(in[j]);
+            if (klass == 0) {
                 (*out)[i] = in[j];
             } else {
                 for (l = i; l > 0; l--)
-                    if (class >= uccombining_class((*out)[l-1]))
+                    if (klass >= uccombining_class((*out)[l-1]))
                         break;
                 memmove(*out + l + 1, *out + l, (i - l) * sizeof(**out));
                 (*out)[l] = in[j];

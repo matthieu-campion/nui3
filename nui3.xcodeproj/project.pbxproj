@@ -1508,7 +1508,7 @@
 		73F09A3212E9D09E00656E84 /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */; };
 		73F09A3312E9D09E00656E84 /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
 		73F09A3412E9D09E00656E84 /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDD1100AFB5000F46C4 /* ucpgba.c */; };
-		73F09A3512E9D09E00656E84 /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.c */; };
+		73F09A3512E9D09E00656E84 /* ucdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.cpp */; };
 		73F09A3612E9D09E00656E84 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8611750ADF0031DFA8 /* jsapi.cpp */; };
 		73F09A3712E9D09E00656E84 /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8811750ADF0031DFA8 /* jsarena.cpp */; };
 		73F09A3812E9D09E00656E84 /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8A11750ADF0031DFA8 /* jsarray.cpp */; };
@@ -6317,7 +6317,7 @@
 		E5DD335212E09CA800F1EF4E /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */; };
 		E5DD335312E09CA800F1EF4E /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
 		E5DD336712E09CA800F1EF4E /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDD1100AFB5000F46C4 /* ucpgba.c */; };
-		E5DD336812E09CA800F1EF4E /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.c */; };
+		E5DD336812E09CA800F1EF4E /* ucdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.cpp */; };
 		E5DD336E12E09CA800F1EF4E /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8611750ADF0031DFA8 /* jsapi.cpp */; };
 		E5DD336F12E09CA800F1EF4E /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8811750ADF0031DFA8 /* jsarena.cpp */; };
 		E5DD337012E09CA800F1EF4E /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8A11750ADF0031DFA8 /* jsarray.cpp */; };
@@ -6985,7 +6985,7 @@
 		E5DD3F1E12E0B08300F1EF4E /* gifalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54EF0FF12E8D00FDF3BE /* gifalloc.c */; };
 		E5DD3F1F12E0B08300F1EF4E /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
 		E5DD3F3212E0B08300F1EF4E /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDD1100AFB5000F46C4 /* ucpgba.c */; };
-		E5DD3F3312E0B08300F1EF4E /* ucdata.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.c */; };
+		E5DD3F3312E0B08300F1EF4E /* ucdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.cpp */; };
 		E5DD3F3912E0B08300F1EF4E /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8611750ADF0031DFA8 /* jsapi.cpp */; };
 		E5DD3F3A12E0B08300F1EF4E /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8811750ADF0031DFA8 /* jsarena.cpp */; };
 		E5DD3F3B12E0B08300F1EF4E /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8A11750ADF0031DFA8 /* jsarray.cpp */; };
@@ -8913,7 +8913,7 @@
 		E5D13BDC1100AFB5000F46C4 /* ucpgba.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ucpgba.h; path = deps/ucdata/ucpgba.h; sourceTree = SOURCE_ROOT; };
 		E5D13BDD1100AFB5000F46C4 /* ucpgba.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ucpgba.c; path = deps/ucdata/ucpgba.c; sourceTree = SOURCE_ROOT; };
 		E5D13BDE1100AFB5000F46C4 /* ucdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ucdata.h; path = deps/ucdata/ucdata.h; sourceTree = SOURCE_ROOT; };
-		E5D13BDF1100AFB5000F46C4 /* ucdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ucdata.c; path = deps/ucdata/ucdata.c; sourceTree = SOURCE_ROOT; };
+		E5D13BDF1100AFB5000F46C4 /* ucdata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ucdata.cpp; path = deps/ucdata/ucdata.cpp; sourceTree = SOURCE_ROOT; };
 		E5D13BE01100AFB5000F46C4 /* ucdata_static.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ucdata_static.h; path = deps/ucdata/ucdata_static.h; sourceTree = SOURCE_ROOT; };
 		E5D13BE11100AFB5000F46C4 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = deps/ucdata/README; sourceTree = SOURCE_ROOT; };
 		E5D13BE21100AFB5000F46C4 /* bidiapi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bidiapi.txt; path = deps/ucdata/bidiapi.txt; sourceTree = SOURCE_ROOT; };
@@ -11728,7 +11728,7 @@
 				E5D13BDC1100AFB5000F46C4 /* ucpgba.h */,
 				E5D13BDD1100AFB5000F46C4 /* ucpgba.c */,
 				E5D13BDE1100AFB5000F46C4 /* ucdata.h */,
-				E5D13BDF1100AFB5000F46C4 /* ucdata.c */,
+				E5D13BDF1100AFB5000F46C4 /* ucdata.cpp */,
 				E5D13BE01100AFB5000F46C4 /* ucdata_static.h */,
 				E5D13BE11100AFB5000F46C4 /* README */,
 				E5D13BE21100AFB5000F46C4 /* bidiapi.txt */,
@@ -16618,7 +16618,7 @@
 				73F09A3212E9D09E00656E84 /* gifalloc.c in Sources */,
 				73F09A3312E9D09E00656E84 /* gif_err.c in Sources */,
 				73F09A3412E9D09E00656E84 /* ucpgba.c in Sources */,
-				73F09A3512E9D09E00656E84 /* ucdata.c in Sources */,
+				73F09A3512E9D09E00656E84 /* ucdata.cpp in Sources */,
 				73F09A3612E9D09E00656E84 /* jsapi.cpp in Sources */,
 				73F09A3712E9D09E00656E84 /* jsarena.cpp in Sources */,
 				73F09A3812E9D09E00656E84 /* jsarray.cpp in Sources */,
@@ -18979,7 +18979,7 @@
 				E5DD335212E09CA800F1EF4E /* gifalloc.c in Sources */,
 				E5DD335312E09CA800F1EF4E /* gif_err.c in Sources */,
 				E5DD336712E09CA800F1EF4E /* ucpgba.c in Sources */,
-				E5DD336812E09CA800F1EF4E /* ucdata.c in Sources */,
+				E5DD336812E09CA800F1EF4E /* ucdata.cpp in Sources */,
 				E5DD336E12E09CA800F1EF4E /* jsapi.cpp in Sources */,
 				E5DD336F12E09CA800F1EF4E /* jsarena.cpp in Sources */,
 				E5DD337012E09CA800F1EF4E /* jsarray.cpp in Sources */,
@@ -19247,7 +19247,7 @@
 				E5DD3F1E12E0B08300F1EF4E /* gifalloc.c in Sources */,
 				E5DD3F1F12E0B08300F1EF4E /* gif_err.c in Sources */,
 				E5DD3F3212E0B08300F1EF4E /* ucpgba.c in Sources */,
-				E5DD3F3312E0B08300F1EF4E /* ucdata.c in Sources */,
+				E5DD3F3312E0B08300F1EF4E /* ucdata.cpp in Sources */,
 				E5DD3F3912E0B08300F1EF4E /* jsapi.cpp in Sources */,
 				E5DD3F3A12E0B08300F1EF4E /* jsarena.cpp in Sources */,
 				E5DD3F3B12E0B08300F1EF4E /* jsarray.cpp in Sources */,
