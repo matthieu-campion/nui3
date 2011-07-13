@@ -38,7 +38,8 @@ static char rcsid[] = "$Id: ucdata.c,v 1.4 2001/01/02 18:46:20 mleisher Exp $";
 #include "ucdata.h"
 #include "ucdata_static.h"
 
-#include <map>
+#include <vector>
+#include <algorithm>
 
 /**************************************************************************
  *
@@ -220,13 +221,92 @@ int32_t reload;
 /*
  * Return -1 on error, 0 if okay
  */
+bool compare_range(const std::pair<uint32_t, int8_t>& rLeft, const std::pair<uint32_t, int8_t>& rRight)
+{
+  return (rLeft.first < rRight.first);
+}
+
+static std::vector<std::pair<uint32_t, int8_t> > ucprops_ranges;
+
 
 static int32_t
 _ucprop_load_static()
 {
   _ucprop_offsets = (uint16_t*)ctype_props_offsets;
   _ucprop_ranges = (uint32_t*)ctype_props;
-  _ucprop_size = sizeof(ctype_props_offsets) / sizeof(ctype_props_offsets[0]);
+  _ucprop_size = sizeof(ctype_props_offsets) / sizeof(ctype_props_offsets[0]) - 2;
+  
+  std::vector<std::pair<uint32_t, int8_t> > ranges;
+  ranges.reserve(sizeof(ctype_props) / 4);
+  
+  for (uint32_t n = 0; n < _ucprop_size; n++)
+  {
+    int32_t l, r, m;
+    int32_t v1 = 1 << n;
+    int32_t v2 = -v1;
+    
+    /*
+     * There is an extra node on the end of the offsets to allow this routine
+     * to work right.  If the index is 0xffff, then there are no nodes for the
+     * property.
+     */
+    if ((l = _ucprop_offsets[n]) != 0xffff)
+    {
+      /*
+       * Locate the next offset that is not 0xffff.  The sentinel at the end of
+       * the array is the max index value.
+       */
+      for (m = 1;
+           n + m < _ucprop_size && _ucprop_offsets[n + m] == 0xffff; m++) ;
+      r = _ucprop_offsets[n + m] - 1;
+      
+      // Scan the range l to r:
+      uint32_t i = l;
+      while (i < r)
+      {
+        const uint32_t a = _ucprop_ranges[i];
+        const uint32_t b = _ucprop_ranges[i + 1];
+        ranges.push_back(std::make_pair(a, v1));
+        ranges.push_back(std::make_pair(b, v2));
+        i += 2;
+      }
+    }
+  }
+  
+  printf("found %d range stops\n", ranges.size());
+  std::sort(ranges.begin(), ranges.end(), compare_range);
+  
+  ucprops_ranges.push_back(ranges.front());
+
+  uint32_t pos = ranges.front().first;
+  int8_t val = ranges.front().second;
+  size_t s = ranges.size();
+  
+  for (uint32_t i = 1; i < s; i++)
+  {
+    const std::pair<uint32_t, int8_t>& rRange(ranges[i]);
+    const uint32_t newpos = rRange.first;
+    const int8_t newval = rRange.second;
+    
+    if (newval < 0)
+      val &= ~(-newval);
+    else
+      val |= newval;
+    
+    if (newpos == pos)
+    {
+      // Modify in place
+      ucprops_ranges.back().second = val;
+    }
+    else
+    {
+      // New range start
+      pos = newpos;
+      ucprops_ranges.push_back(std::make_pair(pos, val));
+    }
+  }
+  
+  printf("ranges computed: %d\n", ucprops_ranges.size());
   return 1;
 }
 
@@ -247,9 +327,9 @@ _ucprop_unload()
      */
     free((char *) _ucprop_offsets);
     _ucprop_size = 0;
-  fast_props.clear();
 }
 
+#if 1
 int32_t
 #ifdef __STDC__
 ucprop_lookup(uint32_t code, uint32_t n)
@@ -294,7 +374,38 @@ uint32_t code, n;
     }
     return 0;
 }
+#else
 
+int32_t
+#ifdef __STDC__
+ucprop_lookup(uint32_t code, uint32_t n)
+#else
+ucprop_lookup(code, n)
+uint32_t code, n;
+#endif
+{
+  //printf("ucprop_lookup %d %d\n", code, n);
+  int32_t l = 0, r = ucprops_ranges.size() - 1, m;
+  
+  while (l <= r)
+  {
+    /*
+     * Determine a "mid" point and adjust to make sure the mid point is at
+     * the beginning of a range pair.
+     */
+    m = (l + r) >> 1;
+    m -= (m & 1);
+    if (code > ucprops_ranges[m + 1].first)
+      l = m + 2;
+    else if (code < ucprops_ranges[m].first)
+      r = m - 2;
+    else if (code >= ucprops_ranges[m].first && code <= ucprops_ranges[m + 1].first)
+      return ((ucprops_ranges[m].second & (1 << n)) >> n);
+  }
+  return 0;
+}
+
+#endif
 
 void
 #ifdef __STDC__
