@@ -380,7 +380,7 @@ static uint32_t last_range_start = -1;
 static uint32_t last_range_end = -1;
 static int8_t last_range_value = 0;
 
-//#define STATS
+#define STATS
 #ifdef STATS
 static uint32_t miss = 0;
 static uint32_t calls = 0;
@@ -416,7 +416,7 @@ uint32_t code, n;
       l = m;
     else if (code < mm)
       r = m;
-    if (code >= ucprops_ranges[m].first && code < ucprops_ranges[m + 1].first)
+    if (code >= mm && code < ucprops_ranges[m + 1].first)
     {
       last_range_start = ucprops_ranges[m].first;
       last_range_end = ucprops_ranges[m + 1].first;
@@ -428,6 +428,7 @@ uint32_t code, n;
       return ((last_range_value & (1 << n)) >> n);
     }
   }
+  miss++;
   return 0;
 }
 
