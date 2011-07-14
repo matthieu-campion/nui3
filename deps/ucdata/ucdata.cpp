@@ -38,6 +38,8 @@ static char rcsid[] = "$Id: ucdata.c,v 1.4 2001/01/02 18:46:20 mleisher Exp $";
 #include "ucdata.h"
 #include "ucdata_static.h"
 
+#include <vector>
+#include <algorithm>
 
 /**************************************************************************
  *
@@ -112,7 +114,7 @@ char *paths, *filename, *mode;
  *
  **************************************************************************/
 
-static uint32_t  _ucprop_size;
+static uint32_t  _ucprop_size = 0;
 static uint16_t *_ucprop_offsets;
 static uint32_t  *_ucprop_ranges;
 
@@ -219,11 +221,92 @@ int32_t reload;
 /*
  * Return -1 on error, 0 if okay
  */
+bool compare_range(const std::pair<uint32_t, int8_t>& rLeft, const std::pair<uint32_t, int8_t>& rRight)
+{
+  return (rLeft.first < rRight.first);
+}
+
+static std::vector<std::pair<uint32_t, int8_t> > ucprops_ranges;
+
+
 static int32_t
 _ucprop_load_static()
 {
   _ucprop_offsets = (uint16_t*)ctype_props_offsets;
   _ucprop_ranges = (uint32_t*)ctype_props;
+  _ucprop_size = sizeof(ctype_props_offsets) / sizeof(ctype_props_offsets[0]) - 2;
+  
+  std::vector<std::pair<uint32_t, int8_t> > ranges;
+  ranges.reserve(sizeof(ctype_props) / 4);
+  
+  for (uint32_t n = 0; n < _ucprop_size; n++)
+  {
+    int32_t l, r, m;
+    int32_t v1 = 1 << n;
+    int32_t v2 = -v1;
+    
+    /*
+     * There is an extra node on the end of the offsets to allow this routine
+     * to work right.  If the index is 0xffff, then there are no nodes for the
+     * property.
+     */
+    if ((l = _ucprop_offsets[n]) != 0xffff)
+    {
+      /*
+       * Locate the next offset that is not 0xffff.  The sentinel at the end of
+       * the array is the max index value.
+       */
+      for (m = 1;
+           n + m < _ucprop_size && _ucprop_offsets[n + m] == 0xffff; m++) ;
+      r = _ucprop_offsets[n + m] - 1;
+      
+      // Scan the range l to r:
+      uint32_t i = l;
+      while (i < r)
+      {
+        const uint32_t a = _ucprop_ranges[i];
+        const uint32_t b = _ucprop_ranges[i + 1] - 1;
+        ranges.push_back(std::make_pair(a, v1));
+        ranges.push_back(std::make_pair(b, v2));
+        i += 2;
+      }
+    }
+  }
+  
+  printf("found %d range stops\n", ranges.size());
+  std::sort(ranges.begin(), ranges.end(), compare_range);
+  
+  ucprops_ranges.push_back(ranges.front());
+
+  uint32_t pos = ranges.front().first;
+  int8_t val = ranges.front().second;
+  size_t s = ranges.size();
+  
+  for (uint32_t i = 1; i < s; i++)
+  {
+    const std::pair<uint32_t, int8_t>& rRange(ranges[i]);
+    const uint32_t newpos = rRange.first;
+    const int8_t newval = rRange.second;
+    
+    if (newval < 0)
+      val &= ~(-newval);
+    else
+      val |= newval;
+    
+    if (newpos == pos)
+    {
+      // Modify in place
+      ucprops_ranges.back().second = val;
+    }
+    else
+    {
+      // New range start
+      pos = newpos;
+      ucprops_ranges.push_back(std::make_pair(pos, val));
+    }
+  }
+  
+  printf("ranges computed: %d\n", ucprops_ranges.size());
   return 1;
 }
 
@@ -246,6 +329,7 @@ _ucprop_unload()
     _ucprop_size = 0;
 }
 
+#if 0
 int32_t
 #ifdef __STDC__
 ucprop_lookup(uint32_t code, uint32_t n)
@@ -254,6 +338,7 @@ ucprop_lookup(code, n)
 uint32_t code, n;
 #endif
 {
+  //printf("ucprop_lookup %d %d\n", code, n);
     int32_t l, r, m;
 
     /*
@@ -289,6 +374,65 @@ uint32_t code, n;
     }
     return 0;
 }
+#else
+
+static uint32_t last_range_start = -1;
+static uint32_t last_range_end = -1;
+static int8_t last_range_value = 0;
+
+#define STATS
+#ifdef STATS
+static uint32_t miss = 0;
+static uint32_t calls = 0;
+#endif
+
+int32_t
+#ifdef __STDC__
+ucprop_lookup(uint32_t code, uint32_t n)
+#else
+ucprop_lookup(code, n)
+uint32_t code, n;
+#endif
+{
+#ifdef STATS
+  calls++;
+#endif
+  
+  if (last_range_start <= code && code < last_range_end)
+    return ((last_range_value & (1 << n)) >> n);
+  
+  //printf("ucprop_lookup %d %d\n", code, n);
+  int32_t l = 0, r = ucprops_ranges.size() - 1, m;
+  
+  while (l < r)
+  {
+    m = (l + r) >> 1;
+    
+    const uint32_t ll = ucprops_ranges[l].first;
+    const uint32_t mm = ucprops_ranges[m].first;
+    const uint32_t rr = ucprops_ranges[r].first;
+    
+    if (code >= mm)
+      l = m;
+    else if (code < mm)
+      r = m;
+    if (code >= mm && code < ucprops_ranges[m + 1].first)
+    {
+      last_range_start = ucprops_ranges[m].first;
+      last_range_end = ucprops_ranges[m + 1].first;
+      last_range_value = ucprops_ranges[m].second;
+#ifdef STATS
+      miss++;
+      printf("calls %d / miss %d (%f%%)\n", calls, miss, 100.0f * (float)miss / (float)calls);
+#endif
+      return ((last_range_value & (1 << n)) >> n);
+    }
+  }
+  miss++;
+  return 0;
+}
+
+#endif
 
 void
 #ifdef __STDC__
@@ -977,7 +1121,7 @@ int32_t *outlen;
 #endif
 {
     int32_t i, j, k, l, size;
-    uint32_t num, class, *decomp, hangdecomp[3];
+    uint32_t num, klass, *decomp, hangdecomp[3];
 
     size = inlen;
     *out = (uint32_t *) malloc(size * sizeof(**out));
@@ -994,12 +1138,12 @@ int32_t *outlen;
                     return *outlen = -1;
             }
             for (k = 0; k < num; k++) {
-                class = uccombining_class(decomp[k]);
-                if (class == 0) {
+                klass = uccombining_class(decomp[k]);
+                if (klass == 0) {
                     (*out)[i] = decomp[k];
                 } else {
                     for (l = i; l > 0; l--)
-                        if (class >= uccombining_class((*out)[l-1]))
+                        if (klass >= uccombining_class((*out)[l-1]))
                             break;
                     memmove(*out + l + 1, *out + l, (i - l) * sizeof(**out));
                     (*out)[l] = decomp[k];
@@ -1024,12 +1168,12 @@ int32_t *outlen;
                 if (*out == NULL)
                     return *outlen = -1;
             }
-            class = uccombining_class(in[j]);
-            if (class == 0) {
+            klass = uccombining_class(in[j]);
+            if (klass == 0) {
                 (*out)[i] = in[j];
             } else {
                 for (l = i; l > 0; l--)
-                    if (class >= uccombining_class((*out)[l-1]))
+                    if (klass >= uccombining_class((*out)[l-1]))
                         break;
                 memmove(*out + l + 1, *out + l, (i - l) * sizeof(**out));
                 (*out)[l] = in[j];

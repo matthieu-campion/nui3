@@ -276,7 +276,7 @@ bool nuiTextLayout::LayoutParagraph(int32 start, int32 length)
         while (pos < origin + len)
         {
           nglUChar ch = mUnicode[pos++];
-          if (ucisprint(ch))
+          if (ucisprint(ch) && ch > 32)
             charset.insert(ch);
         }
       }
