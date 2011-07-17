@@ -35,21 +35,6 @@ void nuiMetaDecoration::InitAttributes()
   
 }
 
-
-
-  
-bool nuiMetaDecoration::Load(const nuiXMLNode* pNode)
-{
-  // do nothing
-  return false;
-}
-
-nuiXMLNode* nuiMetaDecoration::Serialize(nuiXMLNode* pNode)
-{
-  // do nothing
-  return NULL;
-}
-
   
 //virtual
 void nuiMetaDecoration::DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect)

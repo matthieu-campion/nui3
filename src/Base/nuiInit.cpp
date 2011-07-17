@@ -15,6 +15,13 @@
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
 static uint32 gNUIReferences = 0;
+bool nuiInitAll(void* OSHandle = NULL, nuiKernel* pKernel)
+{
+  nuiInit(OSHandle, pKernel);
+  nuiDefaultDecoration::Init();
+  nuiBuilder::Init();
+}
+
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 {

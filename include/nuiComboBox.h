@@ -18,7 +18,6 @@ class NUI_API nuiComboBox : public nuiSimpleContainer
 public:
   nuiComboBox();
   nuiComboBox(nuiTreeNode* pChoicesTree, bool ownTree = false);
-  bool Load(nuiXMLNode* pNode);
   virtual ~nuiComboBox();
   
   

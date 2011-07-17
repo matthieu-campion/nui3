@@ -9,7 +9,6 @@
 #include "nuiToggleButton.h"
 #include "nuiLabel.h"
 #include "nuiDrawContext.h"
-#include "nuiXML.h"
 
 nuiSize nuiToggleButton::mDefaultCheckSize = 14;
 
@@ -51,18 +50,6 @@ nuiToggleButton::nuiToggleButton(const nglImage& rImage)
   mDisplayAsFrameBox = false;
   mCheckSize = mDefaultCheckSize;
   mHasContents = true;
-}
-
-bool nuiToggleButton::Load(const nuiXMLNode* pNode)
-{
-  nuiButton::Load(pNode);
-  SetObjectClass(_T("nuiToggleButton"));
-  mDisplayAsCheckBox = false;
-  mDisplayAsFrameBox = false;
-  mCheckSize = mDefaultCheckSize;
-  mHasContents = true;
-  
-  return true;
 }
 
 nuiToggleButton::~nuiToggleButton()

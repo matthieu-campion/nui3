@@ -9,7 +9,6 @@
 #include "nuiApplication.h"
 #include "nuiSplitter.h"
 #include "nuiDrawContext.h"
-#include "nuiXML.h"
 
 #include "nuiAttributeAnimation.h"
 
@@ -231,25 +230,6 @@ void nuiSplitter::InitAttributes()
                 nuiMakeDelegate(this, &nuiSplitter::SetHandlePos)));
 }
 
-
-
-bool nuiSplitter::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  SetObjectClass(_T("nuiSplitter"));
-
-  mHandlePos    = nuiGetVal(pNode,_T("HandlePos"),50.0f);
-  mHandlePosMin = nuiGetVal(pNode,_T("HandlePosMin"),10.0f);
-  mHandlePosMax = nuiGetVal(pNode,_T("HandlePosMax"),10.0f);
-  mFixed        = nuiGetBool(pNode,_T("Fixed"),false);
-  mMasterChild  = nuiGetBool(pNode,_T("MasterChild"),true);
-  mOrientation  = nuiGetOrientation ( pNode, nuiHorizontal);
-
-  mHandleHover = false;
-
-  InitProperties();
-  return true;
-}
 
 
 nuiSplitter::~nuiSplitter()

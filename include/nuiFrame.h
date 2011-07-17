@@ -21,9 +21,6 @@ public:
 	void InitAttributes();
   virtual ~nuiFrame();
   
-  bool Load(const nuiXMLNode* pNode);
-  nuiXMLNode* Serialize(nuiXMLNode* pNode);
-  
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   
 

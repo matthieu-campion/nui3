@@ -10,7 +10,6 @@
 #include "nui.h"
 #include "nuiWidget.h"
 #include "nuiTopLevel.h"
-#include "nuiXML.h"
 #include "nuiAnimation.h"
 #include "nuiAttributeAnimation.h"
 #include "nuiDrawContext.h"
@@ -98,11 +97,7 @@ nuiWidget::nuiWidget()
   
   Init();
 
-  InitDefaultDecorations();
-  
-  // Property bindings:
-  InitProperties();
-  
+  //InitDefaultDecorations();
 }
 
 
@@ -123,11 +118,7 @@ nuiWidget::nuiWidget(const nglString& rObjectName)
   
   Init();
   
-  InitDefaultDecorations();
-  
-  // Property bindings:
-  InitProperties();
-  
+  //InitDefaultDecorations();
 }
 
 
@@ -166,68 +157,6 @@ void nuiWidget::InitDefaultValues()
 
 
 
-
-bool nuiWidget::Load(const nuiXMLNode* pNode)
-{
-  nuiObject::Load(pNode);
-#ifdef NUI_WIDGET_STATS
-  wcount++;
-  maxwcount = MAX(wcount, maxwcount);
-  NGL_OUT(_T("max widgets: %d (total %d)\n", maxwcount, wcount));
-#endif
-  
-  Init();
-  mpTheme = NULL;
-
-  nglString str = pNode->Dump(0);
-  // Retrieve the size of the widget from the XML description (ignored if not present):
-  if ( pNode->HasAttribute(_T("X")) 
-    && pNode->HasAttribute(_T("Y")) 
-    && pNode->HasAttribute(_T("Width")) 
-    && pNode->HasAttribute(_T("Height")))
-  {
-    mRect.mLeft = pNode->GetAttribute(nglString(_T("X"))).GetCFloat();
-    mRect.mRight = mRect.mLeft + pNode->GetAttribute(nglString(_T("Width"))).GetCFloat();
-    mRect.mTop = pNode->GetAttribute(nglString(_T("Y"))).GetCFloat();
-    mRect.mBottom = mRect.mTop + pNode->GetAttribute(nglString(_T("Height"))).GetCFloat();
-    mIdealRect = mRect;
-    mVisibleRect = GetOverDrawRect(true, true);
-    SetUserRect(mRect);
-  }
-  else
-  {
-    if ( pNode->HasAttribute(_T("X")) 
-      && pNode->HasAttribute(_T("Y")))
-    {
-      SetUserPos(pNode->GetAttribute(nglString(_T("X"))).GetCFloat(),
-        pNode->GetAttribute(nglString(_T("Y"))).GetCFloat());
-    }
-  }
-
-  SetVisible(nuiGetBool(pNode,nglString(_T("Visible")),true));
-  SetEnabled(nuiGetBool(pNode,nglString(_T("Enabled")), true));
-  SetSelected(nuiGetBool(pNode,nglString(_T("Selected")), false));
-  mStateLocked = nuiGetBool(pNode,_T("StateLocked"),false);
-
-  // Property bindings:
-  InitProperties();
-
-  uint i, count = pNode->GetChildrenCount();
-  for (i = 0; i < count; i++)
-  {
-    nuiXMLNode* pChild = pNode->GetChild(i);
-    if (pChild->GetName() == _T("nuiPropertyBag"))
-    {
-      uint j;
-      for (j=0; j<pChild->GetAttributeCount(); j++)
-      {
-        SetProperty(pChild->GetAttributeName(j),pChild->GetAttributeValue(j));
-      }
-    }
-  }
-    
-  return true;
-}
 
 bool nuiWidget::AttrIsEnabled()
 {
@@ -648,48 +577,6 @@ void nuiWidget::Init()
   NUI_ADD_EVENT(PreMouseMoved);
 }
 
-void nuiWidget::InitProperties()
-{
-}
-
-
-nuiXMLNode* nuiWidget::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{   
-  CheckValid();
-  nuiXMLNode* pNode = NULL;
-
-  if (mSerializeMode == eDontSaveNode)
-    return NULL;
-
-  if (mSerializeMode != eSkipNode)
-  {
-    pNode = nuiObject::Serialize(pParentNode,Recursive);
-
-    if (!pNode)
-      return NULL;
-
-    if (HasUserRect())
-    {
-      pNode->SetAttribute(_T("X"),mUserRect.mLeft);
-      pNode->SetAttribute(_T("Y"),mUserRect.mTop);
-      pNode->SetAttribute(_T("Width"),mUserRect.GetWidth());
-      pNode->SetAttribute(_T("Height"),mUserRect.GetHeight());
-    }
-    else
-    {
-      if (mHasUserPos)
-      {
-        pNode->SetAttribute(_T("X"),mUserRect.mLeft);
-        pNode->SetAttribute(_T("Y"),mUserRect.mTop);
-      }
-    }
-  }
-  else
-    pNode = pParentNode;
-
-  return pNode;
-}
-
 bool nuiWidget::SetObjectClass(const nglString& rName)
 {
   CheckValid();
@@ -715,15 +602,16 @@ void nuiWidget::SetObjectName(const nglString& rName)
 
 nglString nuiWidget::Dump()
 {
-  CheckValid();
-  nuiXML* xml = new nuiXML(GetObjectName());
-  
-  Serialize(xml, true);
-  
-  nglString dump = xml->Dump();
-  
-  delete xml;
-  return dump;
+  return nglString::Empty;
+//  CheckValid();
+//  nuiXML* xml = new nuiXML(GetObjectName());
+//  
+//  Serialize(xml, true);
+//  
+//  nglString dump = xml->Dump();
+//  
+//  delete xml;
+//  return dump;
 }
 
 
@@ -4653,21 +4541,6 @@ bool nuiWidget::IsDecorationInteractive() const
 {
   CheckValid();
   return mInteractiveDecoration;
-}
-
-void nuiWidget::InitDefaultDecorations()
-{
-  CheckValid();
-  if (mDefaultDecorations.size())
-    return;
-
-  App->AddExit(&nuiWidget::ExitDefaultDecorations);
-  nuiDefaultDecoration::Init();
-}
-
-void nuiWidget::ExitDefaultDecorations()
-{
-  mDefaultDecorations.clear();
 }
 
 // static 

@@ -91,44 +91,6 @@ void nuiLabel::InitDefaultValues()
 }
 
 
-bool nuiLabel::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  mpLayout = NULL;
-  mpIdealLayout = NULL;
-  mpFont = NULL;
-  mFontChanged = true;
-
-  mUseEllipsis = false;
-  mClearBg = false;
-  mWrapping = false;
-  mIgnoreState = false;
-
-  mTextPosition = nuiGetPosition(pNode,nuiLeft);
-
-  InitAttributes();
-  InitProperties();
-  SetFont(nuiTheme::Default);
-  if (pNode->GetChild(nglString(_T("##text"))))
-    SetText(pNode->GetChild(nglString(_T("##text")))->GetValue());
-  
-  return true;
-}
-
-nuiXMLNode* nuiLabel::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode);
-  if (!pNode) 
-    return NULL;
-  nuiXMLNode* pTextNode = new nuiXMLNode(_T("##text"),pNode);
-  pTextNode->SetValue(mText);
-  pNode->SetAttribute(_T("TextPosition"),mTextPosition);
-  pNode->DelAttribute(_T("Text"));
-
-  return pNode;
-}
-
-
 nuiLabel::~nuiLabel()
 {
   //printf("~nuiLabel: '%s'\n", mText.GetChars());

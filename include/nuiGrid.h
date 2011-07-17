@@ -24,7 +24,6 @@ public:
   void InitAttributes();
   void Reset(uint32 nbcolumns, uint32 nbrows, bool clear=true);
   
-  bool Load(const nuiXMLNode* pNode);
   virtual ~nuiGrid();
 
   void DisplayGridBorder(bool enable, nuiSize gridBorderSize = 1.f); ///< Allow to display the grid border

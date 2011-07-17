@@ -18,13 +18,7 @@ class NUI_API nuiPolyLine : public nuiPathGenerator
 public:
   nuiPolyLine(const nuiPath& rVertices);
   nuiPolyLine(const nuiPoint& rVertex);
-  nuiPolyLine(nuiXMLNode* pNode);
   virtual ~nuiPolyLine();
-
-  /** @name Serialization */
-  //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const; ///< This method saves the state in the given XML Node.
-  //@}
 
   virtual bool Tessellate(nuiPath& rVertices, float Quality = 0.5f) const;
 

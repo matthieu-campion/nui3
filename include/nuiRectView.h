@@ -14,8 +14,6 @@ class nuiRectView : public nuiWidget
 {
 public:
   nuiRectView(const nuiRect& rRect = nuiRect());
-  bool Load(const nuiXMLNode* pNode);
-  nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;
   virtual ~nuiRectView();
   
   bool Draw(nuiDrawContext* pContext);

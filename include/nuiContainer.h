@@ -68,20 +68,12 @@ public:
   /** @name Life */
   //@{
   nuiContainer(); ///< Create an nuiObject and give him his parent.
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create an nuiObject from an XML description.
   virtual ~nuiContainer(); 
   //@}
 
   virtual bool SetObjectClass(const nglString& rName);
   virtual void SetObjectName(const nglString& rName);
   
-  /** @name Serialization */
-  //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;
-	virtual	void SerializeChildren(nuiXMLNode* pParentNode, bool Recursive = false) const; // top level children serialization
-	virtual	nuiXMLNode* SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive = false) const;
-  //@}
-
   /** @name Object relation management */
   //@{
   virtual nuiWidgetPtr GetChild(int index); ///< Returns the child which has the given index (first child = 0). Return NULL in case of faillure.

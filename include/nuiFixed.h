@@ -16,10 +16,7 @@ class NUI_API nuiFixed : public nuiSimpleContainer
 {
 public:
   nuiFixed();
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiFixed();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool Recursive) const;
 
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);

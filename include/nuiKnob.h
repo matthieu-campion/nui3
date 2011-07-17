@@ -27,9 +27,7 @@ public:
   void InitAttributes();
 
   
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiKnob();
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
   
   void SetImageSequence(nuiImageSequence* pImageSequence);
   nuiImageSequence* GetImageSequence() const;

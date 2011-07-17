@@ -9,7 +9,6 @@
 #define __nuiPoint_h__
 
 //#include "nui.h"
-#include "nuiXML.h"
 #include "nglMath.h"
 
 enum nuiPointType 
@@ -24,45 +23,6 @@ public:
   nuiPoint() : nuiVector(), mType(nuiPointTypeNormal)
   {
   }
-
-  explicit nuiPoint(nuiXMLNode* pNode) : nuiVector(), mType(nuiPointTypeNormal)
-  { 
-    if (pNode->GetName() != _T("nuiPoint"))
-      return;
-
-    Elt[0] = nuiGetVal(pNode,_T("X"), 0.0f);
-    Elt[1] = nuiGetVal(pNode,_T("Y"), 0.0f);
-    Elt[2] = nuiGetVal(pNode,_T("Z"), 0.0f);
-    if (nuiGetBool(pNode, _T("Stop"), false))
-      SetType(nuiPointTypeStop);
-
-    NGL_ASSERT(finite(Elt[0]) && finite(Elt[1]) && finite(Elt[2]));
-    const nuiXMLNodeList& children = pNode->GetChildren();
-
-    nuiXMLNodeList::const_iterator it;
-    nuiXMLNodeList::const_iterator end = children.end();
-  }
-
-  /** @name Serialisation */
-  //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const ///< This method saves the state in the given XML Node.
-  {
-    nuiXMLNode* pNode = NULL;
-    if (pParentNode)
-      pNode = new nuiXMLNode(_T("nuiPoint"),pParentNode);
-    else
-      pNode = new nuiXML(_T("nuiPoint"));
-
-//    pNode->SetAttribute(_T("Name"),GetProperty(_T("Name")));
-    pNode->SetAttribute(_T("X"),Elt[0]);
-    pNode->SetAttribute(_T("Y"),Elt[1]);
-    pNode->SetAttribute(_T("Z"),Elt[2]);
-    if (GetType() == nuiPointTypeStop)
-      pNode->SetAttribute("Stop", true);
-    NGL_ASSERT(finite(Elt[0]) && finite(Elt[1]) && finite(Elt[2]));
-    return pNode;
-  }
-  //@}
 
   /// Initialize with values
   explicit nuiPoint(float X, float Y, float Z = 0.0f, float W = 1.f) : nuiVector(X,Y,Z,W), mType(nuiPointTypeNormal)

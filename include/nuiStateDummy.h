@@ -14,8 +14,6 @@ class NUI_API nuiStateDummy : public nuiSimpleContainer
 {
 public:
   nuiStateDummy(nuiWidgetPtr pNormal = NULL, nuiWidgetPtr pSelected = NULL, nuiWidgetPtr pDisabled = NULL);
-  virtual bool Load(const nuiXMLNode* pNode);
-  nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = true) const;
   virtual ~nuiStateDummy();
 
   void SetDummy(bool Selected, bool Enabled, nuiWidgetPtr pWidget); ///< Set the dummy widget to display when the widget is in a particular state. 

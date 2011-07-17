@@ -38,13 +38,7 @@ public:
   //@{
   nuiSplineNode(float x, float y, float z = 0);
   nuiSplineNode(const nuiSplineNode& rNode);
-  nuiSplineNode(nuiXMLNode* pNode); ///< Load from an XML Node
   virtual ~nuiSplineNode();
-  //@}
-
-  /** @name Serialisation */
-  //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, nuiSplineMode Mode = nuiSplineModeFree) const; ///< This method saves the state in the given XML Node.
   //@}
 
   void SetPosition(const nuiVector& rVector); ///< Change the position of the control point.
@@ -107,13 +101,7 @@ class NUI_API nuiSpline : public nuiPathGenerator
 public:
   nuiSpline();
   nuiSpline(const nuiSpline& rSpline); ///< Copy constructor.
-  nuiSpline(nuiXMLNode* pNode); ///< Load from an XML Node
   virtual ~nuiSpline();
-
-  /** @name Serialization */
-  //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode) const; ///< This method saves the state in the given XML Node.
-  //@}
 
   void InsertNode(const nuiSplineNode& rNode, uint32 index = 0); ///< Insert a Node @param rNode at @param index in the Spline.
   void InsertNodes(std::vector<nuiSplineNode> rNodes, uint32 index = 0); ///< Insert the Nodes in the list @param rNodes at @param index in the Spline.

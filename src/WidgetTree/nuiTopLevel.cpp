@@ -191,47 +191,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   SetMouseCursor(eCursorArrow);
 }
 
-bool nuiTopLevel::Load(const nuiXMLNode* pNode)
-{
-  CheckValid();
-  mToolTipTimerOn.SetPeriod(0.5f);
-  mToolTipTimerOff.SetPeriod(5.0f);
-  mFillTrash = false;
-  
-  //EnableRenderCache(false);
-  mClearBackground = true;
-  mNeedInvalidateOnSetRect = true;
-  mReleased = false;
-  SetObjectClass(_T("nuiTopLevel"));
-
-  mResPath = nglPath(pNode->GetAttribute("Path"));
-
-  mToolTipDelayOn = .5f;
-  mToolTipDelayOff = 5.0f;
-
-  mDisplayToolTip = false;
-  mpToolTipSource = NULL;
-  mpToolTipLabel = new nuiToolTip();
-  AddChild(mpToolTipLabel);
-  
-  mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiMainWindow::ToolTipOn);
-  mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiMainWindow::ToolTipOff);
-
-  mpGrab.clear();
-  mMouseInfo.TouchId = -1;
-  mpFocus = NULL;
-  mpUnderMouse = NULL;
-
-  mLastClickedButton = nglMouseInfo::ButtonNone;
-
-  EnablePartialRedraw(PARTIAL_REDRAW_DEFAULT);
-  EnableRenderCache(false);
-
-  SetMouseCursor(eCursorArrow);
-  
-  return true;
-}
-
 nuiTopLevel::~nuiTopLevel()
 {
   CheckValid();

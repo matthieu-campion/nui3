@@ -97,7 +97,8 @@ private:
 
 
 
-bool nuiInit(void* OSInstance, nuiKernel* pKernel = NULL); // OSInstance is the handle of the application's instance (HINSTANCE) in win32, NULL on other systems.
+bool nuiInit(void* OSInstance, nuiKernel* pKernel = NULL); // OSInstance is the handle of the application's instance (HINSTANCE) in win32, NULL on other systems. This call will init a minimal set of features )no default decorations, no widget builder, etc).
+bool nuiInitAll(void* OSInstance, nuiKernel* pKernel = NULL); // OSInstance is the handle of the application's instance (HINSTANCE) in win32, NULL on other systems. This call will init all subsystems (default decorations, nuiBuilder, etc).
 bool nuiUninit();
 
 #endif //__nuiInit_h__

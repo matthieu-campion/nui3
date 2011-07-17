@@ -34,30 +34,6 @@ nuiSVGView::nuiSVGView(const nglPath& rSource)
   }
 }
 
-bool nuiSVGView::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  mCache = nuiRect();
-  nuiSVGView::Init();
-
-  if (pNode->HasAttribute("Source"))
-  {
-    nglIFile file(pNode->GetAttribute("Source"));
-    Load(file);
-  }
-  else // Is the SVG Desc embedded in the nui XML desc? 
-  {
-    nuiXMLNode* pSVG = pNode->GetChild(_T("svg"));
-    if (pSVG)
-    {
-      mpShape = new nuiSVGShape();
-      mpShape->Load(pSVG);
-    }
-  }
-
-  return true;
-}
-
 nuiSVGView::~nuiSVGView()
 {
   delete mpShape;

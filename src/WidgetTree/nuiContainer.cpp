@@ -26,52 +26,6 @@ nuiContainer::nuiContainer()
   NUI_ADD_EVENT(ChildDeleted);
 }
 
-bool nuiContainer::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  return true;
-}
-
-nuiXMLNode* nuiContainer::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{   
-  nuiXMLNode* pNode = NULL;
-
-  if (mSerializeMode == eDontSaveNode)
-    return NULL;
-
-  pNode = SerializeAttributes(pParentNode, Recursive);
-
-  if (Recursive && pNode)
-  {
-    SerializeChildren(pNode);
-  }
-
-  return pNode;
-}
-
-nuiXMLNode* nuiContainer::SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  CheckValid();
-  return nuiWidget::Serialize(pParentNode, Recursive);
-}
-
-void nuiContainer::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  CheckValid();
-  ConstIteratorPtr pIt;
-  for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem)
-      pItem->Serialize(pParentNode,true);
-  }
-  delete pIt;
-}
-
-
-
-
-
 nuiContainer::~nuiContainer()
 {
   CheckValid();

@@ -16,40 +16,9 @@ nuiRectPath::nuiRectPath(const nuiRect& rRect, bool CCW)
   mCCW = CCW;
 }
 
-nuiRectPath::nuiRectPath(nuiXMLNode* pNode)
-{
-  if (pNode->GetName() != _T("nuiRectPath"))
-    return;
-
-  nuiSize x,y,w,h;
-  x = nuiGetVal(pNode, _T("X"),0.0f);
-  y = nuiGetVal(pNode, _T("Y"),0.0f);
-  w = nuiGetVal(pNode, _T("Width"),0.0f);
-  h = nuiGetVal(pNode, _T("Height"),0.0f);
-  mRect.Set(x,y,w,h);
-  mCCW = nuiGetBool(_T("CCW"),false);
-}
-
 nuiRectPath::~nuiRectPath()
 {
 }
-
-nuiXMLNode* nuiRectPath::Serialize(nuiXMLNode* pParentNode) const
-{
-  nuiXMLNode* pNode = nuiPathGenerator::Serialize(pParentNode);
-
-  pNode->SetName(_T("nuiRectPath"));
-
-  pNode->SetAttribute(_T("CCW"),mCCW);
-
-  pNode->SetAttribute(_T("X"),mRect.mLeft);
-  pNode->SetAttribute(_T("Y"),mRect.mTop);
-  pNode->SetAttribute(_T("Width"),mRect.GetWidth());
-  pNode->SetAttribute(_T("Height"),mRect.GetHeight());
-
-  return pNode;
-}
-
 
 bool nuiRectPath::Tessellate(nuiPath& rVertices, float Quality) const
 {

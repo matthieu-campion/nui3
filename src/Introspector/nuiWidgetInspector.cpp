@@ -155,7 +155,7 @@ nuiWidget* nuiWidgetInspectorNode::GetTarget()
 }
 
 nuiWidgetInspector::nuiWidgetInspector(nuiWidget* pTarget)
-: nuiComposite(),
+: nuiSimpleContainer(),
 mInspectorSink(this)
 {
   SetObjectClass(_T("nuiWidgetInspector"));
@@ -263,7 +263,7 @@ class nuiWidgetProxy : public nuiWidget
   };
 
 nuiWidgetInfo::nuiWidgetInfo(nuiWidget* pTarget)
-: nuiComposite(),
+: nuiSimpleContainer(),
 mWISink(this)
 {
   mpTarget = NULL;
