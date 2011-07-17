@@ -14,7 +14,6 @@
 #include "nuiVBox.h"
 #include "nuiPane.h"
 #include "nuiFolderPane.h"
-#include "nuiPositioner.h"
 #include "nuiScrollView.h"
 #include "nuiLabel.h"
 #include "nuiDrawContext.h"

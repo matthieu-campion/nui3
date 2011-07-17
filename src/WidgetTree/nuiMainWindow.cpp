@@ -695,6 +695,7 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
       mDebugSlowRedraw = !mDebugSlowRedraw;
       InvalidateLayout();
     }
+#if 0
 #ifndef _UIKIT_
     else if (rEvent.mKey == NK_S && 
              (IsKeyDown(NK_LCTRL) || IsKeyDown(NK_RCTRL)) && 
@@ -708,6 +709,7 @@ bool nuiMainWindow::OnKeyDown(const nglKeyEvent& rEvent)
       
       //NGL_OUT(_T("Dumping this widget tree XML description:\n%s\n"), dump.GetChars());
     }
+#endif
 #endif
   }
   return CallKeyDown(rEvent);

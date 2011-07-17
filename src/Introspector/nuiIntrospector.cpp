@@ -182,6 +182,7 @@ void nuiIntrospector::ShowObjectInspector(const nuiEvent& rEvent)
 
 void nuiIntrospector::InitDecorations()
 {
+  //nuiDefaultDecoration::Init();
   // window background
   new nuiColorDecoration(INTROSPECTOR_DECO_BKG, nuiRect(10,10,0,0), nuiColor(224,224,224));
   
