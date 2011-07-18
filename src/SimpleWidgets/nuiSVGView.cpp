@@ -65,17 +65,6 @@ bool nuiSVGView::Load (nglIStream& rSource)
 
   NGL_OUT(_T("Xml load time: %f\nSvg load time: %f\n"), (double)xmlt - (double)t, (double)loadt - (double)xmlt);
 
-  nuiDrawContext* pContext = nuiDrawContext::CreateDrawContext(nuiRect(0, 0, 512, 512), eSoftware);
-  nuiPainter* pPainter = pContext->GetPainter();
-  mCache.Reset(NULL);
-  nuiRect r(mpShape->GetBoundingRect());
-  //mCache.SetSize(ToBelow(r.GetWidth()), ToBelow(r.GetHeight()));
-
-  pContext->SetPainter(&mCache);
-  mpShape->Draw(pContext, mAntialias);
-  pContext->SetPainter(pPainter);
-
-  delete pContext;
   return result;
 }
 
@@ -92,8 +81,7 @@ bool nuiSVGView::Draw(nuiDrawContext* pContext)
   y = mRect.GetHeight() / mIdealRect.GetHeight();
   pContext->Scale(x,y);
   pContext->SetFont(nuiFont::GetFont(12));
-//  mpShape->Draw(pContext, mAntialias);
-  mCache.ReDraw(pContext);
+  mpShape->Draw(pContext, mAntialias);
   pContext->PopMatrix();
   return true;
 }
