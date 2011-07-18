@@ -374,6 +374,7 @@ extern NGL_API class nglKernel* App;
     if (!App) \
     { \
       UserAppClass* user InstanceHook new UserAppClass(); \
+      nuiInit(NULL); \
       ret = ((nglApplication*)user)->__NGL_APP_MAINCALL; \
       delete user; \
       App = NULL; \
