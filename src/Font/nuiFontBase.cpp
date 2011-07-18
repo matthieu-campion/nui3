@@ -2311,14 +2311,16 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   pRun->mGlyphs.clear();
   pRun->mGlyphs.resize(num_glyphs);
   x = 0;
+
+  const float factor = nuiGetInvScaleFactor() * (1.0 / 64.0);
   
   //printf("Shape %p\n", pRun);
   for (i = 0; i < num_glyphs; i++)
   {
     GetGlyphInfo(pRun->mGlyphs[i], hb_glyph->codepoint, eGlyphNative);
     pRun->mGlyphs[i].mCluster = hb_glyph->cluster;
-    pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * (1./64);
-    pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * (1./64);
+    pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * factor;
+    pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * factor;
     x += hb_position->x_advance;
     
     //printf("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
@@ -2330,7 +2332,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
 
   //printf("\n");
   
-  pRun->mAdvanceX = x * (1./64);
+  pRun->mAdvanceX = x * factor;
   hb_buffer_destroy(hb_buffer);
   hb_font_destroy(hb_font);
   hb_font_funcs_destroy(funcs);
