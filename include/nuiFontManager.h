@@ -217,6 +217,7 @@ public:
   uint32 GetFontCount() const;
   
   static nuiFontManager& GetManager(bool InitIfNeeded = true);
+  static void ExitManager();
   static nuiFontManager& LoadManager(nglIStream& rStream, double lastscantime = 0);
   
   bool Save(nglOStream& rStream);

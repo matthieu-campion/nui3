@@ -36,13 +36,17 @@ nuiMemorySound::~nuiMemorySound()
     delete[] mSamples[c];
 }
 
-bool nuiMemorySound::LoadSamples(nglIStream* pStream)
+bool nuiMemorySound::LoadSamples(nglIStream* pSStream)
 {
+  nglIStream* pStream = pSStream;
+
   if (!mPath.Exists() && !pStream)
     return false;
   
   if (!pStream)
+  {
     pStream = mPath.OpenRead();
+  }
 
   if (!pStream)
     return false;
@@ -63,7 +67,8 @@ bool nuiMemorySound::LoadSamples(nglIStream* pStream)
       {
         NGL_OUT(_T("Can't load this audio file: %ls (reader can't be created)\n"), mPath.GetNodeName().GetChars());
         delete pReader;
-        delete pStream;
+        if (!pSStream)
+          delete pStream;
         return false;
       }
     }
@@ -81,6 +86,9 @@ bool nuiMemorySound::LoadSamples(nglIStream* pStream)
   }
   
   mLength = pReader->ReadDE(temp, length, eSampleFloat32);
+  delete pReader;
+  if (!pSStream)
+    delete pStream;
 }
 
 nuiVoice* nuiMemorySound::GetVoiceInternal()
