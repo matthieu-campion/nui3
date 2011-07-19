@@ -36,7 +36,6 @@ nuiMemorySound::~nuiMemorySound()
 {
   for (uint32 c = 0; c < mSamples.size(); c++)
     delete[] mSamples[c];
-  delete mpStream;
 }
 
 bool nuiMemorySound::LoadSamples(nglIStream* pSStream)
