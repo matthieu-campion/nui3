@@ -212,23 +212,17 @@ void nuiImageDecoration::SetColor(const nuiColor& rColor)
 
 void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
-  LOGI("nuiImageDecoration::Draw");
   if (!mpTexture || !mpTexture->GetImage() || !mpTexture->GetImage()->GetPixelSize())
   {
-    LOGI("nuiImageDecoration::Draw FAILED %p %p %u", mpTexture, mpTexture->GetImage(), mpTexture->GetImage()->GetPixelSize());
     return;
   }
   
   pContext->PushState();
   pContext->ResetState();
   
-  LOGI("nuiImageDecoration::Draw mClientRect(%f, %f, %f, %f)", (float)mClientRect.Left(), (float)mClientRect.Top(), (float)mClientRect.GetWidth(), (float)mClientRect.GetHeight());
-  LOGI("nuiImageDecoration::Draw rDestRect(%f, %f, %f, %f)", (float)rDestRect.Left(), (float)rDestRect.Top(), (float)rDestRect.GetWidth(), (float)rDestRect.GetHeight());
   nuiRect rect = mClientRect;
   rect.SetPosition(mPosition, rDestRect);
   rect.RoundToBelow();
-  LOGI("nuiImageDecoration::Draw mPosition = %d", (int)mPosition);
-  LOGI("nuiImageDecoration::Draw rect(%f, %f, %f, %f)", (float)rect.Left(), (float)rect.Top(), (float)rect.GetWidth(), (float)rect.GetHeight());
   
   pContext->EnableTexturing(true);
   pContext->EnableBlending(true);
@@ -260,7 +254,6 @@ void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, cons
   pContext->DrawImage(rect, srcrect);
   //pContext->DrawRect(rDestRect, eStrokeShape);
   pContext->PopState();
-  LOGI("nuiImageDecoration::Draw OK rect(%f, %f, %f, %f) srcrect(%f, %f, %f, %f)", (float)rect.Left(), (float)rect.Top(), (float)rect.GetWidth(), (float)rect.GetHeight(), (float)srcrect.Left(), (float)srcrect.Top()  , (float)srcrect.GetWidth(), (float)srcrect.GetHeight());
 }
 
 

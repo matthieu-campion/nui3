@@ -849,6 +849,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   mRenderOperations++;
   mBatches++;
   
+  //glDisable(GL_TEXTURE_2D);
   //glEnable(GL_TEXTURE_2D);
   //glEnable(GL_TEXTURE_2D);
   
@@ -1034,20 +1035,20 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   }
 #endif // NUI_USE_ANTIALIASING
   
-  if (pArray->IsArrayEnabled(nuiRenderArray::eVertex))
-  {
-    if (!mClientVertex)
+//  if (pArray->IsArrayEnabled(nuiRenderArray::eVertex))
+//  {
+//    if (!mClientVertex)
       glEnableClientState(GL_VERTEX_ARRAY);
     mClientVertex = true;
     glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mX);
     nuiCheckForGLErrors();
-  }
-  else
-  {
-    if (mClientVertex)
-      glDisableClientState(GL_VERTEX_ARRAY);
-    mClientVertex = false;
-  }
+//  }
+//  else
+//  {
+//    if (mClientVertex)
+//      glDisableClientState(GL_VERTEX_ARRAY);
+//    mClientVertex = false;
+//  }
   
   float r = mR, g = mG, b = mB, a = mA;
   if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
@@ -1195,7 +1196,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
       glDrawArrays(mode, 0, s);
     }
     else
-    {
+    {      
       for (uint32 i = 0; i < arraycount; i++)
       {
         nuiRenderArray::IndexArray& array(pArray->GetIndexArray(i));
@@ -1444,7 +1445,6 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
     info.mReload = false;
     info.mTexture = id;
     target = pTexture->GetTarget();
-    printf("upload texture %d %x\n", id, target);
   }
   
   nuiCheckForGLErrors();
@@ -1483,7 +1483,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       //      }
       
       glGenTextures(1, &info.mTexture);
-      //NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
+      NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
       nuiCheckForGLErrors();
       firstload = true;
       reload = true;
@@ -1597,7 +1597,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       }
       
       
-#ifndef _MACOSX_
+#if (!defined _MACOSX_)
       if (!firstload)
       {
         glTexSubImage2D
@@ -1990,10 +1990,10 @@ bool nuiCheckForGLErrorsReal()
 {
   GLenum err = GL_NO_ERROR;
 #if 1 // Globally enable/disable OpenGL error checking
-#ifdef _DEBUG_
+      //#ifdef _DEBUG_
   bool error = false;
   err = glGetError();
-  App->GetLog().SetLevel("nuiGLPainter", 0);
+  App->GetLog().SetLevel("nuiGLPainter", 1000);
   switch (err)
   {
       /*
@@ -2020,7 +2020,7 @@ bool nuiCheckForGLErrorsReal()
       NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
       break;
   }
-#endif
+  //#endif
 #endif
   
   return err == GL_NO_ERROR;
