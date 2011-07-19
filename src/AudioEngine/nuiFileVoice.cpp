@@ -18,17 +18,11 @@ nuiFileVoice::nuiFileVoice(nuiFileSound* pSound)
   mpStream(NULL),
   mpReader(NULL)
 {
-  //LBDEBUG
-  //NGL_OUT(_T("nuiFileVoice::nuiFileVoice  pSound %p\n"), pSound);
-  
   Init();
 }
 
 nuiFileVoice::~nuiFileVoice()
 {
-  //LBDEBUG
-  //NGL_OUT(_T("nuiFileVoice::~nuiFileVoice\n"));
-
   if (mpStream)
     delete mpStream;
   if (mpReader)
@@ -43,9 +37,6 @@ nuiFileVoice::nuiFileVoice(const nuiFileVoice& rVoice)
   mpStream(NULL),
   mpReader(NULL)
 {
-  //LBDEBUG
-  //NGL_OUT(_T("nuiFileVoice::nuiFileVoice voice ref\n"));
-
   *this = rVoice;
 }
 
