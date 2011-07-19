@@ -79,6 +79,15 @@ set(SOURCES
   src/Animations/nuiAttributeAnimation.cpp
   src/Animations/nuiWidgetAnimation.cpp
 
+
+  src/NavigationViews/nuiGestureRecognizer.cpp
+  src/NavigationViews/nuiNavigationBar.cpp
+  src/NavigationViews/nuiNavigationController.cpp
+  src/NavigationViews/nuiImageAnimation.cpp
+  src/NavigationViews/nuiNavigationButton.cpp
+  src/NavigationViews/nuiViewController.cpp
+
+
   src/Text/nuiEditLine.cpp
   src/Text/nuiEditText.cpp
   src/Text/nuiFormatedLabel.cpp

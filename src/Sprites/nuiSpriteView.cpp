@@ -103,7 +103,6 @@ nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
   std::list<nglPath> children;
   path.GetChildren(&children);
   children.sort(nglCompareNaturalPath);
-  nuiSpriteAnimation* pAnim1 = new nuiSpriteAnimation();
   std::list<nglPath>::const_iterator it = children.begin();
   std::list<nglPath>::const_iterator end = children.end();
   for (; it != end; it++)
@@ -315,7 +314,7 @@ uint32 nuiSprite::mSpriteCounter = 0;
 
 
 nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
-: mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
+: mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp)
 {
   mpSpriteDef = nuiSpriteDef::GetSprite(rSpriteDefPath.GetNodeName());
   if (!mpSpriteDef || forceReplace)
@@ -329,14 +328,14 @@ nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
 }
 
 nuiSprite::nuiSprite(const nglString& rSpriteDefName)
-: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName)), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
+: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName)), mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp)
 {
   NGL_ASSERT(mpSpriteDef);
   Init();
 }
 
 nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
-: mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
+: mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp)
 {
   NGL_ASSERT(mpSpriteDef);
   mpSpriteDef->Acquire();
@@ -580,7 +579,9 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
 
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);
-  pContext->SetFillColor(mColor);
+  nuiColor c = mColor;
+  c.Multiply(mAlpha);
+  pContext->SetFillColor(c);
   pContext->SetTexture(pFrame->GetTexture());
   
   // #TEST Meeloo
@@ -783,15 +784,13 @@ const nuiColor& nuiSprite::GetColor() const
 
 float nuiSprite::GetAlpha() const
 {
-  float v = GetColor().Alpha();
+  float v = mAlpha;
   return v;
 }
 
 void nuiSprite::SetAlpha(float value)
 {
-  nuiColor color = mColor;
-  color.Multiply(value, true);
-  SetColor(color);
+  mAlpha = value;
 }
 
 void nuiSprite::SetBlendFunc(nuiBlendFunc f)
