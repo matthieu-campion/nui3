@@ -103,7 +103,6 @@ nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
   std::list<nglPath> children;
   path.GetChildren(&children);
   children.sort(nglCompareNaturalPath);
-  nuiSpriteAnimation* pAnim1 = new nuiSpriteAnimation();
   std::list<nglPath>::const_iterator it = children.begin();
   std::list<nglPath>::const_iterator end = children.end();
   for (; it != end; it++)
