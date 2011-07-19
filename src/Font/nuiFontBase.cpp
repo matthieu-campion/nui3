@@ -1421,7 +1421,7 @@ nuiFontBase::GlyphHandle nuiFontBase::GetGlyph (uint Index, GlyphType Type) cons
   {
     case eGlyphNative : break;
     case eGlyphOutline: break;
-    case eGlyphBitmap : desc.flags |= FT_LOAD_RENDER; break;
+    case eGlyphBitmap : desc.flags |= FT_LOAD_FORCE_AUTOHINT | FT_LOAD_RENDER; break;
   }
   
   if (FTC_ImageCache_Lookup(gFTImageCache, &desc, Index, &glyph, NULL) != FT_Err_Ok)
