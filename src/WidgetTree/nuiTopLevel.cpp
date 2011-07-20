@@ -1341,8 +1341,6 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
     return pHandled != NULL;
   }
-  return false;
-#if 0
   else
   { /// this is a mouse over event
     UpdateHoverList(rInfo);
@@ -1402,7 +1400,6 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
   SetToolTipRect();
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
   return pHandled != NULL;
-#endif
 }
 
 void nuiTopLevel::SetToolTipRect()
