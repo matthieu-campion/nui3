@@ -5,7 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
-
+#define DEBUG_NGLPATH 0
 
 #include "nui.h"
 #include "nglVolume.h"
@@ -1169,6 +1169,10 @@ bool nglPath::InternalSetPath(const nglChar* pPath)
 	if (rootpart ? i > rootpart : i > 1)
 		mPathName.TrimRight(_T('/'));
 
+#if DEBUG_NGLPATH
+  NGL_OUT(_T("[nglPath::InternalSetPath] '%s' [Exists %d]\n"), mPathName.GetChars(), Exists());
+  //NGL_ASSERT(Exists());
+#endif
 	return true;
 }
 

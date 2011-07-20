@@ -19444,6 +19444,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -19565,6 +19566,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
