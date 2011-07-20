@@ -423,7 +423,7 @@ uint32_t code, n;
       last_range_value = ucprops_ranges[m].second;
 #ifdef STATS
       miss++;
-      printf("calls %d / miss %d (%f%%)\n", calls, miss, 100.0f * (float)miss / (float)calls);
+//      printf("calls %d / miss %d (%f%%)\n", calls, miss, 100.0f * (float)miss / (float)calls);
 #endif
       return ((last_range_value & (1 << n)) >> n);
     }

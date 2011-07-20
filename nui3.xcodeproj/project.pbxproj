@@ -19444,6 +19444,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -19504,6 +19505,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_VERSION = 4.2;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -19565,6 +19567,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
@@ -19621,6 +19624,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -19667,6 +19671,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = nui3;
 				SDKROOT = macosx;
 			};
@@ -19757,6 +19762,7 @@
 				);
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
 				PRELINK_LIBS = "-liconv -lz";
 				PRODUCT_NAME = nui3D;
 				SDKROOT = macosx;
@@ -19903,6 +19909,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -19936,6 +19943,7 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
