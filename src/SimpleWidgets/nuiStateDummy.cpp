@@ -7,7 +7,6 @@
 
 #include "nui.h"
 #include "nuiStateDummy.h"
-#include "nuiXML.h"
 
 nuiStateDummy::nuiStateDummy(nuiWidgetPtr pNormal, nuiWidgetPtr pSelected, nuiWidgetPtr pDisabled)
 : nuiSimpleContainer()
@@ -24,36 +23,6 @@ nuiStateDummy::nuiStateDummy(nuiWidgetPtr pNormal, nuiWidgetPtr pSelected, nuiWi
   for (i=0; i < 3; i++)
     if (mpState[i])
       AddChild(mpState[i]);
-}
-
-bool nuiStateDummy::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  SetObjectClass(_T("nuiStateDummy"));
-
-  mCombined = false;
-  mpState[1 + 0]   = GetChild(pNode->GetAttribute(_T("NormalChild")),   false);
-  mpState[1 + 2] = GetChild(pNode->GetAttribute(_T("SelectedChild")), false);
-  mpState[0 + 0] = GetChild(pNode->GetAttribute(_T("DisabledChild")), false);
-  mpState[0 + 2] = GetChild(pNode->GetAttribute(_T("DisabledSelectedChild")), false);
-
-  return true;
-}
-
-nuiXMLNode* nuiStateDummy::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiSimpleContainer::Serialize(pParentNode, Recursive);
-
-  if (mpState[1 + 0])
-    pNode->SetAttribute(_T("NormalChild"),   mpState[1 + 0]->GetObjectName());
-  if (mpState[1 + 2])
-    pNode->SetAttribute(_T("SelectedChild"), mpState[1 + 2]->GetObjectName());
-  if (mpState[0 + 0])
-    pNode->SetAttribute(_T("DisabledChild"), mpState[0 + 0]->GetObjectName());
-  if (mpState[0 + 2])
-    pNode->SetAttribute(_T("DisabledSelectedChild"), mpState[0 + 2]->GetObjectName());
-
-  return pNode;
 }
 
 nuiStateDummy::~nuiStateDummy()

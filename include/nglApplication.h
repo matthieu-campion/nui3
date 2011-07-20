@@ -17,6 +17,7 @@ Abstraction of the running application.
 
 //#include "nui.h"
 #include "nglKernel.h"
+#include "nuiInit.h"
 
 #ifdef _X11_
 #include <X11/Xlib.h>
@@ -374,9 +375,11 @@ extern NGL_API class nglKernel* App;
     if (!App) \
     { \
       UserAppClass* user InstanceHook new UserAppClass(); \
+      nuiInit(NULL); \
       ret = ((nglApplication*)user)->__NGL_APP_MAINCALL; \
       delete user; \
       App = NULL; \
+      nuiUninit(); \
     } \
     /*NGL_CHECK_MEMORY*/\
     return ret; \

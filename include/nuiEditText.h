@@ -7,7 +7,7 @@
 #ifndef __nuiEditText_h__
 #define __nuiEditText_h__
 
-#include "nuiComposite.h"
+#include "nuiSimpleContainer.h"
 #include "nuiTheme.h"
 
 #include "nglDragAndDropObjects.h"
@@ -17,19 +17,16 @@
 #include "nuiTextLayout.h"
 
 class nuiFont;
-class nuiXMLNode;
 
-class NUI_API nuiEditText : public nuiComposite
+class NUI_API nuiEditText : public nuiSimpleContainer
 {
 protected:
   class NUI_API TextBlock;
 
 public:
   nuiEditText(const nglString& rText = nglString::Empty);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiEditText();
 
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
   void InitProperties();
 
   virtual bool Draw(nuiDrawContext* pContext);

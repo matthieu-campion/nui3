@@ -115,19 +115,6 @@ uint32 nuiGrid::GetRowDimensionRange(uint32 dimension) const
   return 0;
 }
 
-bool nuiGrid::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mDefaultHSpacing = 0.0f;
-  mDefaultVSpacing = 0.0f;
-  mNbColumns = nuiGetVal(pNode, _T("NbColumns"), 0);
-  mNbRows = nuiGetVal(pNode, _T("NbRows"), 0);
-
-  Reset(mNbColumns, mNbRows, false);
-  
-  return true;
-}
-
 void nuiGrid::Reset(uint32 nbcolumns, uint32 nbrows, bool clear)
 {
   if (clear)

@@ -59,18 +59,6 @@ void nuiCheckerboardDecoration::InitAttributes()
 
 
 
-bool nuiCheckerboardDecoration::Load(const nuiXMLNode* pNode)
-{
-  //#FIXME
-  return true;
-}
-
-nuiXMLNode* nuiCheckerboardDecoration::Serialize(nuiXMLNode* pNode)
-{
-//#FIXME
-  return pNode;
-}
-
 // virtual
 void nuiCheckerboardDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {

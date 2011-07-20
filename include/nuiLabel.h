@@ -23,12 +23,9 @@ public:
   nuiLabel(const nglString& Text = nglString::Empty, nuiTheme::FontStyle FontStyle=nuiTheme::Default);
   nuiLabel(const nglString& Text, const nglString& rObjectName, nuiTheme::FontStyle FontStyle=nuiTheme::Default);
   nuiLabel(const nglString& Text, nuiFont* pFont, bool AlreadyAcquired = false);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiLabel();
 
   void IgnoreState(bool ignoreState = true) { mIgnoreState = ignoreState; }
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   void InitAttributes();
   void InitProperties();

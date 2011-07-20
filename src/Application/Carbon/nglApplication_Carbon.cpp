@@ -56,7 +56,7 @@ nglApplication::nglApplication()
 
   // nglApplication is a kernel's client, just as plugin instances
   IncRef();
-  nuiInit(NULL);
+  //nuiInit(NULL);
 }
 
 nglApplication::~nglApplication()

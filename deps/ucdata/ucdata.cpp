@@ -380,7 +380,7 @@ static uint32_t last_range_start = -1;
 static uint32_t last_range_end = -1;
 static int8_t last_range_value = 0;
 
-#define STATS
+//#define STATS
 #ifdef STATS
 static uint32_t miss = 0;
 static uint32_t calls = 0;
@@ -428,7 +428,9 @@ uint32_t code, n;
       return ((last_range_value & (1 << n)) >> n);
     }
   }
+#ifdef STATS
   miss++;
+#endif
   return 0;
 }
 

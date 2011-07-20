@@ -17,16 +17,6 @@ nuiRectView::nuiRectView(const nuiRect& rRect)
   mDisplayRectOnlyOnHover = false;
 }
 
-bool nuiRectView::Load(const nuiXMLNode* pNode)
-{
-  return false;
-}
-
-nuiXMLNode* nuiRectView::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  return NULL;
-}
-
 nuiRectView::~nuiRectView()
 {
   

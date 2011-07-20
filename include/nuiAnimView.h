@@ -18,10 +18,7 @@ class NUI_API nuiAnimView : public nuiSimpleContainer, public nuiAnimation, virt
 {
 public:
   nuiAnimView ();
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiAnimView();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool Recursive) const;
 
   virtual bool Draw(nuiDrawContext* pContext);
 

@@ -20,17 +20,6 @@ nuiModalContainer::nuiModalContainer(nuiContainerPtr pParent)
   InitParent(pParent);
 }
 
-bool nuiModalContainer::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mIsModal = true;
-  GetTopLevel()->CancelGrab();
-  Grab();
-  Focus();
-  
-  return true;
-}
-
 nuiModalContainer::~nuiModalContainer()
 {
 }
@@ -287,7 +276,6 @@ void nuiModalContainer::OnTrash()
   nuiSimpleContainer::OnTrash();
 }
 
-#include "nuiPositioner.h"
 #include "nuiPane.h"
 #include "nuiLabel.h"
 #include "nuiButton.h"

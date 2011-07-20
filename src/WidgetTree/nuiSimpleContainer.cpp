@@ -73,6 +73,7 @@ nuiSimpleContainer::nuiSimpleContainer()
   SetObjectClass(_T("nuiSimpleContainer"));
 }
 
+#if 0
 bool nuiSimpleContainer::Load(const nuiXMLNode* pNode)
 {
 	bool res=true;
@@ -107,14 +108,7 @@ bool nuiSimpleContainer::LoadChildren(const nuiXMLNode* pNode)
   
   return res;
 }
-
-
-bool nuiSimpleContainer::LoadAttributes(const nuiXMLNode* pNode)
-{
-  CheckValid();
-  return nuiContainer::Load(pNode);
-}
-
+#endif
 
 nuiSimpleContainer::~nuiSimpleContainer()
 {

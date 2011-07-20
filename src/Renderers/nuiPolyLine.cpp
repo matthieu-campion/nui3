@@ -19,43 +19,9 @@ nuiPolyLine::nuiPolyLine(const nuiPoint& rVertex)
   mVertices.AddVertex(rVertex);
 }
 
-nuiPolyLine::nuiPolyLine(nuiXMLNode* pNode)
-{
-  if (pNode->GetName() != _T("nuiPolyLine"))
-    return;
-
-  const nuiXMLNodeList& children = pNode->GetChildren();
-
-  nuiXMLNodeList::const_iterator it;
-  nuiXMLNodeList::const_iterator end = children.end();
-
-  for (it = children.begin(); it != end; ++it)
-  {
-    nuiXMLNode* pChild = *it;
-    if (pChild)
-    {
-      if (pChild->GetName() == _T("nuiPoint"))
-        LineTo(nuiPoint(pChild));
-    }
-  }
-}
-
 nuiPolyLine::~nuiPolyLine()
 {
 }
-
-nuiXMLNode* nuiPolyLine::Serialize(nuiXMLNode* pParentNode) const
-{
-  nuiXMLNode* pNode = nuiPathGenerator::Serialize(pParentNode);
-
-  pNode->SetName(_T("nuiPolyLine"));
-
-  for (uint32 i = 0; i < mVertices.GetCount(); i++)
-    mVertices[i].Serialize(pNode);
-
-  return pNode;
-}
-
 
 bool nuiPolyLine::Tessellate(nuiPath& rVertices, float Quality) const
 {

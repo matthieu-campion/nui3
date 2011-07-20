@@ -8,7 +8,6 @@
 #include "nui.h"
 #include "nuiFileList.h"
 #include "nuiLabel.h"
-#include "nuiXML.h"
 
 
 nuiFileList::nuiFileList(const nglPath& rPath)
@@ -21,35 +20,6 @@ nuiFileList::nuiFileList(const nglPath& rPath)
 
   Populate(rPath);
   mFileListSink.Connect(Activated, &nuiFileList::Selected, this); 
-}
-
-bool nuiFileList::Load(const nuiXMLNode* pNode)
-{
-  nuiList::Load(pNode);
-  SetObjectClass(_T("nuiFileList"));
-  nglString path;
-  path = nuiGetString(pNode, _T("Path"), _T("."));
-  if (path.GetRight(2) == _T("/.") || path.GetRight(2) == _T("\\."))
-    path.DeleteRight(2);
-  else if (path == _T("."))
-    path = nglPath(ePathCurrent).GetAbsolutePath().GetPathName();
-
-  nuiLabel* pLabel = new nuiLabel(_T(".."));
-  pLabel->SetProperty(_T("Path"),nglPath(path).GetParent().GetAbsolutePath().GetPathName());
-
-  Populate(nglPath(path));
-  mFileListSink.Connect(Activated, &nuiFileList::Selected, this); 
-  
-  return true;
-}
-
-nuiXMLNode* nuiFileList::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiList::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-  pNode->SetAttribute(_T("Path"),GetProperty(_T("Path")));
-  return pNode;
 }
 
 nuiFileList::~nuiFileList()
