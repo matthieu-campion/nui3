@@ -19,7 +19,7 @@ and in NGL user application code.
 
 
 #define USE_WCHAR
-//#define __NUI_NO_SOFTWARE__
+#define __NUI_NO_SOFTWARE__
 
 
 /*

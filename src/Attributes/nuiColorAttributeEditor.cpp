@@ -8,7 +8,6 @@
 #include "nui.h"
 #include "nuiColorAttributeEditor.h"
 #include "nuiHBox.h"
-#include "nuiPositioner.h"
 #include "nuiColorSelector.h"
 #include "nuiPopupView.h"
 
@@ -69,9 +68,8 @@ void nuiColorAttributeEditor::Init(const nuiColor& rColor)
   mpColorPane->SetUserSize(10.f, 10.f);
   mpButton->AddChild(mpColorPane);
   
-	nuiPositioner* pos = new nuiPositioner(nuiRight);
-	pos->AddChild(mpButton);
-  hbox->SetCell(1, pos);
+	mpButton->SetPosition(nuiRight);
+  hbox->SetCell(1, mpButton);
 	hbox->SetCellExpand(0, nuiExpandShrinkAndGrow);
   
   mEventSink.Connect(mpButton->Activated, &nuiColorAttributeEditor::OnClicked);

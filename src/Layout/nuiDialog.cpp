@@ -13,7 +13,6 @@
 #include "nuiWidgetAnimation.h"
 #include "nuiButton.h"
 #include "nuiGrid.h"
-#include "nuiPositioner.h"
 #include "nuiTopLevel.h"
 
 #include "nuiColorDecoration.h"
@@ -114,11 +113,10 @@ void nuiDialog::CreateGrids()
   mpGlobalGrid->SetRowExpand(0,     nuiExpandShrinkAndGrow);
   mpGlobalGrid->SetObjectName(_T("GlobalGrid"));
 
-  nuiPositioner* pPositioner = new nuiPositioner(nuiRight);
   mpButtonsGrid = new nuiGrid(1, 1);
   mpButtonsGrid->SetRowExpand(0, nuiExpandShrinkAndGrow);
-  pPositioner->AddChild(mpButtonsGrid);
-  mpGlobalGrid->SetCell(0,2, pPositioner);
+  mpButtonsGrid->SetPosition(nuiRight);
+  mpGlobalGrid->SetCell(0,2, mpButtonsGrid);
   mpButtonsGrid->SetObjectName(_T("ButtonsGrid"));
 }
 

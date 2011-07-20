@@ -38,7 +38,6 @@ protected:
   void CreateThreadInspectorTestWindow(const nuiEvent& rEvent);
   void CreateCSSParserTest(const nuiEvent& rEvent);
   void CreateBlurArea(const nuiEvent& rEvent);
-  void CreateSplineWindow(const nuiEvent& rEvent);
   void CreateTreeViewWindow(const nuiEvent& rEvent);
   void CreateSVGTigerWindow(const nuiEvent& rEvent);
   void CreateAnimWindow(const nuiEvent& rEvent);

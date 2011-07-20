@@ -9,7 +9,6 @@
 #include "nui.h"
 #include "nuiApplication.h"
 #include "nuiPane.h"
-#include "nuiXML.h"
 #include "nuiDrawContext.h"
 
 nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiShapeMode ShapeMode, nuiBlendFunc BlendFunc)
@@ -44,64 +43,6 @@ nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiSh
   mpShape = NULL;
   SetCurve(0);
 }
-
-bool nuiPane::Load(const nuiXMLNode* pNode)
-{
-	LoadAttributes(pNode);
-	LoadChildren(pNode);
-
-  mInterceptMouse = nuiGetBool ( pNode, _T("InterceptMouse"), false);
-  mLineWidth = nuiGetVal(pNode, _T("LineWidth"), 1.0f);
-  mCanRespectConstraint = true;
-  
-  NUI_ADD_EVENT(ClickedMouse);
-  NUI_ADD_EVENT(UnclickedMouse);
-  NUI_ADD_EVENT(MovedMouse);
-
-  mpShape = NULL;
-  SetCurve(0);
-  
-  return true;
-}
-
-
-bool nuiPane::LoadAttributes(const nuiXMLNode* pNode)
-{
-	return nuiSimpleContainer::LoadAttributes(pNode);
-}
-
-bool nuiPane::LoadChildren(const nuiXMLNode* pNode)
-{
-	return nuiSimpleContainer::LoadChildren(pNode);
-}
-
-
-nuiXMLNode* nuiPane::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-	nuiXMLNode* paneNode = SerializeAttributes(pParentNode, Recursive);
-	SerializeChildren(paneNode, Recursive);
-  
-  return paneNode;
-}
-
-
-void nuiPane::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) const
-{
-	nuiContainer::SerializeChildren(pParentNode, Recursive);
-}
-
-
-nuiXMLNode* nuiPane::SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive) const
-{
-	return nuiContainer::SerializeAttributes(pParentNode, Recursive);
-}
-
-
-
-
-
-
-
 
 
 nuiPane::~nuiPane()

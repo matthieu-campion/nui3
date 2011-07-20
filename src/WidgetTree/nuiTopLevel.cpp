@@ -191,47 +191,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   SetMouseCursor(eCursorArrow);
 }
 
-bool nuiTopLevel::Load(const nuiXMLNode* pNode)
-{
-  CheckValid();
-  mToolTipTimerOn.SetPeriod(0.5f);
-  mToolTipTimerOff.SetPeriod(5.0f);
-  mFillTrash = false;
-  
-  //EnableRenderCache(false);
-  mClearBackground = true;
-  mNeedInvalidateOnSetRect = true;
-  mReleased = false;
-  SetObjectClass(_T("nuiTopLevel"));
-
-  mResPath = nglPath(pNode->GetAttribute("Path"));
-
-  mToolTipDelayOn = .5f;
-  mToolTipDelayOff = 5.0f;
-
-  mDisplayToolTip = false;
-  mpToolTipSource = NULL;
-  mpToolTipLabel = new nuiToolTip();
-  AddChild(mpToolTipLabel);
-  
-  mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiMainWindow::ToolTipOn);
-  mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiMainWindow::ToolTipOff);
-
-  mpGrab.clear();
-  mMouseInfo.TouchId = -1;
-  mpFocus = NULL;
-  mpUnderMouse = NULL;
-
-  mLastClickedButton = nglMouseInfo::ButtonNone;
-
-  EnablePartialRedraw(PARTIAL_REDRAW_DEFAULT);
-  EnableRenderCache(false);
-
-  SetMouseCursor(eCursorArrow);
-  
-  return true;
-}
-
 nuiTopLevel::~nuiTopLevel()
 {
   CheckValid();
@@ -1382,6 +1341,8 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
     return pHandled != NULL;
   }
+  return false;
+#if 0
   else
   { /// this is a mouse over event
     UpdateHoverList(rInfo);
@@ -1441,6 +1402,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
   SetToolTipRect();
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
   return pHandled != NULL;
+#endif
 }
 
 void nuiTopLevel::SetToolTipRect()

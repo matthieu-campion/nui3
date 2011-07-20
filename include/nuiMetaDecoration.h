@@ -18,11 +18,6 @@ public:
   
   void InitAttributes();
   
-  
-  
-  virtual bool Load(const nuiXMLNode* pNode);
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode);
-  
   virtual void DrawBack(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   virtual void DrawFront(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);
   

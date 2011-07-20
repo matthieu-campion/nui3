@@ -24,9 +24,6 @@ public:
   // overloaded to redirect the use. Please use SetContents instead
   virtual bool AddChild(nuiWidgetPtr pChild);
 	
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;
-
 	virtual ~nuiTitledPane();
 
 	nuiWidget* GetTitle();

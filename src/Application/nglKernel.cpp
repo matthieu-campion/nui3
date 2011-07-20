@@ -311,7 +311,12 @@ const nglChar* nglKernel::OnError (uint& rError) const
 
 void nglKernel::CallOnInit()
 {
+  double now = nglTime();
   ucdata_init_static();
+  double then = nglTime();
+  
+  printf("ucdata_init_static took %f seconds\n", then - now);
+  
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%s)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);

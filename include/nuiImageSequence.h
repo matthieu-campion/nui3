@@ -19,9 +19,6 @@ public:
   void InitAttributes();
   virtual ~nuiImageSequence();
   
-  bool Load(const nuiXMLNode* pNode);
-  nuiXMLNode* Serialize(nuiXMLNode* pNode);
-  
   virtual nuiRect CalcIdealSize();  
   virtual bool Draw(nuiDrawContext* pContext);
   virtual bool Draw(nuiDrawContext* pContext, nuiWidget* pWidget);

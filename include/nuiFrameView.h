@@ -17,8 +17,6 @@ public:
   nuiFrameView(nuiFrame* pFrame = NULL);
   virtual ~nuiFrameView();
 
-  bool Load(const nuiXMLNode* pNode);
-
   virtual nuiRect CalcIdealSize();
   virtual bool SetRect(const nuiRect& rRect);
   virtual bool Draw(nuiDrawContext* pContext);

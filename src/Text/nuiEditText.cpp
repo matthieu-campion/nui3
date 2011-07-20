@@ -11,7 +11,7 @@
 
 //class nuiEditTest2 : nuiSimpleContainer
 nuiEditText::nuiEditText(const nglString& rText)
-: nuiComposite(),
+: nuiSimpleContainer(),
   mCursorPos(0),
   mAnchorPos(0),
   mCompositionPos(-1),
@@ -41,34 +41,6 @@ nuiEditText::nuiEditText(const nglString& rText)
   InitKeyBindings();
 }
 
-bool nuiEditText::Load(const nuiXMLNode* pNode)
-{
-  mCursorPos = 0;
-  mAnchorPos = 0;
-  mCompositionPos = -1;
-  mCompositionLength = 0;
-  mDropCursorPos = -1;
-  mCommandStackPos = 0;
-  mpFont = NULL;
-  mTextHeight = 0;
-  mSelectGap = 0;
-  mCommandDown = false;
-  mShiftDown = false;
-  mAltDown = false;
-  mSelecting = false;
-  mSelectionActive = false;
-  mIsEditable = true;
-  mFollowModifications = true;
-  mStartDragging = false;
-  
-  SetFont(nuiTheme::Default);
-  SetText(pNode->GetValue());
-  InitCommands();
-  InitKeyBindings();
-  
-  return true;
-}
-
 nuiEditText::~nuiEditText()
 {
   ClearBlocks();
@@ -91,11 +63,6 @@ void nuiEditText::InitAttributes()
                 nuiMakeDelegate(this, &nuiEditText::_SetFont)));
 }
 
-
-nuiXMLNode* nuiEditText::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  return nuiSimpleContainer::Serialize(pParentNode, Recursive);
-}
 
 void nuiEditText::InitProperties()
 {

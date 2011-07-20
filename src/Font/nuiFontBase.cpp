@@ -1421,7 +1421,7 @@ nuiFontBase::GlyphHandle nuiFontBase::GetGlyph (uint Index, GlyphType Type) cons
   {
     case eGlyphNative : break;
     case eGlyphOutline: break;
-    case eGlyphBitmap : desc.flags |= FT_LOAD_RENDER; break;
+    case eGlyphBitmap : desc.flags |= FT_LOAD_FORCE_AUTOHINT | FT_LOAD_RENDER; break;
   }
   
   if (FTC_ImageCache_Lookup(gFTImageCache, &desc, Index, &glyph, NULL) != FT_Err_Ok)
@@ -2109,9 +2109,134 @@ nui_hb_get_glyph_h_advance(hb_font_t *font,
 {
   nuiFontBase* pFont = (nuiFontBase*)user_data;
   NGL_ASSERT(pFont);
-  nuiGlyphInfo info;
-  pFont->GetGlyphInfo(info, glyph, nuiFontBase::eGlyphNative);
-  return info.AdvanceX;
+  FT_Glyph ftglyph;
+  
+  ftglyph = (FT_Glyph)pFont->GetGlyph(glyph, nuiFontBase::eGlyphNative);
+  NGL_ASSERT(ftglyph);
+  return ftglyph->advance.x >> 10;
+}
+
+static hb_position_t
+nui_hb_get_glyph_v_advance(hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t glyph,
+                           void *user_data)
+{
+  nuiFontBase* pFont = (nuiFontBase*)user_data;
+  NGL_ASSERT(pFont);
+  FT_Glyph ftglyph;
+  
+  ftglyph = (FT_Glyph)pFont->GetGlyph(glyph, nuiFontBase::eGlyphNative);
+  NGL_ASSERT(ftglyph);
+  return ftglyph->advance.y >> 10;
+}
+
+static hb_bool_t
+nui_hb_get_glyph_h_origin (hb_font_t *font,
+                          void *font_data,
+                          hb_codepoint_t glyph,
+                          hb_position_t *x,
+                          hb_position_t *y,
+                          void *user_data)
+{
+  /* We always work in the horizontal coordinates. */
+  return TRUE;
+}
+
+static hb_bool_t
+nui_hb_get_glyph_v_origin (hb_font_t *font,
+                          void *font_data,
+                          hb_codepoint_t glyph,
+                          hb_position_t *x,
+                          hb_position_t *y,
+                          void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  int load_flags = FT_LOAD_DEFAULT;
+  
+  if (FT_Load_Glyph (ft_face, glyph, load_flags))
+    return FALSE;
+  
+  /* Note: FreeType's vertical metrics grows downward while other FreeType coordinates
+   * have a Y growing upward.  Hence the extra negation. */
+  *x = ft_face->glyph->metrics.horiBearingX -   ft_face->glyph->metrics.vertBearingX;
+  *y = ft_face->glyph->metrics.horiBearingY - (-ft_face->glyph->metrics.vertBearingY);
+  
+  return TRUE;
+}
+
+static hb_position_t
+nui_hb_get_glyph_h_kerning (hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t left_glyph,
+                           hb_codepoint_t right_glyph,
+                           void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  FT_Vector kerningv;
+  
+  if (FT_Get_Kerning (ft_face, left_glyph, right_glyph, FT_KERNING_DEFAULT, &kerningv))
+    return 0;
+  
+  return kerningv.x;
+}
+
+static hb_position_t
+nui_hb_get_glyph_v_kerning (hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t top_glyph,
+                           hb_codepoint_t bottom_glyph,
+                           void *user_data)
+{
+  /* FreeType API doesn't support vertical kerning */
+  return 0;
+}
+
+static hb_bool_t
+nui_hb_get_glyph_extents (hb_font_t *font,
+                         void *font_data,
+                         hb_codepoint_t glyph,
+                         hb_glyph_extents_t *extents,
+                         void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  int load_flags = FT_LOAD_DEFAULT;
+  
+  if (FT_Load_Glyph (ft_face, glyph, load_flags))
+    return FALSE;
+  
+  extents->x_bearing = ft_face->glyph->metrics.horiBearingX;
+  extents->y_bearing = ft_face->glyph->metrics.horiBearingY;
+  extents->width = ft_face->glyph->metrics.width;
+  extents->height = ft_face->glyph->metrics.height;
+  return TRUE;
+}
+
+static hb_bool_t
+nui_hb_get_glyph_contour_point (hb_font_t *font,
+                               void *font_data,
+                               hb_codepoint_t glyph,
+                               unsigned int point_index,
+                               hb_position_t *x,
+                               hb_position_t *y,
+                               void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  int load_flags = FT_LOAD_DEFAULT;
+  
+  if (FT_Load_Glyph (ft_face, glyph, load_flags))
+    return FALSE;
+  
+  if (ft_face->glyph->format != FT_GLYPH_FORMAT_OUTLINE)
+    return FALSE;
+  
+  if (point_index >= (unsigned int) ft_face->glyph->outline.n_points)
+    return FALSE;
+  
+  *x = ft_face->glyph->outline.points[point_index].x;
+  *y = ft_face->glyph->outline.points[point_index].y;
+  
+  return TRUE;
 }
 
 
@@ -2130,9 +2255,17 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_font = hb_font_create (face);
   hb_face_destroy (face);
   
-  hb_font_funcs_t* funcs = hb_ft_get_font_funcs();
+  hb_font_funcs_t* funcs = hb_font_funcs_create();
+  
   hb_font_funcs_set_glyph_func(funcs, &nui_hb_get_glyph, this, NULL);
   hb_font_funcs_set_glyph_h_advance_func(funcs, &nui_hb_get_glyph_h_advance, this, NULL);
+  hb_font_funcs_set_glyph_v_advance_func(funcs, &nui_hb_get_glyph_v_advance, this, NULL);
+  hb_font_funcs_set_glyph_h_origin_func(funcs, &nui_hb_get_glyph_h_origin, this, NULL);
+  hb_font_funcs_set_glyph_v_origin_func(funcs, &nui_hb_get_glyph_v_origin, this, NULL);
+  hb_font_funcs_set_glyph_h_kerning_func(funcs, &nui_hb_get_glyph_h_kerning, this, NULL);
+  hb_font_funcs_set_glyph_v_kerning_func(funcs, &nui_hb_get_glyph_v_kerning, this, NULL);
+  hb_font_funcs_set_glyph_extents_func(funcs, &nui_hb_get_glyph_extents, this, NULL);
+  hb_font_funcs_set_glyph_contour_point_func(funcs, &nui_hb_get_glyph_contour_point, this, NULL);
 
   hb_font_set_funcs (hb_font,
                      funcs,
@@ -2178,14 +2311,16 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   pRun->mGlyphs.clear();
   pRun->mGlyphs.resize(num_glyphs);
   x = 0;
+
+  const float factor = nuiGetInvScaleFactor() * (1.0 / 64.0);
   
   //printf("Shape %p\n", pRun);
   for (i = 0; i < num_glyphs; i++)
   {
     GetGlyphInfo(pRun->mGlyphs[i], hb_glyph->codepoint, eGlyphNative);
     pRun->mGlyphs[i].mCluster = hb_glyph->cluster;
-    pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * (1./64);
-    pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * (1./64);
+    pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * factor;
+    pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * factor;
     x += hb_position->x_advance;
     
     //printf("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
@@ -2197,8 +2332,9 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
 
   //printf("\n");
   
-  pRun->mAdvanceX = x * (1./64);
+  pRun->mAdvanceX = x * factor;
   hb_buffer_destroy(hb_buffer);
   hb_font_destroy(hb_font);
+  hb_font_funcs_destroy(funcs);
 }
 

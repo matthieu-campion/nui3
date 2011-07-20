@@ -60,7 +60,7 @@ nuiSound* nuiSoundManager::GetSound(const nglString& rSoundID, nglIStream* pStre
   
   nuiSound* pSound = NULL;
   pSound = new nuiMemorySound(rSoundID, pStream);
-  
+
   mSounds[ID] = pSound;
   return pSound;
 }

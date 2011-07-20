@@ -19,34 +19,20 @@
 
 
 nuiScrollView::nuiScrollView(bool Horizontal, bool Vertical)
-  : nuiComposite(),
+  : nuiSimpleContainer(),
     mSVSink(this)
 {
   Init(NULL, NULL, Horizontal, Vertical);
 }
 
 nuiScrollView::nuiScrollView(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVerticalScrollBar )
-: nuiComposite(),
+: nuiSimpleContainer(),
   mSVSink(this)
 {
   Init(pHorizontalScrollBar, pVerticalScrollBar, false, false);
 }
 
 
-
-bool nuiScrollView::Load(const nuiXMLNode* pNode)
-{
-  nuiComposite::Load(pNode);
-
-  bool Horizontal = nuiGetBool(pNode, _T("Horizontal"), true);
-  bool Vertical =   nuiGetBool(pNode, _T("Vertical"), true);
-
-  Init(NULL, NULL, Horizontal, Vertical);
-
-  mFillChildren = nuiGetBool(pNode, _T("FillChildren"), mFillChildren);
-  
-  return true;
-}
 
 void nuiScrollView::InitAttributes()
 {

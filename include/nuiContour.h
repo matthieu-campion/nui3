@@ -16,13 +16,7 @@ class NUI_API nuiContour : public nuiPathGenerator
 {
 public:
   nuiContour();
-  nuiContour(nuiXMLNode* pNode);
   virtual ~nuiContour();
-
-  /** @name Serialization */
-  //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const; ///< This method saves the state in the given XML Node.
-  //@}
 
   void AddArc(const nuiPoint& rStartVertex, const nuiPoint& rStopVertex, float XRadius, float YRadius, float Angle, bool LargeArc, bool Sweep); ///< Add an arc to the contour in the SVG fashion (start/stop points).
   void AddArc(float cX, float cY, float rX, float rY, float Theta1InDegree, float Theta2InDegree, float Phi); ///< Add an arc to the contour in a center/angle fashion.

@@ -8,7 +8,6 @@
 #include "nui.h"
 #include "nglImage.h"
 #include "nuiTexture.h"
-#include "nuiXML.h"
 #include "nuiDrawContext.h"
 #include "AAPrimitives.h"
 #include "nuiStopWatch.h"
@@ -106,20 +105,6 @@ nuiTexture* nuiTexture::GetTexture (nglImage* pImage, bool OwnImage)
   nuiTextureMap::iterator it = mpTextures.find(name);
   if (it == mpTextures.end())
     pTexture = new nuiTexture(pImage,OwnImage);
-  else
-    pTexture = it->second;
-  if (pTexture)
-    pTexture->Acquire();
-  LOG_GETTEXTURE(pTexture);
-  return pTexture;
-}
-
-nuiTexture* nuiTexture::GetTexture(const nuiXMLNode* pNode)
-{
-  nuiTexture* pTexture = NULL;
-  nuiTextureMap::iterator it = mpTextures.find(nuiGetString(pNode, _T("Source")));
-  if (it == mpTextures.end())
-    pTexture = new nuiTexture(pNode);
   else
     pTexture = it->second;
   if (pTexture)
@@ -638,28 +623,6 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
   Init();
 }
 
-nuiTexture::nuiTexture(const nuiXMLNode* pNode)
-: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
-{
-  nuiObject::Load(pNode);
-  if (SetObjectClass(_T("nuiTexture")))
-    InitAttributes();
-  mpSurface = NULL;
-  mpProxyTexture = NULL;
-  mOwnImage = true;
-  mForceReload = false;
-  mRetainBuffer = mRetainBuffers;
-
-  nglPath path(nuiGetString(pNode, _T("Source")));
-  mpImage = new nglImage(path);
-
-  SetProperty(_T("Source"),path.GetPathName());
-
-  mpTextures[path.GetPathName()] = this;
-
-  Init();
-}
-
 nuiTexture::nuiTexture(nuiSurface* pSurface)
 : nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
 {
@@ -862,16 +825,6 @@ bool nuiTexture::IsValid() const
   if (mpSurface || mpProxyTexture)
     return GetWidth() && GetHeight();
   return mpImage && mpImage->IsValid() && GetWidth() && GetHeight();
-}
-
-
-nuiXMLNode* nuiTexture::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiObject::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-  pNode->SetAttribute(_T("Source"),GetProperty(_T("Source")));
-  return pNode;
 }
 
 

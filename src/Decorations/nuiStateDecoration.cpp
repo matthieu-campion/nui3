@@ -133,20 +133,6 @@ void nuiStateDecoration::InitAttributes()
 
 
 
-bool nuiStateDecoration::Load(const nuiXMLNode* pNode)
-{
-  // do nothing
-  return false;
-}
-
-nuiXMLNode* nuiStateDecoration::Serialize(nuiXMLNode* pNode)
-{
-  // do nothing
-  return NULL;
-}
-
-
-
 nuiDecoration* nuiStateDecoration::GetDecoration(const nglString& rName) const
 {
   nuiDecoration* pDecoration = nuiDecoration::Get(rName, true);

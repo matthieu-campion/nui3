@@ -17,19 +17,6 @@ nuiPathGenerator::~nuiPathGenerator()
 {
 }
 
-nuiXMLNode* nuiPathGenerator::Serialize(nuiXMLNode* pParentNode) const
-{
-  nuiXMLNode* pNode = NULL;
-  if (pParentNode)
-    pNode = new nuiXMLNode(_T("nuiPathGenerator"),pParentNode);
-  else
-    pNode = new nuiXML(_T("nuiPathGenerator"));
-
-  pNode->SetName(_T("nuiPathGenerator"));
-
-  return pNode;
-}
-
 nuiPoint nuiPathGenerator::GetStartPoint() const
 {
   return nuiPoint::Zero;

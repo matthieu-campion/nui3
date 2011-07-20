@@ -120,6 +120,8 @@ void nuiDefaultDecoration::Exit()
 
   mIcons.clear();
   mImages.clear();
+  
+  nuiWidget::ClearDefaultDecorations();
 }
 
 

@@ -37,10 +37,7 @@ public:
   // Construction/Destruction
   nuiWindow();
   nuiWindow(const nuiRect& rRect, nuiWindowFlags Flags=NoFlag, nglString Title=nglString(_T("nuiWindow")));
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiWindow();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   // Parenting:
   virtual bool IsParentActive() const; ///< Return true if this object is the active object.

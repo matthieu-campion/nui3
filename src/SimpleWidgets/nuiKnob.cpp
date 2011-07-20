@@ -132,37 +132,6 @@ void nuiKnob::SetNbFrames(uint32 nbFrames)
 
 
 
-bool nuiKnob::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-
-  SetObjectClass(_T("nuiKnob"));
-  mClicked = false;
-  mInteractiveValueChanged = false;
-
-  mSensitivity = mDefaultSensitivity;
-  mFineSensitivityRatio = mDefaultFineSensitivityRatio;
-  mFineSensitivityKey = mDefaultFineSensitivityKey;
-
-  // FIXME: interpret other attributes...
-  mKnobSink.Connect(mRange.Changed, &nuiKnob::DoInvalidate);
-  //mKnobSink.Connect(mRange.ValueChanged, &nuiKnob::DoInvalidate);
-  NUI_ADD_EVENT(ValueChanged);
-  NUI_ADD_EVENT(InteractiveValueChanged);
-  
-  return true;
-}
-
-nuiXMLNode* nuiKnob::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-
-  return pNode;
-}
-
-
 nuiKnob::~nuiKnob()
 {
   if (mpImageSequence)
