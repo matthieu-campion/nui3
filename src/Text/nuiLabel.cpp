@@ -164,6 +164,12 @@ void nuiLabel::InitAttributes()
                (nglString(_T("VMargin")), nuiUnitNone,
                 nuiMakeDelegate(this, &nuiLabel::GetVMargin), 
                 nuiMakeDelegate(this, &nuiLabel::SetVMargin)));
+
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("UseEllipsis")), nuiUnitYesNo,
+                nuiMakeDelegate(this, &nuiLabel::GetUseEllipsis), 
+                nuiMakeDelegate(this, &nuiLabel::UseEllipsis)));
+  
 }
 
 void nuiLabel::InitProperties()
@@ -640,6 +646,10 @@ void nuiLabel::UseEllipsis(bool useEllipsis)
 {
   mUseEllipsis = useEllipsis;
   InvalidateLayout();
+}
+bool nuiLabel::GetUseEllipsis() const
+{
+  return mUseEllipsis;
 }
 
 void nuiLabel::SetOrientation(nuiOrientation Orientation)
