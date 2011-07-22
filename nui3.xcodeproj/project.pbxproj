@@ -786,7 +786,7 @@
 		73F0864612E9BA0700656E84 /* nuiPathAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA519EE0CFAE0DD00832BD1 /* nuiPathAttributeEditor.cpp */; };
 		73F0864712E9BA0700656E84 /* nuiRectAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA519EF0CFAE0DD00832BD1 /* nuiRectAttributeEditor.cpp */; };
 		73F0864812E9BA0700656E84 /* nuiStringAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E460CFEF50200650944 /* nuiStringAttributeEditor.cpp */; };
-		73F0864912E9BA0700656E84 /* nuiAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E8B0CFF022B00650944 /* nuiAttribute.cpp */; };
+		73F0864912E9BA0700656E84 /* nuiAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E8B0CFF022B00650944 /* nuiAttribute.cpp */; settings = {COMPILER_FLAGS = "-mno-thumb"; }; };
 		73F0864A12E9BA0700656E84 /* nuiLabelAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC58C4AB0D0078DB00C19A59 /* nuiLabelAttribute.cpp */; };
 		73F0864B12E9BA0700656E84 /* nuiBooleanAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA456B10D043D8D009236E9 /* nuiBooleanAttributeEditor.cpp */; };
 		73F0864C12E9BA0700656E84 /* nuiNativeResourceVolume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E578F7E10D0460FE00D2F07C /* nuiNativeResourceVolume.cpp */; };
@@ -19138,7 +19138,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -19182,6 +19182,7 @@
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -19201,7 +19202,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
