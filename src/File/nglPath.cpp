@@ -624,7 +624,7 @@ void nglPath::SetExtension(const nglString& rExtension)
     mPathName.DeleteRight(mPathName.GetLength() - dot);
   }
 
-  mPathName.Add(_T('.')).Add(rExtension);
+  mPathName.Append('.').Append(rExtension);
 }
 
 nglString nglPath::GetParentName() const
