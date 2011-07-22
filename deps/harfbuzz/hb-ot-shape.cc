@@ -176,21 +176,13 @@ hb_ot_position_complex (hb_ot_shape_context_t *c)
 
 /* Prepare */
 
-static inline hb_bool_t
-is_variation_selector (hb_codepoint_t unicode)
-{
-  return unlikely ((unicode >=  0x180B && unicode <=  0x180D) || /* MONGOLIAN FREE VARIATION SELECTOR ONE..THREE */
-		   (unicode >=  0xFE00 && unicode <=  0xFE0F) || /* VARIATION SELECTOR-1..16 */
-		   (unicode >= 0xE0100 && unicode <= 0xE01EF));  /* VARIATION SELECTOR-17..256 */
-}
-
 static void
-hb_set_unicode_props (hb_ot_shape_context_t *c)
+hb_set_unicode_props (hb_buffer_t *buffer)
 {
-  hb_unicode_funcs_t *unicode = c->buffer->unicode;
-  hb_glyph_info_t *info = c->buffer->info;
+  hb_unicode_funcs_t *unicode = buffer->unicode;
+  hb_glyph_info_t *info = buffer->info;
 
-  unsigned int count = c->buffer->len;
+  unsigned int count = buffer->len;
   for (unsigned int i = 1; i < count; i++) {
     info[i].general_category() = hb_unicode_general_category (unicode, info[i].codepoint);
     info[i].combining_class() = hb_unicode_combining_class (unicode, info[i].codepoint);
@@ -198,38 +190,41 @@ hb_set_unicode_props (hb_ot_shape_context_t *c)
 }
 
 static void
-hb_form_clusters (hb_ot_shape_context_t *c)
+hb_form_clusters (hb_buffer_t *buffer)
 {
-  unsigned int count = c->buffer->len;
+  unsigned int count = buffer->len;
   for (unsigned int i = 1; i < count; i++)
-    /* TODO: Match other mark types too? */
-    if (c->buffer->info[i].general_category() == HB_UNICODE_GENERAL_CATEGORY_NON_SPACING_MARK)
-      c->buffer->info[i].cluster = c->buffer->info[i - 1].cluster;
+    if (FLAG (buffer->info[i].general_category()) &
+	(FLAG (HB_UNICODE_GENERAL_CATEGORY_SPACING_MARK) |
+	 FLAG (HB_UNICODE_GENERAL_CATEGORY_ENCLOSING_MARK) |
+	 FLAG (HB_UNICODE_GENERAL_CATEGORY_NON_SPACING_MARK)))
+      buffer->info[i].cluster = buffer->info[i - 1].cluster;
 }
 
 static void
-hb_ensure_native_direction (hb_ot_shape_context_t *c)
+hb_ensure_native_direction (hb_buffer_t *buffer)
 {
-  hb_direction_t direction = c->buffer->props.direction;
+  hb_direction_t direction = buffer->props.direction;
 
   /* TODO vertical:
    * The only BTT vertical script is Ogham, but it's not clear to me whether OpenType
    * Ogham fonts are supposed to be implemented BTT or not.  Need to research that
    * first. */
-  if ((HB_DIRECTION_IS_HORIZONTAL (direction) && direction != hb_script_get_horizontal_direction (c->buffer->props.script)) ||
+  if ((HB_DIRECTION_IS_HORIZONTAL (direction) && direction != hb_script_get_horizontal_direction (buffer->props.script)) ||
       (HB_DIRECTION_IS_VERTICAL   (direction) && direction != HB_DIRECTION_TTB))
   {
-    hb_buffer_reverse_clusters (c->buffer);
-    c->buffer->props.direction = HB_DIRECTION_REVERSE (c->buffer->props.direction);
+    hb_form_clusters (buffer);
+    hb_buffer_reverse_clusters (buffer);
+    buffer->props.direction = HB_DIRECTION_REVERSE (buffer->props.direction);
   }
 }
 
 static void
-hb_reset_glyph_infos (hb_ot_shape_context_t *c)
+hb_reset_glyph_infos (hb_buffer_t *buffer)
 {
-  unsigned int count = c->buffer->len;
+  unsigned int count = buffer->len;
   for (unsigned int i = 0; i < count; i++)
-    c->buffer->info[i].var1.u32 = c->buffer->info[i].var2.u32 = 0;
+    buffer->info[i].var1.u32 = buffer->info[i].var2.u32 = 0;
 }
 
 
@@ -259,17 +254,19 @@ static void
 hb_map_glyphs (hb_font_t    *font,
 	       hb_buffer_t  *buffer)
 {
+  hb_codepoint_t glyph;
+
   if (unlikely (!buffer->len))
     return;
 
-  hb_codepoint_t glyph;
   buffer->clear_output ();
+
   unsigned int count = buffer->len - 1;
   for (buffer->i = 0; buffer->i < count;) {
     if (unlikely (is_variation_selector (buffer->info[buffer->i + 1].codepoint))) {
       hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, buffer->info[buffer->i + 1].codepoint, &glyph);
       buffer->replace_glyph (glyph);
-      buffer->i++;
+      buffer->skip_glyph ();
     } else {
       hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, 0, &glyph);
       buffer->replace_glyph (glyph);
@@ -362,19 +359,20 @@ hb_ot_shape_execute_internal (hb_ot_shape_context_t *c)
   /* Save the original direction, we use it later. */
   c->target_direction = c->buffer->props.direction;
 
-  hb_reset_glyph_infos (c); /* BUFFER: Clear buffer var1 and var2 */
+  hb_reset_glyph_infos (c->buffer); /* BUFFER: Clear buffer var1 and var2 */
 
-  hb_set_unicode_props (c); /* BUFFER: Set general_category and combining_class in var1 */
+  hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class in var1 */
 
-  hb_ensure_native_direction (c);
+  hb_ensure_native_direction (c->buffer);
 
-  hb_form_clusters (c);
+  if (_hb_ot_shape_normalize (c))
+    /* Buffer contents changed, reset unicode_props */
+    hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class in var1 */
 
   hb_ot_shape_setup_masks (c); /* BUFFER: Clobbers var2 */
 
   /* SUBSTITUTE */
   {
-    /* Mirroring needs to see the original direction */
     hb_mirror_chars (c);
 
     hb_substitute_default (c);

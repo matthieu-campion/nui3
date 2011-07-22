@@ -7,6 +7,7 @@
 
 
 #include "nui.h"
+#include "hb.h"
 #include "hb-private.hh"
 #include "hb-unicode-private.hh"
 #include "ucdata.h"
@@ -98,8 +99,9 @@ nui_hb_get_general_category (hb_unicode_funcs_t *ufuncs,
       
   TEST(UC_MN_I, HB_UNICODE_GENERAL_CATEGORY_NON_SPACING_MARK);
   TEST(UC_ME_I, HB_UNICODE_GENERAL_CATEGORY_ENCLOSING_MARK);
-  TEST(UC_MC_I, HB_UNICODE_GENERAL_CATEGORY_COMBINING_MARK);
-      
+  //TEST(UC_MC_I, HB_UNICODE_GENERAL_CATEGORY_COMBINING_MARK);
+  TEST(UC_MC_I, HB_UNICODE_GENERAL_CATEGORY_SPACING_MARK);
+  
   TEST(UC_ND_I, HB_UNICODE_GENERAL_CATEGORY_DECIMAL_NUMBER);
   TEST(UC_NL_I, HB_UNICODE_GENERAL_CATEGORY_LETTER_NUMBER);
   TEST(UC_NO_I, HB_UNICODE_GENERAL_CATEGORY_OTHER_NUMBER);
@@ -313,16 +315,53 @@ nui_hb_get_script (hb_unicode_funcs_t *ufuncs,
   return hb_get_script_from_nui(script);
 }
 
+static hb_bool_t
+nui_hb_get_compose (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+                        hb_codepoint_t      a,
+                        hb_codepoint_t      b,
+                        hb_codepoint_t     *ab,
+                        void               *user_data HB_UNUSED)
+{
+  nglString str;
+  str.Append((nglUChar)a);
+  str.Append((nglUChar)b);
+  str.ToCanonicalComposition();
+  if (str.GetULength() == 1)
+  {
+    *ab = str.GetUChar(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static hb_bool_t
+nui_hb_get_decompose (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+                          hb_codepoint_t      ab,
+                          hb_codepoint_t     *a,
+                          hb_codepoint_t     *b,
+                          void               *user_data HB_UNUSED)
+{
+  nglString str;
+  str.Append((nglUChar)ab);
+  str.ToCanonicalDecomposition();
+  if (str.GetULength() == 2)
+  {
+    *a = str.GetUChar(0);
+    *b = str.GetUChar(1);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 static hb_unicode_funcs_t nui_ufuncs = {
   HB_REFERENCE_COUNT_INVALID, /* ref_count */
   NULL, /* parent */
   TRUE, /* immutable */
   {
-    nui_hb_get_combining_class,
-    nui_hb_get_eastasian_width,
-    nui_hb_get_general_category,
-    nui_hb_get_mirroring,
-    nui_hb_get_script
+#define HB_UNICODE_FUNC_IMPLEMENT(name) nui_hb_get_##name,
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
   }
 };
 

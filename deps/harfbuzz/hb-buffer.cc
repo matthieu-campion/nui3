@@ -386,6 +386,11 @@ _hb_buffer_replace_glyphs_be16 (hb_buffer_t *buffer,
   }
 
   hb_glyph_info_t orig_info = buffer->info[buffer->i];
+  for (unsigned int i = 1; i < num_in; i++)
+  {
+    hb_glyph_info_t *info = &buffer->info[buffer->i + i];
+    orig_info.cluster = MIN (orig_info.cluster, info->cluster);
+  }
 
   for (unsigned int i = 0; i < num_out; i++)
   {
@@ -399,8 +404,8 @@ _hb_buffer_replace_glyphs_be16 (hb_buffer_t *buffer,
 }
 
 void
-_hb_buffer_replace_glyph (hb_buffer_t *buffer,
-			  hb_codepoint_t glyph_index)
+_hb_buffer_output_glyph (hb_buffer_t *buffer,
+			 hb_codepoint_t glyph_index)
 {
   hb_glyph_info_t *info;
 
@@ -415,8 +420,21 @@ _hb_buffer_replace_glyph (hb_buffer_t *buffer,
   info = &buffer->out_info[buffer->out_len];
   info->codepoint = glyph_index;
 
-  buffer->i++;
   buffer->out_len++;
+}
+
+void
+_hb_buffer_replace_glyph (hb_buffer_t *buffer,
+			  hb_codepoint_t glyph_index)
+{
+  _hb_buffer_output_glyph (buffer, glyph_index);
+  _hb_buffer_skip_glyph (buffer);
+}
+
+void
+_hb_buffer_skip_glyph (hb_buffer_t *buffer)
+{
+  buffer->i++;
 }
 
 void

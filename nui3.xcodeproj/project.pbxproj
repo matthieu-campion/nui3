@@ -4970,6 +4970,9 @@
 		E5C6CE1C0FF6DC38003E6002 /* nuiHTMLStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C6CE1A0FF6DC38003E6002 /* nuiHTMLStyle.cpp */; };
 		E5C6CE1F0FF6DC38003E6002 /* nuiHTMLStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5C6CE190FF6DC38003E6002 /* nuiHTMLStyle.h */; };
 		E5C6CE200FF6DC38003E6002 /* nuiHTMLStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C6CE1A0FF6DC38003E6002 /* nuiHTMLStyle.cpp */; };
+		E5CB6A8713D9D374005C7B6F /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */; };
+		E5CB6A8813D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */; };
+		E5CB6A8913D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */; };
 		E5CC362B115EF0F400747AB2 /* nuiAttributeType.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CC3629115EF0F400747AB2 /* nuiAttributeType.h */; };
 		E5CC362C115EF0F400747AB2 /* nuiAttributeType.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CC3629115EF0F400747AB2 /* nuiAttributeType.h */; };
 		E5D050970D2AD04500B1A021 /* nuiFixedPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = E5D050930D2AD04500B1A021 /* nuiFixedPoint.h */; };
@@ -8748,6 +8751,7 @@
 		E5C2EE510CF731110098B8BB /* nglNativeVolume.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglNativeVolume.cpp; sourceTree = "<group>"; };
 		E5C6CE190FF6DC38003E6002 /* nuiHTMLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiHTMLStyle.h; sourceTree = "<group>"; };
 		E5C6CE1A0FF6DC38003E6002 /* nuiHTMLStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLStyle.cpp; sourceTree = "<group>"; };
+		E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ot-shape-normalize.cc"; path = "harfbuzz/hb-ot-shape-normalize.cc"; sourceTree = "<group>"; };
 		E5CC3629115EF0F400747AB2 /* nuiAttributeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeType.h; path = include/nuiAttributeType.h; sourceTree = SOURCE_ROOT; };
 		E5D050930D2AD04500B1A021 /* nuiFixedPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFixedPoint.h; path = include/nuiFixedPoint.h; sourceTree = SOURCE_ROOT; };
 		E5D050940D2AD04500B1A021 /* nuiPixelBlender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiPixelBlender.h; path = include/nuiPixelBlender.h; sourceTree = SOURCE_ROOT; };
@@ -11623,6 +11627,7 @@
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
+				E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */,
 				E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */,
 				E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */,
 				E5396AFB139F67EA009CB047 /* hb-ot-shape-complex-indic-table.hh */,
@@ -16492,6 +16497,7 @@
 				E511F7CD1367149100DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571813C70FA300245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 				E57E571313CC8ED50021055F /* hb-ot-shape-complex-indic.cc in Sources */,
+				E5CB6A8913D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18790,6 +18796,7 @@
 				E511F76D1367149000DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571A13C70FA500245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 				E57E571513CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */,
+				E5CB6A8713D9D374005C7B6F /* hb-ot-shape-normalize.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19069,6 +19076,7 @@
 				E511F79D1367149100DE93B0 /* hb-unicode.cc in Sources */,
 				E5AA571913C70FA400245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 				E57E571413CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */,
+				E5CB6A8813D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
