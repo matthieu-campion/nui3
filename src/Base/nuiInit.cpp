@@ -12,6 +12,10 @@
 #include "nglThreadChecker.h"
 #include "nuiDecoration.h"
 
+#if defined(_UIKIT_)
+# import <Foundation/NSAutoreleasePool.h>
+#endif
+
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
 static uint32 gNUIReferences = 0;
@@ -51,7 +55,9 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   nuiTexture::InitTextures();
   
   // Init the font manager:
-  
+#if defined(_UIKIT_)
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+#endif
   
   nglPath fontdb(ePathUserAppSettings);
   fontdb += nglString(NUI_FONTDB_PATH);
@@ -80,6 +86,10 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   nuiDecoration::InitDecorationEngine();
   nuiDefaultDecoration::Init();
   nuiBuilder::Init();
+  
+#if defined(_UIKIT_)
+  [pool release];
+#endif
   
   return App != NULL && !App->GetError();
 }

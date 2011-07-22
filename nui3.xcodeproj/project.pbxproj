@@ -705,7 +705,7 @@
 		73F085EE12E9BA0700656E84 /* nuiWidgetAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */; };
 		73F085EF12E9BA0700656E84 /* nglIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE60C3CECAB00902DFE /* nglIStream.cpp */; };
 		73F085F012E9BA0700656E84 /* nuiShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC00C3CECAB00902DFE /* nuiShape.cpp */; };
-		73F085F112E9BA0700656E84 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; };
+		73F085F112E9BA0700656E84 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; settings = {COMPILER_FLAGS = "-x objective-c++"; }; };
 		73F085F212E9BA0700656E84 /* nuiRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */; };
 		73F085F312E9BA0700656E84 /* nuiTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D690C3CECAB00902DFE /* nuiTimer.cpp */; };
 		73F085F412E9BA0700656E84 /* nglIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */; };
@@ -2581,7 +2581,7 @@
 		E524167911CB860B0025CA71 /* nuiWidgetAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */; };
 		E524167A11CB860B0025CA71 /* nglIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE60C3CECAB00902DFE /* nglIStream.cpp */; };
 		E524167B11CB860B0025CA71 /* nuiShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC00C3CECAB00902DFE /* nuiShape.cpp */; };
-		E524167C11CB860B0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; };
+		E524167C11CB860B0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; settings = {COMPILER_FLAGS = "-x objective-c++"; }; };
 		E524167D11CB860B0025CA71 /* nuiRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */; };
 		E524167E11CB860B0025CA71 /* nuiTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D690C3CECAB00902DFE /* nuiTimer.cpp */; };
 		E524167F11CB860B0025CA71 /* nglIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */; };
@@ -3196,7 +3196,7 @@
 		E5241F5F11CBCE9E0025CA71 /* nuiWidgetAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */; };
 		E5241F6011CBCE9E0025CA71 /* nglIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE60C3CECAB00902DFE /* nglIStream.cpp */; };
 		E5241F6111CBCE9E0025CA71 /* nuiShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC00C3CECAB00902DFE /* nuiShape.cpp */; };
-		E5241F6211CBCE9E0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; };
+		E5241F6211CBCE9E0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; settings = {COMPILER_FLAGS = "-x objective-c++"; }; };
 		E5241F6311CBCE9E0025CA71 /* nuiRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */; };
 		E5241F6411CBCE9E0025CA71 /* nuiTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D690C3CECAB00902DFE /* nuiTimer.cpp */; };
 		E5241F6511CBCE9E0025CA71 /* nglIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */; };
@@ -19287,6 +19287,7 @@
 					deps/libcss/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = nuiPhoneD;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
