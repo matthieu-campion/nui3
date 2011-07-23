@@ -7,7 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiInit.h"
 #include "Application.h"
 #include "MainWindow.h"
 
@@ -31,8 +30,6 @@ void Application::OnExit (int Code)
 {
   if (mpMainWindow)
     delete mpMainWindow;
-
-  //nuiUninit();
 }
 
 void Application::OnInit()

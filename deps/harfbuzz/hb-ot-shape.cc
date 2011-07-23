@@ -176,17 +176,12 @@ hb_ot_position_complex (hb_ot_shape_context_t *c)
 
 /* Prepare */
 
-static void
-hb_set_unicode_props (hb_buffer_t *buffer)
+void
+_hb_set_unicode_props (hb_buffer_t *buffer)
 {
-  hb_unicode_funcs_t *unicode = buffer->unicode;
-  hb_glyph_info_t *info = buffer->info;
-
   unsigned int count = buffer->len;
-  for (unsigned int i = 1; i < count; i++) {
-    info[i].general_category() = hb_unicode_general_category (unicode, info[i].codepoint);
-    info[i].combining_class() = hb_unicode_combining_class (unicode, info[i].codepoint);
-  }
+  for (unsigned int i = 1; i < count; i++)
+    hb_glyph_info_set_unicode_props (&buffer->info[i], buffer->unicode);
 }
 
 static void
@@ -213,7 +208,6 @@ hb_ensure_native_direction (hb_buffer_t *buffer)
   if ((HB_DIRECTION_IS_HORIZONTAL (direction) && direction != hb_script_get_horizontal_direction (buffer->props.script)) ||
       (HB_DIRECTION_IS_VERTICAL   (direction) && direction != HB_DIRECTION_TTB))
   {
-    hb_form_clusters (buffer);
     hb_buffer_reverse_clusters (buffer);
     buffer->props.direction = HB_DIRECTION_REVERSE (buffer->props.direction);
   }
@@ -262,21 +256,21 @@ hb_map_glyphs (hb_font_t    *font,
   buffer->clear_output ();
 
   unsigned int count = buffer->len - 1;
-  for (buffer->i = 0; buffer->i < count;) {
-    if (unlikely (is_variation_selector (buffer->info[buffer->i + 1].codepoint))) {
-      hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, buffer->info[buffer->i + 1].codepoint, &glyph);
+  for (buffer->idx = 0; buffer->idx < count;) {
+    if (unlikely (is_variation_selector (buffer->info[buffer->idx + 1].codepoint))) {
+      hb_font_get_glyph (font, buffer->info[buffer->idx].codepoint, buffer->info[buffer->idx + 1].codepoint, &glyph);
       buffer->replace_glyph (glyph);
       buffer->skip_glyph ();
     } else {
-      hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, 0, &glyph);
+      hb_font_get_glyph (font, buffer->info[buffer->idx].codepoint, 0, &glyph);
       buffer->replace_glyph (glyph);
     }
   }
-  if (likely (buffer->i < buffer->len)) {
-    hb_font_get_glyph (font, buffer->info[buffer->i].codepoint, 0, &glyph);
+  if (likely (buffer->idx < buffer->len)) {
+    hb_font_get_glyph (font, buffer->info[buffer->idx].codepoint, 0, &glyph);
     buffer->replace_glyph (glyph);
   }
-  buffer->swap ();
+  buffer->swap_buffers ();
 }
 
 static void
@@ -361,13 +355,13 @@ hb_ot_shape_execute_internal (hb_ot_shape_context_t *c)
 
   hb_reset_glyph_infos (c->buffer); /* BUFFER: Clear buffer var1 and var2 */
 
-  hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class in var1 */
+  _hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class in var1 */
+
+  hb_form_clusters (c->buffer);
 
   hb_ensure_native_direction (c->buffer);
 
-  if (_hb_ot_shape_normalize (c))
-    /* Buffer contents changed, reset unicode_props */
-    hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class in var1 */
+  _hb_ot_shape_normalize (c);
 
   hb_ot_shape_setup_masks (c); /* BUFFER: Clobbers var2 */
 

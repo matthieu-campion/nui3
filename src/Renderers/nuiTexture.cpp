@@ -410,50 +410,36 @@ nuiTexture* nuiTexture::GetAATexture()
 
 void nuiTexture::ClearAll()
 {
-  // Free proxies first:
-  {
-    nuiTextureMap::iterator it = mpTextures.begin();
-    nuiTextureMap::iterator end = mpTextures.end();
-    
-    std::vector<nuiTexture*> proxies;
-    while (it != end)
-    {
-      nuiTexture* pTex = it->second;
-      if (pTex->GetProxyTexture())
-        proxies.push_back(pTex);
-      ++it;
-    }
-    
-    for (uint32 i = 0; i < proxies.size(); i++)
-    {
-      nuiTexture* pTex = proxies[i];
-      pTex->Release();
-    }
-  }
-
-  // Now we can release the other textures...
   nuiTextureMap::iterator it = mpTextures.begin();
   nuiTextureMap::iterator end = mpTextures.end();
+  
+  std::vector<nuiTexture*> proxies;
   std::vector<nuiTexture*> temp;
   while (it != end)
   {
-    nglString TexName(it->first);
     nuiTexture* pTex = it->second;
-    temp.push_back(pTex);
-    //delete pTex; // the destructor of an nuiTexture removes that texture from the nuiTextureMap automatically so the only way not to get lost with the next it is to restart at the begining.
-    //pTex->Release();
-    //it = mpTextures.begin();
+    NGL_ASSERT(pTex->GetRefCount() > 0);
+    if (pTex->GetProxyTexture())
+      proxies.push_back(pTex);
+    else
+      temp.push_back(pTex);
     ++it;
   }
+  
+  // Free proxies first:
+  size_t count = proxies.size();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiTexture* pTex = proxies[i];
+    NGL_ASSERT(pTex->GetRefCount() == 1);
+    pTex->Release();
+  }
 
+  // Now we can release the other textures
   for (int32 i = 0; i < temp.size(); i++)
   {
     nuiTexture* pTex = temp[i];
-    if (pTex->GetRefCount() > 1)
-    {
-      NGL_OUT(_T("nuiTexture::ClearAll() - '%ls' %p still had %d references\n"), pTex->GetObjectName().GetChars(), pTex, pTex->GetRefCount());
-    }
-    
+    NGL_ASSERT(pTex->GetRefCount() == 1);
     pTex->Release();
   }
   
@@ -466,7 +452,7 @@ void nuiTexture::ClearAll()
 
 void nuiTexture::InitTextures()
 {
-  App->AddExit(&nuiTexture::ClearAll);
+  //App->AddExit(&nuiTexture::ClearAll);
 }
 
 

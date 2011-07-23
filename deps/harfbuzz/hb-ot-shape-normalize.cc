@@ -63,78 +63,224 @@ HB_BEGIN_DECLS
  *     matra for the Indic shaper.
  */
 
-static bool
-get_glyph (hb_ot_shape_context_t *c, unsigned int i)
-{
-  hb_codepoint_t glyph;
 
-  return hb_font_get_glyph (c->font, c->buffer->info[i].codepoint, 0, &glyph);
+static bool
+decompose (hb_ot_shape_context_t *c,
+	   bool shortest,
+	   hb_codepoint_t ab)
+{
+  hb_codepoint_t a, b, glyph;
+
+  if (!hb_unicode_decompose (c->buffer->unicode, ab, &a, &b) ||
+      (b && !hb_font_get_glyph (c->font, b, 0, &glyph)))
+    return FALSE;
+
+  bool has_a = hb_font_get_glyph (c->font, a, 0, &glyph);
+  if (shortest && has_a) {
+    /* Output a and b */
+    c->buffer->output_glyph (a);
+    if (b)
+      c->buffer->output_glyph (b);
+    return TRUE;
+  }
+
+  if (decompose (c, shortest, a)) {
+    if (b)
+      c->buffer->output_glyph (b);
+    return TRUE;
+  }
+
+  if (has_a) {
+    c->buffer->output_glyph (a);
+    if (b)
+      c->buffer->output_glyph (b);
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+static bool
+decompose_current_glyph (hb_ot_shape_context_t *c,
+			 bool shortest)
+{
+  if (decompose (c, shortest, c->buffer->info[c->buffer->idx].codepoint)) {
+    c->buffer->skip_glyph ();
+    return TRUE;
+  } else {
+    c->buffer->next_glyph ();
+    return FALSE;
+  }
 }
 
 static bool
 decompose_single_char_cluster (hb_ot_shape_context_t *c,
-			       bool recompose,
-			       unsigned int i)
+			       bool will_recompose)
 {
-  return FALSE;
-}
+  hb_codepoint_t glyph;
 
-static bool
-handle_single_char_cluster (hb_ot_shape_context_t *c,
-			    bool recompose,
-			    unsigned int i)
-{
-  /* If recomposing and the single char is supported by the font, we're good. */
-  if (recompose && get_glyph (c, i))
+  /* If recomposing and font supports this, we're good to go */
+  if (will_recompose && hb_font_get_glyph (c->font, c->buffer->info[c->buffer->idx].codepoint, 0, &glyph)) {
+    c->buffer->next_glyph ();
     return FALSE;
+  }
 
-  /* Decompose */
-  return decompose_single_char_cluster (c, recompose, i);
+  return decompose_current_glyph (c, will_recompose);
 }
 
 static bool
-handle_multi_char_cluster (hb_ot_shape_context_t *c,
-			   bool recompose,
-			   unsigned int start,
-			   unsigned int end)
+decompose_multi_char_cluster (hb_ot_shape_context_t *c,
+			      unsigned int end)
 {
-  /* TODO Currently if there's a variation-selector we give-up, it's just too hard. */
-  for (unsigned int i = start; i < end; i++)
-    if (unlikely (is_variation_selector (c->buffer->info[i].codepoint)))
-      return FALSE;
+  bool changed = FALSE;
 
-  return FALSE;
+  /* TODO Currently if there's a variation-selector we give-up, it's just too hard. */
+  for (unsigned int i = c->buffer->idx; i < end; i++)
+    if (unlikely (is_variation_selector (c->buffer->info[i].codepoint)))
+      return changed;
+
+  while (c->buffer->idx < end)
+    changed |= decompose_current_glyph (c, FALSE);
+
+  return changed;
 }
 
-bool
+void
 _hb_ot_shape_normalize (hb_ot_shape_context_t *c)
 {
   hb_buffer_t *buffer = c->buffer;
-  bool changed = FALSE;
   bool recompose = !hb_ot_shape_complex_prefer_decomposed (c->plan->shaper);
+  bool changed = FALSE;
+  bool has_multichar_clusters = FALSE;
+  unsigned int count;
+
+  /* We do a farily straightforward yet custom normalization process in three
+   * separate rounds: decompose, reorder, recompose (if desired).  Currently
+   * this makes two buffer swaps.  We can make it faster by moving the last
+   * two rounds into the inner loop for the first round, but it's more readable
+   * this way. */
+
+
+  /* First round, decompose */
 
   buffer->clear_output ();
-
-  unsigned int count = buffer->len;
-  for (buffer->i = 0; buffer->i < count;)
+  count = buffer->len;
+  for (buffer->idx = 0; buffer->idx < count;)
   {
-
     unsigned int end;
-    for (end = buffer->i + 1; end < count; end++)
-      if (buffer->info[buffer->i].cluster != buffer->info[end].cluster)
+    for (end = buffer->idx + 1; end < count; end++)
+      if (buffer->info[buffer->idx].cluster != buffer->info[end].cluster)
         break;
 
-    if (buffer->i + 1 == end)
-      changed |= handle_single_char_cluster (c, recompose, buffer->i);
-    else
-      changed |= handle_multi_char_cluster (c, recompose, buffer->i, end);
-    while (buffer->i < end)
-      c->buffer->next_glyph ();
+    if (buffer->idx + 1 == end)
+      changed |= decompose_single_char_cluster (c, recompose);
+    else {
+      changed |= decompose_multi_char_cluster (c, end);
+      has_multichar_clusters = TRUE;
+    }
+  }
+  buffer->swap_buffers ();
+
+
+  /* Technically speaking, two characters with ccc=0 may combine.  But all
+   * those cases are in languages that the indic module handles (which expects
+   * decomposed), or in Hangul jamo, which again, we want decomposed anyway.
+   * So we don't bother combining across cluster boundaries.
+   *
+   * TODO: Am I right about Hangul?  If I am, we should add a Hangul module
+   * that requests decomposed. */
+
+  if (!has_multichar_clusters)
+    return; /* Done! */
+
+  if (changed)
+    _hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class in var1 */
+
+
+  /* Second round, reorder (inplace) */
+
+  count = buffer->len;
+  for (unsigned int i = 0; i < count; i++)
+  {
+    if (buffer->info[i].combining_class() == 0)
+      continue;
+
+    unsigned int end;
+    for (end = i + 1; end < count; end++)
+      if (buffer->info[end].combining_class() == 0)
+        break;
+
+    /* We are going to do a bubble-sort.  Only do this if the
+     * sequence is short.  Doing it on long sequences can result
+     * in an O(n^2) DoS. */
+    if (end - i > 10) {
+      i = end;
+      continue;
+    }
+
+    unsigned int k = end - i - 1;
+    do {
+      hb_glyph_info_t *pinfo = buffer->info + i;
+      unsigned int new_k = 0;
+
+      for (unsigned int j = 0; j < k; j++)
+	if (pinfo[j].combining_class() > pinfo[j+1].combining_class()) {
+	  hb_glyph_info_t t;
+	  t = pinfo[j];
+	  pinfo[j] = pinfo[j + 1];
+	  pinfo[j + 1] = t;
+
+	  new_k = j;
+	}
+      k = new_k;
+    } while (k);
+
+    i = end;
   }
 
-  buffer->swap ();
 
-  return changed;
+  if (!recompose)
+    return;
+
+  /* Third round, recompose */
+
+  /* As noted in the comment earlier, we don't try to combine
+   * ccc=0 chars with their previous Starter. */
+
+  buffer->clear_output ();
+  count = buffer->len;
+  unsigned int starter = 0;
+  buffer->next_glyph ();
+  while (buffer->idx < count)
+  {
+    if (buffer->info[buffer->idx].combining_class() == 0) {
+      starter = buffer->out_len;
+      buffer->next_glyph ();
+      continue;
+    }
+
+    hb_codepoint_t composed, glyph;
+    if ((buffer->out_info[buffer->out_len - 1].combining_class() >=
+	 buffer->info[buffer->idx].combining_class()) ||
+	!hb_unicode_compose (c->buffer->unicode,
+			     buffer->out_info[starter].codepoint,
+			     buffer->info[buffer->idx].codepoint,
+			     &composed) ||
+	!hb_font_get_glyph (c->font, composed, 0, &glyph))
+    {
+      /* Blocked, or doesn't compose. */
+      buffer->next_glyph ();
+      continue;
+    }
+
+    /* Composes. Modify starter and carry on. */
+    buffer->out_info[starter].codepoint = composed;
+    hb_glyph_info_set_unicode_props (&buffer->out_info[starter], buffer->unicode);
+
+    buffer->skip_glyph ();
+  }
+  buffer->swap_buffers ();
+
 }
 
 HB_END_DECLS
