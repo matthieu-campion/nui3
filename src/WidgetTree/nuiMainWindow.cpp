@@ -1255,7 +1255,7 @@ void nuiMainWindow::DestroyAllWindows()
   {
     nuiMainWindow* pWin = mpWindows.front();
     NGL_LOG("window", NGL_LOG_ALWAYS, "Destroying window #%d '%s'\n", count, pWin->GetNGLWindow()->GetTitle().GetChars());
-    delete pWin;
+    pWin->Release();
     count++;
   }
   NGL_ASSERT(mpWindows.empty());

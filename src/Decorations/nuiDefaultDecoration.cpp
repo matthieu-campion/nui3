@@ -114,11 +114,18 @@ void nuiDefaultDecoration::Init()
 
 void nuiDefaultDecoration::Exit()
 {
-  if (mpKnobSequence)
-    mpKnobSequence->Release();
-  mpKnobSequence = NULL;
+  {
+    // Release the icons:
+    std::list<nuiTexture*>::iterator it = mIcons.begin();
+    std::list<nuiTexture*>::iterator end = mIcons.end();
+    while (it != end)
+    {
+      nuiTexture* pTex = *it;
+      pTex->Release();
+    }
+    mIcons.clear();
+  }
 
-  mIcons.clear();
   mImages.clear();
   
   nuiWidget::ClearDefaultDecorations();
@@ -831,8 +838,6 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 //
 // nuiKnob
 //
-
-nuiImageSequence* nuiDefaultDecoration::mpKnobSequence = NULL;
 
 void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
 {

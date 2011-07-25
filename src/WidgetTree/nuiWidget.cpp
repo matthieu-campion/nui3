@@ -1487,6 +1487,7 @@ bool nuiWidget::IsKeyDown (nglKeyCode Key) const
 
 bool nuiWidget::DispatchTextInput(const nglString& rUnicodeText)
 {
+  nuiAutoRef;
   CheckValid();
   if (TextInput(rUnicodeText))
   {
@@ -1512,6 +1513,7 @@ void nuiWidget::DispatchTextInputCancelled()
 
 bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 {
+  nuiAutoRef;
   CheckValid();
   Mask &= mHotKeyMask;
   if (TriggerHotKeys(rEvent, true, true, Mask))
@@ -1539,6 +1541,7 @@ bool nuiWidget::DispatchKeyDown(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 
 bool nuiWidget::DispatchKeyUp(const nglKeyEvent& rEvent, nuiKeyModifier Mask)
 {
+  nuiAutoRef;
   CheckValid();
   Mask &= mHotKeyMask;
   if (TriggerHotKeys(rEvent, false, true, Mask))
@@ -1620,6 +1623,7 @@ bool nuiWidget::KeyUp(const nglKeyEvent& rEvent)
 bool nuiWidget::TriggerHotKeys(const nglKeyEvent& rEvent, bool KeyDown,  bool Priority, nuiKeyModifier Mask)
 {
   CheckValid();
+  nuiAutoRef;
   nuiKeyModifier Modifiers = 0;
   
   if (IsKeyDown(NK_LSHIFT) || IsKeyDown(NK_RSHIFT))
@@ -1745,6 +1749,7 @@ bool nuiWidget::MouseUngrabbed(nglTouchId id)
 bool nuiWidget::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -1777,6 +1782,7 @@ bool nuiWidget::DispatchMouseClick(const nglMouseInfo& rInfo)
 bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -1809,6 +1815,7 @@ bool nuiWidget::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return NULL;
 
@@ -1842,6 +1849,7 @@ nuiWidgetPtr nuiWidget::DispatchMouseMove(const nglMouseInfo& rInfo)
 bool nuiWidget::DispatchGrab(nuiWidgetPtr pWidget)
 {
   CheckValid();
+  nuiAutoRef;
   if (mpParent)
     return mpParent->DispatchGrab(pWidget);
   return false;

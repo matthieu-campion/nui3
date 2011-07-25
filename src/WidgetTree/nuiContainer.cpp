@@ -47,11 +47,13 @@ void nuiContainer::SetObjectName(const nglString& rName)
 
 bool nuiContainer::Trash()
 {
+  nuiAutoRef;
   return nuiWidget::Trash();
 }
 
 void nuiContainer::CallOnTrash()
 {
+  nuiAutoRef;
   CheckValid();
   ChildrenCallOnTrash();
   nuiWidget::CallOnTrash();
@@ -416,6 +418,7 @@ void nuiContainer::DrawChild(nuiDrawContext* pContext, nuiWidget* pChild)
 bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -467,6 +470,7 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -518,6 +522,7 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 

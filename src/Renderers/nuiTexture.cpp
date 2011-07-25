@@ -431,6 +431,11 @@ void nuiTexture::ClearAll()
   for (uint32 i = 0; i < count; i++)
   {
     nuiTexture* pTex = proxies[i];
+    if (pTex->GetRefCount() != 1)
+    {
+      nglString str(pTex->GetSource());
+      NGL_OUT("Texture '%s' is still owned more than once!\n", str.GetChars());
+    }
     NGL_ASSERT(pTex->GetRefCount() == 1);
     pTex->Release();
   }

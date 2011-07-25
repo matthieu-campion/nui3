@@ -24,12 +24,15 @@ Application::Application()
 
 Application::~Application()
 {
+  if (mpMainWindow)
+    mpMainWindow->Release();
 }
 
 void Application::OnExit (int Code)
 {
   if (mpMainWindow)
-    delete mpMainWindow;
+    mpMainWindow->Release();
+  mpMainWindow = NULL;
 }
 
 void Application::OnInit()
@@ -138,6 +141,7 @@ void Application::OnInit()
     Quit (1);
     return;
   }
+  mpMainWindow->Acquire();
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
   mpMainWindow->SetState(nglWindow::eShow);
