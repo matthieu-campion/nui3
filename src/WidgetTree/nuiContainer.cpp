@@ -53,7 +53,6 @@ bool nuiContainer::Trash()
 
 void nuiContainer::CallOnTrash()
 {
-  nuiAutoRef;
   CheckValid();
   ChildrenCallOnTrash();
   nuiWidget::CallOnTrash();

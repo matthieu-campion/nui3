@@ -122,6 +122,7 @@ void nuiDefaultDecoration::Exit()
     {
       nuiTexture* pTex = *it;
       pTex->Release();
+      ++it;
     }
     mIcons.clear();
   }
