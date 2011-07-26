@@ -358,7 +358,7 @@ nuiSprite::~nuiSprite()
     mpSpriteDef->Release();
   for (size_t i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Release();
-}
+  }
 
 void nuiSprite::Init()
 {
@@ -579,11 +579,15 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   nuiRect src(pFrame->GetRect());
   nuiRect dst(src);
   dst.Move(-pFrame->GetHandleX(), -pFrame->GetHandleY());
+  
+  nuiTexture* pTex = pFrame->GetTexture();
 
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);
   pContext->SetFillColor(mColor);
   pContext->SetTexture(pFrame->GetTexture());
+  
+  
   
   // #TEST Meeloo
   //dst.Grow(dst.GetWidth() * -.25, dst.GetHeight() * -.25);
