@@ -22,28 +22,6 @@ nuiFrameView::~nuiFrameView()
   delete mpFrame;
 }
 
-bool nuiFrameView::Load(const nuiXMLNode* pNode)
-{
-  mpFrame = new nuiFrame(pNode->GetAttribute(_T("Name")));
-  
-  uint count = pNode->GetChildrenCount();
-  
-  for (uint i = 0; i < count; i++)
-  {
-    nuiXMLNode* pChildNode = pNode->GetChild(i);
-    
-    if (pChildNode->GetName() == _T("nuiFrame"))
-    {
-      nuiFrame* pFrame = new nuiFrame(pNode->GetAttribute(_T("Name")));
-      pFrame->Load(pChildNode);
-    }
-    else
-      nuiBuilder::Get().CreateWidget(pChildNode->GetName());
-  }
-  
-  return true;
-}
-
 nuiRect nuiFrameView::CalcIdealSize()
 {
   if (mpFrame)

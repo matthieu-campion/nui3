@@ -148,7 +148,7 @@ bool nglContext::CheckExtension (const nglChar* pExtName)
     success = success && (*ext == 0 || *ext == ' '); // Check next separator
   }
 
-  if (success || !strncmp(extname, "GL_VERSION_1_", 13))
+  if (success || !strncmp(extname, "GL_VERSION_1_", 13) || !strncmp(extname, "GL_VERSION_2_", 13))
   {
     success = InitExtension(pExtName);
 #ifdef _DEBUG_

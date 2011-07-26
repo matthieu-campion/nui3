@@ -37,9 +37,9 @@ void MainWindow::OnCreation()
   AddChild(mpNav);
   
   MyViewController* pView = new MyViewController(mpNav);
-  pView->Acquire();  
   mpNav->PushViewController(pView, false);
 }
+
 
 
 
@@ -109,11 +109,6 @@ MyViewController::MyViewController(nuiNavigationController* pNav)
   nglString name;
   name.Format(_T("MyViewController%d"), mCount % 3);
   SetObjectClass(name);
-  
-  name.Format(_T("%d"), mCount);
-  nuiLabel* pLabel = new nuiLabel(name);
-  pLabel->SetObjectName(_T("ViewControllerName"));
-  AddChild(pLabel);
   
   // pop buttons
   nuiButton* pButton = new nuiButton(_T("pop [slide]"));

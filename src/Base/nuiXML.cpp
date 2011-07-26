@@ -632,6 +632,54 @@ void nuiXMLNode::SetAttribute (const char* pName, const char* pValue)
     DelAttribute(name);
 }
 
+void nuiXMLNode::SetAttribute(const char* pName, uint8 value)
+{
+  nglString name(pName);
+  nglString val;
+  val.SetCUInt(value);
+  SetAttribute(name,val);
+}
+
+void nuiXMLNode::SetAttribute(const char* pName, int8 value)
+{
+  nglString name(pName);
+  nglString val;
+  val.SetCUInt(value);
+  SetAttribute(name,val);
+}
+
+void nuiXMLNode::SetAttribute(const char* pName, uint16 value)
+{
+  nglString name(pName);
+  nglString val;
+  val.SetCUInt(value);
+  SetAttribute(name,val);
+}
+
+void nuiXMLNode::SetAttribute(const char* pName, int16 value)
+{
+  nglString name(pName);
+  nglString val;
+  val.SetCUInt(value);
+  SetAttribute(name,val);
+}
+
+void nuiXMLNode::SetAttribute(const char* pName, uint32 value)
+{
+  nglString name(pName);
+  nglString val;
+  val.SetCUInt(value);
+  SetAttribute(name,val);
+}
+
+void nuiXMLNode::SetAttribute(const char* pName, int32 value)
+{
+  nglString name(pName);
+  nglString val;
+  val.SetCUInt(value);
+  SetAttribute(name,val);
+}
+
 void nuiXMLNode::SetAttribute(const char* pName, uint64 value)
 {
   nglString name(pName);

@@ -16,22 +16,6 @@ nuiFixed::nuiFixed()
   SetObjectClass(_T("nuiFixed"));
 }
 
-bool nuiFixed::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  SetObjectClass(_T("nuiFixed"));
-  // Nothing to do for fixed widget...
-  return true;
-}
-
-nuiXMLNode* nuiFixed::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiSimpleContainer::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-  return pNode;
-}
-
 nuiFixed::~nuiFixed()
 {
 }

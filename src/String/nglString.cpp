@@ -13,101 +13,38 @@ licence: see nui3/LICENCE.TXT
 #include "ucdata.h"
 
 #ifdef WINCE
-#define ngl_vsnprintf	_vsprintf
-#define ngl_snprintf	_snprintf
-#define ngl_strcmp		strcmp
-#define ngl_stricmp 		stricmp
-#define ngl_strncmp 		strncmp
-#define ngl_strnicmp		strnicmp
-#define ngl_mbs_stricmp	_stricmp
+  #define ngl_vsnprintf	_vsprintf
+  #define ngl_snprintf	_snprintf
+  #define ngl_strcmp		strcmp
+  #define ngl_stricmp 		stricmp
+  #define ngl_strncmp 		strncmp
+  #define ngl_strnicmp		strnicmp
+  #define ngl_mbs_stricmp	_stricmp
 #elif defined _WIN32_
-#define ngl_vsnprintf	_vsnprintf
-#define ngl_snprintf	_snprintf
-#define ngl_strcmp		strcmp
-#define ngl_stricmp 		stricmp
-#define ngl_strncmp 		strncmp
-#define ngl_strnicmp		strnicmp
-#define ngl_mbs_stricmp	stricmp
+  #define ngl_vsnprintf	_vsnprintf
+  #define ngl_snprintf	_snprintf
+  #define ngl_strcmp		strcmp
+  #define ngl_stricmp 		stricmp
+  #define ngl_strncmp 		strncmp
+  #define ngl_strnicmp		strnicmp
+  #define ngl_mbs_stricmp	stricmp
 #elif defined _CARBON_ || defined _UIKIT_ || defined _COCOA_
-#define ngl_vsnprintf vsnprintf
-#define ngl_snprintf	snprintf
-#define ngl_strcmp strcmp
-#define ngl_stricmp strcasecmp
-#define ngl_strncmp strncmp
-#define ngl_strnicmp strncasecmp
-#define ngl_mbs_stricmp strcasecmp
-
-#if 0
-#if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_6) || (defined _UIKIT_)
-static int strcasecmp(const nglChar* s1, const nglChar* s2)
-{
-  nglChar c1;
-  nglChar c2;
-  do
-  {
-    int diff;
-
-    c1 = *s1++;
-    c2 = *s2++;
-    if (!c1)
-      break;
-    diff = c1 - c2;
-    if (diff)
-    {
-      if ((c1 >= L'A') && (c1 <= L'Z'))
-        c1 += 0x20;
-      if ((c2 >= L'A') && (c2 <= L'Z'))
-        c2 += 0x20;
-      if (c1 != c2)
-        break;
-    }
-  } while (1);
-  if (c1 < c2)
-    return -1;
-  return c1 - c2;
-}
-
-static int strncasecmp(const wchar_t* s1, const wchar_t* s2, int64 n)
-{
-  nglChar c1;
-  nglChar c2;
-  if (!n)
-    return 0;
-  do
-  {
-    int diff;
-
-    c1 = *s1++;
-    c2 = *s2++;
-    if (!c1)
-      break;
-    diff = c1 - c2;
-    if (diff)
-    {
-      if ((c1 >= L'A') && (c1 <= L'Z'))
-        c1 += 0x20;
-      if ((c2 >= L'A') && (c2 <= L'Z'))
-        c2 += 0x20;
-      if (c1 != c2)
-        break;
-    }
-  } while (--n);
-  if (c1 < c2)
-    return -1;
-  return c1 - c2;
-}
-#endif
-#endif
-
+  #define ngl_vsnprintf vsnprintf
+  #define ngl_snprintf	snprintf
+  #define ngl_strcmp strcmp
+  #define ngl_stricmp strcasecmp
+  #define ngl_strncmp strncmp
+  #define ngl_strnicmp strncasecmp
+  #define ngl_mbs_stricmp strcasecmp
 #elif defined _LINUX_
-#include <ctype.h>
-#define ngl_vsnwprintf vsprintf
-#define ngl_snprintf	snprintf
-#define ngl_strcmp strcmp
-#define ngl_stricmp strcasecmp
-#define ngl_strncmp strncmp
-#define ngl_strnicmp strncasecmp
-#define ngl_mbs_stricmp strcasecmp
+  #include <ctype.h>
+  #define ngl_vsnprintf vsprintf
+  #define ngl_snprintf	snprintf
+  #define ngl_strcmp strcmp
+  #define ngl_stricmp strcasecmp
+  #define ngl_strncmp strncmp
+  #define ngl_strnicmp strncasecmp
+  #define ngl_mbs_stricmp strcasecmp
 #endif
 
 #ifdef WINCE
@@ -201,7 +138,7 @@ static void ngl_ftoa(double x, nglString& _String, int32 precision, nglFloatForm
   else if (flag & Condensed)
     t = L'g';
 
-  fmt.Add(t);
+  fmt.Add((nglUChar)t);
 
   // Use the standard display with the 'C' locale:
   _String.CFormat(fmt.GetChars(), x);
@@ -586,11 +523,10 @@ int32 nglString::GetLength() const
 int32 nglString::GetULength() const
 {
   int32 len = 0;
-  int32 l = 0;
-  while (l >= 0)
+  int32 l = 1;
+  while (l > 0)
   {
-    len = l;
-    l = GetNextUChar(l);
+    l = GetNextUChar(len);
   }
   return len;
 }

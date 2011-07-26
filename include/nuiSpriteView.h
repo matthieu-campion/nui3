@@ -78,11 +78,14 @@ public:
 protected:
   static std::map<nglString, nuiSpriteDef*> mSpriteMap;
   void Init();
+  static void Uninit();
   std::vector<nuiSpriteAnimation*> mpAnimations;
 };
 
 class nuiSprite : public nuiObject
 {
+  friend class nuiSpriteDef;
+  
 public:
   nuiSprite(const nglString& rSpriteDefName);
   nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace);
@@ -131,6 +134,9 @@ public:
 
   float GetAngle() const;
   void SetAngle(float angle);
+  const nglVectorf& GetPivot() const;
+  void SetPivot(const nglVectorf& rPivot);
+
   
   float GetScaleX() const;
   float GetScaleY() const;
@@ -141,6 +147,9 @@ public:
   
   void SetColor(const nuiColor& rColor);
   const nuiColor& GetColor() const;
+
+  void SetAlpha(float Alpha);
+  float GetAlpha() const;
   
   void SetBlendFunc(nuiBlendFunc f);
   nuiBlendFunc GetBlendFunc() const;
@@ -176,10 +185,12 @@ protected:
   nuiMatrixNode_Pivot* mpPivot;
 
   nuiColor mColor;
+  float mAlpha;
   nuiBlendFunc mBlendFunc;
 private:
   
   void _SetAnimation(const nglString& rAnimationName);
+  static uint32 mSpriteCounter;
 
 };
 

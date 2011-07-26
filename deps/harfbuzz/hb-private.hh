@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -22,6 +23,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  * Red Hat Author(s): Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #ifndef HB_PRIVATE_HH
@@ -62,11 +64,15 @@ HB_BEGIN_DECLS
 
 /* Basics */
 
+HB_END_DECLS
+
 #undef MIN
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
+template <typename Type> static inline Type MIN (const Type &a, const Type &b) { return a < b ? a : b; }
 
 #undef MAX
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
+template <typename Type> static inline Type MAX (const Type &a, const Type &b) { return a > b ? a : b; }
+
+HB_BEGIN_DECLS
 
 #undef  ARRAY_LENGTH
 #define ARRAY_LENGTH(__array) ((signed int) (sizeof (__array) / sizeof (__array[0])))
@@ -79,6 +85,7 @@ HB_BEGIN_DECLS
 #define ASSERT_STATIC(_cond) _ASSERT_STATIC0 (__LINE__, (_cond))
 
 #define ASSERT_STATIC_EXPR(_cond) ((void) sizeof (char[(_cond) ? 1 : -1]))
+#define ASSERT_STATIC_EXPR_ZERO(_cond) (0 * sizeof (char[(_cond) ? 1 : -1]))
 
 
 /* Lets assert int types.  Saves trouble down the road. */
@@ -204,77 +211,253 @@ _hb_ctz (unsigned int number)
 #endif
 }
 
+static inline bool
+_hb_unsigned_int_mul_overflows (unsigned int count, unsigned int size)
+{
+  return (size > 0) && (count >= ((unsigned int) -1) / size);
+}
+
+
 /* Type of bsearch() / qsort() compare function */
 typedef int (*hb_compare_func_t) (const void *, const void *);
 
 
-/* We need external help for these */
+HB_END_DECLS
 
-#ifdef HAVE_GLIB
 
-#include <glib.h>
+/* arrays and maps */
 
-typedef volatile int hb_atomic_int_t;
-#define hb_atomic_int_fetch_and_add(AI, V)	g_atomic_int_exchange_and_add (&(AI), V)
-#define hb_atomic_int_get(AI)			g_atomic_int_get (&(AI))
-#define hb_atomic_int_set(AI, V)		g_atomic_int_set (&(AI), V)
 
-typedef GStaticMutex hb_mutex_t;
-#define HB_MUTEX_INIT			G_STATIC_MUTEX_INIT
-#define hb_mutex_init(M)		g_static_mutex_init (&M)
-#define hb_mutex_lock(M)		g_static_mutex_lock (&M)
-#define hb_mutex_trylock(M)		g_static_mutex_trylock (&M)
-#define hb_mutex_unlock(M)		g_static_mutex_unlock (&M)
+template <typename Type, unsigned int StaticSize>
+struct hb_prealloced_array_t {
 
-#else
+  unsigned int len;
+  unsigned int allocated;
+  Type *array;
+  Type static_array[StaticSize];
 
-#ifdef _MSC_VER
-#define _HB__STR2__(x) #x
-#define _HB__STR1__(x) _HB__STR2__(x)
-#define _HB__LOC__ __FILE__ "("_HB__STR1__(__LINE__)") : Warning Msg: "
-#pragma message(_HB__LOC__"Could not find any system to define platform macros, library will NOT be thread-safe")
-#else
-#warning "Could not find any system to define platform macros, library will NOT be thread-safe"
-#endif
+  inline Type& operator [] (unsigned int i) { return array[i]; }
+  inline const Type& operator [] (unsigned int i) const { return array[i]; }
 
-typedef volatile int hb_atomic_int_t;
-#define hb_atomic_int_fetch_and_add(AI, V)	((AI) += (V), (AI) - (V))
-#define hb_atomic_int_get(AI)			(AI)
-#define hb_atomic_int_set(AI, V)  (AI) = (V);
+  inline Type *push (void)
+  {
+    if (!array) {
+      array = static_array;
+      allocated = ARRAY_LENGTH (static_array);
+    }
+    if (likely (len < allocated))
+      return &array[len++];
 
-typedef volatile int hb_mutex_t;
-#define HB_MUTEX_INIT				0
-#define hb_mutex_init(M)			HB_STMT_START { (M) = 0; } HB_STMT_END
-#define hb_mutex_lock(M)			HB_STMT_START { (M) = 1; } HB_STMT_END
-#define hb_mutex_trylock(M)			((M) = 1, 1)
-#define hb_mutex_unlock(M)			HB_STMT_START { (M) = 0; } HB_STMT_END
+    /* Need to reallocate */
+    unsigned int new_allocated = allocated + (allocated >> 1) + 8;
+    Type *new_array = NULL;
 
-#endif
+    if (array == static_array) {
+      new_array = (Type *) calloc (new_allocated, sizeof (Type));
+      if (new_array)
+        memcpy (new_array, array, len * sizeof (Type));
+    } else {
+      bool overflows = (new_allocated < allocated) || _hb_unsigned_int_mul_overflows (new_allocated, sizeof (Type));
+      if (likely (!overflows)) {
+	new_array = (Type *) realloc (array, new_allocated * sizeof (Type));
+      }
+    }
+
+    if (unlikely (!new_array))
+      return NULL;
+
+    array = new_array;
+    allocated = new_allocated;
+    return &array[len++];
+  }
+
+  inline void pop (void)
+  {
+    len--;
+    /* TODO: shrink array if needed */
+  }
+
+  inline void shrink (unsigned int l)
+  {
+     if (l < len)
+       len = l;
+    /* TODO: shrink array if needed */
+  }
+
+  template <typename T>
+  inline Type *find (T v) {
+    for (unsigned int i = 0; i < len; i++)
+      if (array[i] == v)
+	return &array[i];
+    return NULL;
+  }
+  template <typename T>
+  inline const Type *find (T v) const {
+    for (unsigned int i = 0; i < len; i++)
+      if (array[i] == v)
+	return &array[i];
+    return NULL;
+  }
+
+  inline void sort (void)
+  {
+    qsort (array, len, sizeof (Type), (hb_compare_func_t) Type::cmp);
+  }
+
+  inline void sort (unsigned int start, unsigned int end)
+  {
+    qsort (array + start, end - start, sizeof (Type), (hb_compare_func_t) Type::cmp);
+  }
+
+  template <typename T>
+  inline Type *bsearch (T *key)
+  {
+    return (Type *) ::bsearch (key, array, len, sizeof (Type), (hb_compare_func_t) Type::cmp);
+  }
+  template <typename T>
+  inline const Type *bsearch (T *key) const
+  {
+    return (const Type *) ::bsearch (key, array, len, sizeof (Type), (hb_compare_func_t) Type::cmp);
+  }
+
+  inline void finish (void)
+  {
+    if (array != static_array)
+      free (array);
+    array = NULL;
+    allocated = len = 0;
+  }
+};
+
+template <typename Type>
+struct hb_array_t : hb_prealloced_array_t<Type, 2> {};
+
+
+template <typename item_t, typename lock_t>
+struct hb_lockable_set_t
+{
+  hb_array_t <item_t> items;
+
+  template <typename T>
+  inline item_t *replace_or_insert (T v, lock_t &l)
+  {
+    l.lock ();
+    item_t *item = items.find (v);
+    if (item) {
+      item_t old = *item;
+      *item = v;
+      l.unlock ();
+      old.finish ();
+    } else {
+      item = items.push ();
+      if (likely (item))
+	*item = v;
+      l.unlock ();
+    }
+    return item;
+  }
+
+  template <typename T>
+  inline void remove (T v, lock_t &l)
+  {
+    l.lock ();
+    item_t *item = items.find (v);
+    if (item) {
+      item_t old = *item;
+      *item = items[items.len - 1];
+      items.pop ();
+      l.unlock ();
+      old.finish ();
+    } else {
+      l.unlock ();
+    }
+  }
+
+  template <typename T>
+  inline bool find (T v, item_t *i, lock_t &l)
+  {
+    l.lock ();
+    item_t *item = items.find (v);
+    if (item)
+      *i = *item;
+    l.unlock ();
+    return !!item;
+  }
+
+  template <typename T>
+  inline item_t *find_or_insert (T v, lock_t &l)
+  {
+    l.lock ();
+    item_t *item = items.find (v);
+    if (!item) {
+      item = items.push ();
+      if (likely (item))
+        *item = v;
+    }
+    l.unlock ();
+    return item;
+  }
+
+  inline void finish (lock_t &l)
+  {
+    l.lock ();
+    while (items.len) {
+      item_t old = items[items.len - 1];
+	items.pop ();
+	l.unlock ();
+	old.finish ();
+	l.lock ();
+    }
+    items.finish ();
+    l.unlock ();
+  }
+
+};
+
+
+HB_BEGIN_DECLS
 
 
 /* Big-endian handling */
 
-#define hb_be_uint16(v)		((uint16_t) ((((const uint8_t *)&(v))[0] << 8) + (((const uint8_t *)&(v))[1])))
+static inline uint16_t hb_be_uint16 (const uint16_t v)
+{
+  const uint8_t *V = (const uint8_t *) &v;
+  return (uint16_t) (V[0] << 8) + V[1];
+}
 
 #define hb_be_uint16_put(v,V)	HB_STMT_START { v[0] = (V>>8); v[1] = (V); } HB_STMT_END
 #define hb_be_uint16_get(v)	(uint16_t) ((v[0] << 8) + v[1])
-#define hb_be_uint16_cmp(a,b)	(a[0] == b[0] && a[1] == b[1])
+#define hb_be_uint16_eq(a,b)	(a[0] == b[0] && a[1] == b[1])
 
 #define hb_be_uint32_put(v,V)	HB_STMT_START { v[0] = (V>>24); v[1] = (V>>16); v[2] = (V>>8); v[3] = (V); } HB_STMT_END
 #define hb_be_uint32_get(v)	(uint32_t) ((v[0] << 24) + (v[1] << 16) + (v[2] << 8) + v[3])
-#define hb_be_uint32_cmp(a,b)	(a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3])
+#define hb_be_uint32_eq(a,b)	(a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3])
 
 
 /* ASCII tag/character handling */
 
-#define ISALPHA(c) (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z'))
-#define TOUPPER(c) (((c) >= 'a' && (c) <= 'z') ? (c) - 'a' + 'A' : (c))
-#define TOLOWER(c) (((c) >= 'A' && (c) <= 'Z') ? (c) - 'A' + 'a' : (c))
+static inline unsigned char ISALPHA (unsigned char c)
+{ return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); }
+static inline unsigned char ISALNUM (unsigned char c)
+{ return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'); }
+static inline unsigned char TOUPPER (unsigned char c)
+{ return (c >= 'a' && c <= 'z') ? c - 'a' + 'A' : c; }
+static inline unsigned char TOLOWER (unsigned char c)
+{ return (c >= 'A' && c <= 'Z') ? c - 'A' + 'a' : c; }
 
 #define HB_TAG_CHAR4(s)   (HB_TAG(((const char *) s)[0], \
 				  ((const char *) s)[1], \
 				  ((const char *) s)[2], \
 				  ((const char *) s)[3]))
+
+
+/* C++ helpers */
+
+/* Makes class uncopyable.  Use in private: section. */
+#define NO_COPY(T) \
+  T (const T &o); \
+  T &operator = (const T &o)
 
 
 /* Debug */
@@ -283,7 +466,7 @@ typedef volatile int hb_mutex_t;
 #define HB_DEBUG 0
 #endif
 
-static inline hb_bool_t /* always returns TRUE */
+static inline bool /* always returns TRUE */
 _hb_trace (const char *what,
 	   const char *function,
 	   const void *obj,
@@ -295,8 +478,24 @@ _hb_trace (const char *what,
 }
 
 
-#include "hb-object-private.hh"
+/* Pre-mature optimization:
+ * Checks for lo <= u <= hi but with an optimization if lo and hi
+ * are only different in a contiguous set of lower-most bits.
+ */
+static inline bool
+hb_codepoint_in_range (hb_codepoint_t u, hb_codepoint_t lo, hb_codepoint_t hi)
+{
+  if ( ((lo^hi) & lo) == 0 &&
+       ((lo^hi) & hi) == (lo^hi) &&
+       ((lo^hi) & ((lo^hi) + 1)) == 0 )
+    return (u & ~(lo^hi)) == lo;
+  else
+    return lo <= u && u <= hi;
+}
 
+
+/* Useful for set-operations on small enums */
+#define FLAG(x) (1<<(x))
 
 HB_END_DECLS
 

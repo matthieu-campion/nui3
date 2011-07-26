@@ -104,24 +104,6 @@ nuiFrame::~nuiFrame()
   mpTexture->Release();
 }
 
-bool nuiFrame::Load(const nuiXMLNode* pNode)
-{
-  mColor.SetValue(nuiGetString(pNode, _T("Color"), _T("white")));
-  mClientRect.SetValue(nuiGetString(pNode, _T("ClientRect"), _T("{0,0,0,0}")));
-  mpTexture = nuiTexture::GetTexture(nglPath(nuiGetString(pNode, _T("Texture"), nglString::Empty)));
-  return true;
-}
-
-nuiXMLNode* nuiFrame::Serialize(nuiXMLNode* pNode)
-{
-  pNode->SetName(_T("nuiFrame"));
-  pNode->SetAttribute(_T("Color"), mColor.GetValue());
-  pNode->SetAttribute(_T("ClientRect"), mClientRect.GetValue());
-
-  pNode->SetAttribute(_T("Texture"), GetTexturePath());
-  return pNode;
-}
-
 const nglPath& nuiFrame::GetTexturePath() const
 {
   return mTexturePath;

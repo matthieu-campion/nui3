@@ -52,7 +52,6 @@ class NUI_API nuiSplitter : public nuiSimpleContainer
 
 public:
   nuiSplitter(nuiOrientation orientation = nuiHorizontal, nuiSplitterMode mode=eModePercentage);
-  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
   virtual ~nuiSplitter();
   

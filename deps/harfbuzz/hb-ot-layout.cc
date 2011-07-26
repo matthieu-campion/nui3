@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 1998-2004  David Turner and Werner Lemberg
- * Copyright (C) 2006  Behdad Esfahbod
- * Copyright (C) 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 1998-2004  David Turner and Werner Lemberg
+ * Copyright © 2006  Behdad Esfahbod
+ * Copyright © 2007,2008,2009  Red Hat, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -33,6 +33,8 @@
 #include "hb-ot-layout-gdef-private.hh"
 #include "hb-ot-layout-gsub-private.hh"
 #include "hb-ot-layout-gpos-private.hh"
+#include "hb-ot-head-private.hh"
+#include "hb-ot-maxp-private.hh"
 
 
 #include <stdlib.h>
@@ -42,9 +44,9 @@ HB_BEGIN_DECLS
 
 
 hb_ot_layout_t *
-_hb_ot_layout_new (hb_face_t *face)
+_hb_ot_layout_create (hb_face_t *face)
 {
-  /* Remove this object altogether */
+  /* TODO Remove this object altogether */
   hb_ot_layout_t *layout = (hb_ot_layout_t *) calloc (1, sizeof (hb_ot_layout_t));
 
   layout->gdef_blob = Sanitizer<GDEF>::sanitize (hb_face_reference_table (face, HB_OT_TAG_GDEF));
@@ -56,19 +58,19 @@ _hb_ot_layout_new (hb_face_t *face)
   layout->gpos_blob = Sanitizer<GPOS>::sanitize (hb_face_reference_table (face, HB_OT_TAG_GPOS));
   layout->gpos = Sanitizer<GPOS>::lock_instance (layout->gpos_blob);
 
+  layout->head_blob = Sanitizer<head>::sanitize (hb_face_reference_table (face, HB_OT_TAG_head));
+  layout->head = Sanitizer<head>::lock_instance (layout->head_blob);
+
   return layout;
 }
 
 void
-_hb_ot_layout_free (hb_ot_layout_t *layout)
+_hb_ot_layout_destroy (hb_ot_layout_t *layout)
 {
-  hb_blob_unlock (layout->gdef_blob);
-  hb_blob_unlock (layout->gsub_blob);
-  hb_blob_unlock (layout->gpos_blob);
-
   hb_blob_destroy (layout->gdef_blob);
   hb_blob_destroy (layout->gsub_blob);
   hb_blob_destroy (layout->gpos_blob);
+  hb_blob_destroy (layout->head_blob);
 
   free (layout);
 }
@@ -78,17 +80,20 @@ _get_gdef (hb_face_t *face)
 {
   return likely (face->ot_layout && face->ot_layout->gdef) ? *face->ot_layout->gdef : Null(GDEF);
 }
-
 static inline const GSUB&
 _get_gsub (hb_face_t *face)
 {
   return likely (face->ot_layout && face->ot_layout->gsub) ? *face->ot_layout->gsub : Null(GSUB);
 }
-
 static inline const GPOS&
 _get_gpos (hb_face_t *face)
 {
   return likely (face->ot_layout && face->ot_layout->gpos) ? *face->ot_layout->gpos : Null(GPOS);
+}
+static inline const head&
+_get_head (hb_face_t *face)
+{
+  return likely (face->ot_layout && face->ot_layout->head) ? *face->ot_layout->head : Null(head);
 }
 
 
@@ -193,17 +198,13 @@ hb_ot_layout_get_attach_points (hb_face_t      *face,
 
 unsigned int
 hb_ot_layout_get_ligature_carets (hb_font_t      *font,
-				  hb_face_t      *face,
 				  hb_direction_t  direction,
 				  hb_codepoint_t  glyph,
 				  unsigned int    start_offset,
 				  unsigned int   *caret_count /* IN/OUT */,
 				  int            *caret_array /* OUT */)
 {
-  hb_ot_layout_context_t c;
-  c.font = font;
-  c.face = face;
-  return _get_gdef (face).get_lig_carets (&c, direction, glyph, start_offset, caret_count, caret_array);
+  return _get_gdef (font->face).get_lig_carets (font, direction, glyph, start_offset, caret_count, caret_array);
 }
 
 /*
@@ -439,16 +440,26 @@ hb_ot_layout_has_substitution (hb_face_t *face)
   return &_get_gsub (face) != &Null(GSUB);
 }
 
+void
+hb_ot_layout_substitute_start (hb_buffer_t  *buffer)
+{
+  unsigned int count = buffer->len;
+  for (unsigned int i = 0; i < count; i++)
+    buffer->info[i].var1.u32 = buffer->info[i].var2.u32 = 0;
+}
+
 hb_bool_t
 hb_ot_layout_substitute_lookup (hb_face_t    *face,
 				hb_buffer_t  *buffer,
 				unsigned int  lookup_index,
 				hb_mask_t     mask)
 {
-  hb_ot_layout_context_t c;
-  c.font = NULL;
-  c.face = face;
-  return _get_gsub (face).substitute_lookup (&c, buffer, lookup_index, mask);
+  return _get_gsub (face).substitute_lookup (face, buffer, lookup_index, mask);
+}
+
+void
+hb_ot_layout_substitute_finish (hb_buffer_t  *buffer HB_UNUSED)
+{
 }
 
 
@@ -470,21 +481,28 @@ hb_ot_layout_position_start (hb_buffer_t  *buffer)
 
 hb_bool_t
 hb_ot_layout_position_lookup   (hb_font_t    *font,
-				hb_face_t    *face,
 				hb_buffer_t  *buffer,
 				unsigned int  lookup_index,
 				hb_mask_t     mask)
 {
-  hb_ot_layout_context_t c;
-  c.font = font;
-  c.face = face;
-  return _get_gpos (face).position_lookup (&c, buffer, lookup_index, mask);
+  return _get_gpos (font->face).position_lookup (font, buffer, lookup_index, mask);
 }
 
 void
 hb_ot_layout_position_finish (hb_buffer_t  *buffer)
 {
   GPOS::position_finish (buffer);
+}
+
+
+/*
+ * head
+ */
+
+unsigned int
+_hb_ot_layout_get_upem (hb_face_t *face)
+{
+  return _get_head (face).get_upem ();
 }
 
 

@@ -59,6 +59,7 @@ mTexturePath(rTexturePath)
   mUseAlpha = true;
   mAlpha = 1;
   //printf("nuiImageSequence CTOR3 %p\n", this);
+
 }
 
 
@@ -108,27 +109,6 @@ nuiImageSequence::~nuiImageSequence()
   for (uint32 i = 0; i < mTextures.size(); i++)
     mTextures[i]->Release();
 }
-
-bool nuiImageSequence::Load(const nuiXMLNode* pNode)
-{
-  mColor.SetValue(nuiGetString(pNode, _T("Color"), _T("white")));
-  mpTempImage = new nglImage(nglPath(nuiGetString(pNode, _T("Texture"), nglString::Empty)));
-  mRefreshTextures = true;
-  
-  return true;
-}
-
-nuiXMLNode* nuiImageSequence::Serialize(nuiXMLNode* pNode)
-{
-  pNode->SetName(_T("nuiImageSequence"));
-  pNode->SetAttribute(_T("Color"), mColor.GetValue());
-  
-  pNode->SetAttribute(_T("Texture"), GetTexturePath());
-  return pNode;
-}
-
-
-
 
 nuiRect nuiImageSequence::CalcIdealSize()
 {

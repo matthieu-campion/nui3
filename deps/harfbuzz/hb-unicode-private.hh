@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
- * Copyright © 2011 Codethink Limited
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2009  Red Hat, Inc.
+ * Copyright © 2011  Codethink Limited
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -34,6 +34,7 @@
 #include "hb-private.hh"
 
 #include "hb-unicode.h"
+#include "hb-object-private.hh"
 
 HB_BEGIN_DECLS
 
@@ -42,53 +43,65 @@ HB_BEGIN_DECLS
  * hb_unicode_funcs_t
  */
 
+#define HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS \
+  HB_UNICODE_FUNC_IMPLEMENT (combining_class) \
+  HB_UNICODE_FUNC_IMPLEMENT (eastasian_width) \
+  HB_UNICODE_FUNC_IMPLEMENT (general_category) \
+  HB_UNICODE_FUNC_IMPLEMENT (mirroring) \
+  HB_UNICODE_FUNC_IMPLEMENT (script) \
+  HB_UNICODE_FUNC_IMPLEMENT (compose) \
+  HB_UNICODE_FUNC_IMPLEMENT (decompose) \
+  /* ^--- Add new callbacks here */
+
+/* Simple callbacks are those taking a hb_codepoint_t and returning a hb_codepoint_t */
+#define HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS_SIMPLE \
+  HB_UNICODE_FUNC_IMPLEMENT (unsigned int, combining_class) \
+  HB_UNICODE_FUNC_IMPLEMENT (unsigned int, eastasian_width) \
+  HB_UNICODE_FUNC_IMPLEMENT (hb_unicode_general_category_t, general_category) \
+  HB_UNICODE_FUNC_IMPLEMENT (hb_codepoint_t, mirroring) \
+  HB_UNICODE_FUNC_IMPLEMENT (hb_script_t, script) \
+  /* ^--- Add new simple callbacks here */
+
 struct _hb_unicode_funcs_t {
-  hb_reference_count_t ref_count;
+  hb_object_header_t header;
+
   hb_unicode_funcs_t *parent;
 
-  hb_bool_t immutable;
+  bool immutable;
 
-#define IMPLEMENT(return_type, name) \
-  inline return_type \
-  get_##name (hb_codepoint_t unicode) \
-  { return this->get.name (this, unicode, this->user_data.name); }
-
-  IMPLEMENT (unsigned int, combining_class)
-  IMPLEMENT (unsigned int, eastasian_width)
-  IMPLEMENT (hb_unicode_general_category_t, general_category)
-  IMPLEMENT (hb_codepoint_t, mirroring)
-  IMPLEMENT (hb_script_t, script)
-
-#undef IMPLEMENT
-
-  /* Don't access these directly.  Call get_*() instead. */
+  /* Don't access these directly.  Call hb_unicode_*() instead. */
 
   struct {
-    hb_unicode_get_combining_class_func_t	combining_class;
-    hb_unicode_get_eastasian_width_func_t	eastasian_width;
-    hb_unicode_get_general_category_func_t	general_category;
-    hb_unicode_get_mirroring_func_t		mirroring;
-    hb_unicode_get_script_func_t		script;
-  } get;
+#define HB_UNICODE_FUNC_IMPLEMENT(name) hb_unicode_##name##_func_t name;
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
+  } func;
 
   struct {
-    void 					*combining_class;
-    void 					*eastasian_width;
-    void 					*general_category;
-    void 					*mirroring;
-    void 					*script;
+#define HB_UNICODE_FUNC_IMPLEMENT(name) void *name;
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
   } user_data;
 
   struct {
-    hb_destroy_func_t				combining_class;
-    hb_destroy_func_t				eastasian_width;
-    hb_destroy_func_t				general_category;
-    hb_destroy_func_t				mirroring;
-    hb_destroy_func_t				script;
+#define HB_UNICODE_FUNC_IMPLEMENT(name) hb_destroy_func_t name;
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
   } destroy;
 };
 
+
+#if HAVE_GLIB
+extern HB_INTERNAL hb_unicode_funcs_t _hb_glib_unicode_funcs;
+#define _hb_unicode_funcs_default _hb_glib_unicode_funcs
+#elif HAVE_ICU
+extern HB_INTERNAL hb_unicode_funcs_t _hb_icu_unicode_funcs;
+#define _hb_unicode_funcs_default _hb_icu_unicode_funcs
+#else
 extern HB_INTERNAL hb_unicode_funcs_t _hb_unicode_funcs_nil;
+#define _hb_unicode_funcs_default _hb_unicode_funcs_nil
+#endif
+
 
 
 HB_END_DECLS

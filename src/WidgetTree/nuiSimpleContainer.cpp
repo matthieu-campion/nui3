@@ -73,6 +73,7 @@ nuiSimpleContainer::nuiSimpleContainer()
   SetObjectClass(_T("nuiSimpleContainer"));
 }
 
+#if 0
 bool nuiSimpleContainer::Load(const nuiXMLNode* pNode)
 {
 	bool res=true;
@@ -107,14 +108,7 @@ bool nuiSimpleContainer::LoadChildren(const nuiXMLNode* pNode)
   
   return res;
 }
-
-
-bool nuiSimpleContainer::LoadAttributes(const nuiXMLNode* pNode)
-{
-  CheckValid();
-  return nuiContainer::Load(pNode);
-}
-
+#endif
 
 nuiSimpleContainer::~nuiSimpleContainer()
 {
@@ -157,7 +151,7 @@ bool nuiSimpleContainer::AddChild(nuiWidgetPtr pChild)
   pChild->Acquire();
   nuiContainer* pParent = pChild->GetParent();
   NGL_ASSERT(pParent != this);
-
+  
   uint32 capacity = mpChildren.capacity();
   uint32 size = mpChildren.size();
   if (size == capacity)
@@ -189,6 +183,7 @@ bool nuiSimpleContainer::DelChild(nuiWidgetPtr pChild)
 {
   CheckValid();
   NGL_ASSERT(pChild->GetParent() == this)
+
 
   if (GetDebug())
   {

@@ -31,6 +31,9 @@ nglVideoMode::nglVideoMode()
   mHeight = (uint)rect.size.height;
 
   mBPP = 32;
+
+  mScaleFactor = [UIScreen mainScreen].scale;
+  mInvScaleFactor = 1.0f / mScaleFactor;
   
   Init();
 }
@@ -88,3 +91,27 @@ bool nglVideoMode::SetMode (nglVideoMode* pVideoMode, bool Lock)
 //  NGL_DEBUG( NGL_LOG("vidmode", NGL_LOG_INFO, _T("switching to %s: %s"), Dump().GetChars(), done ? _T("ok"):_T("failed")); )
   return done;
 }
+
+static float gScaleFactor = 0;
+static float gInvScaleFactor = 0;
+
+float nuiGetScaleFactor()
+{
+  if (gScaleFactor == 0)
+  {
+    gScaleFactor = [UIScreen mainScreen].scale; 
+  }
+  
+  return gScaleFactor;
+}
+
+float nuiGetInvScaleFactor()
+{
+  if (gInvScaleFactor == 0)
+  {
+    gInvScaleFactor = 1.0f / nuiGetScaleFactor(); 
+  }
+
+  return gInvScaleFactor;
+}
+

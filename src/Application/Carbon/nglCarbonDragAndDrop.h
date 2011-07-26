@@ -59,7 +59,6 @@ public:
   
   EventRecord mEventRecord; // stupid but needed...
   DragRef     mDragRef;
-  RgnHandle   mDragRgn;
   DragTrackingHandlerUPP  mDragTrackingHandler;
   DragReceiveHandlerUPP   mDragReceiveHandler;
   DragSendDataUPP         mSendProc;

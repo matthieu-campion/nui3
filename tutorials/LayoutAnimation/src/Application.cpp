@@ -30,15 +30,11 @@ Application::~Application()
 void Application::OnExit (int Code)
 {
   if (mpMainWindow)
-    delete mpMainWindow;
-
-  nuiUninit();
+    mpMainWindow->Release();
 }
 
 void Application::OnInit()
 {
-  nuiInit(NULL);
-
   uint Width = 0, Height = 0;
   bool HasSize = false;
   bool IsFullScreen = false;
@@ -144,6 +140,7 @@ void Application::OnInit()
     Quit (1);
     return;
   }
+  mpMainWindow->Acquire();
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
 #ifdef NUI_IPHONE

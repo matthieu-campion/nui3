@@ -24,7 +24,6 @@ public:
   /** @name Life */
   //@{
   nuiTopLevel(const nglPath& rPath); ///< Create an nuiTopLevel.
-  bool Load(const nuiXMLNode* pNode); ///< Create an nuiObject from an XML description.
   virtual ~nuiTopLevel(); 
   //@}
 

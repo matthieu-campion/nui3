@@ -91,44 +91,6 @@ void nuiLabel::InitDefaultValues()
 }
 
 
-bool nuiLabel::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  mpLayout = NULL;
-  mpIdealLayout = NULL;
-  mpFont = NULL;
-  mFontChanged = true;
-
-  mUseEllipsis = false;
-  mClearBg = false;
-  mWrapping = false;
-  mIgnoreState = false;
-
-  mTextPosition = nuiGetPosition(pNode,nuiLeft);
-
-  InitAttributes();
-  InitProperties();
-  SetFont(nuiTheme::Default);
-  if (pNode->GetChild(nglString(_T("##text"))))
-    SetText(pNode->GetChild(nglString(_T("##text")))->GetValue());
-  
-  return true;
-}
-
-nuiXMLNode* nuiLabel::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode);
-  if (!pNode) 
-    return NULL;
-  nuiXMLNode* pTextNode = new nuiXMLNode(_T("##text"),pNode);
-  pTextNode->SetValue(mText);
-  pNode->SetAttribute(_T("TextPosition"),mTextPosition);
-  pNode->DelAttribute(_T("Text"));
-
-  return pNode;
-}
-
-
 nuiLabel::~nuiLabel()
 {
   //printf("~nuiLabel: '%s'\n", mText.GetChars());
@@ -367,25 +329,20 @@ void nuiLabel::CalcLayout()
   {
     if (mTextChanged || mFontChanged || !mpLayout)
     {
-      if (mFontChanged)
-      {
-        delete mpLayout;
-        delete mpIdealLayout;
-        mpLayout = NULL;
-        mpIdealLayout = NULL;
-        mpLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
-        mpLayout->SetUnderline(mUnderline);
-        mpLayout->SetStrikeThrough(mStrikeThrough);
-        mpIdealLayout = new nuiFontLayout(*mpFont, 0, 0, mOrientation);
-        mpIdealLayout->SetUnderline(mUnderline);
-        mpIdealLayout->SetStrikeThrough(mStrikeThrough);
-        mFontChanged = false;
-      }
+      delete mpLayout;
+      delete mpIdealLayout;
+      mpLayout = NULL;
+      mpIdealLayout = NULL;
+      mpLayout = new nuiTextLayout(mpFont, mOrientation);
+      mpLayout->SetUnderline(mUnderline);
+      mpLayout->SetStrikeThrough(mStrikeThrough);
+      mpIdealLayout = new nuiTextLayout(mpFont, mOrientation);
+      mpIdealLayout->SetUnderline(mUnderline);
+      mpIdealLayout->SetStrikeThrough(mStrikeThrough);
+      mFontChanged = false;
 
       NGL_ASSERT(mpLayout);
       NGL_ASSERT(mpIdealLayout);
-      mpLayout->Init(0,0);
-      mpIdealLayout->Init(0,0);
 
       if (mWrapping)
       {
@@ -460,7 +417,8 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
       int len = text.GetLength();
       text.DeleteRight(MIN(NbLetterToRemove, len));
       text.Append(_T("..."));
-      mpLayout->Init(0,0);
+      delete mpLayout;
+      mpLayout = new nuiTextLayout(mpFont);
       mpLayout->SetWrapX(0);
       mpLayout->Layout(text);
       GetLayoutRect();
@@ -468,8 +426,10 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
     else if (mWrapping)
     {
       CalcLayout();
-      mpLayout->Init(0,0);
-      mpIdealLayout->Init(0,0);
+      delete mpLayout;
+      mpLayout = new nuiTextLayout(mpFont);
+      delete mpIdealLayout;
+      mpIdealLayout = new nuiTextLayout(mpFont);
       mpLayout->SetWrapX(mRect.GetWidth() - mBorderLeft - mBorderRight);
       mpIdealLayout->SetWrapX(mRect.GetWidth() - mBorderLeft - mBorderRight);
       mpLayout->Layout(mText);

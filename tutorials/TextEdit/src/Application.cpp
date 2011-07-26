@@ -7,7 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiInit.h"
 #include "Application.h"
 #include "MainWindow.h"
 
@@ -25,20 +24,19 @@ Application::Application()
 
 Application::~Application()
 {
+  if (mpMainWindow)
+    mpMainWindow->Release();
 }
 
 void Application::OnExit (int Code)
 {
   if (mpMainWindow)
-    delete mpMainWindow;
-
-  nuiUninit();
+    mpMainWindow->Release();
+  mpMainWindow = NULL;
 }
 
 void Application::OnInit()
 {
-  nuiInit(NULL);
-
   uint Width = 0, Height = 0;
   bool HasSize = false;
   bool IsFullScreen = false;
@@ -55,7 +53,7 @@ void Application::OnInit()
   ParseDefaultArgs();
 
   GetLog().UseConsole(true);
-  GetLog().SetLevel(_T("font"), 100);
+  //GetLog().SetLevel(_T("font"), 100);
 
   // Manual
   if ( (GetArgCount() == 1) &&
@@ -143,6 +141,7 @@ void Application::OnInit()
     Quit (1);
     return;
   }
+  mpMainWindow->Acquire();
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
   mpMainWindow->DBG_SetMouseOverObject(DebugObject);
   mpMainWindow->SetState(nglWindow::eShow);

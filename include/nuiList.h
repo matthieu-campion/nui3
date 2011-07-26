@@ -20,7 +20,6 @@ class NUI_API nuiList : public nuiSimpleContainer
 {
 public:
   nuiList(nuiOrientation orientation = nuiVertical);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiList();
 
   void InitProperties();

@@ -56,7 +56,7 @@ private:
   nglString mText;
   nuiSize mTextX, mTextY;
 
-  nuiFontLayout* mpLayout;
+  nuiTextLayout* mpLayout;
   nuiFont* mpFont;
 };
 
@@ -405,7 +405,7 @@ bool nuiSVGElement::Load(nuiXMLNode* pNode)
     mText = pNode->GetChild(_T("##text"))->GetValue();
     if (!mpFont)
       mpFont = nuiFont::GetFont(mFontSize);
-    mpLayout = new nuiFontLayout(*mpFont);
+    mpLayout = new nuiTextLayout(mpFont);
     mpLayout->Layout(mText);
   }
   else if (pNode->GetName() == _T("circle"))

@@ -47,6 +47,8 @@ protected:
   virtual void ViewWillDisappear();
   virtual void ViewDidAppear();
   virtual void ViewDidDisappear();
+  
+
 
   
 private:

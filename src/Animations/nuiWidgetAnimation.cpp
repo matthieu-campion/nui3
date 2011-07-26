@@ -16,18 +16,8 @@ nuiWidgetAnimation::nuiWidgetAnimation (nuiWidgetPtr pTarget, double DurationInS
   SetDuration(DurationInSeconds);
 }
 
-bool nuiWidgetAnimation::Load(const nuiXMLNode* pNode)
-{
-  return nuiAnimation::Load(pNode);
-}
-
 nuiWidgetAnimation::~nuiWidgetAnimation()
 {
-}
-
-nuiXMLNode* nuiWidgetAnimation::Serialize(nuiXMLNode* pNode, bool CreateNewNode) const
-{
-  return nuiAnimation::Serialize(pNode, CreateNewNode);
 }
 
 //////// ACTUAL ANIMATION CLASSES IMPLEMENTATIONS:
@@ -38,16 +28,6 @@ nuiMoveRectAnim::nuiMoveRectAnim (nuiWidgetPtr pTarget, double Duration, const n
    mSource(rSource),
    mDestination(rDestination)
 {
-}
-
-bool nuiMoveRectAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiWidgetAnimation::Load(pNode);
-}
-
-nuiXMLNode* nuiMoveRectAnim::Serialize(nuiXMLNode* pNode, bool CreateNewNode) const
-{
-  return nuiWidgetAnimation::Serialize(pNode, CreateNewNode);
 }
 
 void nuiMoveRectAnim::OnFrame()
@@ -73,12 +53,6 @@ nuiMoveToRectAnim::nuiMoveToRectAnim (nuiWidgetPtr pTarget, double Duration, con
  {
  }
 
-bool nuiMoveToRectAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiMoveRectAnim::Load(pNode);
-}
-
-
 void nuiMoveToRectAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   mSource = mpTarget->GetIdealRect();
@@ -90,11 +64,6 @@ nuiMoveAnim::nuiMoveAnim (nuiWidgetPtr pTarget, double Duration, nuiSize X1, nui
  : nuiMoveRectAnim(pTarget, Duration, nuiRect(), nuiRect()),
    mX1(X1) ,mY1(Y1), mX2(X2), mY2(Y2)
 {
-}
-
-bool nuiMoveAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiMoveRectAnim::Load(pNode);
 }
 
 void nuiMoveAnim::Play(int32 Count, nuiAnimLoop LoopMode)
@@ -111,11 +80,6 @@ void nuiMoveAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 nuiMoveToAnim::nuiMoveToAnim (nuiWidgetPtr pTarget, double Duration, nuiSize X, nuiSize Y)
   : nuiMoveAnim(pTarget, Duration, 0, 0, X, Y)
 {
-}
-
-bool nuiMoveToAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiMoveAnim::Load(pNode);
 }
 
 void nuiMoveToAnim::Play(int32 Count, nuiAnimLoop LoopMode)
@@ -147,11 +111,6 @@ nuiScaleToWidgetAnim::nuiScaleToWidgetAnim (nuiWidgetPtr pTarget, double Duratio
 {
 }
 
-bool nuiScaleToWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiMoveRectAnim::Load(pNode);
-}
-
 void nuiScaleToWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   mSource = mpTarget->GetRect();
@@ -177,12 +136,6 @@ nuiScaleFromWidgetAnim::nuiScaleFromWidgetAnim (nuiWidgetPtr pTarget, double Dur
 {
 }
 
-bool nuiScaleFromWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiMoveRectAnim::Load(pNode);
-}
-
-
 void nuiScaleFromWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   mSource = mpTarget->GetRect();
@@ -206,11 +159,6 @@ nuiScaleMatrixWidgetAnim::nuiScaleMatrixWidgetAnim (nuiWidgetPtr pTarget, double
    mDestinationRatio(DestinationRatio),
    mPosition(ScaleBarycenterPosition)
 {
-}
-
-bool nuiScaleMatrixWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiWidgetAnimation::Load(pNode);
 }
 
 void nuiScaleMatrixWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
@@ -285,11 +233,6 @@ nuiScaleToMatrixWidgetAnim::nuiScaleToMatrixWidgetAnim (nuiWidgetPtr pTarget, do
 {
 }
 
-bool nuiScaleToMatrixWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiWidgetAnimation::Load(pNode);
-}
-
 void nuiScaleToMatrixWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   nuiVector norm(1,0,0);
@@ -303,12 +246,6 @@ nuiScaleFromMatrixWidgetAnim::nuiScaleFromMatrixWidgetAnim (nuiWidgetPtr pTarget
  : nuiScaleMatrixWidgetAnim(pTarget, Duration, SourceRatio, 0, ScaleBarycenterPosition)
 {
 }
-
-bool nuiScaleFromMatrixWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiScaleMatrixWidgetAnim::Load(pNode);
-}
-
 
 void nuiScaleFromMatrixWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 {
@@ -327,12 +264,6 @@ nuiFadeWidgetAnim::nuiFadeWidgetAnim (nuiWidgetPtr pTarget, double Duration, flo
    mDestinationAlpha(DestinationRatio)
 {
 }
-
-bool nuiFadeWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiWidgetAnimation::Load(pNode);
-}
-
 
 void nuiFadeWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 {
@@ -358,11 +289,6 @@ nuiFadeInWidgetAnim::nuiFadeInWidgetAnim (nuiWidgetPtr pTarget, double Duration,
 {
 }
 
-bool nuiFadeInWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiFadeWidgetAnim::Load(pNode);
-}
-
 void nuiFadeInWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 {
   if (mStartFromCurrentAlpha)
@@ -374,11 +300,6 @@ void nuiFadeInWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)
 nuiFadeOutWidgetAnim::nuiFadeOutWidgetAnim (nuiWidgetPtr pTarget, double Duration, bool StartFromCurrentAlpha)
  : nuiFadeWidgetAnim(pTarget, Duration, 1, 0), mStartFromCurrentAlpha(StartFromCurrentAlpha)
 {
-}
-
-bool nuiFadeOutWidgetAnim::Load(const nuiXMLNode* pNode)
-{
-  return nuiFadeWidgetAnim::Load(pNode);
 }
 
 void nuiFadeOutWidgetAnim::Play(int32 Count, nuiAnimLoop LoopMode)

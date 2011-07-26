@@ -937,14 +937,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Base\nuiProperty.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiProperty.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Base\nuiRange.cpp"
 					>
 				</File>
@@ -1132,11 +1124,31 @@
 					Name="Embeded"
 					>
 					<File
+						RelativePath=".\graphics\DefaultDecoration\Atlas.h"
+						>
+					</File>
+					<File
+						RelativePath=".\graphics\DefaultDecoration\AtlasTexture.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graphics\DefaultDecoration\AtlasTexture.h"
+						>
+					</File>
+					<File
 						RelativePath=".\graphics\DefaultDecoration.cpp"
 						>
 					</File>
 					<File
 						RelativePath=".\graphics\DefaultDecoration.h"
+						>
+					</File>
+					<File
+						RelativePath=".\graphics\DefaultDecoration\ImageDraggedFile.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graphics\DefaultDecoration\ImageDraggedFile.h"
 						>
 					</File>
 				</Filter>
@@ -1191,6 +1203,14 @@
 				<File
 					RelativePath=".\src\Font\hb_nui.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ShowIncludes="true"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\src\Font\hb_nui.h"
@@ -1209,15 +1229,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiFont.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Font\nuiFontBase.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFontBase.h"
 					>
 				</File>
 				<File
@@ -1229,19 +1241,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nuiFontLayout.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFontLayout.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Font\nuiFontManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\nuiFontManager.h"
 					>
 				</File>
 				<File
@@ -1249,51 +1249,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Font\nuiPhoneFontDB.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\src\Font\nuiPhoneFontDB.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Font\nuiTextLayout.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\nuiTextLayout.h"
+					RelativePath=".\src\Font\nuiTextLine.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nuiTextRun.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Font\nuiTextStyle.cpp"
 					>
 				</File>
 			</Filter>
@@ -1554,10 +1522,6 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiPopupView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Layout\nuiPositioner.cpp"
 					>
 				</File>
 				<File
@@ -2101,18 +2065,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\SimpleWidgets\nuiMesh.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SimpleWidgets\nuiMeshEngine.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SimpleWidgets\nuiOffscreenView.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\SimpleWidgets\nuiProgressBar.cpp"
 					>
 				</File>
@@ -2182,10 +2134,6 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiSlider.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\SimpleWidgets\nuiSplineEdit.cpp"
 					>
 				</File>
 				<File
@@ -9229,6 +9177,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\deps\harfbuzz\hb-mutex-private.hh"
+					>
+				</File>
+				<File
 					RelativePath=".\deps\harfbuzz\hb-object-private.hh"
 					>
 				</File>
@@ -9349,6 +9301,10 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\deps\harfbuzz\hb-ot-maxp-private.hh"
+					>
+				</File>
+				<File
 					RelativePath=".\deps\harfbuzz\hb-ot-shape-complex-arabic-table.hh"
 					>
 				</File>
@@ -9389,8 +9345,52 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\deps\harfbuzz\hb-ot-shape-complex-indic-machine.hh"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\hb-ot-shape-complex-indic-table.hh"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\hb-ot-shape-complex-indic.cc"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\hb-ot-shape-complex-misc.cc"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\deps\harfbuzz\hb-ot-shape-complex-private.hh"
 					>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\hb-ot-shape-normalize.cc"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\harfbuzz\hb-ot-shape-private.hh"
@@ -9569,6 +9569,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\deps\harfbuzz\hb-version.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\hb-version.h.in"
+					>
+				</File>
+				<File
 					RelativePath=".\deps\harfbuzz\hb-view.c"
 					>
 					<FileConfiguration
@@ -9597,6 +9605,18 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|x64"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\hb-view.cc"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool
@@ -9673,6 +9693,18 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|x64"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\test.cc"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool
@@ -10865,34 +10897,10 @@
 				Name="ucdata"
 				>
 				<File
-					RelativePath=".\deps\ucdata\ucdata.c"
+					RelativePath=".\deps\ucdata\ucdata.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -13860,11 +13868,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\errors.h"
+						RelativePath=".\deps\libcss\include\parserutils\errors.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\errors.h"
+						RelativePath=".\deps\libcss\include\libcss\errors.h"
 						>
 					</File>
 					<File
@@ -13872,11 +13880,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
+						RelativePath=".\deps\libcss\include\libcss\functypes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\functypes.h"
+						RelativePath=".\deps\libcss\include\parserutils\functypes.h"
 						>
 					</File>
 					<File
@@ -13920,11 +13928,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\libcss\types.h"
+						RelativePath=".\deps\libcss\include\parserutils\types.h"
 						>
 					</File>
 					<File
-						RelativePath=".\deps\libcss\include\parserutils\types.h"
+						RelativePath=".\deps\libcss\include\libcss\types.h"
 						>
 					</File>
 					<File
@@ -16267,11 +16275,11 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
+							RelativePath=".\deps\libcss\src\select\properties.h"
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\select\properties.h"
+							RelativePath=".\deps\libcss\src\parse\properties\properties.h"
 							>
 						</File>
 						<File
@@ -16295,15 +16303,15 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
-							>
-						</File>
-						<File
 							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
 							>
 						</File>
 						<File
 							RelativePath=".\deps\libcss\src\utils\utils.h"
+							>
+						</File>
+						<File
+							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
 							>
 						</File>
 					</Filter>

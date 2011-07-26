@@ -36,12 +36,8 @@ class NUI_API nuiMainWindow :  public nuiTopLevel
 public:
   nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, const nglContext* pShared = NULL, const nglPath& mResPath = nglPath(ePathCurrent));
   nuiMainWindow(uint Width = 320, uint Height = 240, bool Fullscreen=false, const nglPath& mResPath = nglPath(ePathCurrent));
-  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
 
   virtual ~nuiMainWindow();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
-
 
   bool IsKeyDown (nglKeyCode Key) const;
 //  void GetMouseInfo(nglMouseInfo& rMouseInfo);
@@ -141,7 +137,16 @@ public:
 
   double GetLastInteractiveEventTime() const;
   double GetLastEventTime() const;
+  
+  static void DestroyAllWindows();
+
+private:
+  void Register();
+  void Unregister();
+  static std::vector<nuiMainWindow*> mpWindows;
+
 protected:
+  
   /* @name Redirected from nglWindow via nuiMainWindow::NGLWindow */
   //@{
   virtual void OnPaint();
@@ -181,6 +186,8 @@ protected:
 
   nuiWidget*      mpDragSource; ///< widget that has initialized a drag operation
   nuiWidget*      mpWidgetCanDrop; ///< if not NULL, this is the last widget that return true to an OnCanDrop call (used for DragLeave)
+  
+  bool ShowWidgetInspector();
 private:
   
   // attributes
@@ -193,7 +200,7 @@ private:
   //@}
 
   bool mDebugMode;
-  bool ShowWidgetInspector();
+//  bool ShowWidgetInspector();
   nuiMainWindow* mpInspectorWindow;
 
   bool mInvalidatePosted;

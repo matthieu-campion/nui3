@@ -26,52 +26,6 @@ nuiContainer::nuiContainer()
   NUI_ADD_EVENT(ChildDeleted);
 }
 
-bool nuiContainer::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  return true;
-}
-
-nuiXMLNode* nuiContainer::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{   
-  nuiXMLNode* pNode = NULL;
-
-  if (mSerializeMode == eDontSaveNode)
-    return NULL;
-
-  pNode = SerializeAttributes(pParentNode, Recursive);
-
-  if (Recursive && pNode)
-  {
-    SerializeChildren(pNode);
-  }
-
-  return pNode;
-}
-
-nuiXMLNode* nuiContainer::SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  CheckValid();
-  return nuiWidget::Serialize(pParentNode, Recursive);
-}
-
-void nuiContainer::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  CheckValid();
-  ConstIteratorPtr pIt;
-  for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem)
-      pItem->Serialize(pParentNode,true);
-  }
-  delete pIt;
-}
-
-
-
-
-
 nuiContainer::~nuiContainer()
 {
   CheckValid();
@@ -93,11 +47,13 @@ void nuiContainer::SetObjectName(const nglString& rName)
 
 bool nuiContainer::Trash()
 {
+  nuiAutoRef;
   return nuiWidget::Trash();
 }
 
 void nuiContainer::CallOnTrash()
 {
+  nuiAutoRef;
   CheckValid();
   ChildrenCallOnTrash();
   nuiWidget::CallOnTrash();
@@ -462,6 +418,7 @@ void nuiContainer::DrawChild(nuiDrawContext* pContext, nuiWidget* pChild)
 bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -513,6 +470,7 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -564,6 +522,7 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -731,7 +690,9 @@ void nuiContainer::InternalSetLayout(const nuiRect& rect, bool PositionChanged, 
   CheckValid();
   if (mNeedSelfLayout || SizeChanged)
   {
+    mInSetRect = true;
     SetRect(rect);
+    mInSetRect = false;
     Invalidate();
   }
   else

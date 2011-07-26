@@ -14,7 +14,6 @@
 #include "nuiVBox.h"
 #include "nuiPane.h"
 #include "nuiFolderPane.h"
-#include "nuiPositioner.h"
 #include "nuiScrollView.h"
 #include "nuiLabel.h"
 #include "nuiDrawContext.h"
@@ -155,7 +154,7 @@ nuiWidget* nuiWidgetInspectorNode::GetTarget()
 }
 
 nuiWidgetInspector::nuiWidgetInspector(nuiWidget* pTarget)
-: nuiComposite(),
+: nuiSimpleContainer(),
 mInspectorSink(this)
 {
   SetObjectClass(_T("nuiWidgetInspector"));
@@ -263,7 +262,7 @@ class nuiWidgetProxy : public nuiWidget
   };
 
 nuiWidgetInfo::nuiWidgetInfo(nuiWidget* pTarget)
-: nuiComposite(),
+: nuiSimpleContainer(),
 mWISink(this)
 {
   mpTarget = NULL;

@@ -193,37 +193,6 @@ void nuiGradientDecoration::InitAttributes()
 	AddAttribute(_T("Offset4"), Offset4);
 }
 
-
-
-bool nuiGradientDecoration::Load(const nuiXMLNode* pNode)
-{
-  if (pNode->GetAttribute(_T("GradientType")).GetCInt())
-    mGradientType = nuiGradient4Colors;
-  else
-    mGradientType = nuiGradient2Colors;
-  mColor1.SetValue(nuiGetString(pNode, _T("Color1"), _T("white")));
-  mColor2.SetValue(nuiGetString(pNode, _T("Color2"), _T("Black")));
-  mColor3.SetValue(nuiGetString(pNode, _T("Color3"), _T("White")));
-  mColor4.SetValue(nuiGetString(pNode, _T("Color4"), _T("Black")));
-  mClientRect.SetValue(nuiGetString(pNode, _T("ClientRect")));
-  return true;
-}
-
-nuiXMLNode* nuiGradientDecoration::Serialize(nuiXMLNode* pNode)
-{
-  pNode->SetName(_T("nuiGradientDecoration"));
-  pNode->SetAttribute(_T("GradientType"), (int64)mGradientType);
-  pNode->SetAttribute(_T("Color1"), mColor1.GetValue());
-  pNode->SetAttribute(_T("Color2"), mColor2.GetValue());
-  pNode->SetAttribute(_T("Color3"), mColor3.GetValue());
-  pNode->SetAttribute(_T("Color4"), mColor4.GetValue());
-  
-  pNode->SetAttribute(_T("ClientRect"), mClientRect.GetValue());
-
-  return pNode;
-}
-
-
 void nuiGradientDecoration::InitOffsets()
 {
   if (mGradientType == nuiGradient4Colors)
@@ -243,6 +212,11 @@ void nuiGradientDecoration::InitOffsets()
 //virtual
 void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
+  nuiColor c1 = mColor1;
+  nuiColor c2 = mColor2;
+  nuiColor c3 = mColor3;
+  nuiColor c4 = mColor4;
+  nuiColor s = mStrokeColor;
   pContext->PushState();
   pContext->ResetState();
   
@@ -255,30 +229,30 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
   if (mUseWidgetAlpha && pWidget)
   {
     float widgetAlpha = pWidget->GetMixedAlpha();
-    mColor1.Multiply(widgetAlpha);
-    mColor2.Multiply(widgetAlpha);
-    mStrokeColor.Multiply(widgetAlpha);
+    c1.Multiply(widgetAlpha);
+    c2.Multiply(widgetAlpha);
+    s.Multiply(widgetAlpha);
   }
   
-  pContext->SetFillColor(mColor1);
-  pContext->SetStrokeColor(mStrokeColor);
+  pContext->SetFillColor(nuiColor(1, 1, 1, 1));
+  pContext->SetStrokeColor(s);
 
   nuiGradient gradient;
   if (!mUserOffsets)
     InitOffsets();
-  gradient.AddStop(mColor1, mOffset1);
-  gradient.AddStop(mColor2, mOffset2);
+  gradient.AddStop(c1, mOffset1);
+  gradient.AddStop(c2, mOffset2);
   if (mGradientType == nuiGradient4Colors)
   {
     if (mUseWidgetAlpha && pWidget)
     {
       float widgetAlpha = pWidget->GetMixedAlpha();
-      mColor3.Multiply(widgetAlpha);
-      mColor4.Multiply(widgetAlpha);
+      c3.Multiply(widgetAlpha);
+      c4.Multiply(widgetAlpha);
     }
 
-    gradient.AddStop(mColor3, mOffset3);
-    gradient.AddStop(mColor4, mOffset4);
+    gradient.AddStop(c3, mOffset3);
+    gradient.AddStop(c4, mOffset4);
   }
 
   if (mOrientation == nuiVertical)
@@ -290,7 +264,7 @@ void nuiGradientDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, c
   
   if (((mShapeMode == eStrokeShape) || (mShapeMode == eStrokeAndFillShape)) && mStrokeSize)
   {
-    pContext->SetFillColor(mStrokeColor);
+    pContext->SetFillColor(s);
     
     nuiRect rect(rDestRect.Left(), rDestRect.Top(), rDestRect.GetWidth(), mStrokeSize);
     pContext->DrawRect(rect, eFillShape);

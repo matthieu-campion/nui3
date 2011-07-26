@@ -54,7 +54,6 @@ class NUI_API nuiUserArea : public nuiWidget
 {
 public:
   nuiUserArea();
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiUserArea();
 
   virtual bool Draw(nuiDrawContext* pContext);

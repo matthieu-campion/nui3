@@ -248,12 +248,6 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
   err = SetDragSendProc(mDragRef, mSendProc, this);
   NGL_ASSERT(!err);
   
-  mDragRgn = NewRgn();
-  Point offsetPt;
-  SetPt(&offsetPt, 0, 0);
-  LocalToGlobal(&offsetPt);
-  OffsetRgn(mDragRgn, offsetPt.h, offsetPt.v);
-	
 	const nglImage *pImage = pDragObject->GetFeedbackImage();
 	
 	if (pImage)
@@ -298,12 +292,10 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
 	}
   
   
-  err = TrackDrag(mDragRef, &mEventRecord, mDragRgn);
+  err = TrackDrag(mDragRef, &mEventRecord, NULL);
 
 
   bool res = !err ? true : false;
-  
-  DisposeRgn (mDragRgn);
   
   err = DisposeDrag(mDragRef);
   
@@ -389,10 +381,13 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
   
   
   Point mouse;
-  err = GetDragMouse(theDrag, &mouse, NULL);
+  err = ::GetDragMouse(theDrag, &mouse, NULL);
   NGL_ASSERT(!err);
-	SetPort(GetWindowPort(pDnd->mpWin->mWindow));
-  GlobalToLocal(&mouse);
+	Rect rect;
+	GetWindowBounds(pDnd->mpWin->mWindow, kWindowContentRgn, &rect);
+	mouse.h -= rect.left;
+	mouse.v -= rect.top;
+
   nglMouseInfo::Flags Button;
 	
 	DragAttributes flags;
@@ -481,8 +476,10 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         //NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingInWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
         Point mouse;
         err = GetDragMouse (theDrag, &mouse, NULL);
-        SetPort(GetWindowPort(pDnd->mpWin->mWindow));
-        GlobalToLocal(&mouse);
+        Rect rect;
+        GetWindowBounds(pDnd->mpWin->mWindow, kWindowContentRgn, &rect);
+        mouse.h -= rect.left;
+        mouse.v -= rect.top;
         nglMouseInfo::Flags Button;
         
         NGL_ASSERT(pDnd->GetDropObject());
@@ -565,6 +562,8 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
 
 nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 {
+  Register();
+
   mInited = false;
   mTitle = "";
   
@@ -585,6 +584,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 
 nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  Register();
   mInited = false;
   mTitle = "";
 	
@@ -593,6 +593,7 @@ nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo
 	mpCarbonDragAndDrop = NULL;
   
   mpMainMenu = NULL;
+
   mComposingText = false;
   
   InternalInit (rContext, rInfo, pShared);
@@ -883,7 +884,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
         {
           case kEventTextInputUnicodeText:
             {
-              printf("kEventTextInputUnicodeText\n");
+              //printf("kEventTextInputUnicodeText\n");
 
               nglString str;
               result = GetText(eventRef, str);
@@ -895,7 +896,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               }
               else
               {
-                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                //printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
                 if (CallOnTextInput(str))
                 result = noErr;
               }
@@ -903,7 +904,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
             break;
           case kEventTextInputUnicodeForKeyEvent:
             {
-              printf("kEventTextInputUnicodeForKeyEvent\n");
+              //printf("kEventTextInputUnicodeForKeyEvent\n");
                           
               nglString str;
               result = GetText(eventRef, str);
@@ -915,7 +916,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               }
               else
               {
-                printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
+                //printf("\t\tstr = '%s' (%d)\n", str.GetStdString().c_str(), str.GetLength());
                 if (CallOnTextInput(str))
                   result = noErr;
               }
@@ -954,7 +955,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                 OnTextCompositionStarted();
               }
               
-              printf("kEventTextInputUpdateActiveInputArea\n");            
+              //printf("kEventTextInputUpdateActiveInputArea\n");            
               uint32 fixLength;
               OSStatus err = ::GetEventParameter(eventRef, kEventParamTextInputSendFixLen, typeLongInteger, NULL, sizeof(fixLength), NULL, &fixLength);
               if (noErr != err)
@@ -985,11 +986,11 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
                   NGL_ASSERT(noErr == err);
                 }                          
               }                     
-              printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n", mComposedText.GetLength());
-              printf("\t\tscript=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / sizeof(UniChar));
+              //printf("\t\tcall HandleUpdateActiveInputArea textlength = %d\n", mComposedText.GetLength());
+              //printf("\t\tscript=%d language=%d fixlen=%d\n", slr.fScript, slr.fLanguage, fixLength / sizeof(UniChar));
               //err = aBrowserShell->HandleUpdateActiveInputArea(text, slr.fScript, slr.fLanguage, fixLength / sizeof(PRUnichar), hiliteRng);
 //              nglString str(fixLength == -1 ? text : text.GetRight(text.GetLength() - fixLength));
-              printf("\t\tstr = '%s'\n", mComposedText.GetStdString().c_str());
+              //printf("\t\tstr = '%s'\n", mComposedText.GetStdString().c_str());
 //              printf("\t\tpartial  str = '%s'\n", str.GetStdString().c_str());
               
               
@@ -1015,13 +1016,13 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               float x, y;
               x = y = 0;
               OnTextCompositionIndexToPoint(0, x, y);
-              printf("kEventTextInputPosToOffset -> %d %d\n", ToBelow(x), ToBelow(y));
+              //printf("kEventTextInputPosToOffset -> %d %d\n", ToBelow(x), ToBelow(y));
             }
             break;
             
           case kEventTextInputGetSelectedText:
             {
-              printf("kEventTextInputGetSelectedText\n");
+              //printf("kEventTextInputGetSelectedText\n");
               UniChar* pBuf = (UniChar*)mComposedText.Export(eUCS2);
               result = ::SetEventParameter(eventRef, kEventParamTextInputReplyText, typeUnicodeText, mComposedText.GetLength() * sizeof(UniChar), pBuf);
               free(pBuf);
@@ -1031,7 +1032,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
           case kEventTextInputOffsetToPos:
             {
               float x = 0, y = 0;
-              printf("kEventTextInputOffsetToPos\n");
+              //printf("kEventTextInputOffsetToPos\n");
 
               
               long byte_offset;
@@ -1057,7 +1058,7 @@ OSStatus nglWindow::WindowKeyboardEventHandler (EventHandlerCallRef eventHandler
               //              SetEventParameter (event, kEventParamTextInputReplyLineHeight, typeShortInteger, sizeof (short), &height);
               //              SetEventParameter (event, kEventParamTextInputReplyLineAscent, typeShortInteger, sizeof (short), &ascent);
               err = SetEventParameter (eventRef, kEventParamTextInputReplyPoint, typeHIPoint, sizeof (HIPoint), &p);
-              printf("kEventTextInputOffsetToPos %d -> %d %d\n", byte_offset, ToBelow(x), ToBelow(y));
+              //printf("kEventTextInputOffsetToPos %d -> %d %d\n", byte_offset, ToBelow(x), ToBelow(y));
               if (err == noErr)
                 result = noErr;
             }
@@ -1417,7 +1418,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   // set bounding rectangle
   if (rInfo.Pos == nglWindowInfo::ePosUser)
   {
-    SetRect(&wRect,rInfo.XPos,rInfo.YPos,rInfo.XPos+rInfo.Width,rInfo.YPos+rInfo.Height); /* left, top, right, bottom */
+    wRect.left = rInfo.XPos;
+    wRect.top = rInfo.YPos;
+    wRect.right = rInfo.XPos + rInfo.Width;
+    wRect.bottom = rInfo.YPos+rInfo.Height; /* left, top, right, bottom */
   }
   else if (rInfo.Pos == nglWindowInfo::ePosCenter)
   {
@@ -1428,7 +1432,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     int x = (w - rInfo.Width)/2;
     int y = (h - rInfo.Height)/2;
     
-    SetRect(&wRect,x,y,x+rInfo.Width,y+rInfo.Height); /* left, top, right, bottom */
+    wRect.left = x;
+    wRect.top = y;
+    wRect.right = x + rInfo.Width;
+    wRect.bottom = y + rInfo.Height; /* left, top, right, bottom */
   }
   else if (rInfo.Pos == nglWindowInfo::ePosMouse)
   {
@@ -1436,7 +1443,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   else if (rInfo.Pos == nglWindowInfo::ePosAuto)
   {
     // TODO: implement correct behaviour
-    SetRect(&wRect,50,50,50+rInfo.Width,50+rInfo.Height); /* left, top, right, bottom */
+    wRect.left = 50;
+    wRect.top = 50;
+    wRect.right = 50 + rInfo.Width;
+    wRect.bottom = 50 + rInfo.Height; /* left, top, right, bottom */
   }
   
   // set title
@@ -1497,7 +1507,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
         y = (h - rInfo.Height)/2;      
       }
       
-      SetRect(&wRect,x,y,x+rInfo.Width,y+rInfo.Height); /* left, top, right, bottom */
+      wRect.left = x;
+      wRect.top = y;
+      wRect.right = x + rInfo.Width;
+      wRect.bottom = y + rInfo.Height; /* left, top, right, bottom */
     }
     else
     {
@@ -1603,7 +1616,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
     WindowAttributes attributes = kWindowNoAttributes;//kWindowStandardHandlerAttribute;
     //attributes |= kWindowNoConstrainAttribute;
     
-    SetRect(&wRect,0,0,rInfo.Width,rInfo.Height); /* left, top, right, bottom */
+    wRect.left = 0;
+    wRect.top = 0;
+    wRect.right = rInfo.Width;
+    wRect.bottom = rInfo.Height; /* left, top, right, bottom */
     
     mOSInfo.WindowHandle = NULL;
     OSStatus err = CreateNewWindow (windowClass, attributes, &wRect, &(mOSInfo.WindowHandle));
@@ -1699,6 +1715,8 @@ nglWindow::~nglWindow()
     //NGL_OUT("nglWindow: Destroying the gl context!\n");
     Destroy();
   }
+  
+  Unregister();
 }
 
 

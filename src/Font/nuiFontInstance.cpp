@@ -23,7 +23,7 @@ nuiFontInstance::FontListType nuiFontInstance::gFontList;
 
 nuiFontInstance::nuiFontInstance (const nglPath& rPath, uint Face)
 {
-  //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nuiFontInstance::nuiFontInstance 0x%x (%s - %d)\n"), this, rPath.GetChars(), Face);)
+  NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::nuiFontInstance 0x%x (%s - %d)\n", this, rPath.GetChars(), Face);)
   mPath     = rPath;
   mFace     = Face;
   mpMemBase = NULL;
@@ -36,7 +36,7 @@ nuiFontInstance::nuiFontInstance (const nglPath& rPath, uint Face)
 
 nuiFontInstance::nuiFontInstance (const FT_Byte* pBase, FT_Long Size, uint Face, bool StaticBuffer)
 {
-  //NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nuiFontInstance::nuiFontInstance 0x%x (memory %d - %d)\n"), this, Size, Face);)
+  //NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::nuiFontInstance 0x%x (memory %d - %d)\n", this, Size, Face);)
   nglString fake;
   fake.Format(_T("/memory/%p,0x%x"), pBase, Size);
 
@@ -61,12 +61,12 @@ nuiFontInstance::nuiFontInstance (const nuiFontInstance& rInstance)
   mOwnMemory = !mStatic;
   
   Acquire();
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nuiFontInstance::nuiFontInstance COPY CTOR 0x%x (%s - %d)\n"), this, mPath.GetChars(), mFace);)
+  //NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::nuiFontInstance COPY CTOR 0x%x (%s - %d)\n", this, mPath.GetChars(), mFace);)
 }
 
 nuiFontInstance::~nuiFontInstance()
 {
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("nuiFontInstance::~nuiFontInstance DTOR 0x%x (%s - %d)\n"), this, mPath.GetChars(), mFace);)
+  //NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::~nuiFontInstance DTOR 0x%x (%s - %d)\n", this, mPath.GetChars(), mFace);)
   if (mOwnMemory)
     delete[] mpMemBase;
 }
@@ -157,8 +157,15 @@ FT_Error nuiFontInstance::OnFaceRequest (FT_Library pLibrary, FT_Pointer pData, 
 {
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("Hard loading '%s'"), mPath.GetPathName().GetChars(), mFace); )
 
-  if (!mpMemBase) // Load the file in memory instead of counting on ft2 to understand our pathes...
+  if (!mpMemBase) // We were given a file path
   {
+    // Try to load the file directly with freetype:
+    std::string tmp(mPath.GetPathName().GetStdString());
+    FT_Error error = FT_New_Face(pLibrary, tmp.c_str(), mFace, pFace);
+    if (!error) // good!
+      return 0;
+
+    // Freetype couldn't load the file, it may be from our VFS, so try to load it in memory first:
     nglIStream* pFile = mPath.OpenRead();
     if (!pFile || pFile->GetState() != eStreamReady)
     {
@@ -180,12 +187,8 @@ FT_Error nuiFontInstance::OnFaceRequest (FT_Library pLibrary, FT_Pointer pData, 
     delete pFile;
   }
 
-
-  std::string tmp(mPath.GetPathName().GetStdString());
-  return mpMemBase ?
-    FT_New_Memory_Face(pLibrary, mpMemBase, mMemSize, mFace, pFace) :
-    FT_New_Face(pLibrary, tmp.c_str(), mFace, pFace);
-
+  // Load the font from memory
+  return FT_New_Memory_Face(pLibrary, mpMemBase, mMemSize, mFace, pFace);
 }
 
 void nuiFontInstance::Dump()

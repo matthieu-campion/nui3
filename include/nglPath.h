@@ -158,6 +158,7 @@ public:
   void Split(std::vector<nglString>& rElements); ///< Split the elements of this path into its elements (folders and eventual file))
 	int32 GetChildren(std::list<nglPath>* pChildren) const; ///< deprecated
 	int32 GetChildren(std::list<nglPath>& pChildren) const; ///< that's the proper api
+	int32 GetChildrenTree(std::list<nglPath>& pChildren) const; ///< Get the children recursively to get a complete tree.
  
 	/*!< Get node's children
 	\param pChildren if non-null, children will be appended to this list
@@ -229,7 +230,15 @@ public:
 	Variant of the operator+=(const nglPath&),
 	the right operand will be nglPath(rAppend).
 	*/
-	friend NGL_API nglPath operator+ (const nglPath& rPath, const nglPath& rAppend);
+  const nglPath& operator+=(const nglChar* pAppend);
+	/*!< nglPath concatenation
+   \param pAppend path string to append
+   
+   Variant of the operator+=(const nglPath&),
+   the right operand will be nglPath(pAppend).
+   */
+
+  friend NGL_API nglPath operator+ (const nglPath& rPath, const nglPath& rAppend);
 	/*!< nglPath concatenation
 	\param rPath current object
 	\param rAppend path to append

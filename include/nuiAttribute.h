@@ -10,7 +10,6 @@
 
 #include "nui.h"
 #include "nuiSignalsSlots.h"
-#include "nuiXML.h"
 #include "nuiFastDelegate.h"
 #include "nuiVariant.h"
 
@@ -79,9 +78,6 @@ public:
   
 	
 	
-	virtual bool Load(void* pTarget, const nuiXMLNode* pNode);
-	virtual nuiXMLNode* Serialize(void* pTarget, nuiXMLNode* pParentNode) const;
-
   virtual bool ToString(void* pTarget, nglString& rString) const = 0;
   virtual bool FromString(void* pTarget, const nglString& rString) const = 0;
   virtual bool ToString(void* pTarget, int32 index, nglString& rString) const = 0;
@@ -1378,9 +1374,6 @@ public:
   
   int32 GetOrder() const;
   void SetOrder(int32 order);
-  
-	bool Load(const nuiXMLNode* pNode);
-	nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const;
   
   bool ToString(nglString& rString) const;
   bool FromString(const nglString& rString) const;

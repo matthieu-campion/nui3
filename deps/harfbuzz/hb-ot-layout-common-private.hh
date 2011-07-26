@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2007,2008,2009  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2010  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -89,10 +89,10 @@ struct RecordArrayOf : SortedArrayOf<Record<Type> > {
 				hb_tag_t     *record_tags /* OUT */) const
   {
     if (record_count) {
-      const Record<Type> *array = this->sub_array (start_offset, record_count);
+      const Record<Type> *arr = this->sub_array (start_offset, record_count);
       unsigned int count = *record_count;
       for (unsigned int i = 0; i < count; i++)
-	record_tags[i] = array[i].tag;
+	record_tags[i] = arr[i].tag;
     }
     return this->len;
   }
@@ -150,10 +150,10 @@ struct IndexArray : ArrayOf<Index>
 				   unsigned int *_indexes /* OUT */) const
   {
     if (_count) {
-      const USHORT *array = this->sub_array (start_offset, _count);
+      const USHORT *arr = this->sub_array (start_offset, _count);
       unsigned int count = *_count;
       for (unsigned int i = 0; i < count; i++)
-	_indexes[i] = array[i];
+	_indexes[i] = arr[i];
     }
     return this->len;
   }
@@ -526,11 +526,11 @@ struct ClassDef
 struct Device
 {
 
-  inline hb_position_t get_x_delta (hb_ot_layout_context_t *c) const
-  { return get_delta (c->font->x_ppem, c->font->x_scale); }
+  inline hb_position_t get_x_delta (hb_font_t *font) const
+  { return get_delta (font->x_ppem, font->x_scale); }
 
-  inline hb_position_t get_y_delta (hb_ot_layout_context_t *c) const
-  { return get_delta (c->font->y_ppem, c->font->y_scale); }
+  inline hb_position_t get_y_delta (hb_font_t *font) const
+  { return get_delta (font->y_ppem, font->y_scale); }
 
   inline int get_delta (unsigned int ppem, int scale) const
   {

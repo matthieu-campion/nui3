@@ -151,13 +151,13 @@ public:
   void            DelFolder(const nglPath& rPath);
   const nglPath&  GetFolder(const nglString& rId) const;
   void AddSystemFolders();
-  static void GetSystemFolders(std::map<nglString, nglPath>& rFolders);
+  void GetSystemFolders(std::map<nglString, nglPath>& rFolders);
   void ScanFolders(bool rescanAllFolders = false);
   
   void GetFolderList(std::list<nglString>& rList) const;
   void GetFolderList(std::vector<nglString>& rList) const;
   bool FindFontInFolders(const nglString& rFontFileName, nglPath& rResultFontPath) const; 
-  static bool FindFontInSystemFolders(const nglString& rFontFileName, nglPath& rResultFontPath); 
+  bool FindFontInSystemFolders(const nglString& rFontFileName, nglPath& rResultFontPath); 
 
   void RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequestResult>& rFoundFonts) const;
   nuiFont* GetFont(nuiFontRequest& rRequest, const nglString& rID = nglString::Null) const;
@@ -166,6 +166,7 @@ public:
   uint32 GetFontCount() const;
   
   static nuiFontManager& GetManager(bool InitIfNeeded = true);
+  static void ExitManager();
   static nuiFontManager& LoadManager(nglIStream& rStream, double lastscantime = 0);
   
   bool Save(nglOStream& rStream);

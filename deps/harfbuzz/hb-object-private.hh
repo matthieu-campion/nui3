@@ -1,6 +1,7 @@
 /*
- * Copyright (C) 2007  Chris Wilson
- * Copyright (C) 2009,2010  Red Hat, Inc.
+ * Copyright © 2007  Chris Wilson
+ * Copyright © 2009,2010  Red Hat, Inc.
+ * Copyright © 2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -25,6 +26,7 @@
  * Contributor(s):
  *	Chris Wilson <chris@chris-wilson.co.uk>
  * Red Hat Author(s): Behdad Esfahbod
+ * Google Author(s): Behdad Esfahbod
  */
 
 #ifndef HB_OBJECT_PRIVATE_HH
@@ -32,8 +34,58 @@
 
 #include "hb-private.hh"
 
+#include "hb-mutex-private.hh"
+
 HB_BEGIN_DECLS
 
+
+/* Debug */
+
+#ifndef HB_DEBUG_OBJECT
+#define HB_DEBUG_OBJECT (HB_DEBUG+0)
+#endif
+
+
+/* atomic_int */
+
+/* We need external help for these */
+
+#ifdef HAVE_GLIB
+
+#include <glib.h>
+
+typedef volatile int hb_atomic_int_t;
+#define hb_atomic_int_fetch_and_add(AI, V)	g_atomic_int_exchange_and_add (&(AI), V)
+#define hb_atomic_int_get(AI)			g_atomic_int_get (&(AI))
+#define hb_atomic_int_set(AI, V)		g_atomic_int_set (&(AI), V)
+
+
+#elif defined(_MSC_VER) && 0
+
+#include <intrin.h>
+
+typedef long hb_atomic_int_t;
+#define hb_atomic_int_fetch_and_add(AI, V)	_InterlockedExchangeAdd (&(AI), V)
+#define hb_atomic_int_get(AI)			(_ReadBarrier (), (AI))
+#define hb_atomic_int_set(AI, V)		((void) _InterlockedExchange (&(AI), (V)))
+
+
+#else
+
+#pragma message "Could not find any system to define atomic_int macros, library will NOT be thread-safe"
+
+typedef volatile int hb_atomic_int_t;
+#define hb_atomic_int_fetch_and_add(AI, V)	((AI) += (V), (AI) - (V))
+#define hb_atomic_int_get(AI)			(AI)
+#define hb_atomic_int_set(AI, V)		((void) ((AI) = (V)))
+
+
+#endif
+
+
+
+
+/* reference_count */
 
 typedef struct {
   hb_atomic_int_t ref_count;
@@ -52,77 +104,156 @@ typedef struct {
 } hb_reference_count_t;
 
 
+/* user_data */
 
-/* Debug */
+struct hb_user_data_array_t {
 
-#ifndef HB_DEBUG_OBJECT
-#define HB_DEBUG_OBJECT (HB_DEBUG+0)
-#endif
+  struct hb_user_data_item_t {
+    hb_user_data_key_t *key;
+    void *data;
+    hb_destroy_func_t destroy;
 
-static inline void
-_hb_trace_object (const void *obj,
-		  hb_reference_count_t *ref_count,
-		  const char *function)
+    inline bool operator == (hb_user_data_key_t *other_key) const { return key == other_key; }
+    inline bool operator == (hb_user_data_item_t &other) const { return key == other.key; }
+
+    void finish (void) { if (destroy) destroy (data); }
+  };
+
+  hb_lockable_set_t<hb_user_data_item_t, hb_static_mutex_t> items;
+
+  HB_INTERNAL bool set (hb_user_data_key_t *key,
+			void *              data,
+			hb_destroy_func_t   destroy);
+
+  HB_INTERNAL void *get (hb_user_data_key_t *key);
+
+  HB_INTERNAL void finish (void);
+};
+
+
+/* object_header */
+
+typedef struct _hb_object_header_t hb_object_header_t;
+
+struct _hb_object_header_t {
+  hb_reference_count_t ref_count;
+  hb_user_data_array_t user_data;
+
+#define HB_OBJECT_HEADER_STATIC {HB_REFERENCE_COUNT_INVALID}
+
+  static inline void *create (unsigned int size) {
+    hb_object_header_t *obj = (hb_object_header_t *) calloc (1, size);
+
+    if (likely (obj))
+      obj->init ();
+
+    return obj;
+  }
+
+  inline void init (void) {
+    ref_count.init (1);
+  }
+
+  inline bool is_inert (void) const {
+    return unlikely (ref_count.is_invalid ());
+  }
+
+  inline void reference (void) {
+    if (unlikely (!this || this->is_inert ()))
+      return;
+    ref_count.inc ();
+  }
+
+  inline bool destroy (void) {
+    if (unlikely (!this || this->is_inert ()))
+      return false;
+    if (ref_count.dec () != 1)
+      return false;
+
+    ref_count.init (HB_REFERENCE_COUNT_INVALID_VALUE);
+
+    user_data.finish ();
+
+    return true;
+  }
+
+  inline bool set_user_data (hb_user_data_key_t *key,
+			     void *              data,
+			     hb_destroy_func_t   destroy_func) {
+    if (unlikely (!this || this->is_inert ()))
+      return false;
+
+    return user_data.set (key, data, destroy_func);
+  }
+
+  inline void *get_user_data (hb_user_data_key_t *key) {
+    return user_data.get (key);
+  }
+
+  inline void trace (const char *function) const {
+    (void) (HB_DEBUG_OBJECT &&
+	    fprintf (stderr, "OBJECT(%p) refcount=%d %s\n",
+		     (void *) this,
+		     this ? ref_count.get () : 0,
+		     function));
+  }
+
+};
+
+
+HB_END_DECLS
+
+
+/* object */
+
+template <typename Type>
+static inline void hb_object_trace (const Type *obj, const char *function)
 {
-  (void) (HB_DEBUG_OBJECT &&
-	  fprintf (stderr, "OBJECT(%p) refcount=%d %s\n",
-		   obj,
-		   ref_count->get (),
-		   function));
+  obj->header.trace (function);
+}
+template <typename Type>
+static inline Type *hb_object_create (void)
+{
+  Type *obj = (Type *) hb_object_header_t::create (sizeof (Type));
+  hb_object_trace (obj, HB_FUNC);
+  return obj;
+}
+template <typename Type>
+static inline bool hb_object_is_inert (const Type *obj)
+{
+  return unlikely (obj->header.is_inert ());
+}
+template <typename Type>
+static inline Type *hb_object_reference (Type *obj)
+{
+  hb_object_trace (obj, HB_FUNC);
+  obj->header.reference ();
+  return obj;
+}
+template <typename Type>
+static inline bool hb_object_destroy (Type *obj)
+{
+  hb_object_trace (obj, HB_FUNC);
+  return obj->header.destroy ();
+}
+template <typename Type>
+static inline bool hb_object_set_user_data (Type               *obj,
+					    hb_user_data_key_t *key,
+					    void *              data,
+					    hb_destroy_func_t   destroy)
+{
+  return obj->header.set_user_data (key, data, destroy);
 }
 
-#define TRACE_OBJECT(obj) _hb_trace_object (obj, &obj->ref_count, __FUNCTION__)
+template <typename Type>
+static inline void *hb_object_get_user_data (Type               *obj,
+					     hb_user_data_key_t *key)
+{
+  return obj->header.get_user_data (key);
+}
 
 
-
-/* Object allocation and lifecycle manamgement macros */
-
-#define HB_OBJECT_IS_INERT(obj) \
-    (unlikely ((obj)->ref_count.is_invalid ()))
-
-#define HB_OBJECT_DO_INIT_EXPR(obj) \
-    obj->ref_count.init (1)
-
-#define HB_OBJECT_DO_INIT(obj) \
-  HB_STMT_START { \
-    HB_OBJECT_DO_INIT_EXPR (obj); \
-  } HB_STMT_END
-
-#define HB_OBJECT_DO_CREATE(Type, obj) \
-  likely (( \
-	       (void) ( \
-		 ((obj) = (Type *) calloc (1, sizeof (Type))) && \
-		 ( \
-		  HB_OBJECT_DO_INIT_EXPR (obj), \
-		  TRACE_OBJECT (obj), \
-		  TRUE \
-		 ) \
-	       ), \
-	       (obj) \
-	     ))
-
-#define HB_OBJECT_DO_REFERENCE(obj) \
-  HB_STMT_START { \
-    int old_count; \
-    if (unlikely (!(obj) || HB_OBJECT_IS_INERT (obj))) \
-      return obj; \
-    TRACE_OBJECT (obj); \
-    old_count = obj->ref_count.inc (); \
-    assert (old_count > 0); \
-    return obj; \
-  } HB_STMT_END
-
-#define HB_OBJECT_DO_DESTROY(obj) \
-  HB_STMT_START { \
-    int old_count; \
-    if (unlikely (!(obj) || HB_OBJECT_IS_INERT (obj))) \
-      return; \
-    TRACE_OBJECT (obj); \
-    old_count = obj->ref_count.dec (); \
-    assert (old_count > 0); \
-    if (old_count != 1) \
-      return; \
-  } HB_STMT_END
+HB_BEGIN_DECLS
 
 
 HB_END_DECLS

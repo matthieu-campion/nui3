@@ -21,10 +21,7 @@ class NUI_API nuiScrollBar : public nuiSimpleContainer
 {
 public:
   nuiScrollBar(nuiOrientation orientation = nuiHorizontal, const nuiRange& rRange = nuiRange(), nuiWidgetPtr pThumb = NULL);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiScrollBar();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   virtual bool SetRect(const nuiRect& rRect);
   
@@ -67,6 +64,16 @@ public:
   nuiSize GetThumbMinSize() const;
   void SetThumbMinSize(nuiSize MinSize);
   
+  void SetForegroundDeco(nuiDecoration* pDeco);
+  void SetBackgroundDeco(nuiDecoration* pDeco);
+  nuiDecoration* GetForegroundDeco();
+  nuiDecoration* GetBackgroundDeco();
+  
+  void SetForegroundDecoName(const nglString& rName);
+  void SetBackgroundDecoName(const nglString& rName);
+  const nglString& GetForegroundDecoName();
+  const nglString& GetBackgroundDecoName();
+  
   
   nuiSimpleEventSource<0> ThumbPressed;
   nuiSimpleEventSource<0> ThumbDepressed;
@@ -104,6 +111,8 @@ protected:
   nuiRange* mpRange;
 
   nuiWidget*  mpThumb;
+  nuiDecoration* mpForegroundDeco;
+  nuiDecoration* mpBackgroundDeco;
   
   nuiSize mThumbLength;
   nuiSize mThumbPosition;
@@ -118,7 +127,6 @@ class NUI_API nuiCustomScrollBar : public nuiScrollBar
 {
 public:
   nuiCustomScrollBar(nuiOrientation orientation, const nuiRange& rRange = nuiRange(), nuiWidgetPtr pThumb = NULL);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiCustomScrollBar();
 
   void AddWidget(nuiWidget* pWidget, nuiPosition position); ///< add child with given nuiPosition position

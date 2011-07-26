@@ -218,7 +218,7 @@ nuiFontRequest::nuiFontRequest(nuiFontBase* pOriginalFont, bool ForcePanoseOnlyF
   {
     if (pOriginalFont->HasPanoseInfo())
     {
-      MustBeSimilar(pOriginalFont->GetPanoseBytes(), 50.0f);
+      MustBeSimilar(pOriginalFont->GetPanoseBytes(), 20.0f);
       if (mItalic.mScore > 0.0)
         mPanose.mElement.SetItalic(pOriginalFont->IsItalic());
       if (mBold.mScore > 0.0)
@@ -534,7 +534,7 @@ void nuiFontRequest::_SetPanose(const nglString& rPanose)
   rPanose.Tokenize(tokens);
   if (tokens.size() != 10)
   {
-    NGL_OUT(_T("Error: Panose information MUST be 10 numbers from 0 to 255"));
+    NGL_LOG("font", NGL_LOG_ERROR, "Panose information MUST be 10 numbers from 0 to 255");
     return;
   }
   
@@ -543,7 +543,7 @@ void nuiFontRequest::_SetPanose(const nglString& rPanose)
   {
     if (!tokens[i].IsInt())
     {
-      NGL_OUT(_T("Error: Each of the 10 Panose values must be a number from 0 to 255"));
+      NGL_LOG("font", NGL_LOG_ERROR, "Each of the 10 Panose values must be a number from 0 to 255");
       return;
     }
     PanoseBytes[i] = tokens[i].GetCInt();
@@ -617,6 +617,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 #elif (defined _CARBON_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/Library/Fonts/");
+  rFolders[_T("System2")] = _T("~/Library/Fonts/");
 #elif TARGET_IPHONE_SIMULATOR
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   //rFolders[_T("System1")] = _T("/Library/Fonts/");
@@ -630,7 +631,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   {
     rFolders[_T("System0")] = p;
     
-    //NGL_DEBUG( NGL_OUT(_T("Adding System0 font folder: '%s'\n"), p); )
+    //NGL_DEBUG( NGL_LOG("font", NGL_LOG_INFO, "Adding System0 font folder: '%s'\n", p); )
   }
   else
   {
@@ -683,7 +684,8 @@ static nuiLabel* gpFontPathLabel = NULL;
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
-#ifdef _UIKIT_
+//#ifdef _UIKIT_
+#if 0
   UpdateFonts();
   return;
 #endif
@@ -699,7 +701,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   Info.XPos = 0;
   Info.YPos = 0;
 
-#if 1
+#if 0
 #ifndef _UIKIT_
   gpWin = new nuiMainWindow(ContextInfo, Info);
   nuiVBox* pBox = new nuiVBox();
@@ -714,10 +716,10 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 #endif  
 #endif  
   
-  NGL_DEBUG( NGL_OUT(_T("Scan system fonts....\n")); )
+  NGL_DEBUG( NGL_LOG("font", NGL_LOG_INFO, "Scan system fonts....\n"); )
   nglTime start_time;
   
-  mpFonts.clear();
+  Clear();
   
   // Scan each path:
   std::map<nglString, nglPath>::const_iterator it = mFontFolders.begin();
@@ -745,7 +747,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   nglTime end_time;
   
   double t = end_time - start_time;
-  printf("Scaning the system fonts took %f seconds\n", t);
+  NGL_LOG("font", NGL_LOG_INFO, "Scaning the system fonts took %f seconds\n", t);
 
   delete gpWin;
   gpWin = NULL;
@@ -754,7 +756,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
 {
   std::list<nglPath> children;
-  rBasePath.GetChildren(&children);
+  rBasePath.GetChildrenTree(children);
   
   std::list<nglPath>::const_iterator cit = children.begin();
   std::list<nglPath>::const_iterator cend = children.end();
@@ -909,13 +911,16 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
   std::vector<nuiFontDesc*>::const_iterator end = mpFonts.end();
   
   nglString dump;
+  uint32 glyphcount = rRequest.mMustHaveGlyphs.mElement.size();
+
   while (it != end)
   {
     float score = 1.f;
     float sscore = 1.f;
     nuiFontDesc* pFontDesc = *it;
     //pFontDesc->GetPath()
-    
+    if (pFontDesc->GetName().Compare("LastResort", false) == 0)
+      score *= 0.1;
     SET_SCORE2(Name);
     SET_SCORE2(Style);
     SET_SCORE(Face);
@@ -963,6 +968,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
         score += _s;
     }
     
+    if (glyphcount)
     {
       uint32 count = 0;  
       std::set<nglUChar>::const_iterator it = rRequest.mMustHaveGlyphs.mElement.begin();
@@ -976,19 +982,15 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
         ++it;
       }
       
-      uint32 glyphcount = rRequest.mMustHaveGlyphs.mElement.size();
-      if (glyphcount)
+      float f = (float)count / (float)glyphcount;
+      float _s = rRequest.mMustHaveGlyphs.mScore * f;
+      if (rRequest.mMustHaveGlyphs.mStrict)
       {
-        float f = (float)count / (float)glyphcount;
-        float _s = rRequest.mMustHaveGlyphs.mScore * f;
-        if (rRequest.mMustHaveGlyphs.mStrict)
-        {
           sscore *= _s;
-        }
-        else
-        {
-          score += _s;
-        }
+      }
+      else
+      {
+        score += _s;
       }
     }
     
@@ -1041,7 +1043,7 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     {
       const nuiFontRequestResult& r(*it);
       const nuiFontDesc* pDesc = r.GetFontDesc();
-      printf("font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
+    NGL_LOG("font", NGL_LOG_INFO, "font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
       ++it;
     }
   }
@@ -1052,15 +1054,24 @@ nuiFontManager nuiFontManager::gManager;
 
 nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
 {
+  nuiFontBase::Init();
+
   const bool FORCE_FONT_ENUM = 0;
   if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
   {
+    App->AddExit(nuiFontManager::ExitManager);
     gManager.AddSystemFolders();
     gManager.ScanFolders();
   }
   
   return gManager;
 }
+
+void nuiFontManager::ExitManager()
+{
+  gManager.Clear();
+}
+
 
 nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscantime)
 {
@@ -1077,7 +1088,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscan
 }
 
 
-#define NUI_FONTDB_MARKER "nuiFontDatabase4"
+#define NUI_FONTDB_MARKER "nuiFontDatabase5"
 
 bool nuiFontManager::Save(nglOStream& rStream)
 {
@@ -1130,7 +1141,6 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
   // compile list of font files
   std::set<nglPath> fontFiles;
   std::set<nglPath>::iterator itf;
-  std::map<nglString, nglPath> folders;
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
@@ -1138,17 +1148,15 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
   if (scanfolders)
   {
     // All OSes 
-    GetSystemFolders(folders);
-    
-    for (it = folders.begin(); it != folders.end(); ++it)
+    for (it = mFontFolders.begin(); it != mFontFolders.end(); ++it)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
-      NGL_OUT(_T("FontManager: scanning font folder '%s' '%s' for font files\n"), str.GetChars(), pth.GetChars());
+      NGL_LOG("font", NGL_LOG_INFO, "scanning font folder '%s' '%s' for font files\n", str.GetChars(), pth.GetChars());
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
-      pth.GetChildren(&children);
+      pth.GetChildrenTree(children);
       
       for (itc = children.begin(); itc != children.end(); ++itc)
       {
@@ -1156,11 +1164,11 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         if (path.IsLeaf())
         {
           fontFiles.insert(path);
-          NGL_OUT(_T("FontManager: font file found '%s'\n"), path.GetChars());
+          NGL_LOG("font", NGL_LOG_INFO, "font file found '%s'\n", path.GetChars());
         }
         else
         {
-          NGL_OUT(_T("FontManager: skip '%s'\n"), path.GetChars());
+          NGL_LOG("font", NGL_LOG_INFO, "skip '%s'\n", path.GetChars());
         }
       }
     }
@@ -1175,7 +1183,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
       // check font file existence
       if (!pFontDesc->CheckPath())
       {
-        NGL_OUT(_T("FontManager: remove font from database '%s'\n"), pFontDesc->GetPath().GetChars());
+        NGL_LOG("font", NGL_LOG_INFO, "remove font from database '%s'\n", pFontDesc->GetPath().GetChars());
         
         continue;
       }
@@ -1222,7 +1230,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
         {
           mpFonts.push_back(pFontDesc);
           
-          NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
+          NGL_LOG("font", NGL_LOG_INFO, "add new font in database '%s'\n", path.GetChars());
         }
         else
         {
@@ -1234,7 +1242,7 @@ bool nuiFontManager::Load(nglIStream& rStream, double lastscantime)
     }
     else
     {
-      NGL_OUT(_T("FontManager: skip already scanned font '%s'\n"), path.GetChars());
+      NGL_LOG("font", NGL_LOG_INFO, "skip already scanned font '%s'\n", path.GetChars());
     }
     
   }
@@ -1249,7 +1257,6 @@ void nuiFontManager::UpdateFonts()
   // compile list of font files
   std::set<nglPath> fontFiles;
   std::set<nglPath>::iterator itf;
-  std::map<nglString, nglPath> folders;
   std::map<nglString, nglPath>::iterator it;
   
   bool scanfolders = true;
@@ -1257,16 +1264,14 @@ void nuiFontManager::UpdateFonts()
   if (scanfolders)
   {
     // All OSes 
-    GetSystemFolders(folders);
-    
-    for (it = folders.begin(); it != folders.end(); ++it)
+    for (it = mFontFolders.begin(); it != mFontFolders.end(); ++it)
     {
       const nglString& str = it->first;
       const nglPath& pth = it->second;
       
       std::list<nglPath> children;
       std::list<nglPath>::iterator itc;
-      pth.GetChildren(&children);
+      pth.GetChildrenTree(children);
       
       for (itc = children.begin(); itc != children.end(); ++itc)
       {
@@ -1298,7 +1303,7 @@ void nuiFontManager::UpdateFonts()
       {
         mpFonts.push_back(pFontDesc);
         
-        NGL_OUT(_T("FontManager: add new font in database '%s'\n"), path.GetChars());
+        NGL_LOG("font", NGL_LOG_INFO, "add new font in database '%s'\n", path.GetChars());
       }
       else
       {
@@ -1359,10 +1364,8 @@ bool nuiFontManager::FindFontInFolders(const nglString& rFontFileName, nglPath& 
 
 bool nuiFontManager::FindFontInSystemFolders(const nglString& rFontFileName, nglPath& rResultFontPath)
 {
-  std::map<nglString, nglPath> folders;
-  nuiFontManager::GetSystemFolders(folders);
-  std::map<nglString, nglPath>::const_iterator it = folders.begin();
-  std::map<nglString, nglPath>::const_iterator end = folders.end();
+  std::map<nglString, nglPath>::const_iterator it = mFontFolders.begin();
+  std::map<nglString, nglPath>::const_iterator end = mFontFolders.end();
   while (it != end)
   {
     nglPath p(it->second);
@@ -1384,22 +1387,34 @@ nuiFont* nuiFontManager::GetFont(nuiFontRequest& rRequest, const nglString& rID)
   if (!rRequest.mMustHaveSizes.mElement.empty())
     size = *(rRequest.mMustHaveSizes.mElement.begin());
   
-  //wprintf(_T("Loading font %s\n"), rRequest.mName.mElement.GetChars());
+  NGL_LOG("font", NGL_LOG_INFO, "Loading font %s\n", rRequest.mName.mElement.GetChars());
   nuiFont* pFont = nuiFont::GetFont(rRequest.mOriginalName, size, rRequest.mFace.mElement, rID);
   if (pFont)
     return pFont;
   
   std::list<nuiFontRequestResult> Fonts;
   RequestFont(rRequest, Fonts);
+
+  if (0)
+  {
+    std::list<nuiFontRequestResult>::iterator it = Fonts.begin();
+    std::list<nuiFontRequestResult>::iterator end = Fonts.end();
+    while (it != end)
+    {
+      const nuiFontRequestResult& res(*it);
+      NGL_LOG("font", NGL_LOG_INFO, "font result [%s] %f\n", res.GetPath().GetChars(), res.GetScore());
+      ++it;
+    }
+  }  
   
   if (Fonts.empty())
   {
-    printf(_T("font request for '%s'failed, loading default font\n"), rRequest.mName.mElement.GetChars());
+    NGL_LOG("font", NGL_LOG_ERROR, "font request for '%s'failed, loading default font\n", rRequest.mName.mElement.GetChars());
     return nuiFont::GetFont(size);
   }
   
   const nuiFontRequestResult& rFont(*(Fonts.begin()));
-  //printf("found font '%s' (%s)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
+  NGL_LOG("font", NGL_LOG_INFO, "found font '%s' (%s)\n", rFont.GetFontDesc()->GetName().GetChars(), rFont.GetFontDesc()->GetPath().GetChars());
   
   pFont = nuiFont::GetFont(rFont.GetPath(), size, rFont.GetFace(), rID);
   return pFont;

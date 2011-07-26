@@ -17,10 +17,14 @@ public:
   ~MainWindow();
 
   void OnCreation();
+  bool Draw(nuiDrawContext* pContext);
 
 protected:
   
 private:
   nuiEventSink<MainWindow> mEventSink;
+  
+  nuiTextLayout* mpLayout;
+  nuiFont* mpFont;
 };
 

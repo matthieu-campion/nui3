@@ -19,9 +19,6 @@ public:
 
   virtual ~nuiTreeHandleDecoration();
   
-  virtual bool Load(const nuiXMLNode* pNode);
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode);
-  
   virtual void Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rRect);  
   
   virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;

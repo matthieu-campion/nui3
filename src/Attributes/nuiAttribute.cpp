@@ -173,23 +173,6 @@ bool nuiAttributeBase::IsInstanceAttribute() const
   return mInstanceAttribute;
 }
 
-// inherited from AttributeBase, to be specialized for each type of Attribute
-bool nuiAttributeBase::Load(void* pTarget, const nuiXMLNode* pNode)
-{
-  if (pNode->HasAttribute(GetName()))
-    return FromString(pTarget, pNode->GetAttribute(GetName()));
-  return false;
-}
-
-// inherited from AttributeBase, to be specialized for each type of Attribute
-nuiXMLNode* nuiAttributeBase::Serialize(void* pTarget, nuiXMLNode* pParentNode) const
-{
-  nglString str;
-  if (ToString(pTarget, str))
-    pParentNode->SetAttribute(GetName(), str);
-  return pParentNode;
-}
-
 void nuiAttributeBase::KillAttributeHolder(void* pHolder)
 {
   // Events:
@@ -247,7 +230,7 @@ uint64 nuiAttributeTypeTrait<T>::mTypeId = nuiGetNewAttributeUniqueId();
 
 //********************************************************************************************************
 //
-// TEMPLATE TRAITS SPECIALIZATION : Xml Load, Xml Serialize, GetDefaultEditor
+// TEMPLATE TRAITS SPECIALIZATION : GetDefaultEditor
 //
 
 //********************************
@@ -2087,17 +2070,6 @@ int32 nuiAttribBase::GetOrder() const
 void nuiAttribBase::SetOrder(int32 order)
 {
   return mpAttributeBase->SetOrder(order);
-}
-
-
-bool nuiAttribBase::Load(const nuiXMLNode* pNode)
-{
-  return mpAttributeBase->Load(mpTarget, pNode);
-}
-
-nuiXMLNode* nuiAttribBase::Serialize(nuiXMLNode* pParentNode) const
-{
-  return mpAttributeBase->Serialize(mpTarget, pParentNode);
 }
 
 

@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2009  Red Hat, Inc.
+ * Copyright © 2009  Red Hat, Inc.
  * Copyright © 2011 Codethink Limited
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -40,117 +40,159 @@ HB_BEGIN_DECLS
  */
 
 static unsigned int
-hb_unicode_get_combining_class_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
-				    hb_codepoint_t      unicode   HB_UNUSED,
-				    void               *user_data HB_UNUSED)
+hb_unicode_combining_class_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
+				hb_codepoint_t      unicode   HB_UNUSED,
+				void               *user_data HB_UNUSED)
 {
   return 0;
 }
 
 static unsigned int
-hb_unicode_get_eastasian_width_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
-				    hb_codepoint_t      unicode   HB_UNUSED,
-				    void               *user_data HB_UNUSED)
+hb_unicode_eastasian_width_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
+				hb_codepoint_t      unicode   HB_UNUSED,
+				void               *user_data HB_UNUSED)
 {
   return 1;
 }
 
 static hb_unicode_general_category_t
-hb_unicode_get_general_category_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
-				     hb_codepoint_t      unicode   HB_UNUSED,
-				     void               *user_data HB_UNUSED)
+hb_unicode_general_category_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
+				 hb_codepoint_t      unicode   HB_UNUSED,
+				 void               *user_data HB_UNUSED)
 {
   return HB_UNICODE_GENERAL_CATEGORY_OTHER_LETTER;
 }
 
 static hb_codepoint_t
-hb_unicode_get_mirroring_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
-			      hb_codepoint_t      unicode   HB_UNUSED,
-			      void               *user_data HB_UNUSED)
+hb_unicode_mirroring_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
+			  hb_codepoint_t      unicode   HB_UNUSED,
+			  void               *user_data HB_UNUSED)
 {
   return unicode;
 }
 
 static hb_script_t
-hb_unicode_get_script_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
-			   hb_codepoint_t      unicode   HB_UNUSED,
-			   void               *user_data HB_UNUSED)
+hb_unicode_script_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
+		       hb_codepoint_t      unicode   HB_UNUSED,
+		       void               *user_data HB_UNUSED)
 {
   return HB_SCRIPT_UNKNOWN;
 }
 
+static hb_bool_t
+hb_unicode_compose_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
+			hb_codepoint_t      a         HB_UNUSED,
+			hb_codepoint_t      b         HB_UNUSED,
+			hb_codepoint_t     *ab        HB_UNUSED,
+			void               *user_data HB_UNUSED)
+{
+  /* TODO handle Hangul jamo here? */
+  return FALSE;
+}
+
+static hb_bool_t
+hb_unicode_decompose_nil (hb_unicode_funcs_t *ufuncs    HB_UNUSED,
+			  hb_codepoint_t      ab        HB_UNUSED,
+			  hb_codepoint_t     *a         HB_UNUSED,
+			  hb_codepoint_t     *b         HB_UNUSED,
+			  void               *user_data HB_UNUSED)
+{
+  /* TODO handle Hangul jamo here? */
+  return FALSE;
+}
+
 
 hb_unicode_funcs_t _hb_unicode_funcs_nil = {
-  HB_REFERENCE_COUNT_INVALID, /* ref_count */
+  HB_OBJECT_HEADER_STATIC,
+
   NULL, /* parent */
   TRUE, /* immutable */
   {
-    hb_unicode_get_combining_class_nil,
-    hb_unicode_get_eastasian_width_nil,
-    hb_unicode_get_general_category_nil,
-    hb_unicode_get_mirroring_nil,
-    hb_unicode_get_script_nil,
+#define HB_UNICODE_FUNC_IMPLEMENT(name) hb_unicode_##name##_nil,
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
   }
 };
 
+
+hb_unicode_funcs_t *
+hb_unicode_funcs_get_default (void)
+{
+  return &_hb_unicode_funcs_default;
+}
 
 hb_unicode_funcs_t *
 hb_unicode_funcs_create (hb_unicode_funcs_t *parent)
 {
   hb_unicode_funcs_t *ufuncs;
 
-  if (!HB_OBJECT_DO_CREATE (hb_unicode_funcs_t, ufuncs))
+  if (!(ufuncs = hb_object_create<hb_unicode_funcs_t> ()))
     return &_hb_unicode_funcs_nil;
 
-  if (parent != NULL)
-  {
-    hb_unicode_funcs_make_immutable (parent);
-    ufuncs->parent = hb_unicode_funcs_reference (parent);
+  if (!parent)
+    parent = &_hb_unicode_funcs_nil;
 
-    ufuncs->get = parent->get;
+  hb_unicode_funcs_make_immutable (parent);
+  ufuncs->parent = hb_unicode_funcs_reference (parent);
 
-    /* We can safely copy user_data from parent since we hold a reference
-     * onto it and it's immutable.  We should not copy the destroy notifiers
-     * though. */
-    ufuncs->user_data = parent->user_data;
-  }
-  else
-  {
-    ufuncs->get = _hb_unicode_funcs_nil.get;
-  }
+  ufuncs->func = parent->func;
+
+  /* We can safely copy user_data from parent since we hold a reference
+   * onto it and it's immutable.  We should not copy the destroy notifiers
+   * though. */
+  ufuncs->user_data = parent->user_data;
 
   return ufuncs;
 }
 
 hb_unicode_funcs_t *
+hb_unicode_funcs_get_empty (void)
+{
+  return &_hb_unicode_funcs_nil;
+}
+
+hb_unicode_funcs_t *
 hb_unicode_funcs_reference (hb_unicode_funcs_t *ufuncs)
 {
-  HB_OBJECT_DO_REFERENCE (ufuncs);
+  return hb_object_reference (ufuncs);
 }
 
 void
 hb_unicode_funcs_destroy (hb_unicode_funcs_t *ufuncs)
 {
-  HB_OBJECT_DO_DESTROY (ufuncs);
+  if (!hb_object_destroy (ufuncs)) return;
 
-#define DESTROY(name) if (ufuncs->destroy.name) ufuncs->destroy.name (ufuncs->user_data.name)
-  DESTROY (combining_class);
-  DESTROY (eastasian_width);
-  DESTROY (general_category);
-  DESTROY (mirroring);
-  DESTROY (script);
-#undef DESTROY
+#define HB_UNICODE_FUNC_IMPLEMENT(name) \
+  if (ufuncs->destroy.name) ufuncs->destroy.name (ufuncs->user_data.name);
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
 
-  if (ufuncs->parent != NULL)
-    hb_unicode_funcs_destroy (ufuncs->parent);
+  hb_unicode_funcs_destroy (ufuncs->parent);
 
   free (ufuncs);
 }
 
+hb_bool_t
+hb_unicode_funcs_set_user_data (hb_unicode_funcs_t *ufuncs,
+			        hb_user_data_key_t *key,
+			        void *              data,
+			        hb_destroy_func_t   destroy)
+{
+  return hb_object_set_user_data (ufuncs, key, data, destroy);
+}
+
+void *
+hb_unicode_funcs_get_user_data (hb_unicode_funcs_t *ufuncs,
+			        hb_user_data_key_t *key)
+{
+  return hb_object_get_user_data (ufuncs, key);
+}
+
+
 void
 hb_unicode_funcs_make_immutable (hb_unicode_funcs_t *ufuncs)
 {
-  if (HB_OBJECT_IS_INERT (ufuncs))
+  if (hb_object_is_inert (ufuncs))
     return;
 
   ufuncs->immutable = TRUE;
@@ -165,53 +207,68 @@ hb_unicode_funcs_is_immutable (hb_unicode_funcs_t *ufuncs)
 hb_unicode_funcs_t *
 hb_unicode_funcs_get_parent (hb_unicode_funcs_t *ufuncs)
 {
-  return ufuncs->parent;
+  return ufuncs->parent ? ufuncs->parent : &_hb_unicode_funcs_nil;
 }
 
 
-#define IMPLEMENT(return_type, name)                                           \
-                                                                               \
-void                                                                           \
-hb_unicode_funcs_set_##name##_func (hb_unicode_funcs_t             *ufuncs,    \
-                                    hb_unicode_get_##name##_func_t  func,      \
-                                    void                           *user_data, \
-                                    hb_destroy_func_t               destroy)   \
-{                                                                              \
-  if (ufuncs->immutable)                                                       \
-    return;                                                                    \
-                                                                               \
-  if (ufuncs->destroy.name)                                                    \
-    ufuncs->destroy.name (ufuncs->user_data.name);                             \
-                                                                               \
-  if (func) {                                                                  \
-    ufuncs->get.name = func;                                                   \
-    ufuncs->user_data.name = user_data;                                        \
-    ufuncs->destroy.name = destroy;                                            \
-  } else if (ufuncs->parent != NULL) {                                         \
-    ufuncs->get.name = ufuncs->parent->get.name;                               \
-    ufuncs->user_data.name = ufuncs->parent->user_data.name;                   \
-    ufuncs->destroy.name = NULL;                                               \
-  } else {                                                                     \
-    ufuncs->get.name = hb_unicode_get_##name##_nil;                            \
-    ufuncs->user_data.name = NULL;                                             \
-    ufuncs->destroy.name = NULL;                                               \
-  }                                                                            \
-}                                                                              \
-                                                                               \
-return_type                                                                    \
-hb_unicode_get_##name (hb_unicode_funcs_t *ufuncs,                             \
-		       hb_codepoint_t      unicode)                            \
-{                                                                              \
-  return ufuncs->get.name (ufuncs, unicode, ufuncs->user_data.name);           \
+#define HB_UNICODE_FUNC_IMPLEMENT(name)						\
+										\
+void										\
+hb_unicode_funcs_set_##name##_func (hb_unicode_funcs_t		   *ufuncs,	\
+				    hb_unicode_##name##_func_t	    func,	\
+				    void			   *user_data,	\
+				    hb_destroy_func_t		    destroy)	\
+{										\
+  if (ufuncs->immutable)							\
+    return;									\
+										\
+  if (ufuncs->destroy.name)							\
+    ufuncs->destroy.name (ufuncs->user_data.name);				\
+										\
+  if (func) {									\
+    ufuncs->func.name = func;							\
+    ufuncs->user_data.name = user_data;						\
+    ufuncs->destroy.name = destroy;						\
+  } else {									\
+    ufuncs->func.name = ufuncs->parent->func.name;				\
+    ufuncs->user_data.name = ufuncs->parent->user_data.name;			\
+    ufuncs->destroy.name = NULL;						\
+  }										\
 }
 
-IMPLEMENT (unsigned int, combining_class)
-IMPLEMENT (unsigned int, eastasian_width)
-IMPLEMENT (hb_unicode_general_category_t, general_category)
-IMPLEMENT (hb_codepoint_t, mirroring)
-IMPLEMENT (hb_script_t, script)
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
 
-#undef IMPLEMENT
 
+#define HB_UNICODE_FUNC_IMPLEMENT(return_type, name)				\
+										\
+return_type									\
+hb_unicode_##name (hb_unicode_funcs_t *ufuncs,					\
+		   hb_codepoint_t      unicode)					\
+{										\
+  return ufuncs->func.name (ufuncs, unicode, ufuncs->user_data.name);		\
+}
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS_SIMPLE
+#undef HB_UNICODE_FUNC_IMPLEMENT
+
+hb_bool_t
+hb_unicode_compose (hb_unicode_funcs_t *ufuncs,
+		    hb_codepoint_t      a,
+		    hb_codepoint_t      b,
+		    hb_codepoint_t     *ab)
+{
+  *ab = 0;
+  return ufuncs->func.compose (ufuncs, a, b, ab, ufuncs->user_data.compose);
+}
+
+hb_bool_t
+hb_unicode_decompose (hb_unicode_funcs_t *ufuncs,
+		      hb_codepoint_t      ab,
+		      hb_codepoint_t     *a,
+		      hb_codepoint_t     *b)
+{
+  *a = ab; *b = 0;
+  return ufuncs->func.decompose (ufuncs, ab, a, b, ufuncs->user_data.decompose);
+}
 
 HB_END_DECLS

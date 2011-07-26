@@ -9,7 +9,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiPopupMenu.h"
 #include "nuiLabel.h"
 #include "nuiDrawContext.h"
-#include "nuiXML.h"
 #include "nuiTreeView.h"
 #include "nuiTimer.h"
 #include "nuiScrollBar.h"
@@ -74,42 +73,6 @@ mpOldFocused(NULL)
   //  Grab();
 }
 
-bool nuiPopupMenu::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mpNewSelectedNode = NULL;
-  mpOldFocused = NULL;
-  mDelayTime = DELAY_TIME;
-  /*
-  mPopupTreeSink.SetTarget(this);
-  SetObjectClass("nuiPopupMenu");
-  mTrashRemoval = false;
-  SetObjectClass("nuiPopupMenu");
-  nuiRect r = nuiRect();
-  mPopupTreeSink.SetTarget(this);
-  mpTree = NULL;
-  mXdir = 1;
-  mYdir = 1;
-  if (pParent)
-  pParent->LocalToGlobal(r);
-
-  mIdealRect = rRect;
-  SetUserPos(r.Left(), r.Top());
-  UnsetUserSize();
-  mPopupTreeSink.Connect(mSelectionTimer.Tick, OnSelectionTimer);
-
-  nglString s = pNode->GetAttribute("ShowFirstNode");
-  mShowFirstNode = nuiGetBool(s, true);
-
-  mOwnTree = true;
-  mUnparentTree = true;
-
-  Focus();
-  */
-
-  return true;
-}
-
 nuiPopupMenu::~nuiPopupMenu()
 {
   mSelectionTimer.Stop();
@@ -134,15 +97,6 @@ nuiPopupMenu::~nuiPopupMenu()
   //  Ungrab();
 }
 
-
-nuiXMLNode* nuiPopupMenu::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode, Recursive);
-  if (!pNode) 
-    return NULL;
-  pNode->SetAttribute("ShowFirstNode",mShowFirstNode);
-  return pNode;
-}
 
 bool nuiPopupMenu::Draw(nuiDrawContext* pContext)
 {

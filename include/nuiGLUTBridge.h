@@ -7,7 +7,6 @@
 
 #include "nui.h"
 #include "nuiGLPainter.h"
-#include "nuiSoftwarePainter.h"
 
 extern void* gmpNUI_GLUTBridge;
 
@@ -122,7 +121,6 @@ protected:
     nuiPainter* pOldPainter = pContext->GetPainter();
     
     pContext->GetPainter()->ResetStats();
-    //nuiSoftwarePainter* pCTX = dynamic_cast<nuiSoftwarePainter*>(pContext->GetPainter());
     
     BeginSession();
     

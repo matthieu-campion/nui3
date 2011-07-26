@@ -14,7 +14,6 @@
 #include "nglMath.h"
 #include "nuiTexture.h"
 
-#include "nuiFontLayout.h"
 #include "nuiTextLayout.h"
 #include "nglImage.h"
 
@@ -26,7 +25,6 @@
 #include "nglKernel.h"
 #include "nglVideoMode.h"
 #include "nuiFontBase.h"
-#include "nuiFontLayout.h"
 #include "nuiFontInstance.h"
 #include "nglMath.h"
 #include "ngl_default_font.h"
@@ -43,9 +41,6 @@ using namespace std;
 #include FT_CACHE_H
 #include FT_TRUETYPE_TABLES_H
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-
 /* Globals
  */
 FT_Library     gFTLibrary      = NULL;  // Global FT library instance
@@ -53,14 +48,6 @@ FTC_Manager    gFTCacheManager = NULL;  // Global FT cache manager
 FTC_CMapCache  gFTCMapCache    = NULL;  // Charmap lookup cache
 FTC_ImageCache gFTImageCache   = NULL;  // Generic client-side glyph cache
 FTC_SBitCache  gFTSBitmapCache = NULL;
-
-static const nglChar* gpFontBaseErrorTable[] =
-{
-  /*  0 */ _T("No error"),
-  /*  1 */ _T("FreeType library initialisation failed"),
-  /*  2 */ _T("Couldn't load font ressource"),
-  NULL
-};
 
 /* Pick a default pixel size which is very legible for the default (embedded) font
  */
@@ -97,10 +84,11 @@ class FaceHandle
 public:
   FT_Face          Face;  // FreeType face object handler
   FTC_ImageTypeRec Desc;  // Font description, for image cache (pixel size, rendering mode)
-  
-  
+  FTC_ScalerRec ftscaler;  
+
   FaceHandle()
-  : Face(NULL), mpFontInstance(new nuiFontInstance(nglPath(), 0))
+  : Face(NULL),
+    mpFontInstance(new nuiFontInstance(nglPath(), 0))
   {
     Desc.face_id = 0;
     Desc.width = 0;
@@ -128,9 +116,31 @@ public:
   {
     return mpFontInstance;
   }
+  
+
+  bool GetSize(FT_Size& ftsize)
+  {
+    return FTC_Manager_LookupSize(gFTCacheManager, &ftscaler, &ftsize) != 0;
+  }
+  
+  FT_Face GetFace()
+  {
+    FT_Size ftsize;
+    bool res = GetSize(ftsize);
+    if (res)
+    {
+      NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, "Couldn't change font size"); )
+      return NULL;
+    }
+    
+    Face = ftsize->face;
+    Desc.face_id = ftscaler.face_id;
+
+    return ftsize->face;
+  }
+  
 private:
   nuiFontInstance* mpFontInstance;
-  
 };
 
 
@@ -189,11 +199,6 @@ nglTextEncoding nuiGetCharMapEncoding (FT_CharMap CharMap)
 
 using namespace std;
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-//static float NUI_SCALE_FACTOR = 1.0;
-//static float NUI_INV_SCALE_FACTOR = 1.0 / NUI_SCALE_FACTOR;
-
 static const nglChar* gpFontErrorTable[] =
 {
   /*  0 */ _T("No error"),
@@ -201,67 +206,55 @@ static const nglChar* gpFontErrorTable[] =
   NULL
 };
 
-/////////////////////////////////////////////
-//nuiFontBase::nuiFontBase()
-//{
-//  Defaults();
-//}
-//
-//nuiFontBase::nuiFontBase(uint8* pBuffer, uint BufferSize, uint Face, bool StaticBuffer)
-//: nuiFontBase(pBuffer, BufferSize, Face, StaticBuffer)
-//{
-//  Defaults();
-//}
-//
-//nuiFontBase::nuiFontBase (const nglPath& rFontFile, uint Face)
-//: nuiFontBase (rFontFile, Face)
-//{
-//  Defaults();
-//}
-//
-//nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
-//: nuiFontBase (rFont)
-//{
-//  mAlphaTest = rFont.mAlphaTest;
-//}
-
 
 ///! nuiFontDesc
 //class nuiFontDesc
 nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
 {
-  //  NGL_OUT(_T("Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
+  //  NGL_OUT(_T("Scanning font '%s' face %d\n"), rPath.GetChars(), Face);
+  FT_Byte* pBuffer = NULL;
   
   mValid = false;
   
   mPath = rPath;
   mFace = Face;
   
-  nglIStream* pStream = rPath.OpenRead();
-  
-  if (!pStream)
-  {
-    NGL_OUT(_T("Error Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
-    return;
-  }
-  
-  uint32 size = pStream->Available();
-  FT_Byte* pBuffer = new FT_Byte[size];
-  pStream->ReadUInt8(pBuffer, size);
-  delete pStream;
   
   FT_Error error = 0;
   FT_Face pFace = NULL;
   
-  error = FT_New_Memory_Face(gFTLibrary, pBuffer, size, Face, &pFace);
+  error = FT_New_Face(gFTLibrary, rPath.GetChars(), Face, &pFace);
+
+  if (error)
+  {
+    nglIStream* pStream = rPath.OpenRead();
+    
+    if (!pStream)
+    {
+      NGL_LOG("font", NGL_LOG_ERROR, "Error Scanning font '%s' face %d\n", rPath.GetChars(), Face);
+      return;
+    }
+    
+    uint32 size = pStream->Available();
+    pBuffer = new FT_Byte[size];
+    pStream->ReadUInt8(pBuffer, size);
+    delete pStream;
+    
+    error = FT_New_Memory_Face(gFTLibrary, pBuffer, size, Face, &pFace);
+  }
   
   if (error || pFace->num_faces <= Face)
   {
+    if (!Face)
+    {
+      NGL_LOG("font", NGL_LOG_ERROR, "ERROR Scanning font '%s' face %d\n", rPath.GetChars(), Face);
+    }
+
     delete pBuffer;
     return;
   }
   
-  NGL_OUT(_T("Scaning font '%s' face %d\n"), rPath.GetChars(), Face);
+  NGL_LOG("font", NGL_LOG_INFO, "Scanning font '%s' face %d name '%s' style '%s'\n", rPath.GetChars(), Face, pFace->family_name, pFace->style_name);
   
   NGL_ASSERT(pFace->num_faces > Face);
   
@@ -315,58 +308,41 @@ nuiFontDesc::nuiFontDesc(const nglPath& rPath, int32 Face)
   uint32 glyphcount = 0;
   FT_UInt   gindex = 0;
   
+  FT_Select_Charmap(pFace, FT_ENCODING_UNICODE);// == FT_Err_Ok);
+
+  
   charcode = FT_Get_First_Char(pFace, &gindex);
-  // Using the vector directly is very slow on gcc so we store the elements in a set and then copy the set to the vector...
-  std::vector<nglUChar> tmp;
-  tmp.reserve(10000);
+
+//  std::vector<nglUChar> tmp;
+//  tmp.reserve(10000);
   
   while ( gindex != 0 )
   {
     glyphcount++;
-    //    if (prevcharcode > 0 && prevcharcode + 1 != charcode)
-    //    {
-    //      //NGL_OUT(_T("range: %d to %d (%d glyphs)\n"), rangestart, charcode, charcode - rangestart);
-    //      rangestart = -1;
-    //      rangecount++;
-    //    }
-    tmp.push_back(charcode);
+    if (rangestart >= 0 && (prevcharcode != charcode - 1))
+    {
+      //NGL_OUT(_T("\nrange: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
+      rangecount++;
+      
+      mGlyphs.push_back(std::make_pair(rangestart, prevcharcode));
+      rangestart = charcode;
+    }
     prevcharcode = charcode;
-    //    if (rangestart == -1)
-    //      rangestart = prevcharcode;
+
+    if (rangestart < 0)
+      rangestart = charcode;
     
     charcode = FT_Get_Next_Char(pFace, charcode, &gindex);
   }
-  
-  std::sort(tmp.begin(), tmp.end());
-  
-  std::vector<nglUChar>::iterator it = tmp.begin();
-  std::vector<nglUChar>::iterator end = tmp.end();
-  
-  //mGlyphs.resize(tmpset.size());
-  
-  uint i = 0;
-  nglUChar prevc = -1;
-  while (it != end)
+
+  if (prevcharcode > 0)
   {
-    nglUChar c = *it;
-    if (prevc != c)
-      mGlyphs.push_back(c);
-    
-    prevc = c;
-    ++it;
-    i++;
+    //NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart + 1);
+    rangecount++;
+    mGlyphs.push_back(std::make_pair(rangestart, prevcharcode));
   }
-  
-  NGL_OUT(_T("%d glyphs\n"), glyphcount);
-  
-  
-  //  if (prevcharcode > 0)
-  //  {
-  //    //NGL_OUT(_T("last range: %d to %d (%d glyphs)\n"), rangestart, prevcharcode, prevcharcode - rangestart);
-  //    rangecount++;
-  //  }
-  
-  //NGL_DEBUG( NGL_OUT(_T("\t%d glyph ranges (%d glyphs)\n"), rangecount, glyphcount); )
+
+  NGL_DEBUG( NGL_LOG("font", NGL_LOG_INFO, "\t%d glyph ranges (%d glyphs)\n", rangecount, glyphcount); )
   
   FT_Done_Face(pFace);
   delete pBuffer;
@@ -405,7 +381,7 @@ bool nuiFontDesc::CheckPath()
   mPath = p;
   if (mPath.Exists())
   {
-    printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
+    NGL_LOG("font", NGL_LOG_INFO, "found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
     return true;
   }
   
@@ -420,7 +396,7 @@ bool nuiFontDesc::CheckPath()
     
     if (mPath.Exists())
     {
-      printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
+      NGL_LOG("font", NGL_LOG_INFO, "found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
       return true;
     }
     
@@ -431,7 +407,7 @@ bool nuiFontDesc::CheckPath()
     mPath = p;
     if (mPath.Exists())
     {
-      printf("found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
+      NGL_LOG("font", NGL_LOG_INFO, "found '%s' instead of '%s'\n", p.GetChars(), pp.GetChars());
       return true;
     }
   }
@@ -482,6 +458,7 @@ bool nuiFontDesc::HasEncoding(nglTextEncoding Encoding) const
 
 bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
 {
+#if 0
   // Dichotomic lookup of the charcode:
   
   int32 len = mGlyphs.size();
@@ -491,17 +468,17 @@ bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
   
   while (len > 0)
   {
-    nglUChar middleglyph = mGlyphs[middle];
-    nglUChar firstglyph = mGlyphs[start];
-    nglUChar lastglyph = mGlyphs[end];
+    const GlyphRange& middleglyph = mGlyphs[middle];
+    const GlyphRange& firstglyph = mGlyphs[start];
+    const GlyphRange& lastglyph = mGlyphs[end];
     
-    if (Glyph < firstglyph || lastglyph < Glyph)
+    if (Glyph < firstglyph.first || lastglyph.second < Glyph)
       return false;
     
-    if (middleglyph == Glyph)
+    if (middleglyph.first <= Glyph && Glyph <= middleglyph.second)
       return true;
     
-    if (middleglyph < Glyph) 
+    if (middleglyph.first < Glyph) 
     {
       // Return right hand part
       start = middle + 1;
@@ -516,6 +493,16 @@ bool nuiFontDesc::HasGlyph(nglUChar Glyph) const
     middle = (start + end) >> 1;
   }
   return false;
+#else
+  
+  for (uint32 i = 0; i < mGlyphs.size(); i++)
+  {
+    if (mGlyphs[i].first <= Glyph && Glyph <= mGlyphs[i].second)
+      return true;
+  }
+  
+  return false;
+#endif
 }
 
 bool nuiFontDesc::HasSize(int32 Size) const
@@ -527,11 +514,6 @@ bool nuiFontDesc::HasSize(int32 Size) const
 const std::set<nglTextEncoding>& nuiFontDesc::GetEncodings() const
 {
   return mEncodings;
-}
-
-const std::vector<nglUChar>& nuiFontDesc::GetGlyphs() const
-{
-  return mGlyphs;
 }
 
 const std::set<int32>& nuiFontDesc::GetSizes() const
@@ -591,7 +573,7 @@ bool nuiFontDesc::Save(nglOStream& rStream)
   s = mGlyphs.size();
   rStream.WriteUInt32(&s);
   if (s)
-    rStream.Write(&mGlyphs[0], s, sizeof(nglUChar));
+    rStream.Write(&mGlyphs[0], s, sizeof(GlyphRange));
   
   s = mSizes.size();
   rStream.WriteUInt32(&s);
@@ -664,7 +646,7 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   rStream.ReadUInt32(&s);
   mGlyphs.resize(s);
   if (s)
-    rStream.Read(&mGlyphs[0], s, sizeof(nglUChar));
+    rStream.Read(&mGlyphs[0], s, sizeof(GlyphRange));
   
   rStream.ReadUInt32(&s);
   std::vector<uint32> Sizes;
@@ -679,7 +661,7 @@ bool nuiFontDesc::Load(nglIStream& rStream)
   // Read the panose bytes for this font:
   rStream.Read(&mPanoseBytes, 10, 1);
   
-  //printf("FontDesc: '%s' (%s)\n", mName.GetChars(), mPath.GetChars());
+  NGL_LOG("font", NGL_LOG_INFO, "Load FontDesc: '%s' / '%s' (%s)\n", mName.GetChars(), mStyle.GetChars(), mPath.GetChars());
   
   return true;
 }
@@ -815,25 +797,25 @@ void nuiGlyphInfo::Dump (uint Level) const
  * Life cycle
  */
 
-nuiFontBase::nuiFontBase()
+nuiFontBase::nuiFontBase(float Size)
 {
   Defaults();
   Init();
-  Load((FT_Byte*)gpDefaultFontBase, gDefaultFontSize, 0, true);
+  Load((FT_Byte*)gpDefaultFontBase, gDefaultFontSize, 0, true, Size);
 }
 
-nuiFontBase::nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer)
+nuiFontBase::nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer, float Size)
 {
   Defaults();
   Init();
-  Load((FT_Byte*)pBuffer, BufferSize, Face, StaticBuffer);
+  Load((FT_Byte*)pBuffer, BufferSize, Face, StaticBuffer, Size);
 }
 
-nuiFontBase::nuiFontBase (const nglPath& rFontFile, uint Face)
+nuiFontBase::nuiFontBase (const nglPath& rFontFile, uint Face, float Size)
 {
   Defaults();
   Init();
-  Load(rFontFile, Face);
+  Load(rFontFile, Face, Size);
 }
 
 nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
@@ -848,20 +830,20 @@ nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
   mRenderMode  = rFont.mRenderMode;
   
   Init();
-  Load(rFont.mpFace->Desc.face_id);
+  Load(rFont.mpFace->Desc.face_id, mSize);
 }
 
 nuiFontBase::~nuiFontBase()
 {
   delete mpFace;
 
-  NGL_OUT(_T("DestroyFont: %p\n"), this);
+  //NGL_OUT(_T("DestroyFont: %p\n"), this);
   Textures::iterator it;
   Textures::iterator end = mTextures.end();
   for(it = mTextures.begin(); it != end; ++it)
   {
     nuiTexture* pTexture = *it;
-    NGL_OUT(_T("DestroyFontTexture: %p / %p\n"), this, pTexture);
+    //NGL_OUT(_T("DestroyFontTexture: %p / %p\n"), this, pTexture);
     pTexture->Release();
   }
   mTextures.clear();
@@ -875,7 +857,8 @@ nuiFontBase::~nuiFontBase()
 
 bool nuiFontBase::GetInfo (nuiFontInfo& rInfo, nuiFontUnit Unit) const
 {
-  if (!mpFace->Face)
+  FT_Face face = mpFace->GetFace();
+  if (!face)
     return false;
   
   rInfo.pFont = this;
@@ -888,7 +871,7 @@ bool nuiFontBase::GetInfo (nuiFontInfo& rInfo, nuiFontUnit Unit) const
   rInfo.IsItalic   = IsItalic();
   rInfo.GlyphCount = GetGlyphCount();
   rInfo.Unit       = Unit;
-  rInfo.FaceCount  = mpFace->Face->num_faces;
+  rInfo.FaceCount  = face->num_faces;
   
   /* The following fields should contain valuable information only for scalable fonts.
    * We copy them anyway.
@@ -896,21 +879,21 @@ bool nuiFontBase::GetInfo (nuiFontInfo& rInfo, nuiFontUnit Unit) const
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
+    case eFontUnitEM    : ratio = nuiGetInvScaleFactor() * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
-  rInfo.BBoxMinX       = mpFace->Face->bbox.xMin * ratio;
-  rInfo.BBoxMinY       = mpFace->Face->bbox.yMin * ratio;
-  rInfo.BBoxMaxX       = mpFace->Face->bbox.xMax * ratio;
-  rInfo.BBoxMaxY       = mpFace->Face->bbox.yMax * ratio;
-  rInfo.Ascender       = mpFace->Face->ascender * ratio;
-  rInfo.Descender      = mpFace->Face->descender * ratio;
-  rInfo.Height         = mpFace->Face->height * ratio;
-  rInfo.AdvanceMaxW    = mpFace->Face->max_advance_width * ratio;
-  rInfo.AdvanceMaxH    = mpFace->Face->max_advance_height * ratio;
-  rInfo.UnderlinePos   = mpFace->Face->underline_position * ratio;
-  rInfo.UnderlineThick = mpFace->Face->underline_thickness * ratio;
+  rInfo.BBoxMinX       = face->bbox.xMin * ratio;
+  rInfo.BBoxMinY       = face->bbox.yMin * ratio;
+  rInfo.BBoxMaxX       = face->bbox.xMax * ratio;
+  rInfo.BBoxMaxY       = face->bbox.yMax * ratio;
+  rInfo.Ascender       = face->ascender * ratio;
+  rInfo.Descender      = face->descender * ratio;
+  rInfo.Height         = face->height * ratio;
+  rInfo.AdvanceMaxW    = face->max_advance_width * ratio;
+  rInfo.AdvanceMaxH    = face->max_advance_height * ratio;
+  rInfo.UnderlinePos   = face->underline_position * ratio;
+  rInfo.UnderlineThick = face->underline_thickness * ratio;
   
   return true;
 }
@@ -927,27 +910,32 @@ nglString nuiFontBase::GetStyleName() const
 
 bool nuiFontBase::IsScalable() const
 {
-  return mpFace->Face ? FT_IS_SCALABLE(mpFace->Face) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? FT_IS_SCALABLE(face) : false;
 }
 
 bool nuiFontBase::IsBold() const
 {
-  return mpFace->Face ? ((mpFace->Face->style_flags & FT_STYLE_FLAG_BOLD) != 0) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? ((face->style_flags & FT_STYLE_FLAG_BOLD) != 0) : false;
 }
 
 bool nuiFontBase::IsMonospace() const
 {
-  return mpFace->Face ? ((mpFace->Face->face_flags & FT_FACE_FLAG_FIXED_WIDTH) != 0) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? ((face->face_flags & FT_FACE_FLAG_FIXED_WIDTH) != 0) : false;
 }
 
 bool nuiFontBase::IsItalic() const
 {
-  return mpFace->Face ? ((mpFace->Face->style_flags & FT_STYLE_FLAG_ITALIC) != 0) : false;
+  FT_Face face = mpFace->GetFace();
+  return face ? ((face->style_flags & FT_STYLE_FLAG_ITALIC) != 0) : false;
 }
 
 uint nuiFontBase::GetFaceCount() const
 {
-  return mpFace->Face ? mpFace->Face->num_faces : 0;
+  FT_Face face = mpFace->GetFace();
+  return face ? face->num_faces : 0;
 }
 
 float nuiFontBase::GetHeight (nuiFontUnit Unit, float DefaultSpacing) const
@@ -976,45 +964,49 @@ float nuiFontBase::GetHeight (nuiFontUnit Unit, float DefaultSpacing) const
 
 float nuiFontBase::GetAscender(nuiFontUnit Unit) const
 {
+  FT_Face face = mpFace->GetFace();
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
+    case eFontUnitEM    : ratio = nuiGetInvScaleFactor() * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
-  return mpFace->Face->ascender * ratio;
+  return face->ascender * ratio;
 }
 
 float nuiFontBase::GetDescender(nuiFontUnit Unit) const
 {
+  FT_Face face = mpFace->GetFace();
   float ratio = 0.f;
   switch (Unit)
   {
-    case eFontUnitEM    : ratio = NUI_INV_SCALE_FACTOR * 1.0f; break;
+    case eFontUnitEM    : ratio = nuiGetInvScaleFactor() * 1.0f; break;
     case eFontUnitPoint : ratio = EMToPoint(1.0f); break;
     case eFontUnitPixel : ratio = EMToPixel(1.0f); break;
   }
-  return mpFace->Face->ascender * ratio;
+  return face->ascender * ratio;
 }
 
 uint nuiFontBase::GetGlyphCount() const
 {
-  return mpFace->Face ? (uint)mpFace->Face->num_glyphs : 0;
+  FT_Face face = mpFace->GetFace();
+  return face ? (uint)face->num_glyphs : 0;
 }
 
 void nuiFontBase::GetGlyphs(std::set<nglUChar>& rGlyphs) const
 {
+  FT_Face face = mpFace->GetFace();
   rGlyphs.clear();
   
   FT_ULong  charcode = 0;
   FT_UInt   gindex = 0;
   
-  charcode = FT_Get_First_Char( mpFace->Face, &gindex );
+  charcode = FT_Get_First_Char( face, &gindex );
   while ( gindex != 0 )
   {
     //rGlyphs.insert(charcode);
-    charcode = FT_Get_Next_Char( mpFace->Face, charcode, &gindex );     
+    charcode = FT_Get_Next_Char( face, charcode, &gindex );     
   }
 }
 
@@ -1064,15 +1056,14 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
   if (!mpFace->Face)
     return false;
   
-  FTC_ScalerRec ftscaler;
   FT_Size       ftsize;
   FT_UShort     pixels = 0;
   
   // Fetch font ID
-  ftscaler.face_id  = mpFace->Desc.face_id;
+  mpFace->ftscaler.face_id  = mpFace->Desc.face_id;
   
   // Fetch font size in pixel units
-  ftscaler.pixel = 1; // TRUE
+  mpFace->ftscaler.pixel = 1; // TRUE
   switch (Unit)
   {
     case eFontUnitEM    : pixels = (FT_UInt)roundf (EMToPixel(Size)); break;
@@ -1080,14 +1071,14 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
     case eFontUnitPixel : pixels = (FT_UInt)roundf (Size); break;
   }
   
-  pixels *= NUI_SCALE_FACTOR;
+  pixels *= nuiGetScaleFactor();
   
   NGL_ASSERT(pixels > 0);
   
   if (IsScalable())
   {
-    ftscaler.width  = pixels;
-    ftscaler.height = pixels;
+    mpFace->ftscaler.width  = pixels;
+    mpFace->ftscaler.height = pixels;
   }
   else
   {
@@ -1102,8 +1093,8 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
       
       if (pixels == size.height)
       {
-        ftscaler.width  = size.width;
-        ftscaler.height = size.height;
+        mpFace->ftscaler.width  = size.width;
+        mpFace->ftscaler.height = size.height;
         break;
       }
     }
@@ -1111,18 +1102,9 @@ bool nuiFontBase::SetSize (float Size, nuiFontUnit Unit)
       return false;
   }
   
-  if (FTC_Manager_LookupSize (gFTCacheManager, &ftscaler, &ftsize))
-  {
-    NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("Couldn't change font size (to %dpx)"), pixels); )
-    return false;
-  }
-  
-  mpFace->Face = ftsize->face;
-  mpFace->Desc.face_id = ftscaler.face_id;
   mpFace->Desc.width   = pixels;
   mpFace->Desc.height  = pixels;
-  mSize = pixels * NUI_INV_SCALE_FACTOR;
-  
+  mSize = pixels * nuiGetInvScaleFactor();
   return true;
 }
 
@@ -1151,15 +1133,16 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
   if (!(glyph = (FT_Glyph)GetGlyph(Index, Type)))
     return false;
   
+  const float f = nuiGetInvScaleFactor();
   switch (glyph->format)
   {
     case FT_GLYPH_FORMAT_BITMAP:
     {
       FT_BitmapGlyph bitmap = (FT_BitmapGlyph)glyph;
-      rInfo.Width    = NUI_INV_SCALE_FACTOR * (float)bitmap->bitmap.width;
-      rInfo.Height   = NUI_INV_SCALE_FACTOR * (float)bitmap->bitmap.rows;
-      rInfo.BearingX = NUI_INV_SCALE_FACTOR * (float)bitmap->left;
-      rInfo.BearingY = NUI_INV_SCALE_FACTOR * (float)bitmap->top;
+      rInfo.Width    = f * (float)bitmap->bitmap.width;
+      rInfo.Height   = f * (float)bitmap->bitmap.rows;
+      rInfo.BearingX = f * (float)bitmap->left;
+      rInfo.BearingY = f * (float)bitmap->top;
     }
       break;
       
@@ -1168,10 +1151,10 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
       FT_BBox bbox;
       
       FT_Glyph_Get_CBox(glyph, ft_glyph_bbox_pixels, &bbox);
-      rInfo.Width    = NUI_INV_SCALE_FACTOR * (float)(bbox.xMax - bbox.xMin);
-      rInfo.Height   = NUI_INV_SCALE_FACTOR * (float)(bbox.yMax - bbox.yMin);
-      rInfo.BearingX = NUI_INV_SCALE_FACTOR * (float)bbox.xMin;
-      rInfo.BearingY = NUI_INV_SCALE_FACTOR * (float)bbox.yMax;
+      rInfo.Width    = f * (float)(bbox.xMax - bbox.xMin);
+      rInfo.Height   = f * (float)(bbox.yMax - bbox.yMin);
+      rInfo.BearingX = f * (float)bbox.xMin;
+      rInfo.BearingY = f * (float)bbox.yMax;
     }
       break;
       
@@ -1180,8 +1163,8 @@ bool nuiFontBase::GetGlyphInfo (nuiGlyphInfo& rInfo, uint Index, GlyphType Type)
   }
   
   rInfo.Index = Index;
-  rInfo.AdvanceX = NUI_INV_SCALE_FACTOR * glyph->advance.x / 65536.0f;
-  rInfo.AdvanceY = NUI_INV_SCALE_FACTOR * glyph->advance.y / 65536.0f;
+  rInfo.AdvanceX = f * glyph->advance.x / 65536.0f;
+  rInfo.AdvanceY = f * glyph->advance.y / 65536.0f;
   
   return true;
 }
@@ -1205,8 +1188,8 @@ bool nuiFontBase::GetKerning (uint Left, uint Right, float& rX, float& rY) const
     }
   }
   
-  rX *= NUI_INV_SCALE_FACTOR;
-  rY *= NUI_INV_SCALE_FACTOR;
+  rX *= nuiGetInvScaleFactor();
+  rY *= nuiGetInvScaleFactor();
   
   return true;
 }
@@ -1218,7 +1201,8 @@ bool nuiFontBase::GetKerning (uint Left, uint Right, float& rX, float& rY) const
 
 int nuiFontBase::GetCharMapCount() const
 {
-  return mpFace->Face ? mpFace->Face->num_charmaps : 0;
+  FT_Face face = mpFace->GetFace();
+  return face ? face->num_charmaps : 0;
 }
 
 int nuiFontBase::GetCharMap() const
@@ -1228,10 +1212,11 @@ int nuiFontBase::GetCharMap() const
 
 bool nuiFontBase::SetCharMap (int Index)
 {
-  if (!mpFace->Face || (Index < -1) || (Index >= mpFace->Face->num_charmaps))
+  FT_Face face = mpFace->GetFace();
+  if (!face || (Index < -1) || (Index >= face->num_charmaps))
     return false;
   
-  if (FT_Set_Charmap (mpFace->Face, mpFace->Face->charmaps[Index]) != 0)
+  if (FT_Set_Charmap (face, face->charmaps[Index]) != 0)
     return false;
   
   mCharMap = Index;
@@ -1240,15 +1225,17 @@ bool nuiFontBase::SetCharMap (int Index)
 
 const nglChar* nuiFontBase::GetCharMapName ()  const
 {
-  return mpFace->Face ? ::nuiGetCharMapName(mpFace->Face->charmap) : NULL;
+  FT_Face face = mpFace->GetFace();
+  return face ? ::nuiGetCharMapName(face->charmap) : NULL;
 }
 
 const nglChar* nuiFontBase::GetCharMapName (int Index)  const
 {
-  if (!mpFace->Face || (Index < 0) || (Index >= mpFace->Face->num_charmaps))
+  FT_Face face = mpFace->GetFace();
+  if (!face || (Index < 0) || (Index >= face->num_charmaps))
     return NULL;
   
-  return ::nuiGetCharMapName(mpFace->Face->charmaps[Index]);
+  return ::nuiGetCharMapName(face->charmaps[Index]);
 }
 
 
@@ -1264,7 +1251,8 @@ int nuiFontBase::GetGlyphIndexes (const nglChar* pSource, int SourceLength, uint
 
 int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uint* pIndexes, int IndexesLength) const
 {
-  if (!mpFace->Face)
+  FT_Face face = mpFace->GetFace();
+  if (!face)
     return -1;
   
   /*
@@ -1277,8 +1265,8 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
   
   /* No selected or available charmap, or charmap conversion turned off : do a dumb copy
    */
-  if (!mpFace->Face->charmap ||
-      (mpFace->Face->charmap->encoding == ft_encoding_none))
+  if (!face->charmap ||
+      (face->charmap->encoding == ft_encoding_none))
   {
 #ifdef DBG_INDEX
     NGL_OUT(_T("GetGlyphIndexes => Font encoding = none, using chars as glyph indices\n"));
@@ -1362,15 +1350,16 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
 }
 
 
-int32 nuiFontBase::GetGlyphIndex(nglUChar Source) const
+int32 nuiFontBase::GetGlyphIndex(nglUChar Source, nglUChar VariationSelector) const
 {
-  if (!mpFace->Face)
+  FT_Face face = mpFace->GetFace();
+  if (!face)
     return -1;
   
   /* No selected or available charmap, or charmap conversion turned off : do a dumb copy
    */
-  if (!mpFace->Face->charmap ||
-      (mpFace->Face->charmap->encoding == ft_encoding_none))
+  if (!face->charmap ||
+      (face->charmap->encoding == ft_encoding_none))
   {
 #ifdef DBG_INDEX
     NGL_OUT(_T("GetGlyphIndexes => Font encoding = none, using chars as glyph indices\n"));
@@ -1397,7 +1386,8 @@ nuiFontBase::RenderMode nuiFontBase::GetRenderMode() const
 
 bool nuiFontBase::SetRenderMode (nuiFontBase::RenderMode Mode)
 {
-  if (!mpFace->Face || !IsScalable())
+  FT_Face face = mpFace->GetFace();
+  if (!face || !IsScalable())
     return false;
   
   FT_Int32 flags = FT_LOAD_DEFAULT;
@@ -1407,6 +1397,8 @@ bool nuiFontBase::SetRenderMode (nuiFontBase::RenderMode Mode)
   
   if (!(Mode & Hinting))
     flags |= FT_LOAD_NO_HINTING;
+  
+  //flags |= FT_LOAD_TARGET_LCD;
   
   mpFace->Desc.flags = flags;
   mRenderMode = Mode;
@@ -1421,6 +1413,7 @@ bool nuiFontBase::SetRenderMode (nuiFontBase::RenderMode Mode)
 
 nuiFontBase::GlyphHandle nuiFontBase::GetGlyph (uint Index, GlyphType Type) const
 {
+  FT_Face face = mpFace->GetFace();
   FT_Glyph glyph;
   FTC_ImageTypeRec desc = mpFace->Desc; // Our query, with .flags = FT_LOAD_DEFAULT
   
@@ -1428,7 +1421,7 @@ nuiFontBase::GlyphHandle nuiFontBase::GetGlyph (uint Index, GlyphType Type) cons
   {
     case eGlyphNative : break;
     case eGlyphOutline: break;
-    case eGlyphBitmap : desc.flags |= FT_LOAD_RENDER; break;
+    case eGlyphBitmap : desc.flags |= FT_LOAD_FORCE_AUTOHINT | FT_LOAD_RENDER; break;
   }
   
   if (FTC_ImageCache_Lookup(gFTImageCache, &desc, Index, &glyph, NULL) != FT_Err_Ok)
@@ -1558,6 +1551,11 @@ bool nuiFontBase::GetBitmap8 (const GlyphBitmap& rSrc, GlyphBitmap& rDst) const
   return true;
 }
 
+bool nuiFontBase::IsValid() const
+{
+  return mValid;
+}
+
 
 /*
  * Internals
@@ -1565,6 +1563,8 @@ bool nuiFontBase::GetBitmap8 (const GlyphBitmap& rSrc, GlyphBitmap& rDst) const
 
 void nuiFontBase::Defaults()
 {
+  mValid = false;
+
   /* The face object (is managed by the cache)
    */
   mpFace = new FaceHandle();
@@ -1603,9 +1603,9 @@ void nuiFontBase::Defaults()
   mTextures.push_back(texture);
 }
 
-#define NGL_FTCACHE_MAX_FACES 5000
-#define NGL_FTCACHE_MAX_SIZES 400
-#define NGL_FTCACHE_MAX_BYTES (1024*1024*100)
+#define NGL_FTCACHE_MAX_FACES 10
+#define NGL_FTCACHE_MAX_SIZES 20
+#define NGL_FTCACHE_MAX_BYTES (1024*1024*5)
 
 bool nuiFontBase::Init()
 {
@@ -1618,7 +1618,8 @@ bool nuiFontBase::Init()
     error = FT_Init_FreeType (&gFTLibrary);
     if (error)
     {
-      SetError (_T("font"), NGL_FONT_EINIT);
+      NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Unable to initialize the FreeType library")); )
+      //SetError (_T("font"), NGL_FONT_EINIT);
       return false;
     }
     App->AddExit (OnExit);
@@ -1652,27 +1653,27 @@ bool nuiFontBase::Init()
   return true;
 }
 
-bool nuiFontBase::Load (const nglPath& rPath, uint Face)
+bool nuiFontBase::Load (const nglPath& rPath, uint Face, float Size)
 {
   // Load face from file spec
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font '%s' (face %d)"), rPath.GetNodeName().GetChars(), Face); )
   mpFace->SetFontInstance(new nuiFontInstance(rPath, Face));
   mpFace->Desc.face_id = nuiFontInstance::Install(mpFace->GetFontInstance());
   
-  return LoadFinish();
+  return LoadFinish(Size);
 }
 
-bool nuiFontBase::Load (const uint8* pBase, int32 Size, uint Face, bool StaticBuffer)
+bool nuiFontBase::Load (const uint8* pBase, int32 BufferSize, uint Face, bool StaticBuffer, float Size)
 {
   // Load face from memory
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_INFO, _T("Loading logical font at %p (face %d, %d bytes)"), pBase, Face, Size); )
-  mpFace->SetFontInstance(new nuiFontInstance(pBase, Size, Face, StaticBuffer));
+  mpFace->SetFontInstance(new nuiFontInstance(pBase, BufferSize, Face, StaticBuffer));
   mpFace->Desc.face_id = nuiFontInstance::Install(mpFace->GetFontInstance());
   
-  return LoadFinish();
+  return LoadFinish(Size);
 }
 
-bool nuiFontBase::Load (FaceID ID)
+bool nuiFontBase::Load (FaceID ID, float Size)
 {
   // Load face from FreeType cache ID
 #ifdef _DEBUG_
@@ -1683,30 +1684,44 @@ bool nuiFontBase::Load (FaceID ID)
   
   mpFace->Desc.face_id = (FTC_FaceID)ID;
   
-  return LoadFinish();
+  return LoadFinish(Size);
 }
 
-bool nuiFontBase::LoadFinish()
+bool nuiFontBase::LoadFinish(float Size)
 {
+  mValid = false;
+
   /* Fetch generic (maybe unsized) face
    */
   if (FTC_Manager_LookupFace (gFTCacheManager, mpFace->Desc.face_id, &mpFace->Face) != FT_Err_Ok)
   {
-    SetError(_T("font"), NGL_FONT_ELOAD);
+    //SetError(_T("font"), NGL_FONT_ELOAD);
     return false;
   }
   
+  /* Select a default size
+   */
+  if (!SetSize(Size, eFontUnitPixel))
+    return false;
+  if (IsScalable())
+    SetRenderMode(AntiAliasing | Hinting);
+  
+
+  FT_Face face = mpFace->Face;
+  if (!face)
+    return false;
+  
   /* Initialize some global info fields
    */
-  mFamilyName.Import (mpFace->Face->family_name);
+  mFamilyName.Import (face->family_name);
   if (mFamilyName == _T("LastResort"))
     mLastResort = true;
-  mStyleName.Import (mpFace->Face->style_name);
-  mUnitsPerEM = (float)mpFace->Face->units_per_EM;
-  mGlobalHeight = (float)mpFace->Face->height; // Only valid for scalable fonts (see GetHeight())
+  mStyleName.Import (face->style_name);
+  mUnitsPerEM = (float)face->units_per_EM;
+  mGlobalHeight = (float)face->height; // Only valid for scalable fonts (see GetHeight())
   
   // Get Panose information from the TT OS/2 tables
-  TT_OS2* pOS2 = (TT_OS2*)FT_Get_Sfnt_Table(mpFace->Face, ft_sfnt_os2);
+  TT_OS2* pOS2 = (TT_OS2*)FT_Get_Sfnt_Table(face, ft_sfnt_os2);
   if (pOS2)
   {
     memcpy(&mPanoseBytes, pOS2->panose, 10);
@@ -1719,38 +1734,11 @@ bool nuiFontBase::LoadFinish()
     mHasPanoseInfo = false;
   }
   
-  /* Select a default size
-   */
-  if (IsScalable())
-  {
-    if (!SetSize(DefaultPixelSize, eFontUnitPixel))
-      return false;
-    SetRenderMode(AntiAliasing | Hinting);
-  }
-  else
-  {
-    if (mpFace->Face->num_fixed_sizes > 0)
-    {
-      // Take first available size
-      FT_Bitmap_Size* size = mpFace->Face->available_sizes;
-      
-      if (!SetSize ((float)size->height, eFontUnitPixel))
-        return false;
-    }
-#ifdef _DEBUG_
-    else
-    {
-      NGL_LOG(_T("font"), NGL_LOG_WARNING, _T("Oddity: fixed font with no available sizes"));
-    }
-#endif // _DEBUG_
-       // No SetRenderMode() since this is a bitmap font
-  }
-  
   /* Select a default charmap
    *
    * (see GetGlyphindexes for more info)
    */
-  if (FT_Select_Charmap (mpFace->Face, ft_encoding_unicode) != FT_Err_Ok)
+  if (FT_Select_Charmap (face, FT_ENCODING_UNICODE) != FT_Err_Ok)
   {
 #ifdef USE_WCHAR
     // We can't select Unicode output, we'll do nglChar -> locale and use the first map (if available)
@@ -1758,30 +1746,33 @@ bool nuiFontBase::LoadFinish()
 #else
     // We expect that the first charmap is actually the right one for the locale's encoding
 #endif
-    FT_Set_Charmap (mpFace->Face, mpFace->Face->charmaps[0]);
+    FT_Set_Charmap (face, face->charmaps[0]);
   }
 #ifndef USE_WCHAR
   else
     // We have a Unicode charmap, we'll do locale -> UCS-2 conversion
     mpConv = nglString::GetStringConv(nglEncodingPair(eEncodingInternal, eUCS2));
 #endif
-  mCharMap = FT_Get_Charmap_Index(mpFace->Face->charmap);
+  mCharMap = FT_Get_Charmap_Index(face->charmap);
   
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  selected charmap   : %s (#%d)"), GetCharMapName(), GetCharMap()); )
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  charmap conversion : %s"), YESNO(mpConv)); )
   
+  mValid = true;
+
   return true;
 }
 
 void nuiFontBase::GetEncodings(std::set<nglTextEncoding>& rEncodings)
 {
+  FT_Face face = mpFace->GetFace();
   rEncodings.clear();
   
   int32 count = GetCharMapCount();
   
   for (int32 i = 0; i < count; i++)
   {
-    FT_CharMap charmap = mpFace->Face->charmaps[i];
+    FT_CharMap charmap = face->charmaps[i];
     rEncodings.insert(nuiGetCharMapEncoding(charmap));
   }
 }
@@ -1840,12 +1831,10 @@ bool nuiFontBase::IsLastResort() const
 
 nuiTexture *nuiFontBase::AllocateTexture(int size)
 {
-  size *= NUI_SCALE_FACTOR;
+  size *= nuiGetScaleFactor();
   nglImageInfo ImageInfo(false);
   ImageInfo.mBufferFormat = eImageFormatRaw;
   ImageInfo.mPixelFormat = eImagePixelAlpha;
-  nuiFontInfo FontInfo;
-  GetInfo(FontInfo);
   ImageInfo.mWidth = size;
   ImageInfo.mHeight = size;
   ImageInfo.mBitDepth = 8;
@@ -1902,8 +1891,6 @@ void nuiFontBase::Blit8BitsBitmapToTexture(const GlyphBitmap &rBitmap, nuiTextur
 
 bool nuiFontBase::CopyBitmapToTexture(const GlyphBitmap &rBitmap, nuiTexture *pTexture, unsigned int OffsetX, unsigned int OffsetY)
 {
-  OffsetX;
-  OffsetY;
   int32 Width = rBitmap.Width;
   int32 Height = rBitmap.Height;
   switch (rBitmap.Depth)
@@ -2042,264 +2029,46 @@ void nuiFontBase::SetAlphaTest(float Threshold)
   mAlphaTest = Threshold;
 }
 
-int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels)
+void nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels)
 {
-  nuiFontLayout layout(*this);
-
+  nuiTextLayout layout(this);
   layout.Layout(rText);
-
-  int c = 0;
-  int lines = 0;
-  while (c >= 0)
-  {
-    c = rText.Find('\n',c);
-    if (c!=-1)
-      c++;
-    lines++;
-  }
-
-  Y -= GetHeight() * (lines-1);
-  return Print(pContext, X, Y, layout, AlignGlyphPixels);
+  layout.Print(pContext, X, Y, AlignGlyphPixels);
 }
 
-int nuiFontBase::Print(nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout, bool AlignGlyphPixels)
-{
-  int todo = rLayout.GetGlyphCount();
-  if (!todo)
-    return 0;
-  int i;
-  int done = 0;
-
-  bool blendsaved = pContext->GetState().mBlending;
-  bool texturesaved = pContext->GetState().mTexturing;
-
-  pContext->EnableBlending(true);
-  pContext->EnableTexturing(true);
-
-  nuiColor SavedColor = pContext->GetFillColor();
-  pContext->SetFillColor(pContext->GetTextColor());
-  pContext->SetBlendFunc(nuiBlendTransp);
-
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
-  for (i = 0; i < todo; i++)
-  {
-    // Fetch i-th glyph in layout
-    const nuiGlyphLayout* pglyph = rLayout.GetGlyph(i);
-    if (!pglyph)
-      break;
-
-    nuiGlyphLayout glyph;
-
-    glyph.X     = X + pglyph->X;
-    glyph.Y     = Y + pglyph->Y;
-    glyph.Pos   = pglyph->Pos;
-    glyph.Index = pglyph->Index;
-
-    if (((nuiFontBase*)pglyph->mpFont)->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels))
-      done++;
-
-    Glyphs[glyph.mpTexture].push_back(glyph);
-  }
-
-  PrintGlyphs(pContext, Glyphs);
-
-  // Draw underlines if needed
-  if (rLayout.GetUnderline())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.UnderlinePos;
-    float thickness = info.UnderlineThick;
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos) - .5f;
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-
-    pContext->SetStrokeColor(oldcolor);
-  }
-  
-  // Draw underlines if needed
-  if (rLayout.GetStrikeThrough())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.Ascender * .4f;
-    float thickness = ToNearest(info.UnderlineThick);
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos);
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-    
-    pContext->SetStrokeColor(oldcolor);
-  }
-  
-  pContext->EnableBlending(blendsaved);
-  pContext->EnableTexturing(texturesaved);
-
-  pContext->SetFillColor(SavedColor);
-
-  return done;
-}
-
-
-bool nuiFontBase::PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
+bool nuiFontBase::PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph)
 {
   // Fetch rendered glyph
-  GlyphHandle glyph = rGlyph.mpFont->GetGlyph(rGlyph.Index, eGlyphBitmap);
-
-  // If we don't have this glyph, assert it has not been rendered
-  if (!glyph)
-    return false;
-
-  GlyphBitmap bmp;
-  if (!rGlyph.mpFont->GetGlyphBitmap(glyph, bmp))
-    return false;
-
-  nuiFontBase::GlyphLocation GlyphLocation;
-  ((nuiFontBase*)rGlyph.mpFont)->GetCacheGlyph(rGlyph.Index, GlyphLocation);
-
-  float w = GlyphLocation.mWidth;
-  float h = GlyphLocation.mHeight;
-
-  float x = rGlyph.X + bmp.Left;
-  float y = rGlyph.Y - bmp.Top;
-  if (AlignGlyphPixels)
-  {
-    x = ToNearest(x * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-    y = ToNearest(y * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-  }
-  
-  nuiTexture *texture;
-  texture = mTextures[GlyphLocation.mOffsetTexture];
-
-  pContext->SetTexture(texture);
-
-  nuiRect DestRect(x - 1, y - 1, w * NUI_INV_SCALE_FACTOR + 2, h * NUI_INV_SCALE_FACTOR + 2);
-  nuiRect SourceRect((float)GlyphLocation.mOffsetX - 1, (float)GlyphLocation.mOffsetY - 1, w + 2, h + 2);
-
-  pContext->DrawImage(DestRect, SourceRect);
-
-  return true;
-}
-
-bool nuiFontBase::PrepareGlyph (int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels)
-{
-  // Fetch rendered glyph
-  GlyphHandle glyph = GetGlyph(Index, eGlyphBitmap);
-  rGlyph.Index = Index;
+  GlyphHandle glyph = GetGlyph(rGlyph.Index, eGlyphBitmap);
   
   // If we don't have this glyph, assert it has not been rendered
   if (!glyph)
     return false;
-
+  
   GlyphBitmap bmp;
   if (!GetGlyphBitmap(glyph, bmp))
     return false;
-
+  
   nuiFontBase::GlyphLocation GlyphLocation;
-  GetCacheGlyph(Index, GlyphLocation);
-
+  GetCacheGlyph(rGlyph.Index, GlyphLocation);
+  
   float w = GlyphLocation.mWidth;
   float h = GlyphLocation.mHeight;
-
-  float x = rGlyph.X + bmp.Left * NUI_INV_SCALE_FACTOR;
-  float y = rGlyph.Y - bmp.Top * NUI_INV_SCALE_FACTOR;
-
+  
+  float x = rGlyph.mX + bmp.Left * nuiGetInvScaleFactor();
+  float y = rGlyph.mY - bmp.Top * nuiGetInvScaleFactor();
+  
   rGlyph.mpTexture = mTextures[GlyphLocation.mOffsetTexture];
-
-  float ww = w * NUI_INV_SCALE_FACTOR;
-  float hh = h * NUI_INV_SCALE_FACTOR;
-  if (AlignGlyphPixels)
-  {
-    x = ToNearest(x * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-    y = ToNearest(y * NUI_SCALE_FACTOR) * NUI_INV_SCALE_FACTOR;
-  }
-
-  rGlyph.mDestRect.Set(x - 1, y - 1, ww + 2, hh + 2);
-  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - NUI_SCALE_FACTOR, GlyphLocation.mOffsetY - NUI_SCALE_FACTOR, w + 2 * NUI_SCALE_FACTOR, h + 2 * NUI_SCALE_FACTOR);
-
+  
+  float ww = w * nuiGetInvScaleFactor();
+  float hh = h * nuiGetInvScaleFactor();
+  
+  rGlyph.mDestRect.Set(X + x - 1, Y + y - 1, ww + 2, hh + 2);
+  rGlyph.mSourceRect.Set(GlyphLocation.mOffsetX - nuiGetScaleFactor(), GlyphLocation.mOffsetY - nuiGetScaleFactor(), w + 2 * nuiGetScaleFactor(), h + 2 * nuiGetScaleFactor());
+  
   return true;
 }
 
-
-int nuiFontBase::GetTextSize (float& X, float& Y, const nglChar* pText)
-{
-
-  nuiFontLayout Layout(*this);
-
-  int done = Layout.Layout(pText);
-
-  nuiGlyphInfo GlyphInfo;
-  Layout.GetMetrics(GlyphInfo);
-
-  Y = MAX(GlyphInfo.Height, GlyphInfo.AdvanceY);
-  X = MAX(GlyphInfo.Width,  GlyphInfo.AdvanceX);
-
-  return done;
-
-}
-
-int nuiFontBase::GetTextPos (float x, const nglChar* pText)
-{
-  nuiFontLayout Layout(*this);
-
-  int done =  Layout.Layout(pText);
-
-  if (done == -1) 
-    return -1;
-
-  if (!done)
-  {
-    return 0;
-  }
-
-  nuiGlyphInfo Info;
-  Layout.GetMetrics(Info);
-  
-  if (!Layout.GetGlyphCount())
-    return 0;
-
-  if (x > Layout.GetGlyph(done-1)->X) 
-  {
-    return (done-1);
-  }
-
-  for (int i = 0; i < done; i++) 
-  {
-    const nuiGlyphLayout * pGlyphLayout = Layout.GetGlyph(i);
-
-    if (x <= (pGlyphLayout->X))
-    {
-      return i;
-    }
-  }
-  return done;
-}
-
-const nglChar* nuiFontBase::OnError (uint& rError) const
-{
-  return FetchError(gpFontBaseErrorTable, NULL, rError);
-}
 
 nuiFontBase::GlyphLocation::GlyphLocation()
 {
@@ -2314,125 +2083,226 @@ nuiFontBase::GlyphLocation::~GlyphLocation()
 {
 }
 
-bool nuiFontBase::PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiGlyphLayout> >& rGlyphs)
+
+////////////
+
+static hb_bool_t
+nui_hb_get_glyph (hb_font_t *font,
+                 void *font_data,
+                 hb_codepoint_t unicode,
+                 hb_codepoint_t variation_selector,
+                 hb_codepoint_t *glyph,
+                 void *user_data)
+
 {
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> >::const_iterator it = rGlyphs.begin();
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> >::const_iterator end = rGlyphs.end();
+  nuiFontBase* pFont = (nuiFontBase*)user_data;
+  NGL_ASSERT(pFont);
+  *glyph = pFont->GetGlyphIndex(unicode, variation_selector);
+  return *glyph != 0;
+}
 
-  bool texturing = pContext->GetState().mTexturing;
-  nuiTexture* pOldTexture = pContext->GetTexture();
-  if (pOldTexture)
-    pOldTexture->Acquire();
+static hb_position_t
+nui_hb_get_glyph_h_advance(hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t glyph,
+                           void *user_data)
+{
+  nuiFontBase* pFont = (nuiFontBase*)user_data;
+  NGL_ASSERT(pFont);
+  FT_Glyph ftglyph;
+  
+  ftglyph = (FT_Glyph)pFont->GetGlyph(glyph, nuiFontBase::eGlyphNative);
+  NGL_ASSERT(ftglyph);
+  return ftglyph->advance.x >> 10;
+}
 
-  pContext->EnableTexturing(true);
+static hb_position_t
+nui_hb_get_glyph_v_advance(hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t glyph,
+                           void *user_data)
+{
+  nuiFontBase* pFont = (nuiFontBase*)user_data;
+  NGL_ASSERT(pFont);
+  FT_Glyph ftglyph;
+  
+  ftglyph = (FT_Glyph)pFont->GetGlyph(glyph, nuiFontBase::eGlyphNative);
+  NGL_ASSERT(ftglyph);
+  return ftglyph->advance.y >> 10;
+}
 
-  while (it != end)
-  {
-    nuiTexture* pTexture = it->first;
-    pContext->SetTexture(pTexture);
-    int size = (int)it->second.size();
-    int i;
+static hb_bool_t
+nui_hb_get_glyph_h_origin (hb_font_t *font,
+                          void *font_data,
+                          hb_codepoint_t glyph,
+                          hb_position_t *x,
+                          hb_position_t *y,
+                          void *user_data)
+{
+  /* We always work in the horizontal coordinates. */
+  return TRUE;
+}
 
-    nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
-    pArray->EnableArray(nuiRenderArray::eVertex);
-    pArray->EnableArray(nuiRenderArray::eTexCoord);
-    pArray->Reserve(6 * size);
-    
-    for (i = 0; i < size; i++)
-    {
-      const nuiRect& rDest = it->second[i].mDestRect;
-      const nuiRect& rSource = it->second[i].mSourceRect;
+static hb_bool_t
+nui_hb_get_glyph_v_origin (hb_font_t *font,
+                          void *font_data,
+                          hb_codepoint_t glyph,
+                          hb_position_t *x,
+                          hb_position_t *y,
+                          void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  int load_flags = FT_LOAD_DEFAULT;
+  
+  if (FT_Load_Glyph (ft_face, glyph, load_flags))
+    return FALSE;
+  
+  /* Note: FreeType's vertical metrics grows downward while other FreeType coordinates
+   * have a Y growing upward.  Hence the extra negation. */
+  *x = ft_face->glyph->metrics.horiBearingX -   ft_face->glyph->metrics.vertBearingX;
+  *y = ft_face->glyph->metrics.horiBearingY - (-ft_face->glyph->metrics.vertBearingY);
+  
+  return TRUE;
+}
 
-      nuiSize x1,y1,x2,y2;
-      nuiSize tx,ty,tw,th;
+static hb_position_t
+nui_hb_get_glyph_h_kerning (hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t left_glyph,
+                           hb_codepoint_t right_glyph,
+                           void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  FT_Vector kerningv;
+  
+  if (FT_Get_Kerning (ft_face, left_glyph, right_glyph, FT_KERNING_DEFAULT, &kerningv))
+    return 0;
+  
+  return kerningv.x;
+}
 
-      x1 = rDest.mLeft;
-      y1 = rDest.mTop;
-      x2 = rDest.mRight;
-      y2 = rDest.mBottom;
-      
-      tx = rSource.mLeft;
-      ty = rSource.mTop;
-      tw = rSource.mRight;
-      th = rSource.mBottom;
+static hb_position_t
+nui_hb_get_glyph_v_kerning (hb_font_t *font,
+                           void *font_data,
+                           hb_codepoint_t top_glyph,
+                           hb_codepoint_t bottom_glyph,
+                           void *user_data)
+{
+  /* FreeType API doesn't support vertical kerning */
+  return 0;
+}
 
-      pTexture->ImageToTextureCoord(tx, ty);
-      pTexture->ImageToTextureCoord(tw,th);
+static hb_bool_t
+nui_hb_get_glyph_extents (hb_font_t *font,
+                         void *font_data,
+                         hb_codepoint_t glyph,
+                         hb_glyph_extents_t *extents,
+                         void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  int load_flags = FT_LOAD_DEFAULT;
+  
+  if (FT_Load_Glyph (ft_face, glyph, load_flags))
+    return FALSE;
+  
+  extents->x_bearing = ft_face->glyph->metrics.horiBearingX;
+  extents->y_bearing = ft_face->glyph->metrics.horiBearingY;
+  extents->width = ft_face->glyph->metrics.width;
+  extents->height = ft_face->glyph->metrics.height;
+  return TRUE;
+}
 
-      ///////////////////////////////////////////
-      pArray->SetVertex(x1, y1);
-      pArray->SetTexCoords(tx, ty);
-      pArray->PushVertex();
-      
-      pArray->SetVertex(x2, y1);
-      pArray->SetTexCoords(tw, ty);
-      pArray->PushVertex();
-      
-      pArray->SetVertex(x2, y2);
-      pArray->SetTexCoords(tw, th);
-      pArray->PushVertex();
-
-      ///////////////////////////////////////////
-      pArray->SetVertex(x1, y1);
-      pArray->SetTexCoords(tx, ty);
-      pArray->PushVertex();
-
-      pArray->SetVertex(x2, y2);
-      pArray->SetTexCoords(tw, th);
-      pArray->PushVertex();
-
-      pArray->SetVertex(x1, y2);
-      pArray->SetTexCoords(tx, th);
-      pArray->PushVertex();
-    }
-
-    //nglString str = pArray->Dump();
-    //NGL_OUT("%s", str.GetChars());
-    pContext->DrawArray(pArray);
-
-    ++it;
-  }
-
-  pContext->EnableTexturing(texturing);
-  pContext->SetTexture(pOldTexture);
-  if (pOldTexture)
-    pOldTexture->Release();
-
-  return true;
+static hb_bool_t
+nui_hb_get_glyph_contour_point (hb_font_t *font,
+                               void *font_data,
+                               hb_codepoint_t glyph,
+                               unsigned int point_index,
+                               hb_position_t *x,
+                               hb_position_t *y,
+                               void *user_data)
+{
+  FT_Face ft_face = (FT_Face) font_data;
+  int load_flags = FT_LOAD_DEFAULT;
+  
+  if (FT_Load_Glyph (ft_face, glyph, load_flags))
+    return FALSE;
+  
+  if (ft_face->glyph->format != FT_GLYPH_FORMAT_OUTLINE)
+    return FALSE;
+  
+  if (point_index >= (unsigned int) ft_face->glyph->outline.n_points)
+    return FALSE;
+  
+  *x = ft_face->glyph->outline.points[point_index].x;
+  *y = ft_face->glyph->outline.points[point_index].y;
+  
+  return TRUE;
 }
 
 
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
-  NGL_ASSERT(this == pRun->mpFont);
+  if (pRun->IsDummy())
+    return;
+  NGL_ASSERT(this == pRun->mStyle.GetFont());
   
-  FT_Face ft_face = mpFace->Face;
-  hb_face_t *hb_face = hb_ft_face_create_cached(ft_face);
-  hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
+  FT_Face ft_face = mpFace->GetFace();
+  
+  hb_font_t *hb_font;
+  hb_face_t *face;
+  
+  face = hb_ft_face_create (ft_face, NULL);
+  hb_font = hb_font_create (face);
+  hb_face_destroy (face);
+  
+  hb_font_funcs_t* funcs = hb_font_funcs_create();
+  
+  hb_font_funcs_set_glyph_func(funcs, &nui_hb_get_glyph, this, NULL);
+  hb_font_funcs_set_glyph_h_advance_func(funcs, &nui_hb_get_glyph_h_advance, this, NULL);
+  hb_font_funcs_set_glyph_v_advance_func(funcs, &nui_hb_get_glyph_v_advance, this, NULL);
+  hb_font_funcs_set_glyph_h_origin_func(funcs, &nui_hb_get_glyph_h_origin, this, NULL);
+  hb_font_funcs_set_glyph_v_origin_func(funcs, &nui_hb_get_glyph_v_origin, this, NULL);
+  hb_font_funcs_set_glyph_h_kerning_func(funcs, &nui_hb_get_glyph_h_kerning, this, NULL);
+  hb_font_funcs_set_glyph_v_kerning_func(funcs, &nui_hb_get_glyph_v_kerning, this, NULL);
+  hb_font_funcs_set_glyph_extents_func(funcs, &nui_hb_get_glyph_extents, this, NULL);
+  hb_font_funcs_set_glyph_contour_point_func(funcs, &nui_hb_get_glyph_contour_point, this, NULL);
+
+  hb_font_set_funcs (hb_font,
+                     funcs,
+                     ft_face, NULL);
+  hb_font_set_scale (hb_font,
+                     ((uint64_t) ft_face->size->metrics.x_scale * (uint64_t) ft_face->units_per_EM) >> 16,
+                     ((uint64_t) ft_face->size->metrics.y_scale * (uint64_t) ft_face->units_per_EM) >> 16);
+  hb_font_set_ppem (hb_font,
+                    ft_face->size->metrics.x_ppem,
+                    ft_face->size->metrics.y_ppem);
+
+  //hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
   hb_buffer_t *hb_buffer;
   hb_glyph_info_t *hb_glyph;
   hb_glyph_position_t *hb_position;
   unsigned int num_glyphs, i;
   hb_position_t x;
-  const nglChar* text = NULL;
+  const nglUChar* text = NULL;
   int32 len = 0;
 
-  text = pRun->GetString().GetChars() + pRun->GetPosition();
+  text = pRun->GetUnicodeChars();
   len = pRun->GetLength();
   
   hb_buffer = hb_buffer_create(len);
   
-  hb_buffer_set_unicode_funcs(hb_buffer, hb_nui_get_unicode_funcs());
+  hb_buffer_set_unicode_funcs(hb_buffer, nui_hb_get_unicode_funcs());
   
-  hb_buffer_add_utf8(hb_buffer, text, len, 0, len);
+  //hb_buffer_set_direction(hb_buffer, HB_DIRECTION_TTB);
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
+  hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
   //if (language)
   //  hb_buffer_set_language(hb_buffer, hb_language_from_string(language));
   
   hb_feature_t* features = NULL;
   int32 num_features = 0;
   
-  hb_shape (hb_font, hb_face, hb_buffer, features, num_features);
+  hb_shape(hb_font, hb_buffer, features, num_features);
   
   num_glyphs = hb_buffer_get_length(hb_buffer);
   hb_glyph = hb_buffer_get_glyph_infos(hb_buffer, NULL);
@@ -2441,145 +2311,30 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   pRun->mGlyphs.clear();
   pRun->mGlyphs.resize(num_glyphs);
   x = 0;
+
+  const float factor = nuiGetInvScaleFactor() * (1.0 / 64.0);
+  
+  //printf("Shape %p\n", pRun);
   for (i = 0; i < num_glyphs; i++)
   {
-    pRun->mGlyphs[i].mIndex = hb_glyph->codepoint;
+    GetGlyphInfo(pRun->mGlyphs[i], hb_glyph->codepoint, eGlyphNative);
     pRun->mGlyphs[i].mCluster = hb_glyph->cluster;
-    pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * (1./64);
-    pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * (1./64);
+    pRun->mGlyphs[i].mX = (hb_position->x_offset + x) * factor;
+    pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * factor;
     x += hb_position->x_advance;
     
+    //printf("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
+
     hb_glyph++;
     hb_position++;
+
   }
-  pRun->mAdvanceX = x * (1./64);
-  pRun->mAdvanceY = 0;
+
+  //printf("\n");
+  
+  pRun->mAdvanceX = x * factor;
   hb_buffer_destroy(hb_buffer);
   hb_font_destroy(hb_font);
-  hb_face_destroy(hb_face);
+  hb_font_funcs_destroy(funcs);
 }
 
-void nuiFontBase::Print(nuiDrawContext* pContext, float X, float Y, nuiTextLayout* pLayout, bool AlignGlyphPixels)
-{
-  bool blendsaved = pContext->GetState().mBlending;
-  bool texturesaved = pContext->GetState().mTexturing;
-  
-  pContext->EnableBlending(true);
-  pContext->EnableTexturing(true);
-  
-  nuiColor SavedColor = pContext->GetFillColor();
-  pContext->SetFillColor(pContext->GetTextColor());
-  pContext->SetBlendFunc(nuiBlendTransp);
-  
-  std::map<nuiTexture*, std::vector<nuiGlyphLayout> > Glyphs;
-
-  // Iterate runs:
-  for (int32 p = 0; p < pLayout->GetParagraphCount(); p++)
-  {
-    for (int32 l = 0; l < pLayout->GetLineCount(p); l++)
-    {
-      nuiTextLine* pLine = pLayout->GetLine(p, l);
-      for (int32 r = 0; r < pLine->GetRunCount(); r++)
-      {
-        nuiTextRun* pRun = pLine->GetRun(r);
-        const std::vector<nuiTextGlyph>& rGlyphs(pRun->GetGlyphs());
-        nuiFont* pFont = pRun->GetFont();
-        
-        for (int32 g = 0; g < rGlyphs.size(); g++)
-        {
-          const nuiTextGlyph& rGlyph(rGlyphs.at(g));
-          
-          nuiGlyphLayout glyph;
-          
-          glyph.X     = X + rGlyph.mX;
-          glyph.Y     = Y + rGlyph.mY;
-          glyph.Pos   = rGlyph.mCluster;
-          glyph.Index = rGlyph.mIndex;
-          
-          pFont->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels);
-          Glyphs[glyph.mpTexture].push_back(glyph);
-        }
-
-      }
-    }
-  }
-
-#if 0
-  for (i = 0; i < todo; i++)
-  {
-    // Fetch i-th glyph in layout
-    const nuiGlyphLayout* pglyph = pLayout.GetGlyph(i);
-    if (!pglyph)
-      break;
-    
-    nuiGlyphLayout glyph;
-    
-    glyph.X     = X + pglyph->X;
-    glyph.Y     = Y + pglyph->Y;
-    glyph.Pos   = pglyph->Pos;
-    glyph.Index = pglyph->Index;
-    
-    if (((nuiFontBase*)pglyph->mpFont)->PrepareGlyph(glyph.Index, glyph, AlignGlyphPixels))
-      done++;
-    
-    Glyphs[glyph.mpTexture].push_back(glyph);
-  }
-  
-  PrintGlyphs(pContext, Glyphs);
-  
-  // Draw underlines if needed
-  if (rLayout.GetUnderline())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.UnderlinePos;
-    float thickness = info.UnderlineThick;
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos) - .5f;
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-    
-    pContext->SetStrokeColor(oldcolor);
-  }
-  
-  // Draw underlines if needed
-  if (rLayout.GetStrikeThrough())
-  {
-    const std::vector<nuiFontLayout::Line>& rLines(rLayout.GetLines());
-    nuiFontInfo info;
-    GetInfo (info);
-    float pos = -info.Ascender * .4f;
-    float thickness = ToNearest(info.UnderlineThick);
-    pContext->SetLineWidth(thickness);
-    nuiColor oldcolor(pContext->GetStrokeColor());
-    pContext->SetStrokeColor(pContext->GetTextColor());
-    
-    for (uint32 i = 0; i < rLines.size(); i++)
-    {
-      nuiFontLayout::Line rLine(rLines[i]);
-      const float x1 = X + rLine.mX;
-      const float x2 = X + rLine.mX + rLine.mWidth;
-      const float y = ToNearest(Y + rLine.mY + pos);
-      if (rLine.mWidth > 0)
-        pContext->DrawLine(x1, y, x2, y);
-    }
-    
-    pContext->SetStrokeColor(oldcolor);
-  }
-#endif
-  
-  pContext->EnableBlending(blendsaved);
-  pContext->EnableTexturing(texturesaved);
-  
-  pContext->SetFillColor(SavedColor);
-}
