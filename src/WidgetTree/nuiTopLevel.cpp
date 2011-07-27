@@ -174,7 +174,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
 
   mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiTopLevel::ToolTipOn);
   mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiTopLevel::ToolTipOff);
-  mTopLevelSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiTopLevel::OnMessageQueueTick);
 
   mpGrab.clear();
   mMouseInfo.TouchId = -1;
@@ -2015,12 +2014,6 @@ void nuiTopLevel::SetWatchedWidget(nuiWidget* pWatchedWidget)
   Invalidate();
 }
 
-void nuiTopLevel::OnMessageQueueTick(const nuiEvent& rEvent)
-{
-  CheckValid();
-  BroadcastQueuedNotifications();
-}
-
 //// CSS Stuff:
 void nuiTopLevel::PrepareWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 MatchersTag)
 {
@@ -2258,32 +2251,22 @@ bool nuiTopLevel::IsEnteringText() const
 
 void nuiTopLevel::PostNotification(nuiNotification* pNotification)
 {
-  mNotificationManager.PostNotification(pNotification);
+  App->PostNotification(pNotification);
 }
 
 void nuiTopLevel::BroadcastNotification(const nuiNotification& rNotification)
 {
-  mNotificationManager.BroadcastNotification(rNotification);
-}
-
-void nuiTopLevel::BroadcastQueuedNotifications()
-{
-  mNotificationManager.BroadcastQueuedNotifications();
+  App->BroadcastNotification(rNotification);
 }
 
 void nuiTopLevel::RegisterObserver(const nglString& rNotificationName, nuiNotificationObserver* pObserver)
 {
-  mNotificationManager.RegisterObserver(rNotificationName, pObserver);
+  App->RegisterObserver(rNotificationName, pObserver);
 }
 
 void nuiTopLevel::UnregisterObserver(nuiNotificationObserver* pObserver, const nglString& rNotificationName)
 {
-  mNotificationManager.UnregisterObserver(pObserver, rNotificationName);
-}
-
-void nuiTopLevel::ClearNotifications()
-{
-  mNotificationManager.Clear();
+  App->UnregisterObserver(pObserver, rNotificationName);
 }
 
 
