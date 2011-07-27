@@ -29,4 +29,5 @@ protected:
   std::vector<float*> mSamples;
   int64 mLength;
   nglPath mPath;
+  nglIStream* mpStream;
 };

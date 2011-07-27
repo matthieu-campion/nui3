@@ -23,7 +23,12 @@ nuiFileVoice::nuiFileVoice(nuiFileSound* pSound)
 
 nuiFileVoice::~nuiFileVoice()
 {
-  
+  if (mpStream)
+    delete mpStream;
+  if (mpReader)
+    delete mpReader;
+  mpStream = NULL;
+  mpReader = NULL;
 }
 
 nuiFileVoice::nuiFileVoice(const nuiFileVoice& rVoice)

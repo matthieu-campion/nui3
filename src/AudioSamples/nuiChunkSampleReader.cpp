@@ -94,13 +94,19 @@ bool nuiChunkSampleReader::ScanAllChunks()
   for(uint32 k = 0; k < 4; k++)
   {
     if( 1 != mrStream.ReadUInt8((uint8*)&(Id[k]), 1))
+    {
+      delete[] Id;
       return false;
+    }
   }
   Id[4] = '\0';
   //get first chunk size
   uint32 utilSize = 0; // = (total size of the stream) - (first chunk header size)
   if (1 != mrStream.ReadUInt32(&utilSize, 1))
+  {
+    delete[] Id;
     return false;
+  }
   uint32 firstChunkSize = FIRST_CHUNK_DATA_BYTES;
 
   Chunk* pFirstChunk = new Chunk(0, firstChunkSize, CHUNK_HEADER_BYTES, Id);
@@ -117,11 +123,17 @@ bool nuiChunkSampleReader::ScanAllChunks()
     for(uint32 k = 0; k < 4; k++)
     {
       if( 1 != mrStream.ReadUInt8((uint8*)&(Id[k]), 1))
+      {
+        delete[] Id;
         return false;
+      }
     }
     //get chunk size
     if (1 != mrStream.ReadUInt32(&ChunkSize, 1))
+    {
+      delete[] Id;
       return false;
+    }
     if (0 != ChunkSize % 2)
           ChunkSize += 1; // the chunk size is always even
     Chunk* pNextChunk = new Chunk(ChunkPosition, ChunkSize, ChunkPosition + CHUNK_HEADER_BYTES, Id);
