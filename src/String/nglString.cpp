@@ -523,11 +523,10 @@ int32 nglString::GetLength() const
 int32 nglString::GetULength() const
 {
   int32 len = 0;
-  int32 l = 0;
-  while (l >= 0)
+  int32 l = 1;
+  while (l > 0)
   {
-    len = l;
-    l = GetNextUChar(l);
+    l = GetNextUChar(len);
   }
   return len;
 }

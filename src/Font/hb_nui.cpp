@@ -7,11 +7,18 @@
 
 
 #include "nui.h"
-#include "hb-private.hh"
-#include "hb-unicode-private.hh"
+#include "hb.h"
+#include "hb_nui.h"
 #include "ucdata.h"
 #include "nuiUnicode.h"
-#include "hb_nui.h"
+
+//#include "hb-unicode-private.hh"
+
+//#include "hb-private.hh"
+
+//#include "hb-unicode.h"
+#include "hb-object-private.hh"
+//#include <intrin.h>
 
 
 static unsigned int
@@ -98,8 +105,9 @@ nui_hb_get_general_category (hb_unicode_funcs_t *ufuncs,
       
   TEST(UC_MN_I, HB_UNICODE_GENERAL_CATEGORY_NON_SPACING_MARK);
   TEST(UC_ME_I, HB_UNICODE_GENERAL_CATEGORY_ENCLOSING_MARK);
-  TEST(UC_MC_I, HB_UNICODE_GENERAL_CATEGORY_COMBINING_MARK);
-      
+  //TEST(UC_MC_I, HB_UNICODE_GENERAL_CATEGORY_COMBINING_MARK);
+  TEST(UC_MC_I, HB_UNICODE_GENERAL_CATEGORY_SPACING_MARK);
+  
   TEST(UC_ND_I, HB_UNICODE_GENERAL_CATEGORY_DECIMAL_NUMBER);
   TEST(UC_NL_I, HB_UNICODE_GENERAL_CATEGORY_LETTER_NUMBER);
   TEST(UC_NO_I, HB_UNICODE_GENERAL_CATEGORY_OTHER_NUMBER);
@@ -313,22 +321,59 @@ nui_hb_get_script (hb_unicode_funcs_t *ufuncs,
   return hb_get_script_from_nui(script);
 }
 
-static hb_unicode_funcs_t nui_ufuncs = {
-  HB_REFERENCE_COUNT_INVALID, /* ref_count */
-  NULL, /* parent */
-  TRUE, /* immutable */
+static hb_bool_t
+nui_hb_get_compose (hb_unicode_funcs_t *ufuncs,
+                        hb_codepoint_t      a,
+                        hb_codepoint_t      b,
+                        hb_codepoint_t     *ab,
+                        void               *user_data)
+{
+  nglString str;
+  str.Append((nglUChar)a);
+  str.Append((nglUChar)b);
+  str.ToCanonicalComposition();
+  if (str.GetULength() == 1)
   {
-    nui_hb_get_combining_class,
-    nui_hb_get_eastasian_width,
-    nui_hb_get_general_category,
-    nui_hb_get_mirroring,
-    nui_hb_get_script
+    *ab = str.GetUChar(0);
+    return TRUE;
   }
-};
+  return FALSE;
+}
+
+static hb_bool_t
+nui_hb_get_decompose (hb_unicode_funcs_t *ufuncs,
+                          hb_codepoint_t      ab,
+                          hb_codepoint_t     *a,
+                          hb_codepoint_t     *b,
+                          void               *user_data)
+{
+  nglString str;
+  str.Append((nglUChar)ab);
+  str.ToCanonicalDecomposition();
+  if (str.GetULength() == 2)
+  {
+    *a = str.GetUChar(0);
+    *b = str.GetUChar(1);
+    return TRUE;
+  }
+  return FALSE;
+}
 
 hb_unicode_funcs_t *
 nui_hb_get_unicode_funcs (void)
 {
-  return &nui_ufuncs;
+  static hb_unicode_funcs_t* pFunc = NULL;
+  if (!pFunc)
+  {
+    pFunc = hb_unicode_funcs_get_empty();
+    hb_unicode_funcs_set_combining_class_func(pFunc, nui_hb_get_combining_class, NULL, NULL);
+    hb_unicode_funcs_set_eastasian_width_func(pFunc, nui_hb_get_eastasian_width, NULL, NULL);
+    hb_unicode_funcs_set_general_category_func(pFunc, nui_hb_get_general_category, NULL, NULL);
+    hb_unicode_funcs_set_mirroring_func(pFunc, nui_hb_get_mirroring, NULL, NULL);
+    hb_unicode_funcs_set_script_func(pFunc, nui_hb_get_script, NULL, NULL);
+    hb_unicode_funcs_set_compose_func(pFunc, nui_hb_get_compose, NULL, NULL);
+    hb_unicode_funcs_set_decompose_func(pFunc, nui_hb_get_decompose, NULL, NULL);
+  }
+  return pFunc;
 }
 

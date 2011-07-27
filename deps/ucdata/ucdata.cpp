@@ -41,6 +41,10 @@ static char rcsid[] = "$Id: ucdata.c,v 1.4 2001/01/02 18:46:20 mleisher Exp $";
 #include <vector>
 #include <algorithm>
 
+#ifdef WIN32
+#define __STDC__
+#endif
+
 /**************************************************************************
  *
  * Miscellaneous types, data, and support functions.

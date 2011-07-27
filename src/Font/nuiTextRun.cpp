@@ -137,20 +137,20 @@ nuiRect nuiTextRun::GetRect() const
     return nuiRect(mAdvanceX, mAdvanceY);
   nuiFontInfo finfo;
   mStyle.GetFont()->GetInfo(finfo);
-  /*
-   const nuiTextGlyph& rGlyph(*it);
-   nuiGlyphInfo info;
-   rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
-   nuiSize w = info.AdvanceX;
-   //    nuiSize h = finfo.AdvanceMaxH;
-   nuiSize x = rGlyph.X + info.BearingX;
-   nuiSize y = rGlyph.Y - finfo.Ascender;
-   nuiSize h = finfo.Height;
-   
-   nuiRect rr(r);
-   r.Union(rr, nuiRect(x, y, w, h));
-   */
-  
+ 
+//   const nuiTextGlyph& rGlyph(*it);
+//   nuiGlyphInfo info;
+//   rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
+//   nuiSize w = info.AdvanceX;
+//   //    nuiSize h = finfo.AdvanceMaxH;
+//   nuiSize x = rGlyph.X + info.BearingX;
+//   nuiSize y = rGlyph.Y - finfo.Ascender;
+//   nuiSize h = finfo.Height;
+// 
+//   nuiRect rr(r);
+//   r.Union(rr, nuiRect(x, y, w, h));
+//   return r;
+  return nuiRect();
 }
 
 int32 nuiTextRun::GetGlyphCount() const

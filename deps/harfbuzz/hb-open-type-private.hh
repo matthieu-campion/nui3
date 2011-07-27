@@ -34,6 +34,10 @@
 HB_BEGIN_DECLS
 HB_END_DECLS
 
+#define USHORT HB_USHORT
+#define SHORT HB_SHORT
+#define ULONG HB_ULONG
+#define LONG HB_LONG
 
 /*
  * Casts

@@ -109,7 +109,6 @@ protected:
 
 private:
   
-  static nuiImageSequence* mpKnobSequence;
   static std::list<nuiTexture*> mIcons;
   static std::map<nglString, std::pair<const char*, int32> > mImages;
 

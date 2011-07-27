@@ -60,7 +60,7 @@ typedef volatile int hb_atomic_int_t;
 #define hb_atomic_int_set(AI, V)		g_atomic_int_set (&(AI), V)
 
 
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) && 0
 
 #include <intrin.h>
 
@@ -72,7 +72,7 @@ typedef long hb_atomic_int_t;
 
 #else
 
-#warning "Could not find any system to define atomic_int macros, library will NOT be thread-safe"
+#pragma message "Could not find any system to define atomic_int macros, library will NOT be thread-safe"
 
 typedef volatile int hb_atomic_int_t;
 #define hb_atomic_int_fetch_and_add(AI, V)	((AI) += (V), (AI) - (V))
