@@ -167,6 +167,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) dealloc
 {
+  [glView removeFromSuperview];
+  [glView dealloc];
   [self disconnect];
   [super dealloc];
 }
@@ -1048,6 +1050,7 @@ nglWindow::~nglWindow()
   {
     [mpUIWindow disconnect];
     [mpUIWindow removeFromSuperview];
+    [mpUIWindow release];
   }
   Unregister();
 }
