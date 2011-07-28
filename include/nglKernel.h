@@ -20,6 +20,8 @@
 
 class nglKernel;
 class nglPath;
+class nuiNotificationManager;
+class nuiNotificationObserver;
 
 extern NGL_API nglKernel* App;
 /*!<
@@ -307,6 +309,12 @@ public:
   
   static void SetCrashReportEmail(const nglString& rEmail);
 
+  // Notification manager proxy:
+  void PostNotification(nuiNotification* pNotification); ///< Put this notification in a queue in order to broadcast when the system feels like it.
+  void BroadcastNotification(const nuiNotification& rNotification); ///< Send this notification now to all registered observers.
+  void RegisterObserver(const nglString& rNotificationName, nuiNotificationObserver* pObserver); ///< Register an observer for the given notification type. If the type is nglString::Empty, all the notifications will be sent to the observer.
+  void UnregisterObserver(nuiNotificationObserver* pObserver, const nglString& rNotificationName = nglString::Null); ///< Unregister pObserver so that it doesn't receive the given notification. By default it is removed from all notification types (nglString::Null).
+
 protected:
   // Life cycle
   nglKernel();
@@ -337,6 +345,9 @@ protected:
   
   // From nglError
   virtual const nglChar* OnError (uint& rError) const;
+  
+  nuiNotificationManager* mpNotificationManager;
+  void OnMessageQueueTick(const nuiEvent& rEvent);
 
 private:
   typedef std::list<ExitFunc>    ExitFuncList;
