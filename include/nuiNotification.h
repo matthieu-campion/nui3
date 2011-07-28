@@ -38,7 +38,7 @@ private:
   
 };
 
-class NUI_API nuiNotificationManager
+class NUI_API nuiNotificationManager : public nuiRefCount
 {
 public:
   nuiNotificationManager();
