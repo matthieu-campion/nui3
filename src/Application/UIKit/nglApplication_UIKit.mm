@@ -117,7 +117,6 @@ void objCCallOnMemoryWarning();
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidEnterBackground]\n")); )
   NGL_ASSERT(App);
 
-  printf("*** ENTER applicationDidEnterBackground");
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
 	
 	id win;
@@ -128,14 +127,11 @@ void objCCallOnMemoryWarning();
 			nglWindow* pWindow = [win getNGLWindow];
 			
 			NGL_ASSERT(pWindow);
-      printf(" window found, call OnDesactivation\n");
 			pWindow->CallOnDesactivation();
 		}
 	}
 	
-  printf("nuiApplication CallOnDeactivation\n");
   objCCallOnDeactivation();
-  printf("*** LEAVE applicationDidEnterBackground\n");
 }
 
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApplication
