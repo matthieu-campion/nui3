@@ -1052,14 +1052,16 @@ nglWindow::~nglWindow()
 {
   if (mpUIWindow)
   {
-    int c1 = [[UIApplication sharedApplication].windows count];
-    [mpUIWindow disconnect];
-    [mpUIWindow removeFromSuperview];
-    [mpUIWindow resignKeyWindow];
-    [mpUIWindow autorelease];
-    int c2 = [[UIApplication sharedApplication].windows count];
-    id array = [UIApplication sharedApplication].windows; 
-    printf("Windows count %d -> %d\n", c1, c2);
+
+    UIWindow* win = (UIWindow*)mpUIWindow;
+    [win disconnect];
+    UIWindow* oldwin = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    if (win != oldwin)
+    {
+      [oldwin makeKeyWindow];
+    }
+    //[win removeFromSuperview];
+    [win release];
   }
   Unregister();
 }
