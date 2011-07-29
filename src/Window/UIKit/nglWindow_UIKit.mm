@@ -1052,10 +1052,15 @@ nglWindow::~nglWindow()
 {
   if (mpUIWindow)
   {
-    [mpUIWindow disconnect];
-    [mpUIWindow removeFromSuperview];
-    [mpUIWindow release];
-    [
+    UIWindow* win = (UIWindow*)mpUIWindow;
+    [win disconnect];
+    UIWindow* oldwin = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    if (win != oldwin)
+    {
+      [oldwin makeKeyWindow];
+    }
+    //[win removeFromSuperview];
+    [win release];
   }
   Unregister();
 }
