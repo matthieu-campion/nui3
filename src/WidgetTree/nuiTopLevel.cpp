@@ -44,6 +44,7 @@
 #endif
 
 
+#ifndef DISABLE_TOOLTIP
 class nuiToolTip : public nuiSimpleContainer
 {
 public:
@@ -142,13 +143,15 @@ nglString nuiToolTip::GetText() const
     return nglString::Empty;
   return mpLabel->GetText();
 }
-
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   : nuiSimpleContainer(),
-    mToolTipTimerOn(0.5f),    
+#ifndef DISABLE_TOOLTIP
+    mToolTipTimerOn(0.5f),
     mToolTipTimerOff(5.0f),
+#endif
     mpWatchedWidget(NULL),
     mFillTrash(false),
     mpDrawContext(NULL),
@@ -164,6 +167,7 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
 
   mResPath = rResPath;
 
+#ifndef DISABLE_TOOLTIP
   mToolTipDelayOn = .5f;
   mToolTipDelayOff = 5.0f;
   
@@ -174,7 +178,10 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
 
   mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiTopLevel::ToolTipOn);
   mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiTopLevel::ToolTipOff);
+#endif
   mTopLevelSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiTopLevel::OnMessageQueueTick);
+
+  mpInfoLabel = NULL;
 
   mpGrab.clear();
   mMouseInfo.TouchId = -1;
@@ -206,14 +213,14 @@ void nuiTopLevel::Exit()
 //   mTopLevelSink.Disconnect(&nuiMainWindow::ToolTipOn);
 //   mTopLevelSink.Disconnect(&nuiMainWindow::ToolTipOff);
   mTopLevelSink.DisconnectAll();
-
+#ifndef DISABLE_TOOLTIP
   mpToolTipLabel = NULL;
+  mpToolTipSource = NULL;
+  mpToolTipLabel = NULL;
+#endif
   mpGrab.clear();
   mpFocus = NULL;
   mpUnderMouse = NULL;
-  mpToolTipSource = NULL;
-  mpToolTipLabel = NULL;
-  mpInfoLabel = NULL;
   
   EmptyTrash();
 
@@ -344,9 +351,11 @@ void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
     mpUnderMouse = NULL;
     GlobalHoverChanged();
   }
+#ifndef DISABLE_TOOLTIP
   if (mpToolTipSource == pWidget)
     ReleaseToolTip(pWidget);
-  
+#endif
+
   mCSSWidgets.erase(pWidget);
   
   {
@@ -514,6 +523,7 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
   if (pGrab)
     pGrab->MouseGrabbed(touchId);
 
+#ifndef DISABLE_TOOLTIP
   if (pGrab && pGrab->GetProperty("ToolTipOnGrab") == _T("true"))
   {
     mpToolTipSource = pGrab;
@@ -521,6 +531,7 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
   }
   else
     mDisplayToolTip = false;
+#endif
 
   return true;
 }
@@ -536,12 +547,14 @@ bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
     NGL_TOUCHES_DEBUG( NGL_OUT(_T("Ungrab from %s of type %s\n"), pWidget->GetObjectName().GetChars(), pWidget->GetObjectClass().GetChars()) );
   }
 
+#ifndef DISABLE_TOOLTIP
   nuiWidgetPtr pGrab = GetGrab();
   if (pGrab && pGrab->GetProperty("ToolTipOnGrab") == _T("true"))
   {
     mpToolTipSource = NULL;
     mDisplayToolTip = false;
   }
+#endif
 
   Grab(NULL);
 
@@ -560,11 +573,13 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
 
     while (pGrab)
     {
+#ifndef DISABLE_TOOLTIP
       if (pGrab->GetProperty("ToolTipOnGrab") == _T("true"))
       {
         mpToolTipSource = NULL;
         mDisplayToolTip = false;
       }
+#endif
       pGrab->MouseUngrabbed(touchId);
       pGrab = NULL;
     }
@@ -643,6 +658,7 @@ nuiWidgetPtr nuiTopLevel::GetFocus() const
   return mpFocus;
 }
 
+#ifndef DISABLE_TOOLTIP
 bool nuiTopLevel::ActivateToolTip(nuiWidgetPtr pWidget, bool Now)
 {
   CheckValid();
@@ -745,6 +761,7 @@ void nuiTopLevel::ToolTipOff(const nuiEvent& rEvent)
   //Invalidate();
   mpToolTipLabel->Invalidate();
 }
+#endif
 
 bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
 {
@@ -1263,7 +1280,8 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
   }
   
   mHoveredWidgets = HoverSet;
-  
+
+#ifndef DISABLE_TOOLTIP
   // Update Tooltip:
   if (HoverList.empty())
     return;
@@ -1283,6 +1301,7 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
   }
   if (!res && mpToolTipSource)
     ReleaseToolTip(mpToolTipSource);
+#endif
 }
 
 
@@ -1306,12 +1325,13 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
   nuiWidgetPtr pWidget = NULL;
   nuiWidgetPtr pWidgetUnder = NULL;
 
+#ifndef DISABLE_TOOLTIP
   if (mToolTipTimerOn.IsRunning())
   {
     mToolTipTimerOn.Stop();
     mToolTipTimerOn.Start(false);
   }
-	
+#endif	
 	nuiWidgetPtr pHandled = NULL;
 
   // If there is a grab on the mouse serve the grabbing widget and only this one:
@@ -1357,8 +1377,10 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
     GetChildren(rInfo.X, rInfo.Y, widgets, true);
     UpdateMouseCursor(widgets);
 
+#ifndef DISABLE_TOOLTIP
     SetToolTipRect();
-    
+#endif
+
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
     return pHandled != NULL;
   }
@@ -1417,12 +1439,15 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
   nuiWidgetList widgets;
   GetChildren(rInfo.X, rInfo.Y, widgets, true);
   UpdateMouseCursor(widgets);
-  
+
+#ifndef DISABLE_TOOLTIP
   SetToolTipRect();
+#endif
 //NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] END\n"), rInfo.TouchId) );
   return pHandled != NULL;
 }
 
+#ifndef DISABLE_TOOLTIP
 void nuiTopLevel::SetToolTipRect()
 {
   CheckValid();
@@ -1514,7 +1539,7 @@ void nuiTopLevel::DisplayToolTips(nuiDrawContext* pContext)
     DrawChild(pContext, mpToolTipLabel);
   }
 }
-
+#endif
 
 static const bool DISPLAY_PARTIAL_RECTS = false;
 
@@ -1525,13 +1550,18 @@ bool nuiTopLevel::Draw(class nuiDrawContext *pContext)
   for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem && pItem != mpToolTipLabel)
+    if (pItem
+#ifndef DISABLE_TOOLTIP
+        && pItem != mpToolTipLabel
+#endif
+        )
       DrawChild(pContext, pItem);
   }
   delete pIt;
-  
+
+#ifndef DISABLE_TOOLTIP
   DisplayToolTips(pContext);
-  
+#endif
   return true;
 }
 
@@ -1712,7 +1742,9 @@ bool nuiTopLevel::SetRect(const nuiRect& rRect)
   for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
   {
     nuiWidgetPtr pItem = pIt->GetWidget();
+#ifndef DISABLE_TOOLTIP
     if (pItem != mpToolTipLabel)
+#endif
     {
       pItem->GetIdealRect();
       pItem->SetLayout(rect);
@@ -1720,7 +1752,9 @@ bool nuiTopLevel::SetRect(const nuiRect& rRect)
   }
   delete pIt;
 
+#ifndef DISABLE_TOOLTIP
   SetToolTipRect();
+#endif
 
   return true;
 }

@@ -14,6 +14,8 @@
 #include "nuiDrawContext.h"
 #include "nuiNotification.h"
 
+#define DISABLE_TOOLTIP
+
 class nuiLabel;
 class nuiCSS;
 class nuiToolTip;
@@ -81,11 +83,16 @@ public:
 
   /** @name Generic tooltips */
   //@{
+#ifndef DISABLE_TOOLTIP
   virtual bool ActivateToolTip(nuiWidgetPtr pWidget, bool Now = false); ///< nuiMainWindow override the default tool-tip mechanism to actually display them.
   virtual bool ReleaseToolTip(nuiWidgetPtr pWidget); ///< Remove the current tool-tip for the given widget. 
   virtual void SetToolTipOn(bool AutoStop);
   virtual void ToolTipOn(const nuiEvent& rEvent);
   virtual void ToolTipOff(const nuiEvent& rEvent);
+#else
+  virtual bool ActivateToolTip(nuiWidgetPtr pWidget, bool Now = false) {} ///< nuiMainWindow override the default tool-tip mechanism to actually display them.
+  virtual bool ReleaseToolTip(nuiWidgetPtr pWidget) {} ///< Remove the current tool-tip for the given widget. 
+#endif
   //@}
 
   virtual bool IsKeyDown (nglKeyCode Key) const;
@@ -111,7 +118,9 @@ public:
 
   void EnablePartialRedraw(bool Set = true) { mPartialRedraw = Set; }
   bool IsPartialRedrawEnabled() { return mPartialRedraw; }
+#ifndef DISABLE_TOOLTIP
   void DisplayToolTips(nuiDrawContext* pContext);
+#endif
   void EnableClearBackground(bool set = true) { mClearBackground = set; Invalidate(); }
   bool IsClearBackgroundEnabled() const { return mClearBackground; }
 
@@ -166,6 +175,7 @@ protected:
   nuiWidgetPtr mpFocus;
   nuiWidgetPtr mpUnderMouse;
 
+#ifndef DISABLE_TOOLTIP
   // ToolTips:
   nuiTimer mToolTipTimerOn;
   nuiTimer mToolTipTimerOff;
@@ -174,6 +184,7 @@ protected:
   bool mDisplayToolTip;
   nuiWidgetPtr mpToolTipSource;
   nuiToolTip* mpToolTipLabel;
+#endif
   nuiLabel* mpInfoLabel;
 
   typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
@@ -212,8 +223,9 @@ protected:
   nuiEventSink<nuiTopLevel> mTopLevelSink;
   bool mPartialRedraw;
   bool mIsDrawing;
+#ifndef DISABLE_TOOLTIP
   void SetToolTipRect();
-
+#endif
   nglMouseInfo::Flags mLastClickedButton;
 
   std::map<nglString, nuiHotKey*> mHotKeys;
