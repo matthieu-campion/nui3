@@ -12,8 +12,6 @@
 - (void) dealloc;
 - (BOOL) openURL: (NSURL*) pUrl;
 - (void) sendEvent: (UIEvent*) pEvent;
-- (void) didReceiveMemoryWarning;
-
 @end//nglUIApplication
 
 @interface nglUIApplicationDelegate : NSObject
