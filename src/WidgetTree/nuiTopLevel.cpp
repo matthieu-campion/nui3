@@ -1386,7 +1386,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseMove [%d] BEGIN\n"), rInfo.TouchId) );
   }
   else
   { /// this is a mouse over event
-    UpdateHoverList(rInfo);
+//    UpdateHoverList(rInfo);
     nuiSize x,y;
 
     IteratorPtr pIt;
