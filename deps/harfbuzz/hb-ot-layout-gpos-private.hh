@@ -34,7 +34,7 @@
 HB_BEGIN_DECLS
 
 
-/* buffer var allocations */
+/* buffer **position** var allocations */
 #define attach_lookback() var.u16[0] /* number of glyphs to go back to attach this glyph to its base */
 #define cursive_chain() var.i16[1] /* character to which this connects, may be positive or negative */
 
@@ -1507,6 +1507,7 @@ struct GPOS : GSUBGPOS
 			       hb_mask_t     mask) const
   { return get_lookup (lookup_index).apply_string (font, buffer, mask); }
 
+  static inline void position_start (hb_buffer_t *buffer);
   static inline void position_finish (hb_buffer_t *buffer);
 
   inline bool sanitize (hb_sanitize_context_t *c) {
@@ -1565,6 +1566,16 @@ fix_mark_attachment (hb_glyph_position_t *pos, unsigned int i, hb_direction_t di
 }
 
 void
+GPOS::position_start (hb_buffer_t *buffer)
+{
+  buffer->clear_positions ();
+
+  unsigned int count = buffer->len;
+  for (unsigned int i = 0; i < count; i++)
+    buffer->pos[i].attach_lookback() = buffer->pos[i].cursive_chain() = 0;
+}
+
+void
 GPOS::position_finish (hb_buffer_t *buffer)
 {
   unsigned int len;
@@ -1573,15 +1584,15 @@ GPOS::position_finish (hb_buffer_t *buffer)
 
   /* Handle cursive connections */
   for (unsigned int i = 0; i < len; i++)
-  {
     fix_cursive_minor_offset (pos, i, direction);
-  }
 
   /* Handle attachments */
   for (unsigned int i = 0; i < len; i++)
-  {
     fix_mark_attachment (pos, i, direction);
-  }
+
+  HB_BUFFER_DEALLOCATE_VAR (buffer, lig_comp);
+  HB_BUFFER_DEALLOCATE_VAR (buffer, lig_id);
+  HB_BUFFER_DEALLOCATE_VAR (buffer, props_cache);
 }
 
 

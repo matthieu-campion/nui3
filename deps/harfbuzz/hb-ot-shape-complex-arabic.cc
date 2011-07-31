@@ -30,7 +30,7 @@ HB_BEGIN_DECLS
 
 
 /* buffer var allocations */
-#define arabic_shaping_action() var2.u32 /* arabic shaping action */
+#define arabic_shaping_action() complex_var_temporary_u16() /* arabic shaping action */
 
 
 /*
@@ -61,21 +61,21 @@ static unsigned int get_joining_type (hb_codepoint_t u, hb_unicode_general_categ
 {
   /* TODO Macroize the magic bit operations */
 
-  if (likely (hb_codepoint_in_range (u, JOINING_TABLE_FIRST, JOINING_TABLE_LAST))) {
+  if (likely (hb_in_range<hb_codepoint_t> (u, JOINING_TABLE_FIRST, JOINING_TABLE_LAST))) {
     unsigned int j_type = joining_table[u - JOINING_TABLE_FIRST];
     if (likely (j_type != JOINING_TYPE_X))
       return j_type;
   }
 
   /* Mongolian joining data is not in ArabicJoining.txt yet */
-  if (unlikely (hb_codepoint_in_range (u, 0x1800, 0x18AF)))
+  if (unlikely (hb_in_range<hb_codepoint_t> (u, 0x1800, 0x18AF)))
   {
     /* All letters, SIBE SYLLABLE BOUNDARY MARKER, and NIRUGU are D */
     if (gen_cat == HB_UNICODE_GENERAL_CATEGORY_OTHER_LETTER || u == 0x1807 || u == 0x180A)
       return JOINING_TYPE_D;
   }
 
-  if (unlikely (hb_codepoint_in_range (u, 0x200C, 0x200D))) {
+  if (unlikely (hb_in_range<hb_codepoint_t> (u, 0x200C, 0x200D))) {
     return u == 0x200C ? JOINING_TYPE_U : JOINING_TYPE_C;
   }
 
@@ -195,6 +195,8 @@ _hb_ot_shape_complex_setup_masks_arabic (hb_ot_map_t *map, hb_buffer_t *buffer)
   unsigned int count = buffer->len;
   unsigned int prev = 0, state = 0;
 
+  HB_BUFFER_ALLOCATE_VAR (buffer, arabic_shaping_action);
+
   for (unsigned int i = 0; i < count; i++)
   {
     unsigned int this_type = get_joining_type (buffer->info[i].codepoint, (hb_unicode_general_category_t) buffer->info[i].general_category());
@@ -222,6 +224,8 @@ _hb_ot_shape_complex_setup_masks_arabic (hb_ot_map_t *map, hb_buffer_t *buffer)
 
   for (unsigned int i = 0; i < count; i++)
     buffer->info[i].mask |= mask_array[buffer->info[i].arabic_shaping_action()];
+
+  HB_BUFFER_DEALLOCATE_VAR (buffer, arabic_shaping_action);
 }
 
 

@@ -34,10 +34,6 @@
 HB_BEGIN_DECLS
 HB_END_DECLS
 
-#define USHORT HB_USHORT
-#define SHORT HB_SHORT
-#define ULONG HB_ULONG
-#define LONG HB_LONG
 
 /*
  * Casts
@@ -148,29 +144,6 @@ ASSERT_STATIC (Type::min_size + 1 <= sizeof (_Null##Type))
 #define Null(Type) Null<Type>()
 
 
-/*
- * Trace
- */
-
-
-template <int max_depth>
-struct hb_trace_t {
-  explicit hb_trace_t (unsigned int *pdepth_, const char *what, const char *function, const void *obj) : pdepth(pdepth_) {
-    (void) (*pdepth < max_depth &&
-	    fprintf (stderr, "%s(%p) %-*d-> %s\n", what, obj, *pdepth, *pdepth, function));
-    if (max_depth) ++*pdepth;
-  }
-  ~hb_trace_t (void) { if (max_depth) --*pdepth; }
-
-  private:
-  unsigned int *pdepth;
-};
-template <> /* Optimize when tracing is disabled */
-struct hb_trace_t<0> {
-  explicit hb_trace_t (unsigned int *pdepth HB_UNUSED, const char *what HB_UNUSED, const char *function HB_UNUSED, const void *obj HB_UNUSED) {}
-};
-
-
 
 /*
  * Sanitize
@@ -182,7 +155,7 @@ struct hb_trace_t<0> {
 
 
 #define TRACE_SANITIZE() \
-	hb_trace_t<HB_DEBUG_SANITIZE> trace (&c->debug_depth, "SANITIZE", HB_FUNC, this); \
+	hb_auto_trace_t<HB_DEBUG_SANITIZE> trace (&c->debug_depth, "SANITIZE", this, NULL, HB_FUNC);
 
 
 struct hb_sanitize_context_t
@@ -200,17 +173,17 @@ struct hb_sanitize_context_t
     this->edit_count = 0;
     this->debug_depth = 0;
 
-    (void) (HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "sanitize %p init [%p..%p] (%lu bytes)\n",
-	       (void *) this->blob, this->start, this->end,
-	       (unsigned long) (this->end - this->start)));
+    DEBUG_MSG (SANITIZE, this->blob,
+	       "init [%p..%p] (%lu bytes)",
+	       this->start, this->end,
+	       (unsigned long) (this->end - this->start));
   }
 
   inline void finish (void)
   {
-    (void) (HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "sanitize %p fini [%p..%p] %u edit requests\n",
-	       (void *) this->blob, this->start, this->end, this->edit_count));
+    DEBUG_MSG (SANITIZE, this->blob,
+	       "fini [%p..%p] %u edit requests",
+	       this->start, this->end, this->edit_count);
 
     hb_blob_destroy (this->blob);
     this->blob = NULL;
@@ -224,13 +197,12 @@ struct hb_sanitize_context_t
 	       p <= this->end &&
 	       (unsigned int) (this->end - p) >= len;
 
-    (void) (HB_DEBUG_SANITIZE && (int) this->debug_depth < (int) HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "SANITIZE(%p) %-*d-> range [%p..%p] (%d bytes) in [%p..%p] -> %s\n",
-	       p,
-	       this->debug_depth, this->debug_depth,
-	       p, p + len, len,
-	       this->start, this->end,
-	       ret ? "pass" : "FAIL"));
+    DEBUG_MSG_LEVEL (SANITIZE, this->blob, this->debug_depth,
+		     "%-*d-> range [%p..%p] (%d bytes) in [%p..%p] -> %s",
+		     this->debug_depth, this->debug_depth,
+		     p, p + len, len,
+		     this->start, this->end,
+		     ret ? "pass" : "FAIL");
 
     return likely (ret);
   }
@@ -240,13 +212,12 @@ struct hb_sanitize_context_t
     const char *p = (const char *) base;
     bool overflows = _hb_unsigned_int_mul_overflows (len, record_size);
 
-    (void) (HB_DEBUG_SANITIZE && (int) this->debug_depth < (int) HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "SANITIZE(%p) %-*d-> array [%p..%p] (%d*%d=%ld bytes) in [%p..%p] -> %s\n",
-	       p,
-	       this->debug_depth, this->debug_depth,
-	       p, p + (record_size * len), record_size, len, (unsigned long) record_size * len,
-	       this->start, this->end,
-	       !overflows ? "does not overflow" : "OVERFLOWS FAIL"));
+    DEBUG_MSG_LEVEL (SANITIZE, this->blob, this->debug_depth,
+		     "%-*d-> array [%p..%p] (%d*%d=%ld bytes) in [%p..%p] -> %s",
+		     this->debug_depth, this->debug_depth,
+		     p, p + (record_size * len), record_size, len, (unsigned long) record_size * len,
+		     this->start, this->end,
+		     !overflows ? "does not overflow" : "OVERFLOWS FAIL");
 
     return likely (!overflows && this->check_range (base, record_size * len));
   }
@@ -262,14 +233,13 @@ struct hb_sanitize_context_t
     const char *p = (const char *) base;
     this->edit_count++;
 
-    (void) (HB_DEBUG_SANITIZE && (int) this->debug_depth < (int) HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "SANITIZE(%p) %-*d-> edit(%u) [%p..%p] (%d bytes) in [%p..%p] -> %s\n",
-	       p,
-	       this->debug_depth, this->debug_depth,
-	       this->edit_count,
-	       p, p + len, len,
-	       this->start, this->end,
-	       this->writable ? "granted" : "REJECTED"));
+    DEBUG_MSG_LEVEL (SANITIZE, this->blob, this->debug_depth,
+		     "%-*d-> edit(%u) [%p..%p] (%d bytes) in [%p..%p] -> %s",
+		     this->debug_depth, this->debug_depth,
+		     this->edit_count,
+		     p, p + len, len,
+		     this->start, this->end,
+		     this->writable ? "granted" : "REJECTED");
 
     return this->writable;
   }
@@ -296,8 +266,7 @@ struct Sanitizer
     c->init (blob);
 
   retry:
-    (void) (HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "Sanitizer %p start %s\n", (void *) blob, HB_FUNC));
+    DEBUG_MSG_FUNC (SANITIZE, blob, "start");
 
     c->setup ();
 
@@ -311,17 +280,13 @@ struct Sanitizer
     sane = t->sanitize (c);
     if (sane) {
       if (c->edit_count) {
-	(void) (HB_DEBUG_SANITIZE &&
-	  fprintf (stderr, "Sanitizer %p passed first round with %d edits; doing a second round %s\n",
-		   (void *) blob, c->edit_count, HB_FUNC));
+	DEBUG_MSG_FUNC (SANITIZE, blob, "passed first round with %d edits; going for second round", c->edit_count);
 
         /* sanitize again to ensure no toe-stepping */
         c->edit_count = 0;
 	sane = t->sanitize (c);
 	if (c->edit_count) {
-	  (void) (HB_DEBUG_SANITIZE &&
-	    fprintf (stderr, "Sanitizer %p requested %d edits in second round; FAILLING %s\n",
-		     (void *) blob, c->edit_count, HB_FUNC));
+	  DEBUG_MSG_FUNC (SANITIZE, blob, "requested %d edits in second round; FAILLING", c->edit_count);
 	  sane = false;
 	}
       }
@@ -334,8 +299,7 @@ struct Sanitizer
 	if (c->start) {
 	  c->writable = true;
 	  /* ok, we made it writable by relocating.  try again */
-	  (void) (HB_DEBUG_SANITIZE &&
-	    fprintf (stderr, "Sanitizer %p retry %s\n", (void *) blob, HB_FUNC));
+	  DEBUG_MSG_FUNC (SANITIZE, blob, "retry");
 	  goto retry;
 	}
       }
@@ -343,8 +307,7 @@ struct Sanitizer
 
     c->finish ();
 
-    (void) (HB_DEBUG_SANITIZE &&
-      fprintf (stderr, "Sanitizer %p %s %s\n", (void *) blob, sane ? "passed" : "FAILED", HB_FUNC));
+    DEBUG_MSG_FUNC (SANITIZE, blob, sane ? "PASSED" : "FAILED");
     if (sane)
       return blob;
     else {

@@ -34,10 +34,16 @@
 
 HB_BEGIN_DECLS
 
-
 /* buffer var allocations */
-#define lig_id() var2.u16[0] /* unique ligature id */
-#define lig_comp() var2.u16[1] /* component number in the ligature (0 = base) */
+#define lig_id() var2.u8[2] /* unique ligature id */
+#define lig_comp() var2.u8[3] /* component number in the ligature (0 = base) */
+
+static inline uint8_t allocate_lig_id (hb_buffer_t *buffer) {
+  uint8_t lig_id = buffer->next_serial ();
+  if (unlikely (!lig_id)) lig_id = buffer->next_serial (); /* in case of overflow */
+  return lig_id;
+}
+
 
 
 #ifndef HB_DEBUG_APPLY
@@ -45,7 +51,7 @@ HB_BEGIN_DECLS
 #endif
 
 #define TRACE_APPLY() \
-	hb_trace_t<HB_DEBUG_APPLY> trace (&c->debug_depth, "APPLY", HB_FUNC, this); \
+	hb_auto_trace_t<HB_DEBUG_APPLY> trace (&c->debug_depth, "APPLY", this, NULL, HB_FUNC);
 
 
 HB_BEGIN_DECLS
