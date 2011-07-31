@@ -14,6 +14,7 @@
 #include "nglDataObjects.h"
 
 #include "nuiNativeResourceVolume.h"
+#include "nuiNotification.h"
 
 #include "ucdata.h"
 
@@ -314,12 +315,18 @@ const nglChar* nglKernel::OnError (uint& rError) const
 
 void nglKernel::CallOnInit()
 {
+  double now = nglTime();
   ucdata_init_static();
+  double then = nglTime();
+  
+  printf("ucdata_init_static took %f seconds\n", then - now);
+  
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%s)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);
   nuiTimer* pTimer = nuiAnimation::AcquireTimer();
   mKernelEventSink.Connect(pTimer->Tick, &nglKernel::ProcessMessages);
+  mpNotificationManager = new nuiNotificationManager();
   
   OnInit();
 }
@@ -396,4 +403,30 @@ void nglKernel::ProcessMessages(const nuiEvent& rEvent)
       pCommand->Do();
     delete pNotif;
   }
+
+  mpNotificationManager->BroadcastQueuedNotifications();
 }
+
+void nglKernel::PostNotification(nuiNotification* pNotification)
+{
+  mpNotificationManager->PostNotification(pNotification);
+}
+
+void nglKernel::BroadcastNotification(const nuiNotification& rNotification)
+{
+  mpNotificationManager->BroadcastNotification(rNotification);
+}
+
+void nglKernel::RegisterObserver(const nglString& rNotificationName, nuiNotificationObserver* pObserver)
+{
+  mpNotificationManager->RegisterObserver(rNotificationName, pObserver);
+}
+
+void nglKernel::UnregisterObserver(nuiNotificationObserver* pObserver, const nglString& rNotificationName)
+{
+  mpNotificationManager->UnregisterObserver(pObserver, rNotificationName);
+}
+
+
+
+

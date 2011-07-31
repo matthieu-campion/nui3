@@ -9,7 +9,6 @@
 #include "nui.h"
 #include "nglImage.h"
 #include "nuiImage.h"
-#include "nuiXML.h"
 #include "nuiDrawContext.h"
 #include "nglString.h"
 
@@ -149,39 +148,6 @@ void nuiImage::SetTexture(nuiTexture* pTex)
   ResetTextureRect();
   Invalidate();
 }
-
-
-bool nuiImage::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  SetObjectClass(_T("nuiImage"));
-
-  mpTexture = nuiTexture::GetTexture(pNode);
-  mUseAlpha = true;
-
-  mUseAlpha = nuiGetBool( pNode, _T("UseAlpha"), mUseAlpha);
-  mBlendFunc = nuiBlendTransp;
-  SetProperty(_T("Source"), pNode->GetAttribute(_T("Source")));
-
-//  mPosition = nuiGetPosition(pNode,nuiFill);
-//  mFillRule = nuiGetPosition(pNode,_T("FillRule"),nuiFill);
-
-  // FIXME: interpret other attributes...
-  return true;
-}
-
-
-nuiXMLNode* nuiImage::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-//  pNode->SetAttribute(_T("Position"),mPosition);
-//  pNode->SetAttribute(_T("FillRule"),mFillRule);
-  pNode->SetAttribute(_T("Source"),GetProperty(_T("Source")));
-  return pNode;
-}
-
 
 nuiImage::~nuiImage()
 {

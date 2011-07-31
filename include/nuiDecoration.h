@@ -22,9 +22,6 @@ public:
 
   virtual ~nuiDecoration();
 
-  virtual bool Load(const nuiXMLNode* pNode) = 0;
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode) = 0;
-  
   void SetObjectName(const nglString& rName);
   
   void UseWidgetAlpha(bool use);

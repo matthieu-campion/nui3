@@ -36,6 +36,7 @@
 #include "hb-common.h"
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 #include <assert.h>
 
@@ -45,6 +46,7 @@
  * someway around that. */
 #include <stdio.h>
 #include <errno.h>
+#include <stdarg.h>
 
 HB_BEGIN_DECLS
 
@@ -85,6 +87,7 @@ HB_BEGIN_DECLS
 #define ASSERT_STATIC(_cond) _ASSERT_STATIC0 (__LINE__, (_cond))
 
 #define ASSERT_STATIC_EXPR(_cond) ((void) sizeof (char[(_cond) ? 1 : -1]))
+#define ASSERT_STATIC_EXPR_ZERO(_cond) (0 * sizeof (char[(_cond) ? 1 : -1]))
 
 
 /* Lets assert int types.  Saves trouble down the road. */
@@ -123,9 +126,11 @@ ASSERT_STATIC (sizeof (hb_var_int_t) == 4);
 #if __GNUC__ >= 3
 #define HB_PURE_FUNC	__attribute__((pure))
 #define HB_CONST_FUNC	__attribute__((const))
+#define HB_PRINTF_FUNC(format_idx, arg_idx) __attribute__((__format__ (__printf__, format_idx, arg_idx)))
 #else
 #define HB_PURE_FUNC
 #define HB_CONST_FUNC
+#define HB_PRINTF_FUCN(format_idx, arg_idx)
 #endif
 #if __GNUC__ >= 4
 #define HB_UNUSED	__attribute__((unused))
@@ -303,6 +308,11 @@ struct hb_prealloced_array_t {
     qsort (array, len, sizeof (Type), (hb_compare_func_t) Type::cmp);
   }
 
+  inline void sort (unsigned int start, unsigned int end)
+  {
+    qsort (array + start, end - start, sizeof (Type), (hb_compare_func_t) Type::cmp);
+  }
+
   template <typename T>
   inline Type *bsearch (T *key)
   {
@@ -451,26 +461,165 @@ static inline unsigned char TOLOWER (unsigned char c)
 /* Makes class uncopyable.  Use in private: section. */
 #define NO_COPY(T) \
   T (const T &o); \
-  T &operator = (const T &o);
+  T &operator = (const T &o)
 
 
 /* Debug */
+
+HB_END_DECLS
 
 #ifndef HB_DEBUG
 #define HB_DEBUG 0
 #endif
 
-static inline bool /* always returns TRUE */
-_hb_trace (const char *what,
-	   const char *function,
-	   const void *obj,
-	   unsigned int depth,
-	   unsigned int max_depth)
+static inline bool
+_hb_debug (unsigned int level,
+	   unsigned int max_level)
 {
-  (void) ((depth < max_depth) && fprintf (stderr, "%s(%p) %-*d-> %s\n", what, obj, depth, depth, function));
+  return level < max_level;
+}
+
+#define DEBUG_LEVEL(WHAT, LEVEL) (_hb_debug ((LEVEL), HB_DEBUG_##WHAT))
+#define DEBUG(WHAT) (DEBUG_LEVEL (WHAT, 0))
+
+template <int max_level> inline bool /* always returns TRUE */
+_hb_debug_msg (const char *what,
+	       const void *obj,
+	       const char *func,
+	       bool indented,
+	       int level,
+	       const char *message,
+	       ...) HB_PRINTF_FUNC(6, 7);
+template <int max_level> inline bool /* always returns TRUE */
+_hb_debug_msg (const char *what,
+	       const void *obj,
+	       const char *func,
+	       bool indented,
+	       int level,
+	       const char *message,
+	       ...)
+{
+  va_list ap;
+  va_start (ap, message);
+
+  (void) (_hb_debug (level, max_level) &&
+	  fprintf (stderr, "%s(%p): ", what, obj) &&
+	  (func && fprintf (stderr, "%s: ", func), TRUE) &&
+	  (indented && fprintf (stderr, "%-*d-> ", level + 1, level), TRUE) &&
+	  vfprintf (stderr, message, ap) &&
+	  fprintf (stderr, "\n"));
+
+  va_end (ap);
+
+  return TRUE;
+}
+template <> inline bool /* always returns TRUE */
+_hb_debug_msg<0> (const char *what,
+		  const void *obj,
+		  const char *func,
+		  bool indented,
+		  int level,
+		  const char *message,
+		  ...) HB_PRINTF_FUNC(6, 7);
+template <> inline bool /* always returns TRUE */
+_hb_debug_msg<0> (const char *what,
+		  const void *obj,
+		  const char *func,
+		  bool indented,
+		  int level,
+		  const char *message,
+		  ...)
+{
   return TRUE;
 }
 
+#define DEBUG_MSG_LEVEL(WHAT, OBJ, LEVEL, ...) _hb_debug_msg<HB_DEBUG_##WHAT> (#WHAT, (OBJ), NULL, FALSE, (LEVEL), __VA_ARGS__)
+#define DEBUG_MSG(WHAT, OBJ, ...) DEBUG_MSG_LEVEL (WHAT, OBJ, 0, __VA_ARGS__)
+#define DEBUG_MSG_FUNC(WHAT, OBJ, ...) _hb_debug_msg<HB_DEBUG_##WHAT> (#WHAT, (OBJ), HB_FUNC, FALSE, 0, __VA_ARGS__)
+
+
+/*
+ * Trace
+ */
+
+template <int max_level>
+struct hb_auto_trace_t {
+  explicit inline hb_auto_trace_t (unsigned int *plevel_,
+				   const char *what,
+				   const void *obj,
+				   const char *func,
+				   const char *message) : plevel(plevel_)
+  {
+    if (max_level) ++*plevel;
+    /* TODO support variadic args here */
+    _hb_debug_msg<max_level> (what, obj, func, TRUE, *plevel, "%s", message);
+  }
+  ~hb_auto_trace_t (void) { if (max_level) --*plevel; }
+
+  private:
+  unsigned int *plevel;
+};
+template <> /* Optimize when tracing is disabled */
+struct hb_auto_trace_t<0> {
+  explicit inline hb_auto_trace_t (unsigned int *plevel_,
+				   const char *what,
+				   const void *obj,
+				   const char *func,
+				   const char *message) {}
+};
+
+
+/* Misc */
+
+
+/* Pre-mature optimization:
+ * Checks for lo <= u <= hi but with an optimization if lo and hi
+ * are only different in a contiguous set of lower-most bits.
+ */
+template <typename T> inline bool
+hb_in_range (T u, T lo, T hi)
+{
+  if ( ((lo^hi) & lo) == 0 &&
+       ((lo^hi) & hi) == (lo^hi) &&
+       ((lo^hi) & ((lo^hi) + 1)) == 0 )
+    return (u & ~(lo^hi)) == lo;
+  else
+    return lo <= u && u <= hi;
+}
+
+
+/* Useful for set-operations on small enums.
+ * For example, for testing "x ∈ {x1, x2, x3}" use:
+ * (FLAG(x) & (FLAG(x1) | FLAG(x2) | FLAG(x3)))
+ */
+#define FLAG(x) (1<<(x))
+
+
+template <typename T> inline void
+hb_bubble_sort (T *array, unsigned int len, int(*compar)(const T *, const T *))
+{
+  if (unlikely (!len))
+    return;
+
+  unsigned int k = len - 1;
+  do {
+    unsigned int new_k = 0;
+
+    for (unsigned int j = 0; j < k; j++)
+      if (compar (&array[j], &array[j+1]) > 0) {
+        T t;
+	t = array[j];
+	array[j] = array[j + 1];
+	array[j + 1] = t;
+
+	new_k = j;
+      }
+    k = new_k;
+  } while (k);
+}
+
+
+HB_BEGIN_DECLS
 
 HB_END_DECLS
 

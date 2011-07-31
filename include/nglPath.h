@@ -230,7 +230,15 @@ public:
 	Variant of the operator+=(const nglPath&),
 	the right operand will be nglPath(rAppend).
 	*/
-	friend NGL_API nglPath operator+ (const nglPath& rPath, const nglPath& rAppend);
+  const nglPath& operator+=(const nglChar* pAppend);
+	/*!< nglPath concatenation
+   \param pAppend path string to append
+   
+   Variant of the operator+=(const nglPath&),
+   the right operand will be nglPath(pAppend).
+   */
+
+  friend NGL_API nglPath operator+ (const nglPath& rPath, const nglPath& rAppend);
 	/*!< nglPath concatenation
 	\param rPath current object
 	\param rAppend path to append

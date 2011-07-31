@@ -35,6 +35,8 @@
 
 #include <unicode/uversion.h>
 #include <unicode/uchar.h>
+#include <unicode/unorm.h>
+#include <unicode/unistr.h>
 
 HB_BEGIN_DECLS
 
@@ -63,18 +65,18 @@ hb_icu_script_from_script (hb_script_t script)
 
 
 static unsigned int
-hb_icu_get_combining_class (hb_unicode_funcs_t *ufuncs,
-			    hb_codepoint_t      unicode,
-			    void               *user_data)
+hb_icu_unicode_combining_class (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+				hb_codepoint_t      unicode,
+				void               *user_data HB_UNUSED)
 
 {
   return u_getCombiningClass (unicode);
 }
 
 static unsigned int
-hb_icu_get_eastasian_width (hb_unicode_funcs_t *ufuncs,
-			    hb_codepoint_t      unicode,
-			    void               *user_data)
+hb_icu_unicode_eastasian_width (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+				hb_codepoint_t      unicode,
+				void               *user_data HB_UNUSED)
 {
   switch (u_getIntPropertyValue(unicode, UCHAR_EAST_ASIAN_WIDTH))
   {
@@ -91,9 +93,9 @@ hb_icu_get_eastasian_width (hb_unicode_funcs_t *ufuncs,
 }
 
 static hb_unicode_general_category_t
-hb_icu_get_general_category (hb_unicode_funcs_t *ufuncs,
-			     hb_codepoint_t      unicode,
-			     void               *user_data)
+hb_icu_unicode_general_category (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+				 hb_codepoint_t      unicode,
+				 void               *user_data HB_UNUSED)
 {
   switch (u_getIntPropertyValue(unicode, UCHAR_GENERAL_CATEGORY))
   {
@@ -107,7 +109,7 @@ hb_icu_get_general_category (hb_unicode_funcs_t *ufuncs,
 
   case U_NON_SPACING_MARK:		return HB_UNICODE_GENERAL_CATEGORY_NON_SPACING_MARK;
   case U_ENCLOSING_MARK:		return HB_UNICODE_GENERAL_CATEGORY_ENCLOSING_MARK;
-  case U_COMBINING_SPACING_MARK:	return HB_UNICODE_GENERAL_CATEGORY_COMBINING_MARK;
+  case U_COMBINING_SPACING_MARK:	return HB_UNICODE_GENERAL_CATEGORY_SPACING_MARK;
 
   case U_DECIMAL_DIGIT_NUMBER:		return HB_UNICODE_GENERAL_CATEGORY_DECIMAL_NUMBER;
   case U_LETTER_NUMBER:			return HB_UNICODE_GENERAL_CATEGORY_LETTER_NUMBER;
@@ -142,17 +144,17 @@ hb_icu_get_general_category (hb_unicode_funcs_t *ufuncs,
 }
 
 static hb_codepoint_t
-hb_icu_get_mirroring (hb_unicode_funcs_t *ufuncs,
-		      hb_codepoint_t      unicode,
-		      void               *user_data)
+hb_icu_unicode_mirroring (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+			  hb_codepoint_t      unicode,
+			  void               *user_data HB_UNUSED)
 {
   return u_charMirror(unicode);
 }
 
 static hb_script_t
-hb_icu_get_script (hb_unicode_funcs_t *ufuncs,
-		   hb_codepoint_t      unicode,
-		   void               *user_data)
+hb_icu_unicode_script (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+		       hb_codepoint_t      unicode,
+		       void               *user_data HB_UNUSED)
 {
   UErrorCode status = U_ZERO_ERROR;
   UScriptCode scriptCode = uscript_getScript(unicode, &status);
@@ -163,6 +165,113 @@ hb_icu_get_script (hb_unicode_funcs_t *ufuncs,
   return hb_icu_script_to_script (scriptCode);
 }
 
+static hb_bool_t
+hb_icu_unicode_compose (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+			hb_codepoint_t      a,
+			hb_codepoint_t      b,
+			hb_codepoint_t     *ab,
+			void               *user_data HB_UNUSED)
+{
+  if (!a || !b)
+    return FALSE;
+
+  UChar utf16[4], normalized[5];
+  gint len;
+  hb_bool_t ret, err;
+  UErrorCode icu_err;
+
+  len = 0;
+  err = FALSE;
+  U16_APPEND (utf16, len, ARRAY_LENGTH (utf16), a, err);
+  if (err) return FALSE;
+  U16_APPEND (utf16, len, ARRAY_LENGTH (utf16), b, err);
+  if (err) return FALSE;
+
+  icu_err = U_ZERO_ERROR;
+  len = unorm_normalize (utf16, len, UNORM_NFC, 0, normalized, ARRAY_LENGTH (normalized), &icu_err);
+  if (icu_err)
+    return FALSE;
+  normalized[len] = 0;
+  if (u_strlen (normalized) == 1) {
+    U16_GET_UNSAFE (normalized, 0, *ab);
+    ret = TRUE;
+  } else {
+    ret = FALSE;
+  }
+
+  return ret;
+}
+
+static hb_bool_t
+hb_icu_unicode_decompose (hb_unicode_funcs_t *ufuncs HB_UNUSED,
+			  hb_codepoint_t      ab,
+			  hb_codepoint_t     *a,
+			  hb_codepoint_t     *b,
+			  void               *user_data HB_UNUSED)
+{
+  UChar utf16[2], normalized[20];
+  gint len;
+  hb_bool_t ret, err;
+  UErrorCode icu_err;
+
+  /* This function is a monster! Maybe it wasn't a good idea adding a
+   * pairwise decompose API... */
+  /* Watchout for the dragons.  Err, watchout for macros changing len. */
+
+  len = 0;
+  err = FALSE;
+  U16_APPEND (utf16, len, ARRAY_LENGTH (utf16), ab, err);
+  if (err) return FALSE;
+
+  icu_err = U_ZERO_ERROR;
+  len = unorm_normalize (utf16, len, UNORM_NFD, 0, normalized, ARRAY_LENGTH (normalized), &icu_err);
+  if (icu_err)
+    return FALSE;
+
+  normalized[len] = 0;
+  len = u_strlen (normalized);
+
+  if (len == 1) {
+    U16_GET_UNSAFE (normalized, 0, *a);
+    *b = 0;
+    ret = *a != ab;
+  } else if (len == 2) {
+    len =0;
+    U16_NEXT_UNSAFE (normalized, len, *a);
+    U16_NEXT_UNSAFE (normalized, len, *b);
+
+    /* Here's the ugly part: if ab decomposes to a single character and
+     * that character decomposes again, we have to detect that and undo
+     * the second part :-(. */
+    UChar recomposed[20];
+    icu_err = U_ZERO_ERROR;
+    unorm_normalize (normalized, len, UNORM_NFC, 0, recomposed, ARRAY_LENGTH (recomposed), &icu_err);
+    if (icu_err)
+      return FALSE;
+    hb_codepoint_t c;
+    U16_GET_UNSAFE (recomposed, 0, c);
+    if (c != *a && c != ab) {
+      *a = c;
+      *b = 0;
+    }
+    ret = TRUE;
+  } else {
+    /* If decomposed to more than two characters, take the last one,
+     * and recompose the rest to get the first component. */
+    U16_PREV_UNSAFE (normalized, len, *b);
+    UChar recomposed[20];
+    icu_err = U_ZERO_ERROR;
+    len = unorm_normalize (normalized, len, UNORM_NFC, 0, recomposed, ARRAY_LENGTH (recomposed), &icu_err);
+    if (icu_err)
+      return FALSE;
+    /* We expect that recomposed has exactly one character now. */
+    U16_GET_UNSAFE (recomposed, 0, *a);
+    ret = TRUE;
+  }
+
+  return ret;
+}
+
 extern HB_INTERNAL hb_unicode_funcs_t _hb_unicode_funcs_icu;
 hb_unicode_funcs_t _hb_icu_unicode_funcs = {
   HB_OBJECT_HEADER_STATIC,
@@ -170,11 +279,9 @@ hb_unicode_funcs_t _hb_icu_unicode_funcs = {
   NULL, /* parent */
   TRUE, /* immutable */
   {
-    hb_icu_get_combining_class,
-    hb_icu_get_eastasian_width,
-    hb_icu_get_general_category,
-    hb_icu_get_mirroring,
-    hb_icu_get_script
+#define HB_UNICODE_FUNC_IMPLEMENT(name) hb_icu_unicode_##name,
+    HB_UNICODE_FUNCS_IMPLEMENT_CALLBACKS
+#undef HB_UNICODE_FUNC_IMPLEMENT
   }
 };
 

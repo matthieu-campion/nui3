@@ -20,9 +20,6 @@
 #include "nuiTexture.h"
 #include "nuiSurface.h"
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-
 
 /****************************************************************************
  *
@@ -507,9 +504,10 @@ void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nglString& rString, bo
   mCurrentState.mpFont->Print(this,x,y,rString, AlignGlyphPixels);
 }
 
-void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiFontLayout& rLayout, bool AlignGlyphPixels)
+void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiTextLayout& rLayout, bool AlignGlyphPixels)
 {
-  mCurrentState.mpFont->Print(this,x,y,rLayout, AlignGlyphPixels);
+  rLayout.Print(this, x, y, AlignGlyphPixels);
+  //mCurrentState.mpFont->Print(this,x,y,rLayout, AlignGlyphPixels);
 }
 
 void nuiDrawContext::PermitAntialiasing(bool Set)
@@ -806,7 +804,7 @@ static void nuiDrawRect(const nuiRect& out, nuiRenderArray& rArray)
   rArray.SetMode(GL_TRIANGLE_STRIP);
   rArray.Reserve(8);
   nuiRect in(out);
-  in.Grow(-NUI_INV_SCALE_FACTOR, -NUI_INV_SCALE_FACTOR);
+  in.Grow(-nuiGetInvScaleFactor(), -nuiGetInvScaleFactor());
   
   rArray.SetVertex(out.Left(), out.Top()); rArray.PushVertex();
   rArray.SetVertex(in.Left(), in.Top()); rArray.PushVertex();
@@ -875,7 +873,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     else
     {
       nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
-      if (NUI_SCALE_FACTOR != 1.0f)
+      if (nuiGetScaleFactor() != 1.0f)
       {
         nuiDrawRect(rRect, *pStrokeArray);
       }

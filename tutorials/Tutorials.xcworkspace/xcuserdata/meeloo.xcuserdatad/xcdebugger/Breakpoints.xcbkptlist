@@ -31,5 +31,19 @@
          landmarkName = "_hb_buffer_replace_glyph (hb_buffer_t *buffer, hb_codepoint_t glyph_index)"
          landmarkType = "7">
       </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TextEdit/src/MainWindow.cpp"
+         timestampString = "330998169.792035"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
+         landmarkName = "MainWindow::OnCreation()"
+         landmarkType = "5">
+      </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

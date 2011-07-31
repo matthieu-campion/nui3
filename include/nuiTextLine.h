@@ -30,6 +30,10 @@ public:
   
   nuiRect GetRect() const;
   
+  int32 GetGlyphCount() const;
+  
+  const nuiTextGlyph* GetGlyph   (int32 Offset) const;
+  const nuiTextGlyph* GetGlyphAt (float X, float Y) const;
 private:
   friend class nuiTextLayout;
   

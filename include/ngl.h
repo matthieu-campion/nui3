@@ -18,8 +18,8 @@ and in NGL user application code.
 #include "nuiVersion.h"
 
 
-//#define USE_WCHAR
-//#define __NUI_NO_SOFTWARE__
+#define USE_WCHAR
+#define __NUI_NO_SOFTWARE__
 
 
 /*

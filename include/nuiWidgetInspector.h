@@ -9,7 +9,7 @@
 #define __nuiWidgetInspector_h__
 
 #include "nuiTreeView.h"
-#include "nuiComposite.h"
+#include "nuiSimpleContainer.h"
 
 class nuiVBox;
 class nuiGrid;
@@ -34,7 +34,7 @@ private:
 };
 
 
-class NUI_API nuiWidgetInfo : public nuiComposite
+class NUI_API nuiWidgetInfo : public nuiSimpleContainer
 {
 public:
   nuiWidgetInfo(nuiWidget* pTarget);
@@ -78,7 +78,7 @@ protected:
   void BuildInfo();
 };
 
-class NUI_API nuiWidgetInspector : public nuiComposite
+class NUI_API nuiWidgetInspector : public nuiSimpleContainer
 {
 public:
   nuiWidgetInspector(nuiWidget* pTarget);

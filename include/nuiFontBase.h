@@ -8,17 +8,14 @@
 
 #pragma once
 
-#include "nglError.h"
 #include "nuiRect.h"
 #include "nuiPanose.h"
 
-class nuiFontLayout;
 class nglPath;
 class nuiTexture;
 class nuiDrawContext;
 class nuiTexture;
 class nuiFont;
-class nuiGlyphLayout;
 class nuiTextLayout;
 class nuiTextLine;
 #include "nuiTextRun.h"
@@ -62,7 +59,6 @@ public:
   bool HasSize(int32 Size) const;
   
   const std::set<nglTextEncoding>&  GetEncodings() const;
-  const std::vector<nglUChar>&       GetGlyphs() const;
   const std::set<int32>&            GetSizes() const;
   
   const nuiFontPanoseBytes& GetPanoseBytes() const; 
@@ -84,8 +80,9 @@ private:
   bool mMonospace;
   bool mScalable;
   std::set<nglTextEncoding> mEncodings;
-  std::vector<nglUChar>      mGlyphs;
-  std::set<int32>           mSizes;
+  typedef std::pair<nglUChar, nglUChar> GlyphRange;
+  std::vector<GlyphRange> mGlyphs;
+  std::set<int32> mSizes;
   
   nuiFontPanoseBytes        mPanoseBytes;
   
@@ -143,40 +140,7 @@ public:
 };
 
 
-//! Glyph metrics
-/*!
- All glyph metrics are given in pixels, they depend on the current font size and
- resolution. See :
- 
- - nuiFontBase::GetGlyphInfo() for more informations
- - the insightfull introduction to digital typography on FreeType's site :
- http://www.freetype.org/freetype2/docs/glyphs/
- - the font/metrics example bundled with the regular NGL distribution
- */
-class NGL_API nuiGlyphInfo
-{
-public:
-  int   Index;     ///< Glyph index in font face
-  float Width;     ///< Bounding box width
-  float Height;    ///< Bounding box height
-  float BearingX;  ///< X bearing
-  float BearingY;  ///< Y bearing
-  float AdvanceX;  ///< Horizontal advance
-  float AdvanceY;  ///< Vertical advance
-  
-  nuiGlyphInfo();
-  virtual ~nuiGlyphInfo();
-  void Dump (uint Level = 0) const;  ///< Dumps informations to the application log using \p Level verbosity
-};
-
-
-// Errors
-#define NGL_FONT_ENONE  0  ///< No error
-#define NGL_FONT_EINIT  1  ///< FreeType library initialisation failed
-#define NGL_FONT_ELOAD  2  ///< Couldn't load font ressource
-
-
-class NUI_API nuiFontBase: public nglError
+class NUI_API nuiFontBase: public nuiObject
 {
 
 public:
@@ -212,21 +176,23 @@ public:
   
   /** @name Life cycle */
   //@{
-  nuiFontBase ();
+  nuiFontBase (float Size = 14.0f);
   /*!< Create default font
    Create a font from an embedded description. It implements all ASCII characters
    using a monospace, lightly serifed, legible scalable font.
+   \param Size size of the font
    */
   
-  nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer);
+  nuiFontBase(uint8* pBuffer, uint32 BufferSize, uint Face, bool StaticBuffer, float Size = 14.0f);
   /*!< Create font from memory.
    Create a font from a memory buffer.
    */
   
-  nuiFontBase (const nglPath& rFontFile, uint Face = 0);
+  nuiFontBase (const nglPath& rFontFile, uint Face = 0, float Size = 14.0);
   /*!< Create a font from a file
    \param rFontFile path to font file
    \param Face face index for multi-face fonts
+   \param Size size of the font
    
    This will load a font file using any of the FreeType's supported file formats,
    including TrueType, PostScript Type1, Type42, PCF and Windows' FON (among others).
@@ -244,6 +210,8 @@ public:
   /*!< Release the font ressource
    */
   //@}
+  
+  bool IsValid() const;
   
   /** @name Global font info & metrics */
   //@{
@@ -348,7 +316,7 @@ public:
    If \p Char does not have a corresponding glyph, returns false (see SetCharMap()).
    Output metrics are always in pixels. See nuiGlyphInfo for more info.
    
-   To retrieve string metrics, use nuiFontLayout::GetMetrics().
+   To retrieve string metrics, use nuiTextLayout::GetMetrics().
    */
   bool GetKerning (uint Left, uint Right, float& rX, float& rY) const;
   /*!< Fetch kerning values from a glyph pair
@@ -359,7 +327,7 @@ public:
    \return true if \p rX and \p rY represent a valid kerning vector
    
    This methods work on raw glyph indexes because it is expected to be called
-   from a layout implementation (see nuiFontLayout), where indexes are proper
+   from a layout implementation (see nuiTextLayout), where indexes are proper
    glyph handlers.
    */
   //@}
@@ -469,20 +437,13 @@ public:
   void SetAlphaTest(float Threshold = 0.01f);
 
 
-  int  Print (nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels = true);
-  int  Print (nuiDrawContext *pContext, float X, float Y, const nuiFontLayout& rLayout, bool AlignGlyphPixels = true);
-
-  int  GetTextSize (float& X, float& Y, const nglChar* pText); ///< Calculate the bounding of the string in texels and returns it in X & Y.
-  int  GetTextPos (float X, const nglChar* pText); ///< Calculate the bounding of the char pos in the given text where the pixel (X,?) lies and returns it.
-
+  void Print(nuiDrawContext *pContext, float X, float Y, const nglString& rText, bool AlignGlyphPixels = true);
   
-  bool PrepareGlyph(int32 Index, nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
-  bool PrepareGlyph(nuiTextGlyph& rGlyph, bool AlignGlyphPixels);
+  bool PrepareGlyph(float X, float Y, nuiTextGlyph& rGlyph);
   
   void Shape(nuiTextRun* pRun);
 protected:
   GLclampf mAlphaTest;  ///< Alpha test threshold as set by SetAlphaTest()
-  const nglChar* OnError (uint& rError) const;
   
   bool  SetSize (float Size, nuiFontUnit Unit = eFontUnitPixel);
   /*!< Set current font size
@@ -497,8 +458,6 @@ protected:
   
 
 private:
-  bool PrintGlyph (nuiDrawContext *pContext, const nuiGlyphLayout& rGlyph, bool AlignGlyphPixels);
-  bool PrintGlyphs(nuiDrawContext *pContext, const std::map<nuiTexture*, std::vector<nuiGlyphLayout> >& rGlyphs);
   class NUI_API GlyphLocation
   {
   public:
@@ -554,14 +513,15 @@ private:
   nuiFontPanoseBytes    mPanoseBytes;
   bool                  mHasPanoseInfo;
   bool                  mLastResort;
+  bool                  mValid;
   
   /* Init/setup
    */
   static bool Init();                                  // Mandatory init for all instances
-  bool Load (const nglPath& rPath, uint Face);  // Create font object from font file
-  bool Load (const uint8* pBase, int32 Size, uint Face, bool StaticBuffer); // Create font object from memory
-  bool Load (FaceID ID);                        // Clone font object from font ID (font already 'installed')
-  bool LoadFinish();                            // Setup some defaults (size, charmap, rendering)
+  bool Load (const nglPath& rPath, uint Face, float Size);  // Create font object from font file
+  bool Load (const uint8* pBase, int32 BufferSize, uint Face, bool StaticBuffer, float Size); // Create font object from memory
+  bool Load (FaceID ID, float Size);                        // Clone font object from font ID (font already 'installed')
+  bool LoadFinish(float Size);                            // Setup some defaults (size, charmap, rendering)
   
   /* Internal callbacks
    */

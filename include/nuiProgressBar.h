@@ -17,7 +17,6 @@ class NUI_API nuiProgressBar : public nuiWidget
 public:
   nuiProgressBar(float Progress);
   nuiProgressBar();
-  virtual bool Load(const nuiXMLNode* pNode);
   virtual ~nuiProgressBar();
 
   virtual nuiRect CalcIdealSize();

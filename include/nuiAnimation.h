@@ -124,9 +124,6 @@ public:
   nuiAnimation();
   virtual ~nuiAnimation();
 
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
-
   bool SetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the time to display. Returns false if Time is out of range (but the current time will be capped on the nearest boundary).
   double GetTime() const; ///< Return the currently displayed time in the animation.
   double GetPosition() const;
@@ -235,10 +232,7 @@ class NUI_API nuiMetaAnimation : public nuiAnimation
 {
 public:
   nuiMetaAnimation ();
-  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiMetaAnimation();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
   virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
@@ -256,10 +250,7 @@ class NUI_API nuiAnimationSequence : public nuiAnimation
 {
 public:
   nuiAnimationSequence ();
-  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiAnimationSequence();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
   virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.

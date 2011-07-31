@@ -243,32 +243,27 @@ _try_make_writable_inplace_unix (hb_blob_t *blob)
 #endif
 
   if ((uintptr_t) -1L == pagesize) {
-    (void) (HB_DEBUG_BLOB &&
-      fprintf (stderr, "%p %s: failed to get pagesize: %s\n", blob, HB_FUNC, strerror (errno)));
+    DEBUG_MSG_FUNC (BLOB, blob, "failed to get pagesize: %s", strerror (errno));
     return FALSE;
   }
-  (void) (HB_DEBUG_BLOB &&
-    fprintf (stderr, "%p %s: pagesize is %lu\n", blob, HB_FUNC, (unsigned long) pagesize));
+  DEBUG_MSG_FUNC (BLOB, blob, "pagesize is %lu", (unsigned long) pagesize);
 
   mask = ~(pagesize-1);
   addr = (const char *) (((uintptr_t) blob->data) & mask);
   length = (const char *) (((uintptr_t) blob->data + blob->length + pagesize-1) & mask)  - addr;
-  (void) (HB_DEBUG_BLOB &&
-    fprintf (stderr, "%p %s: calling mprotect on [%p..%p] (%lu bytes)\n",
-	     blob, HB_FUNC,
-	     addr, addr+length, (unsigned long) length));
+  DEBUG_MSG_FUNC (BLOB, blob,
+		  "calling mprotect on [%p..%p] (%lu bytes)",
+		  addr, addr+length, (unsigned long) length);
   if (-1 == mprotect ((void *) addr, length, PROT_READ | PROT_WRITE)) {
-    (void) (HB_DEBUG_BLOB &&
-      fprintf (stderr, "%p %s: %s\n", blob, HB_FUNC, strerror (errno)));
+    DEBUG_MSG_FUNC (BLOB, blob, "mprotect failed: %s", strerror (errno));
     return FALSE;
   }
 
   blob->mode = HB_MEMORY_MODE_WRITABLE;
 
-  (void) (HB_DEBUG_BLOB &&
-    fprintf (stderr, "%p %s: successfully made [%p..%p] (%lu bytes) writable\n",
-	     blob, HB_FUNC,
-	     addr, addr+length, (unsigned long) length));
+  DEBUG_MSG_FUNC (BLOB, blob,
+		  "successfully made [%p..%p] (%lu bytes) writable\n",
+		  addr, addr+length, (unsigned long) length);
   return TRUE;
 #else
   return FALSE;
@@ -278,14 +273,12 @@ _try_make_writable_inplace_unix (hb_blob_t *blob)
 static bool
 _try_writable_inplace (hb_blob_t *blob)
 {
-  (void) (HB_DEBUG_BLOB &&
-    fprintf (stderr, "%p %s: making writable inplace\n", blob, HB_FUNC));
+  DEBUG_MSG_FUNC (BLOB, blob, "making writable inplace\n");
 
   if (_try_make_writable_inplace_unix (blob))
     return TRUE;
 
-  (void) (HB_DEBUG_BLOB &&
-    fprintf (stderr, "%p %s: making writable -> FAILED\n", blob, HB_FUNC));
+  DEBUG_MSG_FUNC (BLOB, blob, "making writable -> FAILED\n");
 
   /* Failed to make writable inplace, mark that */
   blob->mode = HB_MEMORY_MODE_READONLY;
@@ -308,8 +301,7 @@ _try_writable (hb_blob_t *blob)
     return TRUE;
 
 
-  (void) (HB_DEBUG_BLOB &&
-    fprintf (stderr, "%p %s -> %p\n", blob, HB_FUNC, blob->data));
+  DEBUG_MSG_FUNC (BLOB, blob, "currect data is -> %p\n", blob->data);
 
   char *new_data;
 
@@ -317,8 +309,7 @@ _try_writable (hb_blob_t *blob)
   if (unlikely (!new_data))
     return FALSE;
 
-  (void) (HB_DEBUG_BLOB &&
-    fprintf (stderr, "%p %s: dupped successfully -> %p\n", blob, HB_FUNC, blob->data));
+  DEBUG_MSG_FUNC (BLOB, blob, "dupped successfully -> %p\n", blob->data);
 
   memcpy (new_data, blob->data, blob->length);
   _hb_blob_destroy_user_data (blob);

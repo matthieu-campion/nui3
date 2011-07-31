@@ -29,15 +29,9 @@ class NUI_API nuiShape : public nuiPathGenerator
 {
 public:
   nuiShape();
-  virtual bool Load(const nuiXMLNode* pNode);
   virtual ~nuiShape();
 
   void Clear();
-
-  /** @name Serialization */
-  //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode) const; ///< This method saves the state in the given XML Node.
-  //@}
 
   /** @name Adding special contours */
   //@{

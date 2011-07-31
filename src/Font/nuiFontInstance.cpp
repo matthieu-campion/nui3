@@ -36,7 +36,7 @@ nuiFontInstance::nuiFontInstance (const nglPath& rPath, uint Face)
 
 nuiFontInstance::nuiFontInstance (const FT_Byte* pBase, FT_Long Size, uint Face, bool StaticBuffer)
 {
-  NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::nuiFontInstance 0x%x (memory %d - %d)\n", this, Size, Face);)
+  //NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::nuiFontInstance 0x%x (memory %d - %d)\n", this, Size, Face);)
   nglString fake;
   fake.Format(_T("/memory/%p,0x%x"), pBase, Size);
 
@@ -61,12 +61,12 @@ nuiFontInstance::nuiFontInstance (const nuiFontInstance& rInstance)
   mOwnMemory = !mStatic;
   
   Acquire();
-  NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::nuiFontInstance COPY CTOR 0x%x (%s - %d)\n", this, mPath.GetChars(), mFace);)
+  //NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::nuiFontInstance COPY CTOR 0x%x (%s - %d)\n", this, mPath.GetChars(), mFace);)
 }
 
 nuiFontInstance::~nuiFontInstance()
 {
-  NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::~nuiFontInstance DTOR 0x%x (%s - %d)\n", this, mPath.GetChars(), mFace);)
+  //NGL_DEBUG( NGL_LOG("font", NGL_LOG_DEBUG, "nuiFontInstance::~nuiFontInstance DTOR 0x%x (%s - %d)\n", this, mPath.GetChars(), mFace);)
   if (mOwnMemory)
     delete[] mpMemBase;
 }

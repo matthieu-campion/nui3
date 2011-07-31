@@ -56,9 +56,11 @@ void MainWindow::OnCreation()
     mpFont = nuiFontManager::GetManager().GetFont(request);
     printf("Requested font: %s - %s\n", mpFont->GetFamilyName().GetChars(), mpFont->GetStyleName().GetChars());
     mpLayout = new nuiTextLayout(mpFont);
-    mpLayout->LayoutText(text);
+    //text = "blah\nbleh\nblu\n";
+    mpLayout->Layout(text);
     
-    //pText->AddText(text);
+    pText->SetFont(mpFont);
+    pText->AddText(text);
     delete pStream;
   }
   
@@ -76,7 +78,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   if (mpLayout)
   {
     pContext->SetTextColor(nuiColor(0, 0, 0));
-    mpLayout->Print(pContext, 10, 20, true);
+    //mpLayout->Print(pContext, 10, 20, true);
     //mpFont->Print(pContext, 10, 400, mpLayout, false);
   }
   

@@ -182,7 +182,7 @@ public:
   void SetTextColor(const nuiColor& rColor);
   nuiColor GetTextColor() const;
   void DrawText(nuiSize x, nuiSize y, const nglString& rString, bool AlignGlyphPixels = true); /// Draw text at the given coordinates and the current font.
-  void DrawText(nuiSize x, nuiSize y, const nuiFontLayout& rLayout, bool AlignGlyphPixels = true); /// Draw text layout at the given coordinates and the current font. The given layout must use the same font as the current font otherwise the results are unpredictable.
+  void DrawText(nuiSize x, nuiSize y, const nuiTextLayout& rLayout, bool AlignGlyphPixels = true); /// Draw text layout at the given coordinates and the current font. The given layout must use the same font as the current font otherwise the results are unpredictable.
   //@}
 
   /** @name Global Draw Settings Manipulation */

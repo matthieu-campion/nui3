@@ -38,16 +38,7 @@ licence: see nui3/LICENCE.TXT
   #define ngl_mbs_stricmp strcasecmp
 #elif defined _LINUX_
   #include <ctype.h>
-  #define ngl_vsnprintf vsnprintf
-  #define ngl_snprintf	snprintf
-  #define ngl_strcmp strcmp
-  #define ngl_stricmp strcasecmp
-  #define ngl_strncmp strncmp
-  #define ngl_strnicmp strncasecmp
-  #define ngl_mbs_stricmp strcasecmp
-#elif defined _ANDROID_
-  #include <ctype.h>
-  #define ngl_vsnprintf vsnprintf
+  #define ngl_vsnprintf vsprintf
   #define ngl_snprintf	snprintf
   #define ngl_strcmp strcmp
   #define ngl_stricmp strcasecmp
@@ -150,7 +141,7 @@ static void ngl_ftoa(double x, nglString& _String, int32 precision, nglFloatForm
   else if (flag & Condensed)
     t = L'g';
 
-  fmt.Add(t);
+  fmt.Add((nglUChar)t);
 
   // Use the standard display with the 'C' locale:
   _String.CFormat(fmt.GetChars(), x);
@@ -535,11 +526,10 @@ int32 nglString::GetLength() const
 int32 nglString::GetULength() const
 {
   int32 len = 0;
-  int32 l = 0;
-  while (l >= 0)
+  int32 l = 1;
+  while (l > 0)
   {
-    len = l;
-    l = GetNextUChar(l);
+    l = GetNextUChar(len);
   }
   return len;
 }

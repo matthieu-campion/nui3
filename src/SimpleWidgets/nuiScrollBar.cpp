@@ -10,7 +10,6 @@
 #include "nuiApplication.h"
 #include "nuiScrollBar.h"
 #include "nuiDrawContext.h"
-#include "nuiXML.h"
 
 #define SCROLL_IDEAL_WIDTH 12
 #define SCROLL_IDEAL_SIZE 50
@@ -77,45 +76,6 @@ nuiScrollBar::nuiScrollBar(nuiOrientation orientation, const nuiRange& rRange, n
 
   NUI_ADD_EVENT(ValueChanged);
 }
-
-bool nuiScrollBar::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mpThumb = NULL;
-  mTimer.SetPeriod(.2);
-      
-  SetObjectClass(_T("nuiScrollBar"));
-  SetRedrawOnHover(true);
-  mClicked = false;
-  mThumbClicked = false;
-  mPageUpClicked = false;
-  mPageDownClicked = false;
-  mDrawBackground = true;
-
-  // FIXME: interpret other attributes...
-  mOrientation = nuiGetOrientation(pNode);
-  
-  SetRange(&mRange);
-
-  mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageUp);
-  mScrollBarSink.Connect(mTimer.Tick, &nuiScrollBar::HandlePageDown);
-
-  NUI_ADD_EVENT(ValueChanged);
-  
-  return true;
-}
-
-nuiXMLNode* nuiScrollBar::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-  
-
-  pNode->SetAttribute(_T("Orientation"),mOrientation);
-  return pNode;
-}
-
 
 nuiScrollBar::~nuiScrollBar()
 {
@@ -583,11 +543,6 @@ const nglString& nuiScrollBar::GetBackgroundDecoName()
 nuiCustomScrollBar::nuiCustomScrollBar(nuiOrientation orientation, const nuiRange& rRange, nuiWidgetPtr pThumb)
 : nuiScrollBar(orientation, rRange, pThumb)
 {
-}
-
-bool nuiCustomScrollBar::Load(const nuiXMLNode* pNode)
-{
-  return nuiScrollBar::Load(pNode);
 }
 
 nuiCustomScrollBar::~nuiCustomScrollBar()

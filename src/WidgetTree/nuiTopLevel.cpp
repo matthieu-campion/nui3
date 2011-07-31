@@ -175,7 +175,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
 
   mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiTopLevel::ToolTipOn);
   mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiTopLevel::ToolTipOff);
-  mTopLevelSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiTopLevel::OnMessageQueueTick);
 
   mpGrab.clear();
   mMouseInfo.TouchId = -1;
@@ -190,47 +189,6 @@ nuiTopLevel::nuiTopLevel(const nglPath& rResPath)
   SetWantKeyboardFocus(true);
   SetFocusVisible(false);
   SetMouseCursor(eCursorArrow);
-}
-
-bool nuiTopLevel::Load(const nuiXMLNode* pNode)
-{
-  CheckValid();
-  mToolTipTimerOn.SetPeriod(0.5f);
-  mToolTipTimerOff.SetPeriod(5.0f);
-  mFillTrash = false;
-  
-  //EnableRenderCache(false);
-  mClearBackground = true;
-  mNeedInvalidateOnSetRect = true;
-  mReleased = false;
-  SetObjectClass(_T("nuiTopLevel"));
-
-  mResPath = nglPath(pNode->GetAttribute("Path"));
-
-  mToolTipDelayOn = .5f;
-  mToolTipDelayOff = 5.0f;
-
-  mDisplayToolTip = false;
-  mpToolTipSource = NULL;
-  mpToolTipLabel = new nuiToolTip();
-  AddChild(mpToolTipLabel);
-  
-  mTopLevelSink.Connect(mToolTipTimerOn.Tick, &nuiMainWindow::ToolTipOn);
-  mTopLevelSink.Connect(mToolTipTimerOff.Tick, &nuiMainWindow::ToolTipOff);
-
-  mpGrab.clear();
-  mMouseInfo.TouchId = -1;
-  mpFocus = NULL;
-  mpUnderMouse = NULL;
-
-  mLastClickedButton = nglMouseInfo::ButtonNone;
-
-  EnablePartialRedraw(PARTIAL_REDRAW_DEFAULT);
-  EnableRenderCache(false);
-
-  SetMouseCursor(eCursorArrow);
-  
-  return true;
 }
 
 nuiTopLevel::~nuiTopLevel()
@@ -353,11 +311,11 @@ void nuiTopLevel::EmptyTrash()
 
   mpTrash.clear();
   
-  if (IsTrashed(false))
-  {
-    mTrashed = false;
-    delete this;
-  }
+//  if (IsTrashed(false))
+//  {
+//    mTrashed = false;
+//    delete this;
+//  }
 }
 
 void nuiTopLevel::AdviseObjectDeath(nuiWidgetPtr pWidget)
@@ -500,18 +458,21 @@ bool nuiTopLevel::DispatchUngrab(nuiWidgetPtr pWidget)
 
 bool nuiTopLevel::DispatchHasGrab(nuiWidgetPtr pWidget)
 {
+  nuiAutoRef;
   CheckValid();
   return HasGrab(pWidget);
 }
 
 bool nuiTopLevel::DispatchHasGrab(nuiWidgetPtr pWidget, nglTouchId TouchId)
 {
+  nuiAutoRef;
   return pWidget == GetGrab(TouchId);
 }
 
 
 bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
 {
+  nuiAutoRef;
   CheckValid();
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Grab 0x%x\n"), pWidget) );
 
@@ -566,6 +527,7 @@ bool nuiTopLevel::Grab(nuiWidgetPtr pWidget)
 
 bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
 {
+  nuiAutoRef;
   CheckValid();
   NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::Ungrab 0x%x\n"), pWidget) );
   if (pWidget)
@@ -589,6 +551,7 @@ bool nuiTopLevel::Ungrab(nuiWidgetPtr pWidget)
 bool nuiTopLevel::CancelGrab()
 {
   CheckValid();
+  nuiAutoRef;
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("CancelGrab()\n")) );
   for (nuiGrabMap::const_iterator it = mpGrab.begin(); it != mpGrab.end(); ++it)
   {
@@ -640,6 +603,7 @@ nuiWidgetPtr nuiTopLevel::GetGrab() const
 bool nuiTopLevel::SetFocus(nuiWidgetPtr pWidget)
 {
   CheckValid();
+  nuiAutoRef;
   if (mpFocus == pWidget)
     return true;
 
@@ -790,29 +754,34 @@ bool nuiTopLevel::IsKeyDown (nglKeyCode Key) const
 
 void nuiTopLevel::CallTextCompositionStarted()
 {
+  nuiAutoRef;
   if (mpFocus)
     mpFocus->TextCompositionStarted();
 }
 void nuiTopLevel::CallTextCompositionConfirmed()
 {
+  nuiAutoRef;
   if (mpFocus)
     mpFocus->TextCompositionConfirmed();
 }
 
 void nuiTopLevel::CallTextCompositionCanceled()
 {
+  nuiAutoRef;
   if (mpFocus)
     mpFocus->TextCompositionCanceled();
 }
 
 void nuiTopLevel::CallTextCompositionUpdated(const nglString& rString, int32 CursorPosition)
 {
+  nuiAutoRef;
   if (mpFocus)
     mpFocus->TextCompositionUpdated(rString, CursorPosition);
 }
 
 nglString nuiTopLevel::CallGetTextComposition() const
 {
+  nuiAutoRef;
   if (mpFocus)
     return mpFocus->GetTextComposition();
   return nglString::Null;
@@ -820,6 +789,7 @@ nglString nuiTopLevel::CallGetTextComposition() const
 
 void nuiTopLevel::CallTextCompositionIndexToPoint(int32 CursorPosition, float& x, float& y) const
 {
+  nuiAutoRef;
   if (mpFocus)
   {
     mpFocus->TextCompositionIndexToPoint(CursorPosition, x, y);
@@ -829,6 +799,7 @@ void nuiTopLevel::CallTextCompositionIndexToPoint(int32 CursorPosition, float& x
 
 bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 {
+  nuiAutoRef;
   CheckValid();
   if (mpFocus && mpFocus->IsEnabled())
   {
@@ -848,6 +819,7 @@ bool nuiTopLevel::CallTextInput (const nglString& rUnicodeText)
 
 void nuiTopLevel::CallTextInputCancelled ()
 {
+  nuiAutoRef;
   CheckValid();
   if (mpFocus && mpFocus->IsEnabled())
   {
@@ -988,6 +960,7 @@ nuiWidgetPtr GetPreviousFocussableWidget(nuiWidgetPtr pWidget)
 bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
 {
   CheckValid();
+  nuiAutoRef;
   if (mpFocus)
   {
     if (mpFocus->IsEnabled())
@@ -1040,6 +1013,7 @@ bool nuiTopLevel::CallKeyDown (const nglKeyEvent& rEvent)
 bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 {
   CheckValid();
+  nuiAutoRef;
   if (mpFocus && mpFocus->IsEnabled())
   {
     if (mpFocus->DispatchKeyUp(rEvent, mHotKeyMask))
@@ -1059,6 +1033,7 @@ bool nuiTopLevel::CallKeyUp (const nglKeyEvent& rEvent)
 bool nuiTopLevel::CallMouseClick (nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   
   mMouseClickedEvents[rInfo.TouchId] = rInfo;
   
@@ -1120,6 +1095,7 @@ NGL_TOUCHES_DEBUG( NGL_OUT(_T("CallMouseClick [%d] END\n"), rInfo.TouchId) );
 void nuiTopLevel::UpdateMouseCursor(const nuiWidgetList& rWidgets)
 {
   CheckValid();
+  nuiAutoRef;
   nuiWidgetPtr pGrab = GetGrab(mMouseInfo.TouchId);
   if (pGrab)
   {
@@ -1150,6 +1126,7 @@ void nuiTopLevel::UpdateMouseCursor(const nuiWidgetList& rWidgets)
 void nuiTopLevel::DispatchKeyboardFocus(const nuiWidgetList& rWidgets)
 {
   CheckValid();
+  nuiAutoRef;
   int32 i = 0;
   
   while (i < rWidgets.size())
@@ -1181,6 +1158,7 @@ void nuiTopLevel::DispatchKeyboardFocus(const nuiWidgetList& rWidgets)
 bool nuiTopLevel::CallMouseUnclick(nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
 //  NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseUnclick X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
   // Update counterpart:
@@ -1311,6 +1289,7 @@ void nuiTopLevel::UpdateHoverList(nglMouseInfo& rInfo)
 bool nuiTopLevel::CallMouseMove (nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
 NGL_TOUCHES_DEBUG( NGL_OUT(_T("nuiTopLevel::CallMouseMove X:%d Y:%d\n"), rInfo.X, rInfo.Y) );
 
   // Update counterpart:
@@ -2016,12 +1995,6 @@ void nuiTopLevel::SetWatchedWidget(nuiWidget* pWatchedWidget)
   Invalidate();
 }
 
-void nuiTopLevel::OnMessageQueueTick(const nuiEvent& rEvent)
-{
-  CheckValid();
-  BroadcastQueuedNotifications();
-}
-
 //// CSS Stuff:
 void nuiTopLevel::PrepareWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 MatchersTag)
 {
@@ -2259,32 +2232,22 @@ bool nuiTopLevel::IsEnteringText() const
 
 void nuiTopLevel::PostNotification(nuiNotification* pNotification)
 {
-  mNotificationManager.PostNotification(pNotification);
+  App->PostNotification(pNotification);
 }
 
 void nuiTopLevel::BroadcastNotification(const nuiNotification& rNotification)
 {
-  mNotificationManager.BroadcastNotification(rNotification);
-}
-
-void nuiTopLevel::BroadcastQueuedNotifications()
-{
-  mNotificationManager.BroadcastQueuedNotifications();
+  App->BroadcastNotification(rNotification);
 }
 
 void nuiTopLevel::RegisterObserver(const nglString& rNotificationName, nuiNotificationObserver* pObserver)
 {
-  mNotificationManager.RegisterObserver(rNotificationName, pObserver);
+  App->RegisterObserver(rNotificationName, pObserver);
 }
 
 void nuiTopLevel::UnregisterObserver(nuiNotificationObserver* pObserver, const nglString& rNotificationName)
 {
-  mNotificationManager.UnregisterObserver(pObserver, rNotificationName);
-}
-
-void nuiTopLevel::ClearNotifications()
-{
-  mNotificationManager.Clear();
+  App->UnregisterObserver(pObserver, rNotificationName);
 }
 
 

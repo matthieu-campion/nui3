@@ -21,10 +21,7 @@ class NUI_API nuiScrollBar : public nuiSimpleContainer
 {
 public:
   nuiScrollBar(nuiOrientation orientation = nuiHorizontal, const nuiRange& rRange = nuiRange(), nuiWidgetPtr pThumb = NULL);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiScrollBar();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   virtual bool SetRect(const nuiRect& rRect);
   
@@ -130,7 +127,6 @@ class NUI_API nuiCustomScrollBar : public nuiScrollBar
 {
 public:
   nuiCustomScrollBar(nuiOrientation orientation, const nuiRange& rRange = nuiRange(), nuiWidgetPtr pThumb = NULL);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiCustomScrollBar();
 
   void AddWidget(nuiWidget* pWidget, nuiPosition position); ///< add child with given nuiPosition position

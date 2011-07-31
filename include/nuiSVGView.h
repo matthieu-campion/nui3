@@ -9,7 +9,6 @@
 #define __nuiSVGView_h__
 
 //#include "nui.h"
-#include "nuiXML.h"
 #include "nuiDrawContext.h"
 #include "nuiSVGShape.h"
 #include "nuiMetaPainter.h"
@@ -19,7 +18,6 @@ class NUI_API nuiSVGView : public nuiWidget
 public:
   nuiSVGView(nuiSVGShape* pShape = NULL); ///< Load a svg view from an existing svg shape.
   nuiSVGView(const nglPath& rShapePath); ///< Construct a svg view from a SVG xml description file.
-  bool Load(const nuiXMLNode* pNode); ///< Load from an XML description.
   virtual ~nuiSVGView();
 
   bool Load (nglIStream& rSource);

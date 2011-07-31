@@ -15,7 +15,6 @@ class NUI_API nuiEditLine : public nuiEditText
 {
 public:
   nuiEditLine(const nglString& rText = _T(""));
-  virtual bool Load(const nuiXMLNode* pNode);
   virtual ~nuiEditLine();
   
   void LimitCharacterCount(int maxDisplayedChar);

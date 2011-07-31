@@ -60,8 +60,6 @@ public:
 
   /** @name Serialization */
   //@{
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create an nuiObject from an XML description.
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;
   nglString Dump(); ///< serialize the object and dump the result in a output string
   //@}
 
@@ -520,7 +518,7 @@ public:
 
   /** @name Decorations */
   //@{
-  void InitDefaultDecorations();
+  static void ClearDefaultDecorations();
   static void SetDefaultDecoration(int32 objectClassIndex, nuiDecorationDelegate dlg);
   virtual void SetDecoration(const nglString& rName);
   virtual void SetDecoration(nuiDecoration* pDecoration, nuiDecorationMode Mode = eDecorationOverdraw, bool AlreadyAcquired=false);
@@ -676,7 +674,6 @@ protected:
   int32 mInTransition;
   
   void InitDefaultValues();
-  void InitProperties(); ///< Init the property bindings.
   void Init(); ///< Initialise the basic parameters of the class.
 
   nuiMetaPainter* mpRenderCache;
@@ -712,7 +709,6 @@ protected:
   nuiDecorationMode mFocusDecorationMode;
   
   static std::vector<nuiDecorationDelegate> mDefaultDecorations;
-  static void ExitDefaultDecorations();
 
 
   void SetBorderLeft(nuiSize border);

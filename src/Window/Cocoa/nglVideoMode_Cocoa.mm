@@ -32,6 +32,9 @@ nglVideoMode::nglVideoMode()
 
   mBPP = 32;
   
+  mScaleFactor = 1.0f;
+  mInvScaleFactor = 1.0f / mScaleFactor;
+
   Init();
 }
 
@@ -88,3 +91,18 @@ bool nglVideoMode::SetMode (nglVideoMode* pVideoMode, bool Lock)
   NGL_DEBUG( NGL_LOG(_T("vidmode"), NGL_LOG_INFO, _T("switching to %s: %s"), pVideoMode->Dump().GetChars(), done ? _T("ok"):_T("failed")); )
   return done;
 }
+
+static float gScaleFactor = 1.0f;
+static float gInvScaleFactor = 1.0f;
+
+float nuiGetScaleFactor()
+{
+  return gScaleFactor;
+}
+
+float nuiGetInvScaleFactor()
+{
+  return gInvScaleFactor;
+}
+
+

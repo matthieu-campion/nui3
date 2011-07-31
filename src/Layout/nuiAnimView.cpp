@@ -17,24 +17,9 @@ nuiAnimView::nuiAnimView()
   SetDuration(5);
 }
 
-bool nuiAnimView::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  return true;
-}
-
 nuiAnimView::~nuiAnimView()
 {
 }
-
-nuiXMLNode* nuiAnimView::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiSimpleContainer::Serialize(pParentNode);
-  nuiAnimation::Serialize(pNode, false); // Add the animation parameters...
-
-  return pNode;
-}
-
 
 bool nuiAnimView::Draw(nuiDrawContext* pContext)
 {

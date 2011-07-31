@@ -18,7 +18,6 @@ class NUI_API nuiTab : public nuiButton
 public:
   nuiTab(); 
   nuiTab(const nglString & text);
-  bool Load(const nuiXMLNode* pNode);
 
   virtual ~nuiTab();
 
@@ -60,7 +59,6 @@ class NUI_API nuiTabBar : public nuiSimpleContainer
 {
 public:
   nuiTabBar(); ///< Create a tab bar
-  bool Load(const nuiXMLNode* pNode);
   virtual ~nuiTabBar();
 
   virtual int AddTab(nuiTab * pNewTab);

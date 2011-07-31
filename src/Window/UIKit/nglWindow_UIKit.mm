@@ -19,7 +19,6 @@
 
 #define NGL_WINDOW_FPS 60.0f
 
-extern float NUI_SCALE_FACTOR;
 
 //#include "nglImage.h"
 
@@ -167,6 +166,12 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 
 - (void) dealloc
 {
+  if (glView)
+  {
+    [glView removeFromSuperview];
+    [glView release];
+  }
+  
   [self disconnect];
   [super dealloc];
 }
@@ -736,9 +741,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   return [CAEAGLLayer class];
 }
 
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
-
 //The EAGL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
 - (id)initWithFrame:(CGRect)rect replacing:(EAGLView*) original
 {
@@ -756,10 +758,8 @@ extern float NUI_INV_SCALE_FACTOR;
     if ([self respondsToSelector:@selector(contentScaleFactor)])
     {
       /* on iOS 4.0, use contentsScaleFactor */
-      NUI_SCALE_FACTOR = [UIScreen mainScreen].scale;
-      NUI_INV_SCALE_FACTOR = 1.0f / NUI_SCALE_FACTOR;
       NSLog(@"Scale: %f\n", self.contentScaleFactor);
-      self.contentScaleFactor = NUI_SCALE_FACTOR;
+      self.contentScaleFactor = nuiGetScaleFactor();
     }
     else
     {
@@ -807,7 +807,7 @@ extern float NUI_INV_SCALE_FACTOR;
     {
       NSLog(@"Unable to resizeFromLayer\n");
     }
-}
+  }
   else
   {
     NSLog(@"EAGLView init failed :-/\n");
@@ -1046,8 +1046,15 @@ nglWindow::~nglWindow()
 {
   if (mpUIWindow)
   {
-    [mpUIWindow disconnect];
-    [mpUIWindow removeFromSuperview];
+    UIWindow* win = (UIWindow*)mpUIWindow;
+    [win disconnect];
+    UIWindow* oldwin = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    if (win != oldwin)
+    {
+      [oldwin makeKeyWindow];
+    }
+    //[win removeFromSuperview];
+    [win release];
   }
   Unregister();
 }

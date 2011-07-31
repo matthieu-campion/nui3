@@ -71,6 +71,10 @@ nglVideoMode::nglVideoMode()
     }
   }
 #endif // HAVE_XF86VIDMODE
+  
+  mScaleFactor = 1.0f;
+  mInvScaleFactor = 1.0f / mScaleFactor;
+
 }
 
 nglVideoMode::nglVideoMode (const nglVideoMode& rMode)
@@ -242,3 +246,20 @@ bool nglVideoMode::SetMode (bool Lock) const
   NGL_DEBUG( NGL_LOG(_T("vidmode"), NGL_LOG_INFO, _T("switching to %s: %s"), Dump().GetChars(), done ? _T("ok"):_T("failed")); )
   return done;
 }
+
+
+static float gScaleFactor = 1.0f;
+static float gInvScaleFactor = 1.0f;
+
+float nuiGetScaleFactor()
+{
+  return gScaleFactor;
+}
+
+float nuiGetInvScaleFactor()
+{
+  return gInvScaleFactor;
+}
+
+
+

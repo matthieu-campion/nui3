@@ -54,6 +54,9 @@
 		E5C9EE120781B71C00629D4E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4D0744D00F0018CBED /* CoreFoundation.framework */; };
 		E5C9EE130781B71C00629D4E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CC2B4E0744D00F0018CBED /* CoreServices.framework */; };
 		E5D65D7E131D64420023E581 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D65D7D131D64420023E581 /* Cocoa.framework */; };
+		E5E9D53513CBC4F1009C2079 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5E9D53413CBC4F1009C2079 /* Info.plist */; };
+		E5E9D53613CBC4F1009C2079 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5E9D53413CBC4F1009C2079 /* Info.plist */; };
+		E5E9D53713CBC4F1009C2079 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5E9D53413CBC4F1009C2079 /* Info.plist */; };
 		E5EC0C98126DDE7F002DA9F4 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1A61400E632DD800BDD037 /* libnui3D.a */; };
 		E5EC0C99126DDE85002DA9F4 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1A61420E632DD800BDD037 /* libnui3.a */; };
 		E5EC0C9A126DDE8D002DA9F4 /* libnui3CocoaD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EC0C7B126DDB49002DA9F4 /* libnui3CocoaD.a */; };
@@ -179,6 +182,7 @@
 		E59CDA570CDAC2F100B1C729 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
 		E5C9EE150781B71C00629D4E /* nuiTestD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nuiTestD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D65D7D131D64420023E581 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		E5E9D53413CBC4F1009C2079 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5ED3B080815D4CF002811C3 /* HelloWorld.nui */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = HelloWorld.nui; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -241,6 +245,7 @@
 		91CC2AFB0744CE480018CBED = {
 			isa = PBXGroup;
 			children = (
+				E5E9D53413CBC4F1009C2079 /* Info.plist */,
 				91CC2B0C0744CE7B0018CBED /* Dependency */,
 				91CC2B030744CE540018CBED /* Source */,
 				91CC2B130744CEA30018CBED /* Products */,
@@ -494,6 +499,7 @@
 				91CC2B1B0744CEB90018CBED /* nuiApp.h in Resources */,
 				91CC2B1D0744CEBA0018CBED /* nuiGearWin.h in Resources */,
 				91CC2B210744CEBC0018CBED /* nuiWin.h in Resources */,
+				E5E9D53513CBC4F1009C2079 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +507,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5E9D53713CBC4F1009C2079 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +515,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5E9D53613CBC4F1009C2079 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +700,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include/";
+				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-liconv",

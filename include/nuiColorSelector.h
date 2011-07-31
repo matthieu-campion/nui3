@@ -29,9 +29,7 @@ class nuiColorSelector : public nuiSimpleContainer
 public:
   nuiColorSelector(const nuiColor& rInitialColor = nuiColor(1.f, 1.f, 1.f, 1.f), const std::vector<nuiColor>& rInitialColorList = std::vector<nuiColor>(), ColorSelectorMode mode = eModeRGB);
   virtual ~nuiColorSelector();
-  bool Load(const nuiXMLNode* pNode);
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
-  
+
   void SetColorList(const std::vector<nuiColor>& rColorList);
   void SetNumColors(uint NumColors);
   

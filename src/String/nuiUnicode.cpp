@@ -352,7 +352,11 @@ nuiTextRange::nuiTextRange()
   mBlank = false;
 }
 
-bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+nuiTextRange::~nuiTextRange()
+{
+}
+
+bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length, const nuiTextSplitterDelegate& rSplitDelegate)
 {
   int32 size = Iterator.GetLength();
   if (length < 0)
@@ -373,6 +377,7 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
   
   int32 lastpos = start;
   int32 curpos = start;
+  nglUChar oldch = 0;
   nglUChar ch = Iterator.GetNextUChar(curpos);
   int32 direction = nuiGetUnicodeDirection(ch);
   int32 newdirection = direction;
@@ -472,6 +477,9 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
         brk = true;
     }
     
+    if (!brk && rSplitDelegate)
+      brk = rSplitDelegate(oldch, ch, pos);
+    
     if (brk)
     {
       nuiTextRange r;
@@ -491,32 +499,36 @@ bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, n
       blank = newblank;
       print = newprint;
     }
+    
+    oldch = ch;
   }
 
   // Last range:
-  nuiTextRange r;
-  r.mLength = curpos - lastpos; // count of unicode code points
-  r.mDirection = direction; // even: Left to right, odd: right to left
-  r.mScript = script; // What script if this range of text
-  r.mRange = range; // What script if this range of text
-  r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
-  
-  rRanges.push_back(r);
-  
+  if (curpos > lastpos)
+  {
+    nuiTextRange r;
+    r.mLength = curpos - lastpos; // count of unicode code points
+    r.mDirection = direction; // even: Left to right, odd: right to left
+    r.mScript = script; // What script if this range of text
+    r.mRange = range; // What script if this range of text
+    r.mBlank = blank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+    
+    rRanges.push_back(r);
+  }  
   
   return true;
 }
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length, const nuiTextSplitterDelegate& rDelegate)
 {
   nuiUCharIterator_String it(rSourceString);
-  return nuiSplitText(it, rRanges, flags, start, length);
+  return nuiSplitText(it, rRanges, flags, start, length, rDelegate);
 }
 
-bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length)
+bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags, int32 start, int32 length, const nuiTextSplitterDelegate& rDelegate)
 {
   nuiUCharIterator_Vector it(rSourceString);
-  return nuiSplitText(it, rRanges, flags, start, length);
+  return nuiSplitText(it, rRanges, flags, start, length, rDelegate);
 }
 
 

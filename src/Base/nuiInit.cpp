@@ -12,14 +12,15 @@
 #include "nglThreadChecker.h"
 #include "nuiDecoration.h"
 
-#if (defined _UIKIT_)
-#include "../Font/nuiPhoneFontDB.h"
-#include "nglIMemory.h"
-#endif
-
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 
 static uint32 gNUIReferences = 0;
+bool nuiInitMinimal(void* OSHandle = NULL, nuiKernel* pKernel)
+{
+  bool res = nuiInit(OSHandle, pKernel);
+  return res;
+}
+
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 {
@@ -52,12 +53,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   
   // Init the font manager:
   
-#if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
-  nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
-  nuiFontManager::LoadManager(Memory, nglTime());
-#else
   
-  //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
   nglPath fontdb(ePathUserAppSettings);
   fontdb += nglString(NUI_FONTDB_PATH);
   
@@ -68,13 +64,24 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
   }  
   else
   {
+#ifndef _UIKIT_
     nuiFontManager::GetManager();
-  }
-  //#endif
 #endif
+  }
+  
+  
+  nuiFontManager& rManager(nuiFontManager::GetManager(false));
+  if (rManager.GetFontCount())
+  {
+    nglOFile db(fontdb, eOFileCreate);
+    if (db.IsOpen())
+      rManager.Save(db);
+  }
   
   nuiDecoration::InitDecorationEngine();
-    
+  nuiDefaultDecoration::Init();
+  nuiBuilder::Init();
+  
   return App != NULL && !App->GetError();
 }
 
@@ -88,17 +95,6 @@ bool nuiUninit()
   {
     // Destroy all the windows that are still alive:
     nuiMainWindow::DestroyAllWindows();
-    
-    nglPath fontdb(ePathUserAppSettings);
-    fontdb += nglString(NUI_FONTDB_PATH);
-    
-    nuiFontManager& rManager(nuiFontManager::GetManager(false));
-    if (rManager.GetFontCount())
-    {
-      nglOFile db(fontdb, eOFileCreate);
-      if (db.IsOpen())
-        rManager.Save(db);
-    }
     
     // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
     // because those have been destroyed at the same time than the opengl context

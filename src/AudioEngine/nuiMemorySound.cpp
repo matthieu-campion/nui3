@@ -52,6 +52,7 @@ bool nuiMemorySound::LoadSamples(nglIStream* pSStream)
 
   if (!pStream)
   {
+    NGL_OUT("nuiMemorySound: stream '%ls' can't be open\n", mPath.GetPathName().GetChars());
     return false;
   }
   

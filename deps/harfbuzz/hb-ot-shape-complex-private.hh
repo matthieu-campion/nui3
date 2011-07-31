@@ -1,5 +1,5 @@
 /*
- * Copyright © 2010  Google, Inc.
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -29,16 +29,44 @@
 
 #include "hb-private.hh"
 
-#include "hb-ot-shape-private.hh"
+#include "hb-ot-map-private.hh"
 
 HB_BEGIN_DECLS
 
+
+/* buffer var allocations, used during the entire shaping process */
+#define general_category() var1.u8[0] /* unicode general_category (hb_unicode_general_category_t) */
+#define combining_class() var1.u8[1] /* unicode combining_class (uint8_t) */
+
+/* buffer var allocations, used by complex shapers */
+#define complex_var_persistent_u8_0()	var2.u8[0]
+#define complex_var_persistent_u8_1()	var2.u8[1]
+#define complex_var_persistent_u16()	var2.u16[0]
+#define complex_var_temporary_u8_0()	var2.u8[2]
+#define complex_var_temporary_u8_1()	var2.u8[3]
+#define complex_var_temporary_u16()	var2.u16[1]
+
+
+#define HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS \
+  HB_COMPLEX_SHAPER_IMPLEMENT (default) /* should be first */ \
+  HB_COMPLEX_SHAPER_IMPLEMENT (arabic) \
+  HB_COMPLEX_SHAPER_IMPLEMENT (indic) \
+  /* ^--- Add new shapers here */
+
+enum hb_ot_complex_shaper_t {
+#define HB_COMPLEX_SHAPER_IMPLEMENT(name) hb_ot_complex_shaper_##name,
+  HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS
+#undef HB_COMPLEX_SHAPER_IMPLEMENT
+};
 
 static inline hb_ot_complex_shaper_t
 hb_ot_shape_complex_categorize (const hb_segment_properties_t *props)
 {
   switch ((int) props->script)
   {
+    default:
+      return hb_ot_complex_shaper_default;
+
     case HB_SCRIPT_ARABIC:
     case HB_SCRIPT_MANDAIC:
     case HB_SCRIPT_MONGOLIAN:
@@ -92,8 +120,7 @@ hb_ot_shape_complex_categorize (const hb_segment_properties_t *props)
     case HB_SCRIPT_TIBETAN:
       return hb_ot_complex_shaper_indic;
 
-    default:
-      return hb_ot_complex_shaper_none;
+    /* ^--- Add new shapers here */
   }
 }
 
@@ -104,20 +131,53 @@ hb_ot_shape_complex_categorize (const hb_segment_properties_t *props)
  *
  * Called during shape_plan().
  *
- * Shapers should use plan->map to add their features.
+ * Shapers should use map to add their features and callbacks.
  */
 
-HB_INTERNAL void _hb_ot_shape_complex_collect_features_arabic	(hb_ot_shape_planner_t *plan, const hb_segment_properties_t  *props);
-HB_INTERNAL void _hb_ot_shape_complex_collect_features_indic	(hb_ot_shape_planner_t *plan, const hb_segment_properties_t  *props);
+typedef void hb_ot_shape_complex_collect_features_func_t (hb_ot_map_builder_t *map, const hb_segment_properties_t  *props);
+#define HB_COMPLEX_SHAPER_IMPLEMENT(name) \
+  HB_INTERNAL hb_ot_shape_complex_collect_features_func_t _hb_ot_shape_complex_collect_features_##name;
+  HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS
+#undef HB_COMPLEX_SHAPER_IMPLEMENT
 
 static inline void
-hb_ot_shape_complex_collect_features (hb_ot_shape_planner_t *planner,
+hb_ot_shape_complex_collect_features (hb_ot_complex_shaper_t shaper,
+				      hb_ot_map_builder_t *map,
 				      const hb_segment_properties_t  *props)
 {
-  switch (planner->shaper) {
-    case hb_ot_complex_shaper_arabic:	_hb_ot_shape_complex_collect_features_arabic	(planner, props);	return;
-    case hb_ot_complex_shaper_indic:	_hb_ot_shape_complex_collect_features_indic	(planner, props);	return;
-    case hb_ot_complex_shaper_none:	default:								return;
+  switch (shaper) {
+    default:
+#define HB_COMPLEX_SHAPER_IMPLEMENT(name) \
+    case hb_ot_complex_shaper_##name:	_hb_ot_shape_complex_collect_features_##name (map, props); return;
+    HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS
+#undef HB_COMPLEX_SHAPER_IMPLEMENT
+  }
+}
+
+
+/*
+ * prefer_decomposed()
+ *
+ * Called during shape_execute().
+ *
+ * Shapers should return TRUE if it prefers decomposed (NFD) input rather than precomposed (NFC).
+ */
+
+typedef bool hb_ot_shape_complex_prefer_decomposed_func_t (void);
+#define HB_COMPLEX_SHAPER_IMPLEMENT(name) \
+  HB_INTERNAL hb_ot_shape_complex_prefer_decomposed_func_t _hb_ot_shape_complex_prefer_decomposed_##name;
+  HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS
+#undef HB_COMPLEX_SHAPER_IMPLEMENT
+
+static inline bool
+hb_ot_shape_complex_prefer_decomposed (hb_ot_complex_shaper_t shaper)
+{
+  switch (shaper) {
+    default:
+#define HB_COMPLEX_SHAPER_IMPLEMENT(name) \
+    case hb_ot_complex_shaper_##name:	return _hb_ot_shape_complex_prefer_decomposed_##name ();
+    HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS
+#undef HB_COMPLEX_SHAPER_IMPLEMENT
   }
 }
 
@@ -126,19 +186,26 @@ hb_ot_shape_complex_collect_features (hb_ot_shape_planner_t *planner,
  *
  * Called during shape_execute().
  *
- * Shapers should use c->plan.map to get feature masks and set on buffer.
+ * Shapers should use map to get feature masks and set on buffer.
  */
 
-HB_INTERNAL void _hb_ot_shape_complex_setup_masks_arabic	(hb_ot_shape_context_t *c);
-HB_INTERNAL void _hb_ot_shape_complex_setup_masks_indic		(hb_ot_shape_context_t *c);
+typedef void hb_ot_shape_complex_setup_masks_func_t (hb_ot_map_t *map, hb_buffer_t *buffer);
+#define HB_COMPLEX_SHAPER_IMPLEMENT(name) \
+  HB_INTERNAL hb_ot_shape_complex_setup_masks_func_t _hb_ot_shape_complex_setup_masks_##name;
+  HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS
+#undef HB_COMPLEX_SHAPER_IMPLEMENT
 
 static inline void
-hb_ot_shape_complex_setup_masks (hb_ot_shape_context_t *c)
+hb_ot_shape_complex_setup_masks (hb_ot_complex_shaper_t shaper,
+				 hb_ot_map_t *map,
+				 hb_buffer_t *buffer)
 {
-  switch (c->plan->shaper) {
-    case hb_ot_complex_shaper_arabic:	_hb_ot_shape_complex_setup_masks_arabic (c);	return;
-    case hb_ot_complex_shaper_indic:	_hb_ot_shape_complex_setup_masks_indic (c);	return;
-    case hb_ot_complex_shaper_none:	default:					return;
+  switch (shaper) {
+    default:
+#define HB_COMPLEX_SHAPER_IMPLEMENT(name) \
+    case hb_ot_complex_shaper_##name:	_hb_ot_shape_complex_setup_masks_##name (map, buffer); return;
+    HB_COMPLEX_SHAPERS_IMPLEMENT_SHAPERS
+#undef HB_COMPLEX_SHAPER_IMPLEMENT
   }
 }
 

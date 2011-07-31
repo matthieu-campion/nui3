@@ -1,6 +1,6 @@
 /*
  * Copyright © 2009,2010  Red Hat, Inc.
- * Copyright © 2010  Google, Inc.
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -73,6 +73,42 @@ void hb_ot_map_builder_t::add_feature (hb_tag_t tag, unsigned int value, bool gl
   info->max_value = value;
   info->global = global;
   info->default_value = global ? value : 0;
+  info->stage[0] = current_stage[0];
+  info->stage[1] = current_stage[1];
+}
+
+void hb_ot_map_t::apply (unsigned int table_index,
+			 hb_ot_map_t::apply_lookup_func_t apply_lookup_func,
+			 void *face_or_font,
+			 hb_buffer_t *buffer) const
+{
+  unsigned int i = 0;
+
+  for (unsigned int pause_index = 0; pause_index < pauses[table_index].len; pause_index++) {
+    const pause_map_t *pause = &pauses[table_index][pause_index];
+    for (; i < pause->num_lookups; i++)
+      apply_lookup_func (face_or_font, buffer, lookups[table_index][i].index, lookups[table_index][i].mask);
+
+    pause->callback.func (this, face_or_font, buffer, pause->callback.user_data);
+  }
+
+  for (; i < lookups[table_index].len; i++)
+    apply_lookup_func (face_or_font, buffer, lookups[table_index][i].index, lookups[table_index][i].mask);
+}
+
+
+void hb_ot_map_builder_t::add_pause (unsigned int table_index, hb_ot_map_t::pause_func_t pause_func, void *user_data)
+{
+  if (pause_func) {
+    pause_info_t *p = pauses[table_index].push ();
+    if (likely (p)) {
+      p->stage = current_stage[table_index];
+      p->callback.func = pause_func;
+      p->callback.user_data = user_data;
+    }
+  }
+
+  current_stage[table_index]++;
 }
 
 void
@@ -98,27 +134,33 @@ hb_ot_map_builder_t::compile (hb_face_t *face,
   unsigned int script_index[2], language_index[2];
   for (unsigned int table_index = 0; table_index < 2; table_index++) {
     hb_tag_t table_tag = table_tags[table_index];
-    hb_ot_layout_table_choose_script (face, table_tag, script_tags, &script_index[table_index]);
+    hb_ot_layout_table_choose_script (face, table_tag, script_tags, &script_index[table_index], &m.chosen_script[table_index]);
     hb_ot_layout_script_find_language (face, table_tag, script_index[table_index], language_tag, &language_index[table_index]);
   }
 
 
   /* Sort features and merge duplicates */
-  feature_infos.sort ();
-  unsigned int j = 0;
-  for (unsigned int i = 1; i < feature_infos.len; i++)
-    if (feature_infos[i].tag != feature_infos[j].tag)
-      feature_infos[++j] = feature_infos[i];
-    else {
-      if (feature_infos[i].global)
-	feature_infos[j] = feature_infos[i];
+  {
+    feature_infos.sort ();
+    unsigned int j = 0;
+    for (unsigned int i = 1; i < feature_infos.len; i++)
+      if (feature_infos[i].tag != feature_infos[j].tag)
+	feature_infos[++j] = feature_infos[i];
       else {
-	feature_infos[j].global = false;
-	feature_infos[j].max_value = MAX (feature_infos[j].max_value, feature_infos[i].max_value);
+	if (feature_infos[i].global) {
+	  feature_infos[j].global = true;
+	  feature_infos[j].max_value = feature_infos[i].max_value;
+	  feature_infos[j].default_value = feature_infos[i].default_value;
+	} else {
+	  feature_infos[j].global = false;
+	  feature_infos[j].max_value = MAX (feature_infos[j].max_value, feature_infos[i].max_value);
+	}
+	feature_infos[j].stage[0] = MIN (feature_infos[j].stage[0], feature_infos[i].stage[0]);
+	feature_infos[j].stage[1] = MIN (feature_infos[j].stage[1], feature_infos[i].stage[1]);
 	/* Inherit default_value from j */
       }
-    }
-  feature_infos.shrink (j + 1);
+    feature_infos.shrink (j + 1);
+  }
 
 
   /* Allocate bits now */
@@ -158,6 +200,8 @@ hb_ot_map_builder_t::compile (hb_face_t *face,
     map->tag = info->tag;
     map->index[0] = feature_index[0];
     map->index[1] = feature_index[1];
+    map->stage[0] = info->stage[0];
+    map->stage[1] = info->stage[1];
     if (info->global && info->max_value == 1) {
       /* Uses the global bit */
       map->shift = 0;
@@ -175,6 +219,9 @@ hb_ot_map_builder_t::compile (hb_face_t *face,
   feature_infos.shrink (0); /* Done with these */
 
 
+  add_gsub_pause (NULL, NULL);
+  add_gpos_pause (NULL, NULL);
+
   for (unsigned int table_index = 0; table_index < 2; table_index++) {
     hb_tag_t table_tag = table_tags[table_index];
 
@@ -188,20 +235,39 @@ hb_ot_map_builder_t::compile (hb_face_t *face,
 							  &required_feature_index))
       m.add_lookups (face, table_index, required_feature_index, 1);
 
-    for (unsigned i = 0; i < m.features.len; i++)
-      m.add_lookups (face, table_index, m.features[i].index[table_index], m.features[i].mask);
-
-    /* Sort lookups and merge duplicates */
-    m.lookups[table_index].sort ();
-    if (m.lookups[table_index].len)
+    unsigned int pause_index = 0;
+    unsigned int last_num_lookups = 0;
+    for (unsigned stage = 0; stage < current_stage[table_index]; stage++)
     {
-      unsigned int j = 0;
-      for (unsigned int i = 1; i < m.lookups[table_index].len; i++)
-	if (m.lookups[table_index][i].index != m.lookups[table_index][j].index)
-	  m.lookups[table_index][++j] = m.lookups[table_index][i];
-	else
-	  m.lookups[table_index][j].mask |= m.lookups[table_index][i].mask;
-      m.lookups[table_index].shrink (j + 1);
+      for (unsigned i = 0; i < m.features.len; i++)
+        if (m.features[i].stage[table_index] == stage)
+	  m.add_lookups (face, table_index, m.features[i].index[table_index], m.features[i].mask);
+
+      /* Sort lookups and merge duplicates */
+      if (last_num_lookups < m.lookups[table_index].len)
+      {
+	m.lookups[table_index].sort (last_num_lookups, m.lookups[table_index].len);
+
+	unsigned int j = last_num_lookups;
+	for (unsigned int i = j + 1; i < m.lookups[table_index].len; i++)
+	  if (m.lookups[table_index][i].index != m.lookups[table_index][j].index)
+	    m.lookups[table_index][++j] = m.lookups[table_index][i];
+	  else
+	    m.lookups[table_index][j].mask |= m.lookups[table_index][i].mask;
+	m.lookups[table_index].shrink (j + 1);
+      }
+
+      last_num_lookups = m.lookups[table_index].len;
+
+      if (pause_index < pauses[table_index].len && pauses[table_index][pause_index].stage == stage) {
+	hb_ot_map_t::pause_map_t *pause_map = m.pauses[table_index].push ();
+	if (likely (pause_map)) {
+	  pause_map->num_lookups = last_num_lookups;
+	  pause_map->callback = pauses[table_index][pause_index].callback;
+	}
+
+	pause_index++;
+      }
     }
   }
 }

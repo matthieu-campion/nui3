@@ -212,16 +212,6 @@ nuiColorSelector::~nuiColorSelector()
 {
 }
 
-bool nuiColorSelector::Load(const nuiXMLNode* pNode)
-{
-  return nuiSimpleContainer::Load(pNode);
-}
-
-nuiXMLNode* nuiColorSelector::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  return nuiSimpleContainer::Serialize(pParentNode, Recursive);
-}
-
 void nuiColorSelector::MakeSwatchGrid()
 {
   if (mpSwatchGrid)

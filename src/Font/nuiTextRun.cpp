@@ -9,31 +9,35 @@
 #include "nuiFontManager.h"
 #include "nuiTextLayout.h"
 
-void TextLayoutTest(const nglString& txt)
-{
-  nuiFontRequest request;
-  request.MustHaveSize(14, 2);
-  request.SetName("Times", 2);
-  nuiFont* pFont = nuiFontManager::GetManager().GetFont(request);
-  //printf("Requested font: %s\n", pFont->GetFamilyName().GetChars());
-  nuiTextLayout* layout = new nuiTextLayout(pFont);
-  layout->LayoutText(txt);
-  delete layout;
-}
-
-
 /////////////
 nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length, const nuiTextStyle& rStyle)
 : mLayout(rLayout),
   mPosition(Position),
   mLength(Length),
   mScript(script),
+  mX(0),
+  mY(0),
   mAdvanceX(0),
   mAdvanceY(0),
   mUnderline(false),
   mStrikeThrough(false),
-  mPrepared(false),
+  mDummy(false),
   mStyle(rStyle)
+{
+}
+
+nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, int32 Position, int32 Length, float AdvanceX, float AdvanceY)
+: mLayout(rLayout),
+  mPosition(Position),
+  mLength(Length),
+  mScript(eScriptCommon),
+  mX(0),
+  mY(0),
+  mAdvanceX(AdvanceX),
+  mAdvanceY(AdvanceY),
+  mUnderline(false),
+  mStrikeThrough(false),
+  mDummy(true)
 {
 }
 
@@ -46,9 +50,13 @@ std::vector<nuiTextGlyph>& nuiTextRun::GetGlyphs()
   return mGlyphs;
 }
 
-void nuiTextRun::SetFont(nuiFont* pFont)
+void nuiTextRun::SetFont(nuiFontBase* pFont)
 {
   mStyle.SetFont(pFont);
+  
+  nuiFontInfo info;
+  pFont->GetInfo(info);
+  mAdvanceY = info.AdvanceMaxH;
 }
 
 nuiUnicodeScript nuiTextRun::GetScript() const
@@ -56,7 +64,7 @@ nuiUnicodeScript nuiTextRun::GetScript() const
   return mScript;
 }
 
-nuiFont* nuiTextRun::GetFont() const
+nuiFontBase* nuiTextRun::GetFont() const
 {
   return mStyle.GetFont();
 }
@@ -84,11 +92,15 @@ float nuiTextRun::GetAdvanceY() const
 
 float nuiTextRun::GetAscender() const
 {
+  if (IsDummy())
+    return 0;
   return mStyle.GetFont()->GetAscender();
 }
 
 float nuiTextRun::GetDescender() const
 {
+  if (IsDummy())
+    return 0;
   return mStyle.GetFont()->GetDescender();
 }
 
@@ -121,31 +133,54 @@ bool nuiTextRun::GetStrikeThrough() const
 
 nuiRect nuiTextRun::GetRect() const
 {
+  if (IsDummy())
+    return nuiRect(mAdvanceX, mAdvanceY);
   nuiFontInfo finfo;
   mStyle.GetFont()->GetInfo(finfo);
-  /*
-   const nuiTextGlyph& rGlyph(*it);
-   nuiGlyphInfo info;
-   rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
-   nuiSize w = info.AdvanceX;
-   //    nuiSize h = finfo.AdvanceMaxH;
-   nuiSize x = rGlyph.X + info.BearingX;
-   nuiSize y = rGlyph.Y - finfo.Ascender;
-   nuiSize h = finfo.Height;
-   
-   nuiRect rr(r);
-   r.Union(rr, nuiRect(x, y, w, h));
-   */
+ 
+//   const nuiTextGlyph& rGlyph(*it);
+//   nuiGlyphInfo info;
+//   rGlyph.mpFont->GetGlyphInfo(info, rGlyph.Index, nuiFontBase::eGlyphBitmap);
+//   nuiSize w = info.AdvanceX;
+//   //    nuiSize h = finfo.AdvanceMaxH;
+//   nuiSize x = rGlyph.X + info.BearingX;
+//   nuiSize y = rGlyph.Y - finfo.Ascender;
+//   nuiSize h = finfo.Height;
+// 
+//   nuiRect rr(r);
+//   r.Union(rr, nuiRect(x, y, w, h));
+//   return r;
+  return nuiRect();
+}
+
+int32 nuiTextRun::GetGlyphCount() const
+{
+  return mGlyphs.size();
+}
+
+const nuiTextGlyph* nuiTextRun::GetGlyph(int32 Offset) const
+{
+  return &(mGlyphs.at(Offset));
+}
+
+const nuiTextGlyph* nuiTextRun::GetGlyphAt (float X, float Y) const
+{
+  X -= mX;
+  Y -= mY;
   
+  for (int32 i = 0; i < mGlyphs.size(); i++)
+  {
+    const nuiTextGlyph* pGlyph = &mGlyphs[i];
+    if (pGlyph->mDestRect.IsInside(X, Y))
+      return pGlyph;
+  }
+  
+  return NULL;
 }
 
-bool nuiTextRun::IsPrepared() const
+bool nuiTextRun::IsDummy() const
 {
-  return mPrepared;
+  return mDummy;
 }
 
-void nuiTextRun::SetPrepared(bool set)
-{
-  mPrepared = set;
-}
 

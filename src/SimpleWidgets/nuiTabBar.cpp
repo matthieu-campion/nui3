@@ -7,7 +7,6 @@
 
 #include "nui.h"
 #include "nuiTabBar.h"
-#include "nuiXML.h"
 #include "nuiContainer.h"
 #include "nuiTheme.h"
 
@@ -22,16 +21,6 @@ nuiTab::nuiTab(const nglString & text)
 : nuiButton(text), mIdentifier(-1)
 {
   SetObjectClass(_T("nuiTab"));
-}
-
-bool nuiTab::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mIdentifier = -1;
-
-  SetObjectClass(_T("nuiTab"));
-  
-  return true;
 }
 
 nuiTab::~nuiTab()
@@ -51,12 +40,6 @@ nuiTabBar::nuiTabBar()
   mTabsSink(this)
 {
   SetObjectClass(_T("nuiTabBar"));
-}
-
-bool nuiTabBar::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  return true;
 }
 
 nuiTabBar::~nuiTabBar()

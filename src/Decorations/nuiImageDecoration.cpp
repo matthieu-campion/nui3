@@ -94,22 +94,6 @@ nuiImageDecoration::~nuiImageDecoration()
   mpTexture->Release();
 }
 
-bool nuiImageDecoration::Load(const nuiXMLNode* pNode)
-{
-  mClientRect.SetValue(nuiGetString(pNode, _T("ClientRect"), _T("{0,0,0,0}")));
-  mpTexture = nuiTexture::GetTexture(nglPath(nuiGetString(pNode, _T("Texture"), nglString::Empty)));
-  return true;
-}
-
-nuiXMLNode* nuiImageDecoration::Serialize(nuiXMLNode* pNode)
-{
-  pNode->SetName(_T("nuiImageDecoration"));
-  pNode->SetAttribute(_T("ClientRect"), mClientRect.GetValue());
-  
-  pNode->SetAttribute(_T("Texture"), GetTexturePath());
-  return pNode;
-}
-
 bool nuiImageDecoration::GetRepeatX() const
 {
   return mRepeatX;
@@ -277,8 +261,8 @@ nuiSize nuiImageDecoration::GetBorder(nuiPosition position, const nuiWidget* pWi
   if (!mBorderEnabled)
     return 0;
   
-  nuiSize w = 1.0, h = 1.0;
-  mpTexture->TextureToImageCoord(w, h);
+  float w = mpTexture->GetWidth();
+  float h = mpTexture->GetHeight();
   switch (position)
   {
     case nuiLeft:

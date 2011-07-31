@@ -15,10 +15,6 @@ class nuiSimpleContainer : public nuiContainer
 public:
   nuiSimpleContainer();
   
-	bool Load(const nuiXMLNode* pNode);
-  virtual bool LoadChildren(const nuiXMLNode* pNode); // top level of LoadChildren
-	virtual bool LoadAttributes(const nuiXMLNode* pNode); // top level of LoadAttributes
-	
   virtual ~nuiSimpleContainer();
   
   virtual bool SetObjectClass(const nglString& rName);

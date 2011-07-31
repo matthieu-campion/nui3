@@ -8,7 +8,6 @@
 #include "nui.h"
 #include "nglImage.h"
 #include "nuiTexture.h"
-#include "nuiXML.h"
 #include "nuiDrawContext.h"
 #include "AAPrimitives.h"
 #include "nuiStopWatch.h"
@@ -16,8 +15,6 @@
 #include "nuiSurface.h"
 
 #include "../Utils/TextureAtlas.h"
-
-extern float NUI_SCALE_FACTOR;
 
 using namespace std;
 
@@ -116,20 +113,6 @@ nuiTexture* nuiTexture::GetTexture (nglImage* pImage, bool OwnImage)
   return pTexture;
 }
 
-nuiTexture* nuiTexture::GetTexture(const nuiXMLNode* pNode)
-{
-  nuiTexture* pTexture = NULL;
-  nuiTextureMap::iterator it = mpTextures.find(nuiGetString(pNode, _T("Source")));
-  if (it == mpTextures.end())
-    pTexture = new nuiTexture(pNode);
-  else
-    pTexture = it->second;
-  if (pTexture)
-    pTexture->Acquire();
-  LOG_GETTEXTURE(pTexture);
-  return pTexture;
-}
-
 nuiTexture* nuiTexture::GetTexture(nuiSurface* pSurface)
 {
   nuiTexture* pTexture = pSurface->GetTexture();
@@ -161,6 +144,13 @@ nuiTexture* nuiTexture::GetTexture(const nglString& rName)
   return pTexture;
 }
 
+nuiTexture* nuiTexture::GetTexture(const nglChar* pName)
+{
+  return nuiTexture::GetTexture(nglString(pName));
+}
+
+
+
 nuiTexture* nuiTexture::BindTexture(GLuint TextureID, GLenum Target)
 {
   nuiTexture* pTexture = NULL;
@@ -188,6 +178,7 @@ nuiTexture* nuiTexture::CreateTextureProxy(const nglString& rName, const nglStri
     pTexture = it->second;
   
   LOG_GETTEXTURE(pTexture);
+  pTexture->Acquire();
   return pTexture;  
 }
 
@@ -214,7 +205,7 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
       if (p.IsLeaf())
       {
         nglString path(p.GetRemovedExtension());
-        if (NUI_SCALE_FACTOR > 1)
+        if (nuiGetScaleFactor() > 1)
         {
           nglString ext(p.GetExtension());
           nglString res(path);
@@ -307,8 +298,8 @@ static void GetAllImages(std::vector<AtlasElem>& rElements, const nglPath& rPath
 bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize, int32 ForceAtlasSize, bool AutoTrim)
 {
   //NGL_OUT(_T("nuiTexture::CreateAtlasFromPath(rPath = '%s', MaxTextureSize = %d, ForceAtlasSize = %d, AutoTrim = '%s')\n"), rPath.GetChars(), MaxTextureSize, ForceAtlasSize, YESNO(AutoTrim));
-  MaxTextureSize *= NUI_SCALE_FACTOR;
-  ForceAtlasSize *= NUI_SCALE_FACTOR;
+  MaxTextureSize *= nuiGetScaleFactor();
+  ForceAtlasSize *= nuiGetScaleFactor();
   int32 offset = 0;
   if (ForceAtlasSize)
     offset = 1;
@@ -419,50 +410,41 @@ nuiTexture* nuiTexture::GetAATexture()
 
 void nuiTexture::ClearAll()
 {
-  // Free proxies first:
-  {
-    nuiTextureMap::iterator it = mpTextures.begin();
-    nuiTextureMap::iterator end = mpTextures.end();
-    
-    std::vector<nuiTexture*> proxies;
-    while (it != end)
-    {
-      nuiTexture* pTex = it->second;
-      if (pTex->GetProxyTexture())
-        proxies.push_back(pTex);
-      ++it;
-    }
-    
-    for (uint32 i = 0; i < proxies.size(); i++)
-    {
-      nuiTexture* pTex = proxies[i];
-      pTex->Release();
-    }
-  }
-
-  // Now we can release the other textures...
   nuiTextureMap::iterator it = mpTextures.begin();
   nuiTextureMap::iterator end = mpTextures.end();
+  
+  std::vector<nuiTexture*> proxies;
   std::vector<nuiTexture*> temp;
   while (it != end)
   {
-    nglString TexName(it->first);
     nuiTexture* pTex = it->second;
-    temp.push_back(pTex);
-    //delete pTex; // the destructor of an nuiTexture removes that texture from the nuiTextureMap automatically so the only way not to get lost with the next it is to restart at the begining.
-    //pTex->Release();
-    //it = mpTextures.begin();
+    NGL_ASSERT(pTex->GetRefCount() > 0);
+    if (pTex->GetProxyTexture())
+      proxies.push_back(pTex);
+    else
+      temp.push_back(pTex);
     ++it;
   }
+  
+  // Free proxies first:
+  size_t count = proxies.size();
+  for (uint32 i = 0; i < count; i++)
+  {
+    nuiTexture* pTex = proxies[i];
+    if (pTex->GetRefCount() != 1)
+    {
+      nglString str(pTex->GetSource());
+      NGL_OUT("Texture '%s' is still owned more than once!\n", str.GetChars());
+    }
+    NGL_ASSERT(pTex->GetRefCount() == 1);
+    pTex->Release();
+  }
 
+  // Now we can release the other textures
   for (int32 i = 0; i < temp.size(); i++)
   {
     nuiTexture* pTex = temp[i];
-    if (pTex->GetRefCount() > 1)
-    {
-      NGL_OUT(_T("nuiTexture::ClearAll() - '%ls' %p still had %d references\n"), pTex->GetObjectName().GetChars(), pTex, pTex->GetRefCount());
-    }
-    
+    NGL_ASSERT(pTex->GetRefCount() == 1);
     pTex->Release();
   }
   
@@ -475,7 +457,7 @@ void nuiTexture::ClearAll()
 
 void nuiTexture::InitTextures()
 {
-  App->AddExit(&nuiTexture::ClearAll);
+  //App->AddExit(&nuiTexture::ClearAll);
 }
 
 
@@ -528,7 +510,7 @@ nuiTexture::nuiTexture (const nglPath& rPath, nglImageCodec* pCodec)
   float scale = 1.0f;
   nglPath p(rPath);
   nglString path(p.GetRemovedExtension());
-  if (NUI_SCALE_FACTOR > 1)
+  if (nuiGetScaleFactor() > 1)
   {
     nglString ext(p.GetExtension());
     nglString res(path);
@@ -628,28 +610,6 @@ nuiTexture::nuiTexture (nglImage* pImage, bool OwnImage)
   name.Format(_T("Image 0x%x"),mpImage);
   SetProperty(_T("Source"),name);
   mpTextures[name] = this;
-
-  Init();
-}
-
-nuiTexture::nuiTexture(const nuiXMLNode* pNode)
-: nuiObject(), mTextureID(0), mTarget(0), mRotated(false)
-{
-  nuiObject::Load(pNode);
-  if (SetObjectClass(_T("nuiTexture")))
-    InitAttributes();
-  mpSurface = NULL;
-  mpProxyTexture = NULL;
-  mOwnImage = true;
-  mForceReload = false;
-  mRetainBuffer = mRetainBuffers;
-
-  nglPath path(nuiGetString(pNode, _T("Source")));
-  mpImage = new nglImage(path);
-
-  SetProperty(_T("Source"),path.GetPathName());
-
-  mpTextures[path.GetPathName()] = this;
 
   Init();
 }
@@ -859,16 +819,6 @@ bool nuiTexture::IsValid() const
 }
 
 
-nuiXMLNode* nuiTexture::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiObject::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-  pNode->SetAttribute(_T("Source"),GetProperty(_T("Source")));
-  return pNode;
-}
-
-
 nuiTexture::~nuiTexture()
 {
   nuiTextureCacheSet::iterator it = mTextureCaches.begin();
@@ -959,7 +909,7 @@ void nuiTexture::ImageToTextureCoord(nuiAltSize& x, nuiAltSize& y) const
 void nuiTexture::TextureToImageCoord(nuiAltSize& x, nuiAltSize& y) const
 {
   nuiSize _x = x, _y = y;
-  ImageToTextureCoord(_x, _y);
+  TextureToImageCoord(_x, _y);
   x = _x;
   y = _y;
 }
@@ -1299,7 +1249,11 @@ void nuiTexture::DelCache(nuiTextureCache* pCache)
   mTextureCaches.erase(pCache);
 }
 
+#ifdef NUI_PHONE
 bool nuiTexture::mRetainBuffers = false;
+#else
+bool nuiTexture::mRetainBuffers = true;
+#endif
 
 void nuiTexture::RetainBuffers(bool Set)
 {

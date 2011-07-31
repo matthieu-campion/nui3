@@ -18,10 +18,7 @@ class NUI_API nuiWindowManager : public nuiSimpleContainer
 {
 public:
   nuiWindowManager();
-  bool Load(const nuiXMLNode* pNode);
   virtual ~nuiWindowManager();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   /* @name Popup windows management */
   //@{
@@ -69,7 +66,7 @@ private:
 };
 
 /*
-class NUI_API nuiWindow : public nuiComposite
+class NUI_API nuiWindow : public nuiSimpleContainer
 {
 public:
 nuiWindow(nuiWindowManager* pParent, nuiWindow* pWindow);

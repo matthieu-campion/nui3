@@ -13,7 +13,7 @@
 #ifndef __nuiFileSelector_h__
 #define __nuiFileSelector_h__
 
-#include "nuiComposite.h"
+#include "nuiSimpleContainer.h"
 #include "nuiEditLine.h"
 #include "nuiTreeView.h"
 #include "nuiColumnTreeView.h"
@@ -53,7 +53,7 @@ You just have to use the following labels as object names in your css file.
 
 class nuiFileSelector;
 
-class nuiFileSelectorBase : public nuiComposite
+class nuiFileSelectorBase : public nuiSimpleContainer
 {
 public:
   

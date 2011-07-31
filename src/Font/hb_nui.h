@@ -7,5 +7,5 @@
 
 #pragma once
 
-hb_unicode_funcs_t* hb_nui_get_unicode_funcs (void);
+hb_unicode_funcs_t* nui_hb_get_unicode_funcs (void);
 hb_script_t hb_get_script_from_nui(nuiUnicodeScript script);

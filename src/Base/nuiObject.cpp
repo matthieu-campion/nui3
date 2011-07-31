@@ -10,7 +10,6 @@
 #include "nuiObject.h"
 #include "nuiApplication.h"
 #include "nuiMainWindow.h"
-#include "nuiXML.h"
 
 #include "nuiBuilder.h"
 
@@ -85,7 +84,8 @@ void nuiObject::InitAttributes()
 }
 
 
-
+//#FIXME This should be moved to an external set of serialization method!
+#if 0
 bool nuiObject::Load(const nuiXMLNode* pNode)
 {
   CheckValid();
@@ -121,13 +121,6 @@ bool nuiObject::Load(const nuiXMLNode* pNode)
 	
   return res;
 }
-
-
-
-
-
-
-
 
 nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 {   
@@ -183,10 +176,7 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   return pNode;
 
 }
-
-
-
-
+#endif
 
 
 

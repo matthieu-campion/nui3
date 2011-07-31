@@ -87,59 +87,62 @@ void nuiFontInspector::UpdateFonts()
   {
     uint32 j = 0;
     // FontID
+    nuiFontBase* pFont = Fonts[k];
+    
     nuiLabel* pLabel = new nuiLabel(FontIDs[k]);
     pGrid->SetCell(j++, i, pLabel);
     
     
     // FamilyName
-    pLabel = new nuiLabel(Fonts[k]->GetFamilyName());
+    pLabel = new nuiLabel(pFont->GetFamilyName());
     pGrid->SetCell(j++, i, pLabel);
 
     // StyleName
-    pLabel = new nuiLabel(Fonts[k]->GetStyleName());
+    pLabel = new nuiLabel(pFont->GetStyleName());
     pGrid->SetCell(j++, i, pLabel);
 
-    // StyleName
+    // Size
     nglString str;
-    str.SetCFloat(Fonts[k]->GetSize());
+    float size = pFont->GetSize();
+    str.SetCFloat(size);
     pLabel = new nuiLabel(str);
     pGrid->SetCell(j++, i, pLabel);
 
     // Bold
     nuiToggleButton* pToggle = new nuiToggleButton();
     pToggle->SetDisplayAsCheckBox(true);
-    pToggle->SetPressed(Fonts[k]->IsBold());
+    pToggle->SetPressed(pFont->IsBold());
     pToggle->SetEnabled(false);
     pGrid->SetCell(j++, i, pToggle, nuiCenter);
 
     // Italic
     pToggle = new nuiToggleButton();
     pToggle->SetDisplayAsCheckBox(true);
-    pToggle->SetPressed(Fonts[k]->IsItalic());
+    pToggle->SetPressed(pFont->IsItalic());
     pToggle->SetEnabled(false);
     pGrid->SetCell(j++, i, pToggle, nuiCenter);
 
     // Proportionnal
     pToggle = new nuiToggleButton();
     pToggle->SetDisplayAsCheckBox(true);
-    pToggle->SetPressed(!Fonts[k]->IsMonospace());
+    pToggle->SetPressed(!pFont->IsMonospace());
     pToggle->SetEnabled(false);
     pGrid->SetCell(j++, i, pToggle, nuiCenter);
 
     // Scaleable
     pToggle = new nuiToggleButton();
     pToggle->SetDisplayAsCheckBox(true);
-    pToggle->SetPressed(Fonts[k]->IsScalable());
+    pToggle->SetPressed(pFont->IsScalable());
     pToggle->SetEnabled(false);
     pGrid->SetCell(j++, i, pToggle, nuiCenter);
 
     // Glyph count
-    str.SetCInt(Fonts[k]->GetGlyphCount());
+    str.SetCInt(pFont->GetGlyphCount());
     pLabel = new nuiLabel(str);
     pGrid->SetCell(j++, i, pLabel, nuiRight);
 
     // Panose
-    nuiPanose panose(Fonts[k]->GetPanoseBytes());
+    nuiPanose panose(pFont->GetPanoseBytes());
     nuiText* pText = new nuiText(panose.Dump());
     pGrid->SetCell(j++, i, pText, nuiFillHorizontal);
 

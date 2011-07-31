@@ -10,10 +10,35 @@
 #include "nuiTextStyle.h"
 #include "nuiUnicode.h"
 
-class nuiTextGlyph
+//! Glyph metrics
+/*!
+ All glyph metrics are given in pixels, they depend on the current font size and
+ resolution. See :
+ 
+ - nuiFontBase::GetGlyphInfo() for more informations
+ - the insightfull introduction to digital typography on FreeType's site :
+ http://www.freetype.org/freetype2/docs/glyphs/
+ - the font/metrics example bundled with the regular NGL distribution
+ */
+class NGL_API nuiGlyphInfo
 {
 public:
-  int32 mIndex; ///< Glyph index in the font
+  int   Index;     ///< Glyph index in font face
+  float Width;     ///< Bounding box width
+  float Height;    ///< Bounding box height
+  float BearingX;  ///< X bearing
+  float BearingY;  ///< Y bearing
+  float AdvanceX;  ///< Horizontal advance
+  float AdvanceY;  ///< Vertical advance
+  
+  nuiGlyphInfo();
+  virtual ~nuiGlyphInfo();
+  void Dump (uint Level = 0) const;  ///< Dumps informations to the application log using \p Level verbosity
+};
+
+class nuiTextGlyph : public nuiGlyphInfo
+{
+public:
   int32 mCluster; ///< Position of the source char in the original unicode code point vector
   float mX, mY; ///< Position on screen
   nuiTexture* mpTexture; ///< Texture that contains this glyph
@@ -27,8 +52,9 @@ class nuiTextRun : public nuiRefCount
 {
 public:
   nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript Script, int32 Position, int32 Length, const nuiTextStyle& rStyle);
+  nuiTextRun(const nuiTextLayout& rLayout, int32 Position, int32 Length, float AdvanceX, float AdvanceY); ///< Create a blank (dummy) layout
   virtual ~nuiTextRun();
-  void SetFont(nuiFont* pFont);
+  void SetFont(nuiFontBase* pFont);
   
   nuiUnicodeScript GetScript() const;
   int32 GetPosition() const;
@@ -42,7 +68,11 @@ public:
   float GetDescender() const;
   
   std::vector<nuiTextGlyph>& GetGlyphs();
-  nuiFont* GetFont() const;
+  const nuiTextGlyph* GetGlyph   (int32 Offset) const;
+  const nuiTextGlyph* GetGlyphAt (float X, float Y) const;
+
+  int32 GetGlyphCount() const;
+  nuiFontBase* GetFont() const;
   
   void SetUnderline(bool set);
   bool GetUnderline() const;
@@ -51,8 +81,8 @@ public:
   
   nuiRect GetRect() const;
   
-  bool IsPrepared() const;
-  void SetPrepared(bool set);
+  bool IsDummy() const;
+ 
 private:
   friend class nuiTextLayout;
   friend class nuiFontBase;
@@ -64,9 +94,12 @@ private:
   
   bool mUnderline : 1;
   bool mStrikeThrough : 1;
-  bool mPrepared : 1;
+  bool mDummy : 1;
   
   std::vector<nuiTextGlyph> mGlyphs;
-  float mAdvanceX, mAdvanceY;
+  float mX;
+  float mY;
+  float mAdvanceX;
+  float mAdvanceY;
 };
 

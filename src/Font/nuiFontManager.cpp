@@ -625,7 +625,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/System/Library/Fonts/Cache/");
 #elif (defined _WIN32_)
-  nglUChar p[MAX_PATH];
+  nglChar p[MAX_PATH];
   HRESULT hr = SHGetFolderPath(NULL, CSIDL_FONTS, NULL, 0, p);
   if (hr == S_OK)
   {
@@ -684,7 +684,8 @@ static nuiLabel* gpFontPathLabel = NULL;
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
-#ifdef _UIKIT_
+//#ifdef _UIKIT_
+#if 0
   UpdateFonts();
   return;
 #endif
@@ -1087,7 +1088,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscan
 }
 
 
-#define NUI_FONTDB_MARKER "nuiFontDatabase4"
+#define NUI_FONTDB_MARKER "nuiFontDatabase5"
 
 bool nuiFontManager::Save(nglOStream& rStream)
 {
