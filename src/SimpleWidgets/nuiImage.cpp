@@ -219,7 +219,9 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
 {
 //  int x=0,y=0;
   if (!mpTexture)
+  {
     return false;
+  }
 
   pContext->PushState();
   pContext->ResetState();
@@ -241,13 +243,15 @@ bool nuiImage::Draw(nuiDrawContext* pContext)
 
   nuiColor c(mColor);
   c.Multiply(alpha);
+  
   pContext->SetFillColor(c);
   pContext->DrawImage(rect, mTextureRect);
-
+  
   pContext->EnableBlending(false);
   pContext->EnableTexturing(false);
 
   pContext->PopState();
+  
   return true;
 }
 

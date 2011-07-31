@@ -42,7 +42,7 @@ LOCAL_EXPORT_CFLAGS    :=  $(MY_C_FLAGS)
 LOCAL_LDLIBS := $(MY_LDLIBS)
 LOCAL_EXPORT_LDLIBS := $(MY_LDLIBS)
 
-LOCAL_STATIC_LIBRARIES := freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif
+LOCAL_STATIC_LIBRARIES := android_native_app_glue freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif mpg123
 
 NUI_LOCAL_SRC_FILES_ANIMATIONS := ../src/Base/nuiAnimation.cpp \
                                   ../src/Animations/nuiAttributeAnimation.cpp \
@@ -89,6 +89,7 @@ NUI_LOCAL_SRC_FILES_ATTRIBUTES := ../src/Attributes/nuiAttribute.cpp \
 NUI_LOCAL_SRC_FILES_AUDIO := ../src/Audio/nuiAudioConvert.cpp \
                              ../src/Audio/nuiAudioFifo.cpp \
                              ../src/Audio/nuiAudioDevice.cpp \
+                             ../src/Audio/Android/nuiAudioDevice_Android.cpp \
 
 NUI_LOCAL_SRC_FILES_AUDIO_ENGINE := ../src/AudioEngine/nuiAudioDb.cpp \
                                     ../src/AudioEngine/nuiAudioEngine.cpp \
@@ -485,6 +486,8 @@ LOCAL_STATIC_LIBRARIES := libnui3
 
 include $(BUILD_SHARED_LIBRARY)
 
+$(call import-module,android/native_app_glue)
+$(call import-module,deps/mpg123/jni)
 $(call import-module,deps/freetype2/jni)
 $(call import-module,deps/expat/jni)
 $(call import-module,deps/glu/libtess/jni)

@@ -5,4 +5,6 @@
  licence: see nui3/LICENCE.TXT
  */
 
+#include "nuiAndroidBridge.h"
+
 void* gmpNUI_AndroidBridge = 0;

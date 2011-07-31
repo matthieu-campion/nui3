@@ -19,6 +19,15 @@ nuiMemorySound::nuiMemorySound(const nglPath& rPath)
 {
   mType = eMemory;
   LoadSamples();
+  mID = nuiSound::GetStringID(rPath, mType);
+}
+
+nuiMemorySound::nuiMemorySound(const nglString& rSoundID, nglIStream* pStream)
+: mLength(0)
+{
+  mType = eMemory;
+  LoadSamples(pStream);
+  mID = rSoundID;
 }
 
 nuiMemorySound::~nuiMemorySound()
@@ -27,14 +36,24 @@ nuiMemorySound::~nuiMemorySound()
     delete[] mSamples[c];
 }
 
-bool nuiMemorySound::LoadSamples()
+bool nuiMemorySound::LoadSamples(nglIStream* pSStream)
 {
-  if (!mPath.Exists())
+  nglIStream* pStream = pSStream;
+
+  if (!mPath.Exists() && !pStream)
+  {
     return false;
+  }
   
-  nglIStream* pStream = mPath.OpenRead();
   if (!pStream)
+  {
+    pStream = mPath.OpenRead();
+  }
+
+  if (!pStream)
+  {
     return false;
+  }
   
   nuiSampleReader* pReader = NULL;
   nuiSampleInfo info;
@@ -52,7 +71,8 @@ bool nuiMemorySound::LoadSamples()
       {
         NGL_OUT(_T("Can't load this audio file: %s (reader can't be created)\n"), mPath.GetNodeName().GetChars());
         delete pReader;
-        delete pStream;
+        if (!pSStream)
+          delete pStream;
         return false;
       }
     }
@@ -70,6 +90,9 @@ bool nuiMemorySound::LoadSamples()
   }
   
   mLength = pReader->ReadDE(temp, length, eSampleFloat32);
+  delete pReader;
+  if (!pSStream)
+    delete pStream;
 }
 
 nuiVoice* nuiMemorySound::GetVoiceInternal()

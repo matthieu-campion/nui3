@@ -718,7 +718,7 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
   NGL_DEBUG( NGL_LOG("font", NGL_LOG_INFO, "Scan system fonts....\n"); )
   nglTime start_time;
   
-  mpFonts.clear();
+  Clear();
   
   // Scan each path:
   std::map<nglString, nglPath>::const_iterator it = mFontFolders.begin();
@@ -1058,12 +1058,19 @@ nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
   const bool FORCE_FONT_ENUM = 0;
   if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
   {
+    App->AddExit(nuiFontManager::ExitManager);
     gManager.AddSystemFolders();
     gManager.ScanFolders();
   }
   
   return gManager;
 }
+
+void nuiFontManager::ExitManager()
+{
+  gManager.Clear();
+}
+
 
 nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscantime)
 {

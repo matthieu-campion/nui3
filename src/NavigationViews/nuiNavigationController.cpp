@@ -258,7 +258,6 @@ bool nuiNavigationController::Draw(nuiDrawContext* pContext)
   if (mShowNavigationBar && pNavigationBar)
     DrawChild(pContext, pNavigationBar);
   
-  
   return true;
 }
 

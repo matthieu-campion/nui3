@@ -47,6 +47,14 @@ uint32 nuiMemoryVoice::GetChannels() const
   return mpMemorySound->GetChannels();
 }
 
+uint32 nuiMemoryVoice::GetSampleFrames() const
+{
+  if (!IsValid())
+    return 0;
+  
+  return mpMemorySound->GetSampleFrames();
+}
+
 uint32 nuiMemoryVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames)
 {
   if (!IsValid())

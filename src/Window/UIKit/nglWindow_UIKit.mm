@@ -954,6 +954,7 @@ nglWindow::OSInfo::OSInfo()
 
 nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 {
+  Register();
   mpUIWindow = NULL;
   nglContextInfo context; // Get default context
   nglWindowInfo info(Width, Height, IsFullScreen);
@@ -962,6 +963,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 
 nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  Register();
   mpUIWindow = NULL;
   InternalInit (rContext, rInfo, pShared);
 }
@@ -1047,6 +1049,7 @@ nglWindow::~nglWindow()
     [mpUIWindow disconnect];
     [mpUIWindow removeFromSuperview];
   }
+  Unregister();
 }
 
 

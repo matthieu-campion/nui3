@@ -13,23 +13,13 @@
 #include <sys/time.h>
 
 
-//#include "ft2build.h"
-//#include FT_FREETYPE_H
-//
-//#include "expat.h"
-//
-//typedef double GLdouble; // defined in ngl.h
-//#include "GL/glu.h"
-
-
 #include "nui.h"
 #include "nuiInit.h"
 
 #include "nuiAndroidBridge.h"
-
+#include "nuiNativeResource.h"
 
 nuiAndroidBridge* gpBridge = NULL;
-
 
 /**
   * Our saved state data.
@@ -148,10 +138,7 @@ static void engine_draw_frame(struct engine* engine)
                ((float)engine->state.y)/engine->height, 1);
   glClear(GL_COLOR_BUFFER_BIT);
   
-  
-  LOGI("android bridge: display");
   gpBridge->Display();
-  LOGI("android bridge: display OK");
   
   eglSwapBuffers(engine->display, engine->surface);
 }
@@ -209,7 +196,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event)
     }
     else if ((AMOTION_EVENT_ACTION_MASK & AMotionEvent_getAction( event )) == AMOTION_EVENT_ACTION_UP)
     {
-      nuiAndroidBridge::androidMouse(0, 1, x, y);
+      nuiAndroidBridge::androidMouse(0, 1, x, y);      
     }
     else if ((AMOTION_EVENT_ACTION_MASK & AMotionEvent_getAction( event )) == AMOTION_EVENT_ACTION_MOVE)
     {
@@ -291,7 +278,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 void android_main(struct android_app* state) 
 { 
   LOGI("nuiInit");
-  nuiInit(NULL);
+  nuiInit(state);
   LOGI("nuiInit OK");
   
   // Create the NUI bridge which also serves as the main window/widget tree:

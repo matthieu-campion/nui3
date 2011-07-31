@@ -150,7 +150,9 @@ nglPath::nglPath (nglPathBase Base)
         #elif defined _WIN32_
         InternalSetPath(getenv("TEMP"));
         #elif defined(_UIKIT_)
-        InternalSetPath(nuiCocoaGetPath_Temp());    
+        InternalSetPath(nuiCocoaGetPath_Temp());  
+        #elif defined (_ANDROID_)
+        InternalSetPath("/sdcard");
         #else
         InternalSetPath(_T("/tmp"));
         #endif
@@ -1572,7 +1574,9 @@ nglIStream* nglPath::OpenRead() const
   {
     nglVolume* pVolume = nglVolume::GetVolume(volume);
     if (pVolume)
+    {
       return pVolume->OpenRead(*this);
+    }
   }
   
   nglIFile* pFile = new nglIFile(*this);

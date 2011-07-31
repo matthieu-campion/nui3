@@ -569,19 +569,20 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   pArray->SetColor(mCurrentState.mFillColor);
   pArray->PushVertex();
 
-  pArray->SetTexCoords(tx1,ty1); 
-  pArray->SetVertex(x1, y1);
-  pArray->PushVertex();
-
   pArray->SetTexCoords(tx3,ty3); 
   pArray->SetVertex(x3, y3);
   pArray->PushVertex();
 
+  pArray->SetTexCoords(tx1,ty1); 
+  pArray->SetVertex(x1, y1);
+  pArray->PushVertex();
+  
   // 2
   pArray->SetTexCoords(tx2,ty2); 
   pArray->SetVertex(x2, y2);
   pArray->PushVertex();
-
+  
+  
   DrawArray(pArray);
 
   if (!texturing)

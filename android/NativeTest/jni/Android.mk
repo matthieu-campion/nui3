@@ -12,12 +12,12 @@ MY_C_FLAGS := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DN
 
 LOCAL_CFLAGS    :=  $(MY_C_FLAGS)
 
-LOCAL_LDLIBS := -lGLESv1_CM -lEGL -landroid -llog -lstdc++
+LOCAL_LDLIBS := -lGLESv1_CM -lEGL -landroid -llog -lstdc++ -lOpenSLES
 
-LOCAL_STATIC_LIBRARIES := android_native_app_glue libnui3 freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif
+LOCAL_STATIC_LIBRARIES := libnui3 android_native_app_glue freetype expat tess harfbuzz libcss libpng libjpeg tidy ucdata ungif libmpg123
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,android/native_app_glue)
 $(call import-module,jni)
+
 

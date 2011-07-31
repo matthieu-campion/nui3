@@ -141,7 +141,16 @@ public:
 
   double GetLastInteractiveEventTime() const;
   double GetLastEventTime() const;
+  
+  static void DestroyAllWindows();
+
+private:
+  void Register();
+  void Unregister();
+  static std::vector<nuiMainWindow*> mpWindows;
+
 protected:
+  
   /* @name Redirected from nglWindow via nuiMainWindow::NGLWindow */
   //@{
   virtual void OnPaint();

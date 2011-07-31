@@ -106,7 +106,6 @@ nuiSpriteAnimation::nuiSpriteAnimation(const nglPath& rPath)
   std::list<nglPath> children;
   path.GetChildren(&children);
   children.sort(nglCompareNaturalPath);
-  nuiSpriteAnimation* pAnim1 = new nuiSpriteAnimation();
   std::list<nglPath>::const_iterator it = children.begin();
   std::list<nglPath>::const_iterator end = children.end();
   for (; it != end; it++)
@@ -259,8 +258,10 @@ void nuiSpriteDef::Uninit()
     nuiSpriteDef* pDef = temp[i];
     pDef->Release();
   }
-  
-  mSpriteMap.clear();
+
+  NGL_ASSERT(mSpriteMap.empty());
+  NGL_ASSERT(!nuiSprite::mSpriteCounter);
+
 }
 
 void nuiSpriteDef::AddAnimation(nuiSpriteAnimation* pAnim)
@@ -311,12 +312,19 @@ nuiSpriteDef* nuiSpriteDef::GetSprite(const nglString& rName)
 // class nuiSprite
 nuiMatrix nuiSprite::mIdentityMatrix;
 
+// static 
+uint32 nuiSprite::mSpriteCounter = 0;
+
+
 nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
 : mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   mpSpriteDef = nuiSpriteDef::GetSprite(rSpriteDefPath.GetNodeName());
   if (!mpSpriteDef || forceReplace)
+  {
     mpSpriteDef = new nuiSpriteDef(rSpriteDefPath);
+    mpSpriteDef->Acquire();
+  }
 
   NGL_ASSERT(mpSpriteDef);
   Init();  
@@ -333,6 +341,8 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 : mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mBlendFunc(nuiBlendTransp)
 {
   NGL_ASSERT(mpSpriteDef);
+  mpSpriteDef->Acquire();
+  
   Init();
 }
 
@@ -340,11 +350,15 @@ nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
 nuiSprite::~nuiSprite()
 {
   LoadIdentityMatrix();
+
+  // static counter
+  mSpriteCounter--;
+  
   if (mpSpriteDef)
     mpSpriteDef->Release();
   for (size_t i = 0; i < mpChildren.size(); i++)
     mpChildren[i]->Release();
-}
+  }
 
 void nuiSprite::Init()
 {
@@ -354,8 +368,8 @@ void nuiSprite::Init()
     InitAttributes();
   }
   
-  if (mpSpriteDef)
-    mpSpriteDef->Acquire();
+  // static counter
+  mSpriteCounter++;
   
   mpParent = NULL;
   mpMatrixNodes = NULL;
@@ -565,11 +579,15 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   nuiRect src(pFrame->GetRect());
   nuiRect dst(src);
   dst.Move(-pFrame->GetHandleX(), -pFrame->GetHandleY());
+  
+  nuiTexture* pTex = pFrame->GetTexture();
 
   pContext->EnableBlending(true);
   pContext->SetBlendFunc(mBlendFunc);
   pContext->SetFillColor(mColor);
   pContext->SetTexture(pFrame->GetTexture());
+  
+  
   
   // #TEST Meeloo
   //dst.Grow(dst.GetWidth() * -.25, dst.GetHeight() * -.25);
@@ -769,7 +787,7 @@ const nuiColor& nuiSprite::GetColor() const
   return mColor;
 }
 
-float nuiSprite::GetAlpha()
+float nuiSprite::GetAlpha() const
 {
   float v = GetColor().Alpha();
   return v;

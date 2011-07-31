@@ -724,10 +724,10 @@ window = new nglWindow (context, info, NULL);
   void SetMainMenu(nuiMainMenu* pMenu); ///< associate a nuiMainMenu to this window, to perform automatic deleting
   nuiMainMenu* GetMainMenu();
   
+  static void DestroyAllWindows();
+  
 protected:
   virtual const nglChar* OnError (uint& rError) const;
-  
-  
 
 private:
   OSInfo             mOSInfo;
@@ -743,6 +743,10 @@ private:
   bool               mComposingText;
   nglString          mComposedText;
 
+  void Register();
+  void Unregister();
+  static std::vector<nglWindow*> mpWindows;
+  
   nglWindow(const nglWindow&) {} // Undefined copy constructor
 
 #if (defined _UIKIT_) || (defined _COCOA_)

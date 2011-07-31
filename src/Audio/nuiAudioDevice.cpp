@@ -236,6 +236,12 @@ void nuiAudioDeviceManager::RegisterAPIS()
 {
   AudioUnitAPI.RegisterWithManager(*this);
 }
+#elif (defined _ANDROID_)
+#include "nuiAudioDevice_Android.h"
+void nuiAudioDeviceManager::RegisterAPIS()
+{
+  AndroidAudioAPI.RegisterWithManager(*this);
+}
 #else
 void nuiAudioDeviceManager::RegisterAPIS()
 {

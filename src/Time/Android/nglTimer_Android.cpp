@@ -24,18 +24,66 @@
 
 #define TIMER_MIN_PERIOD     0.050 // 50ms (somewhat 'reasonable')
 
+nglTime nglTimer::sLastDispatch;
+std::list<nglTimer*> nglTimer::sTimers;
+double nglTimer::DispatchPeriod = 1; // 1 millisecond
 
-nglTimer::nglTimer(nglTime Period) : mPeriod(Period), mLastTick(0), mNextTick(0)
+void nglTimer::DispatchTimers()
+{
+  nglTime now;
+  
+  double elapsed = now.GetValue() - sLastDispatch.GetValue();
+//  LOGI("DispatchTimers elapsed = %lf milliseconds", elapsed * 1000.0);
+  if ((elapsed) < 0.001) // at least 1 millisecond between to updates
+  {
+    return;
+  }
+  
+  std::list<nglTimer*>::iterator it;
+  std::list<nglTimer*>::iterator end = sTimers.end();
+  for (it = sTimers.begin(); it != end; ++it)
+  {
+    nglTimer* pTimer = *it;
+    if (pTimer->IsRunning())
+      pTimer->CallOnDispatch();
+  }
+  
+  sLastDispatch = now;
+}
+
+nglTimer::nglTimer(nglTime Period) : mLastTime(0)
 {
   mCallCnt = 0;
   mRunning = false;
+  mCounter = 0;
+  mRoundsPerTick = 0;
+  
+  SetPeriod(Period);
 
   App->AddTimer (this);
+  sTimers.push_back(this);
 }
 
 nglTimer::~nglTimer()
 {
   App->DelTimer (this);
+  sTimers.remove(this);
+}
+
+
+void nglTimer::CallOnDispatch()
+{
+  if (!mRunning)
+  {
+    return;
+  }
+  
+  mCounter--;
+  if (!mCounter)
+  {
+    TimerAction();
+    mCounter = mRoundsPerTick;
+  }
 }
 
 
@@ -56,27 +104,41 @@ nglTime nglTimer::GetPeriod()
 
 bool nglTimer::SetPeriod(nglTime Period)
 {
-  if (Period < TIMER_MIN_PERIOD)
+  if (mRunning) 
   {
-    mPeriod = TIMER_MIN_PERIOD;
     return false;
   }
-  mPeriod = Period;
+  
+  mPeriod = MAX(TIMER_MIN_PERIOD, Period.GetValue());
+  
+  mRoundsPerTick = ToBelow(mPeriod.GetValue() / (DispatchPeriod / 1000.0));
+  if (!mRoundsPerTick)
+    mRoundsPerTick = 1;
   return true;
 }
 
 bool nglTimer::Start(bool Immediate, bool Reset)
 {
+  if (mRunning)
+  {
+    return false;
+  }
+  
   nglTime now;
-
+  mLastTime = now;
+  
+  if (mCounter == 0)
+    mCounter = mRoundsPerTick;
+  mCounter = MIN(mRoundsPerTick, mCounter);
   if (Reset)
+  {
     mCallCnt = 0;
-
-  mLastTick = now;
-  mNextTick = now;
-  if (!Immediate)
-    mNextTick += mPeriod;
-
+    mCounter = mRoundsPerTick;
+  }
+  
+  if (Immediate)
+    TimerAction();
+  
   mRunning = true;
   return true;
 }
@@ -86,36 +148,16 @@ void nglTimer::Stop()
   mRunning = false;
 }
 
+void nglTimer::TimerAction()
+{
+  nglTime now;
+  double elapsed = now.GetValue() - mLastTime.GetValue();
+  OnTick(elapsed);
+  mLastTime = now;
+  mCallCnt++;
+}
+
 bool nglTimer::IsRunning()
 {
   return mRunning;
-}
-
-
-/*
- * Internals
- */
-
-nglTime nglTimer::GetTimeOut (nglTime Now)
-{
-  nglTime timeout = mNextTick - Now;
-
-  return (timeout < nglTime::Zero) ? nglTime::Zero : timeout;
-}
-
-void nglTimer::Update()
-{
-  nglTime now;
-
-  if (now < mNextTick) return;
-
-  CallOnTick(now - mLastTick);
-
-  mLastTick = now;
-  mNextTick = now + mPeriod; // Simple reload
-}
-
-void nglTimer::CallOnTick(nglTime Elapsed)
-{
-  OnTick (Elapsed);
 }

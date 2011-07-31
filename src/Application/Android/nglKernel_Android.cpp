@@ -24,6 +24,7 @@
 #include <signal.h>
 #include <locale.h>
 
+#include <android_native_app_glue.h>
 
 using namespace std;
 
@@ -115,13 +116,20 @@ void nglKernel::DelWindow (class nglWindow* pWin)
 {
 }
 
+android_app* nglKernel::GetAndroidApp()
+{
+  return mpAndroidApp;
+}
+
 
 /*
  * Internals (generic kernel setup)
  */
 
-bool nglKernel::SysInit()
+bool nglKernel::SysInit(android_app* app)
 {
+  mpAndroidApp = app;
+  
   int signals[] = {
     SIGSEGV,
     SIGHUP, 

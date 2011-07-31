@@ -98,6 +98,7 @@ uint gpKeymapXFree86[NGL_KEYMAP_SIZE] = {
 
 nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 {
+  Register();
   nglContextInfo context; // Get default context
   nglWindowInfo info(Width, Height, IsFullScreen);
 
@@ -106,6 +107,7 @@ nglWindow::nglWindow (uint Width, uint Height, bool IsFullScreen)
 
 nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  Register();
   InternalInit (rContext, rInfo, pShared);
 }
 
@@ -354,6 +356,8 @@ nglWindow::~nglWindow()
 
   XFlush (mpDisplay);
   mpDisplay = NULL;
+
+  Unregister();
 }
 
 

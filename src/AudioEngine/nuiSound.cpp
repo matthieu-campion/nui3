@@ -9,6 +9,26 @@
 #include "nuiSound.h"
 #include "nuiAudioDb.h"
 
+nglString nuiSound::GetStringID(const nglPath& rPath, nuiSound::Type type)
+{
+  nglString str = rPath.GetPathName();
+  switch (type) 
+  {
+    case nuiSound::eStream:
+      str += STREAM_SUFFIX;
+      break;
+      
+    case nuiSound::eMemory:
+      str += MEMORY_SUFFIX;
+      break;
+      
+    default:
+      NGL_ASSERT(0);
+      break;
+  }
+  return str;
+}
+
 nuiSound::nuiSound()
 : mType(eUnknown),
   mGain(1),
@@ -72,4 +92,9 @@ void nuiSound::SetLoop(bool loop)
 bool nuiSound::IsLooping()
 {
   return mLoop;
+}
+
+const nglString& nuiSound::GetID()
+{
+  return mID;
 }
