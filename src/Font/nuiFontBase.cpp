@@ -1697,7 +1697,6 @@ bool nuiFontBase::LoadFinish(float Size)
   if (FT_Select_Charmap (face, FT_ENCODING_UNICODE) != FT_Err_Ok)
   {
     // We expect that the first charmap is actually the right one for the locale's encoding
-#endif
     FT_Set_Charmap (face, face->charmaps[0]);
   }
 #ifndef USE_WCHAR
