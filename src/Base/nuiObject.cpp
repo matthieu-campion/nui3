@@ -216,6 +216,19 @@ nuiObject::~nuiObject()
     c = mInheritanceMap[c];
   }
 
+  // Kill instance attributes:
+  std::map<nglString, nuiAttributeBase*>::iterator it = mInstanceAttributes.begin();
+  std::map<nglString, nuiAttributeBase*>::iterator end = mInstanceAttributes.end();
+  
+  while (it != end)
+  {
+    nuiAttributeBase* pAttrib = it->second;
+    delete pAttrib;
+    ++it;
+  }
+
+  mInstanceAttributes.clear();
+  
   if (mpTrace)
   {
     nglCriticalSectionGuard g(gObjectTraceCS);
