@@ -14,6 +14,7 @@
 #include "nglDataObjects.h"
 
 #include "nuiNativeResourceVolume.h"
+#include "nuiNotification.h"
 
 #include "ucdata.h"
 
@@ -322,6 +323,7 @@ void nglKernel::CallOnInit()
   nglVolume::Mount(pResources);
   nuiTimer* pTimer = nuiAnimation::AcquireTimer();
   mKernelEventSink.Connect(pTimer->Tick, &nglKernel::ProcessMessages);
+  mpNotificationManager = new nuiNotificationManager();
   
   OnInit();
 }
@@ -398,4 +400,30 @@ void nglKernel::ProcessMessages(const nuiEvent& rEvent)
       pCommand->Do();
     delete pNotif;
   }
+
+  mpNotificationManager->BroadcastQueuedNotifications();
 }
+
+void nglKernel::PostNotification(nuiNotification* pNotification)
+{
+  mpNotificationManager->PostNotification(pNotification);
+}
+
+void nglKernel::BroadcastNotification(const nuiNotification& rNotification)
+{
+  mpNotificationManager->BroadcastNotification(rNotification);
+}
+
+void nglKernel::RegisterObserver(const nglString& rNotificationName, nuiNotificationObserver* pObserver)
+{
+  mpNotificationManager->RegisterObserver(rNotificationName, pObserver);
+}
+
+void nglKernel::UnregisterObserver(nuiNotificationObserver* pObserver, const nglString& rNotificationName)
+{
+  mpNotificationManager->UnregisterObserver(pObserver, rNotificationName);
+}
+
+
+
+

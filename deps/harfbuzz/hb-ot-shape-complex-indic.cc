@@ -30,8 +30,8 @@ HB_BEGIN_DECLS
 
 
 /* buffer var allocations */
-#define indic_category() var2.u8[0] /* indic_category_t */
-#define indic_position() var2.u8[1] /* indic_matra_category_t */
+#define indic_category() complex_var_persistent_u8_0() /* indic_category_t */
+#define indic_position() complex_var_persistent_u8_1() /* indic_matra_category_t */
 
 #define INDIC_TABLE_ELEMENT_TYPE uint8_t
 
@@ -63,8 +63,6 @@ enum indic_position_t {
   POS_ABOVE,
   POS_BELOW,
   POS_POST,
-
-  POS_INHERIT /* For Halant, Nukta, ZWJ, ZWNJ */
 };
 
 /* Categories used in IndicSyllabicCategory.txt from UCD */
@@ -136,7 +134,7 @@ enum indic_matra_category_t {
  * and/or
  * 2. Probe font lookups to determine consonant positions.
  */
-static const struct {
+static const struct consonant_position_t {
   hb_codepoint_t u;
   indic_position_t position;
 } consonant_positions[] = {
@@ -236,6 +234,65 @@ static const struct {
   {0x0D35, POS_POST},
 };
 
+/* XXX
+ * This is a hack for now.  We should move this data into the main Indic table.
+ */
+static const hb_codepoint_t ra_chars[] = {
+  0x0930, /* Devanagari */
+  0x09B0, /* Bengali */
+  0x09F0, /* Bengali */
+//0x09F1, /* Bengali */
+//0x0A30, /* Gurmukhi */
+  0x0AB0, /* Gujarati */
+  0x0B30, /* Oriya */
+//0x0BB0, /* Tamil */
+//0x0C30, /* Telugu */
+  0x0CB0, /* Kannada */
+//0x0D30, /* Malayalam */
+};
+
+static int
+compare_codepoint (const void *pa, const void *pb)
+{
+  hb_codepoint_t a = * (hb_codepoint_t *) pa;
+  hb_codepoint_t b = * (hb_codepoint_t *) pb;
+
+  return a < b ? -1 : a == b ? 0 : +1;
+}
+
+static indic_position_t
+consonant_position (hb_codepoint_t u)
+{
+  consonant_position_t *record;
+
+  record = (consonant_position_t *) bsearch (&u, consonant_positions,
+					     ARRAY_LENGTH (consonant_positions),
+					     sizeof (consonant_positions[0]),
+					     compare_codepoint);
+
+  return record ? record->position : POS_BASE;
+}
+
+static bool
+is_ra (hb_codepoint_t u)
+{
+  return !!bsearch (&u, ra_chars,
+		    ARRAY_LENGTH (ra_chars),
+		    sizeof (ra_chars[0]),
+		    compare_codepoint);
+}
+
+static bool
+is_joiner (const hb_glyph_info_t &info)
+{
+  return !!(FLAG (info.indic_category()) & (FLAG (OT_ZWJ) | FLAG (OT_ZWNJ)));
+}
+
+static bool
+is_consonant (const hb_glyph_info_t &info)
+{
+  return !!(FLAG (info.indic_category()) & (FLAG (OT_C) | FLAG (OT_Ra)));
+}
 
 static const struct {
   hb_tag_t tag;
@@ -251,7 +308,7 @@ static const struct {
   {HB_TAG('h','a','l','f'), false},
   {HB_TAG('v','a','t','u'), true},
   {HB_TAG('p','s','t','f'), false},
-  {HB_TAG('c','j','c','t'), true},
+  {HB_TAG('c','j','c','t'), false},
 };
 
 /* Same order as the indic_basic_features array */
@@ -265,7 +322,7 @@ enum {
   HALF,
   _VATU,
   PSTF,
-  _CJCT,
+  CJCT,
 };
 
 static const hb_tag_t indic_other_features[] =
@@ -281,13 +338,17 @@ static const hb_tag_t indic_other_features[] =
   HB_TAG('b','l','w','m'),
 };
 
+
+static void
+initial_reordering (const hb_ot_map_t *map,
+		    hb_face_t *face,
+		    hb_buffer_t *buffer,
+		    void *user_data HB_UNUSED);
 static void
 final_reordering (const hb_ot_map_t *map,
 		  hb_face_t *face,
 		  hb_buffer_t *buffer,
-		  void *user_data HB_UNUSED)
-{
-}
+		  void *user_data HB_UNUSED);
 
 void
 _hb_ot_shape_complex_collect_features_indic (hb_ot_map_builder_t *map, const hb_segment_properties_t  *props)
@@ -297,7 +358,7 @@ _hb_ot_shape_complex_collect_features_indic (hb_ot_map_builder_t *map, const hb_
    * there is a use of it, it's typically at the beginning. */
   map->add_bool_feature (HB_TAG('c','c','m','p'));
 
-  map->add_gsub_pause (NULL, NULL);
+  map->add_gsub_pause (initial_reordering, NULL);
 
   for (unsigned int i = 0; i < ARRAY_LENGTH (indic_basic_features); i++)
     map->add_bool_feature (indic_basic_features[i].tag, indic_basic_features[i].is_global);
@@ -316,36 +377,281 @@ _hb_ot_shape_complex_prefer_decomposed_indic (void)
   return TRUE;
 }
 
-static void
-found_syllable (hb_ot_map_t *map, hb_buffer_t *buffer,
-		unsigned int start, unsigned int end)
-{
-  //fprintf (stderr, "%d %d\n", start, end);
-}
-
-#include "hb-ot-shape-complex-indic-machine.hh"
-
 
 void
 _hb_ot_shape_complex_setup_masks_indic (hb_ot_map_t *map, hb_buffer_t *buffer)
 {
-  unsigned int count = buffer->len;
+  HB_BUFFER_ALLOCATE_VAR (buffer, indic_category);
+  HB_BUFFER_ALLOCATE_VAR (buffer, indic_position);
 
+  /* We cannot setup masks here.  We save information about characters
+   * and setup masks later on in a pause-callback. */
+
+  unsigned int count = buffer->len;
   for (unsigned int i = 0; i < count; i++)
   {
     unsigned int type = get_indic_categories (buffer->info[i].codepoint);
 
     buffer->info[i].indic_category() = type & 0x0F;
     buffer->info[i].indic_position() = type >> 4;
+
+    if (buffer->info[i].indic_category() == OT_C) {
+      buffer->info[i].indic_position() = consonant_position (buffer->info[i].codepoint);
+      if (is_ra (buffer->info[i].codepoint))
+	buffer->info[i].indic_category() = OT_Ra;
+    } else if (buffer->info[i].codepoint == 0x200C)
+      buffer->info[i].indic_category() = OT_ZWNJ;
+    else if (buffer->info[i].codepoint == 0x200D)
+      buffer->info[i].indic_category() = OT_ZWJ;
+  }
+}
+
+static int
+compare_indic_order (const hb_glyph_info_t *pa, const hb_glyph_info_t *pb)
+{
+  int a = pa->indic_position();
+  int b = pb->indic_position();
+
+  return a < b ? -1 : a == b ? 0 : +1;
+}
+
+static void
+found_consonant_syllable (const hb_ot_map_t *map, hb_buffer_t *buffer, hb_mask_t *mask_array,
+			  unsigned int start, unsigned int end)
+{
+  unsigned int i;
+  hb_glyph_info_t *info = buffer->info;
+
+  /* Comments from:
+   * https://www.microsoft.com/typography/otfntdev/devanot/shaping.aspx */
+
+  /* 1. Find base consonant:
+   *
+   * The shaping engine finds the base consonant of the syllable, using the
+   * following algorithm: starting from the end of the syllable, move backwards
+   * until a consonant is found that does not have a below-base or post-base
+   * form (post-base forms have to follow below-base forms), or that is not a
+   * pre-base reordering Ra, or arrive at the first consonant. The consonant
+   * stopped at will be the base.
+   *
+   *   o If the syllable starts with Ra + Halant (in a script that has Reph)
+   *     and has more than one consonant, Ra is excluded from candidates for
+   *     base consonants.
+   */
+
+  unsigned int base = 0;
+
+  /* -> starting from the end of the syllable, move backwards */
+  i = end;
+  do {
+    i--;
+    /* -> until a consonant is found */
+    if (info[i].indic_category() == OT_C)
+    //if ((FLAG (info[i].indic_category()) & (FLAG (OT_C) | FLAG (OT_Ra))))
+    {
+      /* -> that does not have a below-base or post-base form
+       * (post-base forms have to follow below-base forms), */
+      if (info[i].indic_position() != POS_BELOW &&
+	  info[i].indic_position() != POS_POST)
+      {
+        base = i;
+	break;
+      }
+
+      /* TODO: or that is not a pre-base reordering Ra, */
+
+      /* -> or arrive at the first consonant. The consonant stopped at will be the base. */
+      base = i;
+    }
+  } while (i > start);
+  if (base < start)
+    base = start; /* Just in case... */
+
+  /* TODO
+   * If the syllable starts with Ra + Halant (in a script that has Reph)
+   * and has more than one consonant, Ra is excluded from candidates for
+   * base consonants. */
+
+
+  /* 2. Decompose and reorder Matras:
+   *
+   * Each matra and any syllable modifier sign in the cluster are moved to the
+   * appropriate position relative to the consonant(s) in the cluster. The
+   * shaping engine decomposes two- or three-part matras into their constituent
+   * parts before any repositioning. Matra characters are classified by which
+   * consonant in a conjunct they have affinity for and are reordered to the
+   * following positions:
+   *
+   *   o Before first half form in the syllable
+   *   o After subjoined consonants
+   *   o After post-form consonant
+   *   o After main consonant (for above marks)
+   *
+   * IMPLEMENTATION NOTES:
+   *
+   * The normalize() routine has already decomposed matras for us, so we don't
+   * need to worry about that.
+   */
+
+
+  /* 3.  Reorder marks to canonical order:
+   *
+   * Adjacent nukta and halant or nukta and vedic sign are always repositioned
+   * if necessary, so that the nukta is first.
+   *
+   * IMPLEMENTATION NOTES:
+   *
+   * We don't need to do this: the normalize() routine already did this for us.
+   */
+
+
+  /* Reorder characters */
+
+  for (i = start; i < base; i++)
+    info[i].indic_position() = POS_PRE;
+  info[base].indic_position() = POS_BASE;
+
+
+  /* Handle beginning Ra */
+  if (start + 2 <= end &&
+      info[start].indic_category() == OT_Ra &&
+      info[start + 1].indic_category() == OT_H &&
+      (start + 2 == end || !is_joiner (info[start])))
+   {
+    info[start].indic_position() = POS_POST;
+    info[start].mask = mask_array[RPHF];
+   }
+
+  /* For old-style Indic script tags, move the first post-base Halant after
+   * last consonant. */
+  if ((map->get_chosen_script (0) & 0x000000FF) != '2') {
+    /* We should only do this for Indic scripts which have a version two I guess. */
+    for (i = base + 1; i < end; i++)
+      if (info[i].indic_category() == OT_H) {
+        unsigned int j;
+        for (j = end - 1; j > i; j--)
+	  if ((FLAG (info[j].indic_category()) & (FLAG (OT_C) | FLAG (OT_Ra))))
+	    break;
+	if (j > i) {
+	  /* Move Halant to after last consonant. */
+	  hb_glyph_info_t t = info[i];
+	  memmove (&info[i], &info[i + 1], (j - i) * sizeof (info[0]));
+	  info[j] = t;
+	}
+        break;
+      }
   }
 
-  find_syllables (map, buffer);
+  /* Attach ZWJ, ZWNJ, nukta, and halant to previous char to move with them. */
+  for (i = start + 1; i < end; i++)
+    if ((FLAG (info[i].indic_category()) &
+	 (FLAG (OT_ZWNJ) | FLAG (OT_ZWJ) | FLAG (OT_N) | FLAG (OT_H))))
+      info[i].indic_position() = info[i - 1].indic_position();
 
+  /* We do bubble-sort, skip malicious clusters attempts */
+  if (end - start > 20)
+    return;
+
+  /* Sit tight, rock 'n roll! */
+  hb_bubble_sort (info + start, end - start, compare_indic_order);
+
+  /* Setup masks now */
+
+  /* Pre-base */
+  for (i = start; i < base; i++)
+    info[i].mask  |= mask_array[HALF] | mask_array[AKHN] | mask_array[CJCT];
+  /* Base */
+  info[base].mask |= mask_array[AKHN] | mask_array[CJCT];
+  /* Post-base */
+  for (i = base + 1; i < end; i++)
+    info[i].mask  |= mask_array[BLWF] | mask_array[PSTF] | mask_array[CJCT];
+
+  /* Apply ZWJ/ZWNJ effects */
+  for (i = start + 1; i < end; i++)
+    if (is_joiner (info[i])) {
+      bool non_joiner = info[i].indic_category() == OT_ZWNJ;
+      unsigned int j = i - 1;
+
+      do {
+	info[j].mask &= !mask_array[HALF];
+	if (non_joiner)
+	  info[j].mask &= !mask_array[CJCT];
+	j--;
+      } while (j > start && !is_consonant (info[j]));
+    }
+}
+
+
+static void
+found_vowel_syllable (const hb_ot_map_t *map, hb_buffer_t *buffer, hb_mask_t *mask_array,
+		      unsigned int start, unsigned int end)
+{
+  /* TODO
+   * Not clear to me how this should work.  Do the matras move to before the
+   * independent vowel?  No idea.
+   */
+}
+
+static void
+found_standalone_cluster (const hb_ot_map_t *map, hb_buffer_t *buffer, hb_mask_t *mask_array,
+			  unsigned int start, unsigned int end)
+{
+  /* TODO
+   * Easiest thing to do here is to convert the NBSP to consonant and
+   * call found_consonant_syllable.
+   */
+}
+
+static void
+found_non_indic (const hb_ot_map_t *map, hb_buffer_t *buffer, hb_mask_t *mask_array,
+		 unsigned int start, unsigned int end)
+{
+  /* Nothing to do right now.  If we ever switch to using the output
+   * buffer in the reordering process, we'd need to next_glyph() here. */
+}
+
+#include "hb-ot-shape-complex-indic-machine.hh"
+
+static void
+remove_joiners (hb_buffer_t *buffer)
+{
+  buffer->clear_output ();
+  unsigned int count = buffer->len;
+  for (buffer->idx = 0; buffer->idx < count;)
+    if (unlikely (is_joiner (buffer->info[buffer->idx])))
+      buffer->skip_glyph ();
+    else
+      buffer->next_glyph ();
+
+  buffer->swap_buffers ();
+}
+
+static void
+initial_reordering (const hb_ot_map_t *map,
+		    hb_face_t *face,
+		    hb_buffer_t *buffer,
+		    void *user_data HB_UNUSED)
+{
   hb_mask_t mask_array[ARRAY_LENGTH (indic_basic_features)] = {0};
   unsigned int num_masks = ARRAY_LENGTH (indic_basic_features);
   for (unsigned int i = 0; i < num_masks; i++)
     mask_array[i] = map->get_1_mask (indic_basic_features[i].tag);
+
+  find_syllables (map, buffer, mask_array);
+
+  remove_joiners (buffer);
 }
+
+static void
+final_reordering (const hb_ot_map_t *map,
+		  hb_face_t *face,
+		  hb_buffer_t *buffer,
+		  void *user_data HB_UNUSED)
+{
+  HB_BUFFER_DEALLOCATE_VAR (buffer, indic_category);
+  HB_BUFFER_DEALLOCATE_VAR (buffer, indic_position);
+}
+
 
 
 HB_END_DECLS

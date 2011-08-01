@@ -60,7 +60,7 @@ typedef volatile int hb_atomic_int_t;
 #define hb_atomic_int_set(AI, V)		g_atomic_int_set (&(AI), V)
 
 
-#elif defined(_MSC_VER) && 0
+#elif defined(_MSC_VER)
 
 #include <intrin.h>
 
@@ -72,7 +72,7 @@ typedef long hb_atomic_int_t;
 
 #else
 
-#pragma message "Could not find any system to define atomic_int macros, library will NOT be thread-safe"
+#warning "Could not find any system to define atomic_int macros, library will NOT be thread-safe"
 
 typedef volatile int hb_atomic_int_t;
 #define hb_atomic_int_fetch_and_add(AI, V)	((AI) += (V), (AI) - (V))
@@ -191,11 +191,10 @@ struct _hb_object_header_t {
   }
 
   inline void trace (const char *function) const {
-    (void) (HB_DEBUG_OBJECT &&
-	    fprintf (stderr, "OBJECT(%p) refcount=%d %s\n",
-		     (void *) this,
-		     this ? ref_count.get () : 0,
-		     function));
+    DEBUG_MSG (OBJECT, (void *) this,
+	       "refcount=%d %s",
+	       this ? ref_count.get () : 0,
+	       function);
   }
 
 };

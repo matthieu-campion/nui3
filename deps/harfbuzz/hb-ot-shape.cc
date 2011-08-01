@@ -115,7 +115,7 @@ hb_ot_shape_setup_masks (hb_ot_shape_context_t *c)
   hb_mask_t global_mask = c->plan->map.get_global_mask ();
   c->buffer->reset_masks (global_mask);
 
-  hb_ot_shape_complex_setup_masks (c->plan->shaper, &c->plan->map, c->buffer); /* BUFFER: Clobbers var2 */
+  hb_ot_shape_complex_setup_masks (c->plan->shaper, &c->plan->map, c->buffer);
 
   for (unsigned int i = 0; i < c->num_user_features; i++)
   {
@@ -126,49 +126,6 @@ hb_ot_shape_setup_masks (hb_ot_shape_context_t *c)
       c->buffer->set_masks (feature->value << shift, mask, feature->start, feature->end);
     }
   }
-}
-
-
-static void
-hb_ot_substitute_complex (hb_ot_shape_context_t *c)
-{
-  if (!hb_ot_layout_has_substitution (c->face))
-    return;
-
-  c->plan->map.substitute (c->face, c->buffer);
-
-  c->applied_substitute_complex = TRUE;
-  return;
-}
-
-static void
-hb_ot_position_complex (hb_ot_shape_context_t *c)
-{
-
-  if (!hb_ot_layout_has_positioning (c->face))
-    return;
-
-  unsigned int count = c->buffer->len;
-  for (unsigned int i = 0; i < count; i++) {
-    hb_font_add_glyph_origin_for_direction (c->font, c->buffer->info[i].codepoint,
-					    HB_DIRECTION_LTR,
-					    &c->buffer->pos[i].x_offset,
-					    &c->buffer->pos[i].y_offset);
-  }
-
-  c->plan->map.position (c->font, c->buffer);
-
-  for (unsigned int i = 0; i < count; i++) {
-    hb_font_subtract_glyph_origin_for_direction (c->font, c->buffer->info[i].codepoint,
-						 HB_DIRECTION_LTR,
-						 &c->buffer->pos[i].x_offset,
-						 &c->buffer->pos[i].y_offset);
-  }
-
-  hb_ot_layout_position_finish (c->buffer);
-
-  c->applied_position_complex = TRUE;
-  return;
 }
 
 
@@ -211,14 +168,6 @@ hb_ensure_native_direction (hb_buffer_t *buffer)
     hb_buffer_reverse_clusters (buffer);
     buffer->props.direction = HB_DIRECTION_REVERSE (buffer->props.direction);
   }
-}
-
-static void
-hb_reset_glyph_infos (hb_buffer_t *buffer)
-{
-  unsigned int count = buffer->len;
-  for (unsigned int i = 0; i < count; i++)
-    buffer->info[i].var1.u32 = buffer->info[i].var2.u32 = 0;
 }
 
 
@@ -276,7 +225,23 @@ hb_map_glyphs (hb_font_t    *font,
 static void
 hb_substitute_default (hb_ot_shape_context_t *c)
 {
+  hb_ot_layout_substitute_start (c->buffer);
+
+  hb_mirror_chars (c);
+
   hb_map_glyphs (c->font, c->buffer);
+}
+
+static void
+hb_ot_substitute_complex (hb_ot_shape_context_t *c)
+{
+  if (hb_ot_layout_has_substitution (c->face))
+    c->plan->map.substitute (c->face, c->buffer);
+
+  hb_ot_layout_substitute_finish (c->buffer);
+
+  c->applied_substitute_complex = TRUE;
+  return;
 }
 
 static void
@@ -304,6 +269,38 @@ hb_position_default (hb_ot_shape_context_t *c)
 						 &c->buffer->pos[i].x_offset,
 						 &c->buffer->pos[i].y_offset);
   }
+}
+
+static void
+hb_ot_position_complex (hb_ot_shape_context_t *c)
+{
+
+  if (hb_ot_layout_has_positioning (c->face))
+  {
+    /* Change glyph origin to what GPOS expects, apply GPOS, change it back. */
+
+    unsigned int count = c->buffer->len;
+    for (unsigned int i = 0; i < count; i++) {
+      hb_font_add_glyph_origin_for_direction (c->font, c->buffer->info[i].codepoint,
+					      HB_DIRECTION_LTR,
+					      &c->buffer->pos[i].x_offset,
+					      &c->buffer->pos[i].y_offset);
+    }
+
+    c->plan->map.position (c->font, c->buffer);
+
+    for (unsigned int i = 0; i < count; i++) {
+      hb_font_subtract_glyph_origin_for_direction (c->font, c->buffer->info[i].codepoint,
+						   HB_DIRECTION_LTR,
+						   &c->buffer->pos[i].x_offset,
+						   &c->buffer->pos[i].y_offset);
+    }
+  }
+
+  hb_ot_layout_position_finish (c->buffer);
+
+  c->applied_position_complex = TRUE;
+  return;
 }
 
 static void
@@ -350,12 +347,15 @@ hb_position_complex_fallback_visual (hb_ot_shape_context_t *c)
 static void
 hb_ot_shape_execute_internal (hb_ot_shape_context_t *c)
 {
+  c->buffer->deallocate_var_all ();
+
   /* Save the original direction, we use it later. */
   c->target_direction = c->buffer->props.direction;
 
-  hb_reset_glyph_infos (c->buffer); /* BUFFER: Clear buffer var1 and var2 */
+  HB_BUFFER_ALLOCATE_VAR (c->buffer, general_category);
+  HB_BUFFER_ALLOCATE_VAR (c->buffer, combining_class);
 
-  _hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class in var1 */
+  _hb_set_unicode_props (c->buffer); /* BUFFER: Set general_category and combining_class */
 
   hb_form_clusters (c->buffer);
 
@@ -363,12 +363,10 @@ hb_ot_shape_execute_internal (hb_ot_shape_context_t *c)
 
   _hb_ot_shape_normalize (c);
 
-  hb_ot_shape_setup_masks (c); /* BUFFER: Clobbers var2 */
+  hb_ot_shape_setup_masks (c);
 
   /* SUBSTITUTE */
   {
-    hb_mirror_chars (c);
-
     hb_substitute_default (c);
 
     hb_ot_substitute_complex (c);
@@ -394,7 +392,12 @@ hb_ot_shape_execute_internal (hb_ot_shape_context_t *c)
       hb_position_complex_fallback_visual (c);
   }
 
+  HB_BUFFER_DEALLOCATE_VAR (c->buffer, combining_class);
+  HB_BUFFER_DEALLOCATE_VAR (c->buffer, general_category);
+
   c->buffer->props.direction = c->target_direction;
+
+  c->buffer->deallocate_var_all ();
 }
 
 static void

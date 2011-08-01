@@ -407,12 +407,6 @@ struct Ligature
     return true;
   }
 
-  inline uint16_t allocate_lig_id (hb_buffer_t *buffer) const {
-    uint16_t lig_id = buffer->next_serial ();
-    if (unlikely (!lig_id)) lig_id = buffer->next_serial (); /* in case of overflow */
-    return lig_id;
-  }
-
   public:
   inline bool sanitize (hb_sanitize_context_t *c) {
     TRACE_SANITIZE ();
@@ -876,6 +870,9 @@ struct GSUB : GSUBGPOS
 				 hb_mask_t     mask) const
   { return get_lookup (lookup_index).apply_string (face, buffer, mask); }
 
+  static inline void substitute_start (hb_buffer_t *buffer);
+  static inline void substitute_finish (hb_buffer_t *buffer);
+
   inline bool sanitize (hb_sanitize_context_t *c) {
     TRACE_SANITIZE ();
     if (unlikely (!GSUBGPOS::sanitize (c))) return false;
@@ -885,6 +882,24 @@ struct GSUB : GSUBGPOS
   public:
   DEFINE_SIZE_STATIC (10);
 };
+
+
+void
+GSUB::substitute_start (hb_buffer_t *buffer)
+{
+  HB_BUFFER_ALLOCATE_VAR (buffer, props_cache);
+  HB_BUFFER_ALLOCATE_VAR (buffer, lig_id);
+  HB_BUFFER_ALLOCATE_VAR (buffer, lig_comp);
+
+  unsigned int count = buffer->len;
+  for (unsigned int i = 0; i < count; i++)
+    buffer->info[i].props_cache() = buffer->info[i].lig_id() = buffer->info[i].lig_comp() = 0;
+}
+
+void
+GSUB::substitute_finish (hb_buffer_t *buffer)
+{
+}
 
 
 /* Out-of-class implementation for methods recursing */

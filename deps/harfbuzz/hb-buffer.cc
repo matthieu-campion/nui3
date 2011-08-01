@@ -34,7 +34,12 @@
 HB_BEGIN_DECLS
 
 
-static hb_buffer_t Xhb_buffer_nil = {
+#ifndef HB_DEBUG_BUFFER
+#define HB_DEBUG_BUFFER (HB_DEBUG+0)
+#endif
+
+
+static hb_buffer_t _hb_buffer_nil = {
   HB_OBJECT_HEADER_STATIC,
 
   &_hb_unicode_funcs_default,
@@ -140,9 +145,9 @@ hb_buffer_t::reset (void)
     return;
 
   hb_unicode_funcs_destroy (unicode);
-  unicode = Xhb_buffer_nil.unicode;
+  unicode = _hb_buffer_nil.unicode;
 
-  props = Xhb_buffer_nil.props;
+  props = _hb_buffer_nil.props;
 
   in_error = FALSE;
   have_output = FALSE;
@@ -153,6 +158,8 @@ hb_buffer_t::reset (void)
   out_len = 0;
 
   serial = 0;
+  memset (allocated_var_bytes, 0, sizeof allocated_var_bytes);
+  memset (allocated_var_owner, 0, sizeof allocated_var_owner);
 
   out_info = info;
 }
@@ -386,6 +393,57 @@ hb_buffer_t::reverse_clusters (void)
   reverse_range (start, i);
 }
 
+static inline void
+dump_var_allocation (const hb_buffer_t *buffer)
+{
+  char buf[80];
+  for (unsigned int i = 0; i < 8; i++)
+    buf[i] = '0' + buffer->allocated_var_bytes[7 - i];
+  buf[8] = '\0';
+  DEBUG_MSG (BUFFER, buffer,
+	     "Current var allocation: %s",
+	     buf);
+}
+
+void hb_buffer_t::allocate_var (unsigned int byte_i, unsigned int count, const char *owner)
+{
+  assert (byte_i < 8 && byte_i + count <= 8);
+
+  if (DEBUG (BUFFER))
+    dump_var_allocation (this);
+  DEBUG_MSG (BUFFER, this,
+	     "Allocating var bytes %d..%d for %s",
+	     byte_i, byte_i + count - 1, owner);
+
+  for (unsigned int i = byte_i; i < byte_i + count; i++) {
+    assert (!allocated_var_bytes[i]);
+    allocated_var_bytes[i]++;
+    allocated_var_owner[i] = owner;
+  }
+}
+
+void hb_buffer_t::deallocate_var (unsigned int byte_i, unsigned int count, const char *owner)
+{
+  if (DEBUG (BUFFER))
+    dump_var_allocation (this);
+
+  DEBUG_MSG (BUFFER, this,
+	     "Deallocating var bytes %d..%d for %s",
+	     byte_i, byte_i + count - 1, owner);
+
+  assert (byte_i < 8 && byte_i + count <= 8);
+  for (unsigned int i = byte_i; i < byte_i + count; i++) {
+    assert (allocated_var_bytes[i]);
+    assert (0 == strcmp (allocated_var_owner[i], owner));
+    allocated_var_bytes[i]--;
+  }
+}
+
+void hb_buffer_t::deallocate_var_all (void)
+{
+  memset (allocated_var_bytes, 0, sizeof (allocated_var_bytes));
+  memset (allocated_var_owner, 0, sizeof (allocated_var_owner));
+}
 
 /* Public API */
 
@@ -395,13 +453,13 @@ hb_buffer_create (unsigned int pre_alloc_size)
   hb_buffer_t *buffer;
 
   if (!(buffer = hb_object_create<hb_buffer_t> ()))
-    return &Xhb_buffer_nil;
+    return &_hb_buffer_nil;
 
   buffer->reset ();
 
   if (pre_alloc_size && !buffer->ensure (pre_alloc_size)) {
     hb_buffer_destroy (buffer);
-    return &Xhb_buffer_nil;
+    return &_hb_buffer_nil;
   }
 
   return buffer;
@@ -410,7 +468,7 @@ hb_buffer_create (unsigned int pre_alloc_size)
 hb_buffer_t *
 hb_buffer_get_empty (void)
 {
-  return &Xhb_buffer_nil;
+  return &_hb_buffer_nil;
 }
 
 hb_buffer_t *
@@ -457,7 +515,7 @@ hb_buffer_set_unicode_funcs (hb_buffer_t        *buffer,
     return;
 
   if (!unicode)
-    unicode = Xhb_buffer_nil.unicode;
+    unicode = _hb_buffer_nil.unicode;
 
   hb_unicode_funcs_reference (unicode);
   hb_unicode_funcs_destroy (buffer->unicode);

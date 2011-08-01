@@ -36,128 +36,166 @@ HB_BEGIN_DECLS
 
 #line 38 "hb-ot-shape-complex-indic-machine.hh"
 static const unsigned char _indic_syllable_machine_trans_keys[] = {
-	0u, 0u, 5u, 5u, 1u, 2u, 1u, 5u, 5u, 5u, 1u, 2u, 0u, 12u, 0u, 12u, 
+	0u, 0u, 5u, 5u, 1u, 2u, 1u, 2u, 5u, 5u, 1u, 5u, 5u, 5u, 1u, 2u, 
 	0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 
 	0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 
-	0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0
+	0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 
+	0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 0u, 12u, 
+	0u, 12u, 0
 };
 
 static const char _indic_syllable_machine_key_spans[] = {
-	0, 1, 2, 5, 1, 2, 13, 13, 
+	0, 1, 2, 2, 1, 5, 1, 2, 
 	13, 13, 13, 13, 13, 13, 13, 13, 
 	13, 13, 13, 13, 13, 13, 13, 13, 
-	13, 13, 13, 13, 13, 13, 13
+	13, 13, 13, 13, 13, 13, 13, 13, 
+	13, 13, 13, 13, 13, 13, 13, 13, 
+	13
 };
 
 static const short _indic_syllable_machine_index_offsets[] = {
-	0, 0, 2, 5, 11, 13, 16, 30, 
-	44, 58, 72, 86, 100, 114, 128, 142, 
-	156, 170, 184, 198, 212, 226, 240, 254, 
-	268, 282, 296, 310, 324, 338, 352
+	0, 0, 2, 5, 8, 10, 16, 18, 
+	21, 35, 49, 63, 77, 91, 105, 119, 
+	133, 147, 161, 175, 189, 203, 217, 231, 
+	245, 259, 273, 287, 301, 315, 329, 343, 
+	357, 371, 385, 399, 413, 427, 441, 455, 
+	469
 };
 
 static const char _indic_syllable_machine_indicies[] = {
-	0, 1, 2, 2, 1, 2, 2, 
-	1, 1, 0, 1, 3, 1, 4, 4, 
-	1, 5, 4, 6, 7, 1, 1, 1, 
-	1, 1, 1, 1, 1, 8, 1, 9, 
-	10, 11, 12, 13, 14, 15, 15, 16, 
-	17, 18, 19, 20, 1, 9, 10, 11, 
-	12, 13, 21, 15, 15, 16, 17, 18, 
-	19, 20, 1, 5, 4, 6, 7, 22, 
-	1, 23, 24, 25, 26, 27, 1, 8, 
-	1, 5, 4, 6, 7, 1, 1, 23, 
-	24, 25, 26, 27, 1, 8, 1, 5, 
-	4, 6, 7, 1, 1, 1, 1, 25, 
-	26, 27, 1, 8, 1, 5, 4, 6, 
-	7, 28, 2, 1, 1, 25, 26, 27, 
-	1, 8, 1, 5, 4, 6, 7, 1, 
-	2, 1, 1, 25, 26, 27, 1, 8, 
-	1, 5, 4, 6, 7, 1, 1, 1, 
-	1, 1, 1, 27, 1, 8, 1, 5, 
-	4, 6, 7, 1, 1, 1, 1, 1, 
-	1, 5, 1, 8, 1, 5, 4, 6, 
-	7, 29, 0, 23, 23, 25, 26, 27, 
-	1, 8, 1, 5, 4, 6, 7, 1, 
-	0, 23, 23, 25, 26, 27, 1, 8, 
-	1, 9, 10, 11, 12, 1, 14, 15, 
-	15, 16, 17, 18, 19, 20, 1, 9, 
-	4, 4, 12, 1, 1, 30, 30, 1, 
-	17, 18, 1, 20, 1, 9, 4, 4, 
-	12, 1, 1, 1, 1, 1, 17, 18, 
-	1, 20, 1, 9, 10, 11, 12, 1, 
-	1, 1, 1, 1, 1, 18, 1, 20, 
-	1, 9, 10, 11, 12, 1, 1, 1, 
-	1, 1, 1, 31, 1, 20, 1, 9, 
-	10, 11, 12, 1, 1, 1, 1, 1, 
-	1, 1, 1, 20, 1, 9, 10, 11, 
-	12, 32, 33, 1, 1, 16, 17, 18, 
-	1, 20, 1, 9, 10, 11, 12, 1, 
-	33, 1, 1, 16, 17, 18, 1, 20, 
-	1, 9, 10, 11, 12, 1, 1, 1, 
-	1, 16, 17, 18, 1, 20, 1, 9, 
-	10, 11, 12, 1, 34, 1, 1, 16, 
-	17, 18, 1, 20, 1, 9, 10, 11, 
-	12, 1, 1, 35, 35, 1, 17, 18, 
-	1, 20, 1, 9, 10, 11, 12, 1, 
-	1, 1, 1, 1, 17, 18, 1, 20, 
-	1, 9, 4, 4, 7, 1, 1, 30, 
-	30, 1, 17, 18, 1, 8, 1, 0
+	0, 1, 2, 2, 1, 3, 3, 
+	1, 4, 1, 2, 2, 1, 1, 0, 
+	1, 5, 1, 6, 6, 1, 7, 6, 
+	8, 9, 1, 1, 1, 1, 1, 1, 
+	1, 1, 10, 1, 11, 12, 13, 14, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	15, 1, 16, 17, 18, 19, 20, 21, 
+	22, 22, 23, 24, 25, 26, 27, 1, 
+	16, 17, 18, 19, 20, 28, 22, 22, 
+	23, 24, 25, 26, 27, 1, 29, 30, 
+	31, 32, 33, 1, 34, 35, 36, 37, 
+	38, 1, 39, 1, 29, 30, 31, 32, 
+	1, 1, 34, 35, 36, 37, 38, 1, 
+	39, 1, 29, 30, 31, 32, 1, 1, 
+	1, 1, 36, 37, 38, 1, 39, 1, 
+	29, 30, 31, 32, 40, 2, 1, 1, 
+	36, 37, 38, 1, 39, 1, 29, 30, 
+	31, 32, 1, 2, 1, 1, 36, 37, 
+	38, 1, 39, 1, 29, 30, 31, 32, 
+	1, 1, 1, 1, 1, 1, 38, 1, 
+	39, 1, 29, 30, 31, 32, 1, 1, 
+	1, 1, 1, 1, 41, 1, 39, 1, 
+	29, 30, 31, 32, 1, 1, 1, 1, 
+	1, 1, 1, 1, 39, 1, 42, 43, 
+	44, 45, 46, 4, 47, 47, 48, 49, 
+	50, 1, 51, 1, 42, 43, 44, 45, 
+	1, 4, 47, 47, 48, 49, 50, 1, 
+	51, 1, 42, 43, 44, 45, 1, 1, 
+	1, 1, 48, 49, 50, 1, 51, 1, 
+	42, 43, 44, 45, 52, 3, 1, 1, 
+	48, 49, 50, 1, 51, 1, 42, 43, 
+	44, 45, 1, 3, 1, 1, 48, 49, 
+	50, 1, 51, 1, 42, 43, 44, 45, 
+	1, 1, 1, 1, 1, 1, 50, 1, 
+	51, 1, 42, 43, 44, 45, 1, 1, 
+	1, 1, 1, 1, 53, 1, 51, 1, 
+	42, 43, 44, 45, 1, 1, 1, 1, 
+	1, 1, 1, 1, 51, 1, 16, 17, 
+	18, 19, 1, 21, 22, 22, 23, 24, 
+	25, 26, 27, 1, 16, 6, 6, 19, 
+	1, 1, 54, 54, 1, 24, 25, 1, 
+	27, 1, 16, 6, 6, 19, 1, 1, 
+	1, 1, 1, 24, 25, 1, 27, 1, 
+	16, 17, 18, 19, 1, 1, 1, 1, 
+	1, 1, 25, 1, 27, 1, 16, 17, 
+	18, 19, 1, 1, 1, 1, 1, 1, 
+	55, 1, 27, 1, 16, 17, 18, 19, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	27, 1, 16, 17, 18, 19, 56, 57, 
+	1, 1, 23, 24, 25, 1, 27, 1, 
+	16, 17, 18, 19, 1, 57, 1, 1, 
+	23, 24, 25, 1, 27, 1, 16, 17, 
+	18, 19, 1, 1, 1, 1, 23, 24, 
+	25, 1, 27, 1, 16, 17, 18, 19, 
+	1, 58, 1, 1, 23, 24, 25, 1, 
+	27, 1, 16, 17, 18, 19, 1, 1, 
+	59, 59, 1, 24, 25, 1, 27, 1, 
+	16, 17, 18, 19, 1, 1, 1, 1, 
+	1, 24, 25, 1, 27, 1, 16, 6, 
+	6, 9, 1, 1, 54, 54, 1, 24, 
+	25, 1, 10, 1, 0
 };
 
 static const char _indic_syllable_machine_trans_targs[] = {
-	2, 0, 11, 5, 7, 6, 8, 9, 
-	16, 6, 7, 8, 9, 18, 19, 4, 
-	24, 21, 22, 27, 16, 30, 10, 1, 
-	3, 12, 14, 15, 13, 17, 20, 23, 
-	25, 26, 28, 29
+	2, 0, 14, 22, 3, 7, 10, 9, 
+	11, 12, 20, 9, 10, 11, 12, 20, 
+	9, 10, 11, 12, 28, 29, 6, 34, 
+	31, 32, 37, 20, 40, 9, 10, 11, 
+	12, 13, 1, 5, 15, 17, 18, 20, 
+	16, 19, 9, 10, 11, 12, 21, 4, 
+	23, 25, 26, 20, 24, 27, 30, 33, 
+	35, 36, 38, 39
 };
 
 static const char _indic_syllable_machine_trans_actions[] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 1, 1, 1, 1, 0, 0, 0, 
-	0, 0, 0, 0, 1, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 0, 0, 1, 1, 1, 1, 1, 
+	2, 2, 2, 2, 0, 0, 0, 0, 
+	0, 0, 0, 2, 0, 3, 3, 3, 
+	3, 0, 0, 0, 0, 0, 0, 3, 
+	0, 0, 4, 4, 4, 4, 0, 0, 
+	0, 0, 0, 4, 0, 0, 0, 0, 
 	0, 0, 0, 0
 };
 
 static const char _indic_syllable_machine_eof_actions[] = {
-	0, 0, 0, 0, 0, 0, 0, 1, 
-	1, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 1, 1, 1, 1, 1, 1, 
-	1, 1, 1, 1, 1, 1, 1
+	0, 0, 0, 0, 0, 0, 0, 0, 
+	0, 1, 2, 2, 3, 3, 3, 3, 
+	3, 3, 3, 3, 4, 4, 4, 4, 
+	4, 4, 4, 4, 2, 2, 2, 2, 
+	2, 2, 2, 2, 2, 2, 2, 2, 
+	2
 };
 
-static const int indic_syllable_machine_start = 6;
-static const int indic_syllable_machine_first_final = 6;
+static const int indic_syllable_machine_start = 8;
+static const int indic_syllable_machine_first_final = 8;
 static const int indic_syllable_machine_error = 0;
 
-static const int indic_syllable_machine_en_main = 6;
+static const int indic_syllable_machine_en_main = 8;
 
 
 #line 38 "hb-ot-shape-complex-indic-machine.rl"
 
 
 
-#line 81 "hb-ot-shape-complex-indic-machine.rl"
+#line 83 "hb-ot-shape-complex-indic-machine.rl"
 
 
-
-#include <stdio.h>
-#include <string.h>
 
 static void
-find_syllables (hb_ot_map_t *map, hb_buffer_t *buffer)
+set_cluster (hb_buffer_t *buffer,
+	     unsigned int start, unsigned int end)
+{
+  unsigned int cluster = buffer->info[start].cluster;
+
+  for (unsigned int i = start + 1; i < end; i++)
+    cluster = MIN (cluster, buffer->info[i].cluster);
+  for (unsigned int i = start; i < end; i++)
+    buffer->info[i].cluster = cluster;
+}
+
+static void
+find_syllables (const hb_ot_map_t *map, hb_buffer_t *buffer, hb_mask_t *mask_array)
 {
   unsigned int p, pe, eof;
   int cs;
   
-#line 156 "hb-ot-shape-complex-indic-machine.hh"
+#line 194 "hb-ot-shape-complex-indic-machine.hh"
 	{
 	cs = indic_syllable_machine_start;
 	}
 
-#line 95 "hb-ot-shape-complex-indic-machine.rl"
+#line 106 "hb-ot-shape-complex-indic-machine.rl"
 
 
   p = 0;
@@ -165,7 +203,7 @@ find_syllables (hb_ot_map_t *map, hb_buffer_t *buffer)
 
   unsigned int last = 0;
   
-#line 169 "hb-ot-shape-complex-indic-machine.hh"
+#line 207 "hb-ot-shape-complex-indic-machine.hh"
 	{
 	int _slen;
 	int _trans;
@@ -190,14 +228,31 @@ _resume:
 		goto _again;
 
 	switch ( _indic_syllable_machine_trans_actions[_trans] ) {
-	case 1:
+	case 2:
 #line 62 "hb-ot-shape-complex-indic-machine.rl"
-	{
-  found_syllable (map, buffer, last, p);
-  last = p;
-}
+	{ found_consonant_syllable (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
 	break;
-#line 201 "hb-ot-shape-complex-indic-machine.hh"
+	case 3:
+#line 63 "hb-ot-shape-complex-indic-machine.rl"
+	{ found_vowel_syllable (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
+	break;
+	case 4:
+#line 64 "hb-ot-shape-complex-indic-machine.rl"
+	{ found_standalone_cluster (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
+	break;
+	case 1:
+#line 65 "hb-ot-shape-complex-indic-machine.rl"
+	{ found_non_indic (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
+	break;
+#line 256 "hb-ot-shape-complex-indic-machine.hh"
 	}
 
 _again:
@@ -209,21 +264,38 @@ _again:
 	if ( p == eof )
 	{
 	switch ( _indic_syllable_machine_eof_actions[cs] ) {
-	case 1:
+	case 2:
 #line 62 "hb-ot-shape-complex-indic-machine.rl"
-	{
-  found_syllable (map, buffer, last, p);
-  last = p;
-}
+	{ found_consonant_syllable (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
 	break;
-#line 220 "hb-ot-shape-complex-indic-machine.hh"
+	case 3:
+#line 63 "hb-ot-shape-complex-indic-machine.rl"
+	{ found_vowel_syllable (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
+	break;
+	case 4:
+#line 64 "hb-ot-shape-complex-indic-machine.rl"
+	{ found_standalone_cluster (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
+	break;
+	case 1:
+#line 65 "hb-ot-shape-complex-indic-machine.rl"
+	{ found_non_indic (map, buffer, mask_array, last, p); }
+#line 67 "hb-ot-shape-complex-indic-machine.rl"
+	{ set_cluster (buffer, p, last); last = p; }
+	break;
+#line 292 "hb-ot-shape-complex-indic-machine.hh"
 	}
 	}
 
 	_out: {}
 	}
 
-#line 103 "hb-ot-shape-complex-indic-machine.rl"
+#line 114 "hb-ot-shape-complex-indic-machine.rl"
 
 }
 
