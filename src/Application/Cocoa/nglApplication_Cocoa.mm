@@ -441,9 +441,9 @@ static NSString* GetApplicationName(void)
 	}	
 }
 
-- (void) applicationWillResignActive:         (NSApplication*) pNSApplication
+- (void) applicationDidEnterBackground:         (NSApplication*) pNSApplication
 {
-  NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationWillResignActive]\n")); )
+  NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationDidEnterBackground]\n")); )
   NGL_ASSERT(App);
 	
 	
