@@ -8583,7 +8583,7 @@
 		E5816D5C0C3CECAB00902DFE /* nuiFontBase.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFontBase.cpp; path = src/Base/nuiFontBase.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D5D0C3CECAB00902DFE /* nuiGladeLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiGladeLoader.cpp; path = src/Base/nuiGladeLoader.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D5E0C3CECAB00902DFE /* nuiHotKey.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiHotKey.cpp; path = src/Base/nuiHotKey.cpp; sourceTree = SOURCE_ROOT; };
-		E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiInit.cpp; path = src/Base/nuiInit.cpp; sourceTree = SOURCE_ROOT; };
+		E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = nuiInit.cpp; path = src/Base/nuiInit.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D610C3CECAB00902DFE /* nuiNotification.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNotification.cpp; path = src/Base/nuiNotification.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D620C3CECAB00902DFE /* nuiObject.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiObject.cpp; path = src/Base/nuiObject.cpp; sourceTree = SOURCE_ROOT; };
 		E5816D650C3CECAB00902DFE /* nuiProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiProperty.cpp; path = src/Base/nuiProperty.cpp; sourceTree = SOURCE_ROOT; };

@@ -13,13 +13,18 @@
 #include "nuiDecoration.h"
 
 #if (defined _UIKIT_)
+# import <Foundation/NSAutoreleasePool.h>
 #include "../Font/nuiPhoneFontDB.h"
 #include "nglIMemory.h"
 #endif
 
 #define NUI_FONTDB_PATH _T("nuiFonts.db4")
 
+
 static uint32 gNUIReferences = 0;
+#if defined(_UIKIT_)
+static NSAutoreleasePool* nui_autoreleasepool = nil;
+#endif
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 {
@@ -42,38 +47,44 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 #endif
       App->CallOnInit();
     }
+
+    // On iOS, init an AutoReleasePool:
+#if defined(_UIKIT_)
+    nui_autoreleasepool = [[NSAutoreleasePool alloc] init];
+#endif
+
+    // Init the texture manager:
+    nuiTexture::InitTextures();
+    
+    
+    // Init the font manager:
+    
+#if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
+    nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
+    nuiFontManager::LoadManager(Memory, nglTime());
+#else
+    
+    //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
+    nglPath fontdb(ePathUserAppSettings);
+    fontdb += nglString(NUI_FONTDB_PATH);
+    
+    if (fontdb.Exists() && fontdb.IsLeaf())
+    {
+      nglIFile db(fontdb);
+      nuiFontManager::LoadManager(db, fontdb.GetLastMod());
+    }  
+    else
+    {
+      nuiFontManager::GetManager();
+    }
+    //#endif
+#endif
+    
+    nuiDecoration::InitDecorationEngine();
+    
   }
   
   gNUIReferences++;
-  
-  // Init the texture manager:
-  nuiTexture::InitTextures();
-  
-  // Init the font manager:
-  
-#if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
-  nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
-  nuiFontManager::LoadManager(Memory, nglTime());
-#else
-  
-  //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
-  nglPath fontdb(ePathUserAppSettings);
-  fontdb += nglString(NUI_FONTDB_PATH);
-  
-  if (fontdb.Exists() && fontdb.IsLeaf())
-  {
-    nglIFile db(fontdb);
-    nuiFontManager::LoadManager(db, fontdb.GetLastMod());
-  }  
-  else
-  {
-    nuiFontManager::GetManager();
-  }
-  //#endif
-#endif
-  
-  nuiDecoration::InitDecorationEngine();
-  
   
   return App != NULL && !App->GetError();
 }
@@ -121,6 +132,12 @@ bool nuiUninit()
     }
     nuiFont::ClearAll();
     nuiTexture::ClearAll();
+
+    #if defined(_UIKIT_)
+    [nui_autoreleasepool release];
+    nui_autoreleasepool = nil;
+    #endif
+    
   }
 #ifdef WIN32
   WSACleanup();
