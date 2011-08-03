@@ -12,8 +12,6 @@
 #include "nglThreadChecker.h"
 #include "nuiDecoration.h"
 
-#define NUI_FONTDB_PATH _T("nuiFonts.db5")
-
 #if (defined _UIKIT_)
 # import <Foundation/NSAutoreleasePool.h>
 #endif
@@ -72,12 +70,12 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     {
       nglIFile db(fontdb);
       nuiFontManager::LoadManager(db, fontdb.GetLastMod());
-    }  
+    }
+#if !defined(_UIKIT_)
     else
     {
       nuiFontManager::GetManager();
     }
-    
     
     nuiFontManager& rManager(nuiFontManager::GetManager(false));
     if (rManager.GetFontCount())
@@ -86,6 +84,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
       if (db.IsOpen())
         rManager.Save(db);
     }
+#endif
     
     nuiDecoration::InitDecorationEngine();
     nuiDefaultDecoration::Init();

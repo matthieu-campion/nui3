@@ -1062,6 +1062,17 @@ nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
     App->AddExit(nuiFontManager::ExitManager);
     gManager.AddSystemFolders();
     gManager.ScanFolders();
+#if defined(_UIKIT_)
+    if (gManager.GetFontCount())
+    {
+      nglPath fontdb(ePathUserAppSettings);
+      fontdb += nglString(NUI_FONTDB_PATH);
+      nglOFile db(fontdb, eOFileCreate);
+      if (db.IsOpen())
+        gManager.Save(db);
+    }
+#endif
+    
   }
   
   return gManager;
