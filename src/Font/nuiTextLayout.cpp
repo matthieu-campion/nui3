@@ -98,6 +98,8 @@ bool nuiTextLayout::Layout(const nglString& rString)
   mAscender = 0;
   mDescender = 0;
 
+  printf("Map scripts to fonts:\n");
+  int32 c = 0;
   // Find the needed fonts for each script:
   std::map<nuiUnicodeScript, nuiFontBase*> FontSet;
   {
@@ -105,7 +107,7 @@ bool nuiTextLayout::Layout(const nglString& rString)
     std::map<nuiUnicodeScript, std::set<nglUChar> >::iterator end = mCharsets.end();
     while (it != end)
     {
-      //printf("%s -> ", nuiGetUnicodeScriptName(it->first).GetChars());
+      printf("%d %s -> ", c, nuiGetUnicodeScriptName(it->first).GetChars());
       const std::set<nglUChar>& charset(it->second);
       nuiFontBase* pFont = NULL;
       // First try the requested font
@@ -135,11 +137,13 @@ bool nuiTextLayout::Layout(const nglString& rString)
       
       FontSet[it->first] = pFont;
       
-      //printf("%s\n", pFont->GetFamilyName().GetChars());
+      printf("%s\n", pFont->GetFamilyName().GetChars());
       
       ++it;
+      c++;
     }
   }
+  printf("Map scripts to fonts DONE\n");
 
   i = 0;
   nuiRect rect;
