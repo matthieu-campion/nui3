@@ -68,24 +68,25 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     nglPath fontdb(ePathUserAppSettings);
     fontdb += nglString(NUI_FONTDB_PATH);
     
+    nuiFontManager::InitManager(fontdb);
     if (fontdb.Exists() && fontdb.IsLeaf())
     {
       nglIFile db(fontdb);
       nuiFontManager::LoadManager(db, fontdb.GetLastMod());
     }  
-    else
-    {
-      nuiFontManager::GetManager();
-    }
-    
-    
-    nuiFontManager& rManager(nuiFontManager::GetManager(false));
-    if (rManager.GetFontCount())
-    {
-      nglOFile db(fontdb, eOFileCreate);
-      if (db.IsOpen())
-        rManager.Save(db);
-    }
+//    else
+//    {
+//      nuiFontManager::GetManager();
+//    }
+//    
+//    
+//    nuiFontManager& rManager(nuiFontManager::GetManager(false));
+//    if (rManager.GetFontCount())
+//    {
+//      nglOFile db(fontdb, eOFileCreate);
+//      if (db.IsOpen())
+//        rManager.Save(db);
+//    }
     
     nuiDecoration::InitDecorationEngine();
     nuiDefaultDecoration::Init();

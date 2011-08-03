@@ -684,12 +684,6 @@ static nuiLabel* gpFontPathLabel = NULL;
 
 void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 {
-//#ifdef _UIKIT_
-#if 0
-  UpdateFonts();
-  return;
-#endif
-  
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;
   
@@ -751,6 +745,11 @@ void nuiFontManager::ScanFolders(bool rescanAllFolders /* = false */)
 
   delete gpWin;
   gpWin = NULL;
+  
+  nglOStream* pStream = mSavePath.OpenWrite();
+  if (pStream)
+    Save(*pStream);
+  delete pStream;
 }
 
 bool nuiFontManager::ScanSubFolder(const nglPath& rBasePath)
@@ -1072,6 +1071,10 @@ void nuiFontManager::ExitManager()
   gManager.Clear();
 }
 
+void nuiFontManager::InitManager(const nglPath& rSavePath)
+{
+  gManager.mSavePath = rSavePath;
+}
 
 nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscantime)
 {
@@ -1082,8 +1085,7 @@ nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscan
   
   gManager.Clear();
   gManager.Load(rStream, lastscantime);
-  
-  
+
   return gManager;
 }
 

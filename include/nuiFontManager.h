@@ -165,6 +165,7 @@ public:
   
   uint32 GetFontCount() const;
   
+  static void InitManager(const nglPath& rSavePath);
   static nuiFontManager& GetManager(bool InitIfNeeded = true);
   static void ExitManager();
   static nuiFontManager& LoadManager(nglIStream& rStream, double lastscantime = 0);
@@ -180,6 +181,7 @@ private:
   
   static nuiFontManager gManager;
   
+  nglPath mSavePath;
   bool ScanSubFolder(const nglPath& rPath);
   void UpdateFonts();
 };
