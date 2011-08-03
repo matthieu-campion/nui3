@@ -75,9 +75,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     }  
     else
     {
-#ifndef _UIKIT_
       nuiFontManager::GetManager();
-#endif
     }
     
     
