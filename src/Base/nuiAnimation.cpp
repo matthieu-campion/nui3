@@ -188,6 +188,8 @@ void nuiAnimation::ReleaseTimer()
     while (it != end)
     {
       nuiTask* pTask = it->second;
+      NGL_ASSERT(pTask->GetRefCount() == 1); // We should be the last ones to hold on to nuiTasks! If you get there then you have done something wrong like forgetting to release your tasks.
+      NGL_ASSERT(pTask->IsCancelled()); // If you get there then you have done something wrong like forgetting to cancel your tasks.
       pTask->Release();
       ++it;
     }
