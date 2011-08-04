@@ -130,7 +130,7 @@ ASSERT_STATIC (sizeof (hb_var_int_t) == 4);
 #else
 #define HB_PURE_FUNC
 #define HB_CONST_FUNC
-#define HB_PRINTF_FUNC(format_idx, arg_idx)
+#define HB_PRINTF_FUCN(format_idx, arg_idx)
 #endif
 #if __GNUC__ >= 4
 #define HB_UNUSED	__attribute__((unused))
@@ -139,7 +139,11 @@ ASSERT_STATIC (sizeof (hb_var_int_t) == 4);
 #endif
 
 #ifndef HB_INTERNAL
-# define HB_INTERNAL __attribute__((__visibility__("hidden")))
+# ifndef __MINGW32__
+#  define HB_INTERNAL __attribute__((__visibility__("hidden")))
+# else
+#  define HB_INTERNAL
+# endif
 #endif
 
 
@@ -239,13 +243,6 @@ struct hb_prealloced_array_t {
   unsigned int allocated;
   Type *array;
   Type static_array[StaticSize];
-
-  hb_prealloced_array_t()
-  {
-    len = 0;
-    allocated = 0;
-    array = NULL;
-  }
 
   inline Type& operator [] (unsigned int i) { return array[i]; }
   inline const Type& operator [] (unsigned int i) const { return array[i]; }
@@ -510,7 +507,9 @@ _hb_debug_msg (const char *what,
   va_start (ap, message);
 
   (void) (_hb_debug (level, max_level) &&
-	  fprintf (stderr, "%s(%p): ", what, obj) &&
+	  fprintf (stderr, "%s", what) &&
+	  (obj && fprintf (stderr, "(%p)", obj), TRUE) &&
+	  fprintf (stderr, ": ") &&
 	  (func && fprintf (stderr, "%s: ", func), TRUE) &&
 	  (indented && fprintf (stderr, "%-*d-> ", level + 1, level), TRUE) &&
 	  vfprintf (stderr, message, ap) &&

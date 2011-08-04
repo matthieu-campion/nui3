@@ -29,7 +29,7 @@
 #ifndef HB_COMMON_H
 #define HB_COMMON_H
 
-# if (defined __cplusplus) && (!defined WIN32)
+# ifdef __cplusplus
 #  define HB_BEGIN_DECLS	extern "C" {
 #  define HB_END_DECLS		}
 # else /* !__cplusplus */
