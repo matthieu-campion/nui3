@@ -2289,8 +2289,8 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
 
   text = pRun->GetUnicodeChars();
   len = pRun->GetLength();
-  nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
-  NGL_OUT("Text: %s\n", t.GetChars());
+//   nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
+//   NGL_OUT("Text: %s\n", t.GetChars());
   
   hb_buffer = hb_buffer_create(len);
   
