@@ -130,7 +130,7 @@ ASSERT_STATIC (sizeof (hb_var_int_t) == 4);
 #else
 #define HB_PURE_FUNC
 #define HB_CONST_FUNC
-#define HB_PRINTF_FUCN(format_idx, arg_idx)
+#define HB_PRINTF_FUNC(format_idx, arg_idx)
 #endif
 #if __GNUC__ >= 4
 #define HB_UNUSED	__attribute__((unused))
@@ -239,6 +239,13 @@ struct hb_prealloced_array_t {
   unsigned int allocated;
   Type *array;
   Type static_array[StaticSize];
+
+  hb_prealloced_array_t()
+  {
+    len = 0;
+    allocated = 0;
+    array = NULL;
+  }
 
   inline Type& operator [] (unsigned int i) { return array[i]; }
   inline const Type& operator [] (unsigned int i) const { return array[i]; }

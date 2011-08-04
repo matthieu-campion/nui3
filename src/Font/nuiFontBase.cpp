@@ -2243,6 +2243,7 @@ nui_hb_get_glyph_contour_point (hb_font_t *font,
 
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
+  //NGL_OUT("nuiFontBase::Shape with font %s", GetFamilyName().GetChars());
   if (pRun->IsDummy())
     return;
   NGL_ASSERT(this == pRun->mStyle.GetFont());
@@ -2278,7 +2279,6 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
                     ft_face->size->metrics.x_ppem,
                     ft_face->size->metrics.y_ppem);
 
-  //hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
   hb_buffer_t *hb_buffer;
   hb_glyph_info_t *hb_glyph;
   hb_glyph_position_t *hb_position;
@@ -2289,6 +2289,8 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
 
   text = pRun->GetUnicodeChars();
   len = pRun->GetLength();
+  nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
+  //NGL_OUT("Text: %s\n", t.GetChars());
   
   hb_buffer = hb_buffer_create(len);
   
