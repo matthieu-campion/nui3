@@ -2243,7 +2243,7 @@ nui_hb_get_glyph_contour_point (hb_font_t *font,
 
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
-  //NGL_OUT("nuiFontBase::Shape with font %s", GetFamilyName().GetChars());
+  NGL_OUT("nuiFontBase::Shape with font %s", GetFamilyName().GetChars());
   if (pRun->IsDummy())
     return;
   NGL_ASSERT(this == pRun->mStyle.GetFont());
@@ -2290,7 +2290,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   text = pRun->GetUnicodeChars();
   len = pRun->GetLength();
   nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
-  //NGL_OUT("Text: %s\n", t.GetChars());
+  NGL_OUT("Text: %s\n", t.GetChars());
   
   hb_buffer = hb_buffer_create(len);
   
@@ -2298,7 +2298,11 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   
   //hb_buffer_set_direction(hb_buffer, HB_DIRECTION_TTB);
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
-  hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
+  if (sizeof(nglUChar) == 2)
+    hb_buffer_add_utf16(hb_buffer, (const uint16_t *)text, len, 0, len);
+  else
+    hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
+
   //if (language)
   //  hb_buffer_set_language(hb_buffer, hb_language_from_string(language));
   
@@ -2317,7 +2321,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
 
   const float factor = nuiGetInvScaleFactor() * (1.0 / 64.0);
   
-  //printf("Shape %p\n", pRun);
+  NGL_OUT("Shape %p\n", pRun);
   for (i = 0; i < num_glyphs; i++)
   {
     GetGlyphInfo(pRun->mGlyphs[i], hb_glyph->codepoint, eGlyphNative);
@@ -2326,14 +2330,14 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
     pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * factor;
     x += hb_position->x_advance;
     
-    //printf("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
+    NGL_OUT("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
 
     hb_glyph++;
     hb_position++;
 
   }
 
-  //printf("\n");
+  NGL_OUT("\n");
   
   pRun->mAdvanceX = x * factor;
   hb_buffer_destroy(hb_buffer);
