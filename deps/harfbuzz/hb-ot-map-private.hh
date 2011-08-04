@@ -137,6 +137,12 @@ struct hb_ot_map_builder_t
 {
   public:
 
+  hb_ot_map_builder_t()
+  {
+    current_stage[0] = 0;
+    current_stage[1] = 0;
+  }
+
   HB_INTERNAL void add_feature (hb_tag_t tag, unsigned int value, bool global);
 
   inline void add_bool_feature (hb_tag_t tag, bool global = true)
