@@ -173,7 +173,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     [glView release];
     glView = nil;
   }
-  [self disconnect];
+  //[self disconnect];
   [super dealloc];
 }
 
