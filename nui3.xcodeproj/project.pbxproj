@@ -6,20 +6,6 @@
 	objectVersion = 45;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		BC31489913E2CB9500DBF92A /* nuiPhone-ub */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = BC31489A13E2CB9500DBF92A /* Build configuration list for PBXAggregateTarget "nuiPhone-ub" */;
-			buildPhases = (
-				BC31489C13E2CBB500DBF92A /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "nuiPhone-ub";
-			productName = "nuiPhone-ub";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		40033E7412B14D7D000695D2 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7012B14D7D000695D2 /* json_reader.cpp */; };
 		40033E7512B14D7D000695D2 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40033E7112B14D7D000695D2 /* json_value.cpp */; };
@@ -16108,7 +16094,6 @@
 				E5429F110C3F0A5900225219 /* nui3 */,
 				E52412CD11CB860B0025CA71 /* nuiPhoneD */,
 				E5241BA911CBCE9E0025CA71 /* nuiPhone */,
-				BC31489913E2CB9500DBF92A /* nuiPhone-ub */,
 				73F0841812E9BA0700656E84 /* nuiPhone_arm7 */,
 				E5A8CCAE11E33A54004E14CE /* nui3CocoaD */,
 				E5D63EBB1209AB9C009C26A9 /* nui3Cocoa */,
@@ -16118,22 +16103,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		BC31489C13E2CBB500DBF92A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# ********************************************************\n# shell script to build the nuiPhone universal lib (iOS device + simu)\n\n\n# ********************************************************\n# define paths\n#\nDEBUG_THIS_SCRIPT=\"true\"\nINSTALL_DIR=${SRCROOT}/Products\n\nPRODUCT_NUI3_UB=${INSTALL_DIR}/libnuiPhone-ub.a\n\nDEVICE_DIR=${BUILD_DIR}/Default-iphoneos\nSIMULATOR_DIR=${BUILD_DIR}/Default-iphonesimulator\nTEMP_BUILD_DIR=${OBJROOT}/nui3.build\n\n# ********************************************************\n# print paths and env vars\n#\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"SYMROOT = $SYMROOT\"\necho \"OBJROOT = $OBJROOT\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\necho \" \"\necho \"INSTALL_DIR = ${INSTALL_DIR}\"\necho \"DEVICE_DIR = ${DEVICE_DIR}\"\necho \"SIMULATOR_DIR = ${SIMULATOR_DIR}\"\necho \"TEMP_BUILD_DIR = ${TEMP_BUILD_DIR}\"\nfi\n\n\n\n# ********************************************************\n# cleaning before building\n#\nif [ ! -d \"${INSTALL_DIR}\" ]\nthen\nmkdir \"${INSTALL_DIR}\"\nfi\n\nif [ -f \"${PRODUCT_NUI3_UB}\" ]\nthen\nrm -f \"${PRODUCT_NUI3_UB}\"\nfi\n\nif [ -d \"${TEMP_BUILD_DIR}\" ]\nthen\nrm -rf \"${TEMP_BUILD_DIR}\"\nfi\n\nif [ -f \"${DEVICE_DIR}/libnuiPhone.a\" ]\nthen\nrm -f \"${DEVICE_DIR}/libnuiPhone.a\"\nfi\n\nif [ -f \"${SIMULATOR_DIR}/libnuiPhone.a\" ]\nthen\nrm -f \"${SIMULATOR_DIR}/libnuiPhone.a\"\nfi\n\n\n\n# ********************************************************\n# compile lib for device and simu\n#\nxcodebuild -configuration \"Default\" -target \"nuiPhone\" -sdk iphoneos\nxcodebuild -configuration \"Default\" -target \"nuiPhone\" -sdk iphonesimulator\n\n# ********************************************************\n# aggregate nui3 targets into universal lib\n#\nlipo -create \"${DEVICE_DIR}/libnuiPhone.a\" \"${SIMULATOR_DIR}/libnuiPhone.a\" -output \"${PRODUCT_NUI3_UB}\"\n\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		73F0859512E9BA0700656E84 /* Sources */ = {
@@ -19531,18 +19500,6 @@
 			};
 			name = Default;
 		};
-		BC31489B13E2CB9500DBF92A /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					Standard,
-					"(armv7)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos5.0;
-			};
-			name = Default;
-		};
 		E52417F211CB860B0025CA71 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -19770,7 +19727,7 @@
 					DEBUG,
 					_CARBON_,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THREADSAFE_STATICS = NO;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -20000,14 +19957,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				73F09AC212E9D09E00656E84 /* Default */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
-		};
-		BC31489A13E2CB9500DBF92A /* Build configuration list for PBXAggregateTarget "nuiPhone-ub" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BC31489B13E2CB9500DBF92A /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
