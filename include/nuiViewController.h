@@ -28,6 +28,7 @@ public:
   
 protected:
   
+  virtual void ViewDidLoad();
   virtual void ViewWillAppear();
   virtual void ViewWillDisappear();
   virtual void ViewDidAppear();
@@ -44,6 +45,7 @@ private:
   bool mAnimated;
   nuiNavigationBar* mpBar;
 
+  bool mLoaded;
   bool mClicked;
   double mSwipeTime;
   double mSwipeInitiatedTime;
