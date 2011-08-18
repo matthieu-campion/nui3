@@ -2300,14 +2300,14 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
   if (sizeof(nglUChar) == 2)
   {
-    nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
+    //nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
     //NGL_OUT("Text: %s\n", t.GetChars());
     
     hb_buffer_add_utf16(hb_buffer, (const uint16_t *)text, len, 0, len);
   }
   else
   {
-    nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS4);
+    //nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS4);
     //NGL_OUT("Text: %s\n", t.GetChars());
  
     hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
