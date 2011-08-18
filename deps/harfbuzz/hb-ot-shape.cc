@@ -31,7 +31,6 @@
 
 #include "hb-font-private.hh"
 
-HB_BEGIN_DECLS
 
 
 hb_tag_t common_features[] = {
@@ -235,12 +234,13 @@ hb_substitute_default (hb_ot_shape_context_t *c)
 static void
 hb_ot_substitute_complex (hb_ot_shape_context_t *c)
 {
-  if (hb_ot_layout_has_substitution (c->face))
+  if (hb_ot_layout_has_substitution (c->face)) {
     c->plan->map.substitute (c->face, c->buffer);
+    c->applied_substitute_complex = TRUE;
+  }
 
   hb_ot_layout_substitute_finish (c->buffer);
 
-  c->applied_substitute_complex = TRUE;
   return;
 }
 
@@ -295,11 +295,12 @@ hb_ot_position_complex (hb_ot_shape_context_t *c)
 						   &c->buffer->pos[i].x_offset,
 						   &c->buffer->pos[i].y_offset);
     }
+
+    c->applied_position_complex = TRUE;
   }
 
   hb_ot_layout_position_finish (c->buffer);
 
-  c->applied_position_complex = TRUE;
   return;
 }
 
@@ -427,17 +428,21 @@ hb_ot_shape_execute (hb_ot_shape_plan_t *plan,
   hb_ot_shape_execute_internal (&c);
 }
 
-void
+hb_bool_t
 hb_ot_shape (hb_font_t          *font,
 	     hb_buffer_t        *buffer,
 	     const hb_feature_t *features,
-	     unsigned int        num_features)
+	     unsigned int        num_features,
+	     const char * const *shaper_options)
 {
   hb_ot_shape_plan_t plan;
 
+  buffer->guess_properties ();
+
   hb_ot_shape_plan_internal (&plan, font->face, &buffer->props, features, num_features);
   hb_ot_shape_execute (&plan, font, buffer, features, num_features);
+
+  return TRUE;
 }
 
 
-HB_END_DECLS

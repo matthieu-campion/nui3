@@ -33,7 +33,6 @@
 
 #include "hb-ot-layout.h"
 
-HB_BEGIN_DECLS
 
 
 static const hb_tag_t table_tags[2] = {HB_OT_TAG_GSUB, HB_OT_TAG_GPOS};
@@ -43,6 +42,8 @@ struct hb_ot_map_t
   friend struct hb_ot_map_builder_t;
 
   public:
+
+  hb_ot_map_t (void) { memset (this, 0, sizeof (*this)); }
 
   typedef void (*gsub_pause_func_t) (const hb_ot_map_t *map, hb_face_t *face, hb_buffer_t *buffer, void *user_data);
   typedef void (*gpos_pause_func_t) (const hb_ot_map_t *map, hb_font_t *font, hb_buffer_t *buffer, void *user_data);
@@ -137,6 +138,8 @@ struct hb_ot_map_builder_t
 {
   public:
 
+  hb_ot_map_builder_t (void) { memset (this, 0, sizeof (*this)); }
+
   HB_INTERNAL void add_feature (hb_tag_t tag, unsigned int value, bool global);
 
   inline void add_bool_feature (hb_tag_t tag, bool global = true)
@@ -184,6 +187,5 @@ struct hb_ot_map_builder_t
 };
 
 
-HB_END_DECLS
 
 #endif /* HB_OT_MAP_PRIVATE_HH */

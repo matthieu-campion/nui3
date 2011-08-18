@@ -31,7 +31,6 @@
 
 #include <string.h>
 
-HB_BEGIN_DECLS
 
 
 #ifndef HB_DEBUG_BUFFER
@@ -133,6 +132,16 @@ hb_buffer_t::make_room_for (unsigned int num_in,
   }
 
   return TRUE;
+}
+
+void *
+hb_buffer_t::get_scratch_buffer (unsigned int *size)
+{
+  have_output = FALSE;
+  have_positions = FALSE;
+  out_len = 0;
+  *size = allocated * sizeof (pos[0]);
+  return pos;
 }
 
 
@@ -393,6 +402,35 @@ hb_buffer_t::reverse_clusters (void)
   reverse_range (start, i);
 }
 
+void
+hb_buffer_t::guess_properties (void)
+{
+  /* If script is set to INVALID, guess from buffer contents */
+  if (props.script == HB_SCRIPT_INVALID) {
+    for (unsigned int i = 0; i < len; i++) {
+      hb_script_t script = hb_unicode_script (unicode, info[i].codepoint);
+      if (likely (script != HB_SCRIPT_COMMON &&
+		  script != HB_SCRIPT_INHERITED &&
+		  script != HB_SCRIPT_UNKNOWN)) {
+        props.script = script;
+        break;
+      }
+    }
+  }
+
+  /* If direction is set to INVALID, guess from script */
+  if (props.direction == HB_DIRECTION_INVALID) {
+    props.direction = hb_script_get_horizontal_direction (props.script);
+  }
+
+  /* If language is not set, use default language from locale */
+  if (props.language == HB_LANGUAGE_INVALID) {
+    /* TODO get_default_for_script? using $LANGUAGE */
+    props.language = hb_language_get_default ();
+  }
+}
+
+
 static inline void
 dump_var_allocation (const hb_buffer_t *buffer)
 {
@@ -494,9 +532,10 @@ hb_bool_t
 hb_buffer_set_user_data (hb_buffer_t        *buffer,
 			 hb_user_data_key_t *key,
 			 void *              data,
-			 hb_destroy_func_t   destroy)
+			 hb_destroy_func_t   destroy,
+			 hb_bool_t           replace)
 {
-  return hb_object_set_user_data (buffer, key, data, destroy);
+  return hb_object_set_user_data (buffer, key, data, destroy, replace);
 }
 
 void *
@@ -666,8 +705,25 @@ hb_buffer_reverse_clusters (hb_buffer_t *buffer)
   buffer->reverse_clusters ();
 }
 
+void
+hb_buffer_guess_properties (hb_buffer_t *buffer)
+{
+  buffer->guess_properties ();
+}
+
 #define ADD_UTF(T) \
 	HB_STMT_START { \
+	  if (text_length == -1) { \
+	    text_length = 0; \
+	    const T *p = (const T *) text; \
+	    while (*p) { \
+	      text_length++; \
+	      p++; \
+	    } \
+	  } \
+	  if (item_length == -1) \
+	    item_length = text_length - item_offset; \
+	  buffer->ensure (buffer->len + item_length * sizeof (T) / 4); \
 	  const T *next = (const T *) text + item_offset; \
 	  const T *end = next + item_length; \
 	  while (next < end) { \
@@ -722,9 +778,9 @@ hb_utf8_next (const uint8_t *text,
 void
 hb_buffer_add_utf8 (hb_buffer_t  *buffer,
 		    const char   *text,
-		    unsigned int  text_length HB_UNUSED,
+		    int           text_length,
 		    unsigned int  item_offset,
-		    unsigned int  item_length)
+		    int           item_length)
 {
 #define UTF_NEXT(S, E, U)	hb_utf8_next (S, E, &(U))
   ADD_UTF (uint8_t);
@@ -756,9 +812,9 @@ hb_utf16_next (const uint16_t *text,
 void
 hb_buffer_add_utf16 (hb_buffer_t    *buffer,
 		     const uint16_t *text,
-		     unsigned int    text_length HB_UNUSED,
+		     int             text_length,
 		     unsigned int    item_offset,
-		     unsigned int    item_length)
+		     int            item_length)
 {
 #define UTF_NEXT(S, E, U)	hb_utf16_next (S, E, &(U))
   ADD_UTF (uint16_t);
@@ -768,9 +824,9 @@ hb_buffer_add_utf16 (hb_buffer_t    *buffer,
 void
 hb_buffer_add_utf32 (hb_buffer_t    *buffer,
 		     const uint32_t *text,
-		     unsigned int    text_length HB_UNUSED,
+		     int             text_length,
 		     unsigned int    item_offset,
-		     unsigned int    item_length)
+		     int             item_length)
 {
 #define UTF_NEXT(S, E, U)	((U) = *(S), (S)+1)
   ADD_UTF (uint32_t);
@@ -778,4 +834,3 @@ hb_buffer_add_utf32 (hb_buffer_t    *buffer,
 }
 
 
-HB_END_DECLS

@@ -34,7 +34,6 @@
 
 #include "hb-private.hh"
 
-HB_BEGIN_DECLS
 
 
 /* mutex */
@@ -53,9 +52,9 @@ typedef GStaticMutex hb_mutex_impl_t;
 #define hb_mutex_impl_free(M)	g_static_mutex_free (M)
 
 
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) || defined(__MINGW32__)
 
-#include <Windows.h>
+#include <windows.h>
 
 typedef CRITICAL_SECTION hb_mutex_impl_t;
 #define HB_MUTEX_IMPL_INIT	{ NULL, 0, 0, NULL, NULL, 0 }
@@ -107,6 +106,5 @@ struct hb_static_mutex_t : hb_mutex_t
 };
 
 
-HB_END_DECLS
 
 #endif /* HB_MUTEX_PRIVATE_HH */

@@ -39,7 +39,6 @@
 #include <stdio.h>
 #include <errno.h>
 
-HB_BEGIN_DECLS
 
 
 #ifndef HB_DEBUG_BLOB
@@ -166,9 +165,10 @@ hb_bool_t
 hb_blob_set_user_data (hb_blob_t          *blob,
 		       hb_user_data_key_t *key,
 		       void *              data,
-		       hb_destroy_func_t   destroy)
+		       hb_destroy_func_t   destroy,
+		       hb_bool_t           replace)
 {
-  return hb_object_set_user_data (blob, key, data, destroy);
+  return hb_object_set_user_data (blob, key, data, destroy, replace);
 }
 
 void *
@@ -322,4 +322,3 @@ _try_writable (hb_blob_t *blob)
 }
 
 
-HB_END_DECLS
