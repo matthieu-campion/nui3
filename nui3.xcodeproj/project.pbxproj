@@ -1932,6 +1932,21 @@
 		BCFE08250E050ACB0073662D /* nuiDialogSelectFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BCFE08210E050ACB0073662D /* nuiDialogSelectFile.h */; };
 		E50066D3115070A700CDD83E /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
 		E50066D4115070A700CDD83E /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
+		E501C11913FD4561009FB677 /* hb-fallback-shape-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E501C11213FD4561009FB677 /* hb-fallback-shape-private.hh */; };
+		E501C11A13FD4561009FB677 /* hb-fallback-shape-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E501C11213FD4561009FB677 /* hb-fallback-shape-private.hh */; };
+		E501C11B13FD4561009FB677 /* hb-fallback-shape-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E501C11213FD4561009FB677 /* hb-fallback-shape-private.hh */; };
+		E501C11C13FD4561009FB677 /* hb-fallback-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = E501C11313FD4561009FB677 /* hb-fallback-shape.cc */; };
+		E501C11D13FD4561009FB677 /* hb-fallback-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = E501C11313FD4561009FB677 /* hb-fallback-shape.cc */; };
+		E501C11E13FD4561009FB677 /* hb-fallback-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = E501C11313FD4561009FB677 /* hb-fallback-shape.cc */; };
+		E501C12213FD4561009FB677 /* hb-gobject.h in Headers */ = {isa = PBXBuildFile; fileRef = E501C11513FD4561009FB677 /* hb-gobject.h */; };
+		E501C12313FD4561009FB677 /* hb-gobject.h in Headers */ = {isa = PBXBuildFile; fileRef = E501C11513FD4561009FB677 /* hb-gobject.h */; };
+		E501C12413FD4561009FB677 /* hb-gobject.h in Headers */ = {isa = PBXBuildFile; fileRef = E501C11513FD4561009FB677 /* hb-gobject.h */; };
+		E501C12513FD4561009FB677 /* hb-ot-name-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E501C11613FD4561009FB677 /* hb-ot-name-private.hh */; };
+		E501C12613FD4561009FB677 /* hb-ot-name-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E501C11613FD4561009FB677 /* hb-ot-name-private.hh */; };
+		E501C12713FD4561009FB677 /* hb-ot-name-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E501C11613FD4561009FB677 /* hb-ot-name-private.hh */; };
+		E501C12B13FD4561009FB677 /* hb-uniscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = E501C11813FD4561009FB677 /* hb-uniscribe.h */; };
+		E501C12C13FD4561009FB677 /* hb-uniscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = E501C11813FD4561009FB677 /* hb-uniscribe.h */; };
+		E501C12D13FD4561009FB677 /* hb-uniscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = E501C11813FD4561009FB677 /* hb-uniscribe.h */; };
 		E50367B411A0AD7C001F4389 /* nuiNetworkHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50367B011A0AD7C001F4389 /* nuiNetworkHost.cpp */; };
 		E50367B511A0AD7C001F4389 /* nuiSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50367B111A0AD7C001F4389 /* nuiSocket.cpp */; };
 		E50367B611A0AD7C001F4389 /* nuiTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50367B211A0AD7C001F4389 /* nuiTCPClient.cpp */; };
@@ -7353,6 +7368,13 @@
 		BCFE08200E050ACB0073662D /* nuiDialogSelectDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectDirectory.h; path = include/nuiDialogSelectDirectory.h; sourceTree = SOURCE_ROOT; };
 		BCFE08210E050ACB0073662D /* nuiDialogSelectFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiDialogSelectFile.h; path = include/nuiDialogSelectFile.h; sourceTree = SOURCE_ROOT; };
 		E50066D2115070A700CDD83E /* nuiVariant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiVariant.h; path = include/nuiVariant.h; sourceTree = SOURCE_ROOT; };
+		E501C11213FD4561009FB677 /* hb-fallback-shape-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-fallback-shape-private.hh"; path = "harfbuzz/hb-fallback-shape-private.hh"; sourceTree = "<group>"; };
+		E501C11313FD4561009FB677 /* hb-fallback-shape.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-fallback-shape.cc"; path = "harfbuzz/hb-fallback-shape.cc"; sourceTree = "<group>"; };
+		E501C11413FD4561009FB677 /* hb-gobject.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-gobject.cc"; path = "harfbuzz/hb-gobject.cc"; sourceTree = "<group>"; };
+		E501C11513FD4561009FB677 /* hb-gobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-gobject.h"; path = "harfbuzz/hb-gobject.h"; sourceTree = "<group>"; };
+		E501C11613FD4561009FB677 /* hb-ot-name-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-ot-name-private.hh"; path = "harfbuzz/hb-ot-name-private.hh"; sourceTree = "<group>"; };
+		E501C11713FD4561009FB677 /* hb-uniscribe-shape.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-uniscribe-shape.cc"; path = "harfbuzz/hb-uniscribe-shape.cc"; sourceTree = "<group>"; };
+		E501C11813FD4561009FB677 /* hb-uniscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-uniscribe.h"; path = "harfbuzz/hb-uniscribe.h"; sourceTree = "<group>"; };
 		E50367B011A0AD7C001F4389 /* nuiNetworkHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiNetworkHost.cpp; path = src/Net/nuiNetworkHost.cpp; sourceTree = SOURCE_ROOT; };
 		E50367B111A0AD7C001F4389 /* nuiSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSocket.cpp; path = src/Net/nuiSocket.cpp; sourceTree = SOURCE_ROOT; };
 		E50367B211A0AD7C001F4389 /* nuiTCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiTCPClient.cpp; path = src/Net/nuiTCPClient.cpp; sourceTree = SOURCE_ROOT; };
@@ -11627,6 +11649,13 @@
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
+				E501C11213FD4561009FB677 /* hb-fallback-shape-private.hh */,
+				E501C11313FD4561009FB677 /* hb-fallback-shape.cc */,
+				E501C11413FD4561009FB677 /* hb-gobject.cc */,
+				E501C11513FD4561009FB677 /* hb-gobject.h */,
+				E501C11613FD4561009FB677 /* hb-ot-name-private.hh */,
+				E501C11713FD4561009FB677 /* hb-uniscribe-shape.cc */,
+				E501C11813FD4561009FB677 /* hb-uniscribe.h */,
 				E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */,
 				E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */,
 				E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */,
@@ -12517,6 +12546,10 @@
 				E57E58C413CC8EEE0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E57E58C513CC8EEE0021055F /* hb-mutex-private.hh in Headers */,
 				E57E58C613CC8EEE0021055F /* hb-ot-maxp-private.hh in Headers */,
+				E501C11B13FD4561009FB677 /* hb-fallback-shape-private.hh in Headers */,
+				E501C12413FD4561009FB677 /* hb-gobject.h in Headers */,
+				E501C12713FD4561009FB677 /* hb-ot-name-private.hh in Headers */,
+				E501C12D13FD4561009FB677 /* hb-uniscribe.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15215,6 +15248,10 @@
 				E57E58AC13CC8EEC0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E57E58AD13CC8EEC0021055F /* hb-mutex-private.hh in Headers */,
 				E57E58AE13CC8EEC0021055F /* hb-ot-maxp-private.hh in Headers */,
+				E501C11913FD4561009FB677 /* hb-fallback-shape-private.hh in Headers */,
+				E501C12213FD4561009FB677 /* hb-gobject.h in Headers */,
+				E501C12513FD4561009FB677 /* hb-ot-name-private.hh in Headers */,
+				E501C12B13FD4561009FB677 /* hb-uniscribe.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15669,6 +15706,10 @@
 				E57E58B813CC8EED0021055F /* hb-ot-shape-complex-indic-table.hh in Headers */,
 				E57E58B913CC8EED0021055F /* hb-mutex-private.hh in Headers */,
 				E57E58BA13CC8EED0021055F /* hb-ot-maxp-private.hh in Headers */,
+				E501C11A13FD4561009FB677 /* hb-fallback-shape-private.hh in Headers */,
+				E501C12313FD4561009FB677 /* hb-gobject.h in Headers */,
+				E501C12613FD4561009FB677 /* hb-ot-name-private.hh in Headers */,
+				E501C12C13FD4561009FB677 /* hb-uniscribe.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16498,6 +16539,7 @@
 				E5AA571813C70FA300245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 				E57E571313CC8ED50021055F /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5CB6A8913D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */,
+				E501C11E13FD4561009FB677 /* hb-fallback-shape.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18797,6 +18839,7 @@
 				E5AA571A13C70FA500245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 				E57E571513CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5CB6A8713D9D374005C7B6F /* hb-ot-shape-normalize.cc in Sources */,
+				E501C11C13FD4561009FB677 /* hb-fallback-shape.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19077,6 +19120,7 @@
 				E5AA571913C70FA400245C10 /* hb-ot-shape-complex-misc.cc in Sources */,
 				E57E571413CC8ED60021055F /* hb-ot-shape-complex-indic.cc in Sources */,
 				E5CB6A8813D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */,
+				E501C11D13FD4561009FB677 /* hb-fallback-shape.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
