@@ -32,9 +32,6 @@
 
 #include "hb-unicode-private.hh"
 
-#include <glib.h>
-
-HB_BEGIN_DECLS
 
 #if !GLIB_CHECK_VERSION(2,29,14)
 static const hb_script_t
@@ -255,8 +252,10 @@ hb_glib_unicode_compose (hb_unicode_funcs_t *ufuncs HB_UNUSED,
   len = g_unichar_to_utf8 (a, utf8);
   len += g_unichar_to_utf8 (b, utf8 + len);
   normalized = g_utf8_normalize (utf8, len, G_NORMALIZE_NFC);
-
   len = g_utf8_strlen (normalized, -1);
+  if (unlikely (!len))
+    return FALSE;
+
   if (len == 1) {
     *ab = g_utf8_get_char (normalized);
     ret = TRUE;
@@ -289,8 +288,10 @@ hb_glib_unicode_decompose (hb_unicode_funcs_t *ufuncs HB_UNUSED,
 
   len = g_unichar_to_utf8 (ab, utf8);
   normalized = g_utf8_normalize (utf8, len, G_NORMALIZE_NFD);
-
   len = g_utf8_strlen (normalized, -1);
+  if (unlikely (!len))
+    return FALSE;
+
   if (len == 1) {
     *a = g_utf8_get_char (normalized);
     *b = 0;
@@ -346,5 +347,3 @@ hb_glib_get_unicode_funcs (void)
   return &_hb_glib_unicode_funcs;
 }
 
-
-HB_END_DECLS

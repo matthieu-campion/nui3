@@ -44,13 +44,13 @@ hb_face_t *
 hb_face_create (hb_blob_t    *blob,
 		unsigned int  index);
 
-typedef hb_blob_t * (*hb_get_table_func_t)  (hb_face_t *face, hb_tag_t tag, void *user_data);
+typedef hb_blob_t * (*hb_reference_table_func_t)  (hb_face_t *face, hb_tag_t tag, void *user_data);
 
 /* calls destroy() when not needing user_data anymore */
 hb_face_t *
-hb_face_create_for_tables (hb_get_table_func_t  get_table,
-			   void                *user_data,
-			   hb_destroy_func_t    destroy);
+hb_face_create_for_tables (hb_reference_table_func_t  reference_table,
+			   void                      *user_data,
+			   hb_destroy_func_t          destroy);
 
 hb_face_t *
 hb_face_get_empty (void);
@@ -65,7 +65,8 @@ hb_bool_t
 hb_face_set_user_data (hb_face_t          *face,
 		       hb_user_data_key_t *key,
 		       void *              data,
-		       hb_destroy_func_t   destroy);
+		       hb_destroy_func_t   destroy,
+		       hb_bool_t           replace);
 
 
 void *
@@ -85,6 +86,20 @@ hb_face_get_blob (hb_face_t *face);
 hb_blob_t *
 hb_face_reference_table (hb_face_t *face,
 			 hb_tag_t   tag);
+
+hb_blob_t *
+hb_face_reference_blob (hb_face_t *face);
+
+void
+hb_face_set_index (hb_face_t    *face,
+		   unsigned int  index);
+
+unsigned int
+hb_face_get_index (hb_face_t    *face);
+
+void
+hb_face_set_upem (hb_face_t    *face,
+		  unsigned int  upem);
 
 unsigned int
 hb_face_get_upem (hb_face_t *face);
@@ -112,7 +127,8 @@ hb_bool_t
 hb_font_funcs_set_user_data (hb_font_funcs_t    *ffuncs,
 			     hb_user_data_key_t *key,
 			     void *              data,
-			     hb_destroy_func_t   destroy);
+			     hb_destroy_func_t   destroy,
+			     hb_bool_t           replace);
 
 
 void *
@@ -327,7 +343,8 @@ hb_bool_t
 hb_font_set_user_data (hb_font_t          *font,
 		       hb_user_data_key_t *key,
 		       void *              data,
-		       hb_destroy_func_t   destroy);
+		       hb_destroy_func_t   destroy,
+		       hb_bool_t           replace);
 
 
 void *

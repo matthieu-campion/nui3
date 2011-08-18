@@ -35,7 +35,6 @@
 #include "hb-object-private.hh"
 #include "hb-unicode-private.hh"
 
-HB_BEGIN_DECLS
 
 
 ASSERT_STATIC (sizeof (hb_glyph_info_t) == 20);
@@ -95,6 +94,7 @@ struct _hb_buffer_t {
   HB_INTERNAL void reverse_range (unsigned int start, unsigned int end);
   HB_INTERNAL void reverse (void);
   HB_INTERNAL void reverse_clusters (void);
+  HB_INTERNAL void guess_properties (void);
 
   HB_INTERNAL void swap_buffers (void);
   HB_INTERNAL void clear_output (void);
@@ -149,6 +149,5 @@ struct _hb_buffer_t {
 	HB_BUFFER_XALLOCATE_VAR (b, deallocate_var, var (), #var)
 
 
-HB_END_DECLS
 
 #endif /* HB_BUFFER_PRIVATE_HH */

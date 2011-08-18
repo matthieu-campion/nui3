@@ -75,7 +75,8 @@ hb_bool_t
 hb_buffer_set_user_data (hb_buffer_t        *buffer,
 			 hb_user_data_key_t *key,
 			 void *              data,
-			 hb_destroy_func_t   destroy);
+			 hb_destroy_func_t   destroy,
+			 hb_bool_t           replace);
 
 void *
 hb_buffer_get_user_data (hb_buffer_t        *buffer,
@@ -132,6 +133,9 @@ hb_buffer_reverse (hb_buffer_t *buffer);
 void
 hb_buffer_reverse_clusters (hb_buffer_t *buffer);
 
+void
+hb_buffer_guess_properties (hb_buffer_t *buffer);
+
 
 /* Filling the buffer in */
 
@@ -144,23 +148,23 @@ hb_buffer_add (hb_buffer_t    *buffer,
 void
 hb_buffer_add_utf8 (hb_buffer_t  *buffer,
 		    const char   *text,
-		    unsigned int  text_length,
+		    int           text_length,
 		    unsigned int  item_offset,
-		    unsigned int  item_length);
+		    int           item_length);
 
 void
 hb_buffer_add_utf16 (hb_buffer_t    *buffer,
 		     const uint16_t *text,
-		     unsigned int    text_length,
+		     int             text_length,
 		     unsigned int    item_offset,
-		     unsigned int    item_length);
+		     int             item_length);
 
 void
 hb_buffer_add_utf32 (hb_buffer_t    *buffer,
 		     const uint32_t *text,
-		     unsigned int    text_length,
+		     int             text_length,
 		     unsigned int    item_offset,
-		     unsigned int    item_length);
+		     int             item_length);
 
 
 /* Clears any new items added at the end */

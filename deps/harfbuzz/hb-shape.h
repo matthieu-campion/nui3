@@ -41,11 +41,23 @@ typedef struct _hb_feature_t {
   unsigned int  end;
 } hb_feature_t;
 
+
 void
-hb_shape (hb_font_t          *font,
-	  hb_buffer_t        *buffer,
-	  const hb_feature_t *features,
-	  unsigned int        num_features);
+hb_shape (hb_font_t           *font,
+	  hb_buffer_t         *buffer,
+	  const hb_feature_t  *features,
+	  unsigned int         num_features);
+
+hb_bool_t
+hb_shape_full (hb_font_t          *font,
+	       hb_buffer_t        *buffer,
+	       const hb_feature_t *features,
+	       unsigned int        num_features,
+	       const char * const *shaper_options,
+	       const char * const *shaper_list);
+
+const char **
+hb_shape_list_shapers (void);
 
 
 HB_END_DECLS

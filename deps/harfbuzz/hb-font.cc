@@ -31,10 +31,10 @@
 #include "hb-font-private.hh"
 #include "hb-blob.h"
 #include "hb-open-file-private.hh"
+#include "hb-ot-head-private.hh"
 
 #include <string.h>
 
-HB_BEGIN_DECLS
 
 
 /*
@@ -248,9 +248,10 @@ hb_bool_t
 hb_font_funcs_set_user_data (hb_font_funcs_t    *ffuncs,
 			     hb_user_data_key_t *key,
 			     void *              data,
-			     hb_destroy_func_t   destroy)
+			     hb_destroy_func_t   destroy,
+			     hb_bool_t           replace)
 {
-  return hb_object_set_user_data (ffuncs, key, data, destroy);
+  return hb_object_set_user_data (ffuncs, key, data, destroy, replace);
 }
 
 void *
@@ -533,36 +534,37 @@ static hb_face_t _hb_face_nil = {
 
   TRUE, /* immutable */
 
-  NULL, /* get_table */
+  NULL, /* reference_table */
   NULL, /* user_data */
   NULL, /* destroy */
 
   NULL, /* ot_layout */
 
-  1000
+  0,    /* index */
+  1000  /* upem */
 };
 
 
 hb_face_t *
-hb_face_create_for_tables (hb_get_table_func_t  get_table,
-			   void                *user_data,
-			   hb_destroy_func_t    destroy)
+hb_face_create_for_tables (hb_reference_table_func_t  reference_table,
+			   void                      *user_data,
+			   hb_destroy_func_t          destroy)
 {
   hb_face_t *face;
 
-  if (!get_table || !(face = hb_object_create<hb_face_t> ())) {
+  if (!reference_table || !(face = hb_object_create<hb_face_t> ())) {
     if (destroy)
       destroy (user_data);
     return &_hb_face_nil;
   }
 
-  face->get_table = get_table;
+  face->reference_table = reference_table;
   face->user_data = user_data;
   face->destroy = destroy;
 
   face->ot_layout = _hb_ot_layout_create (face);
 
-  face->upem = _hb_ot_layout_get_upem (face);
+  face->upem = 0;
 
   return face;
 }
@@ -596,9 +598,12 @@ _hb_face_for_data_closure_destroy (hb_face_for_data_closure_t *closure)
 }
 
 static hb_blob_t *
-_hb_face_for_data_get_table (hb_face_t *face HB_UNUSED, hb_tag_t tag, void *user_data)
+_hb_face_for_data_reference_table (hb_face_t *face HB_UNUSED, hb_tag_t tag, void *user_data)
 {
   hb_face_for_data_closure_t *data = (hb_face_for_data_closure_t *) user_data;
+
+  if (tag == HB_TAG_NONE)
+    return hb_blob_reference (data->blob);
 
   const OpenTypeFontFile &ot_file = *Sanitizer<OpenTypeFontFile>::lock_instance (data->blob);
   const OpenTypeFontFace &ot_face = ot_file.get_face (data->index);
@@ -614,6 +619,8 @@ hb_face_t *
 hb_face_create (hb_blob_t    *blob,
 		unsigned int  index)
 {
+  hb_face_t *face;
+
   if (unlikely (!blob || !hb_blob_get_length (blob)))
     return &_hb_face_nil;
 
@@ -622,9 +629,13 @@ hb_face_create (hb_blob_t    *blob,
   if (unlikely (!closure))
     return &_hb_face_nil;
 
-  return hb_face_create_for_tables (_hb_face_for_data_get_table,
+  face = hb_face_create_for_tables (_hb_face_for_data_reference_table,
 				    closure,
 				    (hb_destroy_func_t) _hb_face_for_data_closure_destroy);
+
+  hb_face_set_index (face, index);
+
+  return face;
 }
 
 hb_face_t *
@@ -657,9 +668,10 @@ hb_bool_t
 hb_face_set_user_data (hb_face_t          *face,
 		       hb_user_data_key_t *key,
 		       void *              data,
-		       hb_destroy_func_t   destroy)
+		       hb_destroy_func_t   destroy,
+		       hb_bool_t           replace)
 {
-  return hb_object_set_user_data (face, key, data, destroy);
+  return hb_object_set_user_data (face, key, data, destroy, replace);
 }
 
 void *
@@ -701,20 +713,58 @@ hb_face_reference_table (hb_face_t *face,
 {
   hb_blob_t *blob;
 
-  if (unlikely (!face || !face->get_table))
+  if (unlikely (!face || !face->reference_table))
     return hb_blob_get_empty ();
 
-  blob = face->get_table (face, tag, face->user_data);
+  blob = face->reference_table (face, tag, face->user_data);
   if (unlikely (!blob))
     return hb_blob_get_empty ();
 
   return blob;
 }
 
+hb_blob_t *
+hb_face_reference_blob (hb_face_t *face)
+{
+  return hb_face_reference_table (face, HB_TAG_NONE);
+}
+
+void
+hb_face_set_index (hb_face_t    *face,
+		   unsigned int  index)
+{
+  if (hb_object_is_inert (face))
+    return;
+
+  face->index = 0;
+}
+
+unsigned int
+hb_face_get_index (hb_face_t    *face)
+{
+  return face->index;
+}
+
+void
+hb_face_set_upem (hb_face_t    *face,
+		  unsigned int  upem)
+{
+  if (hb_object_is_inert (face))
+    return;
+
+  face->upem = upem;
+}
+
 unsigned int
 hb_face_get_upem (hb_face_t *face)
 {
-  return _hb_ot_layout_get_upem (face);
+  if (unlikely (!face->upem)) {
+    hb_blob_t *head_blob = Sanitizer<head>::sanitize (hb_face_reference_table (face, HB_OT_TAG_head));
+    const head *head_table = Sanitizer<head>::lock_instance (head_blob);
+    face->upem = head_table->get_upem ();
+    hb_blob_destroy (head_blob);
+  }
+  return face->upem;
 }
 
 
@@ -814,9 +864,10 @@ hb_bool_t
 hb_font_set_user_data (hb_font_t          *font,
 		       hb_user_data_key_t *key,
 		       void *              data,
-		       hb_destroy_func_t   destroy)
+		       hb_destroy_func_t   destroy,
+		       hb_bool_t           replace)
 {
-  return hb_object_set_user_data (font, key, data, destroy);
+  return hb_object_set_user_data (font, key, data, destroy, replace);
 }
 
 void *
@@ -920,4 +971,3 @@ hb_font_get_ppem (hb_font_t *font,
 }
 
 
-HB_END_DECLS
