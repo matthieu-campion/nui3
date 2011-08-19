@@ -48,6 +48,12 @@ bool nuiMidiPort::IsPresent() const
 }
   
 
+void nuiMidiPortAPI::RegisterWithManager(nuiMidiManager& rManager)
+{
+  rManager.RegisterAPI(mName, this);
+}
+
+
 //class nuiMidiManager
 nuiMidiManager& nuiMidiManager::Get()
 {

@@ -109,3 +109,6 @@ nuiMidiOutPort* nuiMidiPortAPI_CoreMidi::GetDefaultOutPort()
 {
   
 }
+
+nuiMidiPortAPI_CoreMidi CoreMidiAPI;
+

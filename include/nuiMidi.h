@@ -38,31 +38,31 @@ protected:
 class nuiMidiInPort : public nuiMidiPort
 {
 public:
-  virtual ~nuiMidiInPort();
+  virtual ~nuiMidiInPort(){}
   
   virtual bool Open(nuiMidiProcessFn pProcessFunction) = 0;
   virtual bool Close() = 0;
   
 protected:
-  nuiMidiInPort();
+  nuiMidiInPort(){}
 };
 
 class nuiMidiOutPort : public nuiMidiPort
 {
 public:
-  virtual ~nuiMidiOutPort();
+  virtual ~nuiMidiOutPort(){}
   
   virtual bool Open() = 0;
   virtual bool Close() = 0;
   
 protected:
-  nuiMidiOutPort();
+  nuiMidiOutPort(){}
 };
 
 class nuiMidiPortAPI : public nuiNonCopyable
 {
 public:
-  virtual ~nuiMidiPortAPI();
+  virtual ~nuiMidiPortAPI() {}
   
   const nglString& GetAPIName() const
   {
