@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
 
 #include "nuiFontBase.h"
 

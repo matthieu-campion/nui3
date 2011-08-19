@@ -105,8 +105,8 @@ nuiAudioDeviceManager::~nuiAudioDeviceManager()
 void nuiAudioDeviceManager::Update()
 {
   mDeviceCount = 0;
-  APIMap::const_iterator end = mAPIs.end();
-  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
+  nuiAudioAPIMap::const_iterator end = mAPIs.end();
+  for (nuiAudioAPIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
     uint32 count = it->second->GetDeviceCount();
     mDeviceCount += count;
@@ -120,8 +120,8 @@ uint32 nuiAudioDeviceManager::GetDeviceCount() const
 
 nuiAudioDevice* nuiAudioDeviceManager::GetDevice(uint32 DeviceIndex)
 {
-  APIMap::const_iterator end = mAPIs.end();
-  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
+  nuiAudioAPIMap::const_iterator end = mAPIs.end();
+  for (nuiAudioAPIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
     nuiAudioDeviceAPI* pAPI = it->second;
     uint32 devcount = pAPI->GetDeviceCount();
@@ -139,8 +139,8 @@ nuiAudioDevice* nuiAudioDeviceManager::GetDevice(uint32 DeviceIndex)
 
 nglString nuiAudioDeviceManager::GetDeviceName(uint32 DeviceIndex)
 {
-  APIMap::const_iterator end = mAPIs.end();
-  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
+  nuiAudioAPIMap::const_iterator end = mAPIs.end();
+  for (nuiAudioAPIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
     nuiAudioDeviceAPI* pAPI = it->second;
     uint32 devcount = pAPI->GetDeviceCount();
@@ -158,8 +158,8 @@ nglString nuiAudioDeviceManager::GetDeviceName(uint32 DeviceIndex)
 
 nglString nuiAudioDeviceManager::GetDeviceAPIName(uint32 DeviceIndex)
 {
-  APIMap::const_iterator end = mAPIs.end();
-  for (APIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
+  nuiAudioAPIMap::const_iterator end = mAPIs.end();
+  for (nuiAudioAPIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
     nuiAudioDeviceAPI* pAPI = it->second;
     uint32 devcount = pAPI->GetDeviceCount();
@@ -177,8 +177,8 @@ nglString nuiAudioDeviceManager::GetDeviceAPIName(uint32 DeviceIndex)
 
 nuiAudioDevice* nuiAudioDeviceManager::GetDeviceWithNameAndAPI(const nglString& rDeviceName, const nglString& rApiName)
 {
-  APIMap::const_iterator end = mAPIs.end();
-  APIMap::const_iterator it = mAPIs.find(rApiName);
+  nuiAudioAPIMap::const_iterator end = mAPIs.end();
+  nuiAudioAPIMap::const_iterator it = mAPIs.find(rApiName);
   if (it != end)
   {
     return it->second->GetDevice(rDeviceName);
@@ -205,8 +205,8 @@ nuiAudioDeviceManager::nuiAudioDeviceManager()
 void nuiAudioDeviceManager::RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI)
 {
   NGL_LOG(_T("nuiAudioDeviceManager"), NGL_LOG_DEBUG, _T("RegisterAPI('%s') [0x%x]\n"), rAPIName.GetChars(), pAPI);
-  APIMap::const_iterator end = mAPIs.end();
-  APIMap::const_iterator it = mAPIs.find(rAPIName);
+  nuiAudioAPIMap::const_iterator end = mAPIs.end();
+  nuiAudioAPIMap::const_iterator it = mAPIs.find(rAPIName);
   if (it != end)
   {
     nuiAudioDeviceAPI* pOldAPI = it->second;

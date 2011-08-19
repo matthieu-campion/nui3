@@ -2001,6 +2001,7 @@
 		E50AECC212548EFD006625EA /* nuiNonCopyable.h in Headers */ = {isa = PBXBuildFile; fileRef = E50AECBE12548EFD006625EA /* nuiNonCopyable.h */; };
 		E50AECC312548EFD006625EA /* nuiNonCopyable.h in Headers */ = {isa = PBXBuildFile; fileRef = E50AECBE12548EFD006625EA /* nuiNonCopyable.h */; };
 		E50AECC412548EFD006625EA /* nuiNonCopyable.h in Headers */ = {isa = PBXBuildFile; fileRef = E50AECBE12548EFD006625EA /* nuiNonCopyable.h */; };
+		E50D8E2713FEA1460042CEB0 /* nuiMidi_CoreMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E50D8E2613FEA1460042CEB0 /* nuiMidi_CoreMidi.h */; };
 		E50DB8450D7783EC005B9316 /* nuiHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = E50DB8440D7783EC005B9316 /* nuiHTML.h */; };
 		E50DB8460D7783EC005B9316 /* nuiHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = E50DB8440D7783EC005B9316 /* nuiHTML.h */; };
 		E50DB84C0D779C4B005B9316 /* nuiHTML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50DB84A0D779C4B005B9316 /* nuiHTML.cpp */; };
@@ -7002,6 +7003,27 @@
 		E5EC5E7A0CA0924A00272CE6 /* nuiFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EC5E780CA0924A00272CE6 /* nuiFrameView.h */; };
 		E5EC5E7E0CA0925500272CE6 /* nuiFrameView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5E7C0CA0925500272CE6 /* nuiFrameView.cpp */; };
 		E5EC5E800CA0925500272CE6 /* nuiFrameView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5E7C0CA0925500272CE6 /* nuiFrameView.cpp */; };
+		E5ED550513FDE943004EFA83 /* nuiMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E5ED550413FDE943004EFA83 /* nuiMidi.h */; };
+		E5ED550613FDE943004EFA83 /* nuiMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E5ED550413FDE943004EFA83 /* nuiMidi.h */; };
+		E5ED550713FDE943004EFA83 /* nuiMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E5ED550413FDE943004EFA83 /* nuiMidi.h */; };
+		E5ED550813FDE943004EFA83 /* nuiMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E5ED550413FDE943004EFA83 /* nuiMidi.h */; };
+		E5ED550913FDE943004EFA83 /* nuiMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E5ED550413FDE943004EFA83 /* nuiMidi.h */; };
+		E5ED550A13FDE943004EFA83 /* nuiMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E5ED550413FDE943004EFA83 /* nuiMidi.h */; };
+		E5ED550B13FDE943004EFA83 /* nuiMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = E5ED550413FDE943004EFA83 /* nuiMidi.h */; };
+		E5ED550E13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */; };
+		E5ED550F13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */; };
+		E5ED551013FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */; };
+		E5ED551113FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */; };
+		E5ED551213FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */; };
+		E5ED551313FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */; };
+		E5ED551413FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */; };
+		E5ED551613FDED23004EFA83 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
+		E5ED551713FDED23004EFA83 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
+		E5ED551813FDED23004EFA83 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
+		E5ED551913FDED23004EFA83 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
+		E5ED551A13FDED23004EFA83 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
+		E5ED551B13FDED23004EFA83 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
+		E5ED551C13FDED23004EFA83 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
 		E5EF6E8411E73058000FB337 /* nglApplication_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52EA78B106D60EC008598F5 /* nglApplication_Cocoa.mm */; };
 		E5EF6E8511E7305A000FB337 /* nglApplication_Cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = E52EA7DD106D688C008598F5 /* nglApplication_Cocoa.h */; };
 		E5EF6E8611E730C2000FB337 /* nglConsole_Darwin.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FA11CB86C40025CA71 /* nglConsole_Darwin.mm */; };
@@ -7400,6 +7422,7 @@
 		E50A2B0D0C8DBD8200C58F94 /* nuiMatrixView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiMatrixView.h; path = include/nuiMatrixView.h; sourceTree = SOURCE_ROOT; };
 		E50A2B0E0C8DBD8200C58F94 /* nuiMatrixView.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMatrixView.cpp; path = src/Layout/nuiMatrixView.cpp; sourceTree = SOURCE_ROOT; };
 		E50AECBE12548EFD006625EA /* nuiNonCopyable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiNonCopyable.h; path = include/nuiNonCopyable.h; sourceTree = SOURCE_ROOT; };
+		E50D8E2613FEA1460042CEB0 /* nuiMidi_CoreMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMidi_CoreMidi.h; path = Midi/CoreMidi/nuiMidi_CoreMidi.h; sourceTree = "<group>"; };
 		E50DB77A0D75D8E7005B9316 /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = config.c; path = deps/tidy/config.c; sourceTree = SOURCE_ROOT; };
 		E50DB77B0D75D8E7005B9316 /* istack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = istack.c; path = deps/tidy/istack.c; sourceTree = SOURCE_ROOT; };
 		E50DB77C0D75D8E7005B9316 /* win32tc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32tc.h; path = deps/tidy/win32tc.h; sourceTree = SOURCE_ROOT; };
@@ -8807,6 +8830,9 @@
 		E5EB3A9B0C82270400CF21E2 /* nuiBindingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBindingManager.h; path = include/nuiBindingManager.h; sourceTree = SOURCE_ROOT; };
 		E5EC5E780CA0924A00272CE6 /* nuiFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFrameView.h; path = include/nuiFrameView.h; sourceTree = SOURCE_ROOT; };
 		E5EC5E7C0CA0925500272CE6 /* nuiFrameView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiFrameView.cpp; sourceTree = "<group>"; };
+		E5ED550413FDE943004EFA83 /* nuiMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMidi.h; path = include/nuiMidi.h; sourceTree = SOURCE_ROOT; };
+		E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMidi_CoreMidi.cpp; path = Midi/CoreMidi/nuiMidi_CoreMidi.cpp; sourceTree = "<group>"; };
+		E5ED551513FDED23004EFA83 /* nuiMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMidi.cpp; path = Midi/nuiMidi.cpp; sourceTree = "<group>"; };
 		E5EF6E9211E7315F000FB337 /* nglClipBoard_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglClipBoard_Cocoa.mm; path = Cocoa/nglClipBoard_Cocoa.mm; sourceTree = "<group>"; };
 		E5EF6E9311E7315F000FB337 /* nglDataObjects_Cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglDataObjects_Cocoa.mm; path = Cocoa/nglDataObjects_Cocoa.mm; sourceTree = "<group>"; };
 		E5EF6E9411E7315F000FB337 /* nglDragAndDrop_Cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nglDragAndDrop_Cocoa.h; path = Cocoa/nglDragAndDrop_Cocoa.h; sourceTree = "<group>"; };
@@ -10544,6 +10570,7 @@
 		E5816D200C3CECAB00902DFE /* src */ = {
 			isa = PBXGroup;
 			children = (
+				E5ED550213FDE8F1004EFA83 /* Midi */,
 				E5CBF87A0F38993F00D34E6F /* Animations */,
 				E5816D210C3CECAB00902DFE /* Application */,
 				BC35D3140CF5C54B002CE274 /* Attributes */,
@@ -11646,6 +11673,25 @@
 			name = "Shapes & Contours";
 			sourceTree = "<group>";
 		};
+		E5ED550213FDE8F1004EFA83 /* Midi */ = {
+			isa = PBXGroup;
+			children = (
+				E5ED550C13FDEBDB004EFA83 /* CoreMidi */,
+				E5ED550413FDE943004EFA83 /* nuiMidi.h */,
+				E5ED551513FDED23004EFA83 /* nuiMidi.cpp */,
+			);
+			name = Midi;
+			sourceTree = "<group>";
+		};
+		E5ED550C13FDEBDB004EFA83 /* CoreMidi */ = {
+			isa = PBXGroup;
+			children = (
+				E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp */,
+				E50D8E2613FEA1460042CEB0 /* nuiMidi_CoreMidi.h */,
+			);
+			name = CoreMidi;
+			sourceTree = "<group>";
+		};
 		E5F796590C750430009CE779 /* harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
@@ -12092,6 +12138,7 @@
 				E57D818913B386FD00348211 /* nuiGestureRecognizer.h in Headers */,
 				E533393513C373B60080C465 /* AtlasTexture.h in Headers */,
 				E5DE7A2813C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
+				E5ED550913FDE943004EFA83 /* nuiMidi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12922,6 +12969,7 @@
 				E57D818113B386F000348211 /* nuiNavigationBarStyle.h in Headers */,
 				E533393313C373B60080C465 /* AtlasTexture.h in Headers */,
 				E5DE7A2613C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
+				E5ED550713FDE943004EFA83 /* nuiMidi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13294,6 +13342,7 @@
 				E57D818213B386F100348211 /* nuiNavigationBarStyle.h in Headers */,
 				E533393413C373B60080C465 /* AtlasTexture.h in Headers */,
 				E5DE7A2713C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
+				E5ED550813FDE943004EFA83 /* nuiMidi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13671,6 +13720,7 @@
 				E5F0C26E13A0AE6400EC0FB0 /* nuiTextLine.h in Headers */,
 				E533393213C373B60080C465 /* AtlasTexture.h in Headers */,
 				E5DE7A2513C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
+				E5ED550613FDE943004EFA83 /* nuiMidi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14049,6 +14099,8 @@
 				E5F7D34D13D2064200F3B9B1 /* nuiDecorationInspector.h in Headers */,
 				E5F7D35013D2064200F3B9B1 /* nuiTextureInspector.h in Headers */,
 				E5F7D35113D2064200F3B9B1 /* nuiObjectInspector.h in Headers */,
+				E5ED550513FDE943004EFA83 /* nuiMidi.h in Headers */,
+				E50D8E2713FEA1460042CEB0 /* nuiMidi_CoreMidi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14428,6 +14480,7 @@
 				E57D818F13B386FE00348211 /* nuiGestureRecognizer.h in Headers */,
 				E533393613C373B60080C465 /* AtlasTexture.h in Headers */,
 				E5DE7A2913C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
+				E5ED550A13FDE943004EFA83 /* nuiMidi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14807,6 +14860,7 @@
 				E57D819513B386FF00348211 /* nuiGestureRecognizer.h in Headers */,
 				E533393713C373B60080C465 /* AtlasTexture.h in Headers */,
 				E5DE7A2A13C3EAB80018CD6C /* ImageDraggedFile.h in Headers */,
+				E5ED550B13FDE943004EFA83 /* nuiMidi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16259,6 +16313,8 @@
 				E596F92E13C2898200C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392E13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 				E5DE7A2113C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
+				E5ED551213FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */,
+				E5ED551A13FDED23004EFA83 /* nuiMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16872,6 +16928,8 @@
 				E596F92C13C2898100C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392C13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 				E5DE7A1F13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
+				E5ED551013FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */,
+				E5ED551813FDED23004EFA83 /* nuiMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17204,6 +17262,8 @@
 				E596F92D13C2898100C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392D13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 				E5DE7A2013C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
+				E5ED551113FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */,
+				E5ED551913FDED23004EFA83 /* nuiMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17544,6 +17604,8 @@
 				E596F92B13C2898000C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392B13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 				E5DE7A1E13C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
+				E5ED550F13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */,
+				E5ED551713FDED23004EFA83 /* nuiMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17884,6 +17946,8 @@
 				E5F7D34E13D2064200F3B9B1 /* nuiDecorationInspector.cpp in Sources */,
 				E5F7D34F13D2064200F3B9B1 /* nuiTextureInspector.cpp in Sources */,
 				E5F7D35213D2064200F3B9B1 /* nuiObjectInspector.cpp in Sources */,
+				E5ED550E13FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */,
+				E5ED551613FDED23004EFA83 /* nuiMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18227,6 +18291,8 @@
 				E596F92F13C2898300C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533392F13C373B60080C465 /* AtlasTexture.cpp in Sources */,
 				E5DE7A2213C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
+				E5ED551313FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */,
+				E5ED551B13FDED23004EFA83 /* nuiMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18570,6 +18636,8 @@
 				E596F93013C2898400C109F9 /* nglStringConv_CoreFoundation.cpp in Sources */,
 				E533393013C373B60080C465 /* AtlasTexture.cpp in Sources */,
 				E5DE7A2313C3EAB80018CD6C /* ImageDraggedFile.cpp in Sources */,
+				E5ED551413FDEC0C004EFA83 /* nuiMidi_CoreMidi.cpp in Sources */,
+				E5ED551C13FDED23004EFA83 /* nuiMidi.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

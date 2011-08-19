@@ -69,7 +69,7 @@ protected:
   nglString mName;
 };
 
-typedef std::map<nglString, nuiAudioDeviceAPI*> APIMap;
+typedef std::map<nglString, nuiAudioDeviceAPI*> nuiAudioAPIMap;
 
 class nuiAudioDeviceManager
 {
@@ -97,7 +97,7 @@ protected:
   
   friend void nuiAudioDeviceAPI::RegisterWithManager(nuiAudioDeviceManager& rManager);
   void RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI);
-  APIMap mAPIs;
+  nuiAudioAPIMap mAPIs;
   
   int32 mDeviceCount;
 };
