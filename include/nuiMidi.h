@@ -13,7 +13,7 @@ class nuiMidiManager;
 
 typedef nuiFastDelegate2<const uint8*, uint32> nuiMidiProcessFn; // the params are the pointer to the data and the size of the data in bytes
 
-class nuiMidiPort
+class nuiMidiPort : public nuiRefCount
 {
 public:
   virtual ~nuiMidiPort();
@@ -25,6 +25,7 @@ public:
   const nglString& GetManufacturer() const; ///< Return the manufacturer of this port.
 
   bool IsPresent() const; ///< Return true if the device is connected to the system and online.
+  bool IsOpen() const; ///< Return true if the device is open.
   
 protected:
   nuiMidiPort();
@@ -33,6 +34,7 @@ protected:
   nglString mDeviceName;
   nglString mManufacturer;
   bool mIsPresent;
+  bool mIsOpen;
 };
 
 class nuiMidiInPort : public nuiMidiPort
@@ -71,14 +73,8 @@ public:
 
   virtual uint32 GetInPortCount() const = 0;
   virtual uint32 GetOutPortCount() const = 0;
-  virtual nglString GetInPortName(uint32 index) const = 0;
-  virtual nglString GetOutPortName(uint32 index) const = 0;
   virtual nuiMidiInPort* GetInPort(uint32 index) = 0;
-  virtual nuiMidiInPort* GetInPort(const nglString& rPortName) = 0;
   virtual nuiMidiOutPort* GetOutPort(uint32 index) = 0;
-  virtual nuiMidiOutPort* GetOutPort(const nglString& rPortName) = 0;
-  virtual nuiMidiInPort* GetDefaultInPort() = 0;
-  virtual nuiMidiOutPort* GetDefaultOutPort() = 0;
   
   void RegisterWithManager(nuiMidiManager& rManager);
 protected:
@@ -103,14 +99,9 @@ public:
   
   uint32 GetInPortCount() const;
   uint32 GetOutPortCount() const;
-  nglString GetInPortName(uint32 PortIndex) const;
-  nglString GetOutPortName(uint32 PortIndex) const;
   nuiMidiInPort* GetInPort(uint32 PortIndex);
   nuiMidiOutPort* GetOutPort(uint32 PortIndex);
 
-  nuiMidiInPort* GetDefaultInPort();
-  nuiMidiOutPort* GetDefaultOutPort();
-  
 protected:
   friend void nuiMidiPortAPI::RegisterWithManager(nuiMidiManager& rManager);
   void RegisterAPIS();
@@ -118,7 +109,8 @@ protected:
   nuiMidiAPIMap mAPIs;
   
   nuiMidiManager();
-  int32 mInPortCount;
-  int32 mOutPortCount;
+  
+  std::vector<nuiMidiInPort*> mInputs;
+  std::vector<nuiMidiOutPort*> mOutputs;
 };
 

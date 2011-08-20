@@ -38,11 +38,30 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnCreation()
 {
-  uint32 incount = nuiMidiManager::Get().GetInPortCount();
-  uint32 outcount = nuiMidiManager::Get().GetOutPortCount();
-  
+  nuiMidiManager& midi(nuiMidiManager::Get());
+  uint32 incount = midi.GetInPortCount();
   NGL_OUT("In port count: %d\n", incount);
+  for (uint32 i = 0; i < incount; i++)
+  {
+    nuiMidiInPort* pPort = midi.GetInPort(i);
+    nglString name = pPort->GetName();
+    nglString manuf = pPort->GetManufacturer();
+    nglString device = pPort->GetDeviceName();
+    pPort->Release();
+    NGL_OUT("%d: %s / %s / %s\n", i, name.GetChars(), manuf.GetChars(), device.GetChars());
+  }
+
+  uint32 outcount = midi.GetOutPortCount();
   NGL_OUT("Out port count: %d\n", outcount);
+  for (uint32 i = 0; i < outcount; i++)
+  {
+    nuiMidiOutPort* pPort = midi.GetOutPort(i);
+    nglString name = pPort->GetName();
+    nglString manuf = pPort->GetManufacturer();
+    nglString device = pPort->GetDeviceName();
+    pPort->Release();
+    NGL_OUT("%d: %s / %s / %s\n", i, name.GetChars(), manuf.GetChars(), device.GetChars());
+  }
 }
 
 

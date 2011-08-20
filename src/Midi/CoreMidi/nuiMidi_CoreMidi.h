@@ -14,32 +14,36 @@
 class nuiMidiInPort_CoreMidi : public nuiMidiInPort
 {
 public:
-  nuiMidiInPort_CoreMidi(int32 id);
   
   virtual ~nuiMidiInPort_CoreMidi();
   
   virtual bool Open(nuiMidiProcessFn pProcessFunction);
   virtual bool Close();
   
+  static nuiMidiInPort_CoreMidi* GetPort(uint32 id);
   
 protected:
+  nuiMidiInPort_CoreMidi(int32 id);
   int32 mPortID;
+  static std::map<uint32, nuiMidiInPort_CoreMidi*> mPorts;
 };
 
 
 class nuiMidiOutPort_CoreMidi : public nuiMidiOutPort
 {
 public:
-  nuiMidiOutPort_CoreMidi(int32 id);
   
   virtual ~nuiMidiOutPort_CoreMidi();
   
   virtual bool Open();
   virtual bool Close();
-  
+
+  static nuiMidiOutPort_CoreMidi* GetPort(uint32 id);
   
 protected:
+  nuiMidiOutPort_CoreMidi(int32 id);
   int32 mPortID;
+  static std::map<uint32, nuiMidiOutPort_CoreMidi*> mPorts;
 };
 
 
@@ -53,14 +57,8 @@ public:
   
   virtual uint32 GetInPortCount() const;
   virtual uint32 GetOutPortCount() const;
-  virtual nglString GetInPortName(uint32 index) const;
-  virtual nglString GetOutPortName(uint32 index) const;
   virtual nuiMidiInPort* GetInPort(uint32 index);
-  virtual nuiMidiInPort* GetInPort(const nglString& rPortName);
   virtual nuiMidiOutPort* GetOutPort(uint32 index);
-  virtual nuiMidiOutPort* GetOutPort(const nglString& rPortName);
-  virtual nuiMidiInPort* GetDefaultInPort();
-  virtual nuiMidiOutPort* GetDefaultOutPort();
   
 protected:
   mutable std::vector<int32> mDeviceIDs;
