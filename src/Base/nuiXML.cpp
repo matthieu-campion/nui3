@@ -740,7 +740,7 @@ void nuiXMLNode::SetAttribute(const char* pName, nuiOrientation value)
 
 bool nuiXMLNode::DelAttribute (const char* pName)
 {    
-  nglString name;
+  nglString name(pName);
   bool res = HasAttribute(name);
   mAttributes.erase(name);
   return res;
