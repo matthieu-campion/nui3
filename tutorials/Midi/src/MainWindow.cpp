@@ -57,20 +57,23 @@ void MidiRead(nuiMidiInPort* pPort, const uint8* pData, uint32 size, double time
     switch (*p & 0xf0)
     {
       case 0x80:
-        NGL_OUT("[%x] Note Off %d %d", *p & 0xf, p[1], p[2]);
+        NGL_OUT("[%x] Note Off %d %d\n", *p & 0xf, p[1], p[2]);
         p+= 3;
         size -= 3;
         break;
       case 0x90:
         if (p[2] > 0)
-          NGL_OUT("[%x] Note On %d %d", *p & 0xf, p[1], p[2]);
+          NGL_OUT("[%x] Note On %d %d\n", *p & 0xf, p[1], p[2]);
         else
-          NGL_OUT("[%x] Note Off %d %d", *p & 0xf, p[1], p[2]);
+          NGL_OUT("[%x] Note Off %d %d\n", *p & 0xf, p[1], p[2]);
         p+= 3;
         size -= 3;
         break;
       default:
         NGL_OUT("Received %d bytes from port %p (time = %f)\n", size, pPort, time);
+        pPort+= size;
+        size = 0;
+        break;
     }
   }
 }
