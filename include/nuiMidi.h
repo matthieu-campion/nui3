@@ -8,10 +8,12 @@
 #pragma once
 
 #include "nui.h"
+#include "nuiSingleton.h"
 
 class nuiMidiManager;
+class nuiMidiInPort;
 
-typedef nuiFastDelegate2<const uint8*, uint32> nuiMidiProcessFn; // the params are the pointer to the data and the size of the data in bytes
+typedef nuiFastDelegate4<nuiMidiInPort*, const uint8*, uint32, double> nuiMidiProcessFn; // the params are the pointer to the data, the size of the data in bytes and the time stamp
 
 class nuiMidiPort : public nuiRefCount
 {
@@ -104,6 +106,7 @@ public:
 
 protected:
   friend void nuiMidiPortAPI::RegisterWithManager(nuiMidiManager& rManager);
+  friend class nuiSingletonHolder<nuiMidiManager>;
   void RegisterAPIS();
   void RegisterAPI(const nglString& rAPIName, nuiMidiPortAPI* pAPI);
   nuiMidiAPIMap mAPIs;

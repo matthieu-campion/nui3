@@ -9,6 +9,7 @@
 
 #include "nuiMidi.h"
 #include "nglThread.h"
+#include "nuiSingleton.h"
 #import <CoreMidi/CoreMidi.h>
 
 class nuiMidiInPort_CoreMidi : public nuiMidiInPort
@@ -20,11 +21,20 @@ public:
   virtual bool Open(nuiMidiProcessFn pProcessFunction);
   virtual bool Close();
   
-  static nuiMidiInPort_CoreMidi* GetPort(uint32 id);
+  static nuiMidiInPort_CoreMidi* GetPort(MIDIClientRef pClient, uint32 id);
   
 protected:
-  nuiMidiInPort_CoreMidi(int32 id);
+  nuiMidiInPort_CoreMidi(MIDIClientRef pClient, int32 id);
   int32 mPortID;
+  MIDIClientRef mpClient;
+  MIDIPortRef mpPort;
+  MIDIEndpointRef mpSource;
+  nuiMidiProcessFn mpProcessFunction;
+
+  friend void nuiCoreMidiReadProc(const MIDIPacketList *pktlist, void *refCon, void *connRefCon);
+  void ReadProc(const MIDIPacketList *pktlist);
+
+  
   static std::map<uint32, nuiMidiInPort_CoreMidi*> mPorts;
 };
 
@@ -38,11 +48,15 @@ public:
   virtual bool Open();
   virtual bool Close();
 
-  static nuiMidiOutPort_CoreMidi* GetPort(uint32 id);
+  static nuiMidiOutPort_CoreMidi* GetPort(MIDIClientRef pClient, uint32 id);
   
 protected:
-  nuiMidiOutPort_CoreMidi(int32 id);
+  nuiMidiOutPort_CoreMidi(MIDIClientRef pClient, int32 id);
   int32 mPortID;
+  MIDIClientRef mpClient;
+  MIDIPortRef mpPort;
+  MIDIEndpointRef mpDestination;
+
   static std::map<uint32, nuiMidiOutPort_CoreMidi*> mPorts;
 };
 
@@ -62,10 +76,10 @@ public:
   
 protected:
   mutable std::vector<int32> mDeviceIDs;
-  MIDIClientRef* mpMidiClient;
+  MIDIClientRef mpMidiClientRef;
 };
 
-extern nuiMidiPortAPI_CoreMidi CoreMidiAPI;
+extern nuiSingletonHolder<nuiMidiPortAPI_CoreMidi> CoreMidiAPI;
 
 
 

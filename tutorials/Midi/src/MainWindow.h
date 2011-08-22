@@ -8,6 +8,7 @@
 #pragma once
 
 #include "nuiMainWindow.h"
+#include "nuiMidi.h"
 
 
 class MainWindow : public nuiMainWindow
@@ -27,5 +28,7 @@ private:
   
   nuiLabel* mMyLabel;
   nuiEventSink<MainWindow> mEventSink;
+  
+  std::vector<nuiMidiInPort*> mMiniIn;
 };
 
