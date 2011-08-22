@@ -210,6 +210,31 @@ bool nuiMidiOutPort_CoreMidi::Close()
   
 }
 
+bool nuiMidiOutPort_CoreMidi::Send(const uint8* pData, uint32 size)
+{
+  uint32 s = size;
+  const uint8* p = pData;
+  
+  while (s > 0)
+  {
+    uint32 l = MIN(256, s);
+    struct MIDIPacketList pktlist;
+    pktlist.numPackets = 1;
+    pktlist.packet[0].timeStamp = 0;
+    pktlist.packet[0].length = l;
+    memcpy(pktlist.packet[0].data, p, l);
+
+    if (noErr != MIDISend(mpPort, mpDestination, &pktlist))
+      return false;
+
+    p += l;
+    s -= l;
+  }
+
+  return true;
+}
+
+
 /////////////////////
 
 nuiMidiPortAPI_CoreMidi::nuiMidiPortAPI_CoreMidi()

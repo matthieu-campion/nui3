@@ -58,6 +58,8 @@ public:
   
   virtual bool Open() = 0;
   virtual bool Close() = 0;
+
+  virtual bool Send(const uint8* pData, uint32 size) = 0;
   
 protected:
   nuiMidiOutPort(){}

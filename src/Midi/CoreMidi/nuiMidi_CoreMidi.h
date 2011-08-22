@@ -47,6 +47,7 @@ public:
   
   virtual bool Open();
   virtual bool Close();
+  virtual bool Send(const uint8* pData, uint32 size);
 
   static nuiMidiOutPort_CoreMidi* GetPort(MIDIClientRef pClient, uint32 id);
   
