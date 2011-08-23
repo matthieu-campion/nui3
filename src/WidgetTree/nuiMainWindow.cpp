@@ -380,8 +380,6 @@ void nuiMainWindow::OnClose()
   //OUT("OnClose\n");
   if (mQuitOnClose)
     App->Quit(0);
-  else
-    Trash();
 }
 
 void nuiMainWindow::OnState (nglWindow::StateInfo State)
