@@ -34,6 +34,48 @@ MainWindow::MainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& 
 
 MainWindow::~MainWindow()
 {
+  for (int32 i = 0; i < mMiniIn.size(); i++)
+  {
+    mMiniIn[i]->Close();
+    mMiniIn[i]->Release();
+  }
+  mMiniIn.clear();
+}
+
+void MidiRead(nuiMidiInPort* pPort, const uint8* pData, uint32 size, double time)
+{
+  if (size == 1 && pData[0] == 0xfe) // filter out active sensing
+    return;
+  if (size == 1 && pData[0] == 0xf8) // filter out timing ticks
+    return;
+
+  
+  //Parse data:
+  const uint8* p = pData;
+  while (size)
+  {
+    switch (*p & 0xf0)
+    {
+      case 0x80:
+        NGL_OUT("[%x] Note Off %d %d\n", *p & 0xf, p[1], p[2]);
+        p+= 3;
+        size -= 3;
+        break;
+      case 0x90:
+        if (p[2] > 0)
+          NGL_OUT("[%x] Note On %d %d\n", *p & 0xf, p[1], p[2]);
+        else
+          NGL_OUT("[%x] Note Off %d %d\n", *p & 0xf, p[1], p[2]);
+        p+= 3;
+        size -= 3;
+        break;
+      default:
+        NGL_OUT("Received %d bytes from port %p (time = %f)\n", size, pPort, time);
+        pPort+= size;
+        size = 0;
+        break;
+    }
+  }
 }
 
 void MainWindow::OnCreation()
@@ -47,7 +89,15 @@ void MainWindow::OnCreation()
     nglString name = pPort->GetName();
     nglString manuf = pPort->GetManufacturer();
     nglString device = pPort->GetDeviceName();
-    pPort->Release();
+
+    if (pPort->Open(MidiRead))
+      mMiniIn.push_back(pPort);
+    else
+    {
+      NGL_OUT("\tUnable to open this port!\n");
+      pPort->Release();
+    }
+    
     NGL_OUT("%d: %s / %s / %s\n", i, name.GetChars(), manuf.GetChars(), device.GetChars());
   }
 

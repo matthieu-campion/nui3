@@ -6,6 +6,7 @@
  */
 
 #include "nuiMidi.h"
+#include "nuiSingleton.h"
 
 //class nuiMidiPort
 nuiMidiPort::nuiMidiPort()
@@ -62,8 +63,8 @@ void nuiMidiPortAPI::RegisterWithManager(nuiMidiManager& rManager)
 //class nuiMidiManager
 nuiMidiManager& nuiMidiManager::Get()
 {
-  static nuiMidiManager manager;
-  return manager;
+  static nuiSingletonHolder<nuiMidiManager> manager;
+  return *manager.Instance();
 }
 
 nuiMidiManager::nuiMidiManager()
@@ -164,7 +165,7 @@ nuiMidiOutPort* nuiMidiManager::GetOutPort(uint32 PortIndex)
   #include "nuiMidi_CoreMidi.h"
   void nuiMidiManager::RegisterAPIS()
   {
-    CoreMidiAPI.RegisterWithManager(*this);
+    CoreMidiAPI.Instance()->RegisterWithManager(*this);
   }
 #else
   void nuiMidiManager::RegisterAPIS()
