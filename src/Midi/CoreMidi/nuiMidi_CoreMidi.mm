@@ -6,7 +6,11 @@
  */
 
 #include "nuiMidi_CoreMidi.h"
+#include <mach/mach.h>
+#include <mach/mach_time.h>
+#ifdef NUI_IOS
 #import <CoreMIDI/MIDINetworkSession.h>
+#endif
 
 std::map<uint32, nuiMidiInPort_CoreMidi*> nuiMidiInPort_CoreMidi::mPorts;
 std::map<uint32, nuiMidiOutPort_CoreMidi*> nuiMidiOutPort_CoreMidi::mPorts;
@@ -97,11 +101,19 @@ void nuiMidiInPort_CoreMidi::ReadProc(const MIDIPacketList *pktlist)
   MIDIPacket *packet = (MIDIPacket *)pktlist->packet;
   unsigned int j;
   int i;
+
+  int64 nuiCoreMidiTimeBase_macho = mach_absolute_time();
+  const double nuiCoreMidiTimeBase_nui = nglTime();
+
   for (j = 0; j < pktlist->numPackets; j++)
   {
     //midiSendPacket(packet, gOutPort, gDest);
     static const double v = 1.0 / 1000000000.0; // Convert to seconds
-    mpProcessFunction(this, packet->data, packet->length, ((double)packet->timeStamp) * v);
+    const int64 t = packet->timeStamp - nuiCoreMidiTimeBase_macho;
+    const double vv = v * (double)t;
+    const double tt = nuiCoreMidiTimeBase_nui + vv;
+    
+    mpProcessFunction(this, packet->data, packet->length, tt);
     packet = MIDIPacketNext(packet);
   }
 }
@@ -242,9 +254,11 @@ nuiMidiPortAPI_CoreMidi::nuiMidiPortAPI_CoreMidi()
 {
   mpMidiClientRef = NULL;
   MIDIClientCreate(CFSTR("nui MIDI Client"), NULL, NULL, &mpMidiClientRef);
+#ifdef NUI_IOS
   MIDINetworkSession* session = [MIDINetworkSession defaultSession];
   session.enabled = YES;
   session.connectionPolicy = MIDINetworkConnectionPolicy_Anyone;
+#endif
 }
 
 nuiMidiPortAPI_CoreMidi::~nuiMidiPortAPI_CoreMidi()

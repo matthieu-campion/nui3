@@ -31,7 +31,7 @@
 #include "hb-font-private.hh"
 #include "hb-blob.h"
 #include "hb-open-file-private.hh"
-#include "hb-ot-head-private.hh"
+#include "hb-ot-head-table.hh"
 
 #include <string.h>
 
@@ -913,6 +913,21 @@ hb_font_set_funcs (hb_font_t         *font,
   hb_font_funcs_reference (klass);
   hb_font_funcs_destroy (font->klass);
   font->klass = klass;
+  font->user_data = user_data;
+  font->destroy = destroy;
+}
+
+void
+hb_font_set_funcs_data (hb_font_t         *font,
+		        void              *user_data,
+		        hb_destroy_func_t  destroy)
+{
+  if (font->immutable)
+    return;
+
+  if (font->destroy)
+    font->destroy (font->user_data);
+
   font->user_data = user_data;
   font->destroy = destroy;
 }
