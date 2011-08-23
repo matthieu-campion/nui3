@@ -260,10 +260,6 @@
 		61A9DE3D0B833C9200BC506C = {
 			isa = PBXGroup;
 			children = (
-				E56DB5C513FEC95800CEC74F /* CoreMIDI.framework */,
-				E56DB5C313FEC94A00CEC74F /* CoreMIDI.framework */,
-				E56DB5C113FEC94200CEC74F /* CoreMIDI.framework */,
-				E56DB5BF13FEC93A00CEC74F /* CoreMIDI.framework */,
 				E50F7A3613C1FD92002CB5A0 /* resources */,
 				BC6A09CA0EF9300600881ACF /* css */,
 				61A9DE4A0B833CD000BC506C /* sources */,
@@ -275,6 +271,10 @@
 		61A9DE490B833CB000BC506C /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				E56DB5C513FEC95800CEC74F /* CoreMIDI.framework */,
+				E56DB5C313FEC94A00CEC74F /* CoreMIDI.framework */,
+				E56DB5C113FEC94200CEC74F /* CoreMIDI.framework */,
+				E56DB5BF13FEC93A00CEC74F /* CoreMIDI.framework */,
 				BCD448A211D2120F00BEF227 /* nui3.xcodeproj */,
 				BC3FD81711D17EA400447DD4 /* frameworks iPhone */,
 				BC3FD69C11D17DD100447DD4 /* frameworks osx */,

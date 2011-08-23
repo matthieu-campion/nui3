@@ -70,7 +70,12 @@ void MidiRead(nuiMidiInPort* pPort, const uint8* pData, uint32 size, double time
         size -= 3;
         break;
       default:
-        NGL_OUT("Received %d bytes from port %p (time = %f)\n", size, pPort, time);
+        NGL_OUT("Received %d bytes from port %p (time = %f)\n", size, pPort, time - (double)nglTime());
+        if (0)
+        {
+          static int32 i = 0;
+          NGL_OUT("%d, %f\n", i++, (time - (double)nglTime()));
+        }
         pPort+= size;
         size = 0;
         break;
