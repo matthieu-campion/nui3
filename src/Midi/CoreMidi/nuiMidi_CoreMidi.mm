@@ -6,7 +6,9 @@
  */
 
 #include "nuiMidi_CoreMidi.h"
+#ifdef NUI_IOS
 #import <CoreMIDI/MIDINetworkSession.h>
+#endif
 
 std::map<uint32, nuiMidiInPort_CoreMidi*> nuiMidiInPort_CoreMidi::mPorts;
 std::map<uint32, nuiMidiOutPort_CoreMidi*> nuiMidiOutPort_CoreMidi::mPorts;
@@ -242,9 +244,11 @@ nuiMidiPortAPI_CoreMidi::nuiMidiPortAPI_CoreMidi()
 {
   mpMidiClientRef = NULL;
   MIDIClientCreate(CFSTR("nui MIDI Client"), NULL, NULL, &mpMidiClientRef);
+#ifdef NUI_IOS
   MIDINetworkSession* session = [MIDINetworkSession defaultSession];
   session.enabled = YES;
   session.connectionPolicy = MIDINetworkConnectionPolicy_Anyone;
+#endif
 }
 
 nuiMidiPortAPI_CoreMidi::~nuiMidiPortAPI_CoreMidi()

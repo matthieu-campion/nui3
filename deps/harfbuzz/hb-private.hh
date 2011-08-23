@@ -240,15 +240,10 @@ struct hb_prealloced_array_t {
   Type *array;
   Type static_array[StaticSize];
 
+  hb_prealloced_array_t (void) { memset (this, 0, sizeof (*this)); }
+
   inline Type& operator [] (unsigned int i) { return array[i]; }
   inline const Type& operator [] (unsigned int i) const { return array[i]; }
-
-  hb_prealloced_array_t()
-  {
-    len = 0;
-    allocated = 0;
-    array = NULL;
-  }
 
   inline Type *push (void)
   {
