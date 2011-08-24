@@ -68,16 +68,24 @@ nuiMidiInPort_CoreMidi::nuiMidiInPort_CoreMidi(MIDIClientRef pClient, int32 id)
   MIDIObjectGetStringProperty(ep, kMIDIPropertyManufacturer, &pmanuf);
   MIDIObjectGetStringProperty(dev, kMIDIPropertyName, &pmodel);
   
-  CFStringGetCString(pname, name, sizeof(name), 0);
-  CFStringGetCString(pmanuf, manuf, sizeof(manuf), 0);
-  CFStringGetCString(pmodel, model, sizeof(model), 0);
-  CFRelease(pname);
-  CFRelease(pmanuf);
-  CFRelease(pmodel);
-  
-  mName = name;
-  mManufacturer = manuf;
-  mDeviceName = model;
+  if (pname)
+  {
+    CFStringGetCString(pname, name, sizeof(name), 0);
+    CFRelease(pname);
+    mName = name;
+  }
+  if (pmanuf)
+  {
+    CFStringGetCString(pmanuf, manuf, sizeof(manuf), 0);
+    CFRelease(pmanuf);
+    mManufacturer = manuf;
+  }
+  if (pmodel)
+  {
+    CFStringGetCString(pmodel, model, sizeof(model), 0);
+    CFRelease(pmodel);
+    mDeviceName = model;
+  }
   
   mIsPresent = true;
 }
@@ -175,16 +183,25 @@ nuiMidiOutPort_CoreMidi::nuiMidiOutPort_CoreMidi(MIDIClientRef pClient, int32 id
   MIDIObjectGetStringProperty(ep, kMIDIPropertyManufacturer, &pmanuf);
   MIDIObjectGetStringProperty(dev, kMIDIPropertyName, &pmodel);
   
-  CFStringGetCString(pname, name, sizeof(name), 0);
-  CFStringGetCString(pmanuf, manuf, sizeof(manuf), 0);
-  CFStringGetCString(pmodel, model, sizeof(model), 0);
-  CFRelease(pname);
-  CFRelease(pmanuf);
-  CFRelease(pmodel);
-  
-  mName = name;
-  mManufacturer = manuf;
-  mDeviceName = model;
+  if (pname)
+  {
+    CFStringGetCString(pname, name, sizeof(name), 0);
+    CFRelease(pname);
+    mName = name;
+  }
+  if (pmanuf)
+  {
+    CFStringGetCString(pmanuf, manuf, sizeof(manuf), 0);
+    CFRelease(pmanuf);
+    mManufacturer = manuf;
+  }
+  if (pmodel)
+  {
+    CFStringGetCString(pmodel, model, sizeof(model), 0);
+    CFRelease(pmodel);
+    mDeviceName = model;
+  }
+
   mpPort = NULL;
   mpDestination = NULL;
   
