@@ -122,10 +122,25 @@ OSStatus AudioUnitInputCallback(void* inRefCon,
 
 void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
 {
-  NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d   (%d) %d %d\n"),uNumFrames, ioData->mNumberBuffers, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
+  //NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d   (%d) %d %d\n"),uNumFrames, ioData->mNumberBuffers, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
   
   mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
 
+  if (0)
+  { //#DEBUG TEST
+    static float t = 0;
+    static float incr = 440 * (M_PI * 2 / 44100.0);
+    for (int32 i = 0; i < uNumFrames; i++)
+    {
+      const float v = sinf(t);
+      t += incr;
+      mOutputBuffers[0][i] = v;
+      mOutputBuffers[1][i] = v;
+      
+      if (t >= M_PI * 2)
+        t -= M_PI * 2;
+    }
+  }
 
   // copy buffers (int -> float)
   if (ioData->mNumberBuffers == 2)
