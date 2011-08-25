@@ -1330,6 +1330,37 @@ protected:
   Type mValue;
 };
 
+template <class Type>
+class nuiRefAttribute : public nuiAttribute<Type>
+{
+public:
+  nuiRefAttribute(Type& rRef, const nglString& rName, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = nuiRange())
+  : nuiAttribute<Type>(rName, units, nuiMakeDelegate(this, &nuiRefAttribute<Type>::_Get), nuiMakeDelegate(this, &nuiRefAttribute<Type>::_Set), rRange), mrRef(rRef)
+  {
+    nuiAttributeBase::SetAsInstanceAttribute(true);
+  }
+ 
+protected:
+  Type _Get() const
+  {
+    return mrRef;
+  }
+  
+  void _Set(Type value)
+  {
+    mrRef = value;
+  }
+  
+  Type& mrRef;
+};
+
+template <class Type>
+nuiAttributeBase* nuiMakeRefAttribute(Type& rRef, const nglString& rName, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = nuiRange())
+{
+  return new nuiRefAttribute<Type>(rRef, rName, units, rRange);
+}
+
+
 //////////////////////////////////////////////
 
 template <class Type> 
