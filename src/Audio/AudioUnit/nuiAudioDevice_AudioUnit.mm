@@ -64,6 +64,7 @@ void audioRouteChangeListenerCallback (void                   *inUserData,      
 nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
 {  
   mpIData = NULL;
+  mAudioUnit = NULL;
   
   OSStatus err;
   UInt32 size = sizeof (UInt32);
@@ -98,8 +99,7 @@ nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
 
 nuiAudioDevice_AudioUnit::~nuiAudioDevice_AudioUnit()
 {
-	AudioOutputUnitStop(mAudioUnit);
-	AudioComponentInstanceDispose(mAudioUnit);  
+  Close();
 }
 
 
@@ -358,9 +358,18 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
   
   UInt32 flag = 1;
   err = AudioUnitSetProperty(mAudioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, kOutputBus, &flag, sizeof(flag));
-
+  if (err != noErr)
+  {
+    NGL_ASSERT(0);
+  }
+  
+  
   size = sizeof (AudioStreamBasicDescription);
   err = AudioUnitSetProperty(mAudioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, kOutputBus, &out_fmt_desc, size);
+  if (err != noErr)
+  {
+    NGL_ASSERT(0);
+  }
     
 	// same for input device:
 	AudioStreamBasicDescription in_fmt_desc;
@@ -516,6 +525,14 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 	// uses.  In the current iPhone OS devices, it's always 24
 	
 	err = AudioUnitInitialize(mAudioUnit);
+  
+  uint32 count = 4;
+  while (err == -12983 && count--)
+  {
+    nglThread::MsSleep(100);
+    err = AudioUnitInitialize(mAudioUnit);
+  }
+
 	if (err != noErr)
   {
     NGL_ASSERT(0);
@@ -540,8 +557,10 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 
 bool nuiAudioDevice_AudioUnit::Close()
 {
-	
+	AudioOutputUnitStop(mAudioUnit);
 	AudioUnitUninitialize(mAudioUnit);
+	AudioComponentInstanceDispose(mAudioUnit);
+  mAudioUnit = NULL;
   return true;
 }
     

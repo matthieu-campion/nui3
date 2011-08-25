@@ -84,19 +84,50 @@ bool nuiAudioEngine::AudioInit(ChannelConfig inputConfig)
 
   NGL_OUT(_T("Default output: %ls\n"), mpOutAudioDevice->GetName().GetChars());
 
-  std::vector<uint32> InputChannels;
-  std::vector<uint32> OutputChannels;
-  OutputChannels.push_back(0);
-  OutputChannels.push_back(1);
-  
-  bool res = mpOutAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioOutput));
-  
+  bool res = ActivateOutputDevice();
   
   if (inputConfig == eNone)
     return res;
   
-  InputChannels.clear();
-  OutputChannels.clear();
+  mpInAudioDevice = nuiAudioDeviceManager::Get().GetDefaultInputDevice();
+  res &= ActivateInputDevice(inputConfig);
+  
+  return res;
+}
+
+
+
+
+
+void nuiAudioEngine::DeactivateOutputDevice()
+{
+  mpOutAudioDevice->Close();
+}
+
+void nuiAudioEngine::DeactivateInputDevice()
+{
+  mpInAudioDevice->Close();
+}
+
+
+
+bool nuiAudioEngine::ActivateOutputDevice()
+{
+  std::vector<uint32> InputChannels;
+  std::vector<uint32> OutputChannels;
+  OutputChannels.push_back(0);
+  OutputChannels.push_back(1);
+  bool res = mpOutAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioOutput));
+  return res;
+}
+
+
+
+bool nuiAudioEngine::ActivateInputDevice(ChannelConfig inputConfig)
+{
+  std::vector<uint32> InputChannels;
+  std::vector<uint32> OutputChannels;
+ 
   if (inputConfig == eMono)
     InputChannels.push_back(0);
   else if (inputConfig == eStereo)
@@ -104,11 +135,11 @@ bool nuiAudioEngine::AudioInit(ChannelConfig inputConfig)
     InputChannels.push_back(0);
     InputChannels.push_back(1);
   }
-  mpInAudioDevice = nuiAudioDeviceManager::Get().GetDefaultInputDevice();
-  res &= mpInAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioInput));
   
+  bool res = mpInAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioInput));
   return res;
 }
+
 
 double nuiAudioEngine::GetSampleRate() const
 {

@@ -45,6 +45,13 @@ public:
   void UnsetInputProcessDelegate();
   void UnsetOutputProcessDelegate();
 
+  void DeactivateOutputDevice();
+  bool ActivateOutputDevice();
+  void DeactivateInputDevice();
+  bool ActivateInputDevice(ChannelConfig inputConfig);
+  
+
+
   nuiVoice* PlaySound(const nglPath& path, nuiSound::Type type = nuiSound::eStream);
   nuiVoice* PlaySound(nuiSound* pSound);
   void StopSound(nuiVoice* pnuiVoice);
