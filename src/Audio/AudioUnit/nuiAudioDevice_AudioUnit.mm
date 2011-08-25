@@ -66,30 +66,6 @@ nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
   mpIData = NULL;
   mAudioUnit = NULL;
   
-  OSStatus err;
-  UInt32 size = sizeof (UInt32);
-  UInt32 value = kAudioSessionOverrideAudioRoute_None;
-  AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, size, &value);  
-
-  AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, audioRouteChangeListenerCallback, this);
-  
-	// Initialize our session
-	err = AudioSessionInitialize(NULL, NULL, interruptionListener, NULL);	
-  
-  
-	// Set the category
-  UInt32 uCategory = kAudioSessionCategory_LiveAudio;
-  if (HasAudioInput())
-    uCategory = kAudioSessionCategory_PlayAndRecord;
-    
-	err = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(UInt32), &uCategory);
-  //	if (err != noErr)
-  //  {
-  //    NGL_ASSERT(0);
-  //    return false;
-  //  } 		
-  
-  
   EnumSampleRates();
   EnumBufferSizes();
   if (!HasAudioInput())
@@ -146,7 +122,7 @@ OSStatus AudioUnitInputCallback(void* inRefCon,
 
 void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
 {
-  //NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d    %d %d\n"),uNumFrames, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
+  NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d   (%d) %d %d\n"),uNumFrames, ioData->mNumberBuffers, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
   
   mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
 
@@ -261,7 +237,7 @@ void nuiAudioDevice_AudioUnit::ProcessInput(AudioUnitRenderActionFlags* ioAction
 bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction)
 {
   OSStatus err;
-	
+  	
   mAudioProcessFn = pProcessFunction;
   mSampleRate = SampleRate;
   mBufferSize = BufferSize;
@@ -275,6 +251,28 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
   for (uint32 i = 0; i < mOutputBuffers.size(); i++)
     mOutputBuffers[i] = (float*)malloc(mBufferSize * sizeof(float));
   
+  {
+    UInt32 size = sizeof (UInt32);
+    UInt32 value = kAudioSessionOverrideAudioRoute_None;
+    AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, size, &value);  
+    
+    AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, audioRouteChangeListenerCallback, this);
+    
+    
+    // Set the category
+    UInt32 uCategory = kAudioSessionCategory_LiveAudio;
+    if (HasAudioInput())
+      uCategory = kAudioSessionCategory_PlayAndRecord;
+    
+    err = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(UInt32), &uCategory);
+    //	if (err != noErr)
+    //  {
+    //    NGL_ASSERT(0);
+    //    return false;
+    //  } 		
+  }
+  
+
 	
 	// Set the buffer size
 	Float32 fBufferSize = (float)mBufferSize / mSampleRate;	//256frames @ 44.1khz
@@ -605,6 +603,9 @@ nglString nuiAudioDevice_AudioUnit::GetChannelName(bool IsInput, uint32 index) c
 nuiAudioDeviceAPI_AudioUnit::nuiAudioDeviceAPI_AudioUnit()
 {
   mName = _T("AudioUnit");
+	// Initialize our session
+	OSStatus err = AudioSessionInitialize(NULL, NULL, interruptionListener, NULL);
+  
 }
 
 nuiAudioDeviceAPI_AudioUnit::~nuiAudioDeviceAPI_AudioUnit()
