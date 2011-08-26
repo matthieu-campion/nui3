@@ -907,7 +907,7 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
       
       
       //#FIXME
-      //res.Add(_T(' ')).Add(scratch1).Add(_T("=\"")).Add(scratch2).Add(_T("\""));
+      //res.Append(' ').Add(scratch1).Add(_T("=\"")).Add(scratch2).Add(_T("\""));
       res += rStream.WriteText(nglString(_T(" ")));
       res += rStream.WriteText(scratch1);
       res += rStream.WriteText(nglString(_T("=\"")));
@@ -1024,7 +1024,7 @@ nglString nuiXMLNode::Dump(uint level) const
       
       
       //#FIXME
-      res.Add(_T(' ')).Add(scratch1).Add(_T("=\"")).Add(scratch2).Add(_T("\""));
+      res.Append(' ').Add(scratch1).Add(_T("=\"")).Add(scratch2).Add(_T("\""));
       
       
       ++attrib;
