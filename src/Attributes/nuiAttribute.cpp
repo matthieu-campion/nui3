@@ -2076,22 +2076,22 @@ void nuiAttribBase::SetOrder(int32 order)
 // To/From String
 bool nuiAttribBase::ToString(nglString& rString) const
 {
-  return mpAttributeBase->ToString(mpTarget, rString);
+  return mpAttributeBase->ToString(mpTarget, 0, 0, rString);
 }
 
 bool nuiAttribBase::FromString(const nglString& rString) const
 {
-  return mpAttributeBase->FromString(mpTarget, rString);
+  return mpAttributeBase->FromString(mpTarget, 0, 0, rString);
 }
 
 bool nuiAttribBase::ToString(uint32 index, nglString& rString) const
 {
-  return mpAttributeBase->ToString(mpTarget, index, rString);
+  return mpAttributeBase->ToString(mpTarget, index, 0, rString);
 }
 
 bool nuiAttribBase::FromString(uint32 index, const nglString& rString) const
 {
-  return mpAttributeBase->FromString(mpTarget, index, rString);
+  return mpAttributeBase->FromString(mpTarget, index, 0, rString);
 }
 
 bool nuiAttribBase::ToString(uint32 index0, uint32 index1, nglString& rString) const
@@ -2107,22 +2107,22 @@ bool nuiAttribBase::FromString(uint32 index0, uint32 index1, const nglString& rS
 // To/From Variant
 bool nuiAttribBase::ToVariant(nuiVariant& rVariant) const
 {
-  return mpAttributeBase->ToVariant(mpTarget, rVariant);
+  return mpAttributeBase->ToVariant(mpTarget, 0, 0, rVariant);
 }
 
 bool nuiAttribBase::FromVariant(const nuiVariant& rVariant) const
 {
-  return mpAttributeBase->FromVariant(mpTarget, rVariant);
+  return mpAttributeBase->FromVariant(mpTarget, 0, 0, rVariant);
 }
 
 bool nuiAttribBase::ToVariant(uint32 index, nuiVariant& rVariant) const
 {
-  return mpAttributeBase->ToVariant(mpTarget, index, rVariant);
+  return mpAttributeBase->ToVariant(mpTarget, index, 0, rVariant);
 }
 
 bool nuiAttribBase::FromVariant(uint32 index, const nuiVariant& rVariant) const
 {
-  return mpAttributeBase->FromVariant(mpTarget, index, rVariant);
+  return mpAttributeBase->FromVariant(mpTarget, index, 0, rVariant);
 }
 
 bool nuiAttribBase::ToVariant(uint32 index0, uint32 index1, nuiVariant& rVariant) const
@@ -2140,12 +2140,12 @@ bool nuiAttribBase::FromVariant(uint32 index0, uint32 index1, const nuiVariant& 
 // Format
 void nuiAttribBase::Format(nglString& rString) const
 {
-  mpAttributeBase->Format(mpTarget, rString);
+  mpAttributeBase->Format(mpTarget, 0, 0, rString);
 }
 
 void nuiAttribBase::Format(uint32 index, nglString& rString) const
 {
-  mpAttributeBase->Format(mpTarget, index, rString);
+  mpAttributeBase->Format(mpTarget, index, 0, rString);
 }
 
 void nuiAttribBase::Format(uint32 index0, uint32 index1, nglString& rString) const

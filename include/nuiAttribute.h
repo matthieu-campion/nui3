@@ -78,23 +78,13 @@ public:
   
 	
 	
-  virtual bool ToString(void* pTarget, nglString& rString) const = 0;
-  virtual bool FromString(void* pTarget, const nglString& rString) const = 0;
-  virtual bool ToString(void* pTarget, int32 index, nglString& rString) const = 0;
-  virtual bool FromString(void* pTarget, int32 index, const nglString& rString) const = 0;
   virtual bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const = 0;
   virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const = 0;
 
-  virtual bool ToVariant(void* pTarget, nuiVariant& rVar) const = 0;
-  virtual bool FromVariant(void* pTarget, const nuiVariant& rVar) const = 0;
-  virtual bool ToVariant(void* pTarget, int32 index, nuiVariant& rVar) const = 0;
-  virtual bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVar) const = 0;
   virtual bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVar) const = 0;
   virtual bool FromVariant(void* pTarget, int32 index0, int32 index1, const nuiVariant& rVar) const = 0;
   
 	// Format methods for each dimensions:
-	virtual void Format(void* pTarget, nglString& string) const = 0;
-	virtual void Format(void* pTarget, uint32 index, nglString& string) const = 0;
 	virtual void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const = 0;
   
   void IgnoreAttributeChange(bool ignore);
@@ -253,50 +243,6 @@ public:
     return true;
   }
   
-  bool ToString(void* pTarget, nglString& rString) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-
-    return ToString(Get(pTarget), rString);
-  }
-  
-  bool FromString(void* pTarget, const nglString& rString) const
-  {
-    if (mSetter.empty())
-      return false;
-    Contents val;
-    bool res = FromString(val, rString);
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToString(void* pTarget, int32 index, nglString& rString) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    return ToString(Get(pTarget, index), rString);
-  }
-  
-  bool FromString(void* pTarget, int32 index, const nglString& rString) const
-  {
-    if (mSetter.empty())
-      return false;
-    
-    Contents val;
-    bool res = FromString(val, rString);
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, index, val);
-    return res;
-  }
-  
   bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
   {
     if (!IsValid(pTarget))
@@ -328,60 +274,8 @@ public:
   
   bool FromVariant(Contents& rValue, const nuiVariant& rVariant) const
   {
-#ifndef CLANG_HACK
     rValue = rVariant.operator Contents();
-#endif
     return true;
-  }
-  
-  bool ToVariant(void* pTarget, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    
-    return ToVariant(Get(pTarget), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    Contents val;
-    bool res = true;
-#ifndef CLANG_HACK
-    res = FromVariant(val, rVariant);
-#endif
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    return ToVariant(Get(pTarget, index), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    
-    Contents val;
-    bool res = true;
-#ifndef CLANG_HACK
-    res = FromVariant(val, rVariant);
-#endif
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, index, val);
-    return res;
   }
   
   bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
@@ -406,92 +300,86 @@ public:
   }
   
   
-  // Getters for each dimension:
-  Contents Get(void* pTarget) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 0)
-      return Get(pTarget, 0);
-    GetterDelegate Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    return Getter();
-  }
-  
-  Contents Get(void* pTarget, uint32 index) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 1)
-      return Get(pTarget, index, 0);
-    GetterDelegate1 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    uint32 range = GetIndexRange(pTarget, 0);
-    NGL_ASSERT(range > index);
-    return Getter(index);
-  }
-  
+  // Getter
   Contents Get(void* pTarget, uint32 index0, uint32 index1) const
   {
     NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    GetterDelegate2 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-    NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
-    return Getter(index0, index1);
-  }
-  
-  // Setters for each dimension:
-  void Set(void* pTarget, Contents rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 0);
-    SetterDelegate Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(rValue);
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetDimension())
     {
-      SendAttributeChanged(pTarget, rValue); 
+      case 0:
+      {
+        GetterDelegate Getter;
+        Getter.SetMemento(mGetter);
+        if (!IsInstanceAttribute())
+          Getter.SetThis(pTarget);
+        return Getter();
+        break;
+      }
+      case 1:
+      {
+        GetterDelegate1 Getter;
+        Getter.SetMemento(mGetter);
+        if (!IsInstanceAttribute())
+          Getter.SetThis(pTarget);
+        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+        return Getter(index0);
+        break;
+      }
+      case 2:
+      {
+        GetterDelegate2 Getter;
+        Getter.SetMemento(mGetter);
+        if (!IsInstanceAttribute())
+          Getter.SetThis(pTarget);
+        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+        NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
+        return Getter(index0, index1);
+        break;
+      }
     }
   }
   
-  void Set(void* pTarget, uint32 index, Contents rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 1);
-    SetterDelegate1 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index, rValue);
-    
-    if (!IsAttributeChangeIgnored())
-    {
-      SendAttributeChanged(pTarget, index, rValue); 
-    }
-  }
-  
+  // Setter
   void Set(void* pTarget, uint32 index0, uint32 index1, Contents rValue) const
   {
     NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    SetterDelegate2 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index0, index1, rValue);
-    
-    if (!IsAttributeChangeIgnored())
+
+    switch (GetDimension())
     {
-      SendAttributeChanged(pTarget, index0, index1, rValue); 
+      case 0:
+      {
+        SetterDelegate Setter;
+        Setter.SetMemento(mSetter);
+        if (!IsInstanceAttribute())
+          Setter.SetThis(pTarget);
+        Setter(rValue);
+        if (!IsAttributeChangeIgnored())
+          SendAttributeChanged(pTarget, rValue); 
+        break;
+      }
+      case 1:
+      {
+        SetterDelegate1 Setter;
+        Setter.SetMemento(mSetter);
+        if (!IsInstanceAttribute())
+          Setter.SetThis(pTarget);
+        Setter(index0, rValue);
+        if (!IsAttributeChangeIgnored())
+          SendAttributeChanged(pTarget, index0, rValue); 
+        break;
+      }
+      case 2:
+      {
+        SetterDelegate2 Setter;
+        Setter.SetMemento(mSetter);
+        if (!IsInstanceAttribute())
+          Setter.SetThis(pTarget);
+        Setter(index0, index1, rValue);
+        if (!IsAttributeChangeIgnored())
+          SendAttributeChanged(pTarget, index0, index1, rValue); 
+        break;
+      }
     }
   }
 
@@ -526,38 +414,6 @@ public:
 	}
 
 	// Format methods for each dimensions:
-	void Format(void* pTarget, nglString& string) const
-	{
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-		if (mFormater)
-		{
-			// the user has specified its own formater.
-			return mFormater(string, Get(pTarget));
-		}
-		
-		return FormatDefault(Get(pTarget), string);
-	}
-	
-	void Format(void* pTarget, uint32 index, nglString& string) const
-	{
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-		if (mFormater)
-		{
-			// the user has specified its own formater.
-			return mFormater(string, Get(pTarget, index));
-		}
-		
-		return FormatDefault(Get(pTarget, index), string);
-	}
-	
 	void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const
 	{
     if (!mGetter)
@@ -565,13 +421,16 @@ public:
       string.Nullify();
       return;
     }
+
 		if (mFormater)
 		{
 			// the user has specified its own formater.
-			return mFormater(string, Get(pTarget, index0, index1));
+      mFormater(string, Get(pTarget, index0, index1));
+      
+      return;
 		}
-		
-		return FormatDefault(Get(pTarget, index0, index1), string);
+
+    FormatDefault(Get(pTarget, index0, index1), string);
 	}
 	
   
@@ -844,32 +703,6 @@ public:
     return rValue = rString;
   }
   
-  bool ToString(void* pTarget, nglString& rString) const
-  {
-    return ToString(Get(pTarget), rString);
-  }
-  
-  bool FromString(void* pTarget, const nglString& rString) const
-  {
-    Contents val;
-    bool res = FromString(val, rString);
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToString(void* pTarget, int32 index, nglString& rString) const
-  {
-    return ToString(Get(pTarget, index), rString);
-  }
-  
-  bool FromString(void* pTarget, int32 index, const nglString& rString) const
-  {
-    Contents val;
-    bool res = FromString(val, rString);
-    Set(pTarget, index, val);
-    return res;
-  }
-  
   bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
   {
     return ToString(Get(pTarget, index0, index1), rString);
@@ -900,53 +733,6 @@ public:
     return true;
   }
   
-  bool ToVariant(void* pTarget, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    
-    return ToVariant(Get(pTarget), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    Contents val;
-    bool res = true;
-#ifndef CLANG_HACK
-    res = FromVariant(val, rVariant);
-#endif
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    return ToVariant(Get(pTarget, index), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    
-    Contents val;
-    bool res = FromVariant(val, rVariant);
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, index, val);
-    return res;
-  }
-  
   bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
   {
     if (!IsValid(pTarget))
@@ -969,96 +755,89 @@ public:
   }
   
   
-  // Getters for each dimension:
-  const Contents& Get(void* pTarget) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 0)
-      return Get(pTarget, 0);
-    GetterDelegate Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    return Getter();
-  }
-  
-  const Contents& Get(void* pTarget, uint32 index) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 1)
-      return Get(pTarget, index, 0);
-    GetterDelegate1 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    NGL_ASSERT(GetIndexRange(pTarget, 0) > index);
-    return Getter(index);
-  }
-  
+  // Getter
   const Contents& Get(void* pTarget, uint32 index0, uint32 index1) const
   {
     NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    GetterDelegate2 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-    NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
-    return Getter(index0, index1);
-  }
-  
-  // Setters for each dimension:
-  void Set(void* pTarget, const Contents& rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    if (GetDimension() > 0)
-      return Set(pTarget, 0, rValue);
-    SetterDelegate Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(rValue);
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetDimension())
     {
-      SendAttributeChanged(pTarget, rValue); 
+      case 0:
+      {
+        GetterDelegate Getter;
+        Getter.SetMemento(mGetter);
+        if (!IsInstanceAttribute())
+          Getter.SetThis(pTarget);
+        return Getter();
+        break;
+      }
+      case 1:
+      {
+        GetterDelegate1 Getter;
+        Getter.SetMemento(mGetter);
+        if (!IsInstanceAttribute())
+          Getter.SetThis(pTarget);
+        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+        return Getter(index0);
+        break;
+      }
+      case 2:
+      {
+        GetterDelegate2 Getter;
+        Getter.SetMemento(mGetter);
+        if (!IsInstanceAttribute())
+          Getter.SetThis(pTarget);
+        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+        NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
+        return Getter(index0, index1);
+        break;
+      }
     }
   }
   
-  void Set(void* pTarget, uint32 index, const Contents& rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    if (GetDimension() > 1)
-      return Set(pTarget, index, 0, rValue);
-    SetterDelegate1 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index, rValue);
-    
-    if (!IsAttributeChangeIgnored())
-    {
-      SendAttributeChanged(pTarget, index, rValue); 
-    }
-  }
-  
+  // Setter
   void Set(void* pTarget, uint32 index0, uint32 index1, const Contents& rValue) const
   {
     NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    SetterDelegate2 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index0, index1, rValue);
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetDimension())
     {
-      SendAttributeChanged(pTarget, index0, index1, rValue); 
+      case 0:
+      {
+        SetterDelegate Setter;
+        Setter.SetMemento(mSetter);
+        if (!IsInstanceAttribute())
+          Setter.SetThis(pTarget);
+        Setter(rValue);
+        if (!IsAttributeChangeIgnored())
+          SendAttributeChanged(pTarget, rValue); 
+        break;
+      }
+      case 1:
+      {
+        SetterDelegate1 Setter;
+        Setter.SetMemento(mSetter);
+        if (!IsInstanceAttribute())
+          Setter.SetThis(pTarget);
+        Setter(index0, rValue);
+        if (!IsAttributeChangeIgnored())
+          SendAttributeChanged(pTarget, index0, rValue); 
+        break;
+      }
+      case 2:
+      {
+        SetterDelegate2 Setter;
+        Setter.SetMemento(mSetter);
+        if (!IsInstanceAttribute())
+          Setter.SetThis(pTarget);
+        Setter(index0, index1, rValue);
+        if (!IsAttributeChangeIgnored())
+          SendAttributeChanged(pTarget, index0, index1, rValue); 
+        break;
+      }
     }
   }
-  
+
   // Get/Set Editors:
   void SetEditor(const NewEditorDelegate& rNewEditor)
   {
@@ -1090,39 +869,6 @@ public:
   }
   
   // Format methods for each dimensions:
-  void Format(void* pTarget, nglString& string) const
-  {
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-    if (mFormater)
-    {
-      // the user has specified its own formater.
-      return mFormater(string, Get(pTarget));
-    }
-    
-    return FormatDefault(Get(pTarget), string);
-  }
-  
-  void Format(void* pTarget, uint32 index, nglString& string) const
-  {
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-
-    if (mFormater)
-    {
-      // the user has specified its own formater.
-      return mFormater(string, Get(pTarget, index));
-    }
-    
-    return FormatDefault(Get(pTarget, index), string);
-  }
-  
   void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const
   {
     if (!mGetter)
@@ -1487,22 +1233,22 @@ public:
   
   Contents Get() const
   {
-    return mpAttribute->Get(mpTarget);
+    return mpAttribute->Get(mpTarget, 0, 0);
   }
   
   void Set(Contents rValue) const
   {
-    mpAttribute->Set(mpTarget, rValue);
+    mpAttribute->Set(mpTarget, 0, 0, rValue);
   }
 	
   Contents Get(uint32 index) const
   {
-    return mpAttribute->Get(mpTarget, index);
+    return mpAttribute->Get(mpTarget, index, 0);
   }
   
   void Set(uint32 index, Contents rValue) const
   {
-    mpAttribute->Set(mpTarget, index, rValue);
+    mpAttribute->Set(mpTarget, index, 0, rValue);
   }
 	
   Contents Get(uint32 index0, uint32 index1) const
