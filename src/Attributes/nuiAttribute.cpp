@@ -35,7 +35,7 @@ nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeB
 }
 
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly)
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, Kind kind, void* pOffset)
 : mName(rName),
   mType(type),
   mUnit(unit),
@@ -45,11 +45,13 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mInstanceAttribute(false),
   mRange(rRange),
   mOrder(0),
-  mDimension(0)
+  mDimension(0),
+  mKind(kind),
+  mOffset(pOffset)
 {
 }
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rRangeGetter)
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rRangeGetter, Kind kind, void* pOffset)
 : mName(rName),
   mType(type),
   mUnit(unit),
@@ -60,7 +62,9 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mRange(rRange),
   mOrder(0),
   mDimension(dimension),
-  mRangeGetter(rRangeGetter)
+  mRangeGetter(rRangeGetter),
+  mKind(kind),
+  mOffset(pOffset)
 {
 }
 
@@ -186,6 +190,37 @@ void nuiAttributeBase::KillAttributeHolder(void* pHolder)
     }
   }
 }  
+
+nuiAttributeBase::Kind nuiAttributeBase::GetKind() const
+{
+  return mKind;
+}
+
+void* nuiAttributeBase::GetOffset() const
+{
+  return mOffset;
+}
+
+bool nuiAttributeBase::IsValid(void* pTarget) const
+{
+  if (!pTarget) // We just want a general test about the availability of the Getter
+    return true;
+  
+  switch (GetDimension())
+  {
+    case 0:
+      return true;
+      break;
+    case 1:
+      return (GetIndexRange(pTarget, 0) > 0);
+      break;
+    case 2:
+      return (GetIndexRange(pTarget, 0) > 0) && (GetIndexRange(pTarget, 1) > 0);
+      break;
+  }
+  return false; // Any other dimension is an error!
+}
+
 
 ////////////////// 
 // Declaration of some property types specializations:

@@ -50,6 +50,12 @@ void nuiGenericAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
 {
 	nglString contents;
   
+  if (!mAttribute.CanGet())
+  {
+    mpLabel->SetText(_T("Write only attribute"));
+    return;
+  }
+  
   switch (mAttribute.GetDimension())
   {
     case 0:

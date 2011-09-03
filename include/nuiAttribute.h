@@ -99,11 +99,24 @@ public:
   
   void SetAsInstanceAttribute(bool set);
   bool IsInstanceAttribute() const;
+  bool IsValid(void* pTarget = NULL) const;
+  
+  
+  enum Kind
+  {
+    eSetterGetter,        // use the standard getter and setter delegates
+    eDirectReference,     // mOffset is actually a pointer to the data.
+    eClassOffset          // mOffset is an offset from the start of the target object in memory
+  };
+  Kind GetKind() const;
+  void* GetOffset() const;
+  
 protected:
-  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly);  ///< property 
-  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, Kind kind = eSetterGetter, void* pOffset = NULL);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter, Kind kind = eSetterGetter, void* pOffset = NULL);  ///< property 
   
 private:
+  Kind mKind;
   nglString mName;
   nuiAttributeType mType;
   nuiAttributeUnit mUnit;
@@ -114,6 +127,7 @@ private:
   nuiRange mRange;
   int32 mOrder;
   uint32 mDimension;
+  void* mOffset;
   ArrayRangeDelegate mRangeGetter;
 protected:
   mutable AttributeEventMap mAttributeChangedEvents;
@@ -206,29 +220,6 @@ public:
   {
   }
 
-  bool IsValid(void* pTarget = NULL) const
-  {
-    if (mGetter.empty())
-      return false;
-
-    if (!pTarget) // We just want a general test about the availability of the Getter
-      return true;
-    
-    switch (GetDimension())
-    {
-      case 0:
-        return true;
-        break;
-      case 1:
-        return (GetIndexRange(pTarget, 0) > 0);
-        break;
-      case 2:
-        return (GetIndexRange(pTarget, 0) > 0) && (GetIndexRange(pTarget, 1) > 0);
-        break;
-    }
-    return false; // Any other dimension is an error!
-  }
-  
   ////////////////////////////////////////////////////
   // Strings convertions:
   bool ToString(Contents Value, nglString& rString) const
@@ -303,84 +294,147 @@ public:
   // Getter
   Contents Get(void* pTarget, uint32 index0, uint32 index1) const
   {
-    NGL_ASSERT(!mGetter.empty());
+    Contents* pContents = NULL;
+    
+    switch (GetKind())
+    {
+      case eSetterGetter:
+        NGL_ASSERT(!mGetter.empty());
+        switch (GetDimension())
+        {
+          case 0:
+          {
+            GetterDelegate Getter;
+            Getter.SetMemento(mGetter);
+            if (!IsInstanceAttribute())
+              Getter.SetThis(pTarget);
+            return Getter();
+            break;
+          }
+          case 1:
+          {
+            GetterDelegate1 Getter;
+            Getter.SetMemento(mGetter);
+            if (!IsInstanceAttribute())
+              Getter.SetThis(pTarget);
+            NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+            return Getter(index0);
+            break;
+          }
+          case 2:
+          {
+            GetterDelegate2 Getter;
+            Getter.SetMemento(mGetter);
+            if (!IsInstanceAttribute())
+              Getter.SetThis(pTarget);
+            NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+            NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
+            return Getter(index0, index1);
+            break;
+          }
+        }
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassOffset:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
+    }
     
     switch (GetDimension())
     {
       case 0:
-      {
-        GetterDelegate Getter;
-        Getter.SetMemento(mGetter);
-        if (!IsInstanceAttribute())
-          Getter.SetThis(pTarget);
-        return Getter();
-        break;
-      }
       case 1:
       {
-        GetterDelegate1 Getter;
-        Getter.SetMemento(mGetter);
-        if (!IsInstanceAttribute())
-          Getter.SetThis(pTarget);
-        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-        return Getter(index0);
+        return pContents[index0];
         break;
       }
       case 2:
       {
-        GetterDelegate2 Getter;
-        Getter.SetMemento(mGetter);
-        if (!IsInstanceAttribute())
-          Getter.SetThis(pTarget);
-        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-        NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
-        return Getter(index0, index1);
+        Contents** pContents2 = (Contents**)pContents;
+        return pContents2[index0][index1];
         break;
       }
     }
+
+    NGL_ASSERT(NULL);
+    return *pContents;
   }
   
   // Setter
   void Set(void* pTarget, uint32 index0, uint32 index1, Contents rValue) const
   {
-    NGL_ASSERT(!mSetter.empty());
-
+    Contents* pContents = NULL;
+    
+    switch (GetKind())
+    {
+      case eSetterGetter:
+        NGL_ASSERT(!mSetter.empty());
+        
+        switch (GetDimension())
+        {
+          case 0:
+          {
+            SetterDelegate Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, rValue); 
+            break;
+          }
+          case 1:
+          {
+            SetterDelegate1 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, rValue); 
+            break;
+          }
+          case 2:
+          {
+            SetterDelegate2 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, index1, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, index1, rValue); 
+            break;
+          }
+        }
+        return;
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassOffset:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
+    }
+    
     switch (GetDimension())
     {
       case 0:
-      {
-        SetterDelegate Setter;
-        Setter.SetMemento(mSetter);
-        if (!IsInstanceAttribute())
-          Setter.SetThis(pTarget);
-        Setter(rValue);
-        if (!IsAttributeChangeIgnored())
-          SendAttributeChanged(pTarget, rValue); 
-        break;
-      }
       case 1:
       {
-        SetterDelegate1 Setter;
-        Setter.SetMemento(mSetter);
-        if (!IsInstanceAttribute())
-          Setter.SetThis(pTarget);
-        Setter(index0, rValue);
-        if (!IsAttributeChangeIgnored())
-          SendAttributeChanged(pTarget, index0, rValue); 
+        pContents[index0] = rValue;
         break;
       }
       case 2:
       {
-        SetterDelegate2 Setter;
-        Setter.SetMemento(mSetter);
-        if (!IsInstanceAttribute())
-          Setter.SetThis(pTarget);
-        Setter(index0, index1, rValue);
-        if (!IsAttributeChangeIgnored())
-          SendAttributeChanged(pTarget, index0, index1, rValue); 
+        Contents** pContents2 = (Contents**)pContents;
+        pContents2[index0][index1] = rValue;
         break;
       }
     }
+    
+    NGL_ASSERT(0);
   }
 
   // Get/Set Editors:
@@ -758,84 +812,147 @@ public:
   // Getter
   const Contents& Get(void* pTarget, uint32 index0, uint32 index1) const
   {
-    NGL_ASSERT(!mGetter.empty());
+    Contents* pContents = NULL;
+    
+    switch (GetKind())
+    {
+      case eSetterGetter:
+        NGL_ASSERT(!mGetter.empty());
+        switch (GetDimension())
+      {
+        case 0:
+        {
+          GetterDelegate Getter;
+          Getter.SetMemento(mGetter);
+          if (!IsInstanceAttribute())
+            Getter.SetThis(pTarget);
+          return Getter();
+          break;
+        }
+        case 1:
+        {
+          GetterDelegate1 Getter;
+          Getter.SetMemento(mGetter);
+          if (!IsInstanceAttribute())
+            Getter.SetThis(pTarget);
+          NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+          return Getter(index0);
+          break;
+        }
+        case 2:
+        {
+          GetterDelegate2 Getter;
+          Getter.SetMemento(mGetter);
+          if (!IsInstanceAttribute())
+            Getter.SetThis(pTarget);
+          NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+          NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
+          return Getter(index0, index1);
+          break;
+        }
+      }
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassOffset:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
+    }
     
     switch (GetDimension())
     {
       case 0:
-      {
-        GetterDelegate Getter;
-        Getter.SetMemento(mGetter);
-        if (!IsInstanceAttribute())
-          Getter.SetThis(pTarget);
-        return Getter();
-        break;
-      }
       case 1:
       {
-        GetterDelegate1 Getter;
-        Getter.SetMemento(mGetter);
-        if (!IsInstanceAttribute())
-          Getter.SetThis(pTarget);
-        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-        return Getter(index0);
+        return pContents[index0];
         break;
       }
       case 2:
       {
-        GetterDelegate2 Getter;
-        Getter.SetMemento(mGetter);
-        if (!IsInstanceAttribute())
-          Getter.SetThis(pTarget);
-        NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-        NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
-        return Getter(index0, index1);
+        Contents** pContents2 = (Contents**)pContents;
+        return pContents2[index0][index1];
         break;
       }
     }
+    
+    NGL_ASSERT(NULL);
+    return *pContents;
   }
   
   // Setter
   void Set(void* pTarget, uint32 index0, uint32 index1, const Contents& rValue) const
   {
-    NGL_ASSERT(!mSetter.empty());
+    Contents* pContents = NULL;
+    
+    switch (GetKind())
+    {
+      case eSetterGetter:
+        NGL_ASSERT(!mSetter.empty());
+        
+        switch (GetDimension())
+        {
+          case 0:
+          {
+            SetterDelegate Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, rValue); 
+            break;
+          }
+          case 1:
+          {
+            SetterDelegate1 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, rValue); 
+            break;
+          }
+          case 2:
+          {
+            SetterDelegate2 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, index1, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, index1, rValue); 
+            break;
+          }
+        }
+        return;
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassOffset:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
+    }
     
     switch (GetDimension())
     {
       case 0:
-      {
-        SetterDelegate Setter;
-        Setter.SetMemento(mSetter);
-        if (!IsInstanceAttribute())
-          Setter.SetThis(pTarget);
-        Setter(rValue);
-        if (!IsAttributeChangeIgnored())
-          SendAttributeChanged(pTarget, rValue); 
-        break;
-      }
       case 1:
       {
-        SetterDelegate1 Setter;
-        Setter.SetMemento(mSetter);
-        if (!IsInstanceAttribute())
-          Setter.SetThis(pTarget);
-        Setter(index0, rValue);
-        if (!IsAttributeChangeIgnored())
-          SendAttributeChanged(pTarget, index0, rValue); 
+        pContents[index0] = rValue;
         break;
       }
       case 2:
       {
-        SetterDelegate2 Setter;
-        Setter.SetMemento(mSetter);
-        if (!IsInstanceAttribute())
-          Setter.SetThis(pTarget);
-        Setter(index0, index1, rValue);
-        if (!IsAttributeChangeIgnored())
-          SendAttributeChanged(pTarget, index0, index1, rValue); 
+        Contents** pContents2 = (Contents**)pContents;
+        pContents2[index0][index1] = rValue;
         break;
       }
     }
+    
+    NGL_ASSERT(0);
   }
 
   // Get/Set Editors:
