@@ -106,7 +106,7 @@ public:
   {
     eSetterGetter,        // use the standard getter and setter delegates
     eDirectReference,     // mOffset is actually a pointer to the data.
-    eClassOffset          // mOffset is an offset from the start of the target object in memory
+    eClassMember          // mOffset is an offset from the start of the target object in memory
   };
   Kind GetKind() const;
   void* GetOffset() const;
@@ -219,7 +219,53 @@ public:
     mSetter(rSetter.GetMemento())
   {
   }
+  
+  // Direct reference:
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, Contents& rRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, eDirectReference, (void*)&rRef)
+  {
+  }
+  
+#if 0 // Disabled until I have some time to think about a good way to implement this
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, Contents* pRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 1, eDirectReference, (void*)pRef)
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, Contents** pRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 2, eDirectReference, (void*)pRef)
+  {
+  }
+#endif
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const Contents& rRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, eDirectReference, (void*)&rRef)
+  {
+  }
+  
+#if 0 // Disabled until I have some time to think about a good way to implement this
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const Contents* pRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 1, eDirectReference, (void*)pRef)
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const Contents** pRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 2, eDirectReference, (void*)pRef)
+  {
+  }
+#endif  
 
+  // Class member reference:
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, nuiObject* pThis, Contents& rRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, eClassMember, (void*)((uint64)&rRef - (uint64)pThis))
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, nuiObject* pThis, const Contents& rRef, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, eClassMember, (void*)((uint64)&rRef - (uint64)pThis))
+  {
+  }
+  
   ////////////////////////////////////////////////////
   // Strings convertions:
   bool ToString(Contents Value, nglString& rString) const
@@ -337,7 +383,7 @@ public:
       case eDirectReference:
         pContents = (Contents*)GetOffset();
         break;
-      case eClassOffset:
+      case eClassMember:
         pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
         break;
     }
@@ -413,7 +459,7 @@ public:
       case eDirectReference:
         pContents = (Contents*)GetOffset();
         break;
-      case eClassOffset:
+      case eClassMember:
         pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
         break;
     }
@@ -855,7 +901,7 @@ public:
       case eDirectReference:
         pContents = (Contents*)GetOffset();
         break;
-      case eClassOffset:
+      case eClassMember:
         pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
         break;
     }
@@ -931,7 +977,7 @@ public:
       case eDirectReference:
         pContents = (Contents*)GetOffset();
         break;
-      case eClassOffset:
+      case eClassMember:
         pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
         break;
     }

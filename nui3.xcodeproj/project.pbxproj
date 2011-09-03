@@ -15979,7 +15979,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = libNUI;
 			};
 			buildConfigurationList = E58167300C3CEBF100902DFE /* Build configuration list for PBXProject "nui3" */;
