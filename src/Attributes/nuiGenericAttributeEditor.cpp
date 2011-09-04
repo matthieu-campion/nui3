@@ -95,7 +95,8 @@ void nuiGenericAttributeEditor::OnActivated(const nuiEvent& rEvent)
 void nuiGenericAttributeEditor::OnRenamed(const nuiEvent& rEvent)
 {
 	nuiLabelRenamer* pRenamer = (nuiLabelRenamer*)rEvent.mpUser;
-  switch (mAttribute.GetDimension())
+  uint32 dim = mAttribute.GetDimension();
+  switch (dim)
   {
     case 0:
       {

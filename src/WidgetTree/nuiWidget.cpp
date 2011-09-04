@@ -18,7 +18,6 @@
 #include "nuiTheme.h"
 #include "nuiDecoration.h"
 #include "nuiWidgetMatcher.h"
-#include "nuiClampedValueAttributeEditor.h"
 #include "nuiColorDecoration.h"
 #include "nuiTask.h"
 #include "nuiMatrixNode.h"

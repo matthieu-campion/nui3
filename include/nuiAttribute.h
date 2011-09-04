@@ -290,14 +290,10 @@ public:
   
   virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const
   {
-    if (mSetter.empty())
-      return false;
     Contents val;
     bool res = FromString(val, rString);
     if (!res)
-    {
       return false;
-    }
     Set(pTarget, index0, index1, val);
     return res;
   }
@@ -325,14 +321,10 @@ public:
   
   virtual bool FromVariant(void* pTarget, int32 index0, int32 index1, const nuiVariant& rVariant) const
   {
-    if (mSetter.empty())
-      return false;
     Contents val;
     bool res = FromVariant(val, rVariant);
     if (!res)
-    {
       return false;
-    }
     Set(pTarget, index0, index1, val);
     return res;
   }
