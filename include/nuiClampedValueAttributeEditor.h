@@ -20,7 +20,7 @@ class nuiClampedValueAttributeEditor : public nuiAttributeEditor
 {
 public:
   
-  nuiClampedValueAttributeEditor(const nuiAttrib<T>& rAttribute, const nuiRange& rRange, const nglString& rName = nglString::Null, uint32 flag = 1)
+  nuiClampedValueAttributeEditor(const nuiAttrib<T>& rAttribute, const nuiRange& rRange, const nglString& rName = nglString::Null)
 	: nuiAttributeEditor(),
   mAttribute(rAttribute),
   mEventSink(this),
@@ -43,12 +43,12 @@ public:
     mpBox->SetExpand(nuiExpandShrinkAndGrow);
     AddChild(mpBox);
     
-    Init(flag);
+    Init();
     mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiClampedValueAttributeEditor::OnAttributeChanged));
   }
   
   
-  nuiClampedValueAttributeEditor(const nglString& rName, const nuiAttrib<T>& rAttribute, uint32 index, const nuiRange& rRange, uint32 flag = 1)
+  nuiClampedValueAttributeEditor(const nglString& rName, const nuiAttrib<T>& rAttribute, uint32 index, const nuiRange& rRange)
 	: nuiAttributeEditor(),
   mAttribute(rAttribute),
   mName(rName),
@@ -67,7 +67,7 @@ public:
     mpBox->SetExpand(nuiExpandShrinkAndGrow);
     AddChild(mpBox);
     
-    Init(flag);
+    Init();
     mSink.Connect(mAttribute.GetChangedSignal0(), nuiMakeDelegate(this, &nuiClampedValueAttributeEditor::OnIndexedAttributeChanged));
   }
   
@@ -100,7 +100,7 @@ protected:
   
   
   
-  void Init(uint32 flag)
+  void Init()
   {
     float v = 0;
     if (mIndexed)

@@ -34,6 +34,15 @@ nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeB
   return new nuiGenericAttributeEditor(nuiAttribBase(pTarget, pAttribute));
 }
 
+template <class Type>
+nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeBase* pAttribute)
+{
+  const nuiRange& rRange = pAttribute->GetRange();
+  if (rRange.IsValid()) // Edit with a knob if at all possible
+    return new nuiClampedValueAttributeEditor<Type>(nuiAttrib<Type>(nuiAttribBase(pTarget, pAttribute)), rRange);
+  return new nuiGenericAttributeEditor(nuiAttribBase(pTarget, pAttribute));
+}
+
 
 nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, Kind kind, void* pOffset)
 : mName(rName),
@@ -325,7 +334,7 @@ nuiAttributeEditor* nuiAttribute<int8>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int8>(pTarget, this);
 }
 
 template <>
@@ -375,7 +384,7 @@ nuiAttributeEditor* nuiAttribute<int16>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int16>(pTarget, this);
 }
 
 template <>
@@ -426,7 +435,7 @@ nuiAttributeEditor* nuiAttribute<int32>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int32>(pTarget, this);
 }
 
 template <>
@@ -476,7 +485,7 @@ nuiAttributeEditor* nuiAttribute<int64>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int64>(pTarget, this);
 }
 
 template <>
@@ -527,7 +536,7 @@ nuiAttributeEditor* nuiAttribute<uint8>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint8>(pTarget, this);
 }
 
 template <>
@@ -584,7 +593,7 @@ nuiAttributeEditor* nuiAttribute<uint16>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint16>(pTarget, this);
 }
 
 template <>
@@ -642,7 +651,7 @@ nuiAttributeEditor* nuiAttribute<uint32>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint32>(pTarget, this);
 }
 
 template <>
@@ -700,7 +709,7 @@ nuiAttributeEditor* nuiAttribute<uint64>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint64>(pTarget, this);
 }
 
 template <>
@@ -776,7 +785,7 @@ nuiAttributeEditor* nuiAttribute<float>::GetDefaultEditor(void* pTarget)
 	}
 	
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<float>(pTarget, this);
 }
 
 
@@ -837,7 +846,7 @@ nuiAttributeEditor* nuiAttribute<double>::GetDefaultEditor(void* pTarget)
   }
 
   // if this code is executed, it means a case processing is missing
-  return nuiCreateGenericAttributeEditor(pTarget, this);
+  return nuiCreateGenericAttributeEditor<double>(pTarget, this);
 }
 
 template <>

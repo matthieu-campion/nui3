@@ -21,6 +21,8 @@ public:
   nuiRange(const nuiRange& rRange);
   virtual ~nuiRange();
 
+  bool IsValid() const;
+  
   void SetValue(double Value);
   void SetRange(double Minimum,double Maximum);
   void SetIncrement(double Increment);

@@ -22,19 +22,12 @@ nuiGenericAttributeEditor::nuiGenericAttributeEditor(const nuiAttribBase& rAttri
 	SetObjectClass(_T("nuiGenericAttributeEditor"));
 	
 	//NGL_OUT(_T("Generic Attrib editor '%s': '%s'\n"), rAttribute.GetName().GetChars(), contents.GetChars());
+  mpLabel = new nuiLabel();
+  AddChild(mpLabel);
 	if (!mAttribute.IsReadOnly())
-	{
-		nuiPane* pPane = new nuiPane();
-		mpLabel = new nuiLabel();
-		pPane->AddChild(mpLabel);
-    AddChild(pPane);
-		mEventSink.Connect(mpLabel->Clicked, &nuiGenericAttributeEditor::OnActivated);
-	}
-	else
-	{
-		mpLabel = new nuiLabel();
-    AddChild(mpLabel);
-	}
+    mEventSink.Connect(mpLabel->Clicked, &nuiGenericAttributeEditor::OnActivated);
+  else
+    mpLabel->SetEnabled(false);
 	
 	mEventSink.Connect(mAttribute.GetChangedEvent(), &nuiGenericAttributeEditor::OnAttributeChanged);
   OnAttributeChanged(nuiEvent());

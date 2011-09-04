@@ -81,6 +81,25 @@ nuiRange::~nuiRange()
 {
 }
 
+bool nuiRange::IsValid() const
+{
+  
+  if (isnan(mMinimum)
+  |   isnan(mMaximum)
+  |   isnan(mPageSize)
+  |   isnan(mValue)
+  |   isnan(mIncrement)
+  |   isnan(mPageIncrement)
+  |   isnan(mOrigin)
+      )
+  {
+    return false;
+  }
+  
+  return true;
+}
+
+
 void nuiRange::SetDiscreetStepSize(bool DiscreetStepSize)
 {
   mDiscreetStepSize = DiscreetStepSize;
