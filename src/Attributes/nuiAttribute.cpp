@@ -2211,7 +2211,7 @@ bool nuiAttribBase::IsAttributeChangeIgnored() const
 }
 
 
-nuiAttributeEditor* nuiAttribBase::GetEditor()
+nuiAttributeEditor* nuiAttribBase::GetEditor() const
 {
   return mpAttributeBase->GetEditor(mpTarget);
 }

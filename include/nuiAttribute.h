@@ -1314,7 +1314,7 @@ public:
   
   bool IsAttributeChangeIgnored() const;
   
-	nuiAttributeEditor* GetEditor();
+	nuiAttributeEditor* GetEditor() const;
 
   uint32 GetDimension() const;
   uint32 GetIndexRange(uint32 Dimension) const;
