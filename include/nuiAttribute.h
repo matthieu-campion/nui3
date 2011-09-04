@@ -473,7 +473,7 @@ public:
       }
     }
     
-    NGL_ASSERT(0);
+    return;
   }
 
   // Get/Set Editors:
@@ -991,7 +991,7 @@ public:
       }
     }
     
-    NGL_ASSERT(0);
+    //NGL_ASSERT(0);
   }
 
   // Get/Set Editors:

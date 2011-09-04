@@ -53,8 +53,11 @@ protected:
     const char* params[] = { "Type", "Frequency", "Q", NULL };
     for (uint32 i = 0 ; i < rAttributes.size(); i++)
     {
-      nuiWidget* pWidget = rAttributes[i].GetEditor();
-      pBox->AddCell(pWidget, nuiFill);
+      if (rAttributes[i].IsValid())
+      {
+        nuiWidget* pWidget = rAttributes[i].GetEditor();
+        pBox->AddCell(pWidget, nuiFill);
+      }
     }
   }
 };
