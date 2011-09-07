@@ -1438,7 +1438,7 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   nglString decoName;
   nglString barStyle = NavigationBarStyleToString(style);
   
-  decoName.Format(_T("nuiDefaultNavigation%lsButtonDecoration"), barStyle.GetChars());
+  decoName.Format(_T("nuiDefaultNavigation%sButtonDecoration"), barStyle.GetChars());
   nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(decoName);
   
   if (pDeco)
@@ -1471,9 +1471,9 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   // assign the texture for the "Up" state
   nglString decoUpName;
   if (leftyButton)
-    decoUpName.Format(_T("nuiDefaultNavigation%lsLeftButtonUp"), barStyle.GetChars());
+    decoUpName.Format(_T("nuiDefaultNavigation%sLeftButtonUp"), barStyle.GetChars());
   else
-    decoUpName.Format(_T("nuiDefaultNavigation%lsButtonUp"), barStyle.GetChars());
+    decoUpName.Format(_T("nuiDefaultNavigation%sButtonUp"), barStyle.GetChars());
 
   nuiTexture* pTexUp = nuiTexture::GetTexture("ButtonUp");
   NGL_ASSERT(pTexUp);
@@ -1483,9 +1483,9 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   // assign the texture for the "Down" state
   nglString decoDownName;
   if (leftyButton)
-    decoDownName.Format(_T("nuiDefaultNavigation%lsLeftButtonDown"), barStyle.GetChars());
+    decoDownName.Format(_T("nuiDefaultNavigation%sLeftButtonDown"), barStyle.GetChars());
   else
-    decoDownName.Format(_T("nuiDefaultNavigation%lsButtonDown"), barStyle.GetChars());
+    decoDownName.Format(_T("nuiDefaultNavigation%sButtonDown"), barStyle.GetChars());
   
   nuiTexture* pTexDown = nuiTexture::GetTexture("ButtonDown");
   NGL_ASSERT(pTexDown);
