@@ -60,13 +60,18 @@ nuiNavigationButton::nuiNavigationButton(nuiBarButtonSystemItem systemItem)
 }
 
 
+nuiNavigationButton::nuiNavigationButton()
+: nuiButton()
+{
+  SetObjectClass(_T("nuiNavigationButton"));
+}
+
 nuiNavigationButton::nuiNavigationButton(const nglString& rText)
 : nuiButton()
 {
   SetObjectClass(_T("nuiNavigationButton"));
   nuiLabel* pLabel = new nuiLabel(rText);
   AddChild(pLabel);
- 
 }
 
 

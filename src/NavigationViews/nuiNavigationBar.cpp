@@ -19,7 +19,8 @@ nuiNavigationBar::nuiNavigationBar()
   nuiHBox::SetCellExpand(0, nuiExpandFixed);
   nuiHBox::SetCellExpand(1, nuiExpandShrinkAndGrow);
   nuiHBox::SetCellExpand(2, nuiExpandFixed);
-  
+ 
+  SetPosition(nuiFillHorizontal);
   mBarStyle = eBarStyleDefault;
   //mTintColor = nuiColor(0,0,0);
   mTranslucent = false;
@@ -36,6 +37,10 @@ bool nuiNavigationBar::IsVisible()
   return (mBarStyle != eBarStyleNone);
 }
 
+nuiRect nuiNavigationBar::CalcIdealSize()
+{
+  return nuiRect(320, 44);
+}
 
 void nuiNavigationBar::SetBarStyle(nuiNavigationBarStyle style)
 {
