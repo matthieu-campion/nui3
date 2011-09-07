@@ -34,7 +34,7 @@ public:
 
   void SetTitle(const nglString& rTitle);
   void SetBackNavigationItem(bool set);
-  void SetTopNavigationItem(nuiNavigationButton* pButton);
+  void SetTopNavigationItem(nuiWidget* pWidget);
   void SetLeftNavigationItem(nuiNavigationButton* pButton);
   void SetRightNavigationItem(nuiNavigationButton* pButton);
     

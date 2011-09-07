@@ -1382,8 +1382,6 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
   if (!pBar->IsVisible())
     return;
   
-  pBar->SetPosition(nuiFillTop);
-
   // TODO : plateform? orientation?  
   
   nuiMetaDecoration* pMeta = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultNavigationBarDecoration"));

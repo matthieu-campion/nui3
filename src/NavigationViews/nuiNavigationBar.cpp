@@ -19,8 +19,10 @@ nuiNavigationBar::nuiNavigationBar()
   nuiHBox::SetCellExpand(0, nuiExpandFixed);
   nuiHBox::SetCellExpand(1, nuiExpandShrinkAndGrow);
   nuiHBox::SetCellExpand(2, nuiExpandFixed);
+  nuiHBox::SetExpand(nuiExpandShrinkAndGrow);
  
-  SetPosition(nuiFillHorizontal);
+  SetPosition(nuiFill);
+  
   mBarStyle = eBarStyleDefault;
   //mTintColor = nuiColor(0,0,0);
   mTranslucent = false;
@@ -89,7 +91,7 @@ void nuiNavigationBar::SetTitle(const nglString& rTitle)
   pLabel->SetFont(nuiFontManager::GetManager().GetFont(Request));
   pLabel->SetPosition(nuiCenter);
   pLabel->SetTextColor(nuiColor(255,255,255));
-  AddChild(pLabel);
+  SetTopNavigationItem(pLabel);
 }
 
 void nuiNavigationBar::SetBackNavigationItem(bool set)
@@ -100,10 +102,10 @@ void nuiNavigationBar::SetBackNavigationItem(bool set)
 }
 
 
-void nuiNavigationBar::SetTopNavigationItem(nuiNavigationButton* pButton)
+void nuiNavigationBar::SetTopNavigationItem(nuiWidget* pWidget)
 {
-  nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
-  nuiHBox::SetCell(1, pButton);
+  //nuiDefaultDecoration::NavigationButton(pButton, mBarStyle);  
+  nuiHBox::SetCell(1, pWidget);
 }
 
 void nuiNavigationBar::SetLeftNavigationItem(nuiNavigationButton* pButton)
