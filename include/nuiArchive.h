@@ -15,7 +15,7 @@ public:
   nuiArchive(bool Loading);
   virtual ~nuiArchive();
   
-  virtual void OpenGroup(const nglString& rName) = 0;
+  virtual bool OpenGroup(const nglString& rName) = 0;
   virtual void CloseGroup() = 0;
   
   virtual void Bind(bool& rValue, const nglString& rName) = 0;
@@ -40,7 +40,8 @@ public:
   {
     if (!rName.IsNull())
     {
-      OpenGroup(rName);
+      if (!OpenGroup(rName))
+        return;
     }
 
     rValue.Bind(*this);
@@ -74,9 +75,9 @@ public:
     
   }
   
-  virtual void OpenGroup(const nglString& rName)
+  virtual bool OpenGroup(const nglString& rName)
   {
-    
+    return false;
   }
   
   virtual void CloseGroup();
@@ -135,11 +136,12 @@ public:
   {
   }
   
-  virtual void OpenGroup(const nglString& rName)
+  virtual bool OpenGroup(const nglString& rName)
   {
     nuiXMLNode* pGroup = new nuiXMLNode(rName);
     mpCurrentNode->AddChild(pGroup);
     mpCurrentNode = pGroup;
+    return true;
   }
   
   virtual void CloseGroup()

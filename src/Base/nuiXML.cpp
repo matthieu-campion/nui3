@@ -883,7 +883,7 @@ int64 nuiXMLNode::Write(nglOStream& rStream, uint level) const
     //#FIXME
     //DUMPT(("<%s",name.GetChars()));
     res += rStream.WriteText(tab);
-    res += rStream.WriteText(nglString(_T(" <")));
+    res += rStream.WriteText(nglString(_T("<")));
     res += rStream.WriteText(name);
     //res.Add(tab).Add(_T(" <")).Add(name);
     
