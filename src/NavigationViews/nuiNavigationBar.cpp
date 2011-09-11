@@ -21,7 +21,7 @@ nuiNavigationBar::nuiNavigationBar()
   nuiHBox::SetCellExpand(2, nuiExpandFixed);
   nuiHBox::SetExpand(nuiExpandShrinkAndGrow);
  
-  SetPosition(nuiFill);
+  SetPosition(nuiFillTop);
   
   mBarStyle = eBarStyleDefault;
   //mTintColor = nuiColor(0,0,0);

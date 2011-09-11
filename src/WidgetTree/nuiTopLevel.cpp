@@ -2083,6 +2083,32 @@ nuiCSS* nuiTopLevel::GetCSS() const
   return mpCSS;
 }
 
+bool nuiTopLevel::LoadCSS(const nglPath& rPath)
+{
+  nglIStream* pF = rPath.OpenRead();
+  if (!pF)
+  {
+    NGL_OUT(_T("Unable to open CSS source file '%s'\n"), rPath.GetChars());
+    return false;
+  }
+  
+  nuiCSS* pCSS = new nuiCSS();
+  bool res = pCSS->Load(*pF, rPath);
+  delete pF;
+  
+  if (res)
+  {
+    SetCSS(pCSS);
+    return true;
+  }
+  
+  NGL_LOG("nuiTopLevel", NGL_LOG_ERROR, "%%s\n", pCSS->GetErrorString().GetChars());
+  
+  delete pCSS;
+  return false;
+}
+
+
 void nuiTopLevel::EnterModalState()
 {
   CheckValid();

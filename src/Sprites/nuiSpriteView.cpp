@@ -25,7 +25,7 @@ nuiSpriteFrame::~nuiSpriteFrame()
 
 bool nuiSpriteFrame::SetTexture(nuiTexture* pTexture, const nuiRect& rRect)
 {
-  //printf("nuiSpriteFrame::SetTexture1 %p %ls\n", pTexture, pTexture->GetSource().GetChars());
+  //printf("nuiSpriteFrame::SetTexture1 %p %s\n", pTexture, pTexture->GetSource().GetChars());
   if (mpTexture)
     mpTexture->Release();
   if (pTexture)
@@ -41,7 +41,7 @@ bool nuiSpriteFrame::SetTexture(const nglPath& rPath, const nuiRect& rRect)
   if (mpTexture)
     mpTexture->Release();
   mpTexture = nuiTexture::GetTexture(rPath);
-  //printf("nuiSpriteFrame::SetTexture2 %p %ls\n", mpTexture, mpTexture->GetSource().GetChars());
+  //printf("nuiSpriteFrame::SetTexture2 %p %s\n", mpTexture, mpTexture->GetSource().GetChars());
   mRect = rRect;
   return mpTexture != NULL;
 }
@@ -218,7 +218,7 @@ nuiSpriteDef::~nuiSpriteDef()
   for (size_t i = 0; i < mpAnimations.size(); i++)
     delete mpAnimations[i];
   nglString name(GetObjectName());
-  //printf("~nuiSpriteDef: %p %ls\n", this, name.GetChars());
+  //printf("~nuiSpriteDef: %p %s\n", this, name.GetChars());
   
   std::map<nglString, nuiSpriteDef*>::iterator it = mSpriteMap.find(name);
   NGL_ASSERT(it != mSpriteMap.end());

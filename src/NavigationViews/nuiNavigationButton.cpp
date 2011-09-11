@@ -18,25 +18,25 @@ nuiNavigationButton::nuiNavigationButton(nuiBarButtonSystemItem systemItem)
   SetObjectClass(_T("nuiNavigationButton"));
   //LBDEBUG TODO
   
-//  switch (systemItem)
-//  {
-//    case eBarButtonSystemItemDone: text = _T("Done"); break;
-//    case eBarButtonSystemItemCancel: text = _T("Cancel"); break;
-//    case eBarButtonSystemItemEdit: text = _T("Edit"); break;
-//    case eBarButtonSystemItemSave: text = _T("Save"); break;
-//    case eBarButtonSystemItemAdd: text = _T("Add"); break;
-//    case eBarButtonSystemItemReply: text = _T("Reply"); break;
-//    case eBarButtonSystemItemUndo: text = _T("Undo"); break;
-//    case eBarButtonSystemItemRedo: text = _T("Redo"); break;
-//  }
-//  
-//  if (!text.Empty())
-//  {
-//    nuiLabel* pLabel = new nuiLabel(text);
-//    AddChild(pLabel);
-//    return;
-//  }
-//  
+  switch (systemItem)
+  {
+    case eBarButtonSystemItemDone: text = _T("Done"); break;
+    case eBarButtonSystemItemCancel: text = _T("Cancel"); break;
+    case eBarButtonSystemItemEdit: text = _T("Edit"); break;
+    case eBarButtonSystemItemSave: text = _T("Save"); break;
+    case eBarButtonSystemItemAdd: text = _T("Add"); break;
+    case eBarButtonSystemItemReply: text = _T("Reply"); break;
+    case eBarButtonSystemItemUndo: text = _T("Undo"); break;
+    case eBarButtonSystemItemRedo: text = _T("Redo"); break;
+  }
+  
+  if (!text.IsEmpty())
+  {
+    nuiLabel* pLabel = new nuiLabel(text);
+    AddChild(pLabel);
+    return;
+  }
+  
 //  switch (systemItem)
 //  {
 ////    case eBarButtonSystemItemFlexibleSpace,

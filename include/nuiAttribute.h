@@ -509,12 +509,6 @@ public:
 	// Format methods for each dimensions:
 	void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const
 	{
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-
 		if (mFormater)
 		{
 			// the user has specified its own formater.
@@ -1027,19 +1021,15 @@ public:
   // Format methods for each dimensions:
   void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const
   {
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-
     if (mFormater)
     {
       // the user has specified its own formater.
-      return mFormater(string, Get(pTarget, index0, index1));
+      mFormater(string, Get(pTarget, index0, index1));
+      return;
     }
     
-    return FormatDefault(Get(pTarget, index0, index1), string);
+    FormatDefault(Get(pTarget, index0, index1), string);
+    return;
   }
   
   

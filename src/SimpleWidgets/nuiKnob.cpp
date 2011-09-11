@@ -87,7 +87,9 @@ void nuiKnob::InitAttributes()
 // attributes
 const nglPath& nuiKnob::GetSequencePath() const
 {
-  return mpImageSequence->GetTexturePath();
+  if (mpImageSequence)
+    return mpImageSequence->GetTexturePath();
+  return nglPath();
 }
 
 void nuiKnob::SetSequencePath(const nglPath& rPath)
@@ -101,7 +103,9 @@ void nuiKnob::SetSequencePath(const nglPath& rPath)
 
 nuiOrientation nuiKnob::GetOrientation() const
 {
-  return mpImageSequence->GetOrientation();
+  if (mpImageSequence)
+    return mpImageSequence->GetOrientation();
+  return nuiVertical;
 }
 
 
@@ -116,7 +120,9 @@ void nuiKnob::SetOrientation(nuiOrientation orientation)
 
 uint32 nuiKnob::GetNbFrames() const
 {
-  return mpImageSequence->GetNbFrames();
+  if (mpImageSequence)
+    return mpImageSequence->GetNbFrames();
+  return 0;
 }
 
 
