@@ -24,6 +24,7 @@ public:
   nuiAttributeEditorPane(const nglString& rFolderName, nuiObject* pObject, const std::vector<nglString>& rAttributeNames)
   : nuiFolderPane(rFolderName)
   {
+    SetObjectClass("nuiAttributeEditorPane");
     std::vector<nuiAttribBase> attribs;
     for (uint32 i = 0 ; i < rAttributeNames.size(); i++)
       attribs.push_back(pObject->GetAttribute(rAttributeNames[i]));
@@ -33,6 +34,7 @@ public:
   nuiAttributeEditorPane(const nglString& rFolderName, nuiObject* pObject, const char* pAttributeNames[])
   : nuiFolderPane(rFolderName)
   {
+    SetObjectClass("nuiAttributeEditorPane");
     std::vector<nuiAttribBase> attribs;
     for (uint32 i = 0 ; pAttributeNames[i]; i++)
       attribs.push_back(pObject->GetAttribute(pAttributeNames[i]));
