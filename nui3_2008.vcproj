@@ -353,6 +353,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\nuiAttributeEditorBox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAttributeEditorPane.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Attributes\nuiBooleanAttributeEditor.cpp"
 					>
 				</File>
@@ -3454,6 +3462,18 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiVoice.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="MIDI"
+				>
+				<File
+					RelativePath=".\src\Midi\nuiMidi.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiMidi.h"
 					>
 				</File>
 			</Filter>
@@ -16391,15 +16411,15 @@
 							>
 						</File>
 						<File
+							RelativePath=".\deps\libcss\src\utils\utils.h"
+							>
+						</File>
+						<File
 							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
 							>
 						</File>
 						<File
 							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
-							>
-						</File>
-						<File
-							RelativePath=".\deps\libcss\src\utils\utils.h"
 							>
 						</File>
 					</Filter>
