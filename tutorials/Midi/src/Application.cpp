@@ -25,10 +25,6 @@ Application::Application()
 
 Application::~Application()
 {
-  if (mpMainWindow)
-    mpMainWindow->Release();
-  mpMainWindow = NULL;
-  
 }
 
 void Application::OnExit (int Code)
