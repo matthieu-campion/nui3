@@ -2140,7 +2140,7 @@ nui_hb_get_glyph_h_origin (hb_font_t *font,
                           void *user_data)
 {
   /* We always work in the horizontal coordinates. */
-  return TRUE;
+  return true;
 }
 
 static hb_bool_t
@@ -2155,14 +2155,14 @@ nui_hb_get_glyph_v_origin (hb_font_t *font,
   int load_flags = FT_LOAD_DEFAULT;
   
   if (FT_Load_Glyph (ft_face, glyph, load_flags))
-    return FALSE;
+    return false;
   
   /* Note: FreeType's vertical metrics grows downward while other FreeType coordinates
    * have a Y growing upward.  Hence the extra negation. */
   *x = ft_face->glyph->metrics.horiBearingX -   ft_face->glyph->metrics.vertBearingX;
   *y = ft_face->glyph->metrics.horiBearingY - (-ft_face->glyph->metrics.vertBearingY);
   
-  return TRUE;
+  return false;
 }
 
 static hb_position_t
@@ -2203,13 +2203,13 @@ nui_hb_get_glyph_extents (hb_font_t *font,
   int load_flags = FT_LOAD_DEFAULT;
   
   if (FT_Load_Glyph (ft_face, glyph, load_flags))
-    return FALSE;
+    return false;
   
   extents->x_bearing = ft_face->glyph->metrics.horiBearingX;
   extents->y_bearing = ft_face->glyph->metrics.horiBearingY;
   extents->width = ft_face->glyph->metrics.width;
   extents->height = ft_face->glyph->metrics.height;
-  return TRUE;
+  return true;
 }
 
 static hb_bool_t
@@ -2225,18 +2225,18 @@ nui_hb_get_glyph_contour_point (hb_font_t *font,
   int load_flags = FT_LOAD_DEFAULT;
   
   if (FT_Load_Glyph (ft_face, glyph, load_flags))
-    return FALSE;
+    return false;
   
   if (ft_face->glyph->format != FT_GLYPH_FORMAT_OUTLINE)
-    return FALSE;
+    return false;
   
   if (point_index >= (unsigned int) ft_face->glyph->outline.n_points)
-    return FALSE;
+    return false;
   
   *x = ft_face->glyph->outline.points[point_index].x;
   *y = ft_face->glyph->outline.points[point_index].y;
   
-  return TRUE;
+  return true;
 }
 
 
