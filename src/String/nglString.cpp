@@ -13,7 +13,7 @@ licence: see nui3/LICENCE.TXT
 #include "ucdata.h"
 
 #ifdef WINCE
-  #define ngl_vsnprintf	_vsprintf
+  #define ngl_vsnprintf	_vsnprintf
   #define ngl_snprintf	_snprintf
   #define ngl_strcmp		strcmp
   #define ngl_stricmp 		stricmp
@@ -38,7 +38,7 @@ licence: see nui3/LICENCE.TXT
   #define ngl_mbs_stricmp strcasecmp
 #elif defined _LINUX_
   #include <ctype.h>
-  #define ngl_vsnprintf vsprintf
+  #define ngl_vsnprintf vsnprintf
   #define ngl_snprintf	snprintf
   #define ngl_strcmp strcmp
   #define ngl_stricmp strcasecmp
