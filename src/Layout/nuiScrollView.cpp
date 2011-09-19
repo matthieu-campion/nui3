@@ -1090,7 +1090,9 @@ void nuiScrollView::ShowScrollBars(bool autoHide)
 }
 
 void nuiScrollView::HideScrollBars()
-{  
+{ 
+  if (mpShowAnimH) 
+  {
   mpShowAnimH->Stop();
   mpShowAnimV->Stop();
   
@@ -1101,7 +1103,7 @@ void nuiScrollView::HideScrollBars()
   mpHideAnimH->Stop();
   mpHideAnimH->SetTime(0);  
   mpHideAnimH->Play();
-
+  }
 }
 
 void nuiScrollView::SetHideScrollBars(bool hide)
