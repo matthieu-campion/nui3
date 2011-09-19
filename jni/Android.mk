@@ -107,7 +107,7 @@ NUI_LOCAL_SRC_FILES_AUDIO_ENGINE := ../src/AudioEngine/nuiAudioDb.cpp \
 NUI_LOCAL_SRC_FILES_AUDIO_SAMPLES := ../src/AudioSamples/nuiAiffReader.cpp \
                                      ../src/AudioSamples/nuiAiffWriter.cpp \
                                      ../src/AudioSamples/nuiAudioDecoder.cpp \
-                                     ../src/AudioSamples/Android/nuiAudioDecoder_Android.cpp \
+                                     ../src/AudioSamples/Unix/nuiAudioDecoder_Unix.cpp \
                                      ../src/AudioSamples/nuiChunkSampleReader.cpp \
                                      ../src/AudioSamples/nuiSample.cpp \
                                      ../src/AudioSamples/nuiSampleInfo.cpp \
