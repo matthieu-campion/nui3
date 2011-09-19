@@ -29,4 +29,5 @@ add_subdirectory (TextEdit)
 #add_subdirectory (VideoDecoder)
 #add_subdirectory (VSTPlugin)
 add_subdirectory (WidgetCreatorCSS)
+add_subdirectory (AudioDecoder)
 

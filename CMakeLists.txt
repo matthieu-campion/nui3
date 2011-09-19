@@ -227,6 +227,7 @@ set(SOURCES
   src/Audio/nuiAudioDevice.cpp
   src/Audio/nuiAudioFifo.cpp
 
+
   src/Attributes/nuiAttribute.cpp
   src/Attributes/nuiAttributeEditor.cpp
   src/Attributes/nuiBooleanAttributeEditor.cpp
@@ -418,8 +419,20 @@ IF (${LINUX})
   # src/File/Unix/nglFile_Unix.cpp
     src/File/Unix/nglPath_Unix.cpp
 
-   src/Threading/posix/nglThread_posix.cpp
-   src/Application/Unix/nglConsole_Unix.cpp
+    src/Threading/posix/nglThread_posix.cpp
+    src/Application/Unix/nglConsole_Unix.cpp
+
+    src/AudioSamples/nuiAiffReader.cpp
+    src/AudioSamples/nuiAudioDecoder.cpp
+    src/AudioSamples/nuiSampleInfo.cpp         
+    src/AudioSamples/nuiSampleWriter.cpp
+    src/AudioSamples/nuiWaveWriter.cpp
+    src/AudioSamples/nuiAiffWriter.cpp
+    src/AudioSamples/nuiChunkSampleReader.cpp
+    src/AudioSamples/nuiSample.cpp             
+    src/AudioSamples/nuiSampleReader.cpp
+    src/AudioSamples/nuiWaveReader.cpp
+    src/AudioSamples/Unix/nuiAudioDecoder_Unix.cpp
 
     ${SOURCES}
   )
@@ -474,6 +487,7 @@ ELSEIF (${WINDOWS})
     src/Threading/win32/nglThread_win32.cpp
 
     src/Net/Win/nuiHTTP_WinXX.cpp
+
   )
 ENDIF (${LINUX})
 
@@ -481,7 +495,7 @@ ENDIF (${LINUX})
 add_subdirectory(deps)
 
 add_library( nui3 SHARED ${SOURCES} )
-target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey libcss harfbuzz)
+target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy mpg123 ucdata tracemonkey libcss harfbuzz)
 
 add_subdirectory(scratchpads)
 add_subdirectory(tutorials)
