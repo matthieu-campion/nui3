@@ -78,23 +78,13 @@ public:
   
 	
 	
-  virtual bool ToString(void* pTarget, nglString& rString) const = 0;
-  virtual bool FromString(void* pTarget, const nglString& rString) const = 0;
-  virtual bool ToString(void* pTarget, int32 index, nglString& rString) const = 0;
-  virtual bool FromString(void* pTarget, int32 index, const nglString& rString) const = 0;
   virtual bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const = 0;
   virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const = 0;
 
-  virtual bool ToVariant(void* pTarget, nuiVariant& rVar) const = 0;
-  virtual bool FromVariant(void* pTarget, const nuiVariant& rVar) const = 0;
-  virtual bool ToVariant(void* pTarget, int32 index, nuiVariant& rVar) const = 0;
-  virtual bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVar) const = 0;
   virtual bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVar) const = 0;
   virtual bool FromVariant(void* pTarget, int32 index0, int32 index1, const nuiVariant& rVar) const = 0;
   
 	// Format methods for each dimensions:
-	virtual void Format(void* pTarget, nglString& string) const = 0;
-	virtual void Format(void* pTarget, uint32 index, nglString& string) const = 0;
 	virtual void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const = 0;
   
   void IgnoreAttributeChange(bool ignore);
@@ -109,11 +99,24 @@ public:
   
   void SetAsInstanceAttribute(bool set);
   bool IsInstanceAttribute() const;
+  bool IsValid(void* pTarget = NULL) const;
+  
+  
+  enum Kind
+  {
+    eSetterGetter,        // use the standard getter and setter delegates
+    eDirectReference,     // mOffset is actually a pointer to the data.
+    eClassMember          // mOffset is an offset from the start of the target object in memory
+  };
+  Kind GetKind() const;
+  void* GetOffset() const;
+  
 protected:
-  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly);  ///< property 
-  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, Kind kind = eSetterGetter, void* pOffset = NULL);  ///< property 
+  nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit units, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rArrayRangeGetter, Kind kind = eSetterGetter, void* pOffset = NULL);  ///< property 
   
 private:
+  Kind mKind;
   nglString mName;
   nuiAttributeType mType;
   nuiAttributeUnit mUnit;
@@ -124,11 +127,13 @@ private:
   nuiRange mRange;
   int32 mOrder;
   uint32 mDimension;
+  void* mOffset;
   ArrayRangeDelegate mRangeGetter;
 protected:
   mutable AttributeEventMap mAttributeChangedEvents;
 };
 
+#define NUI_INVALID_RANGE nuiRange(std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::quiet_NaN())
 
 template <typename Contents>  
 class nuiAttribute : public nuiAttributeBase
@@ -157,86 +162,109 @@ public:
   
 
   // Direct Access: (dim = 0)
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false),
       mGetter(rGetter.GetMemento()),
       mSetter(rSetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false),
     mGetter(rGetter.GetMemento())
   {
   }
 
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, true),
     mSetter(rSetter.GetMemento())
   {
   }
   
 	// Array (dim = 1)
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, true, 1, rRangeGetter),
     mSetter(rSetter.GetMemento())
   {
   }
   
 	// Array (dim = 2)
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, true, 2, rRangeGetter),
     mSetter(rSetter.GetMemento())
   {
   }
-
-  bool IsValid(void* pTarget = NULL) const
+  
+  // Direct reference:
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, Contents& rRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, eDirectReference, (void*)&rRef)
   {
-    if (mGetter.empty())
-      return false;
+  }
+  
+#if 0 // Disabled until I have some time to think about a good way to implement this
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, Contents* pRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 1, eDirectReference, (void*)pRef)
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, Contents** pRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, 2, eDirectReference, (void*)pRef)
+  {
+  }
+#endif
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const Contents& rRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, eDirectReference, (void*)&rRef)
+  {
+  }
+  
+#if 0 // Disabled until I have some time to think about a good way to implement this
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const Contents* pRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 1, eDirectReference, (void*)pRef)
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const Contents** pRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, 2, eDirectReference, (void*)pRef)
+  {
+  }
+#endif  
 
-    if (!pTarget) // We just want a general test about the availability of the Getter
-      return true;
-    
-    switch (GetDimension())
-    {
-      case 0:
-        return true;
-        break;
-      case 1:
-        return (GetIndexRange(pTarget, 0) > 0);
-        break;
-      case 2:
-        return (GetIndexRange(pTarget, 0) > 0) && (GetIndexRange(pTarget, 1) > 0);
-        break;
-    }
-    return false; // Any other dimension is an error!
+  // Class member reference:
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, nuiObject* pThis, Contents& rRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, false, false, eClassMember, (void*)((uint64)&rRef - (uint64)pThis))
+  {
+  }
+  
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, nuiObject* pThis, const Contents& rRef, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
+  : nuiAttributeBase(rName, nuiAttributeTypeTrait<Contents>::mTypeId, units, rRange, true, false, eClassMember, (void*)((uint64)&rRef - (uint64)pThis))
+  {
   }
   
   ////////////////////////////////////////////////////
@@ -253,50 +281,6 @@ public:
     return true;
   }
   
-  bool ToString(void* pTarget, nglString& rString) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-
-    return ToString(Get(pTarget), rString);
-  }
-  
-  bool FromString(void* pTarget, const nglString& rString) const
-  {
-    if (mSetter.empty())
-      return false;
-    Contents val;
-    bool res = FromString(val, rString);
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToString(void* pTarget, int32 index, nglString& rString) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    return ToString(Get(pTarget, index), rString);
-  }
-  
-  bool FromString(void* pTarget, int32 index, const nglString& rString) const
-  {
-    if (mSetter.empty())
-      return false;
-    
-    Contents val;
-    bool res = FromString(val, rString);
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, index, val);
-    return res;
-  }
-  
   bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
   {
     if (!IsValid(pTarget))
@@ -306,14 +290,10 @@ public:
   
   virtual bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const
   {
-    if (mSetter.empty())
-      return false;
     Contents val;
     bool res = FromString(val, rString);
     if (!res)
-    {
       return false;
-    }
     Set(pTarget, index0, index1, val);
     return res;
   }
@@ -328,60 +308,8 @@ public:
   
   bool FromVariant(Contents& rValue, const nuiVariant& rVariant) const
   {
-#ifndef CLANG_HACK
     rValue = rVariant.operator Contents();
-#endif
     return true;
-  }
-  
-  bool ToVariant(void* pTarget, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    
-    return ToVariant(Get(pTarget), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    Contents val;
-    bool res = true;
-#ifndef CLANG_HACK
-    res = FromVariant(val, rVariant);
-#endif
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    return ToVariant(Get(pTarget, index), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    
-    Contents val;
-    bool res = true;
-#ifndef CLANG_HACK
-    res = FromVariant(val, rVariant);
-#endif
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, index, val);
-    return res;
   }
   
   bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
@@ -393,106 +321,159 @@ public:
   
   virtual bool FromVariant(void* pTarget, int32 index0, int32 index1, const nuiVariant& rVariant) const
   {
-    if (mSetter.empty())
-      return false;
     Contents val;
     bool res = FromVariant(val, rVariant);
     if (!res)
-    {
       return false;
-    }
     Set(pTarget, index0, index1, val);
     return res;
   }
   
   
-  // Getters for each dimension:
-  Contents Get(void* pTarget) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 0)
-      return Get(pTarget, 0);
-    GetterDelegate Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    return Getter();
-  }
-  
-  Contents Get(void* pTarget, uint32 index) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 1)
-      return Get(pTarget, index, 0);
-    GetterDelegate1 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    uint32 range = GetIndexRange(pTarget, 0);
-    NGL_ASSERT(range > index);
-    return Getter(index);
-  }
-  
+  // Getter
   Contents Get(void* pTarget, uint32 index0, uint32 index1) const
   {
-    NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    GetterDelegate2 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-    NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
-    return Getter(index0, index1);
-  }
-  
-  // Setters for each dimension:
-  void Set(void* pTarget, Contents rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 0);
-    SetterDelegate Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(rValue);
+    Contents* pContents = NULL;
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetKind())
     {
-      SendAttributeChanged(pTarget, rValue); 
+      case eSetterGetter:
+        NGL_ASSERT(!mGetter.empty());
+        switch (GetDimension())
+        {
+          case 0:
+          {
+            GetterDelegate Getter;
+            Getter.SetMemento(mGetter);
+            if (!IsInstanceAttribute())
+              Getter.SetThis(pTarget);
+            return Getter();
+            break;
+          }
+          case 1:
+          {
+            GetterDelegate1 Getter;
+            Getter.SetMemento(mGetter);
+            if (!IsInstanceAttribute())
+              Getter.SetThis(pTarget);
+            NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+            return Getter(index0);
+            break;
+          }
+          case 2:
+          {
+            GetterDelegate2 Getter;
+            Getter.SetMemento(mGetter);
+            if (!IsInstanceAttribute())
+              Getter.SetThis(pTarget);
+            NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+            NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
+            return Getter(index0, index1);
+            break;
+          }
+        }
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassMember:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
     }
-  }
-  
-  void Set(void* pTarget, uint32 index, Contents rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 1);
-    SetterDelegate1 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index, rValue);
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetDimension())
     {
-      SendAttributeChanged(pTarget, index, rValue); 
+      case 0:
+      case 1:
+      {
+        return pContents[index0];
+        break;
+      }
+      case 2:
+      {
+        Contents** pContents2 = (Contents**)pContents;
+        return pContents2[index0][index1];
+        break;
+      }
     }
+
+    NGL_ASSERT(NULL);
+    return *pContents;
   }
   
+  // Setter
   void Set(void* pTarget, uint32 index0, uint32 index1, Contents rValue) const
   {
-    NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    SetterDelegate2 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index0, index1, rValue);
+    Contents* pContents = NULL;
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetKind())
     {
-      SendAttributeChanged(pTarget, index0, index1, rValue); 
+      case eSetterGetter:
+        NGL_ASSERT(!mSetter.empty());
+        
+        switch (GetDimension())
+        {
+          case 0:
+          {
+            SetterDelegate Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, rValue); 
+            break;
+          }
+          case 1:
+          {
+            SetterDelegate1 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, rValue); 
+            break;
+          }
+          case 2:
+          {
+            SetterDelegate2 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, index1, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, index1, rValue); 
+            break;
+          }
+        }
+        return;
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassMember:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
     }
+    
+    switch (GetDimension())
+    {
+      case 0:
+      case 1:
+      {
+        pContents[index0] = rValue;
+        break;
+      }
+      case 2:
+      {
+        Contents** pContents2 = (Contents**)pContents;
+        pContents2[index0][index1] = rValue;
+        break;
+      }
+    }
+    
+    return;
   }
 
   // Get/Set Editors:
@@ -526,52 +507,17 @@ public:
 	}
 
 	// Format methods for each dimensions:
-	void Format(void* pTarget, nglString& string) const
-	{
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-		if (mFormater)
-		{
-			// the user has specified its own formater.
-			return mFormater(string, Get(pTarget));
-		}
-		
-		return FormatDefault(Get(pTarget), string);
-	}
-	
-	void Format(void* pTarget, uint32 index, nglString& string) const
-	{
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-		if (mFormater)
-		{
-			// the user has specified its own formater.
-			return mFormater(string, Get(pTarget, index));
-		}
-		
-		return FormatDefault(Get(pTarget, index), string);
-	}
-	
 	void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const
 	{
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
 		if (mFormater)
 		{
 			// the user has specified its own formater.
-			return mFormater(string, Get(pTarget, index0, index1));
+      mFormater(string, Get(pTarget, index0, index1));
+      
+      return;
 		}
-		
-		return FormatDefault(Get(pTarget, index0, index1), string);
+
+    FormatDefault(Get(pTarget, index0, index1), string);
 	}
 	
   
@@ -752,60 +698,60 @@ public:
   
   
   // Direct Access: (dim = 0)
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const SetterDelegate& rSetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, false),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate& rGetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, true, false),
     mGetter(rGetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate& rSetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, true),
     mSetter(rSetter.GetMemento())
   {
   }
   
   // Array (dim = 1)
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate1& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, true, false, 1, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate1& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, true, 1, rRangeGetter),
     mSetter(rSetter.GetMemento())
   {
   }
   
   // Array (dim = 2)
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = nuiRange()) ///< Read/write property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read/write property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento()),
     mSetter(rSetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const GetterDelegate2& rGetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
     : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, true, false, 2, rRangeGetter),
     mGetter(rGetter.GetMemento())
   {
   }
   
-  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = nuiRange()) ///< Read only property
+  nuiAttribute(const nglString& rName, nuiAttributeUnit units, const SetterDelegate2& rSetter, const ArrayRangeDelegate& rRangeGetter = NULL, const nuiRange& rRange = NUI_INVALID_RANGE) ///< Read only property
   : nuiAttributeBase(rName, nuiAttributeTypeTrait<const Contents&>::mTypeId, units, rRange, false, true, 2, rRangeGetter),
   mSetter(rSetter.GetMemento())
   {
@@ -844,32 +790,6 @@ public:
     return rValue = rString;
   }
   
-  bool ToString(void* pTarget, nglString& rString) const
-  {
-    return ToString(Get(pTarget), rString);
-  }
-  
-  bool FromString(void* pTarget, const nglString& rString) const
-  {
-    Contents val;
-    bool res = FromString(val, rString);
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToString(void* pTarget, int32 index, nglString& rString) const
-  {
-    return ToString(Get(pTarget, index), rString);
-  }
-  
-  bool FromString(void* pTarget, int32 index, const nglString& rString) const
-  {
-    Contents val;
-    bool res = FromString(val, rString);
-    Set(pTarget, index, val);
-    return res;
-  }
-  
   bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
   {
     return ToString(Get(pTarget, index0, index1), rString);
@@ -900,53 +820,6 @@ public:
     return true;
   }
   
-  bool ToVariant(void* pTarget, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    
-    return ToVariant(Get(pTarget), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    Contents val;
-    bool res = true;
-#ifndef CLANG_HACK
-    res = FromVariant(val, rVariant);
-#endif
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, val);
-    return res;
-  }
-  
-  bool ToVariant(void* pTarget, int32 index, nuiVariant& rVariant) const
-  {
-    if (!IsValid(pTarget))
-      return false;
-    return ToVariant(Get(pTarget, index), rVariant);
-  }
-  
-  bool FromVariant(void* pTarget, int32 index, const nuiVariant& rVariant) const
-  {
-    if (mSetter.empty())
-      return false;
-    
-    Contents val;
-    bool res = FromVariant(val, rVariant);
-    if (!res)
-    {
-      return false;
-    }
-    Set(pTarget, index, val);
-    return res;
-  }
-  
   bool ToVariant(void* pTarget, int32 index0, int32 index1, nuiVariant& rVariant) const
   {
     if (!IsValid(pTarget))
@@ -969,96 +842,152 @@ public:
   }
   
   
-  // Getters for each dimension:
-  const Contents& Get(void* pTarget) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 0)
-      return Get(pTarget, 0);
-    GetterDelegate Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    return Getter();
-  }
-  
-  const Contents& Get(void* pTarget, uint32 index) const
-  {
-    NGL_ASSERT(!mGetter.empty());
-    if (GetDimension() > 1)
-      return Get(pTarget, index, 0);
-    GetterDelegate1 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    NGL_ASSERT(GetIndexRange(pTarget, 0) > index);
-    return Getter(index);
-  }
-  
+  // Getter
   const Contents& Get(void* pTarget, uint32 index0, uint32 index1) const
   {
-    NGL_ASSERT(!mGetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    GetterDelegate2 Getter;
-    Getter.SetMemento(mGetter);
-    if (!IsInstanceAttribute())
-      Getter.SetThis(pTarget);
-    NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
-    NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
-    return Getter(index0, index1);
-  }
-  
-  // Setters for each dimension:
-  void Set(void* pTarget, const Contents& rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    if (GetDimension() > 0)
-      return Set(pTarget, 0, rValue);
-    SetterDelegate Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(rValue);
+    Contents* pContents = NULL;
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetKind())
     {
-      SendAttributeChanged(pTarget, rValue); 
+      case eSetterGetter:
+        NGL_ASSERT(!mGetter.empty());
+        switch (GetDimension())
+      {
+        case 0:
+        {
+          GetterDelegate Getter;
+          Getter.SetMemento(mGetter);
+          if (!IsInstanceAttribute())
+            Getter.SetThis(pTarget);
+          return Getter();
+          break;
+        }
+        case 1:
+        {
+          GetterDelegate1 Getter;
+          Getter.SetMemento(mGetter);
+          if (!IsInstanceAttribute())
+            Getter.SetThis(pTarget);
+          NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+          return Getter(index0);
+          break;
+        }
+        case 2:
+        {
+          GetterDelegate2 Getter;
+          Getter.SetMemento(mGetter);
+          if (!IsInstanceAttribute())
+            Getter.SetThis(pTarget);
+          NGL_ASSERT(GetIndexRange(pTarget, 0) > index0);
+          NGL_ASSERT(GetIndexRange(pTarget, 1) > index1);
+          return Getter(index0, index1);
+          break;
+        }
+      }
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassMember:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
     }
-  }
-  
-  void Set(void* pTarget, uint32 index, const Contents& rValue) const
-  {
-    NGL_ASSERT(!mSetter.empty());
-    if (GetDimension() > 1)
-      return Set(pTarget, index, 0, rValue);
-    SetterDelegate1 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index, rValue);
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetDimension())
     {
-      SendAttributeChanged(pTarget, index, rValue); 
+      case 0:
+      case 1:
+      {
+        return pContents[index0];
+        break;
+      }
+      case 2:
+      {
+        Contents** pContents2 = (Contents**)pContents;
+        return pContents2[index0][index1];
+        break;
+      }
     }
+    
+    NGL_ASSERT(NULL);
+    return *pContents;
   }
   
+  // Setter
   void Set(void* pTarget, uint32 index0, uint32 index1, const Contents& rValue) const
   {
-    NGL_ASSERT(!mSetter.empty());
-    NGL_ASSERT(GetDimension() == 2);
-    SetterDelegate2 Setter;
-    Setter.SetMemento(mSetter);
-    if (!IsInstanceAttribute())
-      Setter.SetThis(pTarget);
-    Setter(index0, index1, rValue);
+    Contents* pContents = NULL;
     
-    if (!IsAttributeChangeIgnored())
+    switch (GetKind())
     {
-      SendAttributeChanged(pTarget, index0, index1, rValue); 
+      case eSetterGetter:
+        NGL_ASSERT(!mSetter.empty());
+        
+        switch (GetDimension())
+        {
+          case 0:
+          {
+            SetterDelegate Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, rValue); 
+            break;
+          }
+          case 1:
+          {
+            SetterDelegate1 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, rValue); 
+            break;
+          }
+          case 2:
+          {
+            SetterDelegate2 Setter;
+            Setter.SetMemento(mSetter);
+            if (!IsInstanceAttribute())
+              Setter.SetThis(pTarget);
+            Setter(index0, index1, rValue);
+            if (!IsAttributeChangeIgnored())
+              SendAttributeChanged(pTarget, index0, index1, rValue); 
+            break;
+          }
+        }
+        return;
+        break;
+      case eDirectReference:
+        pContents = (Contents*)GetOffset();
+        break;
+      case eClassMember:
+        pContents = (Contents*)((uint64)pTarget + (uint64)GetOffset());
+        break;
     }
+    
+    switch (GetDimension())
+    {
+      case 0:
+      case 1:
+      {
+        pContents[index0] = rValue;
+        break;
+      }
+      case 2:
+      {
+        Contents** pContents2 = (Contents**)pContents;
+        pContents2[index0][index1] = rValue;
+        break;
+      }
+    }
+    
+    //NGL_ASSERT(0);
   }
-  
+
   // Get/Set Editors:
   void SetEditor(const NewEditorDelegate& rNewEditor)
   {
@@ -1090,54 +1019,17 @@ public:
   }
   
   // Format methods for each dimensions:
-  void Format(void* pTarget, nglString& string) const
-  {
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-    if (mFormater)
-    {
-      // the user has specified its own formater.
-      return mFormater(string, Get(pTarget));
-    }
-    
-    return FormatDefault(Get(pTarget), string);
-  }
-  
-  void Format(void* pTarget, uint32 index, nglString& string) const
-  {
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-
-    if (mFormater)
-    {
-      // the user has specified its own formater.
-      return mFormater(string, Get(pTarget, index));
-    }
-    
-    return FormatDefault(Get(pTarget, index), string);
-  }
-  
   void Format(void* pTarget, uint32 index0, uint32 index1, nglString& string) const
   {
-    if (!mGetter)
-    {
-      string.Nullify();
-      return;
-    }
-
     if (mFormater)
     {
       // the user has specified its own formater.
-      return mFormater(string, Get(pTarget, index0, index1));
+      mFormater(string, Get(pTarget, index0, index1));
+      return;
     }
     
-    return FormatDefault(Get(pTarget, index0, index1), string);
+    FormatDefault(Get(pTarget, index0, index1), string);
+    return;
   }
   
   
@@ -1303,13 +1195,13 @@ template <class Type>
 class nuiValueAttribute : public nuiAttribute<Type>
 {
 public:
-  nuiValueAttribute(const nglString& rName, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = nuiRange())
+  nuiValueAttribute(const nglString& rName, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = NUI_INVALID_RANGE)
     : nuiAttribute<Type>(rName, units, nuiMakeDelegate(this, &nuiValueAttribute<Type>::_Get), nuiMakeDelegate(this, &nuiValueAttribute<Type>::_Set), rRange)
   {
     nuiAttributeBase::SetAsInstanceAttribute(true);
   }
 
-  nuiValueAttribute(const nglString& rName, Type value, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = nuiRange())
+  nuiValueAttribute(const nglString& rName, Type value, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = NUI_INVALID_RANGE)
     : nuiAttribute<Type>(rName, units, nuiMakeDelegate(this, &nuiValueAttribute<Type>::_Get), nuiMakeDelegate(this, &nuiValueAttribute<Type>::_Set), rRange)
   {
     nuiAttributeBase::SetAsInstanceAttribute(true);
@@ -1329,6 +1221,19 @@ protected:
 
   Type mValue;
 };
+
+template <class Type>
+nuiAttributeBase* nuiMakeAttribute(Type& rRef, const nglString& rName, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = NUI_INVALID_RANGE)
+{
+  return new nuiAttribute<Type>(rName, units, rRef, rRange);
+}
+
+template <class Type>
+nuiAttributeBase* nuiMakeAttribute(nuiObject* pThis, Type& rRef, const nglString& rName, nuiAttributeUnit units = nuiUnitNone, const nuiRange& rRange = NUI_INVALID_RANGE)
+{
+  return new nuiAttribute<Type>(rName, units, pThis, rRef, rRange);
+}
+
 
 //////////////////////////////////////////////
 
@@ -1399,7 +1304,7 @@ public:
   
   bool IsAttributeChangeIgnored() const;
   
-	nuiAttributeEditor* GetEditor();
+	nuiAttributeEditor* GetEditor() const;
 
   uint32 GetDimension() const;
   uint32 GetIndexRange(uint32 Dimension) const;
@@ -1456,22 +1361,22 @@ public:
   
   Contents Get() const
   {
-    return mpAttribute->Get(mpTarget);
+    return mpAttribute->Get(mpTarget, 0, 0);
   }
   
   void Set(Contents rValue) const
   {
-    mpAttribute->Set(mpTarget, rValue);
+    mpAttribute->Set(mpTarget, 0, 0, rValue);
   }
 	
   Contents Get(uint32 index) const
   {
-    return mpAttribute->Get(mpTarget, index);
+    return mpAttribute->Get(mpTarget, index, 0);
   }
   
   void Set(uint32 index, Contents rValue) const
   {
-    mpAttribute->Set(mpTarget, index, rValue);
+    mpAttribute->Set(mpTarget, index, 0, rValue);
   }
 	
   Contents Get(uint32 index0, uint32 index1) const

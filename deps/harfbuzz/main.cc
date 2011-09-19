@@ -24,9 +24,9 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#define HB_OT_LAYOUT_CC
+#include "hb-mutex-private.hh"
 #include "hb-open-file-private.hh"
-#include "hb-ot-layout-gdef-private.hh"
+#include "hb-ot-layout-gdef-table.hh"
 #include "hb-ot-layout-gsubgpos-private.hh"
 
 #ifdef HAVE_GLIB
@@ -35,7 +35,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-HB_BEGIN_DECLS
 
 
 int
@@ -193,4 +192,3 @@ main (int argc, char **argv)
 }
 
 
-HB_END_DECLS

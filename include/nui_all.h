@@ -86,4 +86,11 @@ precompiled header central file and everything should be rolling. (lookup precom
 #include "nuiSound.h"
 #include "nuiVoice.h"
 
+#include "nuiNavigationBar.h"
+#include "nuiNavigationController.h"
+#include "nuiNavigationButton.h"
+#include "nuiViewController.h"
+
+
+
 #endif // __nui_all_h__

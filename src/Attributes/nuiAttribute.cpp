@@ -34,8 +34,17 @@ nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeB
   return new nuiGenericAttributeEditor(nuiAttribBase(pTarget, pAttribute));
 }
 
+template <class Type>
+nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeBase* pAttribute)
+{
+  const nuiRange& rRange = pAttribute->GetRange();
+  if (rRange.IsValid()) // Edit with a knob if at all possible
+    return new nuiClampedValueAttributeEditor<Type>(nuiAttrib<Type>(nuiAttribBase(pTarget, pAttribute)), rRange);
+  return new nuiGenericAttributeEditor(nuiAttribBase(pTarget, pAttribute));
+}
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly)
+
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, Kind kind, void* pOffset)
 : mName(rName),
   mType(type),
   mUnit(unit),
@@ -45,11 +54,13 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mInstanceAttribute(false),
   mRange(rRange),
   mOrder(0),
-  mDimension(0)
+  mDimension(0),
+  mKind(kind),
+  mOffset(pOffset)
 {
 }
 
-nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rRangeGetter)
+nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, uint32 dimension, const ArrayRangeDelegate& rRangeGetter, Kind kind, void* pOffset)
 : mName(rName),
   mType(type),
   mUnit(unit),
@@ -60,7 +71,9 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mRange(rRange),
   mOrder(0),
   mDimension(dimension),
-  mRangeGetter(rRangeGetter)
+  mRangeGetter(rRangeGetter),
+  mKind(kind),
+  mOffset(pOffset)
 {
 }
 
@@ -187,6 +200,37 @@ void nuiAttributeBase::KillAttributeHolder(void* pHolder)
   }
 }  
 
+nuiAttributeBase::Kind nuiAttributeBase::GetKind() const
+{
+  return mKind;
+}
+
+void* nuiAttributeBase::GetOffset() const
+{
+  return mOffset;
+}
+
+bool nuiAttributeBase::IsValid(void* pTarget) const
+{
+  if (!pTarget) // We just want a general test about the availability of the Getter
+    return true;
+  
+  switch (GetDimension())
+  {
+    case 0:
+      return true;
+      break;
+    case 1:
+      return (GetIndexRange(pTarget, 0) > 0);
+      break;
+    case 2:
+      return (GetIndexRange(pTarget, 0) > 0) && (GetIndexRange(pTarget, 1) > 0);
+      break;
+  }
+  return false; // Any other dimension is an error!
+}
+
+
 ////////////////// 
 // Declaration of some property types specializations:
 //template<uint32> nuiAttributeTypeTrait<uint32> nuiAttributeTypeTrait<uint32>::singleton;
@@ -290,7 +334,7 @@ nuiAttributeEditor* nuiAttribute<int8>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int8>(pTarget, this);
 }
 
 template <>
@@ -340,7 +384,7 @@ nuiAttributeEditor* nuiAttribute<int16>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int16>(pTarget, this);
 }
 
 template <>
@@ -391,7 +435,7 @@ nuiAttributeEditor* nuiAttribute<int32>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int32>(pTarget, this);
 }
 
 template <>
@@ -441,7 +485,7 @@ nuiAttributeEditor* nuiAttribute<int64>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<int64>(pTarget, this);
 }
 
 template <>
@@ -492,7 +536,7 @@ nuiAttributeEditor* nuiAttribute<uint8>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint8>(pTarget, this);
 }
 
 template <>
@@ -549,7 +593,7 @@ nuiAttributeEditor* nuiAttribute<uint16>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint16>(pTarget, this);
 }
 
 template <>
@@ -607,7 +651,7 @@ nuiAttributeEditor* nuiAttribute<uint32>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint32>(pTarget, this);
 }
 
 template <>
@@ -665,7 +709,7 @@ nuiAttributeEditor* nuiAttribute<uint64>::GetDefaultEditor(void* pTarget)
 {
 	//#FIXME TODO
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<uint64>(pTarget, this);
 }
 
 template <>
@@ -741,7 +785,7 @@ nuiAttributeEditor* nuiAttribute<float>::GetDefaultEditor(void* pTarget)
 	}
 	
 	// if this code is executed, it means a case processing is missing
-	return nuiCreateGenericAttributeEditor(pTarget, this);
+	return nuiCreateGenericAttributeEditor<float>(pTarget, this);
 }
 
 
@@ -802,7 +846,7 @@ nuiAttributeEditor* nuiAttribute<double>::GetDefaultEditor(void* pTarget)
   }
 
   // if this code is executed, it means a case processing is missing
-  return nuiCreateGenericAttributeEditor(pTarget, this);
+  return nuiCreateGenericAttributeEditor<double>(pTarget, this);
 }
 
 template <>
@@ -2076,22 +2120,22 @@ void nuiAttribBase::SetOrder(int32 order)
 // To/From String
 bool nuiAttribBase::ToString(nglString& rString) const
 {
-  return mpAttributeBase->ToString(mpTarget, rString);
+  return mpAttributeBase->ToString(mpTarget, 0, 0, rString);
 }
 
 bool nuiAttribBase::FromString(const nglString& rString) const
 {
-  return mpAttributeBase->FromString(mpTarget, rString);
+  return mpAttributeBase->FromString(mpTarget, 0, 0, rString);
 }
 
 bool nuiAttribBase::ToString(uint32 index, nglString& rString) const
 {
-  return mpAttributeBase->ToString(mpTarget, index, rString);
+  return mpAttributeBase->ToString(mpTarget, index, 0, rString);
 }
 
 bool nuiAttribBase::FromString(uint32 index, const nglString& rString) const
 {
-  return mpAttributeBase->FromString(mpTarget, index, rString);
+  return mpAttributeBase->FromString(mpTarget, index, 0, rString);
 }
 
 bool nuiAttribBase::ToString(uint32 index0, uint32 index1, nglString& rString) const
@@ -2107,22 +2151,22 @@ bool nuiAttribBase::FromString(uint32 index0, uint32 index1, const nglString& rS
 // To/From Variant
 bool nuiAttribBase::ToVariant(nuiVariant& rVariant) const
 {
-  return mpAttributeBase->ToVariant(mpTarget, rVariant);
+  return mpAttributeBase->ToVariant(mpTarget, 0, 0, rVariant);
 }
 
 bool nuiAttribBase::FromVariant(const nuiVariant& rVariant) const
 {
-  return mpAttributeBase->FromVariant(mpTarget, rVariant);
+  return mpAttributeBase->FromVariant(mpTarget, 0, 0, rVariant);
 }
 
 bool nuiAttribBase::ToVariant(uint32 index, nuiVariant& rVariant) const
 {
-  return mpAttributeBase->ToVariant(mpTarget, index, rVariant);
+  return mpAttributeBase->ToVariant(mpTarget, index, 0, rVariant);
 }
 
 bool nuiAttribBase::FromVariant(uint32 index, const nuiVariant& rVariant) const
 {
-  return mpAttributeBase->FromVariant(mpTarget, index, rVariant);
+  return mpAttributeBase->FromVariant(mpTarget, index, 0, rVariant);
 }
 
 bool nuiAttribBase::ToVariant(uint32 index0, uint32 index1, nuiVariant& rVariant) const
@@ -2140,12 +2184,12 @@ bool nuiAttribBase::FromVariant(uint32 index0, uint32 index1, const nuiVariant& 
 // Format
 void nuiAttribBase::Format(nglString& rString) const
 {
-  mpAttributeBase->Format(mpTarget, rString);
+  mpAttributeBase->Format(mpTarget, 0, 0, rString);
 }
 
 void nuiAttribBase::Format(uint32 index, nglString& rString) const
 {
-  mpAttributeBase->Format(mpTarget, index, rString);
+  mpAttributeBase->Format(mpTarget, index, 0, rString);
 }
 
 void nuiAttribBase::Format(uint32 index0, uint32 index1, nglString& rString) const
@@ -2167,7 +2211,7 @@ bool nuiAttribBase::IsAttributeChangeIgnored() const
 }
 
 
-nuiAttributeEditor* nuiAttribBase::GetEditor()
+nuiAttributeEditor* nuiAttribBase::GetEditor() const
 {
   return mpAttributeBase->GetEditor(mpTarget);
 }

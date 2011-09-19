@@ -157,7 +157,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
 
 nuiMainWindow::~nuiMainWindow()
 {
-  delete mpInspectorWindow;
+  if (mpInspectorWindow)
+    mpInspectorWindow->Release();
   nuiTopLevel::Exit();
   
   delete mpNGLWindow;
@@ -379,8 +380,6 @@ void nuiMainWindow::OnClose()
   //OUT("OnClose\n");
   if (mQuitOnClose)
     App->Quit(0);
-  else
-    Trash();
 }
 
 void nuiMainWindow::OnState (nglWindow::StateInfo State)
@@ -739,7 +738,7 @@ bool nuiMainWindow::ShowWidgetInspector()
 
   if (mpInspectorWindow)
   {
-    delete mpInspectorWindow;
+    mpInspectorWindow->Release();
     mpInspectorWindow = NULL;
   }
   else
@@ -754,6 +753,7 @@ bool nuiMainWindow::ShowWidgetInspector()
     Info.Height = 600;
 
     mpInspectorWindow = new nuiMainWindow(nuiContextInfo(nuiContextInfo::StandardContext2D), Info, GetNGLContext(), ResPath);
+    mpInspectorWindow->Acquire();
     mpInspectorWindow->SetQuitOnClose(false);
     mpInspectorWindow->AddChild(new nuiIntrospector(this));
     mpInspectorWindow->SetState(nglWindow::eShow);

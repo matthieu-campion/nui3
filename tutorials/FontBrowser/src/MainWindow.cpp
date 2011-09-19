@@ -142,7 +142,7 @@ void MainWindow::DumpFonts(const std::list<nuiFontRequestResult>& rFonts, nglStr
     rString.AddFormat(_T("Scalable:\t\t%ls\n"), YESNO(pFontDesc->GetScalable()));
     
     rString.AddFormat(_T("Encodings:\t\t%d\n"), (uint32)pFontDesc->GetEncodings().size());
-    rString.AddFormat(_T("Glyphs:\t\t%d\n"), (uint32)pFontDesc->GetGlyphs().size());
+    //rString.AddFormat(_T("Glyphs:\t\t%d\n"), (uint32)pFontDesc->GetGlyphs().size());
     
     if (!pFontDesc->GetScalable())
       rString.AddFormat(_T("Sizes:\t\t%d\n"), (uint32)pFontDesc->GetSizes().size());

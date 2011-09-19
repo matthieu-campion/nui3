@@ -18,7 +18,6 @@
 #include "nuiTheme.h"
 #include "nuiDecoration.h"
 #include "nuiWidgetMatcher.h"
-#include "nuiClampedValueAttributeEditor.h"
 #include "nuiColorDecoration.h"
 #include "nuiTask.h"
 #include "nuiMatrixNode.h"
@@ -168,12 +167,6 @@ bool nuiWidget::AttrIsEnabled()
 bool nuiWidget::AttrIsVisible()
 {
 	return IsVisible();
-}
-
-
-static nuiAttributeEditor* GetAlphaAttributeEditor(void* pTarget, nuiAttribute<float>* pAttribute)
-{
-  return new nuiClampedValueAttributeEditor<float>(nuiAttrib<float>(nuiAttribBase(pTarget, pAttribute)), nuiRange(0, 0, 1, .1, .1, 0));
 }
 
 
@@ -468,18 +461,18 @@ void nuiWidget::InitAttributes()
                ));
 
   nuiAttribute<float>* pAlphaAttrib = new nuiAttribute<float>
-  (nglString(_T("Alpha")), nuiUnitSize,
+  (nglString(_T("Alpha")), nuiUnitNone,
    nuiMakeDelegate(this, &nuiWidget::GetAlpha),
-   nuiMakeDelegate(this, &nuiWidget::SetAlpha)
+   nuiMakeDelegate(this, &nuiWidget::SetAlpha),
+   nuiRange(0, 0, 1, .1, .1, 0)
    );
-  pAlphaAttrib->SetEditor(&GetAlphaAttributeEditor);
   AddAttribute(pAlphaAttrib);
   
   AddAttribute(new nuiAttribute<int32>
                (nglString(_T("Debug")), nuiUnitNone,
                 nuiMakeDelegate(this, &nuiWidget::_GetDebug),
-                nuiMakeDelegate(this, &nuiWidget::SetDebug)
-                ));
+                nuiMakeDelegate(this, &nuiWidget::SetDebug),
+                nuiRange(0, 0, 100, 1, 10, 10, 0)));
   
   AddAttribute(new nuiAttribute<bool>
                (nglString(_T("FixedAspectRatio")), nuiUnitOnOff,

@@ -13,7 +13,7 @@ licence: see nui3/LICENCE.TXT
 #include "ucdata.h"
 
 #ifdef WINCE
-  #define ngl_vsnprintf	_vsprintf
+  #define ngl_vsnprintf	_vsnprintf
   #define ngl_snprintf	_snprintf
   #define ngl_strcmp		strcmp
   #define ngl_stricmp 		stricmp
@@ -38,7 +38,7 @@ licence: see nui3/LICENCE.TXT
   #define ngl_mbs_stricmp strcasecmp
 #elif defined _LINUX_
   #include <ctype.h>
-  #define ngl_vsnprintf vsprintf
+  #define ngl_vsnprintf vsnprintf
   #define ngl_snprintf	snprintf
   #define ngl_strcmp strcmp
   #define ngl_stricmp strcasecmp
@@ -1933,6 +1933,8 @@ int32 nglString::HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar, i
 
 int32 nglString::Compare(const nglChar* pSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   const nglChar* pLocal = &mString[0];
   int result = (CaseSensitive) ?
     ngl_strcmp(pLocal, pSource) :
@@ -1945,11 +1947,17 @@ int32 nglString::Compare(const nglChar* pSource, bool CaseSensitive) const
 
 int32 nglString::Compare(const nglString& rSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return Compare(&rSource.mString[0], CaseSensitive);
 }
 
 int32 nglString::Compare(const nglChar* pSource, int32 Index, int32 Length, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   // Warning, no check against pSource bounds wrt. Index
   int result = (CaseSensitive) ?
     ngl_strncmp (&(mString[Index]), pSource, Length) :
@@ -1962,11 +1970,17 @@ int32 nglString::Compare(const nglChar* pSource, int32 Index, int32 Length, bool
 
 int32 nglString::Compare(const nglString& rSource, int32 Index, int32 Length, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return Compare(&rSource.mString[0], Index, Length, CaseSensitive);
 }
 
 int32 nglString::CompareNatural(const nglChar* pSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   int32 result = (CaseSensitive) ?
     strnatcmp(&mString[0], pSource) :
   strnatcasecmp(&mString[0], pSource);
@@ -1978,11 +1992,17 @@ int32 nglString::CompareNatural(const nglChar* pSource, bool CaseSensitive) cons
 
 int nglString::CompareNatural(const nglString& rSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return CompareNatural(&rSource.mString[0], CaseSensitive);
 }
 
 int32 nglString::CompareLeft(const nglChar* pSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   if (CaseSensitive)
   {
     uint32 pos = 0;
@@ -2016,6 +2036,10 @@ int32 nglString::CompareLeft(const nglChar* pSource, bool CaseSensitive) const
 
 int32 nglString::CompareLeft(const nglString& rSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return CompareLeft(&rSource.mString[0], CaseSensitive);
 }
 

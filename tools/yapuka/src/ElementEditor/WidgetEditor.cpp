@@ -145,8 +145,9 @@ WidgetEditor::WidgetEditor(ElementDesc* pDesc, ElementInspector* pInspector)
 	const nuiXMLNode* xml = pDesc->GetXML();
 	if (xml)
 	{
-		nuiXMLNode* child = xml->GetChild(0);
-		nuiWidget* pWidget = nuiCreateWidget(child);
+    //#FIXME!! Serialization API is deprecated!
+		//nuiXMLNode* child = xml->GetChild(0);
+		nuiWidget* pWidget = NULL; //nuiCreateWidget(child);
 		if (!pWidget)
 			return;
 			
@@ -473,7 +474,8 @@ void WidgetEditor::CommitWidgetChanges(nuiTreeNode* pTreeNode, nuiXMLNode* pXmlP
 		//**************************
 
 		// xml serialize
-		nuiXMLNode* pXmlNode = pWidget->Serialize(pXmlParent);
+    //#FIXME!!! Serialization API deprecated
+		//nuiXMLNode* pXmlNode = pWidget->Serialize(pXmlParent);
 
 		if (!pSelectionInfo->IsContainer())
 			return;

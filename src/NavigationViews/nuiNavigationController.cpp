@@ -284,8 +284,40 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
   }
   else if (!mPushed && !mPoped)
   {
-    // nothing to layout right now...
-    nuiSimpleContainer::SetRect(rRect);
+    // Normal layout:
+    IteratorPtr pIt;
+    for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
+    {
+      nuiWidgetPtr pItem = pIt->GetWidget();
+      nuiRect rect(rRect.Size());
+      
+      if (mShowNavigationBar)
+      {
+        nuiViewController* pView = dynamic_cast<nuiViewController*>(pItem);
+
+        if (pView)
+        {
+          nuiNavigationBar* pBar =  mpIn->GetNavigationBar();
+          nuiRect r(pBar->GetIdealRect());
+          r.MoveTo(0, 0);
+          r.SetWidth(rect.GetWidth());
+          pBar->SetLayout(r);
+          
+          if (!pBar->GetTranslucent())
+          {
+            float offset = pBar->GetRect().GetHeight();
+            rect.SetHeight(rect.GetHeight() - offset);
+            rect.Move(0, offset);
+          }
+        }
+      }
+      
+      if (mCanRespectConstraint)
+        pItem->SetLayoutConstraint(mConstraint);
+      pItem->GetIdealRect();
+      pItem->SetLayout(rect);
+    }
+    delete pIt;
     return true;
   }
   
@@ -295,35 +327,48 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
   rect.Set(mAnimPosition, rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
   if (mpIn)
   {
-    mpIn->SetLayout(rect);
-    
+    float offset = 0;
     if (mShowNavigationBar)
     {
-      nuiWidget* pBar =  mpIn->GetNavigationBar();
+      nuiNavigationBar* pBar =  mpIn->GetNavigationBar();
       nuiRect r(pBar->GetIdealRect());
       r.MoveTo(0, 0);
       r.SetWidth(rect.GetWidth());
       pBar->SetLayout(r);
+      
+      if (!pBar->GetTranslucent())
+        offset = pBar->GetRect().GetHeight();
     }
+    
+    rect.SetHeight(rect.GetHeight() - offset);
+    rect.Move(0, offset);
+    mpIn->SetLayout(rect);
+    
   }
   
   if (mpOut)
   {
+    float offset = 0;
+    if (mShowNavigationBar)
+    {
+      nuiNavigationBar* pBar =  mpOut->GetNavigationBar();
+      nuiRect r(pBar->GetIdealRect());
+      r.MoveTo(0, 0);
+      r.SetWidth(rect.GetWidth());
+      pBar->SetLayout(r);
+      if (!pBar->GetTranslucent())
+        offset = pBar->GetRect().GetHeight();
+    }
+
     if (mPushed)
       rect.Set(mAnimPosition - rRect.GetWidth(), rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
     else
       rect.Set(mAnimPosition + rRect.GetWidth(), rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
     
+    rect.SetHeight(rect.GetHeight() - offset);
+    rect.Move(0, offset);
     mpOut->SetLayout(rect);
     
-    if (mShowNavigationBar)
-    {
-      nuiWidget* pBar =  mpOut->GetNavigationBar();
-      nuiRect r(pBar->GetIdealRect());
-      r.MoveTo(0, 0);
-      r.SetWidth(rect.GetWidth());
-      pBar->SetLayout(r);
-    }
   }
   
   
@@ -614,7 +659,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     mAlphed = true;
     mAnimPosition = 0;
     
-    if (mpIn)
+    // the poped container could have been pushed with overlay : the previous container (the mpIn, here) is still attached to the widget tree
+    if (mpIn && !mpIn->GetParent())
     {
       AddChild(mpIn);  
       if (mShowNavigationBar)
@@ -659,7 +705,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     
     mAnimPosition = -idealsize.GetWidth();
     
-    if (mpIn)
+    // the poped container could have been pushed with overlay : the previous container (the mpIn, here) is still attached to the widget tree
+    if (mpIn && !mpIn->GetParent())
     {
       AddChild(mpIn);  
       if (mShowNavigationBar)
@@ -682,12 +729,14 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   }
   else
   {
-    if (mpIn)
+    // the poped container could have been pushed with overlay : the previous container (the mpIn, here) is still attached to the widget tree
+    if (mpIn && !mpIn->GetParent())
     {
       AddChild(mpIn);  
       if (mShowNavigationBar)
         AddChild(mpIn->GetNavigationBar());
     }
+    
     mpOut->ViewDidDisappear();
     if (mShowNavigationBar)
     {
@@ -697,9 +746,14 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     mpOut->Release();
     DelChild(mpOut);
     
+    
     // mpIn->ViewDidAppear() is made in nuiViewController::ConnectTopLevel
     
     mViewControllers.pop_back();
+    
+    if (viewOverlay)
+      mViewControllers.back()->SetOverlayed(false);
+
     
     if (mPendingOperations.size() >0)
     {  
@@ -957,6 +1011,7 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
   mpOut->ViewDidDisappear();
   // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
 
+  
   if (mpOut->GetParent())
   {
     if (mShowNavigationBar)
@@ -969,6 +1024,9 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
     DelChild(mpOut);
     
     mViewControllers.pop_back(); 
+    
+    if (viewOverlay)
+      mViewControllers.back()->SetOverlayed(false);
 
     if (mPendingOperations.size() >0)
     {

@@ -34,7 +34,6 @@
 #include "hb-font.h"
 #include "hb-object-private.hh"
 
-HB_BEGIN_DECLS
 
 
 /*
@@ -89,12 +88,13 @@ struct _hb_face_t {
 
   hb_bool_t immutable;
 
-  hb_get_table_func_t  get_table;
-  void                *user_data;
-  hb_destroy_func_t    destroy;
+  hb_reference_table_func_t  reference_table;
+  void                      *user_data;
+  hb_destroy_func_t          destroy;
 
   struct hb_ot_layout_t *ot_layout;
 
+  unsigned int index;
   unsigned int upem;
 };
 
@@ -155,10 +155,9 @@ struct _hb_font_t {
 
 
   private:
-  inline hb_position_t em_scale (int16_t v, int scale) { return v * (int64_t) scale / this->face->upem; }
+  inline hb_position_t em_scale (int16_t v, int scale) { return v * (int64_t) scale / hb_face_get_upem (this->face); }
 };
 
 
-HB_END_DECLS
 
 #endif /* HB_FONT_PRIVATE_HH */

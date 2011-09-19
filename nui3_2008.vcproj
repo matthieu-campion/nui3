@@ -353,6 +353,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\nuiAttributeEditorBox.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiAttributeEditorPane.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Attributes\nuiBooleanAttributeEditor.cpp"
 					>
 				</File>
@@ -3454,6 +3462,18 @@
 				</File>
 				<File
 					RelativePath=".\include\nuiVoice.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="MIDI"
+				>
+				<File
+					RelativePath=".\src\Midi\nuiMidi.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\nuiMidi.h"
 					>
 				</File>
 			</Filter>
@@ -8949,6 +8969,46 @@
 					>
 				</File>
 				<File
+					RelativePath=".\deps\harfbuzz\hb-fallback-shape-private.hh"
+					>
+				</File>
+				<File
+					RelativePath=".\deps\harfbuzz\hb-fallback-shape.cc"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\deps\harfbuzz\hb-font-private.hh"
 					>
 				</File>
@@ -9363,12 +9423,28 @@
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\harfbuzz\hb-ot-shape-complex-misc.cc"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -9385,6 +9461,14 @@
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -9623,6 +9707,14 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\deps\harfbuzz\hb.h"
@@ -9705,6 +9797,14 @@
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool
@@ -10901,6 +11001,14 @@
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -16303,15 +16411,15 @@
 							>
 						</File>
 						<File
-							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
-							>
-						</File>
-						<File
 							RelativePath=".\deps\libcss\src\utils\utils.h"
 							>
 						</File>
 						<File
 							RelativePath=".\deps\libcss\src\parse\properties\utils.h"
+							>
+						</File>
+						<File
+							RelativePath=".\deps\libcss\src\libparserutils\utils\utils.h"
 							>
 						</File>
 					</Filter>

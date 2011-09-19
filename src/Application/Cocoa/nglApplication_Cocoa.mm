@@ -441,9 +441,9 @@ static NSString* GetApplicationName(void)
 	}	
 }
 
-- (void) applicationWillResignActive:         (NSApplication*) pNSApplication
+- (void) applicationDidEnterBackground:         (NSApplication*) pNSApplication
 {
-  NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationWillResignActive]\n")); )
+  NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationDidEnterBackground]\n")); )
   NGL_ASSERT(App);
 	
 	
@@ -559,7 +559,7 @@ int nglApplication::Main(int argc, const char** argv)
 
   Init(argc, argv);
 
-  GetLog().SetLevel(_T("window"), 100);
+  //GetLog().SetLevel(_T("window"), 100);
   
   nglNSApplication *applicationObject = [nglNSApplication sharedApplication];
   

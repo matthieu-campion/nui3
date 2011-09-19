@@ -61,7 +61,8 @@ FrameEditor::FrameEditor(ElementDesc* pDesc, ElementInspector* pInspector)
   if (pNode)
   {
     mpFrame = new nuiFrame(pDesc->GetName());
-    if (mpFrame->Load(pNode))
+    //#FIXME!!! Serialization API is deprecated
+    //if (mpFrame->Load(pNode))
     {
       UpdateFrameViews(false);
     } 
@@ -254,7 +255,8 @@ void FrameEditor::CommitChanges()
     return;
 
   nuiXMLNode* pNode = new nuiXMLNode(_T(""));
-  mpFrame->Serialize(pNode);
+  //#FIXME!!! Serialization API is deprecated
+  //mpFrame->Serialize(pNode);
   pNode->SetAttribute(_T("Name"), mpDesc->GetName());
   mpDesc->SetXML(pNode);
 }

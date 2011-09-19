@@ -216,6 +216,19 @@ nuiObject::~nuiObject()
     c = mInheritanceMap[c];
   }
 
+  // Kill instance attributes:
+  std::map<nglString, nuiAttributeBase*>::iterator it = mInstanceAttributes.begin();
+  std::map<nglString, nuiAttributeBase*>::iterator end = mInstanceAttributes.end();
+  
+  while (it != end)
+  {
+    nuiAttributeBase* pAttrib = it->second;
+    delete pAttrib;
+    ++it;
+  }
+
+  mInstanceAttributes.clear();
+  
   if (mpTrace)
   {
     nglCriticalSectionGuard g(gObjectTraceCS);
@@ -672,7 +685,7 @@ int32 nuiObject::GetClassNameIndex(const nglString& rName)
     mObjectClassNames.push_back(rName);
     mClassAttributes.resize(index + 1);
     mInheritanceMap.push_back(-2); // -1 = not parent, -2 = not initialized
-    //NGL_DEBUG( printf("New class: %s [%d]\n", rName.GetChars(), index); )
+    NGL_DEBUG( printf("New class: %s [%d]\n", rName.GetChars(), index); )
     
     return index;
   }

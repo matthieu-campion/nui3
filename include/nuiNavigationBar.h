@@ -34,13 +34,13 @@ public:
 
   void SetTitle(const nglString& rTitle);
   void SetBackNavigationItem(bool set);
-  void SetTopNavigationItem(nuiNavigationButton* pButton);
+  void SetTopNavigationItem(nuiWidget* pWidget);
   void SetLeftNavigationItem(nuiNavigationButton* pButton);
   void SetRightNavigationItem(nuiNavigationButton* pButton);
     
 protected:
   
-//  virtual nuiRect CalcIdealSize();
+  virtual nuiRect CalcIdealSize();
   virtual bool Draw(nuiDrawContext* pContext);
   
 private:
