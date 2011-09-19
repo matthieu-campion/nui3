@@ -1639,11 +1639,13 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       if (allocated)
         free(pBuffer);
 
+#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
       if (!pTexture->IsBufferRetained())
       { 
         pTexture->ReleaseBuffer();
       }
-      
+#endif
+
     }
   }
   
