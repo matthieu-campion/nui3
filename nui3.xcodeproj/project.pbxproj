@@ -7142,6 +7142,13 @@
 			remoteGlobalIDString = 73F097E812E9D09E00656E84;
 			remoteInfo = thirdparty_ios_arm7;
 		};
+		E511CAA2142A27FA0079F31F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5DD2E8D12E09CA700F1EF4E;
+			remoteInfo = thirdparty;
+		};
 		E57D21461318B31E007B3B7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
@@ -7157,13 +7164,6 @@
 			remoteInfo = thirdparty;
 		};
 		E5DD343D12E09FB900F1EF4E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E5DD2E8D12E09CA700F1EF4E;
-			remoteInfo = thirdparty;
-		};
-		E5DD3A1412E0A3A800F1EF4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E581672F0C3CEBF100902DFE /* Project object */;
 			proxyType = 1;
@@ -15927,7 +15927,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E5DD3A1512E0A3A800F1EF4E /* PBXTargetDependency */,
+				E511CAA3142A27FA0079F31F /* PBXTargetDependency */,
 			);
 			name = nui3D;
 			productName = nui3D;
@@ -19264,6 +19264,11 @@
 			target = 73F097E812E9D09E00656E84 /* thirdparty_ios_arm7 */;
 			targetProxy = 73F09ACA12E9D0B200656E84 /* PBXContainerItemProxy */;
 		};
+		E511CAA3142A27FA0079F31F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
+			targetProxy = E511CAA2142A27FA0079F31F /* PBXContainerItemProxy */;
+		};
 		E57D21471318B31E007B3B7A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
@@ -19278,11 +19283,6 @@
 			isa = PBXTargetDependency;
 			target = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
 			targetProxy = E5DD343D12E09FB900F1EF4E /* PBXContainerItemProxy */;
-		};
-		E5DD3A1512E0A3A800F1EF4E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E5DD2E8D12E09CA700F1EF4E /* thirdparty */;
-			targetProxy = E5DD3A1412E0A3A800F1EF4E /* PBXContainerItemProxy */;
 		};
 		E5DD459712E0B13F00F1EF4E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

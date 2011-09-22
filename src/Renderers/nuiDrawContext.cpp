@@ -6,7 +6,7 @@
 */
 
 #include "nui.h"
-#include "nui.h"
+#include "ngl.h"
 #include "nuiDrawContext.h"
 #include "nuiMetaPainter.h"
 #include "nuiGLPainter.h"
