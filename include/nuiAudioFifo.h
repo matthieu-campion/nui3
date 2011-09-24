@@ -146,7 +146,7 @@ private :
 	virtual void OnStart ();
 
 	// output audio callback
-  void Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, uint32 SampleFrames);
+  void Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, uint32 SampleFrames, uint64 TimeStamp);
 };
 
 

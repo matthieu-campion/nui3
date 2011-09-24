@@ -737,7 +737,7 @@ void nuiAudioFifo::OnStart ()
 //
 // output audio callback
 //
-void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, uint32 SampleFrames)
+void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, uint32 SampleFrames, uint64 TimeStamp)
 {
   
 	if (GetStopRequest()) 

@@ -338,7 +338,7 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // We are now ready to call our processing delegate:
-  mAudioProcessFn(mInputBuffers, mOutputBuffers, mBufferSize);
+  mAudioProcessFn(mInputBuffers, mOutputBuffers, mBufferSize, inOutputTime ? inOutputTime->mHostTime : 0);
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   // Put back the output data in the actual buffers:

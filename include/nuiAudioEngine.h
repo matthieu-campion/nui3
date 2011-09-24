@@ -66,8 +66,8 @@ public:
   
     
 protected:
-  void ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames);
-  void ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames);
+  void ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames, uint64 TimeStamp);
+  void ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames, uint64 TimeStamp);
   bool AudioInit(ChannelConfig config);
   
   void SetPlay(bool play);

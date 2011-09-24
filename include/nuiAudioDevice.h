@@ -11,7 +11,7 @@
 
 class nuiAudioDeviceManager;
 
-typedef nuiFastDelegate3<const std::vector<const float*>&, const std::vector<float*>&, uint32> nuiAudioProcessFn; // the params are two arrays of float*: input and output
+typedef nuiFastDelegate4<const std::vector<const float*>&, const std::vector<float*>&, uint32, uint64> nuiAudioProcessFn; // the params are two arrays of float*: input and output
 
 class nuiAudioDevice
 {

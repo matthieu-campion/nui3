@@ -143,7 +143,7 @@ void nuiAudioEngine::UnsetOutputProcessDelegate()
 }
 
 
-void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
+void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames, uint64 TimeStamp)
 {
 #ifdef AUDIO_PROFILE
   double beginTime = nglTime();
@@ -277,7 +277,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
    
 }
 
-void nuiAudioEngine::ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
+void nuiAudioEngine::ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames, uint64 TimeStamp)
 {
   if (mInputDelegateSet)
     mInputDelegate(rInput, SampleFrames);
