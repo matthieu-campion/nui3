@@ -148,7 +148,7 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
 {
   //NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d    %d %d\n"),uNumFrames, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
   
-  mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
+  mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames, 0);
 
 
   // copy buffers (int -> float)
