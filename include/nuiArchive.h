@@ -64,7 +64,7 @@ class nuiArchive_XML_Loader : public nuiArchive
 {
 public:
   
-  nuiArchive_XML_Loader(nuiXMLNode* pRootNode) : nuiArchive(true)
+  nuiArchive_XML_Loader(nuiXMLNode* pRootNode) : nuiArchive(false)
   {
     mpRootNode = pRootNode;
     mpCurrentNode = pRootNode;
@@ -77,7 +77,7 @@ public:
   
   virtual bool OpenGroup(const nglString& rName)
   {
-    return false;
+    return mpCurrentNode->GetName() == rName;
   }
   
   virtual void CloseGroup();
@@ -102,24 +102,22 @@ public:
   template <typename Type>
   void Bind(Type& rValue, const nglString& rName)
   {
-    if (!rName.IsNull())
+    if (!OpenGroup(rName))
     {
-      OpenGroup(rName);
+      NGL_LOG("nuiArchive_XML_Loader", NGL_LOG_ERROR, "'%s' element not found", rName.GetChars());
+      return;
     }
     
     rValue.Bind(*this);
     
-    if (!rName.IsNull())
-    {
-      CloseGroup();
-    }
+    CloseGroup();
   }
   
 
 protected:
   nuiXMLNode* mpRootNode;
   nuiXMLNode* mpCurrentNode;
-
+  uint32 mChildIndex;
 };
 
 class nuiArchive_XML_Saver : public nuiArchive
