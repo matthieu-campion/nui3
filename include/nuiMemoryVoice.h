@@ -9,7 +9,7 @@
 #include "nui.h"
 #include "nuiMemorySound.h"
 
-class nuiMemoryVoice : nuiVoice
+class nuiMemoryVoice : public nuiVoice
 {
 public:
   friend class nuiMemorySound;

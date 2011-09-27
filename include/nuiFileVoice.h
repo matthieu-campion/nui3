@@ -11,7 +11,7 @@
 #include "nuiFileSound.h"
 
 
-class nuiFileVoice : nuiVoice
+class nuiFileVoice : public nuiVoice
 {
 public:
   friend class nuiFileSound;
