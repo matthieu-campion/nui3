@@ -137,3 +137,4 @@ uint32 nuiFileVoice::ReadSamples(const std::vector<float*>& rOutput, int64 posit
   uint32 read = mpReader->ReadDE(temp, todo, eSampleFloat32);
   return read;
 }
+
