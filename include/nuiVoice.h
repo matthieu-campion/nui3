@@ -9,6 +9,21 @@
 
 #include "nui.h"
 
+class nuiVoiceEvent
+{
+public:
+  enum Type
+  {
+    FadeOut,
+    FadeIn
+  };
+  nuiVoiceEvent(Type EventType, int64 position, int64 param = 0);
+  
+  Type mType;
+  int64 mPosition;
+  int64 mParam;
+};
+
 
 class nuiVoice : public nuiObject
 {
@@ -48,8 +63,10 @@ public:
   float GetPan() const;
   void SetPan(float pan);
   
+  void PostEvent(const nuiVoiceEvent& rEvent);
 protected:
   virtual uint32 ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames) = 0;
+  void ProcessInternal(const std::vector<float*>& rOutput, uint32 SampleFrames);
 
   nuiVoice(nuiSound* pSound = NULL);  
   virtual ~nuiVoice();
@@ -81,4 +98,10 @@ protected:
   uint32 mFadeOutLength;
   
   nglCriticalSection mCs;
+  
+  std::vector<nuiVoiceEvent> mEvents;
+  nglCriticalSection mEventCs;
+  
 };
+
+

@@ -121,6 +121,51 @@ bool nuiVoice::IsDone() const
 
 void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
 {
+  uint32 done = 0;
+  std::vector<float*> output;
+  for (int c = 0; c < rOutput.size(); c++)
+    output.push_back(rOutput[c]);
+  
+  while (done != SampleFrames)
+  {
+    int64 nextevent = std::numeric_limits<int64>::max();
+    {
+      nglCriticalSectionGuard guard(mEventCs);
+      while (!mEvents.empty() && mEvents.front().mPosition == GetPosition())
+      {
+        const nuiVoiceEvent& event(mEvents.front());
+        switch (event.mType)
+        {
+        case nuiVoiceEvent::FadeOut:
+          FadeOut(event.mParam);
+          break;
+        case nuiVoiceEvent::FadeIn:
+          FadeIn(event.mParam);
+          break;
+        }
+
+        mEvents.erase(mEvents.begin());
+      }
+      
+      if (!mEvents.empty())
+        nextevent = mEvents.front().mPosition;
+    }
+    
+    const int64 nexteventwait = nextevent - GetPosition();
+    const int64 todo = MIN(SampleFrames, nexteventwait);
+    
+    
+    
+    ProcessInternal(rOutput, todo);
+    for (int c = 0; c < output.size(); c++)
+      output[c] += todo;
+
+    done += todo;
+  }
+}
+
+void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 SampleFrames)
+{
   if (!mpSound || !mPlay || !IsValid())
     return;
   
@@ -374,3 +419,15 @@ void nuiVoice::SetPan(float pan)
 {
   mPan = pan;
 }
+
+void nuiVoice::PostEvent(const nuiVoiceEvent& rEvent)
+{
+  nglCriticalSectionGuard guard(mEventCs);
+  mEvents.push_back(rEvent);
+}
+
+nuiVoiceEvent::nuiVoiceEvent(Type EventType, int64 position, int64 param)
+: mPosition(position), mType(EventType), mParam(param)
+{
+}
+
