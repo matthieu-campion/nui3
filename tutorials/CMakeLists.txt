@@ -1,3 +1,4 @@
+add_subdirectory (AudioDecoder)
 add_subdirectory (RSS)
 add_subdirectory (Buttons)
 add_subdirectory (Checkerboard)
@@ -29,5 +30,4 @@ add_subdirectory (TextEdit)
 #add_subdirectory (VideoDecoder)
 #add_subdirectory (VSTPlugin)
 add_subdirectory (WidgetCreatorCSS)
-add_subdirectory (AudioDecoder)
 

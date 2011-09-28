@@ -20,7 +20,7 @@ int main(int argc, char** argv)
   
   if (argc < 2)
   {
-    printf("usage:\n%s <path to mp3 file>\n");
+    printf("usage:\n%s <path to mp3 file>\n", argv[0]);
     return -1;
   }  
 
