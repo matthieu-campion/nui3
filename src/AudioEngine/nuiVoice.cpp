@@ -126,7 +126,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
   for (int c = 0; c < rOutput.size(); c++)
     output.push_back(rOutput[c]);
   
-  while (done != SampleFrames)
+  while (done < SampleFrames)
   {
     int64 nextevent = std::numeric_limits<int64>::max();
     {

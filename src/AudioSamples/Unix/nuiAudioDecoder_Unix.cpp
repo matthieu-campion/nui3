@@ -259,7 +259,7 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
   
   uint32 bytesDone = 0;
   int err = MPG123_OK;
-  while (outBytes && err != MPG123_DONE)
+  while (outBytes && err != MPG123_OK)
   {
     size_t outBytesDone = 0;
     unsigned char* pOut = pTemp + bytesDone;
@@ -274,6 +274,10 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
       int e;
       mpg123_getformat(mpPrivate->mpHandle, &r, &c, &e);
     }
+    else if (err != MPG123_OK)
+    {
+      NGL_LOG("nuiAudioDecoder", NGL_LOG_ERROR, "mpg123 error while decoding: %s", mpg123_strerror(mpPrivate->mpHandle));
+    }
     
     // feed decoder if needed
     if (err == MPG123_NEED_MORE)
@@ -284,7 +288,11 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
         pIn = new unsigned char[inBytes];
       }
       uint32 bytesRead = mrStream.ReadUInt8(pIn, inBytes);
-      mpg123_decode(mpPrivate->mpHandle, pIn, bytesRead, NULL, 0, &outBytesDone);
+      err = mpg123_decode(mpPrivate->mpHandle, pIn, bytesRead, NULL, 0, &outBytesDone);
+      else if (err != MPG123_OK)
+      {
+        NGL_LOG("nuiAudioDecoder", NGL_LOG_ERROR, "mpg123 error while decoding: %s", mpg123_strerror(mpPrivate->mpHandle));
+      }
     }
   }
   

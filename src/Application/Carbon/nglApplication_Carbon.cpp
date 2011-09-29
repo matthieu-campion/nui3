@@ -161,7 +161,7 @@ void nglApplication::DoMenuCommand(long menuResult)
 /* Startup
  */
 
-int nglApplication::Main(int argc, char** argv)
+int nglApplication::Main(int argc, const char** argv)
 {
   if (!Init (argc, argv))
     return 1;
@@ -170,7 +170,7 @@ int nglApplication::Main(int argc, char** argv)
   return res;
 }
 
-bool nglApplication::Init(int ArgCnt, char** pArg)
+bool nglApplication::Init(int ArgCnt, const char** pArg)
 {
   int i;
 

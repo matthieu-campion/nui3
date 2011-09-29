@@ -250,7 +250,7 @@ protected:
   static OSErr QuitAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
   static OSErr OpenDocumentsAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
 
-  friend int main(int argc, char** argv);
+  friend int main(int argc, const char** argv);
   
 #ifdef __MACHO__  
   friend pascal void TimerAction (EventLoopTimerRef  theTimer, EventLoopIdleTimerMessage inState, void* userData);
