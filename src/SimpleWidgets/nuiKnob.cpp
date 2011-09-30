@@ -259,7 +259,7 @@ bool nuiKnob::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mClicked = true;
     Grab();
     Invalidate();
-    mClickValue = mRange.GetValue();
+    mClickValue = mRange.GetUnitValue();
     
     return true;
   }
@@ -324,16 +324,16 @@ bool nuiKnob::MouseMoved(nuiSize X, nuiSize Y)
 
     nuiSize x,y;
     nuiSize range = sqrtf(GetRect().GetWidth() * GetRect().GetHeight());
-    x = X-mClickX;
+    x = X - mClickX;
     y = mClickY - Y;
 
     //nuiSize length = range;
-    nuiSize start= mClickValue;
+    nuiSize start = mClickValue;
     nuiSize movement = ( x + y ) / sensitivity;
 
-    start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
+    start += movement/range;
     
-    mRange.SetValue(start);
+    mRange.SetUnitValue(start);
     
     mInteractiveValueChanged = true;
     InteractiveValueChanged();
@@ -413,7 +413,7 @@ bool nuiKnob::Draw(nuiDrawContext* pContext)
 {
   if (mpImageSequence)
   {
-    mFrameIndex = (int)((mpImageSequence->GetNbFrames()-1) * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum());
+    mFrameIndex = (int)((mpImageSequence->GetNbFrames()-1) * mRange.GetUnitValue());
     
     mpImageSequence->SetFrameIndex(mFrameIndex);
     mpImageSequence->Draw(pContext, this);
@@ -432,7 +432,7 @@ bool nuiKnob::Draw(nuiDrawContext* pContext)
     float rr = r * .8;
 
     float range = .8;
-    float a = (-( 1 - range ) / 2 - (range * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum()));
+    float a = (-( 1 - range ) / 2 - (range * mRange.GetUnitValue()));
     float a1 = (-( 1 - range ) / 2) * 360 - 90;
     float a2 = (-( 1 - range ) / 2 - range) * 360 - 90;
     a *= 2 * M_PI;

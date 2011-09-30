@@ -14,13 +14,14 @@
   #define ISNAN_DOUBLE std::isnan<double>
 #endif
 
-nuiRange::nuiRange(double Value, double Min, double Max, double Increment, double PageIncrement, double PageSize, double Origin)
+nuiRange::nuiRange(double Value, double Min, double Max, double Increment, double PageIncrement, double PageSize, double Origin, float UnitCurve)
 {
   mEvents = true;
   mDiscreetStepSize = false;
   mMinimum = Min;
   mMaximum = Max;
   mPageSize = PageSize;
+  mUnitCurve = UnitCurve;
 
   if (mMinimum < mMaximum)
   {
@@ -60,6 +61,7 @@ nuiRange::nuiRange(const nuiRange& rRange)
   mIncrement     = rRange.mIncrement;   
   mPageIncrement = rRange.mPageIncrement;
   mOrigin        = rRange.mOrigin;
+  mUnitCurve     = rRange.mUnitCurve;
 }
 
 nuiRange& nuiRange::operator=(const nuiRange& rRange)
@@ -73,6 +75,7 @@ nuiRange& nuiRange::operator=(const nuiRange& rRange)
   mIncrement     = rRange.mIncrement;   
   mPageIncrement = rRange.mPageIncrement;
   mOrigin        = rRange.mOrigin;
+  mUnitCurve     = rRange.mUnitCurve;
   return *this;
 }
 
@@ -91,6 +94,7 @@ bool nuiRange::IsValid() const
   |   isnan(mIncrement)
   |   isnan(mPageIncrement)
   |   isnan(mOrigin)
+  |   isnan(mUnitCurve)
       )
   {
     return false;
@@ -105,8 +109,22 @@ void nuiRange::SetDiscreetStepSize(bool DiscreetStepSize)
   mDiscreetStepSize = DiscreetStepSize;
 }
 
+void nuiRange::SetUnitValue(double Value)
+{
+  NGL_ASSERT(IsValid());
+  NGL_ASSERT(finite(Value));
+  SetValue(ConvertFromUnit(nuiClamp(Value, 0.0, 1.0)));
+}
+
 void nuiRange::SetValue(double Value)
 {
+#ifdef DEBUG
+  if (IsValid())
+  {
+    NGL_ASSERT(finite(Value));
+  }
+#endif
+  
   double OldValue = mValue;
 
   mValue = Value;
@@ -327,6 +345,14 @@ double nuiRange::GetValue() const
   return mValue;
 }
 
+double nuiRange::GetUnitValue() const
+{
+  NGL_ASSERT(IsValid());
+  const double v = ConvertToUnit(GetValue());
+  NGL_ASSERT(finite(v));
+  return v;
+}
+
 double nuiRange::GetMinimum() const
 {
   return mMinimum;
@@ -403,9 +429,21 @@ bool nuiRange::MakeInRange(double Position, double size)
 
 double nuiRange::ConvertToUnit(double RangeValue) const
 {
+  NGL_ASSERT(IsValid());
+  NGL_ASSERT(finite(RangeValue));
   double t = RangeValue - mMinimum;
   double r = mMaximum - mMinimum;
-  return t / r;
+  double v = t / r;
+  return pow(v, mUnitCurve);
+}
+
+double nuiRange::ConvertFromUnit(double UnitValue) const
+{
+  NGL_ASSERT(IsValid());
+  NGL_ASSERT(finite(UnitValue));
+  double r = mMaximum - mMinimum;
+  double v = pow(UnitValue, 1.0 / mUnitCurve);
+  return v * r + mMinimum;
 }
 
 void nuiRange::EnableEvents(bool Set)
