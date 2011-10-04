@@ -227,6 +227,18 @@ set(SOURCES
   src/Audio/nuiAudioDevice.cpp
   src/Audio/nuiAudioFifo.cpp
 
+  src/AudioEngine/nuiAudioDb.cpp
+  src/AudioEngine/nuiAudioEngine.cpp
+  src/AudioEngine/nuiFileSound.cpp
+  src/AudioEngine/nuiFileVoice.cpp
+  src/AudioEngine/nuiMemorySound.cpp
+  src/AudioEngine/nuiMemoryVoice.cpp
+  src/AudioEngine/nuiSound.cpp
+  src/AudioEngine/nuiSoundManager.cpp
+  src/AudioEngine/nuiSynthSound.cpp
+  src/AudioEngine/nuiSynthVoice.cpp
+  src/AudioEngine/nuiVoice.cpp
+
 
   src/Attributes/nuiAttribute.cpp
   src/Attributes/nuiAttributeEditor.cpp
