@@ -129,18 +129,21 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, int32 SampleFrames)
   while (done < SampleFrames)
   {
     int64 nextevent = std::numeric_limits<int64>::max();
+    int64 pos = GetPosition();
     {
       nglCriticalSectionGuard guard(mEventCs);
-      while (!mEvents.empty() && mEvents.front().mPosition == GetPosition())
+      while (!mEvents.empty() && mEvents.front().mPosition == pos)
       {
         const nuiVoiceEvent& event(mEvents.front());
         switch (event.mType)
         {
         case nuiVoiceEvent::FadeOut:
-          FadeOut(event.mParam);
+          if (event.mParam > 0)
+            FadeOut(event.mParam);
           break;
         case nuiVoiceEvent::FadeIn:
-          FadeIn(event.mParam);
+          if (event.mParam > 0)
+            FadeIn(event.mParam);
           break;
         }
 
@@ -151,7 +154,7 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, int32 SampleFrames)
         nextevent = mEvents.front().mPosition;
     }
     
-    const int64 nexteventwait = nextevent - GetPosition();
+    const int64 nexteventwait = nextevent - pos;
     const int64 todo = MIN(SampleFrames, nexteventwait);
     
     
