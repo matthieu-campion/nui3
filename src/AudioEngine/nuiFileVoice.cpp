@@ -127,7 +127,7 @@ int32 nuiFileVoice::ReadSamples(const std::vector<float*>& rOutput, int64 positi
   
   if (position >= mInfo.GetSampleFrames())
     return 0;
-  int32 todo = MIN(SampleFrames, (int64)mInfo.GetSampleFrames() - position);
+  int64 todo = MIN(SampleFrames, mInfo.GetSampleFrames() - position);
   
   std::vector<void*> temp;
   for (int32 i = 0; i < rOutput.size(); i++)
