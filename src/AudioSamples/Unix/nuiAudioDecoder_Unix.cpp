@@ -209,7 +209,7 @@ bool nuiAudioDecoder::ReadInfo()
   return true;
 }
 
-bool nuiAudioDecoder::Seek(uint64 SampleFrame)
+bool nuiAudioDecoder::Seek(int64 SampleFrame)
 {
   off_t streamPosition;
   off_t res = mpg123_feedseek(mpPrivate->mpHandle, SampleFrame, SEEK_SET, &streamPosition);
@@ -225,17 +225,17 @@ bool nuiAudioDecoder::Seek(uint64 SampleFrame)
 
 
 
-uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format)
+int32 nuiAudioDecoder::ReadIN(void* pBuffer, int32 sampleframes, nuiSampleBitFormat format)
 {
   if (!mInitialized)
     return 0;
 
-  SetPosition((uint32)mPosition);
+  SetPosition(mPosition);
 
-  uint32 BitsPerSample  = mInfo.GetBitsPerSample();
-  uint32 channels       = mInfo.GetChannels();
-  uint32 frameSize      = channels * (mInfo.GetBitsPerSample() / 8.f);
-  uint32 outBytes       = sampleframes * frameSize;
+  int32 BitsPerSample  = mInfo.GetBitsPerSample();
+  int32 channels       = mInfo.GetChannels();
+  int32 frameSize      = channels * (mInfo.GetBitsPerSample() / 8.f);
+  int32 outBytes       = sampleframes * frameSize;
 
   unsigned char* pTemp;
   bool allocated = false;
@@ -257,9 +257,9 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
 
   unsigned char* pIn = NULL;
 
-  uint32 bytesDone = 0;
+  int32 bytesDone = 0;
   int err = MPG123_OK;
-  uint32 bytesRead = -1;
+  int32 bytesRead = -1;
   while (outBytes && err != MPG123_DONE && bytesRead != 0)
   {
     size_t outBytesDone = 0;
@@ -280,7 +280,7 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
     bytesRead = -1;
     while (err == MPG123_NEED_MORE && bytesRead != 0)
     {
-      uint32 inBytes = DECODER_INPUT_SIZE;
+      int32 inBytes = DECODER_INPUT_SIZE;
       if (!pIn)
       {
         pIn = new unsigned char[inBytes];
@@ -295,7 +295,7 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
     }
   }
 
-  uint32 frames = bytesDone / frameSize;
+  int32 frames = bytesDone / frameSize;
 
   if (format == eSampleFloat32 && BitsPerSample == 16)
   {
@@ -334,25 +334,25 @@ uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitF
 }
 
 
-uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format)
+int32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, int32 sampleframes, nuiSampleBitFormat format)
 {
   //don't increment mPosition: it's already done in ReadIN
-  uint32 channels = mInfo.GetChannels();  
+  int32 channels = mInfo.GetChannels();  
   int16* pInterleaved = NULL;
   float* pInterleavedFloat = NULL;
   
-  uint32 read = 0;
+  int32 read = 0;
   switch (format)
   {
     case eSampleInt16:
       pInterleaved = new int16[sampleframes * channels];
       read = ReadIN((void*)pInterleaved, sampleframes, format);
 
-      for (uint32 c = 0; c < channels; c++)
+      for (int32 c = 0; c < channels; c++)
       {
         int16* pDst = (int16*)(buffers[c]);
         int16* pSrc = pInterleaved + c;
-        for (uint32 i = 0; i < read; i++)
+        for (int32 i = 0; i < read; i++)
         {
           *(pDst++) = *pSrc;
           pSrc += channels;
@@ -366,11 +366,11 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
       pInterleavedFloat = new float[sampleframes * channels];
       read = ReadIN((void*)pInterleavedFloat, sampleframes, format);
 
-      for (uint32 c = 0; c < channels; c++)
+      for (int32 c = 0; c < channels; c++)
       {
         float* pDst = (float*)(buffers[c]);
         float* pSrc = pInterleavedFloat + c;
-        for (uint32 i = 0; i < read; i++)
+        for (int32 i = 0; i < read; i++)
         {
           *(pDst++) = *pSrc;
           pSrc += channels;
