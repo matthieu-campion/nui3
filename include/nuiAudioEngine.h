@@ -23,8 +23,8 @@ class nuiAudioDevice;
 class nuiAudioEngine : public nuiObject
 {
 public:
-  typedef nuiFastDelegate2<const std::vector<float*>&, uint32> OutputDelegate;
-  typedef nuiFastDelegate2<const std::vector<const float*>&, uint32> InputDelegate;
+  typedef nuiFastDelegate2<const std::vector<float*>&, int32> OutputDelegate;
+  typedef nuiFastDelegate2<const std::vector<const float*>&, int32> InputDelegate;
   
   enum ChannelConfig
   {
@@ -33,11 +33,11 @@ public:
     eStereo
   };
   
-  nuiAudioEngine(double SampleRate, uint32 BufferSize, ChannelConfig inputConfig = eNone);
+  nuiAudioEngine(double SampleRate, int32 BufferSize, ChannelConfig inputConfig = eNone);
   virtual ~nuiAudioEngine();
   
   double GetSampleRate() const;
-  uint32 GetBufferSize() const;
+  int32 GetBufferSize() const;
   
   void SetInputProcessDelegate(const nuiAudioEngine::InputDelegate& rDelegate);
   void SetOutputProcessDelegate(const nuiAudioEngine::OutputDelegate& rDelegate);
@@ -73,8 +73,8 @@ public:
   
     
 protected:
-  void ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames);
-  void ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames);
+  void ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, int32 SampleFrames);
+  void ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, int32 SampleFrames);
   bool AudioInit(ChannelConfig config);
   
   void SetPlay(bool play);
@@ -82,7 +82,7 @@ protected:
   void InitAttributes();
   
   double mSampleRate;
-  uint32 mBufferSize;
+  int32 mBufferSize;
 
   float mGain;
   bool mMute;

@@ -18,11 +18,11 @@ public:
   nuiMemoryVoice& operator=(const nuiMemoryVoice& rVoice);
   
   virtual bool IsValid() const;
-  virtual uint32 GetChannels() const;
-  uint32 GetSampleFrames() const;
+  virtual int32 GetChannels() const;
+  int32 GetSampleFrames() const;
   
 protected:
-  virtual uint32 ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames);
+  virtual int32 ReadSamples(const std::vector<float*>& rOutput, int64 position, int32 SampleFrames);
   
 private:
   nuiMemoryVoice(nuiMemorySound* pSound = NULL);

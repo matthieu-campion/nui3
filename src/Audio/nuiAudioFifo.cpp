@@ -47,7 +47,7 @@ nuiAudioTrack::~nuiAudioTrack ()
 }
 
 
-void nuiAudioTrack::Init(uint32 bufSize, double sampleRate, uint32 nbChannels, float volume, bool bufferingEnabled)
+void nuiAudioTrack::Init(int32 bufSize, double sampleRate, int32 nbChannels, float volume, bool bufferingEnabled)
 {
 	mNbChannels	= nbChannels;
 	mSampleRate	= sampleRate;
@@ -72,9 +72,9 @@ void nuiAudioTrack::Init(uint32 bufSize, double sampleRate, uint32 nbChannels, f
 
 
 
-uint32 nuiAudioTrack::CanRead()
+int32 nuiAudioTrack::CanRead()
 {
-  uint32 value;
+  int32 value;
   if (mpRingBuf)
   {
     value = mpRingBuf->GetWritable();
@@ -92,7 +92,7 @@ uint32 nuiAudioTrack::CanRead()
 
 
 // virtual. to be overloaded
-uint32 nuiAudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer)
+int32 nuiAudioTrack::ReadSamples(int32 sampleFrames, std::vector<float*>& rBuffer)
 {
   // does nothing
   return 0; /* nbSampleFrames */
@@ -107,14 +107,14 @@ uint32 nuiAudioTrack::ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuf
 
 
 
-void nuiAudioTrack::Read(uint32 sampleFrames)
+void nuiAudioTrack::Read(int32 sampleFrames)
 {
   NGL_ASSERT(mpRingBuf);
-  uint32 nbRead=sampleFrames;
-  uint32 nbWrite=0;
-  uint32 nbWrite2=0;
+  int32 nbRead=sampleFrames;
+  int32 nbWrite=0;
+  int32 nbWrite2=0;
   std::vector<float*> rbuf(mNbChannels);
-  uint32 c;
+  int32 c;
   
   
   
@@ -139,7 +139,7 @@ void nuiAudioTrack::Read(uint32 sampleFrames)
   //NGL_LOG(_T("nuiAudioFifo"), NGL_LOG_DEBUG, _T("\nBEFORE BUFFERING %d\n"), nbWrite);  
   
   // read audio samples from the source
-  uint32 nbReadSamples = ReadSamples(nbWrite, rbuf/*ref for output*/);
+  int32 nbReadSamples = ReadSamples(nbWrite, rbuf/*ref for output*/);
   if (!nbReadSamples) 
     return; 
   
@@ -219,12 +219,12 @@ bool nuiAudioTrack::ResetBuffer ()
 
 
 
-bool nuiAudioTrack::CanProcess (uint32 SampleFrames)
+bool nuiAudioTrack::CanProcess (int32 SampleFrames)
 {
   if (!mBufferingEnabled)
     return true;
   
-  uint32 curValue = mpRingBuf->GetReadable();
+  int32 curValue = mpRingBuf->GetReadable();
   
 	// not enough data in the ringbuffer
 	if (curValue < SampleFrames)
@@ -239,14 +239,14 @@ bool nuiAudioTrack::CanProcess (uint32 SampleFrames)
 
 
 
-void nuiAudioTrack::Process(uint32 SampleFrames, std::vector<float*>& rOutputBuffer)
+void nuiAudioTrack::Process(int32 SampleFrames, std::vector<float*>& rOutputBuffer)
 {
   float	*rbuf;
-  uint32	nbRead=0;
-  uint32	nbRead2=0;
-  uint32	totalRead=0;
+  int32	nbRead=0;
+  int32	nbRead2=0;
+  int32	totalRead=0;
   float	l_volume = mVolume;
-  uint32	ch, i;
+  int32	ch, i;
   
   //
   // we don't want to buffer the audio
@@ -350,7 +350,7 @@ void nuiAudioTrack::Process(uint32 SampleFrames, std::vector<float*>& rOutputBuf
 
 
 //virtual method, to be inherited, optionnaly
-void nuiAudioTrack::ProcessedSamples(uint32 sampleFrames, uint32 bufSize, uint32 bufPos)
+void nuiAudioTrack::ProcessedSamples(int32 sampleFrames, int32 bufSize, int32 bufPos)
 {
   // does nothing
 }
@@ -384,7 +384,7 @@ double nuiAudioTrack::GetSampleRate() const
   return mSampleRate;
 }
 
-uint32 nuiAudioTrack::GetNbChannels() const
+int32 nuiAudioTrack::GetNbChannels() const
 {
   return mNbChannels;
 }
@@ -408,7 +408,7 @@ uint32 nuiAudioTrack::GetNbChannels() const
 // CONSTR.
 //
 //*****************************************************************************************
-nuiAudioFifo::nuiAudioFifo (uint32 inbufSize, uint32 outbufSize, double sampleRate, uint32 nbChannels, const nglString& inDeviceName /* = nglString::Empty*/, const nglString& outDeviceName /*= nglString::Empty*/, const nglString& apiName /*= nglString::Empty*/)
+nuiAudioFifo::nuiAudioFifo (int32 inbufSize, int32 outbufSize, double sampleRate, int32 nbChannels, const nglString& inDeviceName /* = nglString::Empty*/, const nglString& outDeviceName /*= nglString::Empty*/, const nglString& apiName /*= nglString::Empty*/)
 : nglThread(Highest), mpAudioDevice(NULL), mInputCS(nglString(_T("nuiAudioFifo_mInputCS"))), mOutputCS(nglString(_T("nuiAudioFifo_mOutputCS"))), mStopRequestCS(nglString(_T("nuiAudioFifo_mStopRequestCS")))
 {    
   
@@ -428,7 +428,7 @@ nuiAudioFifo::nuiAudioFifo (uint32 inbufSize, uint32 outbufSize, double sampleRa
   
 	// we need a reading buffer for output mixing
   mOutputReadingBuffer.resize(mNbChannels);
-  for (uint32 ch=0; ch < mNbChannels; ch++)
+  for (int32 ch=0; ch < mNbChannels; ch++)
     mOutputReadingBuffer[ch] = new float[mOutbufSize];
 }
 
@@ -441,7 +441,7 @@ nuiAudioFifo::~nuiAudioFifo()
 		UnregisterTrack (mAudioTracks[i]);
 	mAudioTracks.clear ();
   
-	for (uint32 ch=0; ch < mNbChannels; ch++)
+	for (int32 ch=0; ch < mNbChannels; ch++)
     delete mOutputReadingBuffer[ch];
   mOutputReadingBuffer.clear();
 }
@@ -481,10 +481,10 @@ bool nuiAudioFifo::Start()
   
   
   // means, no input channels for now, and all output channels are active for now...
-  std::vector<uint32> inputChannels;
-  std::vector<uint32> outputChannels;
+  std::vector<int32> inputChannels;
+  std::vector<int32> outputChannels;
   outputChannels.resize(mNbChannels);
-  for (uint i=0; i < mNbChannels; i++)
+  for (int i=0; i < mNbChannels; i++)
     outputChannels[i] = i; 
   
   //#FIXME : ensure that samplerate and outbufsize are acceptable values for nuiAudioDevice (should enumerate possible value somewhere in the application)
@@ -547,7 +547,7 @@ void nuiAudioFifo::Close()
 //
 //*****************************************************************************************
 
-bool nuiAudioFifo::RegisterTrack (nuiAudioTrack* track, double sampleRate, uint32 nbChannels, float volume, bool mBufferingEnabled /*= true*/)
+bool nuiAudioFifo::RegisterTrack (nuiAudioTrack* track, double sampleRate, int32 nbChannels, float volume, bool mBufferingEnabled /*= true*/)
 {
   
 	// don't forget you may have two threads running and accessing those data
@@ -561,7 +561,7 @@ bool nuiAudioFifo::RegisterTrack (nuiAudioTrack* track, double sampleRate, uint3
   {
     mResamplers.push_back(std::vector<nuiAudioResampler<float>* >());
     mResamplers[mResamplers.size()-1].reserve(nbChannels);
-    for (uint32 ch=0;ch<nbChannels; ch++)
+    for (int32 ch=0;ch<nbChannels; ch++)
       mResamplers[mResamplers.size()-1].push_back(new nuiAudioResampler<float>(eInterpolCubic));
   }
   else
@@ -596,7 +596,7 @@ bool nuiAudioFifo::UnregisterTrack (nuiAudioTrack* track)
 			mAudioTracks.erase (itl);
       if (track->mSampleRate != mSampleRate)
       {
-        for (uint i=0;i<track->mNbChannels;i++)
+        for (int32 i=0;i<track->mNbChannels;i++)
         {
           delete (*it)[i];
         }
@@ -671,7 +671,7 @@ bool nuiAudioFifo::GetStopRequest ()
 //
 void nuiAudioFifo::OnStart ()
 {
-  uint32 nbSampleFrames=0;
+  int32 nbSampleFrames=0;
   bool fifoReadFlag=true;
   
 	SetStopRequest (false);
@@ -737,7 +737,7 @@ void nuiAudioFifo::OnStart ()
 //
 // output audio callback
 //
-void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, uint32 SampleFrames)
+void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, int32 SampleFrames)
 {
   
 	if (GetStopRequest()) 
@@ -752,7 +752,7 @@ void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const
     
     
 		// reset outputbuffer for mixing with silence
-		for (uint32 i=0; i < mNbChannels; i++)
+		for (int32 i=0; i < mNbChannels; i++)
 		{
 			memset (rOutputBuffers[i], 0, SampleFrames * sizeof(float));
 		}
@@ -788,7 +788,7 @@ void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const
         
 				// get buffered audio data from the track
         // resample if needed
-        uint32 nbRead = (uint32)((double)SampleFrames * mAudioTracks[i]->mSampleRate) / mSampleRate;
+        int32 nbRead = (int32)((double)SampleFrames * mAudioTracks[i]->mSampleRate) / mSampleRate;
         if (nbRead == SampleFrames)
         {
           mAudioTracks[i]->Process(nbRead, mOutputReadingBuffer);
@@ -797,12 +797,12 @@ void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const
         {
           std::vector<float*> tempBuf;
           tempBuf.resize(mAudioTracks[i]->mNbChannels);
-          for (uint32 ch=0; ch<mAudioTracks[i]->mNbChannels; ch++)
+          for (int32 ch=0; ch<mAudioTracks[i]->mNbChannels; ch++)
             tempBuf[ch] = new float[nbRead];
           
           mAudioTracks[i]->Process(nbRead, tempBuf);
           
-          for (uint32 ch = 0; ch<mNbChannels; ch++)
+          for (int32 ch = 0; ch<mNbChannels; ch++)
           {
             mResamplers[i][ch]->Process(mOutputReadingBuffer[ch], tempBuf[ch], nbRead, SampleFrames);
             delete tempBuf[ch];
@@ -814,11 +814,11 @@ void nuiAudioFifo::Process(const std::vector<const float*>& rInputBuffers, const
         
 				// mix it in the output buffer
         float *pOutputBuffer, *pInputBuffer;
-        for (uint32 ch=0; ch < mNbChannels; ch++)
+        for (int32 ch=0; ch < mNbChannels; ch++)
         {
           pOutputBuffer = rOutputBuffers[ch];
           pInputBuffer = mOutputReadingBuffer[ch];
-          for (uint32 j=0; j < mOutbufSize; j++)
+          for (int32 j=0; j < mOutbufSize; j++)
           {
             *(pOutputBuffer++) += *(pInputBuffer++);
           }
@@ -850,12 +850,12 @@ const nglString& nuiAudioFifo::GetAPIName() const
   return mAPIName;
 }
 
-uint32 nuiAudioFifo::GetRingBufferSize() const
+int32 nuiAudioFifo::GetRingBufferSize() const
 {
   return mRingbufSize;
 }
 
-uint32 nuiAudioFifo::GetOutBufferSize() const
+int32 nuiAudioFifo::GetOutBufferSize() const
 {
   return mOutbufSize;
 }
@@ -865,7 +865,7 @@ double nuiAudioFifo::GetSampleRate() const
   return mSampleRate;
 }
 
-uint32 nuiAudioFifo::GetNbChannels() const
+int32 nuiAudioFifo::GetNbChannels() const
 {
   return mNbChannels;
 }

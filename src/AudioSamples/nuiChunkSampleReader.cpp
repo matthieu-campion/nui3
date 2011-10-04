@@ -26,7 +26,7 @@ nuiSampleReader(rStream)
 nuiChunkSampleReader::nuiChunkSampleReader(const nuiChunkSampleReader& rReader, nglIStream& rStream) :
 nuiSampleReader(rReader, rStream)
 {
-  for (uint32 i = 0; i < rReader.mChunks.size(); i++)
+  for (int32 i = 0; i < rReader.mChunks.size(); i++)
   {
     Chunk* pChunk = new Chunk(rReader.mChunks[i]->mPosition, rReader.mChunks[i]->mDataSize, rReader.mChunks[i]->mDataPosition, rReader.mChunks[i]->mId);
     mChunks.push_back(pChunk);
@@ -42,8 +42,8 @@ nuiChunkSampleReader::~nuiChunkSampleReader()
 bool nuiChunkSampleReader::GoToChunk(char* pId)
 {
   bool found = false;
-  uint32 index = 0;
-  for (uint32 i = 0; i < mChunks.size() && !found; i++)
+  int32 index = 0;
+  for (int32 i = 0; i < mChunks.size() && !found; i++)
   {
     found = mChunks[i]->CompareId(pId);
     if (found)
@@ -63,8 +63,8 @@ bool nuiChunkSampleReader::GoToChunk(char* pId)
 nuiChunkSampleReader::Chunk* nuiChunkSampleReader::GetChunk(char* Id)
 {
   bool found = false;
-  uint32 index = 0;
-  for (uint32 i = 0; i < mChunks.size() && !found; i++)
+  int32 index = 0;
+  for (int32 i = 0; i < mChunks.size() && !found; i++)
   {
     found = mChunks[i]->CompareId(Id);
     if (found)
@@ -91,7 +91,7 @@ bool nuiChunkSampleReader::ScanAllChunks()
   //get Id
   //std::vector<char> Id(4);
   char* Id = new char[5];
-  for(uint32 k = 0; k < 4; k++)
+  for(int32 k = 0; k < 4; k++)
   {
     if( 1 != mrStream.ReadUInt8((uint8*)&(Id[k]), 1))
     {
@@ -107,7 +107,7 @@ bool nuiChunkSampleReader::ScanAllChunks()
     delete[] Id;
     return false;
   }
-  uint32 firstChunkSize = FIRST_CHUNK_DATA_BYTES;
+  int32 firstChunkSize = FIRST_CHUNK_DATA_BYTES;
 
   Chunk* pFirstChunk = new Chunk(0, firstChunkSize, CHUNK_HEADER_BYTES, Id);
   mChunks.push_back(pFirstChunk);
@@ -120,7 +120,7 @@ bool nuiChunkSampleReader::ScanAllChunks()
     nglFileOffset ChunkPosition = mChunks.back()->mDataPosition + mChunks.back()->mDataSize;
     mrStream.SetPos(ChunkPosition);
     uint32 ChunkSize = 0;
-    for(uint32 k = 0; k < 4; k++)
+    for(int32 k = 0; k < 4; k++)
     {
       if( 1 != mrStream.ReadUInt8((uint8*)&(Id[k]), 1))
       {
@@ -147,7 +147,7 @@ bool nuiChunkSampleReader::ScanAllChunks()
 
 void nuiChunkSampleReader::ClearChunks()
 {
-  for (uint32 i = 0; i < mChunks.size(); i++)
+  for (int32 i = 0; i < mChunks.size(); i++)
   {
     delete mChunks[i];
     mChunks[i] = NULL;
@@ -156,11 +156,11 @@ void nuiChunkSampleReader::ClearChunks()
 }
 
 
-uint32 nuiChunkSampleReader::ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format)
+int32 nuiChunkSampleReader::ReadDE(std::vector<void*> buffers, int32 sampleframes, nuiSampleBitFormat format)
 {
   //don't increment mPosition: it's already done in ReadIN
-  const uint32 channels = mInfo.GetChannels();
-  uint32 length = mInfo.GetSampleFrames();
+  const int32 channels = mInfo.GetChannels();
+  int32 length = mInfo.GetSampleFrames();
   if (mPosition >= length)
     return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
@@ -171,7 +171,7 @@ uint32 nuiChunkSampleReader::ReadDE(std::vector<void*> buffers, uint32 samplefra
   }
   
   bool deleteBuffer = false;
-  uint32 SampleFramesRead = 0;
+  int32 SampleFramesRead = 0;
   switch (format)
   {
     case eSampleFloat32:
@@ -189,9 +189,9 @@ uint32 nuiChunkSampleReader::ReadDE(std::vector<void*> buffers, uint32 samplefra
       }
       
       SampleFramesRead = ReadIN((void*)pFloatBuffer, sampleframes, format); //mPosition is incremented inside
-      for (uint32 s = 0; s < SampleFramesRead; s++)
+      for (int32 s = 0; s < SampleFramesRead; s++)
       {
-        for (uint32 c = 0; c < channels; c++)
+        for (int32 c = 0; c < channels; c++)
         {
           float* pDest = (float*)buffers[c];
           pDest[s] = pFloatBuffer[channels * s + c];
@@ -217,9 +217,9 @@ uint32 nuiChunkSampleReader::ReadDE(std::vector<void*> buffers, uint32 samplefra
       }
       
       SampleFramesRead = ReadIN((void*)pIntBuffer, sampleframes, format);//mPosition is incremented inside
-      for (uint32 s = 0; s < SampleFramesRead; s++)
+      for (int32 s = 0; s < SampleFramesRead; s++)
       {
-        for (uint32 c = 0; c < channels; c++)
+        for (int32 c = 0; c < channels; c++)
         {
             ((int16*)(buffers[c]))[s] = pIntBuffer[channels * s + c];
         }

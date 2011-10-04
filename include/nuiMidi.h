@@ -13,7 +13,7 @@
 class nuiMidiManager;
 class nuiMidiInPort;
 
-typedef nuiFastDelegate4<nuiMidiInPort*, const uint8*, uint32, double> nuiMidiProcessFn; // the params are the pointer to the data, the size of the data in bytes and the time stamp
+typedef nuiFastDelegate4<nuiMidiInPort*, const uint8*, int32, double> nuiMidiProcessFn; // the params are the pointer to the data, the size of the data in bytes and the time stamp
 
 class nuiMidiPort : public nuiRefCount
 {
@@ -59,7 +59,7 @@ public:
   virtual bool Open() = 0;
   virtual bool Close() = 0;
 
-  virtual bool Send(const uint8* pData, uint32 size) = 0;
+  virtual bool Send(const uint8* pData, int32 size) = 0;
   
 protected:
   nuiMidiOutPort(){}
@@ -75,10 +75,10 @@ public:
     return mName;
   }
 
-  virtual uint32 GetInPortCount() const = 0;
-  virtual uint32 GetOutPortCount() const = 0;
-  virtual nuiMidiInPort* GetInPort(uint32 index) = 0;
-  virtual nuiMidiOutPort* GetOutPort(uint32 index) = 0;
+  virtual int32 GetInPortCount() const = 0;
+  virtual int32 GetOutPortCount() const = 0;
+  virtual nuiMidiInPort* GetInPort(int32 index) = 0;
+  virtual nuiMidiOutPort* GetOutPort(int32 index) = 0;
   
   void RegisterWithManager(nuiMidiManager& rManager);
 protected:
@@ -101,10 +101,10 @@ public:
   nuiSimpleEventSource<0> DeviceConnected;
   nuiSimpleEventSource<0> DeviceDisconnected;
   
-  uint32 GetInPortCount() const;
-  uint32 GetOutPortCount() const;
-  nuiMidiInPort* GetInPort(uint32 PortIndex);
-  nuiMidiOutPort* GetOutPort(uint32 PortIndex);
+  int32 GetInPortCount() const;
+  int32 GetOutPortCount() const;
+  nuiMidiInPort* GetInPort(int32 PortIndex);
+  nuiMidiOutPort* GetOutPort(int32 PortIndex);
 
 protected:
   friend void nuiMidiPortAPI::RegisterWithManager(nuiMidiManager& rManager);

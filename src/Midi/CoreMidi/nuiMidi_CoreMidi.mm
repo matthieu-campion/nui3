@@ -12,13 +12,13 @@
 #import <CoreMIDI/MIDINetworkSession.h>
 #endif
 
-std::map<uint32, nuiMidiInPort_CoreMidi*> nuiMidiInPort_CoreMidi::mPorts;
-std::map<uint32, nuiMidiOutPort_CoreMidi*> nuiMidiOutPort_CoreMidi::mPorts;
+std::map<int32, nuiMidiInPort_CoreMidi*> nuiMidiInPort_CoreMidi::mPorts;
+std::map<int32, nuiMidiOutPort_CoreMidi*> nuiMidiOutPort_CoreMidi::mPorts;
 
-nuiMidiInPort_CoreMidi* nuiMidiInPort_CoreMidi::GetPort(MIDIClientRef pClient, uint32 id)
+nuiMidiInPort_CoreMidi* nuiMidiInPort_CoreMidi::GetPort(MIDIClientRef pClient, int32 id)
 {
   nuiMidiInPort_CoreMidi* pPort = NULL;
-  std::map<uint32, nuiMidiInPort_CoreMidi*>::iterator it = mPorts.find(id);
+  std::map<int32, nuiMidiInPort_CoreMidi*>::iterator it = mPorts.find(id);
   if (it != mPorts.end())
     pPort = it->second;
   else
@@ -31,10 +31,10 @@ nuiMidiInPort_CoreMidi* nuiMidiInPort_CoreMidi::GetPort(MIDIClientRef pClient, u
   return pPort;
 }
 
-nuiMidiOutPort_CoreMidi* nuiMidiOutPort_CoreMidi::GetPort(MIDIClientRef pClient, uint32 id)
+nuiMidiOutPort_CoreMidi* nuiMidiOutPort_CoreMidi::GetPort(MIDIClientRef pClient, int32 id)
 {
   nuiMidiOutPort_CoreMidi* pPort = NULL;
-  std::map<uint32, nuiMidiOutPort_CoreMidi*>::iterator it = mPorts.find(id);
+  std::map<int32, nuiMidiOutPort_CoreMidi*>::iterator it = mPorts.find(id);
   if (it != mPorts.end())
     pPort = it->second;
   else
@@ -240,14 +240,14 @@ bool nuiMidiOutPort_CoreMidi::Close()
   
 }
 
-bool nuiMidiOutPort_CoreMidi::Send(const uint8* pData, uint32 size)
+bool nuiMidiOutPort_CoreMidi::Send(const uint8* pData, int32 size)
 {
-  uint32 s = size;
+  int32 s = size;
   const uint8* p = pData;
   
   while (s > 0)
   {
-    uint32 l = MIN(256, s);
+    int32 l = MIN(256, s);
     struct MIDIPacketList pktlist;
     pktlist.numPackets = 1;
     pktlist.packet[0].timeStamp = 0;
@@ -285,22 +285,22 @@ nuiMidiPortAPI_CoreMidi::~nuiMidiPortAPI_CoreMidi()
   mpMidiClientRef = NULL;
 }
 
-uint32 nuiMidiPortAPI_CoreMidi::GetInPortCount() const
+int32 nuiMidiPortAPI_CoreMidi::GetInPortCount() const
 {
   return MIDIGetNumberOfSources();
 }
 
-uint32 nuiMidiPortAPI_CoreMidi::GetOutPortCount() const
+int32 nuiMidiPortAPI_CoreMidi::GetOutPortCount() const
 {
   return MIDIGetNumberOfDestinations();
 }
 
-nuiMidiInPort* nuiMidiPortAPI_CoreMidi::GetInPort(uint32 index)
+nuiMidiInPort* nuiMidiPortAPI_CoreMidi::GetInPort(int32 index)
 {
   return nuiMidiInPort_CoreMidi::GetPort(mpMidiClientRef, index);
 }
 
-nuiMidiOutPort* nuiMidiPortAPI_CoreMidi::GetOutPort(uint32 index)
+nuiMidiOutPort* nuiMidiPortAPI_CoreMidi::GetOutPort(int32 index)
 {
   return nuiMidiOutPort_CoreMidi::GetPort(mpMidiClientRef, index);
 }

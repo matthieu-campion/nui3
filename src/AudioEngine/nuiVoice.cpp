@@ -119,9 +119,9 @@ bool nuiVoice::IsDone() const
   return mDone;
 }
 
-void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
+void nuiVoice::Process(const std::vector<float*>& rOutput, int32 SampleFrames)
 {
-  uint32 done = 0;
+  int32 done = 0;
   std::vector<float*> output;
   for (int c = 0; c < rOutput.size(); c++)
     output.push_back(rOutput[c]);
@@ -164,13 +164,13 @@ void nuiVoice::Process(const std::vector<float*>& rOutput, uint32 SampleFrames)
   }
 }
 
-void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 SampleFrames)
+void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, int32 SampleFrames)
 {
   if (!mpSound || !mPlay || !IsValid())
     return;
   
-  uint32 outChannels = rOutput.size();
-  uint32 inChannels = GetChannels();
+  int32 outChannels = rOutput.size();
+  int32 inChannels = GetChannels();
   
   // if the input and output have not the same channel configuration, we only support mono input with stereo output
   if ((inChannels != outChannels) && (inChannels != 1 || outChannels != 2))
@@ -181,7 +181,7 @@ void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 Sample
   
   // create temp buffers
   std::vector<float*> buffers;
-  for (uint32 c = 0; c < inChannels; c++)
+  for (int32 c = 0; c < inChannels; c++)
   {
     float* pTemp = new float[SampleFrames];
     memset(pTemp, 0, SampleFrames * sizeof(float));
@@ -191,15 +191,15 @@ void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 Sample
   nglCriticalSectionGuard guard(mCs);
   
   // fill temp buffers with data from the reader
-  uint32 done = 0;
-  uint32 toread = SampleFrames;
+  int32 done = 0;
+  int32 toread = SampleFrames;
   while (toread && !mDone)
   {    
     std::vector<float*> temp;
-    for (uint32 c = 0; c < inChannels; c++)
+    for (int32 c = 0; c < inChannels; c++)
       temp.push_back(buffers[c] + done);
    
-    uint32 read = ReadSamples(temp, mPosition, toread);
+    int32 read = ReadSamples(temp, mPosition, toread);
     
     mPosition += read;
     done += read;
@@ -217,18 +217,18 @@ void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 Sample
   // Fades
   if (mFadingIn)
   {
-    uint32 todo = MIN(SampleFrames, mFadeInLength - mFadeInPosition);
+    int32 todo = MIN(SampleFrames, mFadeInLength - mFadeInPosition);
     
     float* pFade = new float[todo];
     float* pTempFade = pFade;
-    for (uint32 i = 0; i < todo; i++)
+    for (int32 i = 0; i < todo; i++)
       *pTempFade++ = (float)(mFadeInPosition + i) / (float)mFadeInLength;
     
-    for (uint32 c = 0; c < inChannels; c++)
+    for (int32 c = 0; c < inChannels; c++)
     {
       float* pDst = buffers[c];
       pTempFade = pFade;
-      for (uint32 i = 0; i < todo; i++)
+      for (int32 i = 0; i < todo; i++)
         *pDst++ *= *pTempFade++;
     }
     
@@ -243,18 +243,18 @@ void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 Sample
   }
   else if (mFadingOut)
   {
-    uint32 todo = MIN(SampleFrames, mFadeOutLength - mFadeOutPosition);
+    int32 todo = MIN(SampleFrames, mFadeOutLength - mFadeOutPosition);
     
     float* pFade = new float[todo];
     float* pTempFade = pFade;
-    for (uint32 i = 0; i < todo; i++)
+    for (int32 i = 0; i < todo; i++)
       *pTempFade++ = 1.f - ((float)(mFadeOutPosition + i) / (float)mFadeOutLength);
     
-    for (uint32 c = 0; c < inChannels; c++)
+    for (int32 c = 0; c < inChannels; c++)
     {
       float* pDst = buffers[c];
       pTempFade = pFade;
-      for (uint32 i = 0; i < todo; i++)
+      for (int32 i = 0; i < todo; i++)
         *pDst++ *= *pTempFade++;
     }
     
@@ -267,10 +267,10 @@ void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 Sample
       mFadeOutPosition = 0;
       mPlay = false;
       
-      for (uint32 c = 0; c < inChannels; c++)
+      for (int32 c = 0; c < inChannels; c++)
       {
         float* pDst = buffers[c];
-        for (uint32 i = todo; i < SampleFrames; i++)
+        for (int32 i = todo; i < SampleFrames; i++)
           pDst[i] = 0;
       }
     }
@@ -285,17 +285,17 @@ void nuiVoice::ProcessInternal(const std::vector<float*>& rOutput, uint32 Sample
     pan = MAX(pan, -1.0);
     float panLeft = MIN(1.0, 1.0 - pan);
     float panRight = MIN(1.0, 1.0 + pan);
-    for (uint32 c= 0; c < outChannels; c++)
+    for (int32 c= 0; c < outChannels; c++)
     {
       float mult = mGain * (c == 0 ? panLeft : panRight);
       float* pSrc = (inChannels == outChannels) ? buffers[c] : buffers[0]; // mono input signal: use first channel
       float* pDst = rOutput[c];
-      for (uint32 i = 0; i < SampleFrames; i++)
+      for (int32 i = 0; i < SampleFrames; i++)
         *pDst++ += (*pSrc++) * mult;
     }
   }
   
-  for (uint32 c = 0; c < buffers.size(); c++)
+  for (int32 c = 0; c < buffers.size(); c++)
     delete[] buffers[c];
   
 }
@@ -321,7 +321,7 @@ void nuiVoice::SetPlay(bool play)
   mPlay = play;
 }
 
-void nuiVoice::FadeIn(uint32 length)
+void nuiVoice::FadeIn(int32 length)
 {
   if (mPlay)
     return;
@@ -335,7 +335,7 @@ void nuiVoice::FadeIn(uint32 length)
   mPlay = true;
 }
 
-void nuiVoice::FadeOut(uint32 length)
+void nuiVoice::FadeOut(int32 length)
 {
   if (!mPlay)
     return;

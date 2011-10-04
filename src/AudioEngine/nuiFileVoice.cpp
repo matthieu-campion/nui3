@@ -108,33 +108,33 @@ bool nuiFileVoice::Init()
   return true;
 }
 
-uint32 nuiFileVoice::GetChannels() const
+int32 nuiFileVoice::GetChannels() const
 {
   return mInfo.GetChannels();
 }
 
-uint32 nuiFileVoice::GetSampleFrames() const
+int32 nuiFileVoice::GetSampleFrames() const
 {
   return mInfo.GetSampleFrames();
 }
 
 
 
-uint32 nuiFileVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames)
+int32 nuiFileVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, int32 SampleFrames)
 {
   if (!IsValid())
     return 0;
   
   if (position >= mInfo.GetSampleFrames())
     return 0;
-  uint32 todo = MIN(SampleFrames, (int64)mInfo.GetSampleFrames() - position);
+  int32 todo = MIN(SampleFrames, (int64)mInfo.GetSampleFrames() - position);
   
   std::vector<void*> temp;
-  for (uint32 i = 0; i < rOutput.size(); i++)
+  for (int32 i = 0; i < rOutput.size(); i++)
     temp.push_back((void*)rOutput[i]);
   
   mpReader->SetPosition(position);
-  uint32 read = mpReader->ReadDE(temp, todo, eSampleFloat32);
+  int32 read = mpReader->ReadDE(temp, todo, eSampleFloat32);
   return read;
 }
 

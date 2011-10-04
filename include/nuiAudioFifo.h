@@ -35,31 +35,31 @@ public:
 	void SetVolume(float volume);
 	float GetVolume() const;
   double GetSampleRate() const;
-  uint32 GetNbChannels() const;
+  int32 GetNbChannels() const;
   
 
 protected : 
 
 	// virtual method : audio input : to be implemented in inherited classes. The buffer contents is uknown, maybe you should reset the buffer before filling it.
-  virtual uint32 ReadSamples(uint32 sampleFrames, std::vector<float*>& rBuffer);
+  virtual int32 ReadSamples(int32 sampleFrames, std::vector<float*>& rBuffer);
   
 
 	// virtual method : give information about the process
 	//	-> sampleFrames : nb of sampleFrames just processed by audio system for this track (<=> reading progress bar)
 	//	-> bufSize : size of reading buffer 
 	//  -> bufPos : current position in the reading buffer 
-	virtual	void	ProcessedSamples(uint32 sampleFrames, uint32 bufSize, uint32 bufPos);
+	virtual	void	ProcessedSamples(int32 sampleFrames, int32 bufSize, int32 bufPos);
 
 private:
 
   bool  ResetBuffer ();
-	void	Init(uint32 bufSize, double sampleRate, uint32 nbChannels, float volume, bool bufferingEnabled);
+	void	Init(int32 bufSize, double sampleRate, int32 nbChannels, float volume, bool bufferingEnabled);
   
-	uint32 CanRead();
-  void Read(uint32 sampleFrames);
+	int32 CanRead();
+  void Read(int32 sampleFrames);
   
-  bool CanProcess(uint32 SampleFrames);
-  void Process(uint32 SampleFrames, std::vector<float*>& rOutputBuffer);
+  bool CanProcess(int32 SampleFrames);
+  void Process(int32 SampleFrames, std::vector<float*>& rOutputBuffer);
   
 	nglRingBuffer*	mpRingBuf;		// ring buffer for audio data
 	int32	mBufSize;
@@ -71,7 +71,7 @@ private:
 
 	// audio params
 	double mSampleRate; 
-	uint32 mNbChannels;
+	int32 mNbChannels;
 };
 
 
@@ -88,7 +88,7 @@ class nuiAudioFifo : public nglThread
 public : 
 
 	// Constr.
-	nuiAudioFifo(uint32 inbufSize, uint32 outbufSize, double sampleRate, uint32 nbChannels, const nglString& inDeviceName = nglString::Empty, const nglString& outDeviceName = nglString::Empty, const nglString& apiName = nglString::Empty);
+	nuiAudioFifo(int32 inbufSize, int32 outbufSize, double sampleRate, int32 nbChannels, const nglString& inDeviceName = nglString::Empty, const nglString& outDeviceName = nglString::Empty, const nglString& apiName = nglString::Empty);
 	~nuiAudioFifo();
 
 	bool Start();
@@ -98,17 +98,17 @@ public :
 
   // Register a track with the fifo
   // Set streamed to true if the track handles its own streaming
-	bool RegisterTrack(nuiAudioTrack* track, double sampleRate, uint32 nbChannels, float volume, bool bufferingEnabled = true);
+	bool RegisterTrack(nuiAudioTrack* track, double sampleRate, int32 nbChannels, float volume, bool bufferingEnabled = true);
 	bool UnregisterTrack(nuiAudioTrack* track);
   bool ResetTrackBuffer(nuiAudioTrack* track, bool makePause);
   
   const nglString& GetInDeviceName() const;
   const nglString& GetOutDeviceName() const;
   const nglString& GetAPIName() const;
-  uint32 GetRingBufferSize() const;
-  uint32 GetOutBufferSize() const;
+  int32 GetRingBufferSize() const;
+  int32 GetOutBufferSize() const;
   double GetSampleRate() const;
-  uint32 GetNbChannels() const;
+  int32 GetNbChannels() const;
 
 
 private : 
@@ -118,7 +118,7 @@ private :
 
 
 	bool mStarted;
-	uint32 mNbChannels;
+	int32 mNbChannels;
 	double mSampleRate;
 
   nglString mInDeviceName;
@@ -133,8 +133,8 @@ private :
 	bool mStopRequest;	// tells the reading thread to end
 	nglCriticalSection	mStopRequestCS;
 	
-	uint32 mRingbufSize;
-	uint32 mOutbufSize;
+	int32 mRingbufSize;
+	int32 mOutbufSize;
 
   
 	std::vector<float*>	mOutputReadingBuffer;	// usefull to mix the tracks
@@ -146,7 +146,7 @@ private :
 	virtual void OnStart ();
 
 	// output audio callback
-  void Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, uint32 SampleFrames);
+  void Process(const std::vector<const float*>& rInputBuffers, const std::vector<float*>& rOutputBuffers, int32 SampleFrames);
 };
 
 

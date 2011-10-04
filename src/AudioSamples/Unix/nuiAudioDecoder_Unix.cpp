@@ -340,8 +340,8 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
   //don't increment mPosition: it's already done in ReadIN
   
   uint32 channels = mInfo.GetChannels();  
-  int16* pInterleaved;
-  float* pInterleavedFloat;
+  int16* pInterleaved = NULL;
+  float* pInterleavedFloat = NULL;
   
   uint32 read = 0;
   switch (format)

@@ -34,7 +34,7 @@ public:
   nuiChunkSampleReader(const nuiChunkSampleReader& rReader, nglIStream& rStream);
   virtual ~nuiChunkSampleReader();
   
-  virtual uint32 ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
+  virtual int32 ReadDE(std::vector<void*> buffers, int32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
   
 protected:
   bool GoToChunk(char* pId);

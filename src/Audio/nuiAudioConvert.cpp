@@ -9,11 +9,11 @@
 #include "nuiAudioConvert.h"
 
 
-void nuiAudioConvert_INint16ToDEfloat(const int16* input, float* output, uint32 curChannel, uint32 nbChannels, uint32 nbSampleFrames)
+void nuiAudioConvert_INint16ToDEfloat(const int16* input, float* output, int32 curChannel, int32 nbChannels, int32 nbSampleFrames)
 {
   static const float mult1 = 1.0 / 32768.0f;
   static const float mult2 = 1.0 / 32767.0f;
-  uint32 j;
+  int32 j;
 
   input += curChannel;
   for (j = 0; j < nbSampleFrames; j++)
@@ -31,11 +31,11 @@ void nuiAudioConvert_INint16ToDEfloat(const int16* input, float* output, uint32 
 
 
 
-void nuiAudioConvert_DEfloatToINint16(const float* input, int16* output, uint32 curChannel, uint32 nbChannels, uint32 nbSampleFrames) // de-interlaced float to interlaced int16
+void nuiAudioConvert_DEfloatToINint16(const float* input, int16* output, int32 curChannel, int32 nbChannels, int32 nbSampleFrames) // de-interlaced float to interlaced int16
 {
   static const float mult1 = 32768.0f ;
   static const float mult2 = 32767.0f ;
-  uint32 j;
+  int32 j;
 
   output += curChannel;
   for (j=0; j < nbSampleFrames; j++)
@@ -55,16 +55,16 @@ void nuiAudioConvert_DEfloatToINint16(const float* input, int16* output, uint32 
  nuiAudioConvert_Unsigned8bitsBufferTo16Bits
  */
 //////////////////////////////////////
-void nuiAudioConvert_Unsigned8bitsBufferTo16Bits(int16* pBuffer, uint64 SizeToRead)
+void nuiAudioConvert_Unsigned8bitsBufferTo16Bits(int16* pBuffer, int64 SizeToRead)
 {
   static const float mult = 2.0 / 255.0f;
   
   float Temp;
   
-  uint64 i;
+  int64 i;
   for (i = 0; i < SizeToRead; i++)
   {
-    Temp = ((uint8*)pBuffer)[ SizeToRead + i ] * mult - 1.0;
+    Temp = ((int8*)pBuffer)[ SizeToRead + i ] * mult - 1.0;
     
     if (Temp < 0)
       pBuffer[i] = (int16)ToZero(Temp * 32768.f);
@@ -77,14 +77,14 @@ void nuiAudioConvert_Unsigned8bitsBufferTo16Bits(int16* pBuffer, uint64 SizeToRe
  nuiAudioConvert_Unsigned8bitsBufferToFloat
  */
 //////////////////////////////////////
-void nuiAudioConvert_Unsigned8bitsBufferToFloat(float* pBuffer, uint64 SizeToRead)
+void nuiAudioConvert_Unsigned8bitsBufferToFloat(float* pBuffer, int64 SizeToRead)
 {
   static const float mult = 2.0 / 255.0f;
   
-  uint64 i;
+  int64 i;
   for (i = 0; i < SizeToRead; i++)
   {
-    pBuffer[i] = ((uint8*)pBuffer)[ 3 * SizeToRead + i ] * mult - 1.0;
+    pBuffer[i] = ((int8*)pBuffer)[ 3 * SizeToRead + i ] * mult - 1.0;
   }
 }
 
@@ -94,14 +94,14 @@ void nuiAudioConvert_Unsigned8bitsBufferToFloat(float* pBuffer, uint64 SizeToRea
 //nuiAudioConvert_Signed8bitsBufferTo16Bits
 //
 //////////////////////////////////////
-void nuiAudioConvert_Signed8bitsBufferTo16Bits(int16* pBuffer, uint64 SizeToRead)
+void nuiAudioConvert_Signed8bitsBufferTo16Bits(int16* pBuffer, int64 SizeToRead)
 {
   static const float mult1 = 1.0 / 128.0f;
   static const float mult2 = 1.0 / 127.0f;
   
   float Temp;
   
-  uint64 i;
+  int64 i;
   for (i = 0; i < SizeToRead; i++)
   {
     Temp = ((int8*)pBuffer)[ SizeToRead + i ];
@@ -117,14 +117,14 @@ void nuiAudioConvert_Signed8bitsBufferTo16Bits(int16* pBuffer, uint64 SizeToRead
 //nuiAudioConvert_Signed8bitsBufferToFloat
 //
 //////////////////////////////////////
-void nuiAudioConvert_Signed8bitsBufferToFloat(float* pBuffer, uint64 SizeToRead)
+void nuiAudioConvert_Signed8bitsBufferToFloat(float* pBuffer, int64 SizeToRead)
 {
   static const float mult1 = 1.0 / 128.0f;
   static const float mult2 = 1.0 / 127.0f;
   
   float Temp;
   
-  uint64 i;
+  int64 i;
   for (i = 0; i < SizeToRead; i++)
   {
     Temp = ((int8*)pBuffer)[ 3 * SizeToRead + i ];
@@ -141,14 +141,14 @@ void nuiAudioConvert_Signed8bitsBufferToFloat(float* pBuffer, uint64 SizeToRead)
  nuiAudioConvert_16bitsBufferToFloat
  */
 //////////////////////////////////////
-void nuiAudioConvert_16bitsBufferToFloat(float* pBuffer, uint64 SizeToRead)
+void nuiAudioConvert_16bitsBufferToFloat(float* pBuffer, int64 SizeToRead)
 {
   static const float mult1 = 1.0 / 32768.0f;
   static const float mult2 = 1.0 / 32767.0f;
   
   float Temp;
   
-  uint64 i;
+  int64 i;
   for (i = 0; i< SizeToRead; i++)
   {
     Temp = ((int16*)pBuffer)[ SizeToRead + i ];
@@ -159,12 +159,12 @@ void nuiAudioConvert_16bitsBufferToFloat(float* pBuffer, uint64 SizeToRead)
   }
 }
 
-void nuiAudioConvert_FloatBufferTo16bits(float* pFloatBuffer, int16* pInt16Buffer, uint64 SizeToRead)
+void nuiAudioConvert_FloatBufferTo16bits(float* pFloatBuffer, int16* pInt16Buffer, int64 SizeToRead)
 {
   static const float mult1 = 32768.0f;
   static const float mult2 = 32767.0f;
   float Temp;
-  for (uint64 i = 0; i< SizeToRead; i++)
+  for (int64 i = 0; i< SizeToRead; i++)
   {
     Temp = pFloatBuffer[i];
     Temp = nuiClamp(Temp, -1.0f, 1.0f);
@@ -210,14 +210,14 @@ float nuiAudioConvert_24bitsToFloatFromBigEndian(uint8* pBytesBuf)
 //
 //nuiAudioConvert_FloatTo24bitsFromLittleEndian
 //
-void nuiAudioConvert_FloatTo24bitsLittleEndian(float* pInBuffer, uint8* pOutBuffer, uint64 SizeToRead)
+void nuiAudioConvert_FloatTo24bitsLittleEndian(float* pInBuffer, uint8* pOutBuffer, int64 SizeToRead)
 {
   static const float mult1 = 8388608.0f ;
   static const float mult2 = 8388607.0f ;
   
   int32 TempInt32;
   
-  uint64 i;
+  int64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
     float value = pInBuffer[i];
@@ -242,14 +242,14 @@ void nuiAudioConvert_FloatTo24bitsLittleEndian(float* pInBuffer, uint8* pOutBuff
   }
 }
 
-void nuiAudioConvert_FloatTo24bitsBigEndian(float* pInBuffer, uint8* pOutBuffer, uint64 SizeToRead)
+void nuiAudioConvert_FloatTo24bitsBigEndian(float* pInBuffer, uint8* pOutBuffer, int64 SizeToRead)
 {
   static const float mult1 = 8388608.0f ;
   static const float mult2 = 8388607.0f ;
   
   int32 TempInt32;
   
-  uint64 i;
+  int64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
     float value = pInBuffer[i];
@@ -273,12 +273,12 @@ void nuiAudioConvert_FloatTo24bitsBigEndian(float* pInBuffer, uint8* pOutBuffer,
   }  
 }
 
-void nuiAudioConvert_FloatTo32bits(float* pInBuffer, int32* pOutBuffer, uint64 SizeToRead)
+void nuiAudioConvert_FloatTo32bits(float* pInBuffer, int32* pOutBuffer, int64 SizeToRead)
 {
   static const float mult1 = 2147483648.0f ;
   static const float mult2 = 2147483647.0f ;
   
-  uint64 i;
+  int64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
     float value = nuiClamp(pInBuffer[i], -1.0f, 1.0f);
@@ -290,12 +290,12 @@ void nuiAudioConvert_FloatTo32bits(float* pInBuffer, int32* pOutBuffer, uint64 S
 }
 
 
-void nuiAudioConvert_32bitsToFloat(int32* pInBuffer, float* pOutBuffer, uint64 SizeToRead)
+void nuiAudioConvert_32bitsToFloat(int32* pInBuffer, float* pOutBuffer, int64 SizeToRead)
 {
   static const float mult1 =  1.0 / 2147483648.0f ;
   static const float mult2 = 1.0 / 2147483647.0f ;
   
-  uint64 i;
+  int64 i;
   for ( i = 0; i < SizeToRead; i++)
   {
     if (pInBuffer[i] < 0)

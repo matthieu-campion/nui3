@@ -79,25 +79,25 @@ nuiMidiManager::~nuiMidiManager()
 
 void nuiMidiManager::Update()
 {
-  for (uint32 i = 0; i < mInputs.size(); i++)
+  for (int32 i = 0; i < mInputs.size(); i++)
     mInputs[i]->Release();
   mInputs.clear();
-  for (uint32 i = 0; i < mOutputs.size(); i++)
+  for (int32 i = 0; i < mOutputs.size(); i++)
     mOutputs[i]->Release();
   mOutputs.clear();
   
   nuiMidiAPIMap::const_iterator end = mAPIs.end();
   for (nuiMidiAPIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
-    uint32 incount = it->second->GetInPortCount();
-    for (uint32 i = 0; i < incount; i++)
+    int32 incount = it->second->GetInPortCount();
+    for (int32 i = 0; i < incount; i++)
     {
       nuiMidiInPort* pPort = it->second->GetInPort(i);
       pPort->Acquire();
       mInputs.push_back(pPort);
     }
-    uint32 outcount = it->second->GetOutPortCount();
-    for (uint32 i = 0; i < outcount; i++)
+    int32 outcount = it->second->GetOutPortCount();
+    for (int32 i = 0; i < outcount; i++)
     {
       nuiMidiOutPort* pPort = it->second->GetOutPort(i);
       pPort->Acquire();
@@ -106,23 +106,23 @@ void nuiMidiManager::Update()
   }
 }
 
-uint32 nuiMidiManager::GetInPortCount() const
+int32 nuiMidiManager::GetInPortCount() const
 {
   return mInputs.size();
 }
 
-uint32 nuiMidiManager::GetOutPortCount() const
+int32 nuiMidiManager::GetOutPortCount() const
 {
   return mOutputs.size();
 }
 
-nuiMidiInPort* nuiMidiManager::GetInPort(uint32 PortIndex)
+nuiMidiInPort* nuiMidiManager::GetInPort(int32 PortIndex)
 {
   nuiMidiAPIMap::const_iterator end = mAPIs.end();
   for (nuiMidiAPIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
     nuiMidiPortAPI* pAPI = it->second;
-    uint32 devcount = pAPI->GetInPortCount();
+    int32 devcount = pAPI->GetInPortCount();
     if (PortIndex >= devcount)
     {
       PortIndex -= devcount;
@@ -136,13 +136,13 @@ nuiMidiInPort* nuiMidiManager::GetInPort(uint32 PortIndex)
   return NULL;
 }
 
-nuiMidiOutPort* nuiMidiManager::GetOutPort(uint32 PortIndex)
+nuiMidiOutPort* nuiMidiManager::GetOutPort(int32 PortIndex)
 {
   nuiMidiAPIMap::const_iterator end = mAPIs.end();
   for (nuiMidiAPIMap::const_iterator it = mAPIs.begin(); it != end; ++it)
   {
     nuiMidiPortAPI* pAPI = it->second;
-    uint32 devcount = pAPI->GetOutPortCount();
+    int32 devcount = pAPI->GetOutPortCount();
     if (PortIndex >= devcount)
     {
       PortIndex -= devcount;

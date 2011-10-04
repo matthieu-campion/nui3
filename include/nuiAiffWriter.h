@@ -17,7 +17,7 @@ public:
   virtual ~nuiAiffWriter();
   
   bool WriteInfo(const nuiSampleInfo& rInfos); 
-  uint32 Write(const void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format);
+  int32 Write(const void* pBuffer, int32 SampleFrames, nuiSampleBitFormat format);
   bool Finalize();
   
 private:

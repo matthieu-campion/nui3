@@ -37,7 +37,7 @@ nuiSampleReader* nuiAudioDecoder::Clone(nglIStream& rStream) const
 }
 
 
-void nuiAudioDecoder::SetPosition(uint32 pos)
+void nuiAudioDecoder::SetPosition(int64 pos)
 {
   if (!mInitialized)
     return;
