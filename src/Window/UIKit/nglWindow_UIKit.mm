@@ -532,8 +532,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
         gAvailableTouches.push_back(rTouch.mTouchId);
         gPressedTouches[rTouch.mTouchId] = false;
         
-        mTouches.erase(it);
-        
+        if (mTouches.size())
+          mTouches.erase(it);
       }
       else if (rTouch.X != x || rTouch.Y != y)
       {
