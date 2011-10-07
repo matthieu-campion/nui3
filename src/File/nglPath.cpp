@@ -1492,7 +1492,7 @@ int32 nglPath::GetRootPart() const
   int slash = mPathName.Find(_T('/'), 0, true);
   
   if (col < slash)
-    return MIN(col + 1, mPathName.GetLength());
+    return MIN(slash + 1, mPathName.GetLength());
   
 	return 0;
 }
