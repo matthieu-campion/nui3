@@ -9,7 +9,7 @@
 
 #include "nglApplication.h"
 
-class nuiScriptEngine;
+//class nuiScriptEngine;
 
 class nuiApplication : public nglApplication
 {
@@ -17,12 +17,14 @@ public:
   nuiApplication();
   virtual ~nuiApplication();
   
+  /*
   void SetScriptEngine(nuiScriptEngine* pEngine);
   nuiScriptEngine* GetScriptEngine() const;
 
   void EnableDefaultScriptEngine();
+  */
   
 protected:
-  nuiScriptEngine* mpScriptEngine;
+//  nuiScriptEngine* mpScriptEngine;
 };
 

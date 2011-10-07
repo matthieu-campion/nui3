@@ -7,34 +7,15 @@
 
 #include "nui.h"
 #include "nuiApplication.h"
-#include "nuiSpiderMonkey.h"
+//#include "nuiSpiderMonkey.h"
 
 nuiApplication::nuiApplication()
 {
-  mpScriptEngine = NULL;
+//  mpScriptEngine = NULL;
 }
 
 nuiApplication::~nuiApplication()
 {
-  if (mpScriptEngine)
-    mpScriptEngine->Release();
-}
-
-void nuiApplication::SetScriptEngine(nuiScriptEngine* pEngine)
-{
-  if (mpScriptEngine)
-    mpScriptEngine->Release();
-  mpScriptEngine = pEngine;
-  if (mpScriptEngine)
-    mpScriptEngine->Acquire();
-}
-
-nuiScriptEngine* nuiApplication::GetScriptEngine() const
-{
-  return mpScriptEngine;
-}
-
-void nuiApplication::EnableDefaultScriptEngine()
-{
-  mpScriptEngine = new nuiSpiderMonkey();
+//  if (mpScriptEngine)
+//    mpScriptEngine->Release();
 }
