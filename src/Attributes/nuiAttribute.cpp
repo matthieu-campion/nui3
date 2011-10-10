@@ -2648,3 +2648,52 @@ public:
 };
 
 #endif
+
+
+///////////////////
+// Attribute Wrapper class:
+template <typename T>
+class nuiWrapper
+{
+public:
+  explicit nuiWrapper(T value)
+  {
+    mValue = value;
+  }
+  
+  explicit nuiWrapper()
+  {
+  }
+  
+  nuiWrapper(const nuiWrapper<T>& value)
+  {
+    mValue = value;
+  }
+  
+  operator T() const
+  {
+    return mValue;
+  }
+
+  T operator =(T value)
+  {
+    mValue = value;
+    return mValue;
+  }
+private:
+  T mValue;
+};
+
+void wrapper_test()
+{
+  nuiWrapper<float> f(0);
+  nuiWrapper<float> ff(10);
+  
+  f = 10;
+  f = 15.0;
+  f = 25.0f;
+  
+  f = f * 5;
+  f = f * 5.0;
+  f = f * 5.0f;
+}
