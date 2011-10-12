@@ -11,13 +11,14 @@
 
 ////////////////
 // Contraint:
-nuiLayout::Constraint::Constraint(nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, nuiLayoutRelation Relation, double Multiplier, double Constant)
+nuiLayout::Constraint::Constraint(nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, nuiLayoutRelation Relation, double Multiplier, double Constant, nuiLayoutPriority Priority)
 :
   mpRefWidget(pRefWidget),
   mRefAttrib(RefAttrib),
   mRelation(Relation),
   mMuliplier(Multiplier),
-  mConstant(Constant)
+  mConstant(Constant),
+  mPriority(Priority)
 {
 }
 
@@ -36,14 +37,14 @@ nuiLayout::~nuiLayout()
 {
 }
 
-bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant)
+bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant, nuiLayoutPriority Priority)
 {
   WidgetLayout* pLayout = &mLayouts[pWidget];
   pLayout->mRefs++;
   
   Node Target(pWidget, Attrib, pLayout);
   
-  Constraint constraint(pRefWidget, RefAttrib, Relation, Multiplier, Constant);
+  Constraint constraint(pRefWidget, RefAttrib, Relation, Multiplier, Constant, Priority);
   
   mConstraints[Target].push_back(constraint);
 
@@ -52,11 +53,16 @@ bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nui
     Node Ref(pRefWidget, RefAttrib, NULL);
     ConstraintMap::iterator it = mConstraints.find(Ref);
     
-    if (it != mConstraints.end())
+    if (it == mConstraints.end())
     {
-      const Node& rNode(it->first);
-      rNode.mIncommingConstraints++;
+      // Create the node artificially:
+      mConstraints[Ref] = ConstraintList();
+      if (mLayouts.find(pWidget) == mLayouts.end())
+        mLayouts[pWidget] = WidgetLayout();
+      it = mConstraints.find(Ref);
     }
+    const Node& rNode(it->first);
+    rNode.mIncommingConstraints++;
 
   }
   return true;
@@ -148,12 +154,29 @@ bool nuiLayout::DoLayout()
     while (it != mLayouts.end())
     {
       WidgetLayout& rLayout(it->second);
-      rLayout.Reset(it->first);
+      nuiWidget* pTarget = it->first;
+      
+      nuiRect r;
+      if (pTarget != this)
+        r = pTarget->GetIdealRect();
+      else
+        r = pTarget->GetRect();
+      
+      pTarget->LocalToLocal(this, r);
+
+      rLayout.Reset(r); // Use the ideal rect as the reference for all widgets except this one
       
       ++it;
     }
   }
 
+  bool res = true;
+  if (!edges.empty())
+  {
+    // There is a cycle in the graph!
+    res = false;
+  }
+  
 
   // Now we can calculate the layout, node by node, going from the one everyone depends on to the star nodes:
   nodes.reverse();
@@ -192,13 +215,35 @@ bool nuiLayout::DoLayout()
       switch (rConstraint.mRelation)
       {
         case eLayoutRelation_Equals:
-          rValue.mMin = rValue.mMax = val;
+          if (rValue.mPriorityMin <= rConstraint.mPriority)
+          {
+            rValue.mMin = val;
+            rValue.mPriorityMin = rConstraint.mPriority;
+            rValue.mSet = true;
+          }
+          
+          if (rValue.mPriorityMax <= rConstraint.mPriority)
+          {
+            rValue.mMax = val;
+            rValue.mPriorityMax = rConstraint.mPriority;
+            rValue.mSet = true;
+          }
           break;
         case eLayoutRelation_LessThanOrEqual:
-          rValue.mMax = val;
+          if (rValue.mPriorityMax <= rConstraint.mPriority)
+          {
+            rValue.mMax = val;
+            rValue.mPriorityMax = rConstraint.mPriority;
+            rValue.mSet = true;
+          }
           break;
         case eLayoutRelation_MoreThanOrEqual:
-          rValue.mMin = val;
+          if (rValue.mPriorityMin <= rConstraint.mPriority)
+          {
+            rValue.mMin = val;
+            rValue.mPriorityMin = rConstraint.mPriority;
+            rValue.mSet = true;
+          }
           break;
       }
       
@@ -208,17 +253,85 @@ bool nuiLayout::DoLayout()
     ++it;
   }
   
-  if (!edges.empty())
-  {
-    // There is a cycle in the graph!
-    return false;
-  }
-
   //// We're almost there!
   // Now we have the constraints all set, let's put them back into the widgets:
+  {
+    WidgetLayouts::iterator it  = mLayouts.begin();
+    WidgetLayouts::iterator end = mLayouts.end();
+    
+    while (it != end)
+    {
+      nuiWidget* pWidget = it->first;
+      WidgetLayout& rLayout = it->second;
+      
+      nuiRect r(pWidget->GetIdealRect());
+      
+      // Width / Height:
+      if (rLayout.mWidth.mSet)
+        r.SetWidth(rLayout.mWidth.mValue);
+      
+      if (rLayout.mHeight.mSet)
+        r.SetHeight(rLayout.mHeight.mValue);
+
+      // Left / Right:
+      if (rLayout.mLeft.mSet)
+      {
+        if (rLayout.mRight.mSet)
+          r.Left() = rLayout.mLeft.mValue;
+        else
+          r.MoveTo(rLayout.mLeft.mValue, r.Top());
+      }
+      
+      if (rLayout.mRight.mSet)
+      {
+        if (rLayout.mLeft.mSet)
+          r.Right() = rLayout.mRight.mValue;
+        else
+          r.Move(rLayout.mRight.mValue - r.GetWidth(), r.Top());
+      }
+      
+      // Top / Bottom:
+      if (rLayout.mTop.mSet)
+      {
+        if (rLayout.mBottom.mSet)
+          r.Top() = rLayout.mTop.mValue;
+        else
+          r.MoveTo(r.Left(), rLayout.mTop.mValue);
+      }
+      
+      if (rLayout.mBottom.mSet)
+      {
+        if (rLayout.mTop.mSet)
+          r.Bottom() = rLayout.mBottom.mValue;
+        else
+          r.Move(r.Left(), rLayout.mBottom.mValue - r.GetHeight());
+      }
+      
+      // Center X & Y:
+      if (rLayout.mCenterX.mSet)
+        r.MoveTo(rLayout.mCenterX.mValue - r.GetWidth() * .5, r.Top());
+
+      if (rLayout.mCenterY.mSet)
+        r.MoveTo(r.Left(), rLayout.mCenterY.mValue - r.GetHeight() * .5);
+      
+      pWidget->SetLayout(r);
+      
+      ++it;
+    }
+    
+  }
+  
+  
+  return res;
+}
+
+bool nuiLayout::SetRect(const nuiRect& rRect)
+{
+  nuiWidget::SetRect(rRect);
+
+  DoLayout();
   
   return true;
 }
-
 
 

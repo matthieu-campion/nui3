@@ -28,6 +28,15 @@ enum nuiLayoutRelation
   eLayoutRelation_MoreThanOrEqual
 };
 
+enum nuiLayoutPriority
+{
+  eLayoutPriority_FromWidget,
+  eLayoutPriority_Low,
+  eLayoutPriority_Normal,
+  eLayoutPriority_High,
+  eLayoutPriority_Highest
+};
+
 
 class nuiLayout : public nuiSimpleContainer
 {
@@ -35,14 +44,16 @@ public:
   nuiLayout();
   virtual ~nuiLayout();
   
-  bool AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant);
+  bool AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant, nuiLayoutPriority Priority = eLayoutPriority_Highest);
+  
+  bool SetRect(const nuiRect& rRect);
   
 private:  
   class Node;
   class Constraint
   {
   public:
-    Constraint(nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, nuiLayoutRelation Relation, double Multiplier, double Constant);
+    Constraint(nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, nuiLayoutRelation Relation, double Multiplier, double Constant, nuiLayoutPriority Priority);
     ~Constraint();
 
     nuiWidget* mpRefWidget;
@@ -50,6 +61,7 @@ private:
     nuiLayoutRelation mRelation;
     double mMuliplier;
     double mConstant;
+    nuiLayoutPriority mPriority;
   };
 
   class LayoutValue
@@ -58,13 +70,19 @@ private:
     LayoutValue()
     : mValue(0),
       mMin(std::numeric_limits<double>::min()),
-      mMax(std::numeric_limits<double>::max())
+      mMax(std::numeric_limits<double>::max()),
+      mPriorityMin(eLayoutPriority_FromWidget),
+      mPriorityMax(eLayoutPriority_FromWidget),
+      mSet(false)
     {
     }
     
     void Reset(double value)
     {
       mValue = value;
+      mSet = false;
+      mPriorityMin = eLayoutPriority_FromWidget;
+      mPriorityMax = eLayoutPriority_FromWidget;
       mMin = std::numeric_limits<double>::min();
       mMax = std::numeric_limits<double>::max();
     }
@@ -72,14 +90,16 @@ private:
     double mValue;
     double mMin;
     double mMax;
+    nuiLayoutPriority mPriorityMin;
+    nuiLayoutPriority mPriorityMax;
+    bool mSet;
   };
 
   class WidgetLayout
   {
   public:
-    void Reset(nuiWidget* pWidget)
+    void Reset(const nuiRect& r)
     {
-      nuiRect r(pWidget->GetIdealRect());
       mWidth.Reset(r.GetWidth());
       mHeight.Reset(r.GetHeight());
       mTop.Reset(r.Top());
@@ -144,9 +164,11 @@ private:
   {
     bool operator()(const Node& rLeft, const Node& rRight) const
     {
-      return 
-        rLeft.mpWidget < rRight.mpWidget &&
-      rLeft.mAttrib  < rRight.mAttrib;
+      if (rLeft.mpWidget < rRight.mpWidget)
+        return true;
+      if (rLeft.mpWidget > rRight.mpWidget)
+        return false;
+      return (rLeft.mAttrib  < rRight.mAttrib);
     }
   };
 
