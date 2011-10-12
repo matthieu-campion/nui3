@@ -57,13 +57,11 @@ bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nui
     {
       // Create the node artificially:
       mConstraints[Ref] = ConstraintList();
-      if (mLayouts.find(pWidget) == mLayouts.end())
-        mLayouts[pWidget] = WidgetLayout();
       it = mConstraints.find(Ref);
     }
     const Node& rNode(it->first);
     rNode.mIncommingConstraints++;
-
+    mLayouts[pRefWidget].mRefs++;
   }
   return true;
 }

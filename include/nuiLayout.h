@@ -98,6 +98,11 @@ private:
   class WidgetLayout
   {
   public:
+    WidgetLayout()
+    : mRefs(0)
+    {
+    }
+    
     void Reset(const nuiRect& r)
     {
       mWidth.Reset(r.GetWidth());
