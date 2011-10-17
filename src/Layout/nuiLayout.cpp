@@ -88,6 +88,7 @@ nuiLayout::~nuiLayout()
 bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant, nuiLayoutPriority Priority)
 {
   Widget* pW = &mWidgets[pWidget];
+  pW->mpWidget = pWidget;
   //pW->mRefs++;
   
   Constraint constraint(pRefWidget, RefAttrib, Relation, Multiplier, Constant, Priority);
@@ -138,6 +139,7 @@ bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nui
   {
     pDeps->insert(pRefWidget);
     Widget* pR = &mWidgets[pRefWidget];
+    pR->mpWidget = pRefWidget;
     pR->mRefs++;
     pR->mIncommingDeps[deps]++;
   }
