@@ -8,6 +8,50 @@
 #include "nui.h"
 #include "nuiLayout.h"
 
+const char* nuiGetLayoutAttributeName(nuiLayoutAttribute attrib)
+{
+  switch (attrib)
+  {
+    case eLayoutAttribute_Left:     return "Left";
+    case eLayoutAttribute_Right:    return "Right";
+    case eLayoutAttribute_Top:      return "Top";
+    case eLayoutAttribute_Bottom:   return "Bottom";
+    case eLayoutAttribute_Width:    return "Width";
+    case eLayoutAttribute_Height:   return "Height";
+    case eLayoutAttribute_CenterX:  return "CenterX";
+    case eLayoutAttribute_CenterY:  return "CenterY";
+  }
+  
+  NGL_ASSERTR(0, "error");
+}
+
+const char* nuiGetLayoutRelationName(nuiLayoutRelation relation)
+{
+  switch (relation)
+  {
+    case eLayoutRelation_Equals:          return "Equals";
+    case eLayoutRelation_LessThanOrEqual: return "LessThanOrEqual";
+    case eLayoutRelation_MoreThanOrEqual: return "MoreThanOrEqual";
+    case eLayoutRelation_Dependency:      return "Dependency";
+  }
+  
+  NGL_ASSERTR(0, "error");
+}
+
+const char* nuiGetLayoutPriorityName(nuiLayoutPriority priority)
+{
+  switch (priority)
+  {
+    case eLayoutPriority_FromWidget:  return "FromWidget";
+    case eLayoutPriority_Low:         return "Low";
+    case eLayoutPriority_Normal:      return "Normal";
+    case eLayoutPriority_High:        return "High";
+    case eLayoutPriority_Highest:        return "Highest";
+  }
+  
+  NGL_ASSERTR(0, "error");
+}
+
 
 ////////////////
 // Contraint:
@@ -16,7 +60,7 @@ nuiLayout::Constraint::Constraint(nuiWidget* pRefWidget, nuiLayoutAttribute RefA
   mpRefWidget(pRefWidget),
   mRefAttrib(RefAttrib),
   mRelation(Relation),
-  mMuliplier(Multiplier),
+  mMultiplier(Multiplier),
   mConstant(Constant),
   mPriority(Priority)
 {
@@ -31,6 +75,10 @@ nuiLayout::Constraint::~Constraint()
 // nuiLayout:
 nuiLayout::nuiLayout()
 {
+  if (SetObjectClass("nuiLayout"))
+  {
+    //
+  }
 }
 
 nuiLayout::~nuiLayout()
@@ -39,34 +87,70 @@ nuiLayout::~nuiLayout()
 
 bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant, nuiLayoutPriority Priority)
 {
-  WidgetLayout* pLayout = &mLayouts[pWidget];
-  pLayout->mRefs++;
-  
-  Node Target(pWidget, Attrib, pLayout);
+  Widget* pW = &mWidgets[pWidget];
+  //pW->mRefs++;
   
   Constraint constraint(pRefWidget, RefAttrib, Relation, Multiplier, Constant, Priority);
   
-  mConstraints[Target].push_back(constraint);
+  LayoutValue* pValue = NULL;
+  DependencySet* pDeps = NULL;
 
+  int32 deps = 1;
+
+  switch (Attrib)
+  {
+    case eLayoutAttribute_Left:
+      pValue = & pW->mLeft;
+      deps = 0;
+      break;
+    case eLayoutAttribute_Right:
+      pValue = & pW->mRight;
+      deps = 0;
+      break;
+    case eLayoutAttribute_Width:
+      pValue = & pW->mWidth;
+      deps = 0;
+      break;
+    case eLayoutAttribute_CenterX:
+      pValue = & pW->mCenterX;
+      deps = 0;
+      break;
+     
+      
+    case eLayoutAttribute_Top:
+      pValue = & pW->mTop;
+      break;
+    case eLayoutAttribute_Bottom:
+      pValue = & pW->mBottom;
+      break;
+    case eLayoutAttribute_Height:
+      pValue = & pW->mHeight;
+      break;
+    case eLayoutAttribute_CenterY:
+      pValue = & pW->mCenterY;
+      break;
+  }
+  
+  pDeps = & pW->mDeps[deps];
+  pValue->mConstraints.push_back(constraint);
+  
   if (pRefWidget)
   {
-    Node Ref(pRefWidget, RefAttrib, NULL);
-    ConstraintMap::iterator it = mConstraints.find(Ref);
-    
-    if (it == mConstraints.end())
-    {
-      // Create the node artificially:
-      mConstraints[Ref] = ConstraintList();
-      it = mConstraints.find(Ref);
-    }
-    const Node& rNode(it->first);
-    rNode.mIncommingConstraints++;
-    mLayouts[pRefWidget].mRefs++;
+    pDeps->insert(pRefWidget);
+    Widget* pR = &mWidgets[pWidget];
+    pR->mRefs++;
+    pR->mIncommingDeps[deps]++;
   }
+  
   return true;
 }
 
-bool nuiLayout::DoLayout()
+void nuiLayout::AddDependency(nuiWidget* pFromWidget, nuiWidget* pToWidget)
+{
+}
+
+
+bool nuiLayout::DoLayout(const nuiRect& rRect)
 {
   // Topological sort:
   /* Algorithm from wikipedia:
@@ -86,233 +170,184 @@ bool nuiLayout::DoLayout()
     output message (proposed topologically sorted order: L)
    */
   
-  std::list<const Node*> nodes;
-  std::set<const Node*> startnodes;
-  std::set<const Constraint*> edges;
-  
+  std::set<const Widget*> startnodes[2];
+  std::list<const Widget*> nodes[2];
   {
     // Fill startnodes:
-    ConstraintMap::iterator it = mConstraints.begin();
-    ConstraintMap::iterator end = mConstraints.end();
+    Widgets::iterator it = mWidgets.begin();
+    Widgets::iterator end = mWidgets.end();
     
     while (it != end)
     {
-      const Node* pNode = &it->first;
-      pNode->mVisits = 0; // Reset the visit count
+      Widget* pWidget = &it->second;
+      pWidget->mVisits[0] = 0; // Reset the visit count for X
+      pWidget->mVisits[1] = 0; // Reset the visit count for Y
       
       // fill the list of start nodes:
-      if (pNode->mIncommingConstraints == 0)
-      {
-        startnodes.insert(pNode);
-      }
+      if (pWidget->mIncommingDeps[0] == 0)
+        startnodes[0].insert(pWidget);
+
+      if (pWidget->mIncommingDeps[1] == 0)
+        startnodes[1].insert(pWidget);
+
+      // reset layout:
+      nuiRect r;
+      nuiWidget* pW = it->first;
+      if (pW != this)
+        r = pW->GetIdealRect();
+      else
+        r = pW->GetRect();
       
-      // Add all edges to the edge list
-      ConstraintList& rList(it->second);
-      for (ConstraintList::iterator i = rList.begin(); i != rList.end(); ++i)
-        edges.insert(&*i);
+      pW->LocalToLocal(this, r);
+      pWidget->Reset(r); // Use the ideal rect as the reference for all widgets except this one
       
       ++it;
     }
   }
   
-  // Now start the actual topological sort:
-  while (!startnodes.empty())
+  for (int32 c = 0; c < 2; c++)
   {
-    // remove a node pNode from the list of start nodes:
-    std::set<const Node*>::iterator it = startnodes.begin();
-    const Node* pNode = *it;
-    startnodes.erase(it);
-    
-    // Insert this node into the node list:
-    nodes.push_back(pNode);
-    
-    // for each node referenced by pNode:
-    ConstraintMap::iterator constraint_it = mConstraints.find(*pNode);
-    NGL_ASSERT(constraint_it != mConstraints.end());
-    ConstraintList& constraints(constraint_it->second);
-    for (ConstraintList::iterator cit = constraints.begin(); cit != constraints.end(); ++cit)
+    // Now start the actual topological sort:
+    while (!startnodes[c].empty())
     {
-      const Constraint& rConstraint(*cit);
-      ConstraintMap::iterator refit = mConstraints.find(Node(rConstraint.mpRefWidget, rConstraint.mRefAttrib, NULL));
-      NGL_ASSERT(refit != mConstraints.end());
+      // remove a node pNode from the list of start nodes:
+      std::set<const Widget*>::iterator it = startnodes[c].begin();
+      const Widget* pNode = *it;
+      startnodes[c].erase(it);
       
-      const Node* pRefNode = &refit->first;
-      pRefNode->mVisits++;
-      edges.erase(&rConstraint);
+      // Insert this node into the node list:
+      nodes[c].push_back(pNode);
       
-      // if pRefNode has no incoming edges, move it to the startnodes list
-      if (pRefNode->mVisits == pRefNode->mIncommingConstraints)
-        startnodes.insert(pRefNode);
+      // for each node referenced by pNode:
+      DependencySet::iterator deps_it = pNode->mDeps[c].begin();
+      DependencySet::iterator deps_end = pNode->mDeps[c].end();
+      while (deps_it != deps_end)
+      {
+        nuiWidget* pRef = *deps_it;
+        Widget* pRefWidget = &mWidgets[pRef];
+        
+        pRefWidget->mVisits[c]++;
+        if (pRefWidget->mVisits[c] == pRefWidget->mIncommingDeps[c])
+          startnodes[c].insert(pRefWidget);
+        
+        ++it;
+      }
     }
-  }
 
-  // Reset widget layout flags:
-  {
-    WidgetLayouts::iterator it = mLayouts.begin();
-    while (it != mLayouts.end())
+
+    // Now we can calculate the layout, node by node, going from the one everyone depends on to the star nodes:
+    nodes[c].reverse();
+    
+    std::list<const Widget*>::iterator it = nodes[c].begin();
+    std::list<const Widget*>::iterator end = nodes[c].end();
+    
+    while (it != end)
     {
-      WidgetLayout& rLayout(it->second);
-      nuiWidget* pTarget = it->first;
+      const Widget* pNode(*it);
+      NGL_OUT("Laying out '%s' [%p]\n", pNode->mpWidget->GetObjectName().GetChars(), pNode->mpWidget);
       
-      nuiRect r;
-      if (pTarget != this)
-        r = pTarget->GetIdealRect();
-      else
-        r = pTarget->GetRect();
-      
-      pTarget->LocalToLocal(this, r);
-
-      rLayout.Reset(r); // Use the ideal rect as the reference for all widgets except this one
+      for (DependencySet::const_iterator deps_it = pNode->mDeps[c].begin(); deps_it != pNode->mDeps[c].end(); ++deps_it)
+      {
+        // Evaluate constraints:
+        
+        if (c == 0)
+        {
+          // Horizontal
+          EvaluateConstraints(pNode->mLeft);
+          EvaluateConstraints(pNode->mRight);
+          EvaluateConstraints(pNode->mWidth);
+          EvaluateConstraints(pNode->mCenterX);
+        }
+        else
+        {
+          // Vertical
+          EvaluateConstraints(pNode->mTop);
+          EvaluateConstraints(pNode->mBottom);
+          EvaluateConstraints(pNode->mHeight);
+          EvaluateConstraints(pNode->mCenterY);
+        }
+      }
       
       ++it;
     }
+    
   }
 
   bool res = true;
-  if (!edges.empty())
-  {
-    // There is a cycle in the graph!
-    res = false;
-  }
+//  if (!edges.empty())
+//  {
+//    // There is a cycle in the graph!
+//    NGL_OUT("\n\nERROR: There is a cycle in the graph!\n\n");
+//    res = false;
+//  }
   
 
-  // Now we can calculate the layout, node by node, going from the one everyone depends on to the star nodes:
-  nodes.reverse();
-  
-  std::list<const Node*>::iterator it = nodes.begin();
-  std::list<const Node*>::iterator end = nodes.end();
-  
-  while (it != end)
-  {
-    const Node* pNode(*it);
-    LayoutValue& rValue(pNode->mpLayout->GetAttrib(pNode->mAttrib));
-    ConstraintMap::iterator cit = mConstraints.find(*pNode);
-    NGL_ASSERT(cit != mConstraints.end());
-
-    ConstraintList& rContraints(cit->second);
-
-    // Apply all constraints that go from this node:
-    for (int32 i = 0; i < rContraints.size(); i++)
-    {
-      Constraint& rConstraint(rContraints[i]);
-
-      double val;
-      if (rConstraint.mpRefWidget)
-      {
-        WidgetLayouts::iterator wit = mLayouts.find(rConstraint.mpRefWidget);
-        NGL_ASSERT(wit != mLayouts.end());
-        
-        WidgetLayout& rRefLayout(wit->second);
-        LayoutValue& rRefValue(rRefLayout.GetAttrib(rConstraint.mRefAttrib));
-
-        val = rRefValue.mValue;
-      }
-
-      val = val * rConstraint.mMuliplier + rConstraint.mConstant;
-
-      switch (rConstraint.mRelation)
-      {
-        case eLayoutRelation_Equals:
-          if (rValue.mPriorityMin <= rConstraint.mPriority)
-          {
-            rValue.mMin = val;
-            rValue.mPriorityMin = rConstraint.mPriority;
-            rValue.mSet = true;
-          }
-          
-          if (rValue.mPriorityMax <= rConstraint.mPriority)
-          {
-            rValue.mMax = val;
-            rValue.mPriorityMax = rConstraint.mPriority;
-            rValue.mSet = true;
-          }
-          break;
-        case eLayoutRelation_LessThanOrEqual:
-          if (rValue.mPriorityMax <= rConstraint.mPriority)
-          {
-            rValue.mMax = val;
-            rValue.mPriorityMax = rConstraint.mPriority;
-            rValue.mSet = true;
-          }
-          break;
-        case eLayoutRelation_MoreThanOrEqual:
-          if (rValue.mPriorityMin <= rConstraint.mPriority)
-          {
-            rValue.mMin = val;
-            rValue.mPriorityMin = rConstraint.mPriority;
-            rValue.mSet = true;
-          }
-          break;
-      }
-      
-      rValue.mValue = nuiClamp(rValue.mValue, rValue.mMin, rValue.mMax);
-    }
-
-    ++it;
-  }
   
   //// We're almost there!
   // Now we have the constraints all set, let's put them back into the widgets:
   {
-    WidgetLayouts::iterator it  = mLayouts.begin();
-    WidgetLayouts::iterator end = mLayouts.end();
+    Widgets::iterator it  = mWidgets.begin();
+    Widgets::iterator end = mWidgets.end();
     
     while (it != end)
     {
       nuiWidget* pWidget = it->first;
-      WidgetLayout& rLayout = it->second;
-      
-      nuiRect r(pWidget->GetIdealRect());
-      
-      // Width / Height:
-      if (rLayout.mWidth.mSet)
-        r.SetWidth(rLayout.mWidth.mValue);
-      
-      if (rLayout.mHeight.mSet)
-        r.SetHeight(rLayout.mHeight.mValue);
+      if (pWidget != this)
+      {
+        Widget& rWidget = it->second;
+        
+        nuiRect r(pWidget->GetIdealRect());
+        
+        // Width / Height:
+        if (rWidget.mWidth.mSet)
+          r.SetWidth(rWidget.mWidth.mValue);
+        
+        if (rWidget.mHeight.mSet)
+          r.SetHeight(rWidget.mHeight.mValue);
 
-      // Left / Right:
-      if (rLayout.mLeft.mSet)
-      {
-        if (rLayout.mRight.mSet)
-          r.Left() = rLayout.mLeft.mValue;
-        else
-          r.MoveTo(rLayout.mLeft.mValue, r.Top());
-      }
-      
-      if (rLayout.mRight.mSet)
-      {
-        if (rLayout.mLeft.mSet)
-          r.Right() = rLayout.mRight.mValue;
-        else
-          r.Move(rLayout.mRight.mValue - r.GetWidth(), r.Top());
-      }
-      
-      // Top / Bottom:
-      if (rLayout.mTop.mSet)
-      {
-        if (rLayout.mBottom.mSet)
-          r.Top() = rLayout.mTop.mValue;
-        else
-          r.MoveTo(r.Left(), rLayout.mTop.mValue);
-      }
-      
-      if (rLayout.mBottom.mSet)
-      {
-        if (rLayout.mTop.mSet)
-          r.Bottom() = rLayout.mBottom.mValue;
-        else
-          r.Move(r.Left(), rLayout.mBottom.mValue - r.GetHeight());
-      }
-      
-      // Center X & Y:
-      if (rLayout.mCenterX.mSet)
-        r.MoveTo(rLayout.mCenterX.mValue - r.GetWidth() * .5, r.Top());
+        // Left / Right:
+        if (rWidget.mLeft.mSet)
+        {
+          if (rWidget.mRight.mSet)
+            r.Left() = rWidget.mLeft.mValue;
+          else
+            r.MoveTo(rWidget.mLeft.mValue, r.Top());
+        }
+        
+        if (rWidget.mRight.mSet)
+        {
+          if (rWidget.mLeft.mSet)
+            r.Right() = rWidget.mRight.mValue;
+          else
+            r.Move(rWidget.mRight.mValue - r.GetWidth(), r.Top());
+        }
+        
+        // Top / Bottom:
+        if (rWidget.mTop.mSet)
+        {
+          if (rWidget.mBottom.mSet)
+            r.Top() = rWidget.mTop.mValue;
+          else
+            r.MoveTo(r.Left(), rWidget.mTop.mValue);
+        }
+        
+        if (rWidget.mBottom.mSet)
+        {
+          if (rWidget.mTop.mSet)
+            r.Bottom() = rWidget.mBottom.mValue;
+          else
+            r.Move(r.Left(), rWidget.mBottom.mValue - r.GetHeight());
+        }
+        
+        // Center X & Y:
+        if (rWidget.mCenterX.mSet)
+          r.MoveTo(rWidget.mCenterX.mValue - r.GetWidth() * .5, r.Top());
 
-      if (rLayout.mCenterY.mSet)
-        r.MoveTo(r.Left(), rLayout.mCenterY.mValue - r.GetHeight() * .5);
-      
-      pWidget->SetLayout(r);
+        if (rWidget.mCenterY.mSet)
+          r.MoveTo(r.Left(), rWidget.mCenterY.mValue - r.GetHeight() * .5);
+        
+        pWidget->SetLayout(r);
+      }
       
       ++it;
     }
@@ -323,11 +358,71 @@ bool nuiLayout::DoLayout()
   return res;
 }
 
+void nuiLayout::EvaluateConstraints(LayoutValue& rValue)
+{
+  // Apply all constraints that go from this node:
+  for (int32 i = 0; i < rValue.mConstraints.size(); i++)
+  {
+    Constraint& rConstraint(rValue.mConstraints[i]);
+    
+    double val = 0;
+    if (rConstraint.mpRefWidget)
+    {
+      NGL_OUT("\twith RefWidget = %s (%s)\n", rConstraint.mpRefWidget->GetObjectName().GetChars(), nuiGetLayoutAttributeName(rConstraint.mRefAttrib));
+      
+      Widget& W(mWidgets[rConstraint.mpRefWidget]);
+      LayoutValue& rRefValue(W.GetAttrib(rConstraint.mRefAttrib));
+      
+      val = rRefValue.mValue;
+    }
+    NGL_OUT("\tConstraint[%d] %s (%f * %f + %f)\n", i, nuiGetLayoutRelationName(rConstraint.mRelation), val, rConstraint.mMultiplier, rConstraint.mConstant);
+    
+    val = val * rConstraint.mMultiplier + rConstraint.mConstant;
+    
+    switch (rConstraint.mRelation)
+    {
+      case eLayoutRelation_Equals:
+        if (rValue.mPriorityMin <= rConstraint.mPriority)
+        {
+          rValue.mMin = val;
+          rValue.mPriorityMin = rConstraint.mPriority;
+        }
+        
+        if (rValue.mPriorityMax <= rConstraint.mPriority)
+        {
+          rValue.mMax = val;
+          rValue.mPriorityMax = rConstraint.mPriority;
+        }
+        break;
+      case eLayoutRelation_LessThanOrEqual:
+        if (rValue.mPriorityMax <= rConstraint.mPriority)
+        {
+          rValue.mMax = val;
+          rValue.mPriorityMax = rConstraint.mPriority;
+        }
+        break;
+      case eLayoutRelation_MoreThanOrEqual:
+        if (rValue.mPriorityMin <= rConstraint.mPriority)
+        {
+          rValue.mMin = val;
+          rValue.mPriorityMin = rConstraint.mPriority;
+        }
+        break;
+    }
+    
+    rValue.mValue = nuiClamp(rValue.mValue, rValue.mMin, rValue.mMax);
+    rValue.mSet = true;
+  }
+}
+
 bool nuiLayout::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
 
-  DoLayout();
+  NGL_OUT("nuiLayout::SetRect(%s)\n", rRect.GetValue().GetChars());
+  
+  nuiRect r(rRect.Size());
+  DoLayout(r);
   
   return true;
 }

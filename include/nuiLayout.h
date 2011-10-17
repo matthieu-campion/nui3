@@ -9,23 +9,24 @@
 
 enum nuiLayoutAttribute
 {
-  eLayoutAttribute_Left = 1 << 0,
-  eLayoutAttribute_Right = 1 << 1,
-  eLayoutAttribute_Top = 1 << 2,
-  eLayoutAttribute_Bottom = 1 << 3,
-  eLayoutAttribute_Width = 1 << 4,
-  eLayoutAttribute_Height = 1 << 5,
-  eLayoutAttribute_CenterX = 1 << 6,
-  eLayoutAttribute_CenterY = 1 << 7
-  //baseline
+  eLayoutAttribute_Left,
+  eLayoutAttribute_Right,
+  eLayoutAttribute_Width,
+  eLayoutAttribute_CenterX,
 
+  eLayoutAttribute_Top,
+  eLayoutAttribute_Bottom,
+  eLayoutAttribute_Height,
+  eLayoutAttribute_CenterY
+  //baseline
 };
 
 enum nuiLayoutRelation
 {
   eLayoutRelation_Equals,
   eLayoutRelation_LessThanOrEqual,
-  eLayoutRelation_MoreThanOrEqual
+  eLayoutRelation_MoreThanOrEqual,
+  eLayoutRelation_Dependency
 };
 
 enum nuiLayoutPriority
@@ -49,7 +50,6 @@ public:
   bool SetRect(const nuiRect& rRect);
   
 private:  
-  class Node;
   class Constraint
   {
   public:
@@ -59,11 +59,15 @@ private:
     nuiWidget* mpRefWidget;
     nuiLayoutAttribute mRefAttrib;
     nuiLayoutRelation mRelation;
-    double mMuliplier;
+    double mMultiplier;
     double mConstant;
     nuiLayoutPriority mPriority;
   };
 
+
+  typedef std::vector<Constraint> ConstraintVector;
+  typedef std::set<nuiWidget*> DependencySet;
+  
   class LayoutValue
   {
   public:
@@ -80,11 +84,11 @@ private:
     void Reset(double value)
     {
       mValue = value;
-      mSet = false;
       mPriorityMin = eLayoutPriority_FromWidget;
       mPriorityMax = eLayoutPriority_FromWidget;
       mMin = std::numeric_limits<double>::min();
       mMax = std::numeric_limits<double>::max();
+      mSet = false;
     }
 
     double mValue;
@@ -93,13 +97,16 @@ private:
     nuiLayoutPriority mPriorityMin;
     nuiLayoutPriority mPriorityMax;
     bool mSet;
+    
+    ConstraintVector mConstraints;
   };
 
-  class WidgetLayout
+  class Widget
   {
   public:
-    WidgetLayout()
-    : mRefs(0)
+    Widget(nuiWidget* pWidget = NULL)
+    : mRefs(0),
+      mpWidget(pWidget)
     {
     }
     
@@ -121,11 +128,12 @@ private:
       {
         case eLayoutAttribute_Left:     return mLeft;
         case eLayoutAttribute_Right:    return mRight;
+        case eLayoutAttribute_Width:    return mWidth;
+        case eLayoutAttribute_CenterX:  return mCenterX;
+
         case eLayoutAttribute_Top:      return mTop;
         case eLayoutAttribute_Bottom:   return mBottom;
-        case eLayoutAttribute_Width:    return mWidth;
         case eLayoutAttribute_Height:   return mHeight;
-        case eLayoutAttribute_CenterX:  return mCenterX;
         case eLayoutAttribute_CenterY:  return mCenterY;
       }
       
@@ -142,48 +150,22 @@ private:
     mutable LayoutValue mCenterY;
     
     int32 mRefs;
-  };
-  
-  class Node
-  {
-  public:
-    Node(nuiWidget* pWidget, nuiLayoutAttribute Attrib, WidgetLayout* pLayout)
-    {
-      mpWidget = pWidget;
-      mAttrib = Attrib;
-      mpLayout = pLayout;
-      mIncommingConstraints = 0;
-      mVisits = 0;
-    }
-        
+    
+    DependencySet mDeps[2];
+    
+    int32 mIncommingDeps[2];
+    int32 mVisits[2];
+    
     nuiWidget* mpWidget;
-    nuiLayoutAttribute mAttrib;
-    
-    mutable int32 mIncommingConstraints;
-    mutable int32 mVisits;
-    
-    WidgetLayout* mpLayout;
   };
   
-  struct less_node
-  {
-    bool operator()(const Node& rLeft, const Node& rRight) const
-    {
-      if (rLeft.mpWidget < rRight.mpWidget)
-        return true;
-      if (rLeft.mpWidget > rRight.mpWidget)
-        return false;
-      return (rLeft.mAttrib  < rRight.mAttrib);
-    }
-  };
-
-  typedef std::vector<Constraint> ConstraintList;
-  typedef std::map< Node, ConstraintList, less_node > ConstraintMap;
-  ConstraintMap mConstraints;
-
-  typedef std::map<nuiWidget*, WidgetLayout> WidgetLayouts;
-  WidgetLayouts mLayouts;
+  typedef std::map<nuiWidget*, Widget> Widgets;
+  Widgets mWidgets;
   
-  bool DoLayout();
+  bool DoLayout(const nuiRect& rRect);
+
+  void AddDependency(nuiWidget* pFromWidget, nuiWidget* pToWidget);
+  
+  void EvaluateConstraints(LayoutValue& rValue);
 };
 
