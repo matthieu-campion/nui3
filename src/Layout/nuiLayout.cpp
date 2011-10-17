@@ -137,7 +137,7 @@ bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nui
   if (pRefWidget)
   {
     pDeps->insert(pRefWidget);
-    Widget* pR = &mWidgets[pWidget];
+    Widget* pR = &mWidgets[pRefWidget];
     pR->mRefs++;
     pR->mIncommingDeps[deps]++;
   }
@@ -180,14 +180,14 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
     while (it != end)
     {
       Widget* pWidget = &it->second;
-      pWidget->mVisits[0] = 0; // Reset the visit count for X
-      pWidget->mVisits[1] = 0; // Reset the visit count for Y
-      
+
       // fill the list of start nodes:
-      if (pWidget->mIncommingDeps[0] == 0)
+      int32 inx = pWidget->mIncommingDeps[0];
+      int32 iny = pWidget->mIncommingDeps[1];
+      if (inx == 0)
         startnodes[0].insert(pWidget);
 
-      if (pWidget->mIncommingDeps[1] == 0)
+      if (iny == 0)
         startnodes[1].insert(pWidget);
 
       // reset layout:
@@ -230,7 +230,7 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
         if (pRefWidget->mVisits[c] == pRefWidget->mIncommingDeps[c])
           startnodes[c].insert(pRefWidget);
         
-        ++it;
+        ++deps_it;
       }
     }
 

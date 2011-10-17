@@ -108,6 +108,10 @@ private:
     : mRefs(0),
       mpWidget(pWidget)
     {
+      mIncommingDeps[0] = 0;
+      mIncommingDeps[1] = 0;
+      mVisits[0] = 0;
+      mVisits[1] = 0;
     }
     
     void Reset(const nuiRect& r)
@@ -120,6 +124,8 @@ private:
       mRight.Reset(r.Right());
       mCenterX.Reset(r.Left() + r.GetWidth() * .5);
       mCenterY.Reset(r.Top() + r.GetHeight() * .5);
+      mVisits[0] = 0;
+      mVisits[1] = 0;
     }
     
     LayoutValue& GetAttrib(nuiLayoutAttribute attrib)
