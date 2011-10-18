@@ -196,7 +196,9 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
       nuiRect r;
       nuiWidget* pW = it->first;
       if (pW != this)
-        r = pW->GetBorderedRect(pW->GetIdealRect()).Size();
+      {
+        r = pW->GetIdealRect().Size();
+      }
       else
         r = pW->GetRect().Size();
       
@@ -355,7 +357,9 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
       if (pWidget != this)
       {
         Widget& rWidget = it->second;
-        pWidget->SetLayout(rWidget.mRect);
+        nuiRect r = rWidget.mRect;
+        //r = pWidget->GetBorderLessRect(r);
+        pWidget->SetLayout(r);
       }
       
       ++it;

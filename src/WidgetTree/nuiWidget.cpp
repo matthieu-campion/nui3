@@ -898,6 +898,17 @@ nuiRect nuiWidget::GetBorderedRect(const nuiRect& rRect) const
   return rect;
 }
 
+nuiRect nuiWidget::GetBorderLessRect(const nuiRect& rRect) const
+{
+  CheckValid();
+  nuiRect rect = rRect;
+  rect.Bottom() -= GetActualBorderBottom();
+  rect.Top() += GetActualBorderTop();
+  rect.Left() += GetActualBorderLeft();
+  rect.Right() -= GetActualBorderRight();
+  return rect;
+}
+
 
 
 void nuiWidget::InvalidateRect(const nuiRect& rRect)
