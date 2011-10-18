@@ -172,8 +172,8 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
     output message (proposed topologically sorted order: L)
    */
   
-  std::set<const Widget*> startnodes[2];
-  std::list<const Widget*> nodes[2];
+  std::set<Widget*> startnodes[2];
+  std::list<Widget*> nodes[2];
   {
     // Fill startnodes:
     Widgets::iterator it = mWidgets.begin();
@@ -196,9 +196,9 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
       nuiRect r;
       nuiWidget* pW = it->first;
       if (pW != this)
-        r = pW->GetIdealRect();
+        r = pW->GetBorderedRect(pW->GetIdealRect()).Size();
       else
-        r = pW->GetRect();
+        r = pW->GetRect().Size();
       
       pW->LocalToLocal(this, r);
       pWidget->Reset(r); // Use the ideal rect as the reference for all widgets except this one
@@ -213,8 +213,8 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
     while (!startnodes[c].empty())
     {
       // remove a node pNode from the list of start nodes:
-      std::set<const Widget*>::iterator it = startnodes[c].begin();
-      const Widget* pNode = *it;
+      std::set<Widget*>::iterator it = startnodes[c].begin();
+      Widget* pNode = *it;
       startnodes[c].erase(it);
       
       // Insert this node into the node list:
@@ -230,7 +230,9 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
         
         pRefWidget->mVisits[c]++;
         if (pRefWidget->mVisits[c] == pRefWidget->mIncommingDeps[c])
+        {
           startnodes[c].insert(pRefWidget);
+        }
         
         ++deps_it;
       }
@@ -240,13 +242,13 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
     // Now we can calculate the layout, node by node, going from the one everyone depends on to the star nodes:
     nodes[c].reverse();
     
-    std::list<const Widget*>::iterator it = nodes[c].begin();
-    std::list<const Widget*>::iterator end = nodes[c].end();
+    std::list<Widget*>::iterator it = nodes[c].begin();
+    std::list<Widget*>::iterator end = nodes[c].end();
     
     while (it != end)
     {
-      const Widget* pNode(*it);
-      NGL_OUT("Laying out '%s' [%p]\n", pNode->mpWidget->GetObjectName().GetChars(), pNode->mpWidget);
+      Widget* pNode(*it);
+      //NGL_OUT("Laying out '%s' [%p]\n", pNode->mpWidget->GetObjectName().GetChars(), pNode->mpWidget);
       
       for (DependencySet::const_iterator deps_it = pNode->mDeps[c].begin(); deps_it != pNode->mDeps[c].end(); ++deps_it)
       {
@@ -259,6 +261,33 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
           EvaluateConstraints(pNode->mRight);
           EvaluateConstraints(pNode->mWidth);
           EvaluateConstraints(pNode->mCenterX);
+
+          nuiRect& r(pNode->mRect);
+          // Width
+          if (pNode->mWidth.mSet)
+            r.SetWidth(pNode->mWidth.mValue);
+          
+          // Left / Right:
+          if (pNode->mLeft.mSet)
+          {
+            if (pNode->mRight.mSet)
+              r.Left() = pNode->mLeft.mValue;
+            else
+              r.MoveTo(pNode->mLeft.mValue, r.Top());
+          }
+          
+          if (pNode->mRight.mSet)
+          {
+            if (pNode->mLeft.mSet)
+              r.Right() = pNode->mRight.mValue;
+            else
+              r.MoveTo(pNode->mRight.mValue - r.GetWidth(), r.Top());
+          }
+          
+          // Center X:
+          if (pNode->mCenterX.mSet)
+            r.MoveTo(pNode->mCenterX.mValue - r.GetWidth() * .5, r.Top());
+          
         }
         else
         {
@@ -267,7 +296,36 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
           EvaluateConstraints(pNode->mBottom);
           EvaluateConstraints(pNode->mHeight);
           EvaluateConstraints(pNode->mCenterY);
+
+          nuiRect& r(pNode->mRect);
+          // Height:
+          if (pNode->mHeight.mSet)
+            r.SetHeight(pNode->mHeight.mValue);
+          
+          // Top / Bottom:
+          if (pNode->mTop.mSet)
+          {
+            if (pNode->mBottom.mSet)
+              r.Top() = pNode->mTop.mValue;
+            else
+              r.MoveTo(r.Left(), pNode->mTop.mValue);
+          }
+          
+          if (pNode->mBottom.mSet)
+          {
+            if (pNode->mTop.mSet)
+              r.Bottom() = pNode->mBottom.mValue;
+            else
+              r.MoveTo(r.Left(), pNode->mBottom.mValue - r.GetHeight());
+          }
+          
+          // Center Y:
+          if (pNode->mCenterY.mSet)
+            r.MoveTo(r.Left(), pNode->mCenterY.mValue - r.GetHeight() * .5);
+          
         }
+        
+        //NGL_OUT("\t\tupdated layout rect: %s\n", pNode->mRect.GetValue().GetChars());
       }
       
       ++it;
@@ -297,58 +355,7 @@ bool nuiLayout::DoLayout(const nuiRect& rRect)
       if (pWidget != this)
       {
         Widget& rWidget = it->second;
-        
-        nuiRect r(pWidget->GetIdealRect());
-        
-        // Width / Height:
-        if (rWidget.mWidth.mSet)
-          r.SetWidth(rWidget.mWidth.mValue);
-        
-        if (rWidget.mHeight.mSet)
-          r.SetHeight(rWidget.mHeight.mValue);
-
-        // Left / Right:
-        if (rWidget.mLeft.mSet)
-        {
-          if (rWidget.mRight.mSet)
-            r.Left() = rWidget.mLeft.mValue;
-          else
-            r.MoveTo(rWidget.mLeft.mValue, r.Top());
-        }
-        
-        if (rWidget.mRight.mSet)
-        {
-          if (rWidget.mLeft.mSet)
-            r.Right() = rWidget.mRight.mValue;
-          else
-            r.Move(rWidget.mRight.mValue - r.GetWidth(), r.Top());
-        }
-        
-        // Top / Bottom:
-        if (rWidget.mTop.mSet)
-        {
-          if (rWidget.mBottom.mSet)
-            r.Top() = rWidget.mTop.mValue;
-          else
-            r.MoveTo(r.Left(), rWidget.mTop.mValue);
-        }
-        
-        if (rWidget.mBottom.mSet)
-        {
-          if (rWidget.mTop.mSet)
-            r.Bottom() = rWidget.mBottom.mValue;
-          else
-            r.Move(r.Left(), rWidget.mBottom.mValue - r.GetHeight());
-        }
-        
-        // Center X & Y:
-        if (rWidget.mCenterX.mSet)
-          r.MoveTo(rWidget.mCenterX.mValue - r.GetWidth() * .5, r.Top());
-
-        if (rWidget.mCenterY.mSet)
-          r.MoveTo(r.Left(), rWidget.mCenterY.mValue - r.GetHeight() * .5);
-        
-        pWidget->SetLayout(r);
+        pWidget->SetLayout(rWidget.mRect);
       }
       
       ++it;
@@ -370,14 +377,24 @@ void nuiLayout::EvaluateConstraints(LayoutValue& rValue)
     double val = 0;
     if (rConstraint.mpRefWidget)
     {
-      NGL_OUT("\twith RefWidget = %s (%s)\n", rConstraint.mpRefWidget->GetObjectName().GetChars(), nuiGetLayoutAttributeName(rConstraint.mRefAttrib));
+      //NGL_OUT("\twith RefWidget = %s (%s)\n", rConstraint.mpRefWidget->GetObjectName().GetChars(), nuiGetLayoutAttributeName(rConstraint.mRefAttrib));
       
       Widget& W(mWidgets[rConstraint.mpRefWidget]);
-      LayoutValue& rRefValue(W.GetAttrib(rConstraint.mRefAttrib));
       
-      val = rRefValue.mValue;
+      switch (rConstraint.mRefAttrib)
+      {
+        case eLayoutAttribute_Left:     val = W.mRect.Left(); break;
+        case eLayoutAttribute_Right:    val = W.mRect.Right(); break;
+        case eLayoutAttribute_Width:    val = W.mRect.GetWidth(); break;
+        case eLayoutAttribute_CenterX:  val = W.mRect.Left() + W.mRect.GetWidth() * .5; break;
+          
+        case eLayoutAttribute_Top:      val = W.mRect.Top(); break;
+        case eLayoutAttribute_Bottom:   val = W.mRect.Bottom(); break;
+        case eLayoutAttribute_Height:   val = W.mRect.GetHeight(); break;
+        case eLayoutAttribute_CenterY:  val = W.mRect.Top() + W.mRect.GetHeight() * .5; break;
+      }
     }
-    NGL_OUT("\tConstraint[%d] %s (%f * %f + %f)\n", i, nuiGetLayoutRelationName(rConstraint.mRelation), val, rConstraint.mMultiplier, rConstraint.mConstant);
+    //NGL_OUT("\tConstraint[%d] %s (%f * %f + %f)\n", i, nuiGetLayoutRelationName(rConstraint.mRelation), val, rConstraint.mMultiplier, rConstraint.mConstant);
     
     val = val * rConstraint.mMultiplier + rConstraint.mConstant;
     
@@ -421,7 +438,7 @@ bool nuiLayout::SetRect(const nuiRect& rRect)
 {
   nuiWidget::SetRect(rRect);
 
-  NGL_OUT("nuiLayout::SetRect(%s)\n", rRect.GetValue().GetChars());
+  //NGL_OUT("nuiLayout::SetRect(%s)\n", rRect.GetValue().GetChars());
   
   nuiRect r(rRect.Size());
   DoLayout(r);

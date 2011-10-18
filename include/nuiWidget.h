@@ -118,7 +118,8 @@ public:
   virtual const nuiRect& GetIdealRect(); ///< Return the ideal area used by this Object. If the layout of this object has changed CalIdealRect will be called and mIdealRect will contain the ideal rectangle. If the user specified a user size then mIdealRect will be overwritten with mUserRect. 
   virtual const nuiRect& GetRect() const; ///< Return the current area used by this Object.
   virtual nuiRect GetBorderedRect() const; ///< Return the current area used by this Object including its border
-  
+  nuiRect nuiWidget::GetBorderedRect(const nuiRect& rRect) const;
+
   void SetUserWidth(nuiSize s);
   nuiSize GetUserWidth();
   void SetUserHeight(nuiSize s);

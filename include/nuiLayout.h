@@ -126,6 +126,7 @@ private:
       mCenterY.Reset(r.Top() + r.GetHeight() * .5);
       mVisits[0] = 0;
       mVisits[1] = 0;
+      mRect = r;
     }
     
     LayoutValue& GetAttrib(nuiLayoutAttribute attrib)
@@ -163,6 +164,8 @@ private:
     int32 mVisits[2];
     
     nuiWidget* mpWidget;
+    
+    nuiRect mRect;
   };
   
   typedef std::map<nuiWidget*, Widget> Widgets;
