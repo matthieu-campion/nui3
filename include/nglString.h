@@ -816,6 +816,8 @@ private:
 */
 
 bool nglIsDigit(nglUChar a);
+bool nglIsAlpha(nglUChar a);
+bool nglIsAlphaNum(nglUChar a);
 
 bool nglIsSpace(nglUChar a);
 

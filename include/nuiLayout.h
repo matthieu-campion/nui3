@@ -9,6 +9,8 @@
 
 enum nuiLayoutAttribute
 {
+  eLayoutAttribute_None = 0,
+
   eLayoutAttribute_Left,
   eLayoutAttribute_Right,
   eLayoutAttribute_Width,
@@ -18,6 +20,7 @@ enum nuiLayoutAttribute
   eLayoutAttribute_Bottom,
   eLayoutAttribute_Height,
   eLayoutAttribute_CenterY
+
   //baseline
 };
 
@@ -25,8 +28,7 @@ enum nuiLayoutRelation
 {
   eLayoutRelation_Equals,
   eLayoutRelation_LessThanOrEqual,
-  eLayoutRelation_MoreThanOrEqual,
-  eLayoutRelation_Dependency
+  eLayoutRelation_MoreThanOrEqual
 };
 
 enum nuiLayoutPriority
@@ -46,6 +48,8 @@ public:
   virtual ~nuiLayout();
   
   bool AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant, nuiLayoutPriority Priority = eLayoutPriority_Highest);
+  
+  bool AddConstraint(const nglString& rConstraintString);
   
   bool SetRect(const nuiRect& rRect);
   

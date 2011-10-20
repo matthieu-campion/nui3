@@ -32,7 +32,6 @@ const char* nuiGetLayoutRelationName(nuiLayoutRelation relation)
     case eLayoutRelation_Equals:          return "Equals";
     case eLayoutRelation_LessThanOrEqual: return "LessThanOrEqual";
     case eLayoutRelation_MoreThanOrEqual: return "MoreThanOrEqual";
-    case eLayoutRelation_Dependency:      return "Dependency";
   }
   
   NGL_ASSERTR(0, "error");
@@ -84,6 +83,118 @@ nuiLayout::nuiLayout()
 nuiLayout::~nuiLayout()
 {
 }
+
+bool nuiLayout::AddConstraint(const nglString& rConstraintString)
+{
+  nuiWidget* pWidget = NULL;
+  double value = 0;
+  nuiLayoutAttribute attrib = eLayoutAttribute_None;
+
+  const double DEFAULT_SPACING = 12;
+  int32 consumed = 0;
+  int32 i = 0;
+  nglUChar ch = rConstraintString.GetNextUChar(i);
+  for (; consumed < rConstraintString.GetLength();)
+  {
+    printf("new char: %c\n", (char)ch);
+    
+    if (ch == '|')
+    {
+      if (pWidget != NULL)
+      {
+        AddConstraint(pWidget, eLayoutAttribute_Right, eLayoutRelation_Equals, this, eLayoutAttribute_Right, 1.0f, -value);
+        // It has to be the end!
+        return true;
+      }
+      else
+      {
+        pWidget = this;
+        attrib = eLayoutAttribute_Left;
+      }
+      consumed++;
+      ch = rConstraintString.GetNextUChar(i);
+      printf("0    new char: %c\n", (char)ch);
+    }
+    else if (ch == '-')
+    {
+      ch = rConstraintString.GetNextUChar(i);
+      printf("1    new char: %c\n", (char)ch);
+      value = 0;
+      bool v = false;
+      while (nglIsDigit(ch))
+      {
+        value *= 10;
+        value += ch - '0';
+        v = true;
+        consumed++;
+        ch = rConstraintString.GetNextUChar(i);
+        printf("2    new char: %c\n", (char)ch);
+      }
+      
+      if (v) // expect the second dash after the value
+      {
+        if (ch != '-')
+        {
+          return false;
+        }
+        consumed++;
+        ch = rConstraintString.GetNextUChar(i);
+        printf("3    new char: %c\n", (char)ch);
+      }
+      else
+      {
+        value = DEFAULT_SPACING;
+      }
+    }
+    else if (ch == '[')
+    {
+      // look for a widget name:
+      ch = rConstraintString.GetNextUChar(i);
+      printf("4    new char: %c\n", (char)ch);
+      if (nglIsAlpha(ch))
+      {
+        nglString str;
+        while (nglIsAlphaNum(ch))
+        {
+          str += ch;
+          consumed++;
+          ch = rConstraintString.GetNextUChar(i);
+          printf("5    new char: %c\n", (char)ch);
+        }
+        
+        nuiWidget* pRightWidget = nuiContainer::GetChild(str);
+        if (!pRightWidget)
+        {
+          return false;
+        }
+        
+        // We know the right widget so we can connect it to the left:
+        if (pWidget && attrib != eLayoutAttribute_None)
+          AddConstraint(pRightWidget, eLayoutAttribute_Left, eLayoutRelation_Equals, pWidget, attrib, 1, value);
+        
+        pWidget = pRightWidget;
+        attrib = eLayoutAttribute_Right;
+        value = 0;
+        
+        if (ch == '(')
+        {
+          // Parse options
+        }
+        
+        if (ch != ']')
+        {
+          return false;
+        }
+        consumed++;
+        ch = rConstraintString.GetNextUChar(i);
+        printf("6    new char: %c\n", (char)ch);
+      }
+    }
+  }
+  
+  return true;
+}
+
 
 bool nuiLayout::AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant, nuiLayoutPriority Priority)
 {

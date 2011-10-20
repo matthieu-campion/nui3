@@ -266,30 +266,49 @@ static int64 ngl_atoi(const nglChar* str, int base)
 
 ////////////////////////////////////////////////////////////////
 
-static inline int nat_isdigit(nglChar a)
+static inline int nat_isdigit(nglUChar a)
 {
   return iswdigit(a);
 }
 
+static inline int nat_isalpha(nglUChar a)
+{
+  return iswalpha(a);
+}
 
-static inline int64 nat_isspace(nglChar a)
+static inline int nat_isalnum(nglUChar a)
+{
+  return iswalnum(a);
+}
+
+static inline int64 nat_isspace(nglUChar a)
 {
   return iswspace(a);
 }
 
 
-bool nglIsDigit (nglChar a)
+bool nglIsDigit (nglUChar a)
 {
   return (nat_isdigit(a) != 0);
 }
 
-bool nglIsSpace (nglChar a)
+bool nglIsAlpha (nglUChar a)
+{
+  return (nat_isalpha(a) != 0);
+}
+
+bool nglIsAlphaNum (nglUChar a)
+{
+  return (nat_isalnum(a) != 0);
+}
+
+bool nglIsSpace (nglUChar a)
 {
   return (nat_isspace(a) != 0);
 }
 
 
-static inline nglChar nat_toupper(nglChar a)
+static inline nglChar nat_toupper(nglUChar a)
 {
   return towupper(a);
 }
