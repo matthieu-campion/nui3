@@ -14,6 +14,9 @@ class nuiHTTPResponse;
 class nuiHTTPRequest_Thread;
 
 typedef std::map<nglString, nglString, nglString::CaseInsensitiveLessFunctor> nuiHTTPHeaderMap;
+typedef nuiFastDelegate1<nuiHTTPResponse*> nuiHTTPResponseReceivedDelegate;
+typedef nuiFastDelegate2<char*, nglSize, bool> nuiHTTPDataReceivedDelegate;
+
 class nuiHTTPMessage
 {
 public:
@@ -25,6 +28,7 @@ public:
   bool AddHeader(const nglString& rHeader); ///< Add new or replace existing header. String must be of form "<field-name>: <field-value>" as per HTTP 1.1 specification (IETF RFC 2616). Returns true in case of success.
 
   void SetBody(const char* pBuffer, nglSize ByteCnt);
+  void AddToBody(const char* pBuffer, nglSize ByteCnt);
   const std::vector<char>& GetBody() const;
   nglString GetBodyStr() const;
 
@@ -43,6 +47,7 @@ public:
   virtual ~nuiHTTPRequest();
 
   nuiHTTPResponse* SendRequest();
+  nuiHTTPResponse* SendRequest(const nuiHTTPResponseReceivedDelegate& rResponseReceived, const nuiHTTPDataReceivedDelegate& rDataReceived);
   nuiHTTPRequest_Thread* SendRequest(const Delegate& rDelegate);
 
   const nglString& GetURL() const;

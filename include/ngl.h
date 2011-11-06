@@ -107,25 +107,7 @@ and in NGL user application code.
   #endif // __GNUC__
 #endif
 
-#ifdef __MWERKS__
-  #ifdef macintosh
-    #define _CARBON_
-  #endif
-#endif
-
-#ifdef __MWERKS__
-  #if TARGET_API_MAC_OS8
-    #define __NGL_CLASSIC__
-  #elif TARGET_API_MAC_CARBON
-    #if  TARGET_API_MAC_OSX
-      #define __NGL_MACHO__
-    #else
-      #define __NGL_CFM__
-    #endif
-  #endif
-#else
   #define __NGL_MACHO__
-#endif
 
 
 /*
@@ -357,29 +339,7 @@ and in NGL user application code.
   #define __PRINTCORE__
   #define __PMAPPLICATION__
   #define __PMAPPLICATION_DEPRECATED__
-  #ifdef __MWERKS__
-    // Codewarrior has another view of how the headers should be organised
-    #if macintosh == 0
-      #ifndef __CFM_CLASSIC__
-        #include <Carbon/Carbon.h>
-      #endif
-      #include <stdlib.h>
-      #include <sys/types.h>
-
-      // This is ugly but the is a name conflict in codewarrior in between BSD and MSL headers
-      #define int32_t ::int32_t
-    #else
-      #include <Carbon.h>
-    #endif
-    #include "alloca.h"
-    // Let's tell the compiler we know what we are doing:
-    #pragma warn_hidevirtual off
-  #else
-    #define __PRINTCORE__
-    #define __PMAPPLICATION__
-    #define __PMAPPLICATION_DEPRECATED__
-    #include <Carbon/Carbon.h>
-  #endif // __MWERKS__
+  #include <Carbon/Carbon.h>
   #include <stdlib.h>
   #include <stddef.h>
 
@@ -394,10 +354,6 @@ and in NGL user application code.
     typedef UInt64 uint64;
   #else
     typedef u_int64_t uint64;
-  #endif
-
-  #ifdef __MWERKS__
-    #define PATH_MAX 1024
   #endif
 
 //  #define NGL_API __attribute__((visibility("hidden"))) 

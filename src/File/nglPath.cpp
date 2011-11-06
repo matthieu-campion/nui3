@@ -27,20 +27,6 @@ using namespace std;
 #endif
 
 
-#ifdef __MWERKS__
-char* strdup(const char* pString)
-{
-	if (!pString)
-		return NULL;
-	int len = strlen(pString);
-	char* pResult = (char*)malloc(len+1);
-	if (!pResult)
-		return NULL;
-	memcpy(pResult,pString, len+1);
-	return pResult;
-}
-#endif
-
 using namespace std;
 
 
