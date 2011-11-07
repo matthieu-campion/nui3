@@ -19211,6 +19211,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/ungif deps/ucdata deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib deps/tracemonkey deps/libcss/src deps/libcss/src/libwapcaplet deps/libcss/src/libparserutils deps/libcss/include";
 			};
