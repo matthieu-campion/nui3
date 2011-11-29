@@ -411,17 +411,27 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   CGPoint newp = [pTouch locationInView: (UIView*)self];
   CGPoint oldp = [pTouch previousLocationInView: (UIView*)self];    
 
-  NGL_OUT(_T("Touch Info [%p] [@%d]: [%s], [%d], [x:%f y:%f]->[x:%f y:%f]\n"),
-            pTouch, [pTouch timestamp],
-            touchPhase == UITouchPhaseBegan ?       "Clicked"   :
-            touchPhase == UITouchPhaseMoved ?       "Moved"     :
-            touchPhase == UITouchPhaseStationary ?  "Static"    :
-            touchPhase == UITouchPhaseEnded ?       "Unclicked" :
-            touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown",
-            touchTapCount,
-            oldp.x, oldp.y,
-            newp.x, newp.y
+  NGL_OUT(_T("Touch Info window[%p] view[%p] touch[%p]: phase[%s]\n"),
+          [pTouch window], [pTouch view], pTouch, 
+          touchPhase == UITouchPhaseBegan ?       "Clicked"   :
+          touchPhase == UITouchPhaseMoved ?       "Moved"     :
+          touchPhase == UITouchPhaseStationary ?  "Static"    :
+          touchPhase == UITouchPhaseEnded ?       "Unclicked" :
+          touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown"
           );
+
+//  NGL_OUT(_T("Touch Info window[%p] view[%p] [%p] [@%d]: [%s], [%d], [x:%f y:%f]->[x:%f y:%f]\n"),
+//            [pTouch window], [pTouch view],
+//            pTouch, [pTouch timestamp],
+//            touchPhase == UITouchPhaseBegan ?       "Clicked"   :
+//            touchPhase == UITouchPhaseMoved ?       "Moved"     :
+//            touchPhase == UITouchPhaseStationary ?  "Static"    :
+//            touchPhase == UITouchPhaseEnded ?       "Unclicked" :
+//            touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown",
+//            touchTapCount,
+//            oldp.x, oldp.y,
+//            newp.x, newp.y
+//          );
 }
 
 - (void) dumpTouches: (UIEvent*) pEvent
@@ -469,7 +479,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   //nuiStopWatch watch(_T("nglWindowUIKIT::handleEvent"));
   if (pEvent.type != UIEventTypeTouches)
     return;
-  
+//  [self dumpTouches: pEvent];
+
 	static double sOldTimestamp = 0.0;
   NSSet* pSet = [pEvent allTouches];
   if (!pSet)
@@ -502,7 +513,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     int y = (int)newp.y;
     
     TouchesInfo::iterator it = mTouches.find(pTouch);
-
+//    NGL_OUT("mTouches size[%d] pTouch[%p] %s\n", mTouches.size(), pTouch, it != mTouches.end() ? "FOUND" : "NOT FOUND");
     if (it != mTouches.end())
     {
 ///< this touch exists
@@ -511,7 +522,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       if (touchPhase == UITouchPhaseEnded || touchPhase == UITouchPhaseCancelled)
       {
 ///< this touch has been released
-        NGL_TOUCHES_OUT(_T("[%p][%d] [available: %d] Release X:%d Y:%d, phase: %s\n"), pTouch, rTouch.mTouchId, gAvailableTouches.size(), x, y, touchPhase == UITouchPhaseEnded ? "UITouchPhaseEnded" : touchPhase == UITouchPhaseCancelled ? "UITouchPhaseEnded" : "SHALL NOT");
+        NGL_TOUCHES_OUT(_T("[%p][%d] [available: %d] Release X:%d Y:%d, phase: %s\n"), pTouch, rTouch.mTouchId, gAvailableTouches.size(), x, y, touchPhase == UITouchPhaseEnded ? "UITouchPhaseEnded" : "UITouchPhaseCancelled");
         
         nglMouseInfo info;
         info.Buttons = nglMouseInfo::ButtonLeft;
@@ -527,13 +538,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 //        if (touchTapCount > 1)// && ([pTouch timestamp] - sOldTimestamp < DOUBLE_TAP_DELAY))
 //          info.Buttons |= nglMouseInfo::ButtonDoubleClick;
 
-        mpNGLWindow->CallOnMouseUnclick(info);
 
         gAvailableTouches.push_back(rTouch.mTouchId);
         gPressedTouches[rTouch.mTouchId] = false;
-        
-        if (mTouches.size())
-          mTouches.erase(it);
+
+        mTouches.erase(it);
+//        NGL_OUT("ERASING pTouch[%p] -> mTouches size[%d]\n", pTouch, mTouches.size());
+        NGL_ASSERT(mTouches.find(pTouch) == mTouches.end());
+
+        mpNGLWindow->CallOnMouseUnclick(info);
       }
       else if (rTouch.X != x || rTouch.Y != y)
       {
@@ -607,7 +620,14 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     }
     else
     {
-      NGL_TOUCHES_OUT(_T("[%p][available: %d] Discarding event: [UITouchPhaseBegan X:%d Y:%d]\n"), pTouch, gAvailableTouches.size(), x, y);
+      NGL_TOUCHES_OUT(_T("[%p][available: %d] Discarding event: [phase: %s X:%d Y:%d]\n"),
+                      pTouch, gAvailableTouches.size(), 
+                      touchPhase == UITouchPhaseBegan ?       "Clicked"   :
+                      touchPhase == UITouchPhaseMoved ?       "Moved"     :
+                      touchPhase == UITouchPhaseStationary ?  "Static"    :
+                      touchPhase == UITouchPhaseEnded ?       "Unclicked" :
+                      touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown",
+                      x, y);
     }
   }
 
