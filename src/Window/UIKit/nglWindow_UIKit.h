@@ -49,7 +49,7 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
 {
   nglWindow*    mpNGLWindow;
   TouchesInfo   mTouches;
-  TouchesInfo   mpTouches[_NUI_MAX_TOUCHES_];
+//  TouchesInfo   mpTouches[_NUI_MAX_TOUCHES_];
   uint8         mTouchCount;
   nglTime       mLastEventTime;
   bool          mInited;
