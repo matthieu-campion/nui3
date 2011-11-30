@@ -425,7 +425,17 @@ bool nglPath::Move(const nglPath& PathTarget)
 bool nglPath::Copy(const nglPath& PathTarget) const
 {
   nglIStream* pInStream = OpenRead();
+  if (pInStream == NULL)
+  {
+    return false;
+  }
+  
   nglIOStream* pOutStream = PathTarget.OpenWrite();
+  if (pOutStream == NULL)
+  {
+    delete pInStream;
+    return false;
+  }
   
   nglFileSize available = pInStream->Available();
   int64 piped = pInStream->PipeTo(*pOutStream);
