@@ -966,7 +966,7 @@ void nuiWidget::Invalidate()
 #ifdef _DEBUG_
   if (CFRunLoopGetCurrent() != CFRunLoopGetMain())
   {
-    printf("Invalidate called from a bad run loop\n");
+    printf("!!! WARNING !!! [ INVALIDATE CALLED FROM A BAD RUN LOOP ] !!! WARNING !!!\n");
   }
 #endif
 
