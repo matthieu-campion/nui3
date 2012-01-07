@@ -192,11 +192,6 @@ public:
   void Get(nglString& rString) const;
   nglString GetValue() const;
   
-  void Apply() const
-  {
-    glColor4f(mRed,mGreen,mBlue,mAlpha);
-  }
-
   bool operator==(const nuiColor& rColor) const
   {
     return mRed == rColor.mRed && mGreen == rColor.mGreen && mBlue == rColor.mBlue && mAlpha == rColor.mAlpha;

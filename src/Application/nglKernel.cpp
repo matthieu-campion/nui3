@@ -11,7 +11,9 @@
 #include "nglLog.h"
 #include "nuiCommand.h"
 
+#ifndef _MINUI3_
 #include "nglDataObjects.h"
+#endif
 
 #include "nuiNativeResourceVolume.h"
 #include "nuiNotification.h"
@@ -125,6 +127,7 @@ const nglString& nglKernel::GetArg (int Index)
 }
 
 
+#ifndef _MINUI3_
 /* Clipboard (platform specific)
  *
 nglString GetClipboard();
@@ -142,6 +145,7 @@ nglDataTypesRegistry& nglKernel::GetDataTypesRegistry()
 {
   return mDataTypesRegistry;
 }
+#endif
 
 /*
  * User callbacks
@@ -204,13 +208,15 @@ void nglKernel::Init()
 
 void nglKernel::Exit(int32 ExitCode)
 {
+#ifndef _MINUI3_
   nuiMainWindow::DestroyAllWindows();
+#endif
   mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
   nuiAnimation::ReleaseTimer();
 
   ExitFuncList::iterator func_i;
-  
+
   for (func_i = mExitFuncs.begin(); func_i != mExitFuncs.end(); ++func_i)
   {
     ExitFunc func;
@@ -236,7 +242,7 @@ void nglKernel::Exit(int32 ExitCode)
     delete mpCon;
     mpCon = NULL;
   }
-  
+
   nglString::ReleaseStringConvs();
 }
 
@@ -318,16 +324,16 @@ void nglKernel::CallOnInit()
   double now = nglTime();
   ucdata_init_static();
   double then = nglTime();
-  
+
   printf("ucdata_init_static took %f seconds\n", then - now);
-  
+
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%s)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);
   nuiTimer* pTimer = nuiAnimation::AcquireTimer();
   mKernelEventSink.Connect(pTimer->Tick, &nglKernel::ProcessMessages);
   mpNotificationManager = new nuiNotificationManager();
-  
+
   OnInit();
 }
 

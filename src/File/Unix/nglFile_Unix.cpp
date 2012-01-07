@@ -17,7 +17,7 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ngl.h"
+#include "nui.h"
 #include "nglKernel.h"
 #include "nglFile.h"
 #include "nglPath.h"
@@ -64,7 +64,7 @@ nglFileSize nglFile::GetSize() const
 {
   struct stat info;
   int res = fstat (mFD, &info);
-  
+
   return (res == -1) ? 0 : info.st_size;
 }
 

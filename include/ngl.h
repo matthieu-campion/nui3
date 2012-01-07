@@ -66,9 +66,13 @@ and in NGL user application code.
 #define _CYGWIN_
 #endif
 
+#ifdef _MINUI3_
+#define _UNIX_
+#endif
+
 /* Mac world
  */
-#ifdef __APPLE__
+#if (defined __APPLE__) && (!defined _MINUI3_)
   #define _MACOSX_
 
 // Include conditionals
@@ -445,7 +449,7 @@ typedef wchar_t nglUChar;
 
 #   define __NUI_NO_GLES__
 
-#ifdef _ANDROID_
+# ifdef _ANDROID_
 
 #    define _OPENGL_ES_
 // Make our GLES Painter available, and disable other Painters...
@@ -454,22 +458,22 @@ typedef wchar_t nglUChar;
 #    define __NUI_NO_D3D__
 #    undef __NUI_NO_GL__
 
-// Disable Anti-Aliasing
-//#    define __NUI_NO_AA__
+    // Disable Anti-Aliasing
+    //#    define __NUI_NO_AA__
 
-#include <EGL/egl.h>
-#include <GLES/gl.h>
-#include <GLES/glext.h>
+#   include <EGL/egl.h>
+#   include <GLES/gl.h>
+#   include <GLES/glext.h>
 
-// Fake GLU for OpenGLES
-typedef double GLdouble;
-typedef double GLclampd;
+    // Fake GLU for OpenGLES
+    typedef double GLdouble;
+    typedef double GLclampd;
 /* TessWinding */
-#define GLU_TESS_WINDING_ODD               100130
-#define GLU_TESS_WINDING_NONZERO           100131
-#define GLU_TESS_WINDING_POSITIVE          100132
-#define GLU_TESS_WINDING_NEGATIVE          100133
-#define GLU_TESS_WINDING_ABS_GEQ_TWO       100134
+#   define GLU_TESS_WINDING_ODD               100130
+#   define GLU_TESS_WINDING_NONZERO           100131
+#   define GLU_TESS_WINDING_POSITIVE          100132
+#   define GLU_TESS_WINDING_NEGATIVE          100133
+#   define GLU_TESS_WINDING_ABS_GEQ_TWO       100134
 
 #  elif defined _UIKIT_
 #    define _OPENGL_ES_
@@ -542,7 +546,8 @@ typedef double GLclampd;
 #   define GL_BGRA 0x80E1
 
 
-#  else
+#  elif !defined _MINUI3_
+
 #    include <GL/gl.h>
 #    include <GL/glu.h>
 #    include "nui_GL/glext.h"
@@ -556,7 +561,6 @@ typedef double GLclampd;
 #    include "nui_GL/wglext.h"
 #    include <d3d9.h>
 #  endif
-#endif // _NOGFX_
 
 /* Glue for lagging OpenGL implementations (taken from glext.h revision 24)
  */
@@ -589,6 +593,8 @@ typedef unsigned int GLhandleARB;  /* shader object handle */
 #ifndef APIENTRY
   #define APIENTRY
 #endif
+
+#endif // _NOGFX_
 
 // Do we need to define STDEXT to the standard std namespace? Only VC7.1 currently needs this.
 #ifndef STDEXT

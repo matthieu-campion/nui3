@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -33,25 +33,25 @@ static CFBundleRef _CFXBundleCreateFromImageName(CFAllocatorRef allocator, const
   CFURLRef myBundleExecutableURL = CFURLCreateFromFileSystemRepresentation(allocator, (const unsigned char*)image_name, strlen (image_name), false);
   if (myBundleExecutableURL == 0)
     return 0;
-  
+
   CFURLRef myBundleContentsMacOSURL = CFURLCreateCopyDeletingLastPathComponent(allocator, myBundleExecutableURL); // Delete Versions/Current/Executable
   CFRelease(myBundleExecutableURL);
   if (myBundleContentsMacOSURL == 0)
     return 0;
-  
+
   CFURLRef myBundleContentsURL = CFURLCreateCopyDeletingLastPathComponent(allocator, myBundleContentsMacOSURL); // Delete Current
   CFRelease(myBundleContentsMacOSURL);
   if (myBundleContentsURL == 0)
     return 0;
-  
+
   CFURLRef theBundleURL = CFURLCreateCopyDeletingLastPathComponent(allocator, myBundleContentsURL); // Delete Versions
   CFRelease(myBundleContentsURL);
   if (theBundleURL == 0)
     return 0;
-  
+
   CFBundleRef result = CFBundleCreate(allocator, theBundleURL);
   CFRelease(theBundleURL);
-  
+
   return result;
 }
 
@@ -59,7 +59,7 @@ static CFBundleRef _CFXBundleCreateFromImageName(CFAllocatorRef allocator, const
 nglPath nuiGetNativeResourcePath()
 {
   CFBundleRef bundle = NULL;
-  
+
 #ifndef _UIKIT_
   Dl_info inf;
   dladdr((void*)nuiGetNativeResourcePath, &inf);
@@ -72,18 +72,18 @@ nglPath nuiGetNativeResourcePath()
 
   if (!bundle)
     bundle = CFBundleGetMainBundle();
-  
+
   CFURLRef resURLref = CFBundleCopyResourcesDirectoryURL(bundle);
   char buffer[2048];
   Boolean res = CFURLGetFileSystemRepresentation(resURLref, true, (UInt8*)buffer, 2048);
   CFRelease(resURLref);
   NGL_ASSERT(res);
-  
+
   return nglPath(nglString(buffer));
 }
 #endif // _CARBON_
 
-#if defined _LINUX_
+#if defined _LINUX_ || defined _MINUI3_
 nglPath nuiGetNativeResourcePath()
 {
   nglString ResourcePathName(getenv("NUI_RESOURCE_PATH"));
@@ -126,31 +126,31 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
   str.TrimLeft(_T('/'));
   str.ToUpper();
   HRSRC Resource = FindResource(App->GetHInstance(), str.GetChars(), _T("NUI_RESOURCE"));
-  
+
   if (Resource == NULL)
   {
     return;
   }
-  
+
   DWORD size = SizeofResource(App->GetHInstance(), Resource);
   HGLOBAL GlobalHandle = LoadResource(App->GetHInstance(), Resource);
-  
+
   if (GlobalHandle == NULL)
   {
     return;
   }
-  
+
   void* pBuffer = LockResource(GlobalHandle);
-  
+
   uint32 datasize = size;
   char* pData = new char[datasize];
   memcpy(pData, pBuffer, size);
-  
+
   // Init the nglIMemory we inherit from...
   mpIStream = new nglIMemory((char*)pData, datasize, true);
 
   UnlockResource(GlobalHandle);
-  
+
   mValid = true;
 #endif
 #if defined _CARBON_ || defined _UIKIT_ || defined _COCOA_ || defined _LINUX_
@@ -166,20 +166,20 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
     mValid = true;
   }
 #endif // _CARBON_ || _UIKIT_ || _COCOA_ || _LINUX_
-  
+
 #ifdef _ANDROID_
   nglString dir = rPath.GetParentName();
   nglString file = rPath.GetNodeName();
-  
+
   dir.TrimLeft(_T("/"));
-  
+
   char* dirChar = dir.Export();
   char* fileChar = file.Export();
   if (!dirChar || !fileChar)
   {
     return;
   }
-  
+
   AAssetManager* pManager = App->GetAndroidApp()->activity->assetManager;
   AAssetDir* pDir = AAssetManager_openDir(pManager, dirChar);
   AAsset* pAsset = NULL;
@@ -188,7 +188,7 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
     const char* f = AAssetDir_getNextFileName(pDir);
     while (f && !mValid)
     {
-      if (strcmp(f, fileChar) == 0) 
+      if (strcmp(f, fileChar) == 0)
       {
         nglString resource;
         if (dir.IsEmpty())
@@ -214,12 +214,12 @@ nuiNativeResource::nuiNativeResource(const nglPath& rPath)
       f = AAssetDir_getNextFileName(pDir);
     }
   }
-  
+
   if (pAsset)
     AAsset_close(pAsset);
   if (pDir)
     AAssetDir_close(pDir);
-  
+
   free(dirChar);
   free(fileChar);
 #endif // _ANDROID_
@@ -256,7 +256,7 @@ bool nuiNativeResource::GetResourcesList(std::vector<nglPath>& rResources)
   nuiNativeResource resourcesList(_T("resource.android"));
   nglString line;
   int64 read = resourcesList.ReadLine(line);
-  while (read) 
+  while (read)
   {
     rResources.push_back(line);
     read = resourcesList.ReadLine(line);
@@ -274,13 +274,13 @@ void RecurseChildren(std::vector<nglPath>& rResources, nglPath ResPath, nglPath 
     rResources.push_back(str);
     return;
   }
-  
+
   std::list<nglPath> children;
   BasePath.GetChildren(&children);
-  
+
   std::list<nglPath>::const_iterator it = children.begin();
   std::list<nglPath>::const_iterator end = children.end();
-  
+
   while (it != end)
   {
     nglPath p(*it);
@@ -290,9 +290,9 @@ void RecurseChildren(std::vector<nglPath>& rResources, nglPath ResPath, nglPath 
       child = nodename;
     else
       child += nodename;
-    
+
     RecurseChildren(rResources, child, p);
-    
+
     ++it;
   }
 }
@@ -301,7 +301,7 @@ void RecurseChildren(std::vector<nglPath>& rResources, nglPath ResPath, nglPath 
 bool nuiNativeResource::GetResourcesList(std::vector<nglPath>& rResources)
 {
   RecurseChildren(rResources, nglPath(), nuiGetNativeResourcePath());
-  
+
   return true;
 }
 #endif

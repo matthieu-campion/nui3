@@ -36,7 +36,7 @@ licence: see nui3/LICENCE.TXT
   #define ngl_strncmp strncmp
   #define ngl_strnicmp strncasecmp
   #define ngl_mbs_stricmp strcasecmp
-#elif defined _LINUX_
+#elif defined _LINUX_ || defined _MINUI3_
   #include <ctype.h>
   #define ngl_vsnprintf vsnprintf
   #define ngl_snprintf	snprintf
@@ -634,7 +634,7 @@ nglUChar nglString::GetNextUChar(int32& Index) const
       UChar = c & (~0xC0);
       count = 1;
     }
-    
+
     for (uint32 i = 0; i < count; i++)
     {
       if (Index >= len)
@@ -645,7 +645,7 @@ nglUChar nglString::GetNextUChar(int32& Index) const
     }
   }
   //NGL_OUT(_T("%lc"), UChar);
-  
+
   return UChar;
 }
 
@@ -1444,7 +1444,7 @@ static const char HEX2DEC[256] =
   /* F */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
 };
 
-inline static nglChar Hex2Dec(nglChar c)
+inline static nglChar Hex2Dec(nglUChar c)
 {
   if (c > 255)
     return -1;
@@ -1609,7 +1609,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 #ifndef WIN32
   va_list args_copy;
   va_copy(args_copy, args);
-#else 
+#else
 //#define args_copy args
   va_list args_copy = args;
 #endif
@@ -1628,7 +1628,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
       len = l;
   }
 #endif
-  
+
   if (len >= 0 && len <= FORMAT_BUFSIZE)
   {
     /* Output fits in the stack buffer, copy it
@@ -2654,31 +2654,31 @@ void nglString::ToCanonicalDecomposition()
 }
 
 /* Base64 code is stolen from http://www.adp-gmbh.ch/cpp/common/base64.html and adapted to nui's strings by SŽbastien MŽtrot.
- 
+
  base64.cpp and base64.h
- 
+
  Copyright (C) 2004-2008 RenŽ Nyffenegger
- 
+
  This source code is provided 'as-is', without any express or implied
  warranty. In no event will the author be held liable for any damages
  arising from the use of this software.
- 
+
  Permission is granted to anyone to use this software for any purpose,
  including commercial applications, and to alter it and redistribute it
  freely, subject to the following restrictions:
- 
+
  1. The origin of this source code must not be misrepresented; you must not
  claim that you wrote the original source code. If you use this source code
  in a product, an acknowledgment in the product documentation would be
  appreciated but is not required.
- 
+
  2. Altered source versions must be plainly marked as such, and must not be
  misrepresented as being the original source code.
- 
+
  3. This notice may not be removed or altered from any source distribution.
- 
+
  RenŽ Nyffenegger rene.nyffenegger@adp-gmbh.ch
- 
+
  */
 
 static const std::string base64_chars = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
@@ -2696,9 +2696,9 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
   int j = 0;
   unsigned char char_array_3[3];
   unsigned char char_array_4[4];
-  
+
   int chars_in_line = 0;
-  
+
   while (in_len--)
   {
     char_array_3[i++] = *(bytes_to_encode++);
@@ -2708,11 +2708,11 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
       char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
       char_array_4[3] = char_array_3[2] & 0x3f;
-      
+
       for(i = 0; (i <4) ; i++)
-        Add((nglChar)base64_chars[char_array_4[i]]);    
+        Add((nglChar)base64_chars[char_array_4[i]]);
       i = 0;
-      
+
       chars_in_line++;
       if (chars_in_line > 60)
       {
@@ -2721,17 +2721,17 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       }
     }
   }
-  
+
   if (i)
   {
     for(j = i; j < 3; j++)
       char_array_3[j] = '\0';
-    
+
     char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
     char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
     char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
     char_array_4[3] = char_array_3[2] & 0x3f;
-    
+
     for (j = 0; (j < i + 1); j++)
     {
       Add((nglChar)base64_chars[char_array_4[j]]);
@@ -2743,7 +2743,7 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
         chars_in_line = 0;
       }
     }
-    
+
     while((i++ < 3))
     {
       chars_in_line++;
@@ -2755,7 +2755,7 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
 
       Add((nglChar)'=');
     }
-    
+
   }
 
 }
@@ -2770,45 +2770,45 @@ void nglString::DecodeBase64(std::vector<uint8>& rDecoded) const
   int32 in_ = 0;
   nglChar char_array_4[4];
   nglChar char_array_3[3];
-  
+
   while (in_len-- && ( GetChar(in_) != _T('=')) && is_base64(GetChar(in_)))
   {
     char_array_4[i++] = GetChar(in_);
     in_++;
-    
-    if (i == 4) 
+
+    if (i == 4)
     {
       for (i = 0; i < 4; i++)
         char_array_4[i] = base64_chars.find(char_array_4[i]);
-      
+
       char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
       char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
       char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
-      
+
       for (i = 0; (i < 3); i++)
         rDecoded.push_back((uint8)char_array_3[i]);
       i = 0;
     }
   }
-  
+
   if (i)
   {
     for (j = i; j <4; j++)
       char_array_4[j] = 0;
-    
+
     for (j = 0; j <4; j++)
       char_array_4[j] = base64_chars.find(char_array_4[j]);
-    
+
     char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
     char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
     char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
-    
+
     for (j = 0; (j < i - 1); j++)
       rDecoded.push_back((uint8)char_array_3[j]);
   }
 }
 
-/* End of base64 code by RenŽ Nyffenegger */ 
+/* End of base64 code by RenŽ Nyffenegger */
 
 
 

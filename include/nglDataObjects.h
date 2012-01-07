@@ -243,7 +243,7 @@ public:
   }
 #endif
 
-#ifdef _CARBON_
+#if (defined _CARBON_) && (!defined _MINUI3_)
   virtual void AddDragItemFlavor(DragRef dragRef, DragItemRef& itemRef, nglNativeObjectType Type)
   {
     OSErr err = noErr;

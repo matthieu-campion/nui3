@@ -19,7 +19,9 @@
 
 #include "nui.h"
 #include "nglKernel.h"
+#ifndef _MINUI3_
 #include "nglWindow.h"
+#endif
 #include "ngl_unix.h"
 #include <signal.h>
 #include <locale.h>
@@ -59,29 +61,6 @@ nglKernel::~nglKernel()
 
 }
 
-
-
-/*
- * Clipboard
- */
-
-//changed from nglString nglKernel::GetClipboard() to this, according to nglKernel.h 
-void nglKernel::GetClipboard(nglString& rClipboard)
-{
-  nglString result(_T("*clipboard code not implemented*"));
-
-  // FIXME
-  //now returns void, according to nglKernel.h
-  //return result;
-}
-
-bool nglKernel::SetClipboard(const nglString& rString)
-{
-  // FIXME
-  return false;
-}
-
-
 /*
  * Event handling (stubs rather than pure virtual methods)
  */
@@ -102,6 +81,30 @@ void nglKernel::DelTimer (nglTimer* pTimer)
 {
 }
 
+
+#ifndef _MINUI3_
+
+/*
+ * Clipboard
+ */
+
+//changed from nglString nglKernel::GetClipboard() to this, according to nglKernel.h
+void nglKernel::GetClipboard(nglString& rClipboard)
+{
+  nglString result(_T("*clipboard code not implemented*"));
+
+  // FIXME
+  //now returns void, according to nglKernel.h
+  //return result;
+}
+
+bool nglKernel::SetClipboard(const nglString& rString)
+{
+  // FIXME
+  return false;
+}
+
+
 void* nglKernel::GetDisplay()
 {
   return NULL;
@@ -115,6 +118,7 @@ void nglKernel::DelWindow (class nglWindow* pWin)
 {
 }
 
+#endif // ifndef _MINUI3_
 
 /*
  * Internals (generic kernel setup)
@@ -124,8 +128,8 @@ bool nglKernel::SysInit()
 {
   int signals[] = {
     SIGSEGV,
-    SIGHUP, 
-    SIGINT, 
+    SIGHUP,
+    SIGINT,
     SIGQUIT,
     SIGPIPE,
     SIGTERM,
@@ -182,6 +186,7 @@ void nglKernel::OnEvent(uint Flags)
 {
 }
 
+#ifndef _MINUI3_
 void nglKernel::EnterModalState()
 {
 }
@@ -189,6 +194,7 @@ void nglKernel::EnterModalState()
 void nglKernel::ExitModalState()
 {
 }
+#endif
 
 void nglKernel::NonBlockingHeartBeat()
 {

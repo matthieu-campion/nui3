@@ -7,6 +7,7 @@
 
 #include "nui.h"
 #include "nuiAttribute.h"
+#ifndef _MINUI3_
 #include "nuiPercentAttributeEditor.h"
 #include "nuiPointAttributeEditor.h"
 #include "nuiColorAttributeEditor.h"
@@ -21,6 +22,7 @@
 #include "nuiClampedValueAttributeEditor.h"
 #include "nuiPopupValueAttributeEditor.h"
 #include "nuiComboAttributeEditor.h"
+#endif
 
 uint64 nuiGetNewAttributeUniqueId()
 {
@@ -28,7 +30,7 @@ uint64 nuiGetNewAttributeUniqueId()
   return IdCounter++;
 }
 
-
+#ifndef _MINUI3_
 nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeBase* pAttribute)
 {
   return new nuiGenericAttributeEditor(nuiAttribBase(pTarget, pAttribute));
@@ -42,7 +44,7 @@ nuiAttributeEditor* nuiCreateGenericAttributeEditor(void* pTarget, nuiAttributeB
     return new nuiClampedValueAttributeEditor<Type>(nuiAttrib<Type>(nuiAttribBase(pTarget, pAttribute)), rRange);
   return new nuiGenericAttributeEditor(nuiAttribBase(pTarget, pAttribute));
 }
-
+#endif
 
 nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type, nuiAttributeUnit unit, const nuiRange& rRange, bool readonly, bool writeonly, Kind kind, void* pOffset)
 : mName(rName),
@@ -86,22 +88,22 @@ nuiAttributeBase::~nuiAttributeBase()
 
 
 bool nuiAttributeBase::IsReadOnly() const
-{  
+{
   return mReadOnly;
 }
 
 bool nuiAttributeBase::IsWriteOnly() const
-{  
+{
   return mWriteOnly;
 }
 
 bool nuiAttributeBase::CanGet() const
-{  
+{
   return !mWriteOnly;
 }
 
 bool nuiAttributeBase::CanSet() const
-{  
+{
   return !mReadOnly;
 }
 
@@ -128,7 +130,7 @@ const nuiRange& nuiAttributeBase::GetRange() const
 nuiRange& nuiAttributeBase::GetRange()
 {
   return mRange;
-} 
+}
 
 void nuiAttributeBase::SetOrder(int32 order)
 {
@@ -198,7 +200,7 @@ void nuiAttributeBase::KillAttributeHolder(void* pHolder)
       mAttributeChangedEvents.erase(it);
     }
   }
-}  
+}
 
 nuiAttributeBase::Kind nuiAttributeBase::GetKind() const
 {
@@ -214,7 +216,7 @@ bool nuiAttributeBase::IsValid(void* pTarget) const
 {
   if (!pTarget) // We just want a general test about the availability of the Getter
     return true;
-  
+
   switch (GetDimension())
   {
     case 0:
@@ -231,7 +233,7 @@ bool nuiAttributeBase::IsValid(void* pTarget) const
 }
 
 
-////////////////// 
+//////////////////
 // Declaration of some property types specializations:
 //template<uint32> nuiAttributeTypeTrait<uint32> nuiAttributeTypeTrait<uint32>::singleton;
 
@@ -252,6 +254,8 @@ NUI_DECLARE_ATTRIBUTE_TYPE(double);
 
 NUI_DECLARE_ATTRIBUTE_TYPE(nglString);
 //NUI_DECLARE_ATTRIBUTE_TYPE(const nglString&);
+
+#ifndef _MINUI3_
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiPoint);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiRect);
 //NUI_DECLARE_ATTRIBUTE_TYPE(const nuiRect&);
@@ -267,6 +271,7 @@ NUI_DECLARE_ATTRIBUTE_TYPE(nglMatrixf);
 //NUI_DECLARE_ATTRIBUTE_TYPE(const nglMatrixf&);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiBlendFunc);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiExpandMode);
+#endif
 
 template <typename T>
 uint64 nuiAttributeTypeTrait<T>::mTypeId = nuiGetNewAttributeUniqueId();
@@ -302,15 +307,17 @@ bool nuiAttribute<bool>::FromString(bool& rValue, const nglString& rString) cons
     rValue = true;
   else
     rValue = false;
-  
+
   return true;
 }
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<bool>::GetDefaultEditor(void* pTarget)
 {
 	return new nuiBooleanAttributeEditor(nuiAttrib<bool>(pTarget, this));
 }
+#endif
 
 template <>
 void nuiAttribute<bool>::FormatDefault(bool value, nglString& rString) const
@@ -329,6 +336,7 @@ void nuiAttribute<bool>::FormatDefault(bool value, nglString& rString) const
 
 template class nuiAttribute<int8>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<int8>::GetDefaultEditor(void* pTarget)
 {
@@ -336,6 +344,7 @@ nuiAttributeEditor* nuiAttribute<int8>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<int8>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<int8>::FormatDefault(int8 value, nglString& string) const
@@ -366,7 +375,7 @@ bool nuiAttribute<int8>::FromString(int8& rValue, const nglString& rString) cons
     rValue = ToZero(dValue);
     return true;
   }
-  
+
   return false;
 }
 
@@ -379,6 +388,7 @@ bool nuiAttribute<int8>::FromString(int8& rValue, const nglString& rString) cons
 
 template class nuiAttribute<int16>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<int16>::GetDefaultEditor(void* pTarget)
 {
@@ -386,6 +396,7 @@ nuiAttributeEditor* nuiAttribute<int16>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<int16>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<int16>::FormatDefault(int16 value, nglString & string) const
@@ -416,7 +427,7 @@ bool nuiAttribute<int16>::FromString(int16& rValue, const nglString& rString) co
     rValue = ToZero(dValue);
     return true;
   }
-  
+
   return false;
 }
 
@@ -430,6 +441,7 @@ bool nuiAttribute<int16>::FromString(int16& rValue, const nglString& rString) co
 
 template class nuiAttribute<int32>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<int32>::GetDefaultEditor(void* pTarget)
 {
@@ -437,6 +449,7 @@ nuiAttributeEditor* nuiAttribute<int32>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<int32>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<int32>::FormatDefault(int32 value, nglString & string) const
@@ -467,7 +480,7 @@ bool nuiAttribute<int32>::FromString(int32& rValue, const nglString& rString) co
     rValue = ToZero(dValue);
     return true;
   }
-  
+
   return false;
 }
 
@@ -480,6 +493,7 @@ bool nuiAttribute<int32>::FromString(int32& rValue, const nglString& rString) co
 
 template class nuiAttribute<int64>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<int64>::GetDefaultEditor(void* pTarget)
 {
@@ -487,6 +501,7 @@ nuiAttributeEditor* nuiAttribute<int64>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<int64>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<int64>::FormatDefault(int64 value, nglString & string) const
@@ -517,7 +532,7 @@ bool nuiAttribute<int64>::FromString(int64& rValue, const nglString& rString) co
     rValue = ToZero(dValue);
     return true;
   }
-  
+
   return false;
 }
 
@@ -531,6 +546,7 @@ bool nuiAttribute<int64>::FromString(int64& rValue, const nglString& rString) co
 
 template class nuiAttribute<uint8>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<uint8>::GetDefaultEditor(void* pTarget)
 {
@@ -538,6 +554,7 @@ nuiAttributeEditor* nuiAttribute<uint8>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<uint8>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<uint8>::FormatDefault(uint8 value, nglString & string) const
@@ -575,7 +592,7 @@ bool nuiAttribute<uint8>::FromString(uint8& rValue, const nglString& rString) co
       return true;
     }
   }
-  
+
   return false;
 }
 
@@ -588,6 +605,7 @@ bool nuiAttribute<uint8>::FromString(uint8& rValue, const nglString& rString) co
 
 template class nuiAttribute<uint16>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<uint16>::GetDefaultEditor(void* pTarget)
 {
@@ -595,6 +613,7 @@ nuiAttributeEditor* nuiAttribute<uint16>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<uint16>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<uint16>::FormatDefault(uint16 value, nglString & string) const
@@ -632,7 +651,7 @@ bool nuiAttribute<uint16>::FromString(uint16& rValue, const nglString& rString) 
       return true;
     }
   }
-  
+
   return false;
 }
 
@@ -646,6 +665,7 @@ bool nuiAttribute<uint16>::FromString(uint16& rValue, const nglString& rString) 
 
 template class nuiAttribute<uint32>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<uint32>::GetDefaultEditor(void* pTarget)
 {
@@ -653,6 +673,7 @@ nuiAttributeEditor* nuiAttribute<uint32>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<uint32>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<uint32>::FormatDefault(uint32 value, nglString & string) const
@@ -689,7 +710,7 @@ bool nuiAttribute<uint32>::FromString(uint32& rValue, const nglString& rString) 
       return true;
     }
   }
-  
+
   return false;
 }
 
@@ -704,6 +725,7 @@ bool nuiAttribute<uint32>::FromString(uint32& rValue, const nglString& rString) 
 template class nuiAttribute<uint64>;
 
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<uint64>::GetDefaultEditor(void* pTarget)
 {
@@ -711,6 +733,7 @@ nuiAttributeEditor* nuiAttribute<uint64>::GetDefaultEditor(void* pTarget)
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<uint64>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<uint64>::FormatDefault(uint64 value, nglString & string) const
@@ -747,7 +770,7 @@ bool nuiAttribute<uint64>::FromString(uint64& rValue, const nglString& rString) 
       return true;
     }
   }
-  
+
   return false;
 }
 
@@ -760,6 +783,7 @@ bool nuiAttribute<uint64>::FromString(uint64& rValue, const nglString& rString) 
 
 template class nuiAttribute<float>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<float>::GetDefaultEditor(void* pTarget)
 {
@@ -783,10 +807,11 @@ nuiAttributeEditor* nuiAttribute<float>::GetDefaultEditor(void* pTarget)
 	case nuiUnitColor : break;
 	case nuiUnitCustom : break;
 	}
-	
+
 	// if this code is executed, it means a case processing is missing
 	return nuiCreateGenericAttributeEditor<float>(pTarget, this);
 }
+#endif
 
 
 template <>
@@ -808,7 +833,7 @@ bool nuiAttribute<float>::FromString(float& rValue, const nglString& rString) co
 {
   if (!rString.IsFloat())
     return false;
-  
+
   rValue = rString.GetCFloat();
   return true;
 }
@@ -821,6 +846,7 @@ bool nuiAttribute<float>::FromString(float& rValue, const nglString& rString) co
 
 template class nuiAttribute<double>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<double>::GetDefaultEditor(void* pTarget)
 {
@@ -848,6 +874,7 @@ nuiAttributeEditor* nuiAttribute<double>::GetDefaultEditor(void* pTarget)
   // if this code is executed, it means a case processing is missing
   return nuiCreateGenericAttributeEditor<double>(pTarget, this);
 }
+#endif
 
 template <>
 void nuiAttribute<double>::FormatDefault(double value, nglString & string) const
@@ -868,12 +895,13 @@ bool nuiAttribute<double>::FromString(double& rValue, const nglString& rString) 
 {
   if (!rString.IsFloat())
     return false;
-  
+
   rValue = rString.GetCDouble();
   return true;
 }
 
 
+#ifndef _MINUI3_
 
 //********************************
 //
@@ -1005,6 +1033,7 @@ bool nuiAttribute<nuiDirection>::FromString(nuiDirection& rValue, const nglStrin
   return true;
 }
 
+#endif /////////////
 
 
 
@@ -1035,11 +1064,13 @@ bool nuiAttribute<nglString>::FromString(nglString& rValue, const nglString& rSt
 }
 
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<nglString>::GetDefaultEditor(void* pTarget)
 {
   return new nuiStringAttributeEditor(nuiAttrib<nglString>(pTarget, this));
 }
+#endif
 
 template <>
 void nuiAttribute<nglString>::FormatDefault(nglString value, nglString & string) const
@@ -1057,11 +1088,13 @@ void nuiAttribute<nglString>::FormatDefault(nglString value, nglString & string)
 
 template class nuiAttribute<const nglString&>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<const nglString&>::GetDefaultEditor(void* pTarget)
-{	
+{
   return new nuiStringAttributeEditor(nuiAttrib<const nglString&>(pTarget, this));
 }
+#endif
 
 template <>
 void nuiAttribute<const nglString&>::FormatDefault(const nglString& rValue, nglString & string) const
@@ -1085,6 +1118,7 @@ bool nuiAttribute<const nglString&>::FromString(nglString& rValue, const nglStri
 
 
 
+#ifndef _MINUI3_
 
 
 //********************************
@@ -1109,11 +1143,13 @@ bool nuiAttribute<nuiColor>::FromString(nuiColor& rValue, const nglString& rStri
 }
 
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<nuiColor>::GetDefaultEditor(void* pTarget)
 {
   return new nuiColorAttributeEditor(nuiAttrib<nuiColor>(pTarget, this));
 }
+#endif
 
 template <>
 void nuiAttribute<nuiColor>::FormatDefault(nuiColor value, nglString & string) const
@@ -1135,11 +1171,13 @@ void nuiAttribute<nuiColor>::FormatDefault(nuiColor value, nglString & string) c
 
 template class nuiAttribute<const nuiColor&>;
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<const nuiColor&>::GetDefaultEditor(void* pTarget)
 {
   return new nuiColorAttributeEditor(nuiAttrib<const nuiColor&>(pTarget, this));
 }
+#endif
 
 template <>
 void nuiAttribute<const nuiColor&>::FormatDefault(const nuiColor& rValue, nglString & string) const
@@ -1370,6 +1408,7 @@ void nuiAttribute<const nuiBorder&>::FormatDefault(const nuiBorder& rValue, nglS
   string.CFormat(_T("(%.0f,%.0f,%.0f,%0.f)"), rValue.Left(), rValue.Top(), rValue.Right(), rValue.Bottom());
 }
 
+#endif
 
 
 
@@ -1435,6 +1474,7 @@ bool nuiAttribute<const nglPath&>::FromString(nglPath& rValue, const nglString& 
 
 
 
+#ifndef _MINUI3_
 
 
 //********************************
@@ -1462,7 +1502,7 @@ void nuiAttribute<nuiDecorationMode>::FormatDefault(nuiDecorationMode value, ngl
       string = "UnknownDecorationMode";
       break;
   }
-  
+
 }
 
 template <>
@@ -1548,7 +1588,7 @@ void nuiAttribute<nuiShapeMode>::FormatDefault(nuiShapeMode value, nglString & s
       string = "UnknownShapeMode";
       break;
   }
-  
+
 }
 
 template <>
@@ -1569,9 +1609,9 @@ bool nuiAttribute<nuiShapeMode>::ToString(nuiShapeMode Value, nglString& rString
       rString = "UnknownShapeMode";
       return false;
   }
-  
+
   return true;
-  
+
 }
 
 template <>
@@ -1669,7 +1709,7 @@ bool nuiAttribute<nuiDecorationLayer>::ToString(nuiDecorationLayer Value, nglStr
     rString = _T("Back");
   else
     rString = _T("Front");
-  
+
   return true;
 }
 
@@ -1793,7 +1833,7 @@ bool nuiAttribute<nuiMouseCursor>::ToString(nuiMouseCursor Value, nglString& rSt
       rString = _T("ResizeSE");
       break;
   };
-  
+
   return true;
 }
 
@@ -1801,7 +1841,7 @@ template <>
 bool nuiAttribute<nuiMouseCursor>::FromString(nuiMouseCursor& rValue, const nglString& rString) const
 {
   rValue = eCursorArrow;
-  
+
   if (!rString.Compare(_T("DoNotSet"), false))
     rValue = eCursorDoNotSet;
   else if (!rString.Compare(_T("None"), false))
@@ -1854,7 +1894,7 @@ bool nuiAttribute<nuiMouseCursor>::FromString(nuiMouseCursor& rValue, const nglS
     rValue = eCursorResizeSE;
   else
     return false;
-  
+
   return true;
 }
 
@@ -2006,7 +2046,7 @@ bool nuiAttribute<const nglMatrixf&>::FromString(nglMatrixf& rValue, const nglSt
   return rValue.SetValue(rString);
 }
 
-
+#endif
 
 
 /////////////////////////////////
@@ -2015,7 +2055,7 @@ nuiAttribBase::nuiAttribBase()
 : mpAttributeBase(NULL),
   mpTarget(NULL)
 {
-  
+
 }
 
 nuiAttribBase::nuiAttribBase(void* pTarget, nuiAttributeBase* pAttributeBase)
@@ -2211,10 +2251,12 @@ bool nuiAttribBase::IsAttributeChangeIgnored() const
 }
 
 
+#ifndef _MINUI3_
 nuiAttributeEditor* nuiAttribBase::GetEditor() const
 {
   return mpAttributeBase->GetEditor(mpTarget);
 }
+#endif
 
 bool nuiAttribBase::IsValid() const
 {
@@ -2240,6 +2282,14 @@ nuiSimpleEventSource<0>& nuiAttribBase::GetChangedEvent()
 {
   return mpAttributeBase->GetChangedEvent(mpTarget);
 }
+
+
+
+
+
+
+
+#ifndef _MINUI3_
 
 
 //********************************
@@ -2290,7 +2340,7 @@ bool nuiAttribute<nuiBlendFunc>::ToString(nuiBlendFunc Value, nglString& rString
       rString = _T("Add"); break;
     case nuiBlendSaturate:
       rString = _T("Saturate"); break;
-      
+
     case nuiBlendTranspClear:
       rString = _T("Clear"); break;
     case nuiBlendTranspAdd:
@@ -2304,9 +2354,9 @@ bool nuiAttribute<nuiBlendFunc>::ToString(nuiBlendFunc Value, nglString& rString
       rString = _T("UnknownBlendFunc");
       return false;
   }
-  
+
   return true;
-  
+
 }
 
 template <>
@@ -2465,14 +2515,14 @@ bool nuiAttribute<nuiExpandMode>::ToString(nuiExpandMode Value, nglString& rStri
       rString = _T("Shrink"); break;
     case nuiExpandShrinkAndGrow:
       rString = _T("ShrinkAndGrow"); break;
-      
+
     default:
       rString = _T("UnknownExpandMode");
       return false;
   }
-  
+
   return true;
-  
+
 }
 
 template <>
@@ -2498,11 +2548,12 @@ bool nuiAttribute<nuiExpandMode>::FromString(nuiExpandMode& rValue, const nglStr
     rValue = nuiExpandShrinkAndGrow;
     return true;
   }
-  
+
   rValue = nuiExpandFixed;
   return false;
 }
 
+#ifndef _MINUI3_
 template <>
 nuiAttributeEditor* nuiAttribute<nuiExpandMode>::GetDefaultEditor(void* pTarget)
 {
@@ -2516,7 +2567,8 @@ nuiAttributeEditor* nuiAttribute<nuiExpandMode>::GetDefaultEditor(void* pTarget)
   else
  		return nuiCreateGenericAttributeEditor(pTarget, this);
 }
-
+#endif
+#endif
 
 #if 0
 
@@ -2535,7 +2587,7 @@ public:
     capacity = INIT;
     data = new T[INIT];
   }
-  
+
   void push(const T& t)
   {
     if(count == capacity)
@@ -2552,19 +2604,19 @@ public:
     assert(count < capacity);
     data[count++] = t;
   }
-  
+
   void pop()
   {
     assert(count > 0);
     --count;
   }
-  
+
   T top() const
   {
     assert(count > 0);
     return data[count-1];
   }
-  
+
   std::size_t size() const
   {
     return count;
@@ -2586,7 +2638,7 @@ public:
     capacity = INIT;
     data = new void*[INIT];
   }
-  
+
   void push(void* const & t)
   {
     if(count == capacity)
@@ -2601,19 +2653,19 @@ public:
     assert(count < capacity);
     data[count++] = t;
   }
-  
+
   void pop()
   {
     assert(count > 0);
     --count;
   }
-  
+
   void* top() const
   {
     assert(count > 0);
     return data[count-1];
   }
-  
+
   std::size_t size() const
   {
     return count;
@@ -2635,12 +2687,12 @@ public:
   {
     Base::pop();
   }
-  
+
   T* top() const
   {
     return static_cast<T*>(Base::top());
   }
-  
+
   std::size_t size()
   {
     return Base::size();
@@ -2660,16 +2712,16 @@ public:
   {
     mValue = value;
   }
-  
+
   explicit nuiWrapper()
   {
   }
-  
+
   nuiWrapper(const nuiWrapper<T>& value)
   {
     mValue = value;
   }
-  
+
   operator T() const
   {
     return mValue;
@@ -2688,11 +2740,11 @@ void wrapper_test()
 {
   nuiWrapper<float> f(0);
   nuiWrapper<float> ff(10);
-  
+
   f = 10;
   f = 15.0;
   f = 25.0f;
-  
+
   f = f * 5;
   f = f * 5.0;
   f = f * 5.0f;
