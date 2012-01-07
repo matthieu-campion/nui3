@@ -33,8 +33,29 @@
 #include <unistd.h>
 
 /* Implemented in file/nglFile_shr.cpp */
-extern const nglChar* nglFile_mode(nglFileMode mode);
-extern const nglChar* nglFile_endian(nglEndian endian);
+const nglChar* nglFile_mode(nglFileMode mode)
+{
+  switch (mode)
+  {
+    case eFileRead: return "Read";
+    case eFileWrite: return "Write";
+    case eFileModify: return "Modify";
+    case eFileAppend: return "Append";
+  }
+  return "???";
+}
+
+const nglChar* nglFile_endian(nglEndian endian)
+{
+  switch (endian)
+  {
+    case eEndianBig: return "Big";
+    case eEndianLittle: return "Little";
+    case eEndianPDP: return "PDP";
+  }
+
+  return "???";
+}
 
 /* Legacy code : enable build against Win32's POSIX emulation
 #ifdef _WIN32_

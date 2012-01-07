@@ -401,9 +401,9 @@ inline void ngl_atomic_dec(nglAtomic64 &value)
 #endif // 64bits
 
 #endif
-#endif /* __APPLE__ */
+//#endif /* __APPLE__ */
 
-#ifdef _LINUX_
+#elif defined _LINUX_ || defined _MINUI3_
 inline uint32 InterlockedExchangeAdd(int32* Addend, uint32 Increment)
 {
   uint32 ret;

@@ -31,7 +31,7 @@ solution "minui3"
     links
     {
         "z",
-        "iconv",
+        --"iconv",
         "curl"
     }
 
@@ -137,7 +137,7 @@ solution "minui3"
         "src/Application/Unix/nglConsole_Unix.cpp",
 
         "src/Time/Unix/*.cpp",
-        --"src/File/Unix/*.cpp",
+        "src/File/Unix/*.cpp",
         "src/File/Unix/nglPath_Unix.cpp",
         "src/Net/Unix/*.cpp",
         "src/Threading/posix/*.cpp"
@@ -146,7 +146,7 @@ solution "minui3"
 
     files
     {
-      "scratchpad/minui_test.cpp"
+      "scratchpads/minui_test.cpp"
     }
 
     configuration { "Debug*" }
