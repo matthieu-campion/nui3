@@ -146,7 +146,7 @@ solution "minui3"
 
     files
     {
-      "minui_test.cpp"
+      "scratchpad/minui_test.cpp"
     }
 
     configuration { "Debug*" }
