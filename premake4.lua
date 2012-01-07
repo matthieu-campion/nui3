@@ -129,19 +129,36 @@ solution "minui3"
 
     }
 
-    files
-    {
-        "src/Window/Unix/nglEvent_Unix.cpp",
-        "src/Application/Unix/nglKernel_Unix.cpp",
-        "src/Application/Unix/nglModule_Unix.cpp",
-        "src/Application/Unix/nglConsole_Unix.cpp",
+    if os.is("linux") then
 
-        "src/Time/Unix/*.cpp",
-        "src/File/Unix/*.cpp",
-        "src/File/Unix/nglPath_Unix.cpp",
-        "src/Net/Unix/*.cpp",
-        "src/Threading/posix/*.cpp"
-    }
+        files
+        {
+            "src/Window/Unix/nglEvent_Unix.cpp",
+            "src/Application/Unix/nglKernel_Unix.cpp",
+            "src/Application/Unix/nglModule_Unix.cpp",
+            "src/Application/Unix/nglConsole_Unix.cpp",
+
+            "src/Time/Unix/*.cpp",
+            "src/File/Unix/*.cpp",
+            "src/File/Unix/nglPath_Unix.cpp",
+            "src/Net/Unix/*.cpp",
+            "src/Threading/posix/*.cpp"
+        }
+    else
+        files
+        {
+            "src/Window/Unix/nglEvent_Unix.cpp",
+            "src/Application/Unix/nglKernel_Unix.cpp",
+            "src/Application/Unix/nglModule_Unix.cpp",
+            "src/Application/Unix/nglConsole_Unix.cpp",
+
+            "src/Time/Unix/*.cpp",
+            "src/File/Unix/*.cpp",
+            --"src/File/Unix/nglPath_Unix.cpp",
+            "src/Net/Unix/*.cpp",
+            "src/Threading/posix/*.cpp"
+        }
+    end
 
 
     files
