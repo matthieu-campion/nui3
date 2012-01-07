@@ -28,7 +28,13 @@ class nuiTopLevel;
 class nuiMainWindow;
 class nuiLabel;
 
-#ifdef __clang__
+#define GCC_VERSION (__GNUC__ * 10000 \
+                               + __GNUC_MINOR__ * 100 \
+                               + __GNUC_PATCHLEVEL__)
+          /* Test for GCC > 3.2.0 */
+          //#if GCC_VERSION > 30200
+
+#if defined __clang__ || GCC_VERSION > 40600
 template <> uint64 nuiAttributeTypeTrait<bool>::mTypeId;
 
 template <> uint64 nuiAttributeTypeTrait<int8>::mTypeId;
