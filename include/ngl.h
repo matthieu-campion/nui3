@@ -262,7 +262,7 @@ and in NGL user application code.
   typedef u_int32_t uint32;
   typedef u_int64_t uint64;
 
-  #if (!defined _NOGFX_) && (!defined _ANDROID_)
+  #if (!defined _NOGFX_) && (!defined _MINUI3_) && (!defined _ANDROID_)
   #define _X11_
   #endif
 #endif // _UNIX_
