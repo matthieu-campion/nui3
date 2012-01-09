@@ -17,17 +17,13 @@ solution "minui3"
     configuration { "Debug*" }
         defines { "_DEBUG", "DEBUG" }
         flags   { "Symbols" }
+        targetdir "bin/debug"
 
     configuration { "Release*" }
         defines { "NDEBUG" }
         flags   { "Optimize" }
-
-
-    configuration { "Debug" }
-        targetdir "bin/debug"
-
-    configuration { "Release" }
         targetdir "bin/release"
+
 
     if _ACTION == "clean" then
         os.rmdir("bin")

@@ -327,9 +327,12 @@ void nglKernel::CallOnInit()
 
   printf("ucdata_init_static took %f seconds\n", then - now);
 
+#ifndef _MINUI3_
   NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%s)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);
+#endif
+
   nuiTimer* pTimer = nuiAnimation::AcquireTimer();
   mKernelEventSink.Connect(pTimer->Tick, &nglKernel::ProcessMessages);
   mpNotificationManager = new nuiNotificationManager();
