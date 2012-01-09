@@ -13,7 +13,7 @@
 #include "nglString.h"
 #include "nglIStream.h"
 #include "nglOStream.h"
-#include "nuiApplication.h"
+//#include "nuiApplication.h"
 
 class xmlLexer;
 
