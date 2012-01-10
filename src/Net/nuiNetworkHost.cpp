@@ -113,7 +113,7 @@ nuiNetworkHost nuiNetworkHost::Resolve(const nglString& rService)
 {
   std::vector<nuiNetworkHost> hosts;
   if (!Resolve(hosts, rService) || hosts.empty())
-    return nuiNetworkHost();
+    return nuiNetworkHost(0, eAny);
   return hosts[0];
 }
 

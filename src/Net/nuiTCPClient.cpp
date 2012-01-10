@@ -59,12 +59,12 @@ bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
 
 bool nuiTCPClient::Connect(const nglString& rHost, int16 port)
 {
-  return Connect(nuiNetworkHost(rHost, port));
+  return Connect(nuiNetworkHost(rHost, port, nuiNetworkHost::eTCP));
 }
 
 bool nuiTCPClient::Connect(uint32 ipaddress, int16 port)
 {
-  return Connect(nuiNetworkHost(ipaddress, port));
+  return Connect(nuiNetworkHost(ipaddress, port, nuiNetworkHost::eTCP));
 }
 
 

@@ -31,13 +31,13 @@ nuiTCPServer::~nuiTCPServer()
 
 bool nuiTCPServer::Bind(const nglString& rHost, int16 port)
 {
-  nuiNetworkHost host(rHost, port);
+  nuiNetworkHost host(rHost, port, nuiNetworkHost::eTCP);
   return Bind(host);
 }
 
 bool nuiTCPServer::Bind(uint32 ipaddress, int16 port)
 {
-  nuiNetworkHost host(ipaddress, port);
+  nuiNetworkHost host(ipaddress, port, nuiNetworkHost::eTCP);
   return Bind(host);
 }
 
