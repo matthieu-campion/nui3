@@ -119,6 +119,7 @@ solution "minui3"
             "src/File/*.cpp",
             "src/Math/*.cpp",
             "src/Net/nuiHTTP.cpp",
+            "src/Net/nuiHTTPServer.cpp",
             "src/Net/nuiMimeMultiPart.cpp",
             "src/Net/nuiNetworkHost.cpp",
             "src/Net/nuiSocket.cpp",
