@@ -67,6 +67,11 @@ bool nuiTCPClient::Connect(uint32 ipaddress, int16 port)
   return Connect(nuiNetworkHost(ipaddress, port, nuiNetworkHost::eTCP));
 }
 
+bool nuiTCPClient::Send(const nglString& rString)
+{
+  return Send((uint8*)rString.GetChars(), rString.GetLength());
+}
+
 
 bool nuiTCPClient::Send(const std::vector<uint8>& rData)
 {
@@ -79,11 +84,17 @@ bool nuiTCPClient::Send(const uint8* pData, int len)
     return false;
   
 #ifdef WIN32
-  send(mSocket, (const char*)pData, len, 0);
+  int res = send(mSocket, (const char*)pData, len, 0);
 #else
-  send(mSocket, pData, len, 0);
+  int res = send(mSocket, pData, len, 0);
 #endif
-  return false;
+  
+  if (res < 0 || res != len)
+  {
+    mConnected = false;
+    return false;
+  }
+  return true;
 }
 
 
@@ -134,10 +145,14 @@ bool nuiTCPClient::Receive(std::vector<uint8>& rData)
   
 #ifdef WIN32
   int res = recv(mSocket, (char*)&rData[0], rData.size(), MSG_WAITALL);
+  printf("%x recv returned %d\n", this, res);
 #else
-  int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
+  //int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
+  int res = read(mSocket, &rData[0], rData.size());
+  printf("%p read returned %d\n", this, res);
 #endif
 
+  
   if (res == 0)
   {
     mConnected = false;
