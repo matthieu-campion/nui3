@@ -94,7 +94,7 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest(const nuiHTTPResponseReceivedDelega
       
       UInt32 statusCode = CFHTTPMessageGetResponseStatusCode(responseHeader);
       
-      //nuiHTTPResponse* pResponse = new nuiHTTPResponse(statusCode, status);
+      pResponse = new nuiHTTPResponse(statusCode, status);
       
       delete[] pStatus;
       
@@ -127,7 +127,7 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest(const nuiHTTPResponseReceivedDelega
       CFRelease(statusLine);
       CFRelease(dict);
       
-      pResponse = new nuiHTTPResponse(statusCode, status);
+      //pResponse = new nuiHTTPResponse(statusCode, status);
 
       if (rResponseReceived)
         rResponseReceived(pResponse);
