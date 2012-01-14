@@ -167,7 +167,7 @@ void nglKernel::OnSignal(int Signal) /* static method */
         tcsetattr (STDIN_FILENO, TCSANOW, &App->mTermInfo);
 */
       NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_ERROR, _T("** Segmentation fault\n")); )
-      _exit(2);
+      exit(2);
     }
 
     case SIGHUP:
@@ -177,7 +177,11 @@ void nglKernel::OnSignal(int Signal) /* static method */
     case SIGTERM:
     {
       NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_ERROR, _T("** Caught signal %d\n"), Signal); )
+#ifndef _MINUI3_
       App->Quit(1);
+#else
+      exit(1);
+#endif
     }
   }
 }

@@ -96,8 +96,12 @@ nglFileSize nglFile::GetSize() const
 
 bool nglFile::Open()
 {
+//NGL_OUT("nglFile::Open()\n");
   if (IsOpen())
+  {
+    //NGL_OUT("  -> file already open\n");
     return false;
+  }
 
   int flags;
   std::string str(mPath.GetPathName().GetStdString());
@@ -113,7 +117,7 @@ bool nglFile::Open()
 	#endif // _CARBON_
 
 
-  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("opening '%ls', %ls, %ls (%lsnative)\n"), mPath.GetPathName().GetChars(), nglFile_mode(mMode), nglFile_endian(mEndian), (mEndian == eEndianNative) ? _T("") : _T("non-")); )
+  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("opening '%s', %s, %s (%snative)\n"), mPath.GetPathName().GetChars(), nglFile_mode(mMode), nglFile_endian(mEndian), (mEndian == eEndianNative) ? _T("") : _T("non-")); )
 
   switch (mMode)
   {
@@ -121,12 +125,15 @@ bool nglFile::Open()
     case eFileWrite : flags = O_RDWR + O_CREAT + O_TRUNC; break;
     case eFileModify: flags = O_RDWR + O_CREAT; break;
     case eFileAppend: flags = O_RDWR + O_CREAT + O_APPEND; break;
-    default: return false;
+    default:
+  //NGL_OUT("Invalid Mode... exiting\n");
+        return false;
   }
 #ifdef _WIN32_
   flags += _O_BINARY;
 #endif
   mFD = open (filename, flags, 00644);
+//NGL_OUT("open: %s -> %d\n", filename, mFD);
   if (mFD == -1)
   {
     switch (errno)
@@ -152,7 +159,7 @@ void nglFile::Close()
   if (!IsOpen())
     return;
 
-  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("closing '%ls'\n"), mPath.GetChars()); )
+  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("closing '%s'\n"), mPath.GetChars()); )
   if (mAutoFlush) Flush();
   close(mFD);
 }

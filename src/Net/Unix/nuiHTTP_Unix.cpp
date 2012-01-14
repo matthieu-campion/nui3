@@ -46,53 +46,21 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest(const nuiHTTPResponseReceivedDelega
   uint port = 80;
   CURLcode res;
 
-  NGL_OUT(_T("%s\n"), __FILE__);
-
-  if (url.CompareLeft(_T("http://")) == 0)
-  {
-    url.DeleteLeft(7);
-  }
-
-  int32 pos = url.Find(':');
-  if (pos != -1)
-  {
-    server = url.Extract(0, pos);
-    port = url.Extract(pos).GetCInt();
-    pos = url.Find('/');
-    if (pos != -1)
-    {
-      objectName = url.Extract(pos);
-    }
-    else
-    {
-      objectName = nglString::Null;
-    }
-  }
-  else
-  {
-    pos = url.Find('/');
-    if (pos != -1)
-    {
-      server = url.Extract(0, pos);
-      objectName = url.Extract(pos);
-    }
-    else
-    {
-      server = url;
-      objectName = nglString::Null;
-    }
-  }
+  NGL_OUT("%s\n", url.GetChars());
 
   CURL *easyhandle = curl_easy_init();
-  if (mMethod == _T("POST"))
+
+  res = curl_easy_setopt(easyhandle, CURLOPT_URL, url.GetStdString().c_str());
+
+  //#FIXME!!!!!!!!
+  curl_easy_setopt(easyhandle, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_easy_setopt(easyhandle, CURLOPT_SSL_VERIFYPEER, 0);
+
+  curl_easy_setopt(easyhandle, CURLOPT_CUSTOMREQUEST, mMethod.GetChars());
+
+  if (mMethod == "HEAD")
   {
-    res = curl_easy_setopt(easyhandle, CURLOPT_URL, url.GetStdString().c_str());
-    res = curl_easy_setopt(easyhandle, CURLOPT_POSTFIELDS, objectName.GetStdString().c_str());
-  }
-  else if (mMethod == _T("GET"))
-  {
-    NGL_OUT(_T("url = %ls\n"), mUrl.GetChars());
-    res = curl_easy_setopt(easyhandle, CURLOPT_URL, mUrl.GetStdString().c_str());
+    curl_easy_setopt(easyhandle, CURLOPT_NOBODY, 1);
   }
 
   curl_easy_setopt(easyhandle, CURLOPT_FOLLOWLOCATION, 1);
@@ -120,7 +88,7 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest(const nuiHTTPResponseReceivedDelega
 
   for (; it != end; ++it)
   {
-    pos = it->Find(_T(":"));
+    int pos = it->Find(_T(":"));
     nglString fieldName(it->Extract(0, pos));
     fieldName.Trim();
     nglString fieldValue(it->Extract(pos+1));

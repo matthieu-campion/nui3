@@ -168,7 +168,8 @@ solution "minui3"
                 "src/Application/Unix/nglConsole_Unix.cpp",
 
                 "src/Time/Unix/*.cpp",
-                "src/File/Unix/*.cpp",
+                --"src/File/Unix/*.cpp",
+                "src/File/Unix/nglPath_Unix.cpp",
                 "src/Net/Unix/*.cpp",
                 "src/Threading/posix/*.cpp"
             }

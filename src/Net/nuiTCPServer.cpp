@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -48,7 +48,7 @@ bool nuiTCPServer::Bind(const nuiNetworkHost& rHost)
 {
   if (!Init(AF_INET, SOCK_STREAM, 0))
     return false;
-  
+
   int option = 1;
   int res = setsockopt(mSocket, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
   if (res)
@@ -60,9 +60,9 @@ bool nuiTCPServer::Bind(const nuiNetworkHost& rHost)
   res = bind(mSocket, addr->ai_addr, addr->ai_addrlen);
   if (res)
     DumpError(errno);
-  
+
   freeaddrinfo(addr);
-  
+
   return res == 0;
 }
 
@@ -74,10 +74,10 @@ bool nuiTCPServer::Listen(int backlog)
 nuiTCPClient* nuiTCPServer::Accept()
 {
   int n = 1;
-  setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+  //setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
   int s = accept(mSocket, NULL, NULL);
-  
-  setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+
+  //setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
   printf("%x accept %d\n", this, s);
   nuiTCPClient* pClient = new nuiTCPClient(s);
   return pClient;
