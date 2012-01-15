@@ -34,7 +34,7 @@ void nuiHTTPHandler::Parse()
       if (state == Body)
       {
         std::vector<uint8> d(data.begin() + index, data.end());
-        NGL_OUT("...Body data... (%d)\n", d.size());
+        //NGL_OUT("...Body data... (%d)\n", d.size());
         OnBodyData(d);
         index = data.size();
       }
@@ -62,7 +62,7 @@ void nuiHTTPHandler::Parse()
               }
               
               mMethod = mCurrentLine.GetLeft(pos);
-              NGL_OUT("Method: %s\n", mMethod.GetChars());
+              //NGL_OUT("Method: %s\n", mMethod.GetChars());
               if (!OnMethod(mMethod))
                 return;
               
@@ -72,7 +72,7 @@ void nuiHTTPHandler::Parse()
               while (mCurrentLine[pos2] != ' ')
                 pos2++;
               mURL = mCurrentLine.Extract(pos, pos2 - pos);
-              NGL_OUT("URL: %s\n", mURL.GetChars());
+              //NGL_OUT("URL: %s\n", mURL.GetChars());
               if (!OnMethod(mURL))
                 return;
               
@@ -86,8 +86,8 @@ void nuiHTTPHandler::Parse()
               mProtocol = mCurrentLine.Extract(pos, pos2 - pos);
               mVersion = mCurrentLine.Extract(pos2 + 1);
               mVersion.Trim();
-              NGL_OUT("Protocol: %s\n", mProtocol.GetChars());
-              NGL_OUT("Version: %s\n", mVersion.GetChars());
+              //NGL_OUT("Protocol: %s\n", mProtocol.GetChars());
+              //NGL_OUT("Version: %s\n", mVersion.GetChars());
               if (!OnProtocol(mProtocol, mVersion))
                 return;
               
@@ -101,7 +101,7 @@ void nuiHTTPHandler::Parse()
             {
               if (mCurrentLine.IsEmpty())
               {
-                NGL_OUT("Start body...\n");
+                //NGL_OUT("Start body...\n");
                 if (!OnBodyStart())
                   return;
                 state = Body;
@@ -124,7 +124,7 @@ void nuiHTTPHandler::Parse()
                 
                 mHeaders[key] = value;
                 
-                NGL_OUT("[%s]: '%s'\n", key.GetChars(), value.GetChars());
+                //NGL_OUT("[%s]: '%s'\n", key.GetChars(), value.GetChars());
                 
                 if (!OnHeader(key, value))
                   return;
@@ -147,7 +147,7 @@ void nuiHTTPHandler::Parse()
       
     }
   }
-  NGL_OUT("End body\n");
+  //NGL_OUT("End body\n");
   OnBodyEnd();
 }
 
@@ -242,7 +242,7 @@ void nuiHTTPServer::AcceptConnections()
 
 void nuiHTTPServer::OnNewClient(nuiTCPClient* pClient)
 {
-  NGL_OUT("Received new connection...\n");
+  //NGL_OUT("Received new connection...\n");
   nuiHTTPServerThread* pThread = new nuiHTTPServerThread(mDelegate(pClient));
   pThread->Start();
 }

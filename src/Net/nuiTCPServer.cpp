@@ -74,11 +74,15 @@ bool nuiTCPServer::Listen(int backlog)
 nuiTCPClient* nuiTCPServer::Accept()
 {
   int n = 1;
-  //setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+#ifndef _LINUX_
+  setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+#endif
   int s = accept(mSocket, NULL, NULL);
 
-  //setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
-  printf("%x accept %d\n", this, s);
+#ifndef _LINUX_
+  setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+#endif
+  //printf("%x accept %d\n", this, s);
   nuiTCPClient* pClient = new nuiTCPClient(s);
   return pClient;
 }
