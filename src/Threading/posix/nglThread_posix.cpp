@@ -24,9 +24,10 @@ class nglThreadPrivate
 public:
   static void Start(nglThread * pThread)
   {
+    bool autodelete = pThread->GetAutoDelete();
     pThread->OnStart();
     pThread->mState = nglThread::Closed;
-    if (pThread->GetAutoDelete())
+    if (autodelete)
       delete pThread;
   }
 
