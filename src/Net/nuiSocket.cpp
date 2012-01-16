@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -22,11 +22,17 @@
 nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
 : mSocket(Socket)
 {
+#if (!defined _LINUX_)
+  setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+#endif
 }
 
 bool nuiSocket::Init(int domain, int type, int protocol)
 {
   mSocket = socket(domain, type, protocol);
+#if (!defined _LINUX_)
+  setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+#endif
   return mSocket >= 0;
 }
 
@@ -52,7 +58,7 @@ bool nuiSocket::GetLocalHost(nuiNetworkHost& rHost) const
   int res = getsockname(mSocket, (struct sockaddr*)&addr, &addrlen);
   if (res != 0)
     return false;
-  
+
   nuiNetworkHost h(addr.sin_addr.s_addr, addr.sin_port, rHost.mProtocol);
   rHost = h;
   return true;
@@ -92,9 +98,9 @@ void nuiSocket::DumpError(int err) const
 {
   if (!err)
     return;
-  
+
   nglString error;
-  
+
   switch (err)
   {
     case EACCES: error = "The destination address is a broadcast address and the socket option SO_BROADCAST is not set."; break;
@@ -120,7 +126,7 @@ void nuiSocket::DumpError(int err) const
     case W(ECONNRESET): error = "Remote host reset the connection request."; break;
     default: error = "Unknown error "; error.Add(err); break;
   }
-  
+
   NGL_OUT(_T("Socket Error: %s\n"), error.GetChars());
 }
 

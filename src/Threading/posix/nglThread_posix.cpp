@@ -15,14 +15,14 @@
 #include "nglThreadChecker.h"
 
 
-static void *start_thread(void *arg); 
+static void *start_thread(void *arg);
 
-class nglThreadPrivate 
+class nglThreadPrivate
 {
   friend class nglThread;
-  
+
 public:
-  static void Start(nglThread * pThread) 
+  static void Start(nglThread * pThread)
   {
     pThread->OnStart();
     pThread->mState = nglThread::Closed;
@@ -37,7 +37,7 @@ public:
 
   nglThread::ID GetThreadID()
   {
-    return thread;  
+    return thread;
   }
 
 private:
@@ -46,43 +46,45 @@ private:
 };
 
 
-static void *start_thread(void *arg) 
+static void *start_thread(void *arg)
 {
   nglThread *thread = (nglThread *)arg;
 
   // register the thread by the nglThreadChecker
-  nglThreadChecker::RegisterThread(thread->GetID(), thread->GetName());  
-  
+  nglThreadChecker::RegisterThread(thread->GetID(), thread->GetName());
+
   nglThreadPrivate::Start(thread);
 
   // warn the nglThreadChecker that the thread stoped
   nglThreadChecker::UnregisterThread(thread->GetID());
-  
+
   pthread_exit(0);
   nglThreadPrivate::exit(thread);
   nglDelThreadFromGlobalList(thread);
   return 0;
 }
 
-nglThread::nglThread(Priority priority)
+nglThread::nglThread(Priority priority, size_t StackSize)
 {
   mpData = new nglThreadPrivate();
-  
+
   mpData->thread = 0;
   mState = Stopped;
   mPriority = priority;
   mAutoDelete = false;
+  mStackSize = StackSize;
 }
 
-nglThread::nglThread(const nglString& rName, Priority priority)
+nglThread::nglThread(const nglString& rName, Priority priority, size_t StackSize)
 {
   mName = rName;
   mpData = new nglThreadPrivate();
-  
+
   mpData->thread = 0;
   mState = Stopped;
   mPriority = priority;
   mAutoDelete = false;
+  mStackSize = StackSize;
 }
 
 
@@ -93,35 +95,43 @@ nglThread::~nglThread()
 
 bool nglThread::Start()
 {
-  
+
   int ret = 0;
   //if (!mpData->thread) // If the thread is not created, do it:
   {
     pthread_attr_t attr;
-    
+
     pthread_attr_init(&attr);
     //		pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-    
+
+    if (mStackSize != 0)
+      pthread_attr_setstacksize(&attr, mStackSize);
+
     ret = pthread_create(&mpData->thread, &attr, start_thread, this);
+
+    // Get the stack size:
+    pthread_getattr_np(mpData->thread, &attr);
+    pthread_attr_getstacksize(&attr, &mStackSize);
+
     nglAddThreadInGlobalList(this);
-    
-    if (ret != 0) 
+
+    if (ret != 0)
     {
       NGL_ASSERT(0);
     }
-    
+
     //		pthread_attr_destroy(&attr);
   }
   mState = Running;
-  
+
   return true;
 }
 
 bool nglThread::Join()
 {
   bool res = true;
-  
+
   if (pthread_join(mpData->thread, NULL) != 0)
   {
     res = false;

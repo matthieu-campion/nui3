@@ -159,6 +159,7 @@ solution "minui3"
         }
 
         if os.is("linux") then
+            defines { "_LINUX_" }
 
             files
             {
