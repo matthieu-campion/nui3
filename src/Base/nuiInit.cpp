@@ -65,7 +65,9 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 #else
     
     //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
-    nglPath fontdb(ePathUserAppSettings);
+      //LBDEBUG
+//    nglPath fontdb(ePathUserAppSettings);
+      nglPath fontdb(ePathLibraryCache);
     fontdb += nglString(NUI_FONTDB_PATH);
     
     if (fontdb.Exists() && fontdb.IsLeaf())
@@ -100,7 +102,8 @@ bool nuiUninit()
     // Destroy all the windows that are still alive:
     nuiMainWindow::DestroyAllWindows();
     
-    nglPath fontdb(ePathUserAppSettings);
+      //    nglPath fontdb(ePathUserAppSettings);
+      nglPath fontdb(ePathLibraryCache);
     fontdb += nglString(NUI_FONTDB_PATH);
     
     nuiFontManager& rManager(nuiFontManager::GetManager(false));

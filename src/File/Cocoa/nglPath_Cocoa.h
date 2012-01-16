@@ -15,4 +15,5 @@ nglPath nuiCocoaGetPath_AppSettings();
 nglPath nuiCocoaGetPath_UserDocuments();
 nglPath nuiCocoaGetPath_UserPreferences();
 nglPath nuiCocoaGetPath_UserDesktop();
+nglPath nuiCocoaGetPath_LibraryCache();
 

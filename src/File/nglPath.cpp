@@ -274,7 +274,28 @@ nglPath::nglPath (nglPathBase Base)
         #endif
       }
       break;
-	}
+
+		case ePathLibraryCache:
+        {
+        #ifdef WINCE
+            //TODO
+            NGL_ASSERT(0);
+        #elif defined _WIN32_
+            //TODO
+            NGL_ASSERT(0);
+        #elif defined(_UIKIT_)
+            InternalSetPath(nuiCocoaGetPath_LibraryCache());
+        #elif defined(__MACHO__)
+            //TODO
+            NGL_ASSERT(0);
+        #else
+            //TODO
+            NGL_ASSERT(0);
+        #endif
+        }
+			break;
+	
+    }
 }
 
 nglPath::nglPath (const nglPath& rPath)
