@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -17,7 +17,7 @@ public:
   virtual ~nuiHTTPHandler();
 
   void Parse();
-  
+
   virtual bool OnMethod(const nglString& rValue);
   virtual bool OnURL(const nglString& rValue);
   virtual bool OnProtocol(const nglString& rValue, const nglString rVersion);
@@ -27,6 +27,9 @@ public:
   virtual void OnBodyEnd();
   bool ReplyLine(const nglString& rString);
   bool ReplyHeader(const nglString& rKey, const nglString& rValue);
+  bool ReplyError(int32 code, const nglString& rErrorStr);
+  bool Log(int32 code);
+
 
 protected:
   enum State
@@ -51,7 +54,7 @@ public:
   nuiHTTPServerThread(nuiHTTPHandler* pHandler);
   virtual ~nuiHTTPServerThread();
   void OnStart();
-  
+
 private:
   nuiHTTPHandler* mpHandler;
 };
@@ -63,14 +66,14 @@ class nuiHTTPServer : public nuiTCPServer
 public:
   nuiHTTPServer();
   virtual ~nuiHTTPServer();
-  
+
   void AcceptConnections();
   void OnNewClient(nuiTCPClient* pClient);
   void SetHandlerDelegate(const nuiFastDelegate1<nuiTCPClient*, nuiHTTPHandler*>& rDelegate);
-  
+
 protected:
   nuiFastDelegate1<nuiTCPClient*, nuiHTTPHandler*> mDelegate;
-  
+
   nuiHTTPHandler* DefaultHandler(nuiTCPClient* pClient);
 };
 

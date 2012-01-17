@@ -46,7 +46,7 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest(const nuiHTTPResponseReceivedDelega
   uint port = 80;
   CURLcode res;
 
-  NGL_OUT("%s\n", url.GetChars());
+  //NGL_OUT("%s\n", url.GetChars());
 
   CURL *easyhandle = curl_easy_init();
 

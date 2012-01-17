@@ -1,12 +1,13 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
 #include "nui.h"
 #include "nuiHTTPServer.h"
+#include "nuiNetworkHost.h"
 
 //class nuiHTTPHandler
 nuiHTTPHandler::nuiHTTPHandler(nuiTCPClient* pClient)
@@ -41,7 +42,7 @@ void nuiHTTPHandler::Parse()
       else
       {
         index++;
-        
+
         if (cur == 10)
         {
           // skip...
@@ -60,12 +61,12 @@ void nuiHTTPHandler::Parse()
                 // Error!
                 return;
               }
-              
+
               mMethod = mCurrentLine.GetLeft(pos);
               //NGL_OUT("Method: %s\n", mMethod.GetChars());
               if (!OnMethod(mMethod))
                 return;
-              
+
               while (mCurrentLine[pos] == ' ')
                 pos++;
               int pos2 = pos;
@@ -75,14 +76,14 @@ void nuiHTTPHandler::Parse()
               //NGL_OUT("URL: %s\n", mURL.GetChars());
               if (!OnMethod(mURL))
                 return;
-              
+
               pos = pos2;
               while (mCurrentLine[pos] == ' ')
                 pos++;
               pos2 = pos;
               while (mCurrentLine[pos2] != '/')
                 pos2++;
-              
+
               mProtocol = mCurrentLine.Extract(pos, pos2 - pos);
               mVersion = mCurrentLine.Extract(pos2 + 1);
               mVersion.Trim();
@@ -90,13 +91,13 @@ void nuiHTTPHandler::Parse()
               //NGL_OUT("Version: %s\n", mVersion.GetChars());
               if (!OnProtocol(mProtocol, mVersion))
                 return;
-              
+
               state = Header;
-              
+
               mCurrentLine.Wipe();
             }
               break;
-              
+
             case Header:
             {
               if (mCurrentLine.IsEmpty())
@@ -115,20 +116,20 @@ void nuiHTTPHandler::Parse()
                   // Error!
                   return;
                 }
-                
+
                 nglString key = mCurrentLine.GetLeft(pos);
                 nglString value = mCurrentLine.Extract(pos + 1);
-                
+
                 key.Trim();
                 value.Trim();
-                
+
                 mHeaders[key] = value;
-                
+
                 //NGL_OUT("[%s]: '%s'\n", key.GetChars(), value.GetChars());
-                
+
                 if (!OnHeader(key, value))
                   return;
-                
+
                 state = Header;
                 mCurrentLine.Wipe();
               }
@@ -144,7 +145,7 @@ void nuiHTTPHandler::Parse()
           mCurrentLine.Append(cur);
         }
       }
-      
+
     }
   }
   //NGL_OUT("End body\n");
@@ -199,6 +200,34 @@ bool nuiHTTPHandler::ReplyHeader(const nglString& rKey, const nglString& rValue)
   return ReplyLine(str);
 }
 
+bool nuiHTTPHandler::ReplyError(int32 code, const nglString& rErrorStr)
+{
+  nglString errstr;
+  errstr.Add("HTTP/1.1 ").Add(code).Add(" ").Add(rErrorStr);
+  ReplyLine(errstr);
+  ReplyHeader("Content-Type", "text/plain");
+  ReplyHeader("Server", "Yastream 1.0.0");
+  ReplyLine("");
+  ReplyLine(rErrorStr);
+
+  // Log the error:
+  Log(code);
+}
+
+bool nuiHTTPHandler::Log(int32 code)
+{
+  nuiNetworkHost client(0, 0, nuiNetworkHost::eTCP);
+  bool res = mpClient->GetDistantHost(client);
+  if (!res)
+    return false;
+
+  uint32 ip = client.GetIP();
+  uint8* pIp = (uint8*)&ip;
+  nglString t = nglTime().GetLocalTimeStr("%a, %d %b %Y %H:%M:%S %z");
+  NGL_OUT("%d.%d.%d.%d \"%s %s\" %d %s\n", pIp[0], pIp[1], pIp[2], pIp[3], mMethod.GetChars(), mURL.GetChars(), code, t.GetChars());
+}
+
+
 //class nuiHTTPServerThread : public nglThread
 nuiHTTPServerThread::nuiHTTPServerThread(nuiHTTPHandler* pHandler)
 : mpHandler(pHandler)
@@ -237,7 +266,7 @@ void nuiHTTPServer::AcceptConnections()
     OnNewClient(pClient);
     //Listen();
   }
-  
+
 }
 
 void nuiHTTPServer::OnNewClient(nuiTCPClient* pClient)
