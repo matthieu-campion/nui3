@@ -27,8 +27,7 @@ enum nglPathBase
 	ePathUserAppSettings, ///< Use a user-related ('unix sense') location as root for application settings(may not be visible by default)
 	ePathUserDocuments, ///< Use a user-related ('unix sense') location as root for application documents
   ePathUserPreferences, ///< Use a user-related ('unix sense') location as root for preferences
-  ePathUserDesktop,    ///< Use the desktop folder as root,
-    ePathLibraryCache ///< system library cache
+  ePathUserDesktop    ///< Use the desktop folder as root,
 };
 
 
