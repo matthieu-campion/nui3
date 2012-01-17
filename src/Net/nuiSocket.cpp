@@ -72,7 +72,7 @@ bool nuiSocket::GetDistantHost(nuiNetworkHost& rHost) const
   if (res != 0)
     return false;
 
-  nuiNetworkHost h(addr.sin_addr.s_addr, addr.sin_port, rHost.mProtocol);
+  nuiNetworkHost h(ntohl(addr.sin_addr.s_addr), addr.sin_port, rHost.mProtocol);
   rHost = h;
   return true;
 }

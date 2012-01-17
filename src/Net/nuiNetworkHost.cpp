@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -44,7 +44,7 @@ nuiNetworkHost::nuiNetworkHost(uint32 IPAddress, int port, Protocol protocol)
 : mIPSet(true),
   mNameSet(false),
   mPort(port),
-  mIP(htons(IPAddress)),
+  mIP(htonl(IPAddress)),
   mProtocol(protocol)
 {
 }
@@ -87,7 +87,7 @@ nuiNetworkHost::Protocol nuiNetworkHost::GetProtocol() const
 bool nuiNetworkHost::Resolve(std::vector<nuiNetworkHost>& rHosts, const nglString& rService)
 {
   struct addrinfo* infos = GetAddrInfo(rService);
-  
+
   while (infos)
   {
     sockaddr_in* addr = (struct sockaddr_in*)infos->ai_addr;
@@ -126,7 +126,7 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
   hints.ai_family = PF_INET;    /* PF_xxx */
   hints.ai_socktype = 0;  /* SOCK_xxx */
   hints.ai_protocol = 0;  /* 0 or IPPROTO_xxx for IPv4 and IPv6 */
-  
+
   if (mProtocol == eTCP)
   {
     hints.ai_socktype = SOCK_STREAM;  /* SOCK_xxx */
@@ -137,9 +137,9 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
     hints.ai_socktype = SOCK_DGRAM;  /* SOCK_xxx */
     hints.ai_protocol = IPPROTO_UDP;  /* 0 or IPPROTO_xxx for IPv4 and IPv6 */
   }
-  
+
   struct addrinfo* infos = NULL;
-  
+
   nglString h;
   if (mNameSet)
     h = mName;
@@ -148,7 +148,7 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
     uint8* ip = (uint8*)&mIP;
     h.CFormat(_T("%d.%d.%d.%d"), ip[0], ip[1], ip[2], ip[3]);
   }
-  
+
   char* hh = NULL;
   char* ss = NULL;
   if (!h.IsEmpty())
@@ -161,17 +161,17 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
     s.Add(mPort);
     ss = s.Export();
   }
-  
+
   int res = getaddrinfo(hh, ss, &hints, &infos);
-  
+
   free(hh);
   free(ss);
-  
-  
+
+
   if (res != 0)
   {
     nglString err;
-    switch (res) 
+    switch (res)
     {
       case EAI_AGAIN:
         err = "temporary failure in name resolution EAI_BADFLAGS invalid value for ai_flags EAI_BADHINTS invalid value for hints";
@@ -197,10 +197,10 @@ struct addrinfo* nuiNetworkHost::GetAddrInfo(const nglString& rService) const
         break;
 #endif
     }
-    
+
     NGL_LOG(_T("network"), 0, _T("nuiNetworkHost::Resolve error: %s\n"), err.GetChars());
   }
-  
+
 
   return infos;
 }
