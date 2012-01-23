@@ -112,9 +112,19 @@ bool nglThread::Start()
     ret = pthread_create(&mpData->thread, &attr, start_thread, this);
 
     // Get the stack size:
+#ifdef __APPLE__
+   pthread_t self_id;
+
+   self_id = pthread_self ();
+   void* start = pthread_get_stackaddr_np (self_id);
+   int64 size = pthread_get_stacksize_np (self_id);
+   void* end = (char *)start + size;
+
+   mStackSize = size;
+#else
     pthread_getattr_np(mpData->thread, &attr);
     pthread_attr_getstacksize(&attr, &mStackSize);
-
+#endif
     nglAddThreadInGlobalList(this);
 
     if (ret != 0)

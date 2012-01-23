@@ -23,6 +23,7 @@ nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
 : mSocket(Socket)
 {
 #if (!defined _LINUX_)
+  int n = 0;
   setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
 #endif
 }
@@ -31,6 +32,7 @@ bool nuiSocket::Init(int domain, int type, int protocol)
 {
   mSocket = socket(domain, type, protocol);
 #if (!defined _LINUX_)
+  int n = 0;
   setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
 #endif
   return mSocket >= 0;
