@@ -26,6 +26,9 @@
 #include <signal.h>
 #include <locale.h>
 
+#include <gcrypt.h> 
+#include <curl/curl.h>
+GCRY_THREAD_OPTION_PTHREAD_IMPL;
 
 using namespace std;
 
@@ -131,7 +134,7 @@ bool nglKernel::SysInit()
     SIGHUP,
     SIGINT,
     SIGQUIT,
-    SIGPIPE,
+    //SIGPIPE,
     SIGTERM,
     -1
   };
@@ -143,6 +146,8 @@ bool nglKernel::SysInit()
   // Set locale (for strtoup(), time/date formatting and so on)
   setlocale (LC_ALL, "");
 
+  gcry_control(GCRYCTL_SET_THREAD_CBS, &gcry_threads_pthread);
+  curl_global_init(CURL_GLOBAL_ALL);
   return true;
 }
 
