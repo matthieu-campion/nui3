@@ -902,6 +902,14 @@ int32 nglString::Import(const char* pBuffer, const nglTextEncoding Encoding)
     return false;
 
   mIsNull = false;
+  
+  
+  if (Encoding == eEncodingInternal)
+  {
+    Copy(pBuffer);
+    return GetLength();
+  }
+
   int32 offset = 0;
   int32 len = (int32)strlen((char*)pBuffer);
 
@@ -913,6 +921,12 @@ int32 nglString::Import (const char* pBuffer, int32 ByteCount, const nglTextEnco
   if (!pBuffer)
     return false;
 
+  if (Encoding == eEncodingInternal)
+  {
+    Copy(pBuffer, ByteCount);
+    return GetLength();
+  }
+  
   mIsNull = false;
   int32 offset = 0;
 
