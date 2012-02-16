@@ -229,8 +229,8 @@ bool nuiHTTPHandler::Log(int32 code)
 
 
 //class nuiHTTPServerThread : public nglThread
-nuiHTTPServerThread::nuiHTTPServerThread(nuiHTTPHandler* pHandler)
-: mpHandler(pHandler)
+nuiHTTPServerThread::nuiHTTPServerThread(nuiHTTPHandler* pHandler, size_t StackSize)
+: nglThread(nglThread::Normal, StackSize), mpHandler(pHandler)
 {
   SetAutoDelete(true);
 }
@@ -250,6 +250,7 @@ void nuiHTTPServerThread::OnStart()
 //class nuiHTTPServer : public nuiTCPServer
 nuiHTTPServer::nuiHTTPServer()
 {
+  mClientStackSize = 0;
   SetHandlerDelegate(nuiMakeDelegate(this, &nuiHTTPServer::DefaultHandler));
 }
 
@@ -272,7 +273,7 @@ void nuiHTTPServer::AcceptConnections()
 void nuiHTTPServer::OnNewClient(nuiTCPClient* pClient)
 {
   //NGL_OUT("Received new connection...\n");
-  nuiHTTPServerThread* pThread = new nuiHTTPServerThread(mDelegate(pClient));
+  nuiHTTPServerThread* pThread = new nuiHTTPServerThread(mDelegate(pClient), mClientStackSize);
   pThread->Start();
 }
 
@@ -284,5 +285,16 @@ void nuiHTTPServer::SetHandlerDelegate(const nuiFastDelegate1<nuiTCPClient*, nui
 nuiHTTPHandler* nuiHTTPServer::DefaultHandler(nuiTCPClient* pClient)
 {
   return new nuiHTTPHandler(pClient);
+}
+
+
+void nuiHTTPServer::SetClientStackSize(size_t StackSize)
+{
+  mClientStackSize = StackSize;
+}
+
+size_t nuiHTTPServer::GetClientStackSize() const
+{
+  return mClientStackSize;
 }
 

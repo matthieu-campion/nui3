@@ -51,7 +51,7 @@ protected:
 class nuiHTTPServerThread : public nglThread
 {
 public:
-  nuiHTTPServerThread(nuiHTTPHandler* pHandler);
+  nuiHTTPServerThread(nuiHTTPHandler* pHandler, size_t StackSize = 0);
   virtual ~nuiHTTPServerThread();
   void OnStart();
 
@@ -71,9 +71,13 @@ public:
   void OnNewClient(nuiTCPClient* pClient);
   void SetHandlerDelegate(const nuiFastDelegate1<nuiTCPClient*, nuiHTTPHandler*>& rDelegate);
 
+  void SetClientStackSize(size_t StackSize);
+  size_t GetClientStackSize() const;
 protected:
   nuiFastDelegate1<nuiTCPClient*, nuiHTTPHandler*> mDelegate;
 
   nuiHTTPHandler* DefaultHandler(nuiTCPClient* pClient);
+  
+  size_t mClientStackSize;
 };
 
