@@ -1240,7 +1240,7 @@ JSPropertySpec TypedArray::jsprops[] = {
  * TypedArray boilerplate
  */
 
-#if 1
+#if _MSC_VER >= 1600
 #define IMPL_TYPED_ARRAY_STATICS(_typedArray)                                  \
 template<> JSObjectMap _typedArray::fastObjectMap(&_typedArray::fastObjectOps, \
                                                   JSObjectMap::SHAPELESS);     \
