@@ -9,6 +9,40 @@
 
 #include "nuiTCPServer.h"
 #include "nuiTCPClient.h"
+#include "nuiRegExp.h"
+
+class nuiHTTPHandler;
+
+class nuiURLHandler
+{
+public:
+  typedef nuiFastDelegate2<const nglString&, std::vector<nglString>, nuiHTTPHandler* > HandlerDelegate;
+  nuiURLHandler(const nglString& rRegExp, const HandlerDelegate& rDelegate);
+  virtual ~nuiURLHandler();
+
+  nuiHTTPHandler* Handle(const nglString& rURL);
+
+  const nglString& GetRegExp() const;
+
+private:
+  nuiRegExp mRegExp;
+  HandlerDelegate mDelegate;
+};
+
+class nuiURLDispatcher
+{
+public:
+  nuiURLDispatcher();
+  virtual ~nuiURLDispatcher();
+  
+  void AddHandler(nuiURLHandler* pHandler);
+  void AddHandler(const nglString& rRegExp, const nuiURLHandler::HandlerDelegate& rDelegate);
+  
+  nuiHTTPHandler* Dispatch(const nglString& rURL);
+  
+private:
+  std::vector<nuiURLHandler*> mpHandlers;
+};
 
 class nuiHTTPHandler
 {

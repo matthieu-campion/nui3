@@ -9,6 +9,68 @@
 #include "nuiHTTPServer.h"
 #include "nuiNetworkHost.h"
 
+
+//class nuiURLHandler
+nuiURLHandler::nuiURLHandler(const nglString& rRegExp, const HandlerDelegate& rDelegate)
+: mRegExp(rRegExp), mDelegate(rDelegate)
+{
+}
+
+nuiURLHandler::~nuiURLHandler()
+{
+}
+
+const nglString& nuiURLHandler::GetRegExp() const
+{
+  return mRegExp.GetExpression();
+}
+
+nuiHTTPHandler* nuiURLHandler::Handle(const nglString& rURL)
+{
+  if (mRegExp.Match(rURL))
+  {
+    std::vector<nglString> args;
+    for (uint32 i = 0; i < mRegExp.SubStrings(); i++)
+      args.push_back(rURL.Extract(mRegExp.SubStart(i), mRegExp.SubLength(i)));
+    return mDelegate(rURL, args);
+  }
+}
+  
+
+//class nuiURLDispatcher
+nuiURLDispatcher::nuiURLDispatcher()
+{
+}
+
+nuiURLDispatcher::~nuiURLDispatcher()
+{
+  for (int i = 0; i < mpHandlers.size(); i++)
+    delete mpHandlers[i];
+}
+
+void nuiURLDispatcher::AddHandler(nuiURLHandler* pHandler)
+{
+  mpHandlers.push_back(pHandler);
+}
+
+void nuiURLDispatcher::AddHandler(const nglString& rRegExp, const nuiURLHandler::HandlerDelegate& rDelegate)
+{
+  mpHandlers.push_back(new nuiURLHandler(rRegExp, rDelegate));
+}
+
+nuiHTTPHandler* nuiURLDispatcher::Dispatch(const nglString& rURL)
+{
+  for (int i = 0; i < mpHandlers.size(); i++)
+  {
+     nuiHTTPHandler* pHandler = mpHandlers[i]->Handle(rURL);
+    if (pHandler)
+      return pHandler;
+  }
+
+  return NULL;
+}
+
+
 //class nuiHTTPHandler
 nuiHTTPHandler::nuiHTTPHandler(nuiTCPClient* pClient)
 : mpClient(pClient)

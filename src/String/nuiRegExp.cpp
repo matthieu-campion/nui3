@@ -1468,13 +1468,15 @@ nuiRegExp::nuiRegExp()
 
 nuiRegExp::nuiRegExp( const nglChar* exp, bool iCase )
   : rc( new regexp( exp, iCase ) ),
-  mpString(NULL)
+  mpString(NULL),
+  mExpression(exp)
 {
 }
 
 nuiRegExp::nuiRegExp( const nglString& exp, bool iCase )
   : rc( new regexp( exp.GetChars(), iCase ) ),
-  mpString(NULL)
+  mpString(NULL),
+  mExpression(exp)
 {
 }
 
@@ -1482,7 +1484,8 @@ nuiRegExp::nuiRegExp( const nuiRegExp &r )
   : rc( r.rc ),
   m_szError(r.m_szError),
   mString(r.mString),
-  mpString(mString.GetChars())
+  mpString(mString.GetChars()),
+  mExpression(r.GetExpression())
 {
   if ( rc )
     rc->count++;
@@ -1502,7 +1505,9 @@ const nuiRegExp & nuiRegExp::operator=( const nuiRegExp & r )
     mString = r.mString;
     mpString = mString.GetChars();
     m_szError = r.m_szError;
+    mExpression = r.GetExpression();
   }
+  
   return *this;
 }
 
@@ -1767,3 +1772,7 @@ void nuiRegExp::ClearErrorString() const
   m_szError.Wipe();
 }
 
+const nglString& nuiRegExp::GetExpression() const
+{
+  return mExpression;
+}
