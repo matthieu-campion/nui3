@@ -93,9 +93,11 @@ bool nuiStringTemplate::Parse(const nglString& rSource)
     
     if (c == '{' && cc == '{')
     {
-      nglString txt(rSource.Extract(start, current - start));
+      nglString txt(rSource.Extract(start, current - start - 1));
       AddNode(new nuiSTN_Text(txt));
       
+      start = i;
+
       // Skip blanks
       c = ' ';
       while (i < len && c == ' ')
@@ -104,7 +106,6 @@ bool nuiStringTemplate::Parse(const nglString& rSource)
       if (i == len)
         return false;
       
-      start = i;
       while (i < len && c != '}' )
       {
         current = i;
@@ -119,7 +120,9 @@ bool nuiStringTemplate::Parse(const nglString& rSource)
           nglString t(rSource.Extract(start, current - start));
           t.Trim();
           
-          AddNode(new nuiSTN_Attribute(txt));
+          AddNode(new nuiSTN_Attribute(t));
+          
+          start = i;
         }
         else
           return false;
@@ -132,5 +135,8 @@ bool nuiStringTemplate::Parse(const nglString& rSource)
     cc = c;
   }
   
+  nglString txt(rSource.Extract(start, len - start));
+  AddNode(new nuiSTN_Text(txt));
+
   return true;
 }
