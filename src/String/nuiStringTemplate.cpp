@@ -79,63 +79,143 @@ bool nuiStringTemplate::Generate(nuiObject* pDataSource, const OutputDelegate& r
   return true;
 }
 
+class nuiStringTemplate::ParseContext
+{
+public:
+  ParseContext(const nglString& rString)
+  : mString(rString), mPos(0), mNextPos(0), mLen(rString.GetLength())
+  {
+    
+  }
+  virtual ~ParseContext() {}
+
+  bool NextChar()
+  {
+    if (mNextPos >= mLen)
+      return false;
+    mPos = mNextPos;
+    mChar = mString.GetNextUChar(mNextPos);
+    
+    return true;
+  }
+  
+  bool SkipBlank()
+  {
+    while (IsValid() && mChar <= ' ')
+      NextChar();
+    
+    return IsValid();
+  }
+
+  bool ToNext(nglUChar c)
+  {
+    while (IsValid() && mChar != c)
+      NextChar();
+    
+    return IsValid();
+  }
+  
+
+  bool IsValid() const
+  {
+    return mPos < mLen;
+  }
+  
+  const nglString& mString;
+  int32 mPos;
+  int32 mNextPos;
+  const int32 mLen;
+  nglUChar mChar;
+};
+
 bool nuiStringTemplate::Parse(const nglString& rSource)
 {
-  int32 i = 0;
-  int32 len = rSource.GetLength();
-  int32 start = 0;
+  ParseContext context(rSource);
+  
+  if (!context.NextChar())
+    return false;
+  return Parse(context);
+}
+
+bool nuiStringTemplate::Parse(ParseContext& rContext)
+{
+  int32 start = rContext.mPos;
   nglUChar cc = 0;
 
-  while (i < len)
+  while (rContext.IsValid())
   {
-    int32 current = i;
-    nglUChar c = rSource.GetNextUChar(i);
+    int32 current = rContext.mPos;
+    nglUChar c = rContext.mChar;
     
     if (c == '{' && cc == '{')
     {
-      nglString txt(rSource.Extract(start, current - start - 1));
+      // Variable access:
+      nglString txt(rContext.mString.Extract(start, current - start - 1));
       AddNode(new nuiSTN_Text(txt));
       
-      start = i;
+      start = rContext.mPos;
 
       // Skip blanks
-      c = ' ';
-      while (i < len && c == ' ')
-        c = rSource.GetNextUChar(i);
-      
-      if (i == len)
+      if (!rContext.SkipBlank())
         return false;
       
-      while (i < len && c != '}' )
-      {
-        current = i;
-        c = rSource.GetNextUChar(i);
-      }
+      if (!rContext.ToNext('}'))
+        return false;
+      current = rContext.mPos - 1;
       
-      if (c == '}')
+      rContext.NextChar();
+      if (rContext.mChar == '}')
       {
-        c = rSource.GetNextUChar(i);
-        if (c == '}')
-        {
-          nglString t(rSource.Extract(start, current - start));
-          t.Trim();
-          
-          AddNode(new nuiSTN_Attribute(t));
-          
-          start = i;
-        }
+        nglString t(rContext.mString.Extract(start, current - start));
+        t.Trim();
+        
+        AddNode(new nuiSTN_Attribute(t));
+        
+        start = rContext.mPos;
+      }
         else
           return false;
+    }
+#if 0
+    else if (c == '%' && cc == '{')
+    {
+      // Code access:
+      nglString txt(rContext.mString.Extract(start, current - start - 1));
+      AddNode(new nuiSTN_Text(txt));
+      
+      start = rContext.mPos;
+      
+      // Skip blanks
+      if (!rContext.SkipBlank())
+        return false;
+      
+      nglString cmd;
+      if (!rContext.GetAlpha(cmd))
+        return false;
+
+      if (cmd == "if")
+      {
+        Check(ParseCondition(rContext));
+        Check(ParseText(rContext));
+        if (ParseElse(rContext))
+          Check(ParseText(rContext));
+        Check(ParseBlockEnd(rContext));
       }
       else
         return false;
-            
+    }
+#endif
+    else
+    {
+      if (!rContext.NextChar())
+        return false;
     }
         
     cc = c;
+
   }
   
-  nglString txt(rSource.Extract(start, len - start));
+  nglString txt(rContext.mString.Extract(start, rContext.mLen - start));
   AddNode(new nuiSTN_Text(txt));
 
   return true;
