@@ -85,9 +85,10 @@ class nuiStringTemplate::ParseContext
 {
 public:
   ParseContext(const nglString& rString)
-  : mString(rString), mPos(0), mNextPos(0), mLen(rString.GetLength())
+  : mString(rString), mPos(0), mNextPos(0), mLen(rString.GetLength()), mCmd(0)
   {
-    
+    if (!NextChar())
+      return false;
   }
   virtual ~ParseContext() {}
 
@@ -120,7 +121,7 @@ public:
 
   bool IsValid() const
   {
-    return mPos < mLen;
+    return mNextPos < mLen;
   }
   
   const nglString& mString;
@@ -134,9 +135,6 @@ public:
 bool nuiStringTemplate::Parse(const nglString& rSource)
 {
   ParseContext context(rSource);
-  
-  if (!context.NextChar())
-    return false;
   return Parse(context);
 }
 
@@ -150,9 +148,8 @@ bool nuiStringTemplate::ParseTextUntilCommand(ParseContext& rContext)
     int32 current = rContext.mPos;
     nglUChar c = rContext.mChar;
     
-    if (c == '{' && cc == '{' || c == '%')
+    if (cc == '{' && (c == '{' || c == '%'))
     {
-      // Variable access:
       nglString txt(rContext.mString.Extract(start, current - start - 1));
       AddNode(new nuiSTN_Text(txt));
       
@@ -186,13 +183,15 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
     int32 current = rContext.mPos;
     nglUChar c = rContext.mChar;
     
-    if (!ParseTextUntilCommand(rContext))
+    ParseTextUntilCommand(rContext);
+    
+    if (!rContext.IsValid())
       return false;
     
     if (rContext.mCmd == '{')
     {
       // Variable access:
-      start = rContext.mPos;
+      start = rContext.mNextPos;
 
       // Skip blanks
       if (!rContext.SkipBlank())
@@ -200,9 +199,11 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
       
       if (!rContext.ToNext('}'))
         return false;
-      current = rContext.mPos - 1;
+      current = rContext.mPos;
       
-      rContext.NextChar();
+      if (!rContext.NextChar())
+        return false;
+      
       if (rContext.mChar == '}')
       {
         nglString t(rContext.mString.Extract(start, current - start));
@@ -212,8 +213,11 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
         
         start = rContext.mPos;
       }
-        else
-          return false;
+      else
+        return false;
+
+      if (!rContext.NextChar())
+        return false;
     }
 #if 0
     else if (rContext.mCmd == '%')
@@ -254,8 +258,6 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
 
   }
   
-  nglString txt(rContext.mString.Extract(start, rContext.mLen - start));
-  AddNode(new nuiSTN_Text(txt));
 
   return true;
 }
