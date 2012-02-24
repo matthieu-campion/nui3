@@ -34,4 +34,5 @@ private:
   std::vector<nuiStringTemplateNode*> mpNodes;
   class ParseContext;
   bool Parse(ParseContext& rContext);
+  bool ParseTextUntilCommand(ParseContext& rContext);
 };
