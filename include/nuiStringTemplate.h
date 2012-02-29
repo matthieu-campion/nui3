@@ -17,22 +17,35 @@ public:
   virtual bool Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate) = 0;
 };
 
-class nuiStringTemplate : public nuiStringTemplateNode
+class nuiStringTemplateContainer : public nuiStringTemplateNode
 {
 public:
-  nuiStringTemplate(const nglString& rTemplateSource = nglString::Null);
-  virtual ~nuiStringTemplate();
+  nuiStringTemplateContainer();
+  virtual ~nuiStringTemplateContainer();
 
   virtual bool Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate);
 
   void AddNode(nuiStringTemplateNode* pNode);
   void Clear();
   
+private:
+  std::vector<nuiStringTemplateNode*> mpNodes;
+};
+
+class nuiStringTemplate : public nuiStringTemplateContainer
+{
+public:
+  nuiStringTemplate(const nglString& rTemplateSource = nglString::Null);
+  virtual ~nuiStringTemplate();
+  
   bool Parse(const nglString& rSource);
   
 private:
-  std::vector<nuiStringTemplateNode*> mpNodes;
   class ParseContext;
   bool Parse(ParseContext& rContext);
+  bool ParseFor(ParseContext& rContext);
+  bool ParseClose(ParseContext& rContext);
+  bool ParseEnd(ParseContext& rContext);
   bool ParseTextUntilCommand(ParseContext& rContext);
 };
+

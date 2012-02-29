@@ -49,30 +49,73 @@ private:
   nglString mAttribute;
 };
 
-nuiStringTemplate::nuiStringTemplate(const nglString& rTemplateSource)
+class nuiSTN_For : public nuiStringTemplateContainer
 {
-  if (!rTemplateSource.IsNull())
-    Parse(rTemplateSource);
+public:
+  nuiSTN_For(const nglString& rVariable, const nglString& rContainer)
+  : mVariable(rVariable), mContainer(rContainer)
+  {
+    NGL_OUT("nuiSTN_For: '%s' in '%s'\n", mVariable.GetChars(), mContainer.GetChars());
+  }
+  
+  virtual bool Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate)
+  {
+    nuiAttribBase container(pDataSource->GetAttribute(mContainer));
+    nuiAttribBase variable(pDataSource->GetAttribute(mVariable));
+    nuiAttribute<nglString>* pAttribute = NULL;
+    nglString val;
+    if (!variable.IsValid())
+    {
+      pAttribute = new nuiAttribute<nglString>(mVariable, nuiUnitNone, val);
+      pDataSource->AddInstanceAttribute(mVariable, pAttribute);
+      variable = pDataSource->GetAttribute(mVariable);
+    }
+
+    if (container.IsValid())
+    {
+      int32 count = container.GetIndexRange(0);
+      for (int32 i = 0; i < count; i++)
+      {
+        nglString val;
+        container.ToString(i, val);
+        variable.FromString(val);
+        
+        bool res = nuiStringTemplateContainer::Generate(pDataSource, rOutputDelegate);
+      }
+    }
+    return true;
+  }
+  
+private:
+  nglString mVariable;
+  nglString mContainer;
+  std::vector<nuiStringTemplateNode*> mpNodes;
+  
+};
+
+///////////////////////////
+nuiStringTemplateContainer::nuiStringTemplateContainer()
+{
 }
 
-nuiStringTemplate::~nuiStringTemplate()
+nuiStringTemplateContainer::~nuiStringTemplateContainer()
 {
   Clear();
 }
 
-void nuiStringTemplate::AddNode(nuiStringTemplateNode* pNode)
+void nuiStringTemplateContainer::AddNode(nuiStringTemplateNode* pNode)
 {
   mpNodes.push_back(pNode);
 }
 
-void nuiStringTemplate::Clear()
+void nuiStringTemplateContainer::Clear()
 {
   for (int32 i = 0; i < mpNodes.size(); i++)
     delete mpNodes[i];
   mpNodes.clear();
 }
 
-bool nuiStringTemplate::Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate)
+bool nuiStringTemplateContainer::Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate)
 {
   for (int32 i = 0; i < mpNodes.size(); i++)
     if (!mpNodes[i]->Generate(pDataSource, rOutputDelegate))
@@ -81,12 +124,29 @@ bool nuiStringTemplate::Generate(nuiObject* pDataSource, const OutputDelegate& r
   return true;
 }
 
+
+
+
+///////////////////////////
+
+nuiStringTemplate::nuiStringTemplate(const nglString& rTemplateSource)
+{
+  if (!rTemplateSource.IsNull())
+    Parse(rTemplateSource);
+}
+
+nuiStringTemplate::~nuiStringTemplate()
+{
+}
+
 class nuiStringTemplate::ParseContext
 {
 public:
-  ParseContext(const nglString& rString)
-  : mString(rString), mPos(0), mNextPos(0), mLen(rString.GetLength()), mCmd(0)
+  ParseContext(const nglString& rString, nuiStringTemplateContainer* pContainer)
+  : mString(rString), mPos(0), mNextPos(0), mLen(rString.GetLength()), mTag(0)
   {
+    PushContainer(pContainer);
+    
     if (!NextChar())
       return false;
   }
@@ -118,23 +178,58 @@ public:
     return IsValid();
   }
   
+  bool GetAlpha(nglString& rString)
+  {
+    rString.Wipe();
+    while (nglIsAlpha(mChar) && IsValid())
+    {
+      rString.Add(mChar);
+      if (!NextChar())
+        return false;
+    }
+    
+    return true;
+  }
 
   bool IsValid() const
   {
     return mNextPos < mLen;
   }
+
+  void PushContainer(nuiStringTemplateContainer* pContainer)
+  {
+    mContainers.push_back(pContainer);
+  }
   
+  nuiStringTemplateContainer* GetContainer() const
+  {
+    return mContainers.back();
+  }
+
+  void PopContainer()
+  {
+    mContainers.pop_back();
+  }
+  
+  void AddNode(nuiStringTemplateNode* pNode)
+  {
+    GetContainer()->AddNode(pNode);
+  }
+  
+
   const nglString& mString;
   int32 mPos;
   int32 mNextPos;
   const int32 mLen;
   nglUChar mChar;
-  nglUChar mCmd;
+  nglUChar mTag;
+  
+  std::list<nuiStringTemplateContainer*> mContainers;
 };
 
 bool nuiStringTemplate::Parse(const nglString& rSource)
 {
-  ParseContext context(rSource);
+  ParseContext context(rSource, this);
   return Parse(context);
 }
 
@@ -151,9 +246,12 @@ bool nuiStringTemplate::ParseTextUntilCommand(ParseContext& rContext)
     if (cc == '{' && (c == '{' || c == '%'))
     {
       nglString txt(rContext.mString.Extract(start, current - start - 1));
-      AddNode(new nuiSTN_Text(txt));
+      rContext.AddNode(new nuiSTN_Text(txt));
       
-      rContext.mCmd = c;
+      rContext.mTag = c;
+
+      if (!rContext.NextChar())
+        return false;
       
       return true;
     }
@@ -168,7 +266,7 @@ bool nuiStringTemplate::ParseTextUntilCommand(ParseContext& rContext)
   }
   
   nglString txt(rContext.mString.Extract(start, rContext.mLen - start));
-  AddNode(new nuiSTN_Text(txt));
+  rContext.AddNode(new nuiSTN_Text(txt));
   
   return true;
 }
@@ -188,10 +286,10 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
     if (!rContext.IsValid())
       return false;
     
-    if (rContext.mCmd == '{')
+    if (rContext.mTag == '{')
     {
       // Variable access:
-      start = rContext.mNextPos;
+      start = rContext.mPos;
 
       // Skip blanks
       if (!rContext.SkipBlank())
@@ -209,7 +307,7 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
         nglString t(rContext.mString.Extract(start, current - start));
         t.Trim();
         
-        AddNode(new nuiSTN_Attribute(t));
+        rContext.AddNode(new nuiSTN_Attribute(t));
         
         start = rContext.mPos;
       }
@@ -219,15 +317,10 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
       if (!rContext.NextChar())
         return false;
     }
-#if 0
-    else if (rContext.mCmd == '%')
+    else if (rContext.mTag == '%')
     {
-      // Code access:
-      nglString txt(rContext.mString.Extract(start, current - start - 1));
-      AddNode(new nuiSTN_Text(txt));
-      
-      start = rContext.mPos;
-      
+      // Parse Keyword
+
       // Skip blanks
       if (!rContext.SkipBlank())
         return false;
@@ -236,18 +329,19 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
       if (!rContext.GetAlpha(cmd))
         return false;
 
-      if (cmd == "if")
+      if (cmd == "for")
       {
-        Check(ParseCondition(rContext));
-        Check(ParseText(rContext));
-        if (ParseElse(rContext))
-          Check(ParseText(rContext));
-        Check(ParseBlockEnd(rContext));
+        if (!ParseFor(rContext))
+          return false;
+      }
+      else if (cmd == "end")
+      {
+        if (!ParseEnd(rContext))
+          return false;
       }
       else
         return false;
     }
-#endif
     else
     {
       if (!rContext.NextChar())
@@ -260,4 +354,64 @@ bool nuiStringTemplate::Parse(ParseContext& rContext)
   
 
   return true;
+}
+
+bool nuiStringTemplate::ParseFor(ParseContext& rContext)
+{
+  if (!rContext.SkipBlank())
+    return false;
+  
+  nglString var;
+  if (!rContext.GetAlpha(var))
+    return false;
+  
+  if (!rContext.SkipBlank())
+    return false;
+  
+  nglString in;
+  if (!rContext.GetAlpha(in))
+    return false;
+  if (in != "in")
+    return false;
+  
+  if (!rContext.SkipBlank())
+    return false;
+  
+  nglString container;
+  if (!rContext.GetAlpha(container))
+    return false;
+
+  nuiSTN_For* pFor = new nuiSTN_For(var, container);
+  rContext.AddNode(pFor);
+  rContext.PushContainer(pFor);
+  
+  return ParseClose(rContext);
+}
+
+bool nuiStringTemplate::ParseClose(ParseContext& rContext)
+{  
+  if (!rContext.SkipBlank())
+    return false;
+  
+  if (!rContext.ToNext('%'))
+    return false;
+  
+  if (!rContext.NextChar())
+    return false;
+  
+  if (rContext.mChar != '}')
+    return false;
+  
+  if (!rContext.NextChar())
+    return false;
+  
+  return true;
+}
+
+
+bool nuiStringTemplate::ParseEnd(ParseContext& rContext)
+{
+  rContext.PopContainer();
+
+  return ParseClose(rContext);
 }

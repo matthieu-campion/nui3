@@ -24,6 +24,14 @@
 #include "nuiComboAttributeEditor.h"
 #endif
 
+uint32 nuiFakeGetRange1(uint32 dimension)
+{
+  if (dimension == 0)
+    return 1;
+  return 0;
+}
+
+
 uint64 nuiGetNewAttributeUniqueId()
 {
   static uint64 IdCounter = 0;
@@ -58,7 +66,8 @@ nuiAttributeBase::nuiAttributeBase(const nglString& rName, nuiAttributeType type
   mOrder(0),
   mDimension(0),
   mKind(kind),
-  mOffset(pOffset)
+  mOffset(pOffset),
+  mRangeGetter(nuiFakeGetRange1)
 {
 }
 
@@ -151,7 +160,7 @@ uint32 nuiAttributeBase::GetIndexRange(void* pTarget, uint32 Dimension) const
 {
   NGL_ASSERT(GetDimension() > Dimension && mRangeGetter);
   ArrayRangeDelegate getter(mRangeGetter);
-  if (!IsInstanceAttribute())
+  if (!IsInstanceAttribute() && (getter != (ArrayRangeDelegate)nuiFakeGetRange1))
     getter.SetThis(pTarget);
   return getter(Dimension);
 }
