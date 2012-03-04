@@ -282,7 +282,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 	if(res == -1)
   {
 		int err = errno;
-		NGL_LOG("socket", NGL_LOG_ERROR, "Poller_kqueue::waitForEvents : kevent : %s (errno %d)\n", strerror(err), err);
+		NGL_LOG("socket", NGL_LOG_ERROR, "kqueue::waitForEvents : kevent : %s (errno %d)\n", strerror(err), err);
 		return err;
 	}
 
@@ -291,6 +291,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   
   for (int i = 0; i < res; i++)
   {
+    nuiSocket* pSocket = (nuiSocket*)mEvents[i].udata;
     // dispatch events:
     switch (mEvents[i].filter)
     {
@@ -314,4 +315,76 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 }
   
 #endif //NGL_KQUEUE
+
+
+#ifdef NGL_EPOLL
+nuiSocketPool::nuiSocketPool()
+{
+  mEPoll = epoll_create(100);
+}
+
+nuiSocketPool::~nuiSocketPool()
+{
+  ///
+}
+
+void nuiSocketPool::Add(nuiSocket* pSocket)
+{
+  struct epoll_event ev;
+  ev.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
+  ev.data.ptr = pSocket;
+  ev.data.fd = pSocket->GetSocket();
+  ev.data.u32 = 0;
+  ev.data.u64 = 0;
+  
+  epoll_ctl(mEPoll, EPOLL_CTL_ADD, pSocket->GetSocket(), &ev);
+  mEvents.resize(mEvents.size() + 2);
+}
+
+void nuiSocketPool::Del(nuiSocket* pSocket)
+{
+  epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
+  mEvents.resize(mEvents.size() - 2);
+}
+
+int nuiSocketPool::DispatchEvents(int timeout_millisec)
+{
+  int res = epoll_wait(mEPoll, &mEvents[0], mEvents.size(), timeout_millisec);
+  
+	if(res == -1)
+  {
+		int err = errno;
+		NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents : %s (errno %d)\n", strerror(err), err);
+		return err;
+	}
+  
+	if (res == 0)
+		return EWOULDBLOCK;
+  
+  for (int i = 0; i < res; i++)
+  {
+    nuiSocket* pSocket = (nuiSocket*)mEvents[i].data.ptr;
+    // dispatch events:
+    switch (mEvents[i].events)
+    {
+      case EPOLLIN:
+        pSocket->OnCanRead();
+        break;
+        
+      case EPOLLOUT:
+        pSocket->OnCanWrite();
+        break;
+        
+      case EPOLLRDHUP:
+      default:
+        pSocket->OnReadClosed();
+        pSocket->OnWriteClosed();
+        break;
+    };
+  }
+  
+	return 0;
+}
+
+#endif //NGL_EPOLL
 

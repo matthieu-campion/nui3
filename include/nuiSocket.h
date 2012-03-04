@@ -87,6 +87,8 @@ private:
 #endif
   
 #ifdef NGL_EPOLL
+  int mEPoll;
+  std::vector<struct epoll_event> mEvents;
 #endif
   
   
