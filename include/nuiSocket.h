@@ -9,11 +9,21 @@
 
 #include "nui.h"
 
+#if (defined _DARWIN_) || (defined _FREEBSD_)
+#include <sys/event.h>
+#define NGL_KQUEUE
+#elif (defined _LINUX_) || (defined _ANDROID_)
+#include <sys/epoll.h>
+#define NGL_EPOLL
+#endif
+
 class nuiNetworkHost;
 
 class nuiSocket
 {
 public:
+  typedef nuiFastDelegate1<nuiSocket&> EventDelegate;
+  
 #ifdef WIN32
   typedef SOCKET SocketType;
 #else
@@ -29,6 +39,19 @@ public:
 
   bool IsValid() const;
   
+  void SetNonBlocking(bool set);
+  bool IsNonBlocking() const;
+  
+  void SetCanReadDelegate(const EventDelegate& rDelegate);
+  void SetCanWriteDelegate(const EventDelegate& rDelegate);
+  void SetReadClosedDelegate(const EventDelegate& rDelegate);
+  void SetWriteClosedDelegate(const EventDelegate& rDelegate);
+  
+  virtual void OnCanRead();
+  virtual void OnCanWrite();
+  virtual void OnReadClosed();
+  virtual void OnWriteClosed();
+
 protected:
   nuiSocket(SocketType Socket = -1);
   bool Init(int domain, int type, int protocol);
@@ -37,5 +60,34 @@ protected:
   void DumpError(int err) const;
   
   SocketType mSocket;
+  EventDelegate mReadDelegate;
+  EventDelegate mWriteDelegate;
+  EventDelegate mReadCloseDelegate;
+  EventDelegate mWriteCloseDelegate;
+  bool mNonBlocking;
 };
 
+class nuiSocketPool
+{
+public:
+  nuiSocketPool();
+  virtual ~nuiSocketPool();
+  
+  void Add(nuiSocket* pSocket);
+  void Del(nuiSocket* pSocket);
+  
+  int DispatchEvents(int timeout_millisec);
+  
+private:
+#ifdef NGL_KQUEUE
+  // Kernel queue implementation (FreeBSD, Darwin...)
+  std::vector<struct kevent> mChangeset;
+  std::vector<struct kevent> mEvents;
+  int mQueue;
+#endif
+  
+#ifdef NGL_EPOLL
+#endif
+  
+  
+};

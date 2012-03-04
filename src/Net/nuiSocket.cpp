@@ -26,6 +26,7 @@ nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
   int n = 0;
   setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
 #endif
+  mNonBlocking = false;
 }
 
 bool nuiSocket::Init(int domain, int type, int protocol)
@@ -90,6 +91,82 @@ struct addrinfo* nuiSocket::GetAddrInfo(const nuiNetworkHost& rHost) const
   return rHost.GetAddrInfo();
 }
 
+void nuiSocket::SetNonBlocking(bool set)
+{
+  if (mNonBlocking == set)
+    return;
+  
+  int flags;
+  mNonBlocking = set;
+  
+  /* If they have O_NONBLOCK, use the Posix way to do it */
+#if defined(O_NONBLOCK)
+  /* Fixme: O_NONBLOCK is defined but broken on SunOS 4.1.x and AIX 3.2.5. */
+  if (-1 == (flags = fcntl(mSocket, F_GETFL, 0)))
+    flags = 0;
+  if (set)
+    flags |= O_NONBLOCK;
+  else
+    flags &= ~O_NONBLOCK;
+  return fcntl(mSocket, F_SETFL, flags);
+#else
+  /* Otherwise, use the old way of doing it */
+  flags = set ? 1 : 0;
+  return ioctl(mSocket, FIOBIO, &flags);
+#endif
+}
+
+bool nuiSocket::IsNonBlocking() const
+{
+  return mNonBlocking;
+}
+
+void nuiSocket::SetCanReadDelegate(const EventDelegate& rDelegate)
+{
+  mReadDelegate = rDelegate;
+}
+
+void nuiSocket::SetCanWriteDelegate(const EventDelegate& rDelegate)
+{
+  mWriteDelegate = rDelegate;
+}
+
+void nuiSocket::SetReadClosedDelegate(const EventDelegate& rDelegate)
+{
+  mReadCloseDelegate = rDelegate;
+}
+
+void nuiSocket::SetWriteClosedDelegate(const EventDelegate& rDelegate)
+{
+  mWriteCloseDelegate = rDelegate;
+}
+
+void nuiSocket::OnCanRead()
+{
+  if (mReadDelegate)
+    mReadDelegate(*this);
+}
+
+void nuiSocket::OnCanWrite()
+{
+  if (mWriteDelegate)
+    mWriteDelegate(*this);
+}
+
+void nuiSocket::OnReadClosed()
+{
+  if (mReadCloseDelegate)
+    mReadCloseDelegate(*this);
+}
+
+void nuiSocket::OnWriteClosed()
+{
+  if (mWriteCloseDelegate)
+    mWriteCloseDelegate(*this);
+}
+
+
+
 #ifdef WIN32
 #define W(X) WSA##X
 #else
@@ -131,4 +208,110 @@ void nuiSocket::DumpError(int err) const
 
   NGL_OUT(_T("Socket Error: %s\n"), error.GetChars());
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+//class nuiSocketPool
+#ifdef NGL_KQUEUE
+nuiSocketPool::nuiSocketPool()
+{
+  mQueue = kqueue();
+}
+
+nuiSocketPool::~nuiSocketPool()
+{
+  ///
+}
+
+void nuiSocketPool::Add(nuiSocket* pSocket)
+{
+  struct kevent ev;
+  memset(&ev, 0, sizeof(struct kevent));
+  ev.ident = pSocket->GetSocket();
+  ev.filter = EVFILT_READ;
+  ev.flags = EV_ADD | EV_ENABLE;
+  ev.udata = pSocket;
+  
+  mChangeset.push_back(ev);
+  ev.filter = EVFILT_WRITE;
+  mChangeset.push_back(ev);
+
+  mEvents.resize(mEvents.size() + 2);
+}
+
+void nuiSocketPool::Del(nuiSocket* pSocket)
+{
+  struct kevent ev;
+  memset(&ev, 0, sizeof(struct kevent));
+  ev.ident = pSocket->GetSocket();
+  ev.filter = EVFILT_READ;
+  ev.flags = EV_DELETE;
+  ev.udata = pSocket;
+  
+  mChangeset.push_back(ev);
+  ev.filter = EVFILT_WRITE;
+  mChangeset.push_back(ev);
+  
+  mEvents.resize(mEvents.size() - 2);
+}
+
+int nuiSocketPool::DispatchEvents(int timeout_millisec)
+{
+	struct timespec to;
+  
+	if (timeout_millisec >= 0)
+  {
+		to.tv_sec = timeout_millisec / 1000;
+		to.tv_nsec = (timeout_millisec % 1000) * 1000000;	// nanosec
+	}
+  
+	int res = kevent(mQueue, &mChangeset[0], mChangeset.size(), &mEvents[0], mEvents.size(), (timeout_millisec >= 0) ? &to : (struct timespec *) 0);
+  
+  mChangeset.clear();
+	if(res == -1)
+  {
+		int err = errno;
+		NGL_LOG("socket", NGL_LOG_ERROR, "Poller_kqueue::waitForEvents : kevent : %s (errno %d)\n", strerror(err), err);
+		return err;
+	}
+
+	if (res == 0)
+		return EWOULDBLOCK;
+  
+  for (int i = 0; i < res; i++)
+  {
+    // dispatch events:
+    switch (mEvents[i].filter)
+    {
+      case EVFILT_READ:
+        if (mEvents[i].flags == EV_EOF)
+          pSocket->OnReadClosed();
+        else
+          pSocket->OnCanRead();
+        break;
+      
+      case EVFILT_WRITE:
+        if (mEvents[i].flags == EV_EOF)
+          pSocket->OnWriteClosed();
+        else
+          pSocket->OnCanWrite();
+        break;
+    };
+  }
+  
+	return 0;
+}
+  
+#endif //NGL_KQUEUE
 
