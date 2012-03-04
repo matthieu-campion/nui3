@@ -108,11 +108,11 @@ void nuiSocket::SetNonBlocking(bool set)
     flags |= O_NONBLOCK;
   else
     flags &= ~O_NONBLOCK;
-  return fcntl(mSocket, F_SETFL, flags);
+  fcntl(mSocket, F_SETFL, flags);
 #else
   /* Otherwise, use the old way of doing it */
   flags = set ? 1 : 0;
-  return ioctl(mSocket, FIOBIO, &flags);
+  ioctl(mSocket, FIOBIO, &flags);
 #endif
 }
 

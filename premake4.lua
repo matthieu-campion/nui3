@@ -109,6 +109,7 @@ solution "minui3"
             "src/String/nglStringConv_iconv.cpp",
             "src/String/nglUTFStringConv.cpp",
             "src/String/nuiUnicode.cpp",
+            "src/String/nuiStringTemplate.cpp",
 
             "src/Json/*.cpp",
 

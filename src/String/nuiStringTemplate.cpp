@@ -147,8 +147,7 @@ public:
   {
     PushContainer(pContainer);
     
-    if (!NextChar())
-      return false;
+    NextChar();
   }
   virtual ~ParseContext() {}
 

@@ -50,14 +50,15 @@ private:
 static void *start_thread(void *arg)
 {
   nglThread *thread = (nglThread *)arg;
+  nglThread::ID id = thread->GetID();
 
   // register the thread by the nglThreadChecker
-  nglThreadChecker::RegisterThread(thread->GetID(), thread->GetName());
+  nglThreadChecker::RegisterThread(id, thread->GetName());
 
   nglThreadPrivate::Start(thread);
 
   // warn the nglThreadChecker that the thread stoped
-  nglThreadChecker::UnregisterThread(thread->GetID());
+  nglThreadChecker::UnregisterThread(id);
 
   pthread_exit(0);
   nglThreadPrivate::exit(thread);
