@@ -234,13 +234,13 @@ nuiSocketPool::~nuiSocketPool()
   ///
 }
 
-void nuiSocketPool::Add(nuiSocket* pSocket)
+void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode ReadMode, TriggerMode WriteMode)
 {
   struct kevent ev;
   memset(&ev, 0, sizeof(struct kevent));
   ev.ident = pSocket->GetSocket();
   ev.filter = EVFILT_READ;
-  ev.flags = EV_ADD | EV_ENABLE;
+  ev.flags = EV_ADD | EV_ENABLE | EV_CLEAR;
   ev.udata = pSocket;
   
   mChangeset.push_back(ev);

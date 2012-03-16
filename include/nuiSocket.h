@@ -9,7 +9,7 @@
 
 #include "nui.h"
 
-#if (defined _DARWIN_) || (defined _FREEBSD_)
+#if (defined __APPLE__) || (defined _DARWIN_) || (defined _FREEBSD_)
 #include <sys/event.h>
 #define NGL_KQUEUE
 #elif (defined _LINUX_) || (defined _ANDROID_)
@@ -70,10 +70,16 @@ protected:
 class nuiSocketPool
 {
 public:
+  enum TriggerMode
+  {
+    eContinuous,
+    eStateChange
+  };
+  
   nuiSocketPool();
   virtual ~nuiSocketPool();
   
-  void Add(nuiSocket* pSocket);
+  void Add(nuiSocket* pSocket, TriggerMode ReadMode, TriggerMode WriteMode);
   void Del(nuiSocket* pSocket);
   
   int DispatchEvents(int timeout_millisec);
