@@ -328,7 +328,7 @@ nuiSocketPool::~nuiSocketPool()
   ///
 }
 
-void nuiSocketPool::Add(nuiSocket* pSocket)
+void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode ReadMode, TriggerMode WriteMode)
 {
   struct epoll_event ev;
   ev.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
