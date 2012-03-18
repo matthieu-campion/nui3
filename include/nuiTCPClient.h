@@ -25,6 +25,7 @@ public:
   int Send(const nglString& rString);
   int ReceiveAvailable(std::vector<uint8>& rData); ///< Fill the rData vector with the data that is already available to read on the socket.
   int Receive(std::vector<uint8>& rData); ///< Fill the buffer up to its current size.
+  int Receive(uint8* pData, int32 len); ///< Fill the buffer up to its current size.
   
   bool IsConnected() const;
   int32 GetAvailable() const;

@@ -133,21 +133,21 @@ int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
   return res != 0;
 }
 
-int nuiTCPClient::Receive(std::vector<uint8>& rData)
+int nuiTCPClient::Receive(uint8* pData, int32 len)
 {
   if (!IsConnected())
     return 0;
-
+  
 #ifdef WIN32
-  int res = recv(mSocket, (char*)&rData[0], rData.size(), MSG_WAITALL);
+  int res = recv(mSocket, (char*)pData, len, MSG_WAITALL);
   printf("%x recv returned %d\n", this, res);
 #else
   //int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
-  int res = read(mSocket, &rData[0], rData.size());
+  int res = read(mSocket, pData, len);
   //printf("%p read returned %d\n", this, res);
 #endif
-
-
+  
+  
   if (res == 0)
   {
     mConnected = false;
@@ -157,9 +157,24 @@ int nuiTCPClient::Receive(std::vector<uint8>& rData)
     // Error
     return res;
   }
+  
+  return res;
+}
+
+int nuiTCPClient::Receive(std::vector<uint8>& rData)
+{
+  if (!IsConnected())
+    return 0;
+
+  int res = Receive(&rData[0], rData.size());
+
+  if (res < 0)
+  {
+    // Error
+    return res;
+  }
 
   rData.resize(res);
-
   return res;
 }
 
