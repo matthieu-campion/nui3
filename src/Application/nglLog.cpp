@@ -303,12 +303,17 @@ nglLog::Domain* nglLog::LookupDomain (const nglChar* pName)
 
 void nglLog::Output (const nglString& rText) const
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (mUseConsole)
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     NGL_OUT(rText);
+  printf("Check %s %d\n", __FILE__, __LINE__);
   }
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   OutputList::const_iterator out;
   for (out = mOutputList.begin(); out != mOutputList.end(); out++)
     (*out)->WriteText (rText);
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
