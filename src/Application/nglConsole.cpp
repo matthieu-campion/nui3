@@ -65,7 +65,7 @@ void nglConsole::SetHistory (uint LineMax, uint CharMax)
           ((CharMax > 0) && (mCharCnt > CharMax))))
   {
     list<nglString*>::iterator tail = mHistory.end();
-    tail--; // mHistory.end() return an iterator just past the last element 
+    tail--; // mHistory.end() return an iterator just past the last element
     if (*tail)
     {
       mCharCnt -= (*tail)->GetLength();
@@ -103,7 +103,7 @@ void nglConsole::AddToHistory (const nglString& rLine)
           ((mCharMax > 0) && (new_charcnt > mCharMax))))
   {
     list<nglString*>::iterator tail = mHistory.end();
-    tail--; // mHistory.end() return an iterator just past the last element 
+    tail--; // mHistory.end() return an iterator just past the last element
     if (*tail)
     {
       new_charcnt -= (*tail)->GetLength();
@@ -203,7 +203,7 @@ list<nglString>& nglConsole::Completion (nglString& rLine, uint Start, uint End,
       {
         /* End < 2 : the word to complete is '!' (display all history)
          * Else : match with rLine[1..End-1]
-         */ 
+         */
         if ( (End < 2) ||
              (!rLine.Compare (**hline, 1, End - 1, mHistoryCase)) )
         {
@@ -232,39 +232,55 @@ void nglConsole::Setup()
 
 void nglConsole::Output (const nglChar* pFormat, ...)
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   nglCriticalSectionGuard guard(mCS);
   va_list args;
-  
+
+  printf("Check %s %d\n", __FILE__, __LINE__);
   va_start (args, pFormat);
   Outputv (pFormat, args);
   va_end (args);
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (this)   //#HACK This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     nglCriticalSectionGuard guard(mCS);
+  printf("Check %s %d\n", __FILE__, __LINE__);
     mOutputBuffer.Formatv(pFormat, Args);
+  printf("Check %s %d\n", __FILE__, __LINE__);
     OnOutput(mOutputBuffer);
+  printf("Check %s %d\n", __FILE__, __LINE__);
   }
   else
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     nglString out;
+  printf("Check %s %d\n", __FILE__, __LINE__);
     out.Formatv(pFormat, Args);
 #ifdef _WIN32_
     OutputDebugString(out.GetChars());
 #elif !defined _ANDROID_
+  printf("Check %s %d\n", __FILE__, __LINE__);
     printf(_T("%s\n"), out.GetChars());
 #else
     LOGI("%s", out.GetChars());
 #endif
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 void nglConsole::Output (const nglString& rText)
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   nglCriticalSectionGuard guard(mCS);
+  printf("Check %s %d\n", __FILE__, __LINE__);
   OnOutput (rText);
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
