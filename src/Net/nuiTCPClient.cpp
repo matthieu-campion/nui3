@@ -140,9 +140,8 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
   
 #ifdef WIN32
   int res = recv(mSocket, (char*)pData, len, MSG_WAITALL);
-  printf("%x recv returned %d\n", this, res);
 #else
-  //int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
+  //int res = recv(mSocket, (char*)pData, len, MSG_WAITALL);
   int res = read(mSocket, pData, len);
   //printf("%p read returned %d\n", this, res);
 #endif
@@ -171,6 +170,7 @@ int nuiTCPClient::Receive(std::vector<uint8>& rData)
   if (res < 0)
   {
     // Error
+    rData.clear();
     return res;
   }
 
