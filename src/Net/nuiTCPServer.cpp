@@ -53,6 +53,7 @@ bool nuiTCPServer::Bind(const nuiNetworkHost& rHost)
   int res = setsockopt(mSocket, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
   if (res)
   {
+    printf("setsockopt error %d\n", errno);
     DumpError(errno);
     return false;
   }

@@ -240,21 +240,30 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
 
 void nglLog::Dump (uint Level) const
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mLock.LockRead();
+  printf("Check %s %d\n", __FILE__, __LINE__);
   DomainList::const_iterator dom = mDomainList.begin();
   DomainList::const_iterator end = mDomainList.end();
+  printf("Check %s %d\n", __FILE__, __LINE__);
 
   nglString text = _T("# Log domains usage statistics :\n");
   nglString format;
+  printf("Check %s %d\n", __FILE__, __LINE__);
   Output(text);
+  printf("Check %s %d\n", __FILE__, __LINE__);
 
   for (; dom != end; dom++)
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     format.Format(_T("#   %s %%d\n"), mDomainFormat.GetChars());
     text.Format(format.GetChars(), (*dom).Name.GetChars(), (*dom).Count);
     Output(text);
+  printf("Check %s %d\n", __FILE__, __LINE__);
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mLock.UnlockRead();
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 
