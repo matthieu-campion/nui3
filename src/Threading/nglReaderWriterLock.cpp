@@ -92,7 +92,7 @@ void nglReaderWriterLock::LockWrite()
 
     printf("Check %s %d\n", __FILE__, __LINE__);
     printf ("Writer: %d / Current: %d\n", mWriter, nglThread::GetCurThreadID());
-    if (mWriter != nglThread::GetCurThreadID())
+    if (mWriter && mWriter != nglThread::GetCurThreadID())
       mWaitForWrite.Wait();
 
     printf("Check %s %d\n", __FILE__, __LINE__);
