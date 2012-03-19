@@ -298,31 +298,42 @@ void nglLog::Dump (uint Level) const
 
 nglLog::Domain* nglLog::LookupDomain (const nglChar* pName)
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   // Sanity check
   if (!pName)
     return NULL;
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mLock.LockRead();
   // Search in domain list
   DomainList::iterator dom = mDomainList.begin();
   DomainList::iterator end = mDomainList.end();
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   for (; dom != end; dom++)
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     if (dom->Name == pName)
     {
+  printf("Check %s %d\n", __FILE__, __LINE__);
       Domain* pDom = &(*dom);
       mLock.UnlockRead();
+  printf("Check %s %d\n", __FILE__, __LINE__);
       return pDom;
     }
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mLock.UnlockRead();
 
   // Not found ? Create it.
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mLock.LockWrite();
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mDomainList.push_back(Domain(pName, mDefaultLevel));
   Domain* pDom = &mDomainList.back();
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mLock.UnlockWrite();
+  printf("Check %s %d\n", __FILE__, __LINE__);
   return pDom;
 }
 
