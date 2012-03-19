@@ -70,10 +70,14 @@ void nglKernel::SetDebug (bool Debug)
 
 nglLog& nglKernel::GetLog()
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (!mpLog)
   {
+    printf("Check %s %d\n", __FILE__, __LINE__);
     mpLog = new nglLog();
+    printf("Check %s %d\n", __FILE__, __LINE__);
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
   return *mpLog;
 }
 

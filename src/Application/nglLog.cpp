@@ -23,11 +23,13 @@ const nglLog::StampFlags nglLog::DomainStamp = 1 << 2;
 
 nglLog::nglLog (bool UseConsole)
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mDefaultLevel = NGL_LOG_DEFAULT;
   mStampFlags = DomainStamp;
   mUseConsole = UseConsole;
   mDomainFormat = _T("%s: ");
   mDomainFormatLen = 0;
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 nglLog::~nglLog ()
@@ -142,41 +144,53 @@ void nglLog::SetLevel (const nglChar* pDomain, uint Level)
 
 void nglLog::Log (const nglChar* pDomain, uint Level, const nglChar* pText, ...)
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (pText == NULL)
     return;
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   va_list args;
   va_start (args, pText);
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   Logv (pDomain, Level, pText, args);
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   va_end (args);
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_list Args)
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (pText == NULL)
     return;
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   Domain* dom = LookupDomain(pDomain);
   if (!dom)
     return;
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (Level > dom->Level)
     return;
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   // Update log item counter
   ngl_atomic_inc(dom->Count);
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   // Get time stamp (if necessary)
   nglTimeInfo stamp;
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (mStampFlags & (TimeStamp | DateStamp))
   {
     nglTime now;
     now.GetLocalTime (stamp);
   }
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   // Compose mPrefix
   mPrefix.Wipe();
   if (mStampFlags & DateStamp)
@@ -184,11 +198,13 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
     mBody.Format(_T("%.2d/%.2d/%.2d "), stamp.Year - 100, stamp.Month, stamp.Day);
     mPrefix += mBody;
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (mStampFlags & TimeStamp)
   {
     mBody.Format(_T("%.2d:%.2d:%.2d "), stamp.Hours, stamp.Minutes, stamp.Seconds);
     mPrefix += mBody;
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (mStampFlags & DomainStamp)
   {
     const nglChar* dom_name = dom->Name.GetChars();
@@ -209,11 +225,14 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
     mPrefix += mBody;
   }
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   mOutputBuffer.Formatv(pText, Args);
   mOutputBuffer.TrimRight(_T('\n'));
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (mOutputBuffer.Find(_T('\n')) == -1)
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     // Single line, display immediatly
     mBody = mPrefix;
     mBody += mOutputBuffer;
@@ -222,20 +241,26 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
   }
   else
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     // Multiple lines, display individually
     std::vector<nglString> lines;
     std::vector<nglString>::iterator line;
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
     mOutputBuffer.Tokenize(lines, _T('\n'));
     for (line = lines.begin(); line != lines.end(); ++line)
     {
+  printf("Check %s %d\n", __FILE__, __LINE__);
       mBody = mPrefix;
       mBody += *line;
       mBody.TrimRight(_T('\n'));
       mBody += _T('\n');
+  printf("Check %s %d\n", __FILE__, __LINE__);
       Output (mBody);
+  printf("Check %s %d\n", __FILE__, __LINE__);
     }
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 void nglLog::Dump (uint Level) const
