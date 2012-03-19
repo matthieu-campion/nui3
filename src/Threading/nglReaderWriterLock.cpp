@@ -85,6 +85,7 @@ void nglReaderWriterLock::LockWrite()
       printf("Check %s %d\n", __FILE__, __LINE__);
       if (!mWriter && !mReaders)
       {
+        printf("Check %s %d\n", __FILE__, __LINE__);
         mWriter = nglThread::GetCurThreadID();
       }
     }
