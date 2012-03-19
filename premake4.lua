@@ -7,7 +7,7 @@ solution "minui3"
         "include",
         "deps/ucdata",
         "deps/zlib",
-        "deps/expat",
+        "deps/expat/lib",
         "deps/tidy",
         "src/Stream/Zip"
     }
