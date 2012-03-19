@@ -80,17 +80,22 @@ nglLog& nglKernel::GetLog()
 
 nglConsole& nglKernel::GetConsole()
 {
+  printf("Check %s %d\n", __FILE__, __LINE__);
   //#HACH This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
   if (!this)
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     return *(nglConsole*)NULL;
   }
 
+  printf("Check %s %d\n", __FILE__, __LINE__);
   if (!mpCon)
   {
+  printf("Check %s %d\n", __FILE__, __LINE__);
     mpCon = new nglConsole();
     mOwnCon = true;
   }
+  printf("Check %s %d\n", __FILE__, __LINE__);
   return *mpCon;
 }
 
