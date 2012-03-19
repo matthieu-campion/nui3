@@ -58,7 +58,6 @@ bool nuiTCPServer::Bind(const nuiNetworkHost& rHost)
     return false;
   }
   struct addrinfo* addr = nuiSocket::GetAddrInfo(rHost);
-  printf("bind to %s\n", addr->ai_addr->sa_data);
   res = bind(mSocket, addr->ai_addr, addr->ai_addrlen);
   if (res)
     DumpError(errno);
