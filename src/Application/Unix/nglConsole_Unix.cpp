@@ -30,26 +30,19 @@
 
 nglConsole::nglConsole(bool IsVisible)
 {
-  printf("Check %s %d\n", __FILE__, __LINE__);
   Setup(); // Portable code init
 
-  printf("Check %s %d\n", __FILE__, __LINE__);
   mIsVisible = IsVisible;
   mFD = STDIN_FILENO;
-  printf("Check %s %d\n", __FILE__, __LINE__);
   if (!isatty (mFD))
   {
-  printf("Check %s %d\n", __FILE__, __LINE__);
     mFlags = 0;
     NGL_LOG(_T("console"), NGL_LOG_WARNING, _T("Warning: not connected to a tty, interactive console disabled\n"));
-  printf("Check %s %d\n", __FILE__, __LINE__);
     return;
   }
-  printf("Check %s %d\n", __FILE__, __LINE__);
   mFlags = nglEvent::Read | nglEvent::Error;
   App->AddEvent (this);
 
-  printf("Check %s %d\n", __FILE__, __LINE__);
   if (mIsVisible) NGL_OUT (nglString(NGL_CONSOLE_PROMPT));
 }
 

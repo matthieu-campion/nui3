@@ -232,55 +232,39 @@ void nglConsole::Setup()
 
 void nglConsole::Output (const nglChar* pFormat, ...)
 {
-  printf("Check %s %d\n", __FILE__, __LINE__);
   nglCriticalSectionGuard guard(mCS);
   va_list args;
 
-  printf("Check %s %d\n", __FILE__, __LINE__);
   va_start (args, pFormat);
   Outputv (pFormat, args);
   va_end (args);
-  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
 {
-  printf("Check %s %d\n", __FILE__, __LINE__);
   if (this)   //#HACK This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
   {
-  printf("Check %s %d\n", __FILE__, __LINE__);
     nglCriticalSectionGuard guard(mCS);
-  printf("Check %s %d\n", __FILE__, __LINE__);
     mOutputBuffer.Formatv(pFormat, Args);
-  printf("Check %s %d\n", __FILE__, __LINE__);
     OnOutput(mOutputBuffer);
-  printf("Check %s %d\n", __FILE__, __LINE__);
   }
   else
   {
-  printf("Check %s %d\n", __FILE__, __LINE__);
     nglString out;
-  printf("Check %s %d\n", __FILE__, __LINE__);
     out.Formatv(pFormat, Args);
 #ifdef _WIN32_
     OutputDebugString(out.GetChars());
 #elif !defined _ANDROID_
-  printf("Check %s %d\n", __FILE__, __LINE__);
     printf(_T("%s\n"), out.GetChars());
 #else
     LOGI("%s", out.GetChars());
 #endif
 
-  printf("Check %s %d\n", __FILE__, __LINE__);
   }
-  printf("Check %s %d\n", __FILE__, __LINE__);
 }
 
 void nglConsole::Output (const nglString& rText)
 {
-  printf("Check %s %d\n", __FILE__, __LINE__);
   nglCriticalSectionGuard guard(mCS);
-  printf("Check %s %d\n", __FILE__, __LINE__);
   OnOutput (rText);
-  printf("Check %s %d\n", __FILE__, __LINE__);
 }
