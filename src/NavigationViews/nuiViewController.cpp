@@ -16,6 +16,7 @@ nuiViewController::nuiViewController()
   SetObjectClass(_T("nuiViewController"));
   mAnimated = false;
   mOverlayed = false;
+  mLoaded = false;
   
   mpBar = new nuiNavigationBar();
 }
@@ -29,7 +30,20 @@ nuiViewController::~nuiViewController()
 // virtual 
 void nuiViewController::ConnectTopLevel()
 {
+  if (!mLoaded)
+  {
+    mLoaded = true;
+    ViewDidLoad();
+  }
+  
   ViewDidAppear();
+}
+
+
+// virtual 
+void nuiViewController::ViewDidLoad()
+{
+
 }
 
 

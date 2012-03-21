@@ -40,7 +40,7 @@ nglPath nuiCocoaGetPath_App()
 
 nglPath nuiCocoaGetPath_AppSettings()
 {
-  NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
   NSString* docs = [paths objectAtIndex: 0];
   nglString str((CFStringRef)docs);
   return nglPath(str);  
@@ -61,6 +61,5 @@ nglPath nuiCocoaGetPath_UserDesktop()
   nglString str((CFStringRef)docs);
   return nglPath(str);  
 }
-
 
 

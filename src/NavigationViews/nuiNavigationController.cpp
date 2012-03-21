@@ -615,7 +615,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     mAlphed = true;
     mAnimPosition = 0;
     
-    if (mpIn)
+    // the poped container could have been pushed with overlay : the previous container (the mpIn, here) is still attached to the widget tree
+    if (mpIn && !mpIn->GetParent())
     {
       AddChild(mpIn);  
       if (mShowNavigationBar)
@@ -660,7 +661,8 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     
     mAnimPosition = -idealsize.GetWidth();
     
-    if (mpIn)
+    // the poped container could have been pushed with overlay : the previous container (the mpIn, here) is still attached to the widget tree
+    if (mpIn && !mpIn->GetParent())
     {
       AddChild(mpIn);  
       if (mShowNavigationBar)
@@ -683,12 +685,14 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
   }
   else
   {
-    if (mpIn)
+    // the poped container could have been pushed with overlay : the previous container (the mpIn, here) is still attached to the widget tree
+    if (mpIn && !mpIn->GetParent())
     {
       AddChild(mpIn);  
       if (mShowNavigationBar)
         AddChild(mpIn->GetNavigationBar());
     }
+    
     mpOut->ViewDidDisappear();
     if (mShowNavigationBar)
     {
@@ -698,9 +702,14 @@ void nuiNavigationController::_PopViewControllerAnimated(bool animated, Transiti
     mpOut->Release();
     DelChild(mpOut);
     
+    
     // mpIn->ViewDidAppear() is made in nuiViewController::ConnectTopLevel
     
     mViewControllers.pop_back();
+    
+    if (viewOverlay)
+      mViewControllers.back()->SetOverlayed(false);
+
     
     if (mPendingOperations.size() >0)
     {  
@@ -958,6 +967,7 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
   mpOut->ViewDidDisappear();
   // mpIn->ViewDidAppear is made in nuiViewController::ConnectTopLevel
 
+  
   if (mpOut->GetParent())
   {
     if (mShowNavigationBar)
@@ -970,6 +980,9 @@ void nuiNavigationController::OnViewPopStop(const nuiEvent& rEvent)
     DelChild(mpOut);
     
     mViewControllers.pop_back(); 
+    
+    if (viewOverlay)
+      mViewControllers.back()->SetOverlayed(false);
 
     if (mPendingOperations.size() >0)
     {

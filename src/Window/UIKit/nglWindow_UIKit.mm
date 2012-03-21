@@ -171,8 +171,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   {
     [glView removeFromSuperview];
     [glView release];
+    glView = nil;
   }
-  [self disconnect];
+  //[self disconnect];
   [super dealloc];
 }
 
@@ -1051,9 +1052,16 @@ nglWindow::~nglWindow()
 {
   if (mpUIWindow)
   {
-    [mpUIWindow disconnect];
-    [mpUIWindow removeFromSuperview];
-    [mpUIWindow release];
+
+    UIWindow* win = (UIWindow*)mpUIWindow;
+    [win disconnect];
+    UIWindow* oldwin = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    if (win != oldwin)
+    {
+      [oldwin makeKeyWindow];
+    }
+    //[win removeFromSuperview];
+    [win release];
   }
   Unregister();
 }

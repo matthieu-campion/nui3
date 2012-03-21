@@ -101,9 +101,9 @@ void objCCallOnMemoryWarning();
 	}	
 }
 
-- (void) applicationWillResignActive:         (UIApplication*) pUIApplication
+- (void) applicationDidEnterBackground:         (UIApplication*) pUIApplication
 {
-  NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationWillResignActive]\n")); )
+  NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidEnterBackground]\n")); )
   NGL_ASSERT(App);
 	
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];

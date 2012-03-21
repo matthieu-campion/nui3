@@ -182,6 +182,16 @@ void nuiAnimation::ReleaseTimer()
   {
     delete mpTimer;
     AnimSink.DisconnectAll();
+    // also kill all tasks:
+    std::list<std::pair<int32, nuiTask*> >::iterator it = mOnNextTick.begin();
+    std::list<std::pair<int32, nuiTask*> >::iterator end = mOnNextTick.end();
+    while (it != end)
+    {
+      nuiTask* pTask = it->second;
+      pTask->Release();
+      ++it;
+    }
+    mOnNextTick.clear();
     mpTimer = NULL;
   }
 }

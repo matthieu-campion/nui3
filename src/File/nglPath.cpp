@@ -274,7 +274,8 @@ nglPath::nglPath (nglPathBase Base)
         #endif
       }
       break;
-	}
+	
+    }
 }
 
 nglPath::nglPath (const nglPath& rPath)
