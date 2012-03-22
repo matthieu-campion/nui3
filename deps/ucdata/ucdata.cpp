@@ -277,7 +277,7 @@ _ucprop_load_static()
     }
   }
   
-  printf("found %d range stops\n", ranges.size());
+  //printf("found %d range stops\n", ranges.size());
   std::sort(ranges.begin(), ranges.end(), compare_range);
   
   ucprops_ranges.push_back(ranges.front());
@@ -310,7 +310,7 @@ _ucprop_load_static()
     }
   }
   
-  printf("ranges computed: %d\n", ucprops_ranges.size());
+  //printf("ranges computed: %d\n", ucprops_ranges.size());
   return 1;
 }
 
@@ -427,7 +427,7 @@ uint32_t code, n;
       last_range_value = ucprops_ranges[m].second;
 #ifdef STATS
       miss++;
-      printf("calls %d / miss %d (%f%%)\n", calls, miss, 100.0f * (float)miss / (float)calls);
+      //printf("calls %d / miss %d (%f%%)\n", calls, miss, 100.0f * (float)miss / (float)calls);
 #endif
       return ((last_range_value & (1 << n)) >> n);
     }
