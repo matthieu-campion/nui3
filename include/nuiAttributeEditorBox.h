@@ -32,15 +32,54 @@ public:
     Init(rFolderName, attribs, orientation);
   }
 
-  nuiAttributeEditorBox(const nglString& rFolderName, nuiObject* pObject, const char* pAttributeNames[], nuiOrientation orientation)
+  nuiAttributeEditorBox(const nglString& rFolderName, nuiObject* pObject, const char* pAttributeNames[] = NULL, nuiOrientation orientation = nuiVertical)
   : nuiSimpleContainer()
   {
     SetObjectClass("nuiAttributeEditorBox");
     std::vector<nuiAttribBase> attribs;
-    for (uint32 i = 0 ; pAttributeNames[i]; i++)
-      attribs.push_back(pObject->GetAttribute(pAttributeNames[i]));
+    if (pAttributeNames)
+    {
+      for (uint32 i = 0; pAttributeNames[i]; i++)
+        attribs.push_back(pObject->GetAttribute(pAttributeNames[i]));
+    }
+    else
+    {
+      nglString autoedit;
+      nuiAttribBase attr = pObject->GetAttribute("AutoEdit");
+      if (attr.IsValid() && attr.ToString(autoedit))
+      {
+        std::vector<nglString> attr;
+        autoedit.Tokenize(attr, ',');
+        for (uint32 i = 0; i < attr.size(); i++)
+        {
+          attr[i].Trim();
+          attribs.push_back(pObject->GetAttribute(attr[i]));
+        }
+      }
+    }
     Init(rFolderName, attribs, orientation);
   }
+
+  nuiAttributeEditorBox(nuiObject* pObject, nuiOrientation orientation = nuiHorizontal)
+  : nuiSimpleContainer()
+  {
+    SetObjectClass("nuiAttributeEditorBox");
+    std::vector<nuiAttribBase> attribs;
+    nglString autoedit;
+    nuiAttribBase attr = pObject->GetAttribute("AutoEdit");
+    if (attr.IsValid() && attr.ToString(autoedit))
+    {
+      std::vector<nglString> attr;
+      autoedit.Tokenize(attr, ',');
+      for (uint32 i = 0; i < attr.size(); i++)
+      {
+        attr[i].Trim();
+        attribs.push_back(pObject->GetAttribute(attr[i]));
+      }
+    }
+    Init(pObject->GetObjectClass(), attribs, orientation);
+  }
+  
 
   virtual ~nuiAttributeEditorBox()
   {
@@ -66,7 +105,6 @@ protected:
     }
     pPane->AddCell(pBox);
     AddChild(pPane);
-    const char* params[] = { "Type", "Frequency", "Q", NULL };
     for (uint32 i = 0 ; i < rAttributes.size(); i++)
     {
       if (rAttributes[i].IsValid())
