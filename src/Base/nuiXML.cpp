@@ -227,11 +227,17 @@ void nuiXMLParser::Stop()
 
 void nuiXMLParser::StartElement(void* pThis, const nuiXML_Char* name, const nuiXML_Char** atts)
 {
+//  int i = 0;
+//  for (; atts[i] != NULL; i++)
+//    if (!strcmp(atts[i], "Name"))
+//      break;
+//  printf("nuiXMLParser::StartElement [%s] [name=%s]\n", name, atts[i+1]);
   ((nuiXMLParser*)pThis)->StartElement(name, atts);
 }
 
 void nuiXMLParser::EndElement(void* pThis, const nuiXML_Char* name)
 {
+//  printf("nuiXMLParser::EndElement [%s]\n", name);
   ((nuiXMLParser*)pThis)->EndElement(name);
 }
 

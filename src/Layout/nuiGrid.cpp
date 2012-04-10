@@ -209,6 +209,8 @@ nuiRect nuiGrid::CalcIdealSize()
   nuiSize width = 0.f;
   nuiSize height = 0.f;
 
+  nuiSize maxH = 0.f;
+
   for (uint32 r = 0; r < mNbRows; r++)
   {
     if (!mRowVisible[r])
@@ -226,6 +228,7 @@ nuiRect nuiGrid::CalcIdealSize()
           const nuiRect &rect = pWidget->GetIdealRect();
           NGL_ASSERT(&rect);
           max = MAX(max, rect.GetHeight());
+          maxH= MAX(maxH, max);
         }
       }
     }
@@ -240,6 +243,7 @@ nuiRect nuiGrid::CalcIdealSize()
   }
   height += mGridBorderSize;
 
+  nuiSize maxW = 0.f;
 
   for (uint32 c = 0; c < mNbColumns; c++)
   {
@@ -256,6 +260,7 @@ nuiRect nuiGrid::CalcIdealSize()
         {
           const nuiRect &rect = pWidget->GetIdealRect();
           max = MAX(max, rect.GetWidth());
+          maxW= MAX(maxW, max);
         }
       }
     }
@@ -270,6 +275,41 @@ nuiRect nuiGrid::CalcIdealSize()
     width += max + 2 * mVGaps[c] + mGridBorderSize;
   }
   width += mGridBorderSize;
+
+  if (mEqualizeColumns)
+  {
+    width = 0;
+    for (uint32 c = 0; c < mNbColumns; c++)
+    {
+      nuiSize w = maxW;
+
+      if (mMaximumColumnSizes[c] >= 0.f && w > mMaximumColumnSizes[c])
+        w = mMaximumColumnSizes[c];
+      if ( w < mMinimumColumnSizes[c])
+        w = mMinimumColumnSizes[c];
+
+      mColumnWidths[c] = w;
+      width += w + 2 * mVGaps[c] + mGridBorderSize;
+    }
+    width += mGridBorderSize;  
+  }
+  if (mEqualizeRows)
+  {
+    height = 0;
+    for (uint32 r = 0; r < mNbRows; r++)
+    {
+      nuiSize h = maxH;
+      
+      if (mMaximumRowSizes[r] >= 0.f && h > mMaximumRowSizes[r])
+        h = mMaximumRowSizes[r];
+      if ( h < mMinimumRowSizes[r])
+        h = mMinimumRowSizes[r];
+      
+      mRowHeights[r] = h;
+      height += h + 2 * mHGaps[r] + mGridBorderSize;
+    }
+    height += mGridBorderSize;  
+  }
 
   mSizeRect.Set(0.f, 0.f, width, height);
 
