@@ -35,7 +35,7 @@ nuiHTTPHandler* nuiURLHandler::Handle(const nglString& rURL)
     return mDelegate(rURL, args);
   }
 }
-  
+
 
 //class nuiURLDispatcher
 nuiURLDispatcher::nuiURLDispatcher()
@@ -335,7 +335,13 @@ void nuiHTTPServer::AcceptConnections()
 void nuiHTTPServer::OnNewClient(nuiTCPClient* pClient)
 {
   //NGL_OUT("Received new connection...\n");
-  nuiHTTPServerThread* pThread = new nuiHTTPServerThread(mDelegate(pClient), mClientStackSize);
+  nuiHTTPHandler* pHandler = mDelegate(pClient);
+  if (!pHandler)
+  {
+    delete pClient;
+    return;
+  }
+  nuiHTTPServerThread* pThread = new nuiHTTPServerThread(pHandler, mClientStackSize);
   pThread->Start();
 }
 

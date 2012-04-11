@@ -28,6 +28,8 @@ public:
   int Receive(uint8* pData, int32 len); ///< Fill the buffer up to its current size.
   
   bool IsConnected() const;
+  bool IsWriteConnected() const;
+  bool IsReadConnected() const;
   int32 GetAvailable() const;
   bool CanWrite() const;
   
@@ -36,7 +38,8 @@ public:
 protected:
   friend class nuiTCPServer;
   nuiTCPClient(int sock);
-  bool mConnected;
+  bool mReadConnected;
+  bool mWriteConnected;
 };
 
 class nuiPipe

@@ -23,13 +23,15 @@
 
 nuiTCPClient::nuiTCPClient()
 {
-  mConnected = false;
+  mReadConnected = false;
+  mWriteConnected = false;
 }
 
 nuiTCPClient::nuiTCPClient(int sock)
 : nuiSocket(sock)
 {
-  mConnected = true;
+  mReadConnected = true;
+  mWriteConnected = true;
 }
 
 nuiTCPClient::~nuiTCPClient()
@@ -52,9 +54,9 @@ bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
 
   freeaddrinfo(addr);
 
-  mConnected = res == 0;
+  mReadConnected = mWriteConnected = res == 0;
 
-  return mConnected;
+  return mReadConnected;
 }
 
 bool nuiTCPClient::Connect(const nglString& rHost, int16 port)
@@ -80,14 +82,17 @@ int nuiTCPClient::Send(const std::vector<uint8>& rData)
 
 int nuiTCPClient::Send(const uint8* pData, int len)
 {
-  if (!IsConnected())
-    return false;
+  if (!IsWriteConnected())
+    return 0;
 
 #ifdef WIN32
   int res = send(mSocket, (const char*)pData, len, 0);
 #else
   int res = send(mSocket, pData, len, 0);
 #endif
+
+  if (res == -1)
+    mWriteConnected = false;
 
   return res;
 }
@@ -117,7 +122,7 @@ int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
 
   if (res < 0)
   {
-    mConnected = false;
+    mReadConnected = false;
     rData.clear();
     return 0;
   }
@@ -149,7 +154,7 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
   
   if (res == 0)
   {
-    mConnected = false;
+    mReadConnected = false;
   }
   else if (res < 0)
   {
@@ -193,12 +198,38 @@ bool nuiTCPClient::Close()
 #endif
 
   mSocket = -1;
+  mWriteConnected = false;
+  mReadConnected = false;
   return true;
 }
 
 bool nuiTCPClient::IsConnected() const
 {
-  return mConnected;
+  return IsReadConnected() || IsWriteConnected();
+}
+
+bool nuiTCPClient::IsWriteConnected() const
+{
+  return mWriteConnected;
+}
+
+bool nuiTCPClient::IsReadConnected() const
+{  
+  bool retval = false;
+  int bytestoread = 0;
+  timeval timeout;
+  timeout.tv_sec = 0;
+  timeout.tv_usec = 0;
+  fd_set myfd;
+ 
+  FD_ZERO(&myfd);
+  FD_SET(mSocket, &myfd);
+  int sio = select(FD_SETSIZE, &myfd, (fd_set *)0, (fd_set *)0, &timeout);
+  //have to do select first for some reason
+  int dio = ioctl(mSocket, FIONREAD, &bytestoread);//should do error checking on return value of this
+  retval = ((bytestoread == 0) && (sio == 1));
+ 
+  return retval;
 }
 
 int32 nuiTCPClient::GetAvailable() const
