@@ -32,6 +32,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E5047FFB153A37F200D4D6D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A62E5911CA542000446489 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5FB9CF3147D5CEE001A1829;
+			remoteInfo = minui3D;
+		};
 		E52420E711CBCE9E0025CA71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E5A62E5911CA542000446489 /* nui3.xcodeproj */;
@@ -277,6 +284,7 @@
 				E57D81AA13B3874D00348211 /* libthirdparty.a */,
 				E57D81AC13B3874D00348211 /* libthirdparty_ios.a */,
 				E57D81AE13B3874D00348211 /* libthirdparty_ios_arm7.a */,
+				E5047FFC153A37F200D4D6D7 /* libminui3D.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,6 +361,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		E5047FFC153A37F200D4D6D7 /* libminui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libminui3D.a;
+			remoteRef = E5047FFB153A37F200D4D6D7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E52420E811CBCE9E0025CA71 /* libnuiPhone.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;

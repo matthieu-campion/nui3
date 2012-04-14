@@ -205,13 +205,13 @@ void nglApplication::Quit (int Code)
 /* Startup
  */
 
-int nglApplication::Main(int argc, char** argv)
+int nglApplication::Main(int argc, const char** argv)
 {
   NSAutoreleasePool *pPool = [NSAutoreleasePool new];
 
   Init(argc, argv);
 
-  UIApplicationMain(argc, argv, @"nglUIApplication", @"nglUIApplicationDelegate");
+  UIApplicationMain(argc, const_cast<char**>(argv), @"nglUIApplication", @"nglUIApplicationDelegate");
 
   [pPool release];
 
@@ -219,7 +219,7 @@ int nglApplication::Main(int argc, char** argv)
 }
 
 
-bool nglApplication::Init(int ArgCnt, char** pArg)
+bool nglApplication::Init(int ArgCnt, const char** pArg)
 {
   int i;
 
