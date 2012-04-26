@@ -136,7 +136,7 @@ void nuiHTTPHandler::Parse()
                 pos2++;
               mURL = mCurrentLine.Extract(pos, pos2 - pos);
               //NGL_OUT("URL: %s\n", mURL.GetChars());
-              if (!OnMethod(mURL))
+              if (!OnURL(mURL))
                 return;
 
               pos = pos2;
