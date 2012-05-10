@@ -17,7 +17,6 @@ nglReaderWriterLock::nglReaderWriterLock()
 
 void nglReaderWriterLock::LockRead()
 { 
-return;
   bool ok = false;
   do 
   {
@@ -39,7 +38,6 @@ return;
 
 bool nglReaderWriterLock::TryLockRead()
 { 
-return true;
   bool ok = false;
   {
     nglCriticalSectionGuard guard(mCS);
@@ -56,7 +54,6 @@ return true;
 
 void nglReaderWriterLock::UnlockRead()
 {
-return;
   nglCriticalSectionGuard guard(mCS);
 
   ngl_atomic_dec(mReaders);
@@ -66,7 +63,6 @@ return;
 
 void nglReaderWriterLock::LockWrite()
 {
-return;
   do 
   {
     {
@@ -86,7 +82,6 @@ return;
 
 bool nglReaderWriterLock::TryLockWrite()
 {
-return true;
   {
     nglCriticalSectionGuard guard(mCS);
     
@@ -102,7 +97,6 @@ return true;
 
 void nglReaderWriterLock::UnlockWrite()
 {
-return;
   nglCriticalSectionGuard guard(mCS);
 
   mWriter = NULL;
