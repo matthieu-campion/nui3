@@ -41,7 +41,7 @@ nuiTCPClient::~nuiTCPClient()
 
 bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
 {
-  if (IsConnected())
+  if (IsWriteConnected())
     return false;
 
   if (!Init(AF_INET, SOCK_STREAM, 0))
@@ -100,9 +100,6 @@ int nuiTCPClient::Send(const uint8* pData, int len)
 
 int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
 {
-  if (!IsConnected())
-    return 0;
-
   int PendingBytes = 0;
 #ifdef WIN32
   int result = WSAIoctl(mSocket, FIONREAD, NULL, 0, &PendingBytes, sizeof(PendingBytes), NULL, NULL, NULL);
@@ -140,9 +137,6 @@ int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
 
 int nuiTCPClient::Receive(uint8* pData, int32 len)
 {
-  if (!IsConnected())
-    return 0;
-  
 #ifdef WIN32
   int res = recv(mSocket, (char*)pData, len, MSG_WAITALL);
 #else
@@ -167,9 +161,6 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
 
 int nuiTCPClient::Receive(std::vector<uint8>& rData)
 {
-  if (!IsConnected())
-    return 0;
-
   int res = Receive(&rData[0], rData.size());
 
   if (res < 0)
@@ -186,10 +177,6 @@ int nuiTCPClient::Receive(std::vector<uint8>& rData)
 
 bool nuiTCPClient::Close()
 {
-  if (!IsConnected())
-    return false;
-
-
 #ifdef WIN32
   //DisconnectEx(mSocket, NULL, 0, 0);
   closesocket(mSocket);
@@ -249,7 +236,7 @@ int32 nuiTCPClient::GetAvailable() const
 
 bool nuiTCPClient::CanWrite() const
 {
-  return IsConnected();
+  return IsWriteConnected();
 }
 
 //////////////////////////

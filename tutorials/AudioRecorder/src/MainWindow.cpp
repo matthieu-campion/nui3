@@ -31,7 +31,7 @@ public:
     mChannelCount = 1;
   }
   
-  void AddSamples(const std::vector<const float*>& Samples, uint32 SampleFrames)
+  void AddSamples(const std::vector<const float*>& Samples, int32 SampleFrames)
   {
     //printf("record %d\n", SampleFrames);
     mChannelCount = Samples.size();

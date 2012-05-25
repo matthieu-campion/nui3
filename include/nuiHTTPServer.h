@@ -50,7 +50,8 @@ public:
   nuiHTTPHandler(nuiTCPClient* pClient);
   virtual ~nuiHTTPHandler();
 
-  void Parse();
+  void SynchronousParse(); ///< Handle the http stream by blocking on read
+  void ParseData(const std::vector<uint8>& rData); ///< Parse incomming data. This method doesn't block.
 
   virtual bool OnMethod(const nglString& rValue);
   virtual bool OnURL(const nglString& rValue);
@@ -78,6 +79,8 @@ protected:
   nglString mMethod;
   nglString mProtocol;
   nglString mVersion;
+  State mState;
+
   std::map<nglString, nglString> mHeaders;
   std::vector<uint8> mBody;
 };

@@ -73,7 +73,7 @@ nuiHTTPHandler* nuiURLDispatcher::Dispatch(const nglString& rURL)
 
 //class nuiHTTPHandler
 nuiHTTPHandler::nuiHTTPHandler(nuiTCPClient* pClient)
-: mpClient(pClient)
+: mpClient(pClient), mState(Request)
 {
 }
 
@@ -82,137 +82,161 @@ nuiHTTPHandler::~nuiHTTPHandler()
   delete mpClient;
 }
 
-void nuiHTTPHandler::Parse()
+void nuiHTTPHandler::SynchronousParse()
 {
+  mState = Request;
   std::vector<uint8> data;
   nglChar cur = 0;
-  State state = Request;
   data.resize(1024);
-  while (mpClient->Receive(data))
+  while (mpClient->IsWriteConnected() && mpClient->Receive(data))
   {
-    size_t index = 0;
-    while (index < data.size())
-    {
-      cur = data[index];
-      if (state == Body)
-      {
-        std::vector<uint8> d(data.begin() + index, data.end());
-        //NGL_OUT("...Body data... (%d)\n", d.size());
-        OnBodyData(d);
-        index = data.size();
-      }
-      else
-      {
-        index++;
-
-        if (cur == 10)
-        {
-          // skip...
-        }
-        else if (cur == 13)
-        {
-          // found a line:
-          switch (state)
-          {
-            case Request:
-            {
-              mCurrentLine.Trim();
-              int pos = mCurrentLine.Find(' ');
-              if (pos < 0)
-              {
-                // Error!
-                return;
-              }
-
-              mMethod = mCurrentLine.GetLeft(pos);
-              //NGL_OUT("Method: %s\n", mMethod.GetChars());
-              if (!OnMethod(mMethod))
-                return;
-
-              while (mCurrentLine[pos] == ' ')
-                pos++;
-              int pos2 = pos;
-              while (mCurrentLine[pos2] != ' ')
-                pos2++;
-              mURL = mCurrentLine.Extract(pos, pos2 - pos);
-              //NGL_OUT("URL: %s\n", mURL.GetChars());
-              if (!OnURL(mURL))
-                return;
-
-              pos = pos2;
-              while (mCurrentLine[pos] == ' ')
-                pos++;
-              pos2 = pos;
-              while (mCurrentLine[pos2] != '/')
-                pos2++;
-
-              mProtocol = mCurrentLine.Extract(pos, pos2 - pos);
-              mVersion = mCurrentLine.Extract(pos2 + 1);
-              mVersion.Trim();
-              //NGL_OUT("Protocol: %s\n", mProtocol.GetChars());
-              //NGL_OUT("Version: %s\n", mVersion.GetChars());
-              if (!OnProtocol(mProtocol, mVersion))
-                return;
-
-              state = Header;
-
-              mCurrentLine.Wipe();
-            }
-              break;
-
-            case Header:
-            {
-              if (mCurrentLine.IsEmpty())
-              {
-                //NGL_OUT("Start body...\n");
-                if (!OnBodyStart())
-                  return;
-                state = Body;
-              }
-              else
-              {
-                mCurrentLine.Trim();
-                int pos = mCurrentLine.Find(':');
-                if (pos < 0)
-                {
-                  // Error!
-                  return;
-                }
-
-                nglString key = mCurrentLine.GetLeft(pos);
-                nglString value = mCurrentLine.Extract(pos + 1);
-
-                key.Trim();
-                value.Trim();
-
-                mHeaders[key] = value;
-
-                //NGL_OUT("[%s]: '%s'\n", key.GetChars(), value.GetChars());
-
-                if (!OnHeader(key, value))
-                  return;
-
-                state = Header;
-                mCurrentLine.Wipe();
-              }
-            }
-              break;
-            default:
-              NGL_ASSERT(0);
-              break;
-          }
-        }
-        else
-        {
-          mCurrentLine.Append(cur);
-        }
-      }
-
-    }
+    ParseData(data);
   }
   //NGL_OUT("End body\n");
   OnBodyEnd();
 }
+
+void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
+{
+  nglChar cur = 0;
+  size_t index = 0;
+  while (index < rData.size())
+  {
+    cur = rData[index];
+    if (mState == Body)
+    {
+      std::vector<uint8> d(rData.begin() + index, rData.end());
+      //NGL_OUT("...Body data... (%d)\n", d.size());
+      OnBodyData(d);
+      index = rData.size();
+    }
+    else
+    {
+      index++;
+      
+      if (cur == 10)
+      {
+        // skip...
+      }
+      else if (cur == 13)
+      {
+        // found a line:
+        switch (mState)
+        {
+          case Request:
+          {
+            mCurrentLine.Trim();
+            int pos = mCurrentLine.Find(' ');
+            if (pos < 0)
+            {
+              // Error!
+              mpClient->Close();
+              return;
+            }
+            
+            mMethod = mCurrentLine.GetLeft(pos);
+            //NGL_OUT("Method: %s\n", mMethod.GetChars());
+            if (!OnMethod(mMethod))
+            {
+              mpClient->Close();
+              return;
+            }
+            
+            while (mCurrentLine[pos] == ' ')
+              pos++;
+            int pos2 = pos;
+            while (mCurrentLine[pos2] != ' ')
+              pos2++;
+            mURL = mCurrentLine.Extract(pos, pos2 - pos);
+            //NGL_OUT("URL: %s\n", mURL.GetChars());
+            if (!OnURL(mURL))
+            {
+              mpClient->Close();
+              return;
+            }
+            
+            pos = pos2;
+            while (mCurrentLine[pos] == ' ')
+              pos++;
+            pos2 = pos;
+            while (mCurrentLine[pos2] != '/')
+              pos2++;
+            
+            mProtocol = mCurrentLine.Extract(pos, pos2 - pos);
+            mVersion = mCurrentLine.Extract(pos2 + 1);
+            mVersion.Trim();
+            //NGL_OUT("Protocol: %s\n", mProtocol.GetChars());
+            //NGL_OUT("Version: %s\n", mVersion.GetChars());
+            if (!OnProtocol(mProtocol, mVersion))
+            {
+              mpClient->Close();
+              return;
+            }
+            
+            mState = Header;
+            
+            mCurrentLine.Wipe();
+          }
+            break;
+            
+          case Header:
+          {
+            if (mCurrentLine.IsEmpty())
+            {
+              //NGL_OUT("Start body...\n");
+              if (!OnBodyStart())
+              {
+                mpClient->Close();
+                return;
+              }
+              mState = Body;
+            }
+            else
+            {
+              mCurrentLine.Trim();
+              int pos = mCurrentLine.Find(':');
+              if (pos < 0)
+              {
+                // Error
+                mpClient->Close();
+                return;
+              }
+              
+              nglString key = mCurrentLine.GetLeft(pos);
+              nglString value = mCurrentLine.Extract(pos + 1);
+              
+              key.Trim();
+              value.Trim();
+              
+              mHeaders[key] = value;
+              
+              //NGL_OUT("[%s]: '%s'\n", key.GetChars(), value.GetChars());
+              
+              if (!OnHeader(key, value))
+              {
+                mpClient->Close();
+                return;
+              }
+              
+              mState = Header;
+              mCurrentLine.Wipe();
+            }
+          }
+            break;
+          default:
+            NGL_ASSERT(0);
+            break;
+        }
+      }
+      else
+      {
+        mCurrentLine.Append(cur);
+      }
+    }
+  }
+  //NGL_OUT("End body\n");
+}
+
 
 bool nuiHTTPHandler::OnMethod(const nglString& rValue)
 {
@@ -304,7 +328,7 @@ nuiHTTPServerThread::~nuiHTTPServerThread()
 
 void nuiHTTPServerThread::OnStart()
 {
-  mpHandler->Parse();
+  mpHandler->SynchronousParse();
 }
 
 

@@ -100,6 +100,7 @@ float nuiGetScaleFactor()
   if (gScaleFactor == 0)
   {
     gScaleFactor = [UIScreen mainScreen].scale; 
+//    gScaleFactor = 1.0f; 
   }
   
   return gScaleFactor;
