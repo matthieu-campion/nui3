@@ -16,6 +16,7 @@
 //#include "nui.h"
 #include "nglString.h"
 #include "nglReaderWriterLock.h"
+#include "nglCriticalSection.h"
 class nglOStream;
 
 /* Verbosity levels
@@ -48,7 +49,7 @@ nglApplication::ParseDefaultArgs() to see how this facility can help you.
 */
 class NGL_API nglLog
 {
-public: 
+public:
   typedef uint StampFlags;
 
   static const StampFlags NoStamp;      ///< Do not stamp log lines (raw output)
@@ -176,6 +177,7 @@ private:
   void    Output (const nglString& rText) const;
 
   mutable nglReaderWriterLock mLock;
+  nglCriticalSection mCS;
 };
 
 #endif // __nglLog_h__
