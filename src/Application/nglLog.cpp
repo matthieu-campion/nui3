@@ -177,63 +177,66 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
     now.GetLocalTime (stamp);
   }
 
-  // Compose mPrefix
-  mPrefix.Wipe();
-  if (mStampFlags & DateStamp)
   {
-    mBody.Format(_T("%.2d/%.2d/%.2d "), stamp.Year - 100, stamp.Month, stamp.Day);
-    mPrefix += mBody;
-  }
-  if (mStampFlags & TimeStamp)
-  {
-    mBody.Format(_T("%.2d:%.2d:%.2d "), stamp.Hours, stamp.Minutes, stamp.Seconds);
-    mPrefix += mBody;
-  }
-  if (mStampFlags & DomainStamp)
-  {
-    const nglChar* dom_name = dom->Name.GetChars();
-
-    if (dom->Count == 1)
+    nglCriticalSectionGuard guard(mCS);
+    // Compose mPrefix
+    mPrefix.Wipe();
+    if (mStampFlags & DateStamp)
     {
-      // On first display from this domain, adjust domain display width
-      uint32 dom_len = strlen(dom_name);
+      mBody.Format(_T("%.2d/%.2d/%.2d "), stamp.Year - 100, stamp.Month, stamp.Day);
+      mPrefix += mBody;
+    }
+    if (mStampFlags & TimeStamp)
+    {
+      mBody.Format(_T("%.2d:%.2d:%.2d "), stamp.Hours, stamp.Minutes, stamp.Seconds);
+      mPrefix += mBody;
+    }
+    if (mStampFlags & DomainStamp)
+    {
+      const nglChar* dom_name = dom->Name.GetChars();
 
-      if (dom_len > mDomainFormatLen)
+      if (dom->Count == 1)
       {
-        mDomainFormatLen = dom_len;
-        mDomainFormat.Format(_T("%%-%ds: "), mDomainFormatLen);
+        // On first display from this domain, adjust domain display width
+        uint32 dom_len = strlen(dom_name);
+
+        if (dom_len > mDomainFormatLen)
+        {
+          mDomainFormatLen = dom_len;
+          mDomainFormat.Format(_T("%%-%ds: "), mDomainFormatLen);
+        }
       }
+
+      mBody.Format(mDomainFormat.GetChars(), dom_name);
+      mPrefix += mBody;
     }
 
-    mBody.Format(mDomainFormat.GetChars(), dom_name);
-    mPrefix += mBody;
-  }
+    mOutputBuffer.Formatv(pText, Args);
+    mOutputBuffer.TrimRight(_T('\n'));
 
-  mOutputBuffer.Formatv(pText, Args);
-  mOutputBuffer.TrimRight(_T('\n'));
-
-  if (mOutputBuffer.Find(_T('\n')) == -1)
-  {
-    // Single line, display immediatly
-    mBody = mPrefix;
-    mBody += mOutputBuffer;
-    mBody += _T('\n');
-    Output (mBody);
-  }
-  else
-  {
-    // Multiple lines, display individually
-    std::vector<nglString> lines;
-    std::vector<nglString>::iterator line;
-
-    mOutputBuffer.Tokenize(lines, _T('\n'));
-    for (line = lines.begin(); line != lines.end(); ++line)
+    if (mOutputBuffer.Find(_T('\n')) == -1)
     {
+      // Single line, display immediatly
       mBody = mPrefix;
-      mBody += *line;
-      mBody.TrimRight(_T('\n'));
+      mBody += mOutputBuffer;
       mBody += _T('\n');
       Output (mBody);
+    }
+    else
+    {
+      // Multiple lines, display individually
+      std::vector<nglString> lines;
+      std::vector<nglString>::iterator line;
+
+      mOutputBuffer.Tokenize(lines, _T('\n'));
+      for (line = lines.begin(); line != lines.end(); ++line)
+      {
+        mBody = mPrefix;
+        mBody += *line;
+        mBody.TrimRight(_T('\n'));
+        mBody += _T('\n');
+        Output (mBody);
+      }
     }
   }
 }

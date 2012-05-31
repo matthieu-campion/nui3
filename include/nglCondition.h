@@ -21,7 +21,7 @@ public:
   void WakeOne();
   void WakeAll();
 
-  bool Wait(uint32 time = ULONG_MAX);
+  bool Wait(uint32 time =  0xffffffff);
 
 private:
   nglConditionPrivate *mpData;

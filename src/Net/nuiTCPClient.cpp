@@ -41,9 +41,6 @@ nuiTCPClient::~nuiTCPClient()
 
 bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
 {
-  if (IsWriteConnected())
-    return false;
-
   if (!Init(AF_INET, SOCK_STREAM, 0))
     return false;
 
@@ -82,9 +79,6 @@ int nuiTCPClient::Send(const std::vector<uint8>& rData)
 
 int nuiTCPClient::Send(const uint8* pData, int len)
 {
-  if (!IsWriteConnected())
-    return 0;
-
 #ifdef WIN32
   int res = send(mSocket, (const char*)pData, len, 0);
 #else
@@ -144,8 +138,8 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
   int res = read(mSocket, pData, len);
   //printf("%p read returned %d\n", this, res);
 #endif
-  
-  
+
+
   if (res == 0)
   {
     mReadConnected = false;
@@ -155,7 +149,7 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
     // Error
     return res;
   }
-  
+
   return res;
 }
 
@@ -201,21 +195,21 @@ bool nuiTCPClient::IsWriteConnected() const
 }
 
 bool nuiTCPClient::IsReadConnected() const
-{  
+{
   bool retval = false;
   int bytestoread = 0;
   timeval timeout;
   timeout.tv_sec = 0;
   timeout.tv_usec = 0;
   fd_set myfd;
- 
+
   FD_ZERO(&myfd);
   FD_SET(mSocket, &myfd);
   int sio = select(FD_SETSIZE, &myfd, (fd_set *)0, (fd_set *)0, &timeout);
   //have to do select first for some reason
   int dio = ioctl(mSocket, FIONREAD, &bytestoread);//should do error checking on return value of this
   retval = ((bytestoread == 0) && (sio == 1));
- 
+
   return retval;
 }
 
@@ -243,12 +237,12 @@ bool nuiTCPClient::CanWrite() const
 //class nuiPipe
 nuiPipe::nuiPipe()
 {
-  
+
 }
 
 nuiPipe::~nuiPipe()
 {
-  
+
 }
 
 size_t nuiPipe::Write(const uint8* pBuffer, size_t size)
@@ -256,7 +250,7 @@ size_t nuiPipe::Write(const uint8* pBuffer, size_t size)
   size_t p = mBuffer.size();
   mBuffer.resize(size + p);
   memcpy(&mBuffer[p], pBuffer, size);
-  
+
   return size;
 }
 
@@ -270,7 +264,7 @@ size_t nuiPipe::Read(uint8* pBuffer, size_t size)
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
-  
+
   memcpy(pBuffer, &mBuffer[0], todo);
   memmove(&mBuffer[0], &mBuffer[todo], remain);
   mBuffer.resize(remain);
@@ -292,7 +286,7 @@ void nuiPipe::Eat(size_t size)
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
-  
+
   memmove(&mBuffer[0], &mBuffer[todo], remain);
   mBuffer.resize(remain);
 }
@@ -311,7 +305,7 @@ nuiBufferedTCPClient::nuiBufferedTCPClient()
 
 nuiBufferedTCPClient::~nuiBufferedTCPClient()
 {
-  
+
 }
 
 // This is used by the client:
@@ -346,10 +340,10 @@ void nuiBufferedTCPClient::OnCanRead()
 {
   if (mReadDelegate)
     mReadDelegate(*this);
-  
+
   std::vector<uint8> Data;
   ReceiveAvailable(Data);
-  
+
   WriteToInputBuffer(&Data[0], Data.size());
   //printf("%d write %d\n", GetSocket(), Data.size());
 }
@@ -358,16 +352,16 @@ void nuiBufferedTCPClient::OnCanWrite()
 {
   if (mWriteDelegate)
     mWriteDelegate(*this);
-  
+
   size_t s = mOut.GetSize();
-  
+
   if (!s)
     return;
-  
+
   const uint8* pBuffer = mOut.GetBuffer();
-  
+
   size_t done = Send(pBuffer, s);
-  
+
   mOut.Eat(done);
   //printf("%d eat %d\n", GetSocket(), done);
 }
@@ -376,7 +370,7 @@ void nuiBufferedTCPClient::OnReadClosed()
 {
   if (mReadCloseDelegate)
     mReadCloseDelegate(*this);
-  
+
   printf("%d read closed\n", GetSocket());
 }
 

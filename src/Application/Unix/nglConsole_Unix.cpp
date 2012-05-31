@@ -37,7 +37,7 @@ nglConsole::nglConsole(bool IsVisible)
   if (!isatty (mFD))
   {
     mFlags = 0;
-    NGL_LOG(_T("console"), NGL_LOG_WARNING, _T("Warning: not connected to a tty, interactive console disabled\n"));
+    //NGL_LOG(_T("console"), NGL_LOG_WARNING, _T("Warning: not connected to a tty, interactive console disabled\n"));
     return;
   }
   mFlags = nglEvent::Read | nglEvent::Error;
