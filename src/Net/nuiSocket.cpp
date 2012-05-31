@@ -41,12 +41,15 @@ bool nuiSocket::Init(int domain, int type, int protocol)
 
 nuiSocket::~nuiSocket()
 {
+  if (mSocket > 0)
+  {
 #ifdef WIN32
-  //DisconnectEx(mSocket, NULL, 0, 0);
-  closesocket(mSocket);
+    //DisconnectEx(mSocket, NULL, 0, 0);
+    closesocket(mSocket);
 #else
-  close(mSocket);
+    close(mSocket);
 #endif
+  }
 }
 
 nuiSocket::SocketType nuiSocket::GetSocket() const
@@ -234,13 +237,15 @@ nuiSocketPool::~nuiSocketPool()
   ///
 }
 
-void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode ReadMode, TriggerMode WriteMode)
+void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 {
   struct kevent ev;
   memset(&ev, 0, sizeof(struct kevent));
   ev.ident = pSocket->GetSocket();
   ev.filter = EVFILT_READ;
-  ev.flags = EV_ADD | EV_ENABLE | EV_CLEAR;
+  ev.flags = EV_ADD | EV_ENABLE;
+  if (Mode != eStateChange)
+    ev.flags |= EV_CLEAR;
   ev.udata = pSocket;
   
   mChangeset.push_back(ev);
@@ -328,10 +333,12 @@ nuiSocketPool::~nuiSocketPool()
   ///
 }
 
-void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode ReadMode, TriggerMode WriteMode)
+void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 {
   struct epoll_event ev;
   ev.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
+  if (Mode == eStateChange)
+    ev.events |= EPOLLET;
   ev.data.ptr = pSocket;
   ev.data.fd = pSocket->GetSocket();
   ev.data.u32 = 0;

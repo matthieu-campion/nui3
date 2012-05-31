@@ -72,14 +72,13 @@ nuiHTTPHandler* nuiURLDispatcher::Dispatch(const nglString& rURL)
 
 
 //class nuiHTTPHandler
-nuiHTTPHandler::nuiHTTPHandler(nuiTCPClient* pClient)
-: mpClient(pClient), mState(Request)
+nuiHTTPHandler::nuiHTTPHandler(nuiSocket::SocketType s)
+: nuiTCPClient(s), mState(Request)
 {
 }
 
 nuiHTTPHandler::~nuiHTTPHandler()
 {
-  delete mpClient;
 }
 
 void nuiHTTPHandler::SynchronousParse()
@@ -88,7 +87,7 @@ void nuiHTTPHandler::SynchronousParse()
   std::vector<uint8> data;
   nglChar cur = 0;
   data.resize(1024);
-  while (mpClient->IsWriteConnected() && mpClient->Receive(data))
+  while (IsWriteConnected() && Receive(data))
   {
     ParseData(data);
   }
@@ -130,7 +129,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
             if (pos < 0)
             {
               // Error!
-              mpClient->Close();
+              Close();
               return;
             }
             
@@ -138,7 +137,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
             //NGL_OUT("Method: %s\n", mMethod.GetChars());
             if (!OnMethod(mMethod))
             {
-              mpClient->Close();
+              Close();
               return;
             }
             
@@ -151,7 +150,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
             //NGL_OUT("URL: %s\n", mURL.GetChars());
             if (!OnURL(mURL))
             {
-              mpClient->Close();
+              Close();
               return;
             }
             
@@ -169,7 +168,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
             //NGL_OUT("Version: %s\n", mVersion.GetChars());
             if (!OnProtocol(mProtocol, mVersion))
             {
-              mpClient->Close();
+              Close();
               return;
             }
             
@@ -186,7 +185,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               //NGL_OUT("Start body...\n");
               if (!OnBodyStart())
               {
-                mpClient->Close();
+                Close();
                 return;
               }
               mState = Body;
@@ -198,7 +197,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               if (pos < 0)
               {
                 // Error
-                mpClient->Close();
+                Close();
                 return;
               }
               
@@ -214,7 +213,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               
               if (!OnHeader(key, value))
               {
-                mpClient->Close();
+                Close();
                 return;
               }
               
@@ -274,8 +273,8 @@ void nuiHTTPHandler::OnBodyEnd()
 
 bool nuiHTTPHandler::ReplyLine(const nglString& rString)
 {
-  bool res = mpClient->Send(rString);
-  res &= mpClient->Send("\r\n");
+  bool res = Send(rString);
+  res &= Send("\r\n");
   return res;
 }
 
@@ -303,7 +302,7 @@ bool nuiHTTPHandler::ReplyError(int32 code, const nglString& rErrorStr)
 bool nuiHTTPHandler::Log(int32 code)
 {
   nuiNetworkHost client(0, 0, nuiNetworkHost::eTCP);
-  bool res = mpClient->GetDistantHost(client);
+  bool res = GetDistantHost(client);
   if (!res)
     return false;
 
@@ -350,33 +349,43 @@ void nuiHTTPServer::AcceptConnections()
   Listen();
   while ((pClient = Accept()))
   {
-    OnNewClient(pClient);
+    OnNewClient((nuiHTTPHandler*)pClient);
     //Listen();
   }
 
 }
 
-void nuiHTTPServer::OnNewClient(nuiTCPClient* pClient)
+nuiTCPClient* nuiHTTPServer::OnCreateClient(nuiSocket::SocketType sock)
+{
+  nuiHTTPHandler* pHandler = mDelegate(sock);
+  if (!pHandler)
+    pHandler = new nuiHTTPHandler(sock);
+  return pHandler;
+}
+
+void nuiHTTPServer::OnNewClient(nuiHTTPHandler* pClient)
 {
   //NGL_OUT("Received new connection...\n");
-  nuiHTTPHandler* pHandler = mDelegate(pClient);
-  if (!pHandler)
-  {
-    delete pClient;
-    return;
-  }
-  nuiHTTPServerThread* pThread = new nuiHTTPServerThread(pHandler, mClientStackSize);
+  nuiHTTPServerThread* pThread = new nuiHTTPServerThread(pClient, mClientStackSize);
   pThread->Start();
 }
 
-void nuiHTTPServer::SetHandlerDelegate(const nuiFastDelegate1<nuiTCPClient*, nuiHTTPHandler*>& rDelegate)
+void nuiHTTPServer::OnCanRead()
+{
+  nuiTCPClient* pClient = Accept();
+  if (pClient)
+    OnNewClient((nuiHTTPHandler*)pClient);
+}
+
+
+void nuiHTTPServer::SetHandlerDelegate(const nuiFastDelegate1<nuiSocket::SocketType, nuiHTTPHandler*>& rDelegate)
 {
   mDelegate = rDelegate;
 }
 
-nuiHTTPHandler* nuiHTTPServer::DefaultHandler(nuiTCPClient* pClient)
+nuiHTTPHandler* nuiHTTPServer::DefaultHandler(nuiSocket::SocketType s)
 {
-  return new nuiHTTPHandler(pClient);
+  return new nuiHTTPHandler(s);
 }
 
 

@@ -78,7 +78,7 @@ nuiTCPClient* nuiTCPServer::Accept()
   int s = accept(mSocket, NULL, NULL);
 
   //printf("%x accept %d\n", this, s);
-  nuiTCPClient* pClient = new nuiTCPClient(s);
+  nuiTCPClient* pClient = OnCreateClient(s);
   return pClient;
 }
 
@@ -89,5 +89,10 @@ bool nuiTCPServer::Close()
 #else
   return 0 == close(mSocket);
 #endif
+}
+
+nuiTCPClient* nuiTCPServer::OnCreateClient(nuiSocket::SocketType sock)
+{
+  return new nuiTCPClient(sock);
 }
 

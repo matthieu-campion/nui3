@@ -44,10 +44,10 @@ private:
   std::vector<nuiURLHandler*> mpHandlers;
 };
 
-class nuiHTTPHandler
+class nuiHTTPHandler : public nuiTCPClient
 {
 public:
-  nuiHTTPHandler(nuiTCPClient* pClient);
+  nuiHTTPHandler(nuiSocket::SocketType s);
   virtual ~nuiHTTPHandler();
 
   void SynchronousParse(); ///< Handle the http stream by blocking on read
@@ -73,7 +73,6 @@ protected:
     Header,
     Body
   };
-  nuiTCPClient* mpClient;
   nglString mCurrentLine;
   nglString mURL;
   nglString mMethod;
@@ -83,6 +82,11 @@ protected:
 
   std::map<nglString, nglString> mHeaders;
   std::vector<uint8> mBody;
+
+//  virtual void OnCanRead();
+//  virtual void OnCanWrite();
+//  virtual void OnReadClosed();
+//  virtual void OnWriteClosed();
 };
 
 class nuiHTTPServerThread : public nglThread
@@ -105,15 +109,19 @@ public:
   virtual ~nuiHTTPServer();
 
   void AcceptConnections();
-  void OnNewClient(nuiTCPClient* pClient);
-  void SetHandlerDelegate(const nuiFastDelegate1<nuiTCPClient*, nuiHTTPHandler*>& rDelegate);
+  void OnNewClient(nuiHTTPHandler* pClient);
+  void SetHandlerDelegate(const nuiFastDelegate1<nuiSocket::SocketType, nuiHTTPHandler*>& rDelegate);
 
   void SetClientStackSize(size_t StackSize);
   size_t GetClientStackSize() const;
+  
 protected:
-  nuiFastDelegate1<nuiTCPClient*, nuiHTTPHandler*> mDelegate;
+  virtual void OnCanRead();
+  nuiTCPClient* OnCreateClient(nuiSocket::SocketType sock);
 
-  nuiHTTPHandler* DefaultHandler(nuiTCPClient* pClient);
+  nuiFastDelegate1<nuiSocket::SocketType, nuiHTTPHandler*> mDelegate;
+
+  nuiHTTPHandler* DefaultHandler(nuiSocket::SocketType s);
   
   size_t mClientStackSize;
 };

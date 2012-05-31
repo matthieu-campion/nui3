@@ -55,6 +55,7 @@ public:
 protected:
   nuiSocket(SocketType Socket = -1);
   bool Init(int domain, int type, int protocol);
+  void Clear();
   
   struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost) const;
   void DumpError(int err) const;
@@ -79,7 +80,7 @@ public:
   nuiSocketPool();
   virtual ~nuiSocketPool();
   
-  void Add(nuiSocket* pSocket, TriggerMode ReadMode, TriggerMode WriteMode);
+  void Add(nuiSocket* pSocket, TriggerMode Mode);
   void Del(nuiSocket* pSocket);
   
   int DispatchEvents(int timeout_millisec);
