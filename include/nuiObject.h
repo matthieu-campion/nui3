@@ -109,6 +109,8 @@ public:
   inline void CheckValid() const
   {
 #ifdef _NUI_DEBUG_OBJECTS_
+    if (!mpTrace)
+      printf("Object bugged: CLASS:%s NAME:%s\n", mObjectClassNames[mClassNameIndex].GetChars(), mObjectName.GetChars());
     NGL_ASSERT(mpTrace);
 #else
     if (mpTrace)

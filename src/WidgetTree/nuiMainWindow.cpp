@@ -281,6 +281,11 @@ void nuiMainWindow::Paint()
     pContext->DrawRect(r, eStrokeAndFillShape);
   }
 
+//  if (mpDragFeedback)
+//  {
+//    
+//  }
+  
   pContext->StopRendering();
   EmptyTrash();
 
@@ -882,11 +887,26 @@ void nuiMainWindow::OnDragLeave()
     mpWidgetCanDrop->OnDropLeave();
     mpWidgetCanDrop = NULL;
   }
+  if (mpDragFeedback) {
+    mpDragFeedback->Trash();
+    mpDragFeedback = NULL;
+  }
 }
 
 
 nglDropEffect nuiMainWindow::OnCanDrop (nglDragAndDrop* pDragObject, int X, int Y, nglMouseInfo::Flags Button)
 {
+  if (!mpDragFeedback &&
+      mCreateDragFeedbackDelegate)
+  {
+    mpDragFeedback = mCreateDragFeedbackDelegate(pDragObject);
+    AddChild(mpDragFeedback);
+  }
+  if (mpDragFeedback) {
+    SetDragFeedbackRect(X,Y);
+//    InvalidateLayout();
+//    Invalidate();
+  }
   mLastEventTime = nglTime();
   mLastInteractiveEventTime = nglTime();
   
@@ -960,6 +980,10 @@ void nuiMainWindow::OnDragStop(bool canceled)
   if (mpDragSource && mpDragSource != this)
   {
     mpDragSource->OnDragStop(canceled); ///< advise drag source
+  }
+  if (mpDragFeedback) {
+    mpDragFeedback->Trash();
+    mpDragFeedback = NULL;
   }
 }
 

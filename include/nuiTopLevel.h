@@ -185,6 +185,8 @@ protected:
 #endif
   nuiLabel* mpInfoLabel;
 
+  nuiWidget* mpDragFeedback;
+
   typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
   nuiGrabMap mpGrab;
   bool HasGrab(nuiWidgetPtr pWidget); ///< Returns true if this \p pWidget has been grabbed by any touch
@@ -224,6 +226,8 @@ protected:
 #ifndef DISABLE_TOOLTIP
   void SetToolTipRect();
 #endif
+  void SetDragFeedbackRect(int X, int Y);
+
   nglMouseInfo::Flags mLastClickedButton;
 
   std::map<nglString, nuiHotKey*> mHotKeys;

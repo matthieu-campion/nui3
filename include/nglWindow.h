@@ -867,6 +867,11 @@ private:
   GLuint mDepthBuffer;
   nglContextInfo mContextInfo;
   StateChange mState;
+  bool mDragging;
+  nglDragAndDrop* mpDragged;
+public:
+  bool IsDragging() { return mDragging; }
+  nglDragAndDrop* GetDraggedObject() { return mpDragged; }
 #endif
 
 #ifdef _COCOA_
