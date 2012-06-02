@@ -83,7 +83,7 @@ protected:
   std::map<nglString, nglString> mHeaders;
   std::vector<uint8> mBody;
 
-//  virtual void OnCanRead();
+  virtual void OnCanRead();
 //  virtual void OnCanWrite();
 //  virtual void OnReadClosed();
 //  virtual void OnWriteClosed();
@@ -109,12 +109,12 @@ public:
   virtual ~nuiHTTPServer();
 
   void AcceptConnections();
-  void OnNewClient(nuiHTTPHandler* pClient);
   void SetHandlerDelegate(const nuiFastDelegate1<nuiSocket::SocketType, nuiHTTPHandler*>& rDelegate);
 
   void SetClientStackSize(size_t StackSize);
   size_t GetClientStackSize() const;
   
+  void SetClientThreading(bool set);
 protected:
   virtual void OnCanRead();
   nuiTCPClient* OnCreateClient(nuiSocket::SocketType sock);
@@ -124,5 +124,7 @@ protected:
   nuiHTTPHandler* DefaultHandler(nuiSocket::SocketType s);
   
   size_t mClientStackSize;
+  void OnNewClient(nuiHTTPHandler* pClient);
+  bool mThreadClients;
 };
 

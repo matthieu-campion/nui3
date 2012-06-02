@@ -18,6 +18,7 @@
 #endif
 
 class nuiNetworkHost;
+class nuiSocketPool;
 
 class nuiSocket
 {
@@ -53,8 +54,10 @@ public:
   virtual void OnWriteClosed();
 
 protected:
+  friend class nuiSocketPool;
   nuiSocket(SocketType Socket = -1);
   bool Init(int domain, int type, int protocol);
+  void SetPool(nuiSocketPool* pPool);
   void Clear();
   
   struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost) const;
@@ -66,6 +69,7 @@ protected:
   EventDelegate mReadCloseDelegate;
   EventDelegate mWriteCloseDelegate;
   bool mNonBlocking;
+  nuiSocketPool* mpPool;
 };
 
 class nuiSocketPool

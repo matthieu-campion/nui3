@@ -233,16 +233,98 @@ bool nuiTCPClient::CanWrite() const
   return IsWriteConnected();
 }
 
+
+// This is used by the client:
+size_t nuiTCPClient::BufferedSend(const uint8* pBuffer, size_t size)
+{
+  mOut.Write(pBuffer, size);
+  SendWriteBuffer();
+  return size;
+}
+
+size_t nuiTCPClient::BufferedSend(const nglString& rString)
+{
+  return BufferedSend((uint8*)rString.GetChars(), rString.GetLength());
+}
+
+size_t nuiTCPClient::BufferedReceive(uint8* pBuffer, size_t size)
+{
+  return mIn.Read(pBuffer, size);
+}
+
+// This is only used by stream handlers
+size_t nuiTCPClient::WriteToInputBuffer(const uint8* pBuffer, size_t size)
+{
+  return mIn.Write(pBuffer, size);
+}
+
+size_t nuiTCPClient::ReadFromOutputBuffer(uint8* pBuffer, size_t size)
+{
+  return mOut.Read(pBuffer, size);
+}
+
+
+void nuiTCPClient::OnCanRead()
+{
+  if (mReadDelegate)
+    mReadDelegate(*this);
+
+  std::vector<uint8> Data;
+  ReceiveAvailable(Data);
+
+  WriteToInputBuffer(&Data[0], Data.size());
+  //printf("%d write %d\n", GetSocket(), Data.size());
+}
+
+void nuiTCPClient::OnCanWrite()
+{
+  if (mWriteDelegate)
+    mWriteDelegate(*this);
+
+  SendWriteBuffer();
+}
+
+void nuiTCPClient::SendWriteBuffer()
+{
+  size_t s = mOut.GetSize();
+  
+  if (!s)
+    return;
+  
+  const uint8* pBuffer = mOut.GetBuffer();
+  
+  int done = Send(pBuffer, s);
+  if (done >= 0)
+    mOut.Eat(done);
+  //printf("%d eat %d\n", GetSocket(), done);
+}
+
+void nuiTCPClient::OnReadClosed()
+{
+  if (mReadCloseDelegate)
+    mReadCloseDelegate(*this);
+
+  printf("%d read closed\n", GetSocket());
+}
+
+void nuiTCPClient::OnWriteClosed()
+{
+  if (mWriteCloseDelegate)
+    mWriteCloseDelegate(*this);
+  printf("%d write closed\n", GetSocket());
+}
+
+
 //////////////////////////
 //class nuiPipe
 nuiPipe::nuiPipe()
 {
-
+  
 }
 
 nuiPipe::~nuiPipe()
 {
-
+  
 }
 
 size_t nuiPipe::Write(const uint8* pBuffer, size_t size)
@@ -250,7 +332,7 @@ size_t nuiPipe::Write(const uint8* pBuffer, size_t size)
   size_t p = mBuffer.size();
   mBuffer.resize(size + p);
   memcpy(&mBuffer[p], pBuffer, size);
-
+  
   return size;
 }
 
@@ -264,7 +346,7 @@ size_t nuiPipe::Read(uint8* pBuffer, size_t size)
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
-
+  
   memcpy(pBuffer, &mBuffer[0], todo);
   memmove(&mBuffer[0], &mBuffer[todo], remain);
   mBuffer.resize(remain);
@@ -286,7 +368,7 @@ void nuiPipe::Eat(size_t size)
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
-
+  
   memmove(&mBuffer[0], &mBuffer[todo], remain);
   mBuffer.resize(remain);
 }
@@ -298,86 +380,4 @@ void nuiPipe::Clear()
 }
 
 
-//class nuiBufferedTCPClient : public nuiTCPClient
-nuiBufferedTCPClient::nuiBufferedTCPClient()
-{
-}
-
-nuiBufferedTCPClient::~nuiBufferedTCPClient()
-{
-
-}
-
-// This is used by the client:
-size_t nuiBufferedTCPClient::BufferedWrite(const uint8* pBuffer, size_t size)
-{
-  return mOut.Write(pBuffer, size);
-}
-
-size_t nuiBufferedTCPClient::BufferedWrite(const nglString& rString)
-{
-  return BufferedWrite((uint8*)rString.GetChars(), rString.GetLength());
-}
-
-size_t nuiBufferedTCPClient::BufferedRead(uint8* pBuffer, size_t size)
-{
-  return mIn.Read(pBuffer, size);
-}
-
-// This is only used by stream handlers
-size_t nuiBufferedTCPClient::WriteToInputBuffer(const uint8* pBuffer, size_t size)
-{
-  return mIn.Write(pBuffer, size);
-}
-
-size_t nuiBufferedTCPClient::ReadFromOutputBuffer(uint8* pBuffer, size_t size)
-{
-  return mOut.Read(pBuffer, size);
-}
-
-
-void nuiBufferedTCPClient::OnCanRead()
-{
-  if (mReadDelegate)
-    mReadDelegate(*this);
-
-  std::vector<uint8> Data;
-  ReceiveAvailable(Data);
-
-  WriteToInputBuffer(&Data[0], Data.size());
-  //printf("%d write %d\n", GetSocket(), Data.size());
-}
-
-void nuiBufferedTCPClient::OnCanWrite()
-{
-  if (mWriteDelegate)
-    mWriteDelegate(*this);
-
-  size_t s = mOut.GetSize();
-
-  if (!s)
-    return;
-
-  const uint8* pBuffer = mOut.GetBuffer();
-
-  size_t done = Send(pBuffer, s);
-
-  mOut.Eat(done);
-  //printf("%d eat %d\n", GetSocket(), done);
-}
-
-void nuiBufferedTCPClient::OnReadClosed()
-{
-  if (mReadCloseDelegate)
-    mReadCloseDelegate(*this);
-
-  printf("%d read closed\n", GetSocket());
-}
-
-void nuiBufferedTCPClient::OnWriteClosed()
-{
-  if (mWriteCloseDelegate)
-    mWriteCloseDelegate(*this);
-  printf("%d write closed\n", GetSocket());
-}
 

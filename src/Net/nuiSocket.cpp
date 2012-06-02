@@ -20,7 +20,7 @@
 
 
 nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
-: mSocket(Socket)
+: mSocket(Socket), mpPool(NULL)
 {
 #if (!defined _LINUX_)
   int n = 0;
@@ -43,6 +43,8 @@ nuiSocket::~nuiSocket()
 {
   if (mSocket > 0)
   {
+    if (mpPool)
+      mpPool->Del(this);
 #ifdef WIN32
     //DisconnectEx(mSocket, NULL, 0, 0);
     closesocket(mSocket);
@@ -55,6 +57,11 @@ nuiSocket::~nuiSocket()
 nuiSocket::SocketType nuiSocket::GetSocket() const
 {
   return mSocket;
+}
+
+void nuiSocket::SetPool(nuiSocketPool* pPool)
+{
+  mpPool = pPool;
 }
 
 bool nuiSocket::GetLocalHost(nuiNetworkHost& rHost) const
@@ -239,16 +246,17 @@ nuiSocketPool::~nuiSocketPool()
 
 void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 {
+  pSocket->SetPool(this);
   struct kevent ev;
   memset(&ev, 0, sizeof(struct kevent));
   ev.ident = pSocket->GetSocket();
   ev.filter = EVFILT_READ;
   ev.flags = EV_ADD | EV_ENABLE;
-  if (Mode != eStateChange)
-    ev.flags |= EV_CLEAR;
+//  if (Mode != eStateChange)
+//    ev.flags |= EV_CLEAR;
   ev.udata = pSocket;
-  
   mChangeset.push_back(ev);
+
   ev.filter = EVFILT_WRITE;
   mChangeset.push_back(ev);
 
@@ -257,6 +265,7 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 
 void nuiSocketPool::Del(nuiSocket* pSocket)
 {
+  pSocket->SetPool(NULL);
   struct kevent ev;
   memset(&ev, 0, sizeof(struct kevent));
   ev.ident = pSocket->GetSocket();

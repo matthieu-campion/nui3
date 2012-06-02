@@ -10,6 +10,25 @@
 #include "nui.h"
 #include "nuiSocket.h"
 
+class nuiPipe
+{
+public:
+  nuiPipe();
+  virtual ~nuiPipe();
+  
+  size_t Write(const uint8* pBuffer, size_t size);
+  size_t Write(const nglString& rString);
+  size_t Read(uint8* pBuffer, size_t size);
+  size_t GetSize() const;
+  const uint8* GetBuffer() const;
+  void Eat(size_t size);
+  void Clear();
+  
+protected:
+  std::vector<uint8> mBuffer;
+};
+
+
 class nuiTCPClient : public nuiSocket
 {
 public:
@@ -35,55 +54,30 @@ public:
   
   bool Close();
   
+
+  // Buffered client interface:
+  size_t BufferedSend(const uint8* pBuffer, size_t size);
+  size_t BufferedSend(const nglString& rString);
+  size_t BufferedReceive(uint8* pBuffer, size_t size);
+  
+  virtual void OnCanRead();
+  virtual void OnCanWrite();
+  virtual void OnReadClosed();
+  virtual void OnWriteClosed();
+  
 protected:
   friend class nuiTCPServer;
   nuiTCPClient(int sock);
   bool mReadConnected;
   bool mWriteConnected;
-};
 
-class nuiPipe
-{
-public:
-  nuiPipe();
-  virtual ~nuiPipe();
-  
-  size_t Write(const uint8* pBuffer, size_t size);
-  size_t Write(const nglString& rString);
-  size_t Read(uint8* pBuffer, size_t size);
-  size_t GetSize() const;
-  const uint8* GetBuffer() const;
-  void Eat(size_t size);
-  void Clear();
-  
-protected:
-  std::vector<uint8> mBuffer;
-};
+  nuiPipe mIn;
+  nuiPipe mOut;
 
-
-
-class nuiBufferedTCPClient : public nuiTCPClient
-{
-public:
-  nuiBufferedTCPClient();
-  virtual ~nuiBufferedTCPClient();
-
-  // This is used by the client:
-  size_t BufferedWrite(const uint8* pBuffer, size_t size);
-  size_t BufferedWrite(const nglString& rString);
-  size_t BufferedRead(uint8* pBuffer, size_t size);
-  
   // This is only used by stream handlers
   size_t WriteToInputBuffer(const uint8* pBuffer, size_t size);
   size_t ReadFromOutputBuffer(uint8* pBuffer, size_t size);
-  
-  void OnCanRead();
-  void OnCanWrite();
-  void OnReadClosed();
-  void OnWriteClosed();
-  
-private:
-  nuiPipe mIn;
-  nuiPipe mOut;
+  void SendWriteBuffer();
 };
+
 
