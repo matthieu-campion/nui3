@@ -35,12 +35,12 @@ public:
 
   bool Drag(nglDragAndDrop* pDragObject);
 
-  void SetDropObject(nglDragAndDrop* pDrop) { mpDropObject = pDrop; }
+//  void SetDropObject(nglDragAndDrop* pDrop) { mpDropObject = pDrop; }
   void SetDragObject(nglDragAndDrop* pDrag) { mpDragObject = pDrag; }
-  nglDragAndDrop* GetDropObject()           { return mpDropObject; }
+//  nglDragAndDrop* GetDropObject()           { return mpDropObject; }
   nglDragAndDrop* GetDragObject()           { return mpDragObject; }
   
-  bool HasDropObject()                      { return mpDropObject ? true : false; }
+//  bool HasDropObject()                      { return mpDropObject ? true : false; }
   bool HasDragObject()                      { return mpDragObject ? true : false; }
 
   void SetCanDrop(bool can)                 { mCanDrop = can; }
@@ -54,7 +54,7 @@ public:
   bool        mCanDrop;
   
   nglDragAndDrop* mpDragObject;
-  nglDragAndDrop* mpDropObject;
+//  nglDragAndDrop* mpDropObject;
   
   
   EventRecord mEventRecord; // stupid but needed...
