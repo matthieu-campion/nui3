@@ -15,7 +15,7 @@ public:
   nuiSTN_Text(const nglString& rText)
   : mText(rText)
   {
-    NGL_OUT("nuiSTN_Text: '%s'\n", mText.GetChars());
+    //NGL_OUT("nuiSTN_Text: '%s'\n", mText.GetChars());
   }
   
   virtual bool Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate)
@@ -33,7 +33,7 @@ public:
   nuiSTN_Attribute(const nglString& rAttribute)
   : mAttribute(rAttribute)
   {
-    NGL_OUT("nuiSTN_Attribute: '%s'\n", mAttribute.GetChars());
+    //NGL_OUT("nuiSTN_Attribute: '%s'\n", mAttribute.GetChars());
   }
   
   virtual bool Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate)
@@ -55,7 +55,7 @@ public:
   nuiSTN_For(const nglString& rVariable, const nglString& rContainer)
   : mVariable(rVariable), mContainer(rContainer)
   {
-    NGL_OUT("nuiSTN_For: '%s' in '%s'\n", mVariable.GetChars(), mContainer.GetChars());
+    //NGL_OUT("nuiSTN_For: '%s' in '%s'\n", mVariable.GetChars(), mContainer.GetChars());
   }
   
   virtual bool Generate(nuiObject* pDataSource, const OutputDelegate& rOutputDelegate)
