@@ -91,6 +91,8 @@ public:
   bool IsCellVisible(uint32 col, uint32 row) const;
   void SetRowVisible(uint32 row, bool set);
   bool IsRowVisible(uint32 row) const;
+  void SetColumnVisible(uint32 col, bool set);
+  bool IsColumnVisible(uint32 col) const;
 
 
   // Add rows/columns:
@@ -156,6 +158,7 @@ protected:
   std::vector<nuiSize> mHeights;
   
   std::vector<bool> mRowVisible;
+  std::vector<bool> mColumnVisible;
 
   std::vector<nuiSize> mColumnWidths;
   std::vector<nuiSize> mRowHeights;

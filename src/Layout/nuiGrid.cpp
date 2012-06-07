@@ -168,6 +168,7 @@ void nuiGrid::Reset(uint32 nbcolumns, uint32 nbrows, bool clear)
   mMinimumRowSizes.resize(mNbRows, 0.f);
   
   mRowVisible.resize(mNbRows, true);
+  mColumnVisible.resize(mNbColumns, true);
 
 
   UpdateExpandRatio(mExpandGrowRows, mExpandGrowRowsCoeff);
@@ -220,6 +221,9 @@ nuiRect nuiGrid::CalcIdealSize()
 
     for (uint32 c = 0; c < mNbColumns; c++)
     {
+      if (!mColumnVisible[c])
+        continue;
+
       nuiWidget* pWidget = mGrid[c][r];
       if (pWidget != NULL)
       {
@@ -247,6 +251,9 @@ nuiRect nuiGrid::CalcIdealSize()
 
   for (uint32 c = 0; c < mNbColumns; c++)
   {
+    if (!mColumnVisible[c])
+      continue;
+
     nuiSize max = 0.f;
     for (uint32 r = 0; r < mNbRows; r++)
     {
@@ -449,10 +456,12 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
   nuiSize sizeX = 0.f;
   nuiSize sizeY = 0.f;
 
-  uint32 cpt = 0;
   std::vector< std::vector<nuiWidget* > >::const_iterator col_end = mGrid.end();
   for (col_it = mGrid.begin(); col_it != col_end; ++col_it, col++)
   {
+    if (!mColumnVisible[col])
+      continue;
+
     X += mVGaps[col] + mGridBorderSize;
     Y = 0.f;
     row = 0;
@@ -486,7 +495,6 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
 
       row++;
     }
-    cpt++;
     X += mVGaps[col] + sizeX;
   }
   
@@ -979,8 +987,11 @@ nuiSize nuiGrid::GetColumnMinPixels(uint32 col) const
 void nuiGrid::SetCellVisible(uint32 col, uint32 row, bool set)
 {
   nuiWidget* pWidget = GetCell(col, row);
-  pWidget->SetVisible(set);
-  pWidget->SetEnabled(set);
+  if (pWidget)
+  {
+    pWidget->SetVisible(set);
+    pWidget->SetEnabled(set);
+  }
 }
 
 bool nuiGrid::IsCellVisible(uint32 col, uint32 row) const
@@ -996,12 +1007,29 @@ void nuiGrid::SetRowVisible(uint32 row, bool set)
   
   for (uint32 col=0; col < mNbColumns; col++)
     SetCellVisible(col, row, set);
+  InvalidateLayout();
 }
 
 bool nuiGrid::IsRowVisible(uint32 row) const
 {
   NGL_ASSERT(row < mNbRows);
   return mRowVisible[row];
+}
+
+void nuiGrid::SetColumnVisible(uint32 col, bool set)
+{
+  NGL_ASSERT(col < mNbColumns);
+  mColumnVisible[col] = set;
+  
+  for (uint32 row=0; row < mNbRows; row++)
+    SetCellVisible(col, row, set);
+  InvalidateLayout();
+}
+
+bool nuiGrid::IsColumnVisible(uint32 col) const
+{
+  NGL_ASSERT(col < mNbColumns);
+  return mColumnVisible[col];
 }
 
 
@@ -1165,6 +1193,7 @@ bool nuiGrid::Clear()
   mMinimumColumnSizes.clear();
   
   mRowVisible.clear();
+  mColumnVisible.clear();
 
   InvalidateLayout();
   
@@ -1208,6 +1237,9 @@ bool nuiGrid::Draw(nuiDrawContext *pContext)
     nuiSize widthSoFar = 0.f;
     for (uint32 i = 0; i < mWidths.size(); i++)
     {
+      if (!mColumnVisible[i])
+        continue;
+
       widthSoFar += mVGaps[i];
 
       nuiSize heightSoFar = 0.f;
@@ -1274,6 +1306,10 @@ void nuiGrid::AddColumns(uint32 pos, uint32 columns)
   
   it = mMinimumColumnSizes.begin()+ pos;
   mMinimumColumnSizes.insert(it, columns, 0.f);
+
+  std::vector<bool>::iterator it2;
+  it2 = mColumnVisible.begin() + pos;
+  mColumnVisible.insert(it2, columns, true);
 
   UpdateExpandRatio(mExpandGrowColumns, mExpandGrowColumnsCoeff);
   UpdateExpandRatio(mExpandShrinkColumns, mExpandShrinkColumnsCoeff);
@@ -1342,6 +1378,12 @@ void nuiGrid::RemoveColumns(uint32 pos, uint32 columns)
   it = mMinimumColumnSizes.begin()+ pos;
   it_end = mMinimumColumnSizes.begin()+ pos + columns;
   mMinimumColumnSizes.erase(it, it_end);
+
+  std::vector<bool>::iterator it2;
+  std::vector<bool>::iterator it2_end;
+  it2 = mColumnVisible.begin() + pos;
+  it2_end = mColumnVisible.begin() + pos + columns;
+  mColumnVisible.erase(it2, it2_end);
 
   UpdateExpandRatio(mExpandGrowColumns, mExpandGrowColumnsCoeff);
   UpdateExpandRatio(mExpandShrinkColumns, mExpandShrinkColumnsCoeff);
