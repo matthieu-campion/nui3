@@ -85,8 +85,14 @@ int nuiTCPClient::Send(const uint8* pData, int len)
   int res = send(mSocket, pData, len, 0);
 #endif
 
-  if (res == -1)
+  if (res < 0)
+  {
+    if (errno == EWOULDBLOCK && mNonBlocking)
+      return res;
+
+    DumpError(errno);
     mWriteConnected = false;
+  }
 
   return res;
 }
@@ -111,8 +117,12 @@ int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
   int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
 #endif
 
+  //#FIXME testing twice for the same condition... which one is right???
   if (res < 0)
   {
+    if (errno == EWOULDBLOCK && mNonBlocking)
+      return res;
+
     mReadConnected = false;
     rData.clear();
     return 0;
@@ -146,6 +156,8 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
   }
   else if (res < 0)
   {
+    if (errno == EWOULDBLOCK && mNonBlocking)
+      return res;
     // Error
     return res;
   }
@@ -287,31 +299,31 @@ void nuiTCPClient::OnCanWrite()
 void nuiTCPClient::SendWriteBuffer()
 {
   size_t s = mOut.GetSize();
-  
+
   if (!s)
     return;
-  
+
   const uint8* pBuffer = mOut.GetBuffer();
-  
+
   int done = Send(pBuffer, s);
   if (done >= 0)
     mOut.Eat(done);
-  //printf("%d eat %d\n", GetSocket(), done);
+  //NGL_OUT("%p %d eat %d\n", this, GetSocket(), done);
 }
 
 void nuiTCPClient::OnReadClosed()
 {
-  if (mReadCloseDelegate)
-    mReadCloseDelegate(*this);
-
   printf("%d read closed\n", GetSocket());
+  nuiSocket::OnReadClosed();
+  mReadConnected = false;
+
 }
 
 void nuiTCPClient::OnWriteClosed()
 {
-  if (mWriteCloseDelegate)
-    mWriteCloseDelegate(*this);
-  printf("%d write closed\n", GetSocket());
+  NGL_OUT("%d write closed\n", GetSocket());
+  nuiSocket::OnWriteClosed();
+  mWriteConnected = false;
 }
 
 
@@ -319,12 +331,12 @@ void nuiTCPClient::OnWriteClosed()
 //class nuiPipe
 nuiPipe::nuiPipe()
 {
-  
+
 }
 
 nuiPipe::~nuiPipe()
 {
-  
+
 }
 
 size_t nuiPipe::Write(const uint8* pBuffer, size_t size)
@@ -332,7 +344,7 @@ size_t nuiPipe::Write(const uint8* pBuffer, size_t size)
   size_t p = mBuffer.size();
   mBuffer.resize(size + p);
   memcpy(&mBuffer[p], pBuffer, size);
-  
+
   return size;
 }
 
@@ -346,7 +358,7 @@ size_t nuiPipe::Read(uint8* pBuffer, size_t size)
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
-  
+
   memcpy(pBuffer, &mBuffer[0], todo);
   memmove(&mBuffer[0], &mBuffer[todo], remain);
   mBuffer.resize(remain);
@@ -368,7 +380,7 @@ void nuiPipe::Eat(size_t size)
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
-  
+
   memmove(&mBuffer[0], &mBuffer[todo], remain);
   mBuffer.resize(remain);
 }

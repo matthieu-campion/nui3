@@ -120,7 +120,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
     else
     {
       index++;
-      
+
       if (cur == 10)
       {
         // skip...
@@ -140,7 +140,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
-            
+
             mMethod = mCurrentLine.GetLeft(pos);
             //NGL_OUT("Method: %s\n", mMethod.GetChars());
             if (!OnMethod(mMethod))
@@ -148,7 +148,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
-            
+
             while (mCurrentLine[pos] == ' ')
               pos++;
             int pos2 = pos;
@@ -161,14 +161,14 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
-            
+
             pos = pos2;
             while (mCurrentLine[pos] == ' ')
               pos++;
             pos2 = pos;
             while (mCurrentLine[pos2] != '/')
               pos2++;
-            
+
             mProtocol = mCurrentLine.Extract(pos, pos2 - pos);
             mVersion = mCurrentLine.Extract(pos2 + 1);
             mVersion.Trim();
@@ -179,13 +179,13 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
-            
+
             mState = Header;
-            
+
             mCurrentLine.Wipe();
           }
             break;
-            
+
           case Header:
           {
             if (mCurrentLine.IsEmpty())
@@ -208,23 +208,23 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
                 Close();
                 return;
               }
-              
+
               nglString key = mCurrentLine.GetLeft(pos);
               nglString value = mCurrentLine.Extract(pos + 1);
-              
+
               key.Trim();
               value.Trim();
-              
+
               mHeaders[key] = value;
-              
-              //NGL_OUT("[%s]: '%s'\n", key.GetChars(), value.GetChars());
-              
+
+              NGL_OUT("HTTPheader %s: %s\n", key.GetChars(), value.GetChars());
+
               if (!OnHeader(key, value))
               {
                 Close();
                 return;
               }
-              
+
               mState = Header;
               mCurrentLine.Wipe();
             }
@@ -287,7 +287,7 @@ bool nuiHTTPHandler::ReplyLine(const nglString& rString)
     res = BufferedSend(rString);
     res &= BufferedSend("\r\n");
   }
-  else 
+  else
   {
     res = Send(rString);
     res &= Send("\r\n");

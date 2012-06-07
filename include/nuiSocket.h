@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -24,7 +24,7 @@ class nuiSocket
 {
 public:
   typedef nuiFastDelegate1<nuiSocket&> EventDelegate;
-  
+
 #ifdef WIN32
   typedef SOCKET SocketType;
 #else
@@ -32,22 +32,22 @@ public:
 #endif
 
   virtual ~nuiSocket();
-  
+
   SocketType GetSocket() const;
-  
+
   bool GetLocalHost(nuiNetworkHost& rHost) const;
   bool GetDistantHost(nuiNetworkHost& rHost) const;
 
   bool IsValid() const;
-  
+
   void SetNonBlocking(bool set);
   bool IsNonBlocking() const;
-  
+
   void SetCanReadDelegate(const EventDelegate& rDelegate);
   void SetCanWriteDelegate(const EventDelegate& rDelegate);
   void SetReadClosedDelegate(const EventDelegate& rDelegate);
   void SetWriteClosedDelegate(const EventDelegate& rDelegate);
-  
+
   virtual void OnCanRead();
   virtual void OnCanWrite();
   virtual void OnReadClosed();
@@ -59,10 +59,10 @@ protected:
   bool Init(int domain, int type, int protocol);
   void SetPool(nuiSocketPool* pPool);
   void Clear();
-  
+
   struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost) const;
   void DumpError(int err) const;
-  
+
   SocketType mSocket;
   EventDelegate mReadDelegate;
   EventDelegate mWriteDelegate;
@@ -80,15 +80,15 @@ public:
     eContinuous,
     eStateChange
   };
-  
+
   nuiSocketPool();
   virtual ~nuiSocketPool();
-  
+
   void Add(nuiSocket* pSocket, TriggerMode Mode);
   void Del(nuiSocket* pSocket);
-  
+
   int DispatchEvents(int timeout_millisec);
-  
+
 private:
 #ifdef NGL_KQUEUE
   // Kernel queue implementation (FreeBSD, Darwin...)
@@ -96,11 +96,12 @@ private:
   std::vector<struct kevent> mEvents;
   int mQueue;
 #endif
-  
+
 #ifdef NGL_EPOLL
   int mEPoll;
+  int mEventCount;
   std::vector<struct epoll_event> mEvents;
 #endif
-  
-  
+
+
 };

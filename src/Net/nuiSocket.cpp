@@ -105,10 +105,10 @@ void nuiSocket::SetNonBlocking(bool set)
 {
   if (mNonBlocking == set)
     return;
-  
+
   int flags;
   mNonBlocking = set;
-  
+
   /* If they have O_NONBLOCK, use the Posix way to do it */
 #if defined(O_NONBLOCK)
   /* Fixme: O_NONBLOCK is defined but broken on SunOS 4.1.x and AIX 3.2.5. */
@@ -213,6 +213,8 @@ void nuiSocket::DumpError(int err) const
     case W(EPROTOTYPE): error = "address has a different type than the socket that is bound to the specified peer address."; break;
     case W(ETIMEDOUT): error = " Connection establishment timed out without establishing a connection."; break;
     case W(ECONNRESET): error = "Remote host reset the connection request."; break;
+    case W(EWOULDBLOCK): error = "Would block."; break;
+
     default: error = "Unknown error "; error.Add(err); break;
   }
 
@@ -272,26 +274,26 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   ev.filter = EVFILT_READ;
   ev.flags = EV_DELETE;
   ev.udata = pSocket;
-  
+
   mChangeset.push_back(ev);
   ev.filter = EVFILT_WRITE;
   mChangeset.push_back(ev);
-  
+
   mEvents.resize(mEvents.size() - 2);
 }
 
 int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
 	struct timespec to;
-  
+
 	if (timeout_millisec >= 0)
   {
 		to.tv_sec = timeout_millisec / 1000;
 		to.tv_nsec = (timeout_millisec % 1000) * 1000000;	// nanosec
 	}
-  
+
 	int res = kevent(mQueue, &mChangeset[0], mChangeset.size(), &mEvents[0], mEvents.size(), (timeout_millisec >= 0) ? &to : (struct timespec *) 0);
-  
+
   mChangeset.clear();
 	if(res == -1)
   {
@@ -302,7 +304,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
 	if (res == 0)
 		return EWOULDBLOCK;
-  
+
   for (int i = 0; i < res; i++)
   {
     nuiSocket* pSocket = (nuiSocket*)mEvents[i].udata;
@@ -315,7 +317,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
         else
           pSocket->OnCanRead();
         break;
-      
+
       case EVFILT_WRITE:
         if (mEvents[i].flags == EV_EOF)
           pSocket->OnWriteClosed();
@@ -324,10 +326,10 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
         break;
     };
   }
-  
+
 	return 0;
 }
-  
+
 #endif //NGL_KQUEUE
 
 
@@ -335,6 +337,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 nuiSocketPool::nuiSocketPool()
 {
   mEPoll = epoll_create(100);
+  mEventCount = 0;
 }
 
 nuiSocketPool::~nuiSocketPool()
@@ -344,61 +347,80 @@ nuiSocketPool::~nuiSocketPool()
 
 void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 {
+NGL_OUT("nuiSocketPool::Add(%p, %d)\n", pSocket, Mode);
+  pSocket->SetPool(this);
   struct epoll_event ev;
   ev.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
   if (Mode == eStateChange)
     ev.events |= EPOLLET;
   ev.data.ptr = pSocket;
-  ev.data.fd = pSocket->GetSocket();
-  ev.data.u32 = 0;
-  ev.data.u64 = 0;
-  
+
   epoll_ctl(mEPoll, EPOLL_CTL_ADD, pSocket->GetSocket(), &ev);
-  mEvents.resize(mEvents.size() + 2);
+  mEventCount++;
 }
 
 void nuiSocketPool::Del(nuiSocket* pSocket)
 {
   epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
-  mEvents.resize(mEvents.size() - 2);
+  mEventCount--;
 }
 
 int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
-  int res = epoll_wait(mEPoll, &mEvents[0], mEvents.size(), timeout_millisec);
-  
+  if (mEventCount > mEvents.size())
+    mEvents.resize(mEventCount);
+
+  int res = epoll_wait(mEPoll, &mEvents[0], mEventCount, timeout_millisec);
+
 	if(res == -1)
   {
 		int err = errno;
 		NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents : %s (errno %d)\n", strerror(err), err);
 		return err;
 	}
-  
+
 	if (res == 0)
 		return EWOULDBLOCK;
-  
+
   for (int i = 0; i < res; i++)
   {
     nuiSocket* pSocket = (nuiSocket*)mEvents[i].data.ptr;
+    uint32_t events = mEvents[i].events;
+
     // dispatch events:
-    switch (mEvents[i].events)
+    if (events & EPOLLIN)
     {
-      case EPOLLIN:
-        pSocket->OnCanRead();
-        break;
-        
-      case EPOLLOUT:
-        pSocket->OnCanWrite();
-        break;
-        
-      case EPOLLRDHUP:
-      default:
+      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLIN %p\n", pSocket);
+      pSocket->OnCanRead();
+    }
+
+    if (events & EPOLLOUT)
+    {
+      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLOUT %p\n", pSocket);
+      pSocket->OnCanWrite();
+    }
+
+    if (events & EPOLLRDHUP)
+    {
+    		//NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLRDHUP %p\n", pSocket);
+        pSocket->OnReadClosed();
+    }
+
+    if (events & EPOLLHUP)
+    {
+    		NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLHUP %p\n", pSocket);
         pSocket->OnReadClosed();
         pSocket->OnWriteClosed();
-        break;
-    };
+    }
+
+    if (events & EPOLLERR)
+    {
+    		NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLERR %p\n", pSocket);
+        pSocket->OnReadClosed();
+        pSocket->OnWriteClosed();
+    }
   }
-  
+
 	return 0;
 }
 
