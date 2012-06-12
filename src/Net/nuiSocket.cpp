@@ -363,10 +363,14 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
 {
   epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
   mEventCount--;
+  if (IsInDispatch())
+    mDeletedFromPool.insert(pSocket);
 }
 
 int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
+  SetInDispatch(true);
+
   if (mEventCount > mEvents.size())
     mEvents.resize(mEventCount);
 
@@ -388,41 +392,63 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     uint32_t events = mEvents[i].events;
 
     // dispatch events:
-    if (events & EPOLLIN)
+    bool skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
+    if ((events & EPOLLIN) && !skip)
     {
       NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLIN %p\n", pSocket);
       pSocket->OnCanRead();
+      skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
-    if (events & EPOLLOUT)
+    if ((events & EPOLLOUT) && !skip)
     {
       NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLOUT %p\n", pSocket);
       pSocket->OnCanWrite();
+      skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
-    if (events & EPOLLRDHUP)
+    if ((events & EPOLLRDHUP) && !skip)
     {
-    		//NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLRDHUP %p\n", pSocket);
-        pSocket->OnReadClosed();
+      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLRDHUP %p\n", pSocket);
+      pSocket->OnReadClosed();
+      skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
-    if (events & EPOLLHUP)
+    if ((events & EPOLLHUP) && !skip)
     {
-    		NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLHUP %p\n", pSocket);
-        pSocket->OnReadClosed();
-        pSocket->OnWriteClosed();
+      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLHUP %p\n", pSocket);
+      pSocket->OnReadClosed();
+      pSocket->OnWriteClosed();
+      skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
-    if (events & EPOLLERR)
+    if ((events & EPOLLERR) && !skip)
     {
-    		NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLERR %p\n", pSocket);
-        pSocket->OnReadClosed();
-        pSocket->OnWriteClosed();
+      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLERR %p\n", pSocket);
+      pSocket->OnReadClosed();
+      pSocket->OnWriteClosed();
+      skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
   }
 
+  SetInDispatch(false);
 	return 0;
 }
 
 #endif //NGL_EPOLL
+
+bool nuiSocketPool::IsInDispatch() const
+{
+  return ngl_atomic_read(mInDispatch) != 0;
+}
+
+void nuiSocketPool::SetInDispatch(bool set)
+{
+  if (set)
+    ngl_atomic_compare_and_swap(mInDispatch, 0, 1);
+  else
+    ngl_atomic_compare_and_swap(mInDispatch, 1, 0);
+}
+
+
 

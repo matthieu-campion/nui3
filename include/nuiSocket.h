@@ -103,5 +103,9 @@ private:
   std::vector<struct epoll_event> mEvents;
 #endif
 
+  std::set<nuiSocket*> mDeletedFromPool;
+  nglAtomic mInDispatch;
 
+  bool IsInDispatch() const;
+  void SetInDispatch(bool set);
 };

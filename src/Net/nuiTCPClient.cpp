@@ -247,16 +247,17 @@ bool nuiTCPClient::CanWrite() const
 
 
 // This is used by the client:
-size_t nuiTCPClient::BufferedSend(const uint8* pBuffer, size_t size)
+size_t nuiTCPClient::BufferedSend(const uint8* pBuffer, size_t size, bool BufferOnly)
 {
   mOut.Write(pBuffer, size);
-  SendWriteBuffer();
+  if (!BufferOnly)
+    SendWriteBuffer();
   return size;
 }
 
-size_t nuiTCPClient::BufferedSend(const nglString& rString)
+size_t nuiTCPClient::BufferedSend(const nglString& rString, bool BufferOnly)
 {
-  return BufferedSend((uint8*)rString.GetChars(), rString.GetLength());
+  return BufferedSend((uint8*)rString.GetChars(), rString.GetLength(), BufferOnly);
 }
 
 size_t nuiTCPClient::BufferedReceive(uint8* pBuffer, size_t size)
