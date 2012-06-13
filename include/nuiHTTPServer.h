@@ -65,13 +65,15 @@ public:
   bool ReplyError(int32 code, const nglString& rErrorStr);
   bool Log(int32 code);
 
+  bool ReplyAndClose();
 
 protected:
   enum State
   {
     Request,
     Header,
-    Body
+    Body,
+    Done
   };
   nglString mCurrentLine;
   nglString mURL;

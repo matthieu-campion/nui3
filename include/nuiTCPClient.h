@@ -65,6 +65,8 @@ public:
   virtual void OnReadClosed();
   virtual void OnWriteClosed();
 
+  void SetAutoDelete(bool set); ///< Delete the client when the send buffer is empty after a call to SendWriteBuffer()
+  void SendWriteBuffer();
 protected:
   friend class nuiTCPServer;
   nuiTCPClient(int sock);
@@ -77,7 +79,8 @@ protected:
   // This is only used by stream handlers
   size_t WriteToInputBuffer(const uint8* pBuffer, size_t size);
   size_t ReadFromOutputBuffer(uint8* pBuffer, size_t size);
-  void SendWriteBuffer();
+
+  bool mAutoDelete;
 };
 
 

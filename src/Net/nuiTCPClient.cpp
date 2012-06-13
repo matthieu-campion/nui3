@@ -25,6 +25,7 @@ nuiTCPClient::nuiTCPClient()
 {
   mReadConnected = false;
   mWriteConnected = false;
+  mAutoDelete = false;
 }
 
 nuiTCPClient::nuiTCPClient(int sock)
@@ -32,6 +33,7 @@ nuiTCPClient::nuiTCPClient(int sock)
 {
   mReadConnected = true;
   mWriteConnected = true;
+  mAutoDelete = false;
 }
 
 nuiTCPClient::~nuiTCPClient()
@@ -276,6 +278,11 @@ size_t nuiTCPClient::ReadFromOutputBuffer(uint8* pBuffer, size_t size)
   return mOut.Read(pBuffer, size);
 }
 
+void nuiTCPClient::SetAutoDelete(bool set)
+{
+  mAutoDelete = set;
+}
+
 
 void nuiTCPClient::OnCanRead()
 {
@@ -295,6 +302,8 @@ void nuiTCPClient::OnCanWrite()
     mWriteDelegate(*this);
 
   SendWriteBuffer();
+  if (mAutoDelete && mOut.GetSize() == 0)
+    delete this;
 }
 
 void nuiTCPClient::SendWriteBuffer()

@@ -110,12 +110,20 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
   while (index < rData.size())
   {
     cur = rData[index];
-    if (mState == Body)
+
+    if (mState == Done)
+    {
+      return;
+    }
+    else if (mState == Body)
     {
       std::vector<uint8> d(rData.begin() + index, rData.end());
       //NGL_OUT("...Body data... (%d)\n", d.size());
       OnBodyData(d);
       index = rData.size();
+      
+      if (mState == Done)
+        return;
     }
     else
     {
@@ -148,6 +156,10 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
+            
+            if (mState == Done)
+              return;
+            
 
             while (mCurrentLine[pos] == ' ')
               pos++;
@@ -161,6 +173,10 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
+            
+            if (mState == Done)
+              return;
+            
 
             pos = pos2;
             while (mCurrentLine[pos] == ' ')
@@ -179,6 +195,9 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
+            
+            if (mState == Done)
+              return;
 
             mState = Header;
 
@@ -196,6 +215,10 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
                 Close();
                 return;
               }
+
+              if (mState == Done)
+                return;
+
               mState = Body;
             }
             else
@@ -224,6 +247,9 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
                 Close();
                 return;
               }
+
+              if (mState == Done)
+                return;
 
               mState = Header;
               mCurrentLine.Wipe();
@@ -315,6 +341,14 @@ bool nuiHTTPHandler::ReplyError(int32 code, const nglString& rErrorStr)
   // Log the error:
   Log(code);
 }
+
+bool nuiHTTPHandler::ReplyAndClose()
+{
+  SetAutoDelete(true);
+  mState = Done;
+  return true;
+}
+
 
 bool nuiHTTPHandler::Log(int32 code)
 {
