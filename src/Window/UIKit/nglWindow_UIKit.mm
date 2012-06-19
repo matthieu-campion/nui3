@@ -866,7 +866,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 	}
 	else
   {
-    nglString str((CFStringRef)string);
+    const char *p = [string UTF8String];
+    nglString str(p);
     mpNGLWindow->CallOnTextInput(str);
 	}
 
