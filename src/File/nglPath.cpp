@@ -1501,6 +1501,10 @@ int32 nglPath::GetRootPart() const
   int col = mPathName.Find(_T(':'), 0, true);
   int slash = mPathName.Find(_T('/'), 0, true);
   
+  // Not a volume
+  if (col < 0 || slash < 0)
+    return 0;
+  
   if (col < slash)
     return MIN(slash + 1, mPathName.GetLength());
   
