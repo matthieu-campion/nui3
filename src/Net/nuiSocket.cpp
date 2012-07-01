@@ -312,14 +312,14 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     switch (mEvents[i].filter)
     {
       case EVFILT_READ:
-        if (mEvents[i].flags == EV_EOF)
+        if (mEvents[i].flags & EV_EOF)
           pSocket->OnReadClosed();
         else
           pSocket->OnCanRead();
         break;
 
       case EVFILT_WRITE:
-        if (mEvents[i].flags == EV_EOF)
+        if (mEvents[i].flags & EV_EOF)
           pSocket->OnWriteClosed();
         else
           pSocket->OnCanWrite();
