@@ -963,12 +963,10 @@ void nuiWidget::BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRe
 
 void nuiWidget::Invalidate()
 {
-
-  if (CFRunLoopGetCurrent() != CFRunLoopGetMain())
-  {
-    printf("!!! WARNING !!! [ INVALIDATE CALLED FROM A BAD RUN LOOP ] !!! WARNING !!!\n");
-  }
-
+//  if (CFRunLoopGetCurrent() != CFRunLoopGetMain())
+//  {
+//    printf("!!! WARNING !!! [ INVALIDATE CALLED FROM A BAD RUN LOOP ] !!! WARNING !!!\n");
+//  }
 
   CheckValid();
   if ((mNeedRender && mNeedSelfRedraw))
