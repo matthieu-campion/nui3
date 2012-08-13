@@ -1070,6 +1070,11 @@ nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
       nglOFile db(fontdb, eOFileCreate);
       if (db.IsOpen())
         gManager.Save(db);
+      
+      // Prevent file from being backed-up on iCloud...
+      uint8 attrValue = 1;
+      int result = setxattr(fontdb.GetPathName().GetStdString().c_str(), "com.apple.MobileBackup", &attrValue, sizeof (attrValue), 0, 0);
+      NGL_ASSERT(result == 0);
     }
 #endif
     
