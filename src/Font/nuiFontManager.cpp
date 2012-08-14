@@ -16,6 +16,7 @@
 #include <CoreText/CoreText.h>
 #endif
 #include <CoreFoundation/CoreFoundation.h>
+#include <sys/xattr.h>
 #endif
 
 #include <ft2build.h>
