@@ -119,26 +119,20 @@ int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
   int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
 #endif
 
-  //#FIXME testing twice for the same condition... which one is right???
+  mReadConnected = res != 0;
+
   if (res < 0)
   {
     if (errno == EWOULDBLOCK && mNonBlocking)
       return res;
 
-    mReadConnected = false;
     rData.clear();
-    return 0;
-  }
-  else if (res < 0)
-  {
-    // Error
-    rData.clear();
-    return 0;
+    return res;
   }
 
   rData.resize(res);
 
-  return res != 0;
+  return res;
 }
 
 int nuiTCPClient::Receive(uint8* pData, int32 len)
@@ -152,17 +146,7 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
 #endif
 
 
-  if (res == 0)
-  {
-    mReadConnected = false;
-  }
-  else if (res < 0)
-  {
-    if (errno == EWOULDBLOCK && mNonBlocking)
-      return res;
-    // Error
-    return res;
-  }
+  mReadConnected = res != 0;
 
   return res;
 }
