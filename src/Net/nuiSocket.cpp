@@ -41,10 +41,11 @@ bool nuiSocket::Init(int domain, int type, int protocol)
 
 nuiSocket::~nuiSocket()
 {
+  if (mpPool)
+    mpPool->Del(this);
+
   if (mSocket > 0)
   {
-    if (mpPool)
-      mpPool->Del(this);
 #ifdef WIN32
     //DisconnectEx(mSocket, NULL, 0, 0);
     closesocket(mSocket);
@@ -361,6 +362,7 @@ NGL_OUT("nuiSocketPool::Add(%p, %d)\n", pSocket, Mode);
 
 void nuiSocketPool::Del(nuiSocket* pSocket)
 {
+  NGL_LOG("socket", NGL_LOG_ERROR, "nuiSocketPool::Del() %p\n", pSocket);
   epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
   mEventCount--;
   if (IsInDispatch())
@@ -380,11 +382,15 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   {
 		int err = errno;
 		NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents : %s (errno %d)\n", strerror(err), err);
-		return err;
+    SetInDispatch(false);
+    return err;
 	}
 
 	if (res == 0)
-		return EWOULDBLOCK;
+  {
+    SetInDispatch(false);
+  	return EWOULDBLOCK;
+  }
 
   for (int i = 0; i < res; i++)
   {
