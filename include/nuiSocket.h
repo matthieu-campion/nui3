@@ -53,12 +53,13 @@ public:
   virtual void OnReadClosed();
   virtual void OnWriteClosed();
 
+  virtual void Close();
+
 protected:
   friend class nuiSocketPool;
   nuiSocket(SocketType Socket = -1);
   bool Init(int domain, int type, int protocol);
   void SetPool(nuiSocketPool* pPool);
-  void Clear();
 
   struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost) const;
   void DumpError(int err) const;
@@ -92,9 +93,9 @@ public:
 private:
 #ifdef NGL_KQUEUE
   // Kernel queue implementation (FreeBSD, Darwin...)
-  std::vector<struct kevent> mChangeset;
   std::vector<struct kevent> mEvents;
   int mQueue;
+  int mNbSockets;
 #endif
 
 #ifdef NGL_EPOLL

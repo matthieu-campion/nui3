@@ -25,8 +25,6 @@ public:
   
   nuiTCPClient* Accept();
   
-  bool Close();
-  
 private:
   virtual nuiTCPClient* OnCreateClient(nuiSocket::SocketType sock);
 };

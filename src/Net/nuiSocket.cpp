@@ -41,11 +41,17 @@ bool nuiSocket::Init(int domain, int type, int protocol)
 
 nuiSocket::~nuiSocket()
 {
+  Close();
+}
+
+void nuiSocket::Close()
+{
   if (mpPool)
     mpPool->Del(this);
 
   if (mSocket > 0)
   {
+    shutdown(mSocket, 2);
 #ifdef WIN32
     //DisconnectEx(mSocket, NULL, 0, 0);
     closesocket(mSocket);
@@ -53,7 +59,10 @@ nuiSocket::~nuiSocket()
     close(mSocket);
 #endif
   }
+
+  mSocket = -1;
 }
+
 
 nuiSocket::SocketType nuiSocket::GetSocket() const
 {
@@ -240,6 +249,7 @@ void nuiSocket::DumpError(int err) const
 nuiSocketPool::nuiSocketPool()
 {
   mQueue = kqueue();
+  mNbSockets = 0;
 }
 
 nuiSocketPool::~nuiSocketPool()
@@ -258,12 +268,12 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 //  if (Mode != eStateChange)
 //    ev.flags |= EV_CLEAR;
   ev.udata = pSocket;
-  mChangeset.push_back(ev);
+	kevent(mQueue, &ev, 1, NULL, 0, 0);
 
   ev.filter = EVFILT_WRITE;
-  mChangeset.push_back(ev);
+	kevent(mQueue, &ev, 1, NULL, 0, 0);
 
-  mEvents.resize(mEvents.size() + 2);
+  mNbSockets++;
 }
 
 void nuiSocketPool::Del(nuiSocket* pSocket)
@@ -276,15 +286,22 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   ev.flags = EV_DELETE;
   ev.udata = pSocket;
 
-  mChangeset.push_back(ev);
-  ev.filter = EVFILT_WRITE;
-  mChangeset.push_back(ev);
+	kevent(mQueue, &ev, 1, NULL, 0, 0);
 
-  mEvents.resize(mEvents.size() - 2);
+  ev.filter = EVFILT_WRITE;
+	kevent(mQueue, &ev, 1, NULL, 0, 0);
+
+  mNbSockets--;
+
+  mDeletedFromPool.insert(pSocket);
 }
 
 int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
+  SetInDispatch(true);
+
+  mEvents.resize(mNbSockets * 2);
+
 	struct timespec to;
 
 	if (timeout_millisec >= 0)
@@ -293,13 +310,13 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 		to.tv_nsec = (timeout_millisec % 1000) * 1000000;	// nanosec
 	}
 
-	int res = kevent(mQueue, &mChangeset[0], mChangeset.size(), &mEvents[0], mEvents.size(), (timeout_millisec >= 0) ? &to : (struct timespec *) 0);
+	int res = kevent(mQueue, NULL, 0, &mEvents[0], mEvents.size(), (timeout_millisec >= 0) ? &to : (struct timespec *) 0);
 
-  mChangeset.clear();
 	if(res == -1)
   {
 		int err = errno;
 		NGL_LOG("socket", NGL_LOG_ERROR, "kqueue::waitForEvents : kevent : %s (errno %d)\n", strerror(err), err);
+    SetInDispatch(false);
 		return err;
 	}
 
@@ -309,25 +326,31 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   for (int i = 0; i < res; i++)
   {
     nuiSocket* pSocket = (nuiSocket*)mEvents[i].udata;
-    // dispatch events:
-    switch (mEvents[i].filter)
+    if (mDeletedFromPool.find(pSocket) == mDeletedFromPool.end())
     {
-      case EVFILT_READ:
-        if (mEvents[i].flags & EV_EOF)
-          pSocket->OnReadClosed();
-        else
-          pSocket->OnCanRead();
-        break;
+      // dispatch events:
+      switch (mEvents[i].filter)
+      {
+        case EVFILT_READ:
+          if (mEvents[i].flags & EV_EOF)
+            pSocket->OnReadClosed();
+          else
+            pSocket->OnCanRead();
+          break;
 
-      case EVFILT_WRITE:
-        if (mEvents[i].flags & EV_EOF)
-          pSocket->OnWriteClosed();
-        else
-          pSocket->OnCanWrite();
-        break;
-    };
+        case EVFILT_WRITE:
+          if (mEvents[i].flags & EV_EOF)
+            pSocket->OnWriteClosed();
+          else
+            pSocket->OnCanWrite();
+          break;
+      }
+    }
   }
 
+  mDeletedFromPool.clear();
+
+  SetInDispatch(false);
 	return 0;
 }
 

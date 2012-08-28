@@ -52,7 +52,7 @@ public:
   int32 GetAvailable() const;
   bool CanWrite() const;
 
-  bool Close();
+  void Close();
 
 
   // Buffered client interface:

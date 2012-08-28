@@ -167,19 +167,11 @@ int nuiTCPClient::Receive(std::vector<uint8>& rData)
 }
 
 
-bool nuiTCPClient::Close()
+void nuiTCPClient::Close()
 {
-#ifdef WIN32
-  //DisconnectEx(mSocket, NULL, 0, 0);
-  closesocket(mSocket);
-#else
-  close(mSocket);
-#endif
-
-  mSocket = -1;
+  nuiSocket::Close();
   mWriteConnected = false;
   mReadConnected = false;
-  return true;
 }
 
 bool nuiTCPClient::IsConnected() const

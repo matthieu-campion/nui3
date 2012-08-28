@@ -82,15 +82,6 @@ nuiTCPClient* nuiTCPServer::Accept()
   return pClient;
 }
 
-bool nuiTCPServer::Close()
-{
-#ifdef WIN32
-  return 0 == closesocket(mSocket);
-#else
-  return 0 == close(mSocket);
-#endif
-}
-
 nuiTCPClient* nuiTCPServer::OnCreateClient(nuiSocket::SocketType sock)
 {
   return new nuiTCPClient(sock);
