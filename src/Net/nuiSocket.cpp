@@ -379,14 +379,28 @@ NGL_OUT("nuiSocketPool::Add(%p, %d)\n", pSocket, Mode);
     ev.events |= EPOLLET;
   ev.data.ptr = pSocket;
 
-  epoll_ctl(mEPoll, EPOLL_CTL_ADD, pSocket->GetSocket(), &ev);
+  int res = epoll_ctl(mEPoll, EPOLL_CTL_ADD, pSocket->GetSocket(), &ev);
+  if(res != -1)
+  {
+    int err = errno;
+    NGL_LOG("socket", NGL_LOG_ERROR, "epoll::Add : %s (errno %d)\n", strerror(err), err);
+  }
+
   mEventCount++;
 }
 
 void nuiSocketPool::Del(nuiSocket* pSocket)
 {
+  pSocket->SetPool(NULL);
   NGL_LOG("socket", NGL_LOG_ERROR, "nuiSocketPool::Del() %p\n", pSocket);
-  epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
+  int res = epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
+  if(res != -1)
+  {
+    int err = errno;
+    NGL_LOG("socket", NGL_LOG_ERROR, "epoll::Del : %s (errno %d)\n", strerror(err), err);
+  }
+
+
   mEventCount--;
   if (IsInDispatch())
     mDeletedFromPool.insert(pSocket);
