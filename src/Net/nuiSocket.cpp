@@ -268,10 +268,10 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 //  if (Mode != eStateChange)
 //    ev.flags |= EV_CLEAR;
   ev.udata = pSocket;
-	kevent(mQueue, &ev, 1, NULL, 0, 0);
+  kevent(mQueue, &ev, 1, NULL, 0, 0);
 
   ev.filter = EVFILT_WRITE;
-	kevent(mQueue, &ev, 1, NULL, 0, 0);
+  kevent(mQueue, &ev, 1, NULL, 0, 0);
 
   mNbSockets++;
 }
@@ -286,10 +286,10 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   ev.flags = EV_DELETE;
   ev.udata = pSocket;
 
-	kevent(mQueue, &ev, 1, NULL, 0, 0);
+  kevent(mQueue, &ev, 1, NULL, 0, 0);
 
   ev.filter = EVFILT_WRITE;
-	kevent(mQueue, &ev, 1, NULL, 0, 0);
+  kevent(mQueue, &ev, 1, NULL, 0, 0);
 
   mNbSockets--;
 
@@ -302,26 +302,26 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
   mEvents.resize(mNbSockets * 2);
 
-	struct timespec to;
+  struct timespec to;
 
-	if (timeout_millisec >= 0)
+  if (timeout_millisec >= 0)
   {
-		to.tv_sec = timeout_millisec / 1000;
-		to.tv_nsec = (timeout_millisec % 1000) * 1000000;	// nanosec
-	}
+    to.tv_sec = timeout_millisec / 1000;
+    to.tv_nsec = (timeout_millisec % 1000) * 1000000; // nanosec
+  }
 
-	int res = kevent(mQueue, NULL, 0, &mEvents[0], mEvents.size(), (timeout_millisec >= 0) ? &to : (struct timespec *) 0);
+  int res = kevent(mQueue, NULL, 0, &mEvents[0], mEvents.size(), (timeout_millisec >= 0) ? &to : (struct timespec *) 0);
 
-	if(res == -1)
+  if(res == -1)
   {
-		int err = errno;
-		NGL_LOG("socket", NGL_LOG_ERROR, "kqueue::waitForEvents : kevent : %s (errno %d)\n", strerror(err), err);
+    int err = errno;
+    NGL_LOG("socket", NGL_LOG_ERROR, "kqueue::waitForEvents : kevent : %s (errno %d)\n", strerror(err), err);
     SetInDispatch(false);
-		return err;
-	}
+    return err;
+  }
 
-	if (res == 0)
-		return EWOULDBLOCK;
+  if (res == 0)
+    return EWOULDBLOCK;
 
   for (int i = 0; i < res; i++)
   {
@@ -351,7 +351,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   mDeletedFromPool.clear();
 
   SetInDispatch(false);
-	return 0;
+  return 0;
 }
 
 #endif //NGL_KQUEUE
@@ -371,7 +371,7 @@ nuiSocketPool::~nuiSocketPool()
 
 void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 {
-NGL_OUT("nuiSocketPool::Add(%p, %d)\n", pSocket, Mode);
+  NGL_OUT("nuiSocketPool::Add(%p, %d, %d)\n", pSocket, Mode, pSocket->GetSocket());
   pSocket->SetPool(this);
   struct epoll_event ev;
   ev.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
@@ -380,7 +380,8 @@ NGL_OUT("nuiSocketPool::Add(%p, %d)\n", pSocket, Mode);
   ev.data.ptr = pSocket;
 
   int res = epoll_ctl(mEPoll, EPOLL_CTL_ADD, pSocket->GetSocket(), &ev);
-  if(res != -1)
+
+  if (res != 0)
   {
     int err = errno;
     NGL_LOG("socket", NGL_LOG_ERROR, "epoll::Add : %s (errno %d)\n", strerror(err), err);
@@ -392,9 +393,11 @@ NGL_OUT("nuiSocketPool::Add(%p, %d)\n", pSocket, Mode);
 void nuiSocketPool::Del(nuiSocket* pSocket)
 {
   pSocket->SetPool(NULL);
-  NGL_LOG("socket", NGL_LOG_ERROR, "nuiSocketPool::Del() %p\n", pSocket);
+  NGL_LOG("socket", NGL_LOG_ERROR, "nuiSocketPool::Del(%p, %d)\n", pSocket, pSocket->GetSocket());
+
   int res = epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
-  if(res != -1)
+
+  if (res != 0)
   {
     int err = errno;
     NGL_LOG("socket", NGL_LOG_ERROR, "epoll::Del : %s (errno %d)\n", strerror(err), err);
@@ -415,51 +418,54 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
   int res = epoll_wait(mEPoll, &mEvents[0], mEventCount, timeout_millisec);
 
-	if(res == -1)
+  if(res == -1)
   {
-		int err = errno;
-		NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents : %s (errno %d)\n", strerror(err), err);
+    int err = errno;
+    NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents : %s (errno %d)\n", strerror(err), err);
     SetInDispatch(false);
+    mDeletedFromPool.clear();
     return err;
-	}
+  }
 
-	if (res == 0)
+  if (res == 0)
   {
     SetInDispatch(false);
-  	return EWOULDBLOCK;
+    mDeletedFromPool.clear();
+    return EWOULDBLOCK;
   }
 
   for (int i = 0; i < res; i++)
   {
     nuiSocket* pSocket = (nuiSocket*)mEvents[i].data.ptr;
     uint32_t events = mEvents[i].events;
+    //NGL_LOG("socket", NGL_LOG_ERROR, "epoll_wait [%d] %d/%d %p\n", res, pSocket->GetSocket(), mEvents[i].data.fd, pSocket);
 
     // dispatch events:
     bool skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     if ((events & EPOLLIN) && !skip)
     {
-      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLIN %p\n", pSocket);
+      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLIN %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnCanRead();
       skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
     if ((events & EPOLLOUT) && !skip)
     {
-      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLOUT %p\n", pSocket);
+      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLOUT %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnCanWrite();
       skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
     if ((events & EPOLLRDHUP) && !skip)
     {
-      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLRDHUP %p\n", pSocket);
+      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLRDHUP %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnReadClosed();
       skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
     if ((events & EPOLLHUP) && !skip)
     {
-      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLHUP %p\n", pSocket);
+      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLHUP %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnReadClosed();
       pSocket->OnWriteClosed();
       skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
@@ -467,7 +473,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
     if ((events & EPOLLERR) && !skip)
     {
-      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLERR %p\n", pSocket);
+      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLERR %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnReadClosed();
       pSocket->OnWriteClosed();
       skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
@@ -475,7 +481,8 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   }
 
   SetInDispatch(false);
-	return 0;
+  mDeletedFromPool.clear();
+  return 0;
 }
 
 #endif //NGL_EPOLL
