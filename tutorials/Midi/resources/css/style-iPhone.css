@@ -1,0 +1,21 @@
+//
+// main nui3 stylesheet
+//
+
+// you can include your stylesheets this way:
+#include "style-Common.css"
+
+
+@nuiFrame dMainBox
+{
+  Texture: "rsrc:/decorations/Background-iPhone.png";
+}
+
+
+"MainBox"!
+{
+  Decoration: dMainBox;
+}
+
+// blank ending line following
+

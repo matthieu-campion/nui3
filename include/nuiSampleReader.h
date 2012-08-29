@@ -23,14 +23,14 @@ public:
   
   virtual bool GetInfo(nuiSampleInfo& rInfo) const;
   
-  virtual uint32 ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32) = 0; ///< Returns the count sample frames actually read. Deinterlaced version.
-  virtual uint32 ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32) = 0; ///< Returns the count sample frames actually read. Interlaced version.
+  virtual int32 ReadDE(std::vector<void*> buffers, int32 sampleframes, nuiSampleBitFormat format = eSampleFloat32) = 0; ///< Returns the count sample frames actually read. Deinterlaced version.
+  virtual int32 ReadIN(void* pBuffer, int32 sampleframes, nuiSampleBitFormat format = eSampleFloat32) = 0; ///< Returns the count sample frames actually read. Interlaced version.
   
-  uint32 GetPosition() const;
-  virtual void SetPosition(uint32 position);
+  int64 GetPosition() const;
+  virtual void SetPosition(int64 position);
   
-  uint64 BytesToSampleFrames(uint64 inBytes) const;
-  uint64 SampleFramesToBytes(uint64 inSampleFrames) const;
+  int64 BytesToSampleFrames(int64 inBytes) const;
+  int64 SampleFramesToBytes(int64 inSampleFrames) const;
 protected:
   virtual bool ReadInfo() = 0;
   

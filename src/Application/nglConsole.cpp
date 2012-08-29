@@ -5,6 +5,7 @@
   licence: see nui3/LICENCE.TXT
 */
 
+
 #include "nui.h"
 #include "nglKernel.h"
 #include "nglConsole.h"
@@ -253,8 +254,10 @@ void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
     out.Formatv(pFormat, Args);
 #ifdef _WIN32_
     OutputDebugString(out.GetChars());
-#else
+#elif !defined _ANDROID_
     printf(_T("%s\n"), out.GetChars());
+#else
+    LOGI("%s", out.GetChars());
 #endif
 
   }

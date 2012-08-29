@@ -148,6 +148,7 @@ public:
   void ApplyWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 MatchersTag);
   void SetCSS(nuiCSS* pCSS);
   nuiCSS* GetCSS() const;
+  bool LoadCSS(const nglPath& rPath);
   
   virtual void EnterModalState();
   virtual void ExitModalState();

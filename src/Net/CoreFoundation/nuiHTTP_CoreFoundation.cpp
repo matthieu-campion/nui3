@@ -16,7 +16,7 @@
 #include <CoreServices/CoreServices.h>
 #endif//_UIKIT_
 
-nuiHTTPResponse* nuiHTTPRequest::SendRequest()
+nuiHTTPResponse* nuiHTTPRequest::SendRequest(const nuiHTTPResponseReceivedDelegate& rResponseReceived, const nuiHTTPDataReceivedDelegate& rDataReceived)
 {
   char* pUrl = mUrl.Export();
 	
@@ -69,77 +69,102 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
   CFReadStreamRef readStream = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, req);
   CFReadStreamOpen(readStream);
   
+  nuiHTTPResponse* pResponse = NULL;
+
+  
   std::vector<char> buf;
+  buf.resize(1024);
   CFIndex pos = 0;
   CFIndex size = 0;
   bool cont = true;
   do
   {
-    buf.resize(pos + 1024);
-    size = CFReadStreamRead(readStream, (UInt8*)&buf[pos], 1024);
+    size = CFReadStreamRead(readStream, (UInt8*)&buf[0], 1024);
+
+    if (!pResponse)
+    {
+      // get headers and create response message:
+      CFHTTPMessageRef responseHeader = (CFHTTPMessageRef)CFReadStreamCopyProperty(readStream, kCFStreamPropertyHTTPResponseHeader);
+      
+      CFStringRef statusLine = CFHTTPMessageCopyResponseStatusLine(responseHeader);
+      CFIndex strSize = CFStringGetLength(statusLine)+1;
+      char* pStatus = new char[strSize];
+      CFStringGetCString(statusLine, pStatus, strSize, kCFStringEncodingUTF8);
+      nglString status(pStatus);
+      
+      UInt32 statusCode = CFHTTPMessageGetResponseStatusCode(responseHeader);
+      
+      pResponse = new nuiHTTPResponse(statusCode, status);
+      
+      delete[] pStatus;
+      
+      CFDictionaryRef dict = CFHTTPMessageCopyAllHeaderFields(responseHeader);
+      CFIndex valueCount = CFDictionaryGetCount(dict);
+      const CFStringRef* pNames = new CFStringRef[valueCount];
+      const CFStringRef* pValues = new CFStringRef[valueCount];
+      CFDictionaryGetKeysAndValues(dict, (const void**)pNames, (const void**)pValues);
+      for (CFIndex i = 0; i< valueCount; i++)
+      {
+        strSize = CFStringGetLength(pNames[i])+1;
+        char* pName = new char[strSize];
+        CFStringGetCString(pNames[i], pName, strSize, kCFStringEncodingUTF8);
+        
+        strSize = CFStringGetLength(pValues[i])+1;
+        char* pVal = new char[strSize];
+        CFStringGetCString(pValues[i], pVal, strSize, kCFStringEncodingUTF8);
+        
+        nglString name(pName);
+        nglString val(pVal);
+        pResponse->AddHeader(name, val);
+        
+        delete[] pName;
+        delete[] pVal;
+      }
+      delete[] pNames;
+      delete[] pValues;
+    
+      CFRelease(responseHeader);
+      CFRelease(statusLine);
+      CFRelease(dict);
+      
+      //pResponse = new nuiHTTPResponse(statusCode, status);
+
+      if (rResponseReceived)
+        rResponseReceived(pResponse);
+    }
+    
     if (size == -1)
     {
       return NULL;
     }
-    else if (size == 0)
-    {
-      if (CFReadStreamGetStatus(readStream) == kCFStreamStatusAtEnd)
-        cont = false;
+    else
+    { 
+      bool doadd = true;
+      if (rDataReceived)
+        doadd = !rDataReceived(&buf[0], size);
+
+      if (size == 0)
+      {
+        if (CFReadStreamGetStatus(readStream) == kCFStreamStatusAtEnd)
+          cont = false;
+        else
+          nglThread::MsSleep(10);
+      }
       else
-        nglThread::MsSleep(10);
+      {
+        if (doadd)
+          pResponse->AddToBody(&buf[0], size);
+      }
     }
     
     pos += size;
   }
   while (cont);
   
-  CFHTTPMessageRef responseHeader = (CFHTTPMessageRef)CFReadStreamCopyProperty(readStream, kCFStreamPropertyHTTPResponseHeader);
-  
-  CFStringRef statusLine = CFHTTPMessageCopyResponseStatusLine(responseHeader);
-  CFIndex strSize = CFStringGetLength(statusLine)+1;
-  char* pStatus = new char[strSize];
-  CFStringGetCString(statusLine, pStatus, strSize, kCFStringEncodingUTF8);
-  nglString status(pStatus);
-  
-  UInt32 statusCode = CFHTTPMessageGetResponseStatusCode(responseHeader);
-  
-  nuiHTTPResponse* pResponse = new nuiHTTPResponse(statusCode, status);
-  pResponse->SetBody(&buf[0], pos);
-  
-  delete[] pStatus;
-  
-  CFDictionaryRef dict = CFHTTPMessageCopyAllHeaderFields(responseHeader);
-  CFIndex valueCount = CFDictionaryGetCount(dict);
-  const CFStringRef* pNames = new CFStringRef[valueCount];
-  const CFStringRef* pValues = new CFStringRef[valueCount];
-  CFDictionaryGetKeysAndValues(dict, (const void**)pNames, (const void**)pValues);
-  for (CFIndex i = 0; i< valueCount; i++)
-  {
-    strSize = CFStringGetLength(pNames[i])+1;
-    char* pName = new char[strSize];
-    CFStringGetCString(pNames[i], pName, strSize, kCFStringEncodingUTF8);
-    
-    strSize = CFStringGetLength(pValues[i])+1;
-    char* pVal = new char[strSize];
-    CFStringGetCString(pValues[i], pVal, strSize, kCFStringEncodingUTF8);
-    
-    nglString name(pName);
-    nglString val(pVal);
-    pResponse->AddHeader(name, val);
-    
-    delete[] pName;
-    delete[] pVal;
-  }
-  delete[] pNames;
-  delete[] pValues;
-  
-  CFRelease(responseHeader);
   CFRelease(url);
   CFRelease(method);
   CFRelease(req);
   CFRelease(readStream);
-  CFRelease(dict);
-  CFRelease(statusLine);
   if (body)
     CFRelease(body);
   

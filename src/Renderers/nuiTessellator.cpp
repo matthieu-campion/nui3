@@ -12,7 +12,7 @@
 #include "nuiPathGenerator.h"
 #include "nuiContour.h"
 
-#ifdef _UIKIT_
+#if (defined _UIKIT_) || (defined _ANDROID_)
 #    include "glu//GL/glu.h"
 #    include "glu/libtess/tess.h"
 #endif

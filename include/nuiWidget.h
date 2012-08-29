@@ -105,6 +105,27 @@ public:
   void SetBorder(nuiSize X, nuiSize Y); ///< Sets the empty space around the widget itself
   void GetBorder(nuiSize& rXLeft, nuiSize& rXRight, nuiSize& rYTop, nuiSize& rYBottom);
   void SetBorder(nuiSize XLeft, nuiSize XRight, nuiSize YTop, nuiSize YBottom); ///< Sets the empty space around the widget itself
+  void SetBorderLeft(nuiSize border);
+  void SetBorderTop(nuiSize border);
+  void SetBorderRight(nuiSize border);
+  void SetBorderBottom(nuiSize border);
+  nuiSize GetBorderLeft() const;
+  nuiSize GetBorderTop() const;
+  nuiSize GetBorderRight() const;
+  nuiSize GetBorderBottom() const;
+  nuiSize GetActualBorderLeft() const;
+  nuiSize GetActualBorderTop() const;
+  nuiSize GetActualBorderRight() const;
+  nuiSize GetActualBorderBottom() const;
+  
+  void SetOverDrawLeft(nuiSize border);
+  void SetOverDrawTop(nuiSize border);
+  void SetOverDrawRight(nuiSize border);
+  void SetOverDrawBottom(nuiSize border);
+  nuiSize GetOverDrawLeft() const;
+  nuiSize GetOverDrawTop() const;
+  nuiSize GetOverDrawRight() const;
+  nuiSize GetOverDrawBottom() const;
 
   virtual void SetVisibleRect(const nuiRect& rRect); ///< This sets the rectangle that will actually be displayed in the parent widget (for example in case this widget is inside a nuiScrollView, only a part of it may be visible at once). The rectangle is local to the widget rect.
   void SilentSetVisibleRect(const nuiRect& rRect); ///< This method change the visible rect of the widget without invalidating it. It is useful if you need to change the visible rect from a parent's SetRect method: you allready know that you will need to redraw it. See SetVisibleRect for more information.
@@ -118,7 +139,9 @@ public:
   virtual const nuiRect& GetIdealRect(); ///< Return the ideal area used by this Object. If the layout of this object has changed CalIdealRect will be called and mIdealRect will contain the ideal rectangle. If the user specified a user size then mIdealRect will be overwritten with mUserRect. 
   virtual const nuiRect& GetRect() const; ///< Return the current area used by this Object.
   virtual nuiRect GetBorderedRect() const; ///< Return the current area used by this Object including its border
-  
+  nuiRect GetBorderedRect(const nuiRect& rRect) const;
+  nuiRect GetBorderLessRect(const nuiRect& rRect) const;
+
   void SetUserWidth(nuiSize s);
   nuiSize GetUserWidth();
   void SetUserHeight(nuiSize s);
@@ -711,27 +734,6 @@ protected:
   static std::vector<nuiDecorationDelegate> mDefaultDecorations;
 
 
-  void SetBorderLeft(nuiSize border);
-  void SetBorderTop(nuiSize border);
-  void SetBorderRight(nuiSize border);
-  void SetBorderBottom(nuiSize border);
-  nuiSize GetBorderLeft() const;
-  nuiSize GetBorderTop() const;
-  nuiSize GetBorderRight() const;
-  nuiSize GetBorderBottom() const;
-  nuiSize GetActualBorderLeft() const;
-  nuiSize GetActualBorderTop() const;
-  nuiSize GetActualBorderRight() const;
-  nuiSize GetActualBorderBottom() const;
-
-  void SetOverDrawLeft(nuiSize border);
-  void SetOverDrawTop(nuiSize border);
-  void SetOverDrawRight(nuiSize border);
-  void SetOverDrawBottom(nuiSize border);
-  nuiSize GetOverDrawLeft() const;
-  nuiSize GetOverDrawTop() const;
-  nuiSize GetOverDrawRight() const;
-  nuiSize GetOverDrawBottom() const;
 
   void AutoHide(const nuiEvent& rEvent); ///< This methods calls SetVisible(false) right after the HIDE animation stopped
   void AutoInvalidate(const nuiEvent& rEvent); ///< This methods calls Invalidate()

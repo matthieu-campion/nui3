@@ -31,9 +31,14 @@
 
 #include "hb-font-private.hh"
 
+#include FT_ADVANCES_H
 #include FT_TRUETYPE_TABLES_H
 
-HB_BEGIN_DECLS
+
+
+#ifndef HB_DEBUG_FT
+#define HB_DEBUG_FT (HB_DEBUG+0)
+#endif
 
 
 /* TODO:
@@ -43,8 +48,12 @@ HB_BEGIN_DECLS
  *
  *   - We don't handle any load_flags.  That definitely has API implications. :(
  *     I believe hb_ft_font_create() should take load_flags input.
+ *     In particular, FT_Get_Advance() without the NO_HINTING flag seems to be
+ *     buggy.
  *
  *   - We don't handle / allow for emboldening / obliqueing.
+ *
+ *   - Rounding, etc?
  *
  *   - In the future, we should add constructors to create fonts in font space.
  *
@@ -85,12 +94,13 @@ hb_ft_get_glyph_h_advance (hb_font_t *font HB_UNUSED,
 			   void *user_data HB_UNUSED)
 {
   FT_Face ft_face = (FT_Face) font_data;
-  int load_flags = FT_LOAD_DEFAULT;
+  int load_flags = FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING;
+  FT_Fixed v;
 
-  if (unlikely (FT_Load_Glyph (ft_face, glyph, load_flags)))
+  if (unlikely (FT_Get_Advance (ft_face, glyph, load_flags, &v)))
     return 0;
 
-  return ft_face->glyph->metrics.horiAdvance;
+  return v >> 10;
 }
 
 static hb_position_t
@@ -100,14 +110,15 @@ hb_ft_get_glyph_v_advance (hb_font_t *font HB_UNUSED,
 			   void *user_data HB_UNUSED)
 {
   FT_Face ft_face = (FT_Face) font_data;
-  int load_flags = FT_LOAD_DEFAULT;
+  int load_flags = FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING | FT_LOAD_VERTICAL_LAYOUT;
+  FT_Fixed v;
 
-  if (unlikely (FT_Load_Glyph (ft_face, glyph, load_flags)))
+  if (unlikely (FT_Get_Advance (ft_face, glyph, load_flags, &v)))
     return 0;
 
   /* Note: FreeType's vertical metrics grows downward while other FreeType coordinates
    * have a Y growing upward.  Hence the extra negation. */
-  return -ft_face->glyph->metrics.vertAdvance;
+  return -v >> 10;
 }
 
 static hb_bool_t
@@ -236,23 +247,22 @@ static hb_font_funcs_t ft_ffuncs = {
   }
 };
 
-hb_font_funcs_t *
-hb_ft_get_font_funcs (void)
+static hb_font_funcs_t *
+_hb_ft_get_font_funcs (void)
 {
   return &ft_ffuncs;
 }
 
 
 static hb_blob_t *
-get_table  (hb_face_t *face HB_UNUSED, hb_tag_t tag, void *user_data)
+reference_table  (hb_face_t *face HB_UNUSED, hb_tag_t tag, void *user_data)
 {
   FT_Face ft_face = (FT_Face) user_data;
   FT_Byte *buffer;
   FT_ULong  length = 0;
   FT_Error error;
 
-  if (unlikely (tag == HB_TAG_NONE))
-    return NULL;
+  /* Note: FreeType like HarfBuzz uses the NONE tag for fetching the entire blob */
 
   error = FT_Load_Sfnt_Table (ft_face, tag, 0, NULL, &length);
   if (error)
@@ -292,8 +302,11 @@ hb_ft_face_create (FT_Face           ft_face,
     face = hb_face_create (blob, ft_face->face_index);
     hb_blob_destroy (blob);
   } else {
-    face = hb_face_create_for_tables (get_table, ft_face, destroy);
+    face = hb_face_create_for_tables (reference_table, ft_face, destroy);
   }
+
+  hb_face_set_index (face, ft_face->face_index);
+  hb_face_set_upem (face, ft_face->units_per_EM);
 
   return face;
 }
@@ -319,6 +332,11 @@ hb_ft_face_create_cached (FT_Face ft_face)
   return hb_face_reference ((hb_face_t *) ft_face->generic.data);
 }
 
+static void
+_do_nothing (void)
+{
+}
+
 
 hb_font_t *
 hb_ft_font_create (FT_Face           ft_face,
@@ -331,8 +349,8 @@ hb_ft_font_create (FT_Face           ft_face,
   font = hb_font_create (face);
   hb_face_destroy (face);
   hb_font_set_funcs (font,
-		     hb_ft_get_font_funcs (),
-		     ft_face, NULL);
+		     _hb_ft_get_font_funcs (),
+		     ft_face, (hb_destroy_func_t) _do_nothing);
   hb_font_set_scale (font,
 		     ((uint64_t) ft_face->size->metrics.x_scale * (uint64_t) ft_face->units_per_EM) >> 16,
 		     ((uint64_t) ft_face->size->metrics.y_scale * (uint64_t) ft_face->units_per_EM) >> 16);
@@ -344,4 +362,78 @@ hb_ft_font_create (FT_Face           ft_face,
 }
 
 
-HB_END_DECLS
+
+
+static FT_Library ft_library;
+static hb_bool_t ft_library_initialized;
+static struct ft_library_destructor {
+  ~ft_library_destructor (void) {
+    if (ft_library)
+      FT_Done_FreeType (ft_library);
+  }
+} static_ft_library_destructor;
+
+static FT_Library
+_get_ft_library (void)
+{
+  if (unlikely (!ft_library_initialized)) {
+    FT_Init_FreeType (&ft_library);
+    ft_library_initialized = TRUE;
+  }
+
+  return ft_library;
+}
+
+static void
+_release_blob (FT_Face ft_face)
+{
+  hb_blob_destroy ((hb_blob_t *) ft_face->generic.data);
+}
+
+void
+hb_ft_font_set_funcs (hb_font_t *font)
+{
+  hb_blob_t *blob = hb_face_reference_blob (font->face);
+  unsigned int blob_length;
+  const char *blob_data = hb_blob_get_data (blob, &blob_length);
+  if (unlikely (!blob_length))
+    DEBUG_MSG (FT, font, "Font face has empty blob");
+
+  FT_Face ft_face = NULL;
+  FT_Error err = FT_New_Memory_Face (_get_ft_library (),
+				     (const FT_Byte *) blob_data,
+				     blob_length,
+				     hb_face_get_index (font->face),
+				     &ft_face);
+
+  if (unlikely (err)) {
+    hb_blob_destroy (blob);
+    DEBUG_MSG (FT, font, "Font face FT_New_Memory_Face() failed");
+    return;
+  }
+
+  FT_Select_Charmap (ft_face, FT_ENCODING_UNICODE);
+
+  FT_Set_Char_Size (ft_face,
+		    font->x_scale, font->y_scale,
+		    font->x_ppem * 72 * 64 / font->x_scale,
+		    font->y_ppem * 72 * 64 / font->y_scale);
+
+  ft_face->generic.data = blob;
+  ft_face->generic.finalizer = (FT_Generic_Finalizer) _release_blob;
+
+  hb_font_set_funcs (font,
+		     _hb_ft_get_font_funcs (),
+		     ft_face,
+		     (hb_destroy_func_t) FT_Done_Face);
+}
+
+FT_Face
+hb_ft_font_get_face (hb_font_t *font)
+{
+  if (font->destroy == (hb_destroy_func_t) FT_Done_Face ||
+      font->destroy == (hb_destroy_func_t) _do_nothing)
+    return (FT_Face) font->user_data;
+
+  return NULL;
+}

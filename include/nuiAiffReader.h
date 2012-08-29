@@ -29,9 +29,9 @@ public:
   
   virtual nuiSampleReader* Clone(nglIStream& rStream) const;
   
-  uint32 ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
+  int32 ReadIN(void* pBuffer, int32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
   
-  virtual void SetPosition(uint32 position);
+  virtual void SetPosition(int64 position);
 private:
   virtual bool ReadInfo();
 };

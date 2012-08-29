@@ -48,7 +48,6 @@
 #include <errno.h>
 #include <stdarg.h>
 
-HB_BEGIN_DECLS
 
 
 /* Essentials */
@@ -66,7 +65,6 @@ HB_BEGIN_DECLS
 
 /* Basics */
 
-HB_END_DECLS
 
 #undef MIN
 template <typename Type> static inline Type MIN (const Type &a, const Type &b) { return a < b ? a : b; }
@@ -74,7 +72,6 @@ template <typename Type> static inline Type MIN (const Type &a, const Type &b) {
 #undef MAX
 template <typename Type> static inline Type MAX (const Type &a, const Type &b) { return a > b ? a : b; }
 
-HB_BEGIN_DECLS
 
 #undef  ARRAY_LENGTH
 #define ARRAY_LENGTH(__array) ((signed int) (sizeof (__array) / sizeof (__array[0])))
@@ -130,7 +127,7 @@ ASSERT_STATIC (sizeof (hb_var_int_t) == 4);
 #else
 #define HB_PURE_FUNC
 #define HB_CONST_FUNC
-#define HB_PRINTF_FUCN(format_idx, arg_idx)
+#define HB_PRINTF_FUNC(format_idx, arg_idx)
 #endif
 #if __GNUC__ >= 4
 #define HB_UNUSED	__attribute__((unused))
@@ -139,7 +136,11 @@ ASSERT_STATIC (sizeof (hb_var_int_t) == 4);
 #endif
 
 #ifndef HB_INTERNAL
-# define HB_INTERNAL __attribute__((__visibility__("hidden")))
+# ifndef __MINGW32__
+#  define HB_INTERNAL __attribute__((__visibility__("hidden")))
+# else
+#  define HB_INTERNAL
+# endif
 #endif
 
 
@@ -226,7 +227,6 @@ _hb_unsigned_int_mul_overflows (unsigned int count, unsigned int size)
 typedef int (*hb_compare_func_t) (const void *, const void *);
 
 
-HB_END_DECLS
 
 
 /* arrays and maps */
@@ -239,6 +239,8 @@ struct hb_prealloced_array_t {
   unsigned int allocated;
   Type *array;
   Type static_array[StaticSize];
+
+  hb_prealloced_array_t (void) { memset (this, 0, sizeof (*this)); }
 
   inline Type& operator [] (unsigned int i) { return array[i]; }
   inline const Type& operator [] (unsigned int i) const { return array[i]; }
@@ -343,15 +345,21 @@ struct hb_lockable_set_t
   hb_array_t <item_t> items;
 
   template <typename T>
-  inline item_t *replace_or_insert (T v, lock_t &l)
+  inline item_t *replace_or_insert (T v, lock_t &l, bool replace)
   {
     l.lock ();
     item_t *item = items.find (v);
     if (item) {
-      item_t old = *item;
-      *item = v;
-      l.unlock ();
-      old.finish ();
+      if (replace) {
+	item_t old = *item;
+	*item = v;
+	l.unlock ();
+	old.finish ();
+      }
+      else {
+        item = NULL;
+	l.unlock ();
+      }
     } else {
       item = items.push ();
       if (likely (item))
@@ -419,7 +427,6 @@ struct hb_lockable_set_t
 };
 
 
-HB_BEGIN_DECLS
 
 
 /* Big-endian handling */
@@ -466,7 +473,6 @@ static inline unsigned char TOLOWER (unsigned char c)
 
 /* Debug */
 
-HB_END_DECLS
 
 #ifndef HB_DEBUG
 #define HB_DEBUG 0
@@ -503,7 +509,9 @@ _hb_debug_msg (const char *what,
   va_start (ap, message);
 
   (void) (_hb_debug (level, max_level) &&
-	  fprintf (stderr, "%s(%p): ", what, obj) &&
+	  fprintf (stderr, "%s", what) &&
+	  (obj && fprintf (stderr, "(%p)", obj), TRUE) &&
+	  fprintf (stderr, ": ") &&
 	  (func && fprintf (stderr, "%s: ", func), TRUE) &&
 	  (indented && fprintf (stderr, "%-*d-> ", level + 1, level), TRUE) &&
 	  vfprintf (stderr, message, ap) &&
@@ -619,8 +627,6 @@ hb_bubble_sort (T *array, unsigned int len, int(*compar)(const T *, const T *))
 }
 
 
-HB_BEGIN_DECLS
 
-HB_END_DECLS
 
 #endif /* HB_PRIVATE_HH */

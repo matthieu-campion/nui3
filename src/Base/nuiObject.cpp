@@ -8,10 +8,6 @@
 #include "nui.h"
 #include "nui.h"
 #include "nuiObject.h"
-#include "nuiApplication.h"
-#include "nuiMainWindow.h"
-
-#include "nuiBuilder.h"
 
 //#define NUI_OBJECT_DEBUG_TOOLTIPS
 
@@ -20,9 +16,9 @@ using namespace std;
 
 nuiObject::nuiObject()
 : mpTrace(NULL)
-{	
+{
   nglString name;
-  name.CFormat(_T("%p"), this);
+  name.CFormat("%d", this);
   Init(name);
 }
 
@@ -34,7 +30,7 @@ nuiObject::nuiObject(const nglString& rObjectName)
 
 
 void nuiObject::Init(const nglString& rObjectName)
-{	
+{
 #ifdef _NUI_DEBUG_OBJECTS_
   {
     nglCriticalSectionGuard g(gObjectTraceCS);
@@ -54,14 +50,14 @@ void nuiObject::Init(const nglString& rObjectName)
 
   mClassNameIndex = -1;
   if (SetObjectClass(_T("nuiObject")))
+  {
     InitAttributes();
-  
+  }
   SetObjectName(rObjectName);
-  
+
   mSerializeMode = eSaveNode;
-  
+
   mpToken = NULL;
-  
 }
 
 
@@ -76,7 +72,7 @@ void nuiObject::InitAttributes()
 
   nuiAttribute<const nglString&>* AttributeName = new nuiAttribute<const nglString&>
   (nglString(_T("Name")), nuiUnitName,
-   nuiAttribute<const nglString&>::GetterDelegate(this, &nuiObject::GetObjectName), 
+   nuiAttribute<const nglString&>::GetterDelegate(this, &nuiObject::GetObjectName),
    nuiAttribute<const nglString&>::SetterDelegate(this, &nuiObject::SetObjectName));
 
 	AddAttribute(_T("Class"), AttributeClass);
@@ -97,12 +93,12 @@ bool nuiObject::Load(const nuiXMLNode* pNode)
 	nuiAttrib<const nglString&> att(GetAttribute(_T("Name")));
 	att.Set(name);
 	SetProperty(nglString(_T("Name")), name);
-	
+
 	// set the class of the node in the property xmlClass so that we can easily guess the final type even if we haven't finished the construction inheritance.
   SetProperty(nglString(_T("xmlClass")),pNode->GetName());
 
   mSerializeMode = eSaveNode;
-	
+
 	// search for object attributes in xml attributes
 	std::map<nglString, nuiAttribBase> attributes;
   GetAttributes(attributes);
@@ -114,16 +110,16 @@ bool nuiObject::Load(const nuiXMLNode* pNode)
 		{
 			if (base.IsReadOnly())
         continue;
-        
+
 			res &= base.Load(pNode);
 		}
 	}
-	
+
   return res;
 }
 
 nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{   
+{
   CheckValid();
   nuiXMLNode* pNode = NULL;
 
@@ -131,7 +127,7 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
     return NULL;
 
   NGL_OUT(_T("Serialize: %s\n"), GetObjectClass().GetChars());
-  
+
   if (mSerializeMode != eSkipNode)
   {
     if (pParentNode)
@@ -158,8 +154,8 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
   }
   else
     pNode = pParentNode;
-		
-	
+
+
   // save object attributes
 	std::map<nglString, nuiAttribBase>::const_iterator it;
 	std::map<nglString, nuiAttribBase> attributes;
@@ -171,8 +167,8 @@ nuiXMLNode* nuiObject::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
 
 		base.Serialize(pNode);
 	}
-	
-	
+
+
   return pNode;
 
 }
@@ -205,21 +201,21 @@ nuiObject::~nuiObject()
     // clean attributes
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].begin();
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
-    
+
     while (it != end)
     {
       nuiAttributeBase* pAttribute = it->second;
       pAttribute->KillAttributeHolder(this);
       ++it;
     }
-    
+
     c = mInheritanceMap[c];
   }
 
   // Kill instance attributes:
   std::map<nglString, nuiAttributeBase*>::iterator it = mInstanceAttributes.begin();
   std::map<nglString, nuiAttributeBase*>::iterator end = mInstanceAttributes.end();
-  
+
   while (it != end)
   {
     nuiAttributeBase* pAttrib = it->second;
@@ -228,7 +224,7 @@ nuiObject::~nuiObject()
   }
 
   mInstanceAttributes.clear();
-  
+
   if (mpTrace)
   {
     nglCriticalSectionGuard g(gObjectTraceCS);
@@ -262,9 +258,9 @@ void nuiObject::SetObjectName(const nglString& rName)
   }
 
   mObjectName = rName;
-  
+
   DebugRefreshInfo();
-	
+
 #ifdef NUI_OBJECT_DEBUG_TOOLTIPS
   {
     // Enable this to debug your tooltips and classes
@@ -273,7 +269,7 @@ void nuiObject::SetObjectName(const nglString& rName)
     SetProperty(_T("ToolTip"), tt);
   }
 #endif
-  
+
 }
 
 std::vector<int32> nuiObject::mInheritanceMap;
@@ -291,11 +287,11 @@ bool nuiObject::SetObjectClass(const nglString& rClass)
 
 //	const nglString propname = _T("Class");
 //  mProperties[propname] = rClass;
-    
+
   mClassNameIndex = c;
 
   DebugRefreshInfo();
-  
+
 #ifdef NUI_OBJECT_DEBUG_TOOLTIPS
   {
     // Enable this to debug your tooltips and classes
@@ -311,7 +307,7 @@ void nuiObject::GetObjectInheritance(std::vector<nglString>& rClasses) const
 {
   CheckValid();
   int32 c = mClassNameIndex;
-  
+
   do
   {
     rClasses.push_back(GetClassNameFromIndex(c));
@@ -332,14 +328,14 @@ bool nuiObject::IsOfClass(int32 ClassIndex) const
 {
   CheckValid();
   NGL_ASSERT(ClassIndex < mInheritanceMap.size());
-  
+
   int32 c = mClassNameIndex;
 
   while (c && c > ClassIndex)
   {
     c = mInheritanceMap[c];
   }
-  
+
   return c == ClassIndex;
 }
 
@@ -350,7 +346,7 @@ void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
 //  {
 //    NGL_OUT(_T("nuiObject::SetProperty for 0x%x %s / %s = %s\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rValue.GetChars());
 //  }
-  
+
   mProperties[rName] = rValue;
   OnPropertyChanged(rName, rValue);
   DebugRefreshInfo();
@@ -444,10 +440,10 @@ bool nuiObject::ClearProperties(bool ClearNameAndClassToo)
   {
     nuiPropertyMap::iterator it = mProperties.begin();
     nuiPropertyMap::iterator end = mProperties.end();
-    
+
     nglString strname("Name");
     nglString strclass("Class");
-    
+
     while ( it != end )
     {
       if ((*it).first != strname && (*it).first != strclass)
@@ -456,7 +452,7 @@ bool nuiObject::ClearProperties(bool ClearNameAndClassToo)
         ++it;
     }
   }
-  
+
   DebugRefreshInfo();
   return true;
 }
@@ -475,7 +471,7 @@ void nuiObject::SetToken(nuiTokenBase* pToken)
 nuiTokenBase* nuiObject::GetToken() const
 {
   CheckValid();
-  return mpToken;  
+  return mpToken;
 }
 
 
@@ -495,7 +491,7 @@ void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap)
   {
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mInstanceAttributes.begin();
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mInstanceAttributes.end();
-    
+
     while (it != end)
     {
       rAttributeMap.insert(make_pair(it->first, nuiAttribBase(const_cast<nuiObject*>(this), it->second)));
@@ -510,13 +506,13 @@ void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap)
     //printf("\t\tattr for class %s\n", GetClassNameFromIndex(c).GetChars());
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].begin();
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
-    
+
     while (it != end)
     {
       rAttributeMap.insert(make_pair(it->first, nuiAttribBase(const_cast<nuiObject*>(this), it->second)));
       ++it;
     }
-    
+
     c = mInheritanceMap[c];
   }
 }
@@ -524,7 +520,7 @@ void nuiObject::GetAttributes(std::map<nglString, nuiAttribBase>& rAttributeMap)
 void nuiObject::GetAttributesOfClass(uint32 ClassIndex, std::map<nglString, nuiAttributeBase*>& rAttributeMap)
 {
   rAttributeMap.clear();
-  
+
   // Add classes attributes:
   int32 c = ClassIndex;
   while (c >= 0)
@@ -532,13 +528,13 @@ void nuiObject::GetAttributesOfClass(uint32 ClassIndex, std::map<nglString, nuiA
     //printf("\t\tattr for class %s\n", GetClassNameFromIndex(c).GetChars());
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].begin();
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
-    
+
     while (it != end)
     {
       rAttributeMap.insert(*it);
       ++it;
     }
-    
+
     c = mInheritanceMap[c];
   }
 }
@@ -563,10 +559,10 @@ void nuiObject::GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const
     {
       nuiAttributeBase* pBase = it->second;
       rListToFill.push_back(nuiAttribBase(const_cast<nuiObject*>(this), pBase));
-      
+
       ++it;
     }
-    
+
     c = mInheritanceMap[c];
   }
 
@@ -578,11 +574,11 @@ void nuiObject::GetSortedAttributes(std::list<nuiAttribBase>& rListToFill) const
     {
       nuiAttributeBase* pBase = it->second;
       rListToFill.push_back(nuiAttribBase(const_cast<nuiObject*>(this), pBase));
-      
+
       ++it;
     }
   }
-  
+
   rListToFill.sort(NUIATTRIBUTES_COMPARE);
 }
 
@@ -596,25 +592,25 @@ nuiAttribBase nuiObject::GetAttribute(const nglString& rName) const
   {
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mInstanceAttributes.find(rName);
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mInstanceAttributes.end();
-    
+
     if (it != end)
       return nuiAttribBase(const_cast<nuiObject*>(this), it->second);
   }
-  
-  
+
+
   // Search classes attributes:
   int32 c = mClassNameIndex;
   while (c >= 0)
   {
     std::map<nglString,nuiAttributeBase*>::const_iterator it = mClassAttributes[c].find(rName);
     std::map<nglString,nuiAttributeBase*>::const_iterator end = mClassAttributes[c].end();
-    
+
     if (it != end)
       return nuiAttribBase(const_cast<nuiObject*>(this), it->second);
-    
+
     c = mInheritanceMap[c];
   }
-  
+
   return nuiAttribBase();
 }
 
@@ -644,7 +640,7 @@ void nuiObject::AddInstanceAttribute(const nglString& rName, nuiAttributeBase* p
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
   pAttribute->SetAsInstanceAttribute(true);
-  
+
   mInstanceAttributes[rName] = pAttribute;
 }
 
@@ -654,7 +650,7 @@ void nuiObject::AddInstanceAttribute(nuiAttributeBase* pAttribute)
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
   pAttribute->SetAsInstanceAttribute(true);
-  
+
   mInstanceAttributes[pAttribute->GetName()] = pAttribute;
 }
 
@@ -685,8 +681,8 @@ int32 nuiObject::GetClassNameIndex(const nglString& rName)
     mObjectClassNames.push_back(rName);
     mClassAttributes.resize(index + 1);
     mInheritanceMap.push_back(-2); // -1 = not parent, -2 = not initialized
-    //NGL_DEBUG( printf("New class: %s [%d]\n", rName.GetChars(), index); )
-    
+    NGL_DEBUG( printf("New class: %s [%d]\n", rName.GetChars(), index); )
+
     return index;
   }
   return mObjectClassNamesMap[rName];
@@ -721,7 +717,7 @@ const nglString& nuiObject::GetGlobalProperty(const nglString& rName)
   const nuiPropertyMap::const_iterator it = mGlobalProperties.find(rName);
   if (it == mGlobalProperties.end())
     return nglString::Null;
-  
+
   return it->second;
 }
 
@@ -751,13 +747,13 @@ bool nuiObject::GetGlobalProperties(std::list<nglString>& rPropertyNames)
 {
   nuiPropertyMap::const_iterator it = mGlobalProperties.begin();
   nuiPropertyMap::const_iterator end = mGlobalProperties.end();
-  
+
   while (it != end)
   {
     rPropertyNames.push_back(it->first);
     ++it;
   }
-  
+
   return true;
 }
 

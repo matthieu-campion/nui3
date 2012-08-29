@@ -16,11 +16,13 @@ This file includes all nui external and internal headers to create the precompil
 #include "nui.h"
 #include "ngl_all.h"
 #include "nuiObject.h"
+#include "nuiEvent.h"
+
+#ifndef _MINUI3_
 #include "nuiContainer.h"
 #include "nuiWidget.h"
 #include "nuiTopLevel.h"
 #include "nuiDrawContext.h"
-#include "nuiEvent.h"
 #include "nuiMouseEvent.h"
 #include "nuiRect.h"
 #include "nuiTheme.h"
@@ -39,6 +41,6 @@ This file includes all nui external and internal headers to create the precompil
 #include "nuiPoint.h"
 #include "nuiRenderState.h"
 #include "nuiWindowManager.h"
-
+#endif
 
 

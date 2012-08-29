@@ -19,3 +19,25 @@ nuiApplication::~nuiApplication()
 //  if (mpScriptEngine)
 //    mpScriptEngine->Release();
 }
+/*
+void nuiApplication::SetScriptEngine(nuiScriptEngine* pEngine)
+{
+  if (mpScriptEngine)
+    mpScriptEngine->Release();
+  mpScriptEngine = pEngine;
+  if (mpScriptEngine)
+    mpScriptEngine->Acquire();
+}
+
+nuiScriptEngine* nuiApplication::GetScriptEngine() const
+{
+  return mpScriptEngine;
+}
+
+void nuiApplication::EnableDefaultScriptEngine()
+{
+#ifndef _ANDROID_
+  mpScriptEngine = new nuiSpiderMonkey();
+#endif
+}
+*/

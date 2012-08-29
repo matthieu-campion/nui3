@@ -26,21 +26,17 @@
  * Red Hat Author(s): Behdad Esfahbod
  */
 
-#define HB_OT_LAYOUT_CC
-
 #include "hb-ot-layout-private.hh"
 
-#include "hb-ot-layout-gdef-private.hh"
-#include "hb-ot-layout-gsub-private.hh"
-#include "hb-ot-layout-gpos-private.hh"
-#include "hb-ot-head-private.hh"
-#include "hb-ot-maxp-private.hh"
+#include "hb-ot-layout-gdef-table.hh"
+#include "hb-ot-layout-gsub-table.hh"
+#include "hb-ot-layout-gpos-table.hh"
+#include "hb-ot-maxp-table.hh"
 
 
 #include <stdlib.h>
 #include <string.h>
 
-HB_BEGIN_DECLS
 
 
 hb_ot_layout_t *
@@ -58,9 +54,6 @@ _hb_ot_layout_create (hb_face_t *face)
   layout->gpos_blob = Sanitizer<GPOS>::sanitize (hb_face_reference_table (face, HB_OT_TAG_GPOS));
   layout->gpos = Sanitizer<GPOS>::lock_instance (layout->gpos_blob);
 
-  layout->head_blob = Sanitizer<head>::sanitize (hb_face_reference_table (face, HB_OT_TAG_head));
-  layout->head = Sanitizer<head>::lock_instance (layout->head_blob);
-
   return layout;
 }
 
@@ -70,7 +63,6 @@ _hb_ot_layout_destroy (hb_ot_layout_t *layout)
   hb_blob_destroy (layout->gdef_blob);
   hb_blob_destroy (layout->gsub_blob);
   hb_blob_destroy (layout->gpos_blob);
-  hb_blob_destroy (layout->head_blob);
 
   free (layout);
 }
@@ -89,11 +81,6 @@ static inline const GPOS&
 _get_gpos (hb_face_t *face)
 {
   return likely (face->ot_layout && face->ot_layout->gpos) ? *face->ot_layout->gpos : Null(GPOS);
-}
-static inline const head&
-_get_head (hb_face_t *face)
-{
-  return likely (face->ot_layout && face->ot_layout->head) ? *face->ot_layout->head : Null(head);
 }
 
 
@@ -506,15 +493,3 @@ hb_ot_layout_position_finish (hb_buffer_t  *buffer)
 }
 
 
-/*
- * head
- */
-
-unsigned int
-_hb_ot_layout_get_upem (hb_face_t *face)
-{
-  return _get_head (face).get_upem ();
-}
-
-
-HB_END_DECLS

@@ -35,7 +35,6 @@
 
 #include <locale.h>
 
-HB_BEGIN_DECLS
 
 
 /* hb_tag_t */
@@ -162,8 +161,10 @@ struct hb_language_item_t {
   void finish (void) { free (lang); }
 };
 
-static hb_static_mutex_t langs_lock;
-static hb_lockable_set_t<hb_language_item_t, hb_static_mutex_t> langs;
+static struct hb_static_lang_set_t : hb_lockable_set_t<hb_language_item_t, hb_static_mutex_t> {
+  ~hb_static_lang_set_t (void) { this->finish (lock); }
+  hb_static_mutex_t lock;
+} langs;
 
 hb_language_t
 hb_language_from_string (const char *str)
@@ -171,7 +172,7 @@ hb_language_from_string (const char *str)
   if (!str || !*str)
     return HB_LANGUAGE_INVALID;
 
-  hb_language_item_t *item = langs.find_or_insert (str, langs_lock);
+  hb_language_item_t *item = langs.find_or_insert (str, langs.lock);
 
   return likely (item) ? item->lang : HB_LANGUAGE_INVALID;
 }
@@ -300,17 +301,20 @@ static hb_static_mutex_t user_data_lock;
 bool
 hb_user_data_array_t::set (hb_user_data_key_t *key,
 			   void *              data,
-			   hb_destroy_func_t   destroy)
+			   hb_destroy_func_t   destroy,
+			   hb_bool_t           replace)
 {
   if (!key)
     return false;
 
-  if (!data && !destroy) {
-    items.remove (key, user_data_lock);
-    return true;
+  if (replace) {
+    if (!data && !destroy) {
+      items.remove (key, user_data_lock);
+      return true;
+    }
   }
   hb_user_data_item_t item = {key, data, destroy};
-  bool ret = !!items.replace_or_insert (item, user_data_lock);
+  bool ret = !!items.replace_or_insert (item, user_data_lock, replace);
 
   return ret;
 }
@@ -357,4 +361,3 @@ hb_version_check (unsigned int major,
 }
 
 
-HB_END_DECLS

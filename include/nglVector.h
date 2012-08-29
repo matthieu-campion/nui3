@@ -15,7 +15,7 @@
 
 //#include "nui.h"
 #include "nglMath.h"
-#include "nglApplication.h"
+//#include "nglApplication.h"
 
 
 /// Two dimensional vectors

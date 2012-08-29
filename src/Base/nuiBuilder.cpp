@@ -84,6 +84,12 @@
 #include "nuiScrollingLabel.h"
 #include "nuiSpinnerLabel.h"
 
+#include "nuiNavigationBar.h"
+#include "nuiNavigationController.h"
+#include "nuiNavigationButton.h"
+#include "nuiViewController.h"
+
+
 
 using namespace std;
 
@@ -149,7 +155,7 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiAnimView, "Container");
   NUI_ADD_WIDGET_CREATOR(nuiBackgroundPane, "Container");
   //NUI_ADD_WIDGET_CREATOR(nuiDialog, "Dialog");
-  //NUI_ADD_WIDGET_CREATOR(nuiFlowView, "Container");
+  NUI_ADD_WIDGET_CREATOR(nuiFlowView, "Container");
   //NUI_ADD_WIDGET_CREATOR(nuiImageSequence, "Container");
   NUI_ADD_WIDGET_CREATOR(nuiMatrixView, "Container");
   NUI_ADD_WIDGET_CREATOR(nuiModalContainer, "Container");
@@ -181,6 +187,12 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiScrollingLabel, "Widget");
   NUI_ADD_WIDGET_CREATOR(nuiSpinnerLabel, "Widget");
 
+  NUI_ADD_WIDGET_CREATOR(nuiNavigationBar, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiNavigationController, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiNavigationButton, "Widget");
+  NUI_ADD_WIDGET_CREATOR(nuiViewController, "Widget");
+
+  
 #ifndef _OPENGL_ES_
   NUI_ADD_WIDGET_CREATOR(nuiUserArea,"Widget");
 #endif

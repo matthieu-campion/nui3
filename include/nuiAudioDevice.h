@@ -11,25 +11,25 @@
 
 class nuiAudioDeviceManager;
 
-typedef nuiFastDelegate4<const std::vector<const float*>&, const std::vector<float*>&, uint32, uint64> nuiAudioProcessFn; // the params are two arrays of float*: input and output
+typedef nuiFastDelegate3<const std::vector<const float*>&, const std::vector<float*>&, int32> nuiAudioProcessFn; // the params are two arrays of float*: input and output
 
 class nuiAudioDevice
 {
 public:
   virtual ~nuiAudioDevice();
 
-  virtual bool Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction) = 0;
+  virtual bool Open(std::vector<int32>& rInputChannels, std::vector<int32>& rOutputChannels, double SampleRate, int32 BufferSize, nuiAudioProcessFn pProcessFunction) = 0;
   virtual bool Close() = 0;
 
   const nglString& GetAPIName() const; // CoreAudio / ASIO / DirectSound / MME ...
   const nglString& GetName() const;
   const nglString& GetManufacturer() const;
   const std::vector<double>& GetSampleRates() const;
-  const std::vector<uint32>& GetBufferSizes() const;
-  uint32 GetInputChannelCount() const;
-  uint32 GetOutputChannelCount() const;
-  const nglString& GetInputChannelName(uint32 InputChannel) const;
-  const nglString& GetOutputChannelName(uint32 OutputChannel) const;
+  const std::vector<int32>& GetBufferSizes() const;
+  int32 GetInputChannelCount() const;
+  int32 GetOutputChannelCount() const;
+  const nglString& GetInputChannelName(int32 InputChannel) const;
+  const nglString& GetOutputChannelName(int32 OutputChannel) const;
 
   bool IsPresent() const;
 
@@ -40,7 +40,7 @@ protected:
   nglString mName;
   nglString mManufacturer;
   std::vector<double> mSampleRates;
-  std::vector<uint32> mBufferSizes;
+  std::vector<int32> mBufferSizes;
   std::vector<nglString> mInputChannels;
   std::vector<nglString> mOutputChannels;
   bool mIsPresent;
@@ -55,9 +55,9 @@ public:
   {
     return mName;
   }
-  virtual uint32 GetDeviceCount() const = 0;
-  virtual nglString GetDeviceName(uint32 index) const = 0;
-  virtual nuiAudioDevice* GetDevice(uint32 index) = 0;
+  virtual int32 GetDeviceCount() const = 0;
+  virtual nglString GetDeviceName(int32 index) const = 0;
+  virtual nuiAudioDevice* GetDevice(int32 index) = 0;
   virtual nuiAudioDevice* GetDevice(const nglString& rDeviceName) = 0;
   virtual nuiAudioDevice* GetDefaultInputDevice() = 0;
   virtual nuiAudioDevice* GetDefaultOutputDevice() = 0;
@@ -69,7 +69,7 @@ protected:
   nglString mName;
 };
 
-typedef std::map<nglString, nuiAudioDeviceAPI*> APIMap;
+typedef std::map<nglString, nuiAudioDeviceAPI*> nuiAudioAPIMap;
 
 class nuiAudioDeviceManager
 {
@@ -82,10 +82,10 @@ public:
   nuiSimpleEventSource<0> DeviceConnected;
   nuiSimpleEventSource<0> DeviceDisconnected;
 
-  uint32 GetDeviceCount() const;
-  nuiAudioDevice* GetDevice(uint32 DeviceIndex);
-  nglString       GetDeviceName(uint32 DeviceIndex);
-  nglString       GetDeviceAPIName(uint32 DeviceIndex);
+  int32 GetDeviceCount() const;
+  nuiAudioDevice* GetDevice(int32 DeviceIndex);
+  nglString       GetDeviceName(int32 DeviceIndex);
+  nglString       GetDeviceAPIName(int32 DeviceIndex);
   nuiAudioDevice* GetDeviceWithNameAndAPI(const nglString& rDeviceName, const nglString& rApiName);
   nuiAudioDevice* GetDefaultOutputDevice();
   nuiAudioDevice* GetDefaultInputDevice();
@@ -97,7 +97,7 @@ protected:
   
   friend void nuiAudioDeviceAPI::RegisterWithManager(nuiAudioDeviceManager& rManager);
   void RegisterAPI(const nglString& rAPIName, nuiAudioDeviceAPI* pAPI);
-  APIMap mAPIs;
+  nuiAudioAPIMap mAPIs;
   
   int32 mDeviceCount;
 };

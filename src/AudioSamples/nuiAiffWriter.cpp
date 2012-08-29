@@ -147,11 +147,11 @@ bool nuiAiffWriter::Finalize()
 
 
 
-uint32 nuiAiffWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format)
+int32 nuiAiffWriter::Write(const void* pBuffer, int32 SampleFrames, nuiSampleBitFormat format)
 {
-  uint32 channels = mrSampleInfo.GetChannels();
-  const uint64 NbSamplePointsToRead = SampleFrames * mrSampleInfo.GetChannels();
-  uint32 SampleFramesRead = 0;
+  int32 channels = mrSampleInfo.GetChannels();
+  const int64 NbSamplePointsToRead = SampleFrames * mrSampleInfo.GetChannels();
+  int32 SampleFramesRead = 0;
   
   switch(format)
   {
@@ -213,7 +213,7 @@ uint32 nuiAiffWriter::Write(const void* pBuffer, uint32 SampleFrames, nuiSampleB
   }
   
   //add size read To size already read
-  uint64 NbFrames = mrSampleInfo.GetSampleFrames() + SampleFramesRead;
+  int64 NbFrames = mrSampleInfo.GetSampleFrames() + SampleFramesRead;
   mrSampleInfo.SetSampleFrames(NbFrames);
   return SampleFramesRead;
 }

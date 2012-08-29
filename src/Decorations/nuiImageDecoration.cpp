@@ -196,7 +196,7 @@ void nuiImageDecoration::SetColor(const nuiColor& rColor)
 
 void nuiImageDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {
-  if (!mpTexture || !mpTexture->GetImage() || !mpTexture->GetImage()->GetPixelSize())
+  if (!mpTexture)
     return;
   
   pContext->PushState();

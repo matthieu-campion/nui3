@@ -64,7 +64,7 @@ void nglVolume::Mount(nglVolume* pVolume)
 {
   nglCriticalSectionGuard guard(mCS);
   nglString name(pVolume->GetName());
-
+  
   VolumeMap::const_iterator it = mVolumes.find(name);
   uint32 i = 2;
   while (it != mVolumes.end())

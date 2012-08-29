@@ -582,10 +582,12 @@ void nuiAnimation::StartTasks(const nuiEvent& rEvent)
     }
     else
     {
+      static int count = 0;
       nuiTask* pTask = it->second;
       pTask->Run();
       pTask->Release();
       mOnNextTick.erase(it++);
+      count++;
     }
   }
 }

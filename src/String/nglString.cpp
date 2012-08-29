@@ -13,7 +13,7 @@ licence: see nui3/LICENCE.TXT
 #include "ucdata.h"
 
 #ifdef WINCE
-  #define ngl_vsnprintf	_vsprintf
+  #define ngl_vsnprintf	_vsnprintf
   #define ngl_snprintf	_snprintf
   #define ngl_strcmp		strcmp
   #define ngl_stricmp 		stricmp
@@ -36,9 +36,9 @@ licence: see nui3/LICENCE.TXT
   #define ngl_strncmp strncmp
   #define ngl_strnicmp strncasecmp
   #define ngl_mbs_stricmp strcasecmp
-#elif defined _LINUX_
+#elif defined _LINUX_ || defined _MINUI3_
   #include <ctype.h>
-  #define ngl_vsnprintf vsprintf
+  #define ngl_vsnprintf vsnprintf
   #define ngl_snprintf	snprintf
   #define ngl_strcmp strcmp
   #define ngl_stricmp strcasecmp
@@ -47,7 +47,10 @@ licence: see nui3/LICENCE.TXT
   #define ngl_mbs_stricmp strcasecmp
 #endif
 
-#ifdef WINCE
+#undef LOGI
+#define LOGI
+
+#if (defined WINCE) || (defined _ANDROID_)
 #define NO_LOCALE(x) \
 { \
   x; \
@@ -263,30 +266,49 @@ static int64 ngl_atoi(const nglChar* str, int base)
 
 ////////////////////////////////////////////////////////////////
 
-static inline int nat_isdigit(nglChar a)
+static inline int nat_isdigit(nglUChar a)
 {
   return iswdigit(a);
 }
 
+static inline int nat_isalpha(nglUChar a)
+{
+  return iswalpha(a);
+}
 
-static inline int64 nat_isspace(nglChar a)
+static inline int nat_isalnum(nglUChar a)
+{
+  return iswalnum(a);
+}
+
+static inline int64 nat_isspace(nglUChar a)
 {
   return iswspace(a);
 }
 
 
-bool nglIsDigit (nglChar a)
+bool nglIsDigit (nglUChar a)
 {
   return (nat_isdigit(a) != 0);
 }
 
-bool nglIsSpace (nglChar a)
+bool nglIsAlpha (nglUChar a)
+{
+  return (nat_isalpha(a) != 0);
+}
+
+bool nglIsAlphaNum (nglUChar a)
+{
+  return (nat_isalnum(a) != 0);
+}
+
+bool nglIsSpace (nglUChar a)
 {
   return (nat_isspace(a) != 0);
 }
 
 
-static inline nglChar nat_toupper(nglChar a)
+static inline nglChar nat_toupper(nglUChar a)
 {
   return towupper(a);
 }
@@ -612,7 +634,7 @@ nglUChar nglString::GetNextUChar(int32& Index) const
       UChar = c & (~0xC0);
       count = 1;
     }
-    
+
     for (uint32 i = 0; i < count; i++)
     {
       if (Index >= len)
@@ -623,7 +645,7 @@ nglUChar nglString::GetNextUChar(int32& Index) const
     }
   }
   //NGL_OUT(_T("%lc"), UChar);
-  
+
   return UChar;
 }
 
@@ -781,7 +803,7 @@ nglString nglString::Extract(int32 Index, int32 Length) const
     return nglString();
   if (Index + Length > len)
     Length = len - Index;
-  return nglString(mString.substr(Index, Length));
+  return nglString(mString.substr(Index, Length), eEncodingInternal);
 }
 
 
@@ -880,6 +902,14 @@ int32 nglString::Import(const char* pBuffer, const nglTextEncoding Encoding)
     return false;
 
   mIsNull = false;
+  
+  
+  if (Encoding == eEncodingInternal)
+  {
+    Copy(pBuffer);
+    return GetLength();
+  }
+
   int32 offset = 0;
   int32 len = (int32)strlen((char*)pBuffer);
 
@@ -891,6 +921,12 @@ int32 nglString::Import (const char* pBuffer, int32 ByteCount, const nglTextEnco
   if (!pBuffer)
     return false;
 
+  if (Encoding == eEncodingInternal)
+  {
+    Copy(pBuffer, ByteCount);
+    return GetLength();
+  }
+  
   mIsNull = false;
   int32 offset = 0;
 
@@ -1422,7 +1458,7 @@ static const char HEX2DEC[256] =
   /* F */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
 };
 
-inline static nglChar Hex2Dec(nglChar c)
+inline static nglChar Hex2Dec(nglUChar c)
 {
   if (c > 255)
     return -1;
@@ -1575,7 +1611,9 @@ nglString& nglString::Format(const nglChar* pFormat, ...)
 nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 {
   if (!pFormat)
+  {
     return *this;
+  }
 
   mIsNull = false;
   nglChar sbuffer[FORMAT_BUFSIZE+1];
@@ -1585,7 +1623,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
 #ifndef WIN32
   va_list args_copy;
   va_copy(args_copy, args);
-#else 
+#else
 //#define args_copy args
   va_list args_copy = args;
 #endif
@@ -1604,7 +1642,7 @@ nglString& nglString::Formatv(const nglChar* pFormat, va_list args)
       len = l;
   }
 #endif
-  
+
   if (len >= 0 && len <= FORMAT_BUFSIZE)
   {
     /* Output fits in the stack buffer, copy it
@@ -1660,7 +1698,9 @@ nglString& nglString::Formatv(const nglString& rFormat, va_list Args)
 nglString& nglString::CFormat(const nglChar* pFormat, ...)
 {
   if (!pFormat)
+  {
     return *this;
+  }
 
   mIsNull = false;
   va_list args;
@@ -1675,7 +1715,9 @@ nglString& nglString::CFormat(const nglChar* pFormat, ...)
 nglString& nglString::CFormat(const nglString& rFormat, ...)
 {
   if (rFormat.IsNull())
+  {
     return *this;
+  }
 
   mIsNull = false;
   va_list args;
@@ -1924,6 +1966,8 @@ int32 nglString::HexDump(const char* pBuffer, int32 ByteCount, bool PrintChar, i
 
 int32 nglString::Compare(const nglChar* pSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   const nglChar* pLocal = &mString[0];
   int result = (CaseSensitive) ?
     ngl_strcmp(pLocal, pSource) :
@@ -1936,11 +1980,17 @@ int32 nglString::Compare(const nglChar* pSource, bool CaseSensitive) const
 
 int32 nglString::Compare(const nglString& rSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return Compare(&rSource.mString[0], CaseSensitive);
 }
 
 int32 nglString::Compare(const nglChar* pSource, int32 Index, int32 Length, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   // Warning, no check against pSource bounds wrt. Index
   int result = (CaseSensitive) ?
     ngl_strncmp (&(mString[Index]), pSource, Length) :
@@ -1953,11 +2003,17 @@ int32 nglString::Compare(const nglChar* pSource, int32 Index, int32 Length, bool
 
 int32 nglString::Compare(const nglString& rSource, int32 Index, int32 Length, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return Compare(&rSource.mString[0], Index, Length, CaseSensitive);
 }
 
 int32 nglString::CompareNatural(const nglChar* pSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   int32 result = (CaseSensitive) ?
     strnatcmp(&mString[0], pSource) :
   strnatcasecmp(&mString[0], pSource);
@@ -1969,11 +2025,17 @@ int32 nglString::CompareNatural(const nglChar* pSource, bool CaseSensitive) cons
 
 int nglString::CompareNatural(const nglString& rSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return CompareNatural(&rSource.mString[0], CaseSensitive);
 }
 
 int32 nglString::CompareLeft(const nglChar* pSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return !pSource ? 0 : -1;
   if (CaseSensitive)
   {
     uint32 pos = 0;
@@ -2007,6 +2069,10 @@ int32 nglString::CompareLeft(const nglChar* pSource, bool CaseSensitive) const
 
 int32 nglString::CompareLeft(const nglString& rSource, bool CaseSensitive) const
 {
+  if (IsNull())
+    return rSource.IsNull() ? 0 : -1;
+  if (rSource.IsNull())
+    return 1;
   return CompareLeft(&rSource.mString[0], CaseSensitive);
 }
 
@@ -2602,31 +2668,31 @@ void nglString::ToCanonicalDecomposition()
 }
 
 /* Base64 code is stolen from http://www.adp-gmbh.ch/cpp/common/base64.html and adapted to nui's strings by SŽbastien MŽtrot.
- 
+
  base64.cpp and base64.h
- 
+
  Copyright (C) 2004-2008 RenŽ Nyffenegger
- 
+
  This source code is provided 'as-is', without any express or implied
  warranty. In no event will the author be held liable for any damages
  arising from the use of this software.
- 
+
  Permission is granted to anyone to use this software for any purpose,
  including commercial applications, and to alter it and redistribute it
  freely, subject to the following restrictions:
- 
+
  1. The origin of this source code must not be misrepresented; you must not
  claim that you wrote the original source code. If you use this source code
  in a product, an acknowledgment in the product documentation would be
  appreciated but is not required.
- 
+
  2. Altered source versions must be plainly marked as such, and must not be
  misrepresented as being the original source code.
- 
+
  3. This notice may not be removed or altered from any source distribution.
- 
+
  RenŽ Nyffenegger rene.nyffenegger@adp-gmbh.ch
- 
+
  */
 
 static const std::string base64_chars = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
@@ -2644,9 +2710,9 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
   int j = 0;
   unsigned char char_array_3[3];
   unsigned char char_array_4[4];
-  
+
   int chars_in_line = 0;
-  
+
   while (in_len--)
   {
     char_array_3[i++] = *(bytes_to_encode++);
@@ -2656,11 +2722,11 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
       char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
       char_array_4[3] = char_array_3[2] & 0x3f;
-      
+
       for(i = 0; (i <4) ; i++)
-        Add((nglChar)base64_chars[char_array_4[i]]);    
+        Add((nglChar)base64_chars[char_array_4[i]]);
       i = 0;
-      
+
       chars_in_line++;
       if (chars_in_line > 60)
       {
@@ -2669,17 +2735,17 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
       }
     }
   }
-  
+
   if (i)
   {
     for(j = i; j < 3; j++)
       char_array_3[j] = '\0';
-    
+
     char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
     char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
     char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
     char_array_4[3] = char_array_3[2] & 0x3f;
-    
+
     for (j = 0; (j < i + 1); j++)
     {
       Add((nglChar)base64_chars[char_array_4[j]]);
@@ -2691,7 +2757,7 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
         chars_in_line = 0;
       }
     }
-    
+
     while((i++ < 3))
     {
       chars_in_line++;
@@ -2703,7 +2769,7 @@ void nglString::EncodeBase64(const uint8* bytes_to_encode, unsigned int in_len)
 
       Add((nglChar)'=');
     }
-    
+
   }
 
 }
@@ -2718,45 +2784,45 @@ void nglString::DecodeBase64(std::vector<uint8>& rDecoded) const
   int32 in_ = 0;
   nglChar char_array_4[4];
   nglChar char_array_3[3];
-  
+
   while (in_len-- && ( GetChar(in_) != _T('=')) && is_base64(GetChar(in_)))
   {
     char_array_4[i++] = GetChar(in_);
     in_++;
-    
-    if (i == 4) 
+
+    if (i == 4)
     {
       for (i = 0; i < 4; i++)
         char_array_4[i] = base64_chars.find(char_array_4[i]);
-      
+
       char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
       char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
       char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
-      
+
       for (i = 0; (i < 3); i++)
         rDecoded.push_back((uint8)char_array_3[i]);
       i = 0;
     }
   }
-  
+
   if (i)
   {
     for (j = i; j <4; j++)
       char_array_4[j] = 0;
-    
+
     for (j = 0; j <4; j++)
       char_array_4[j] = base64_chars.find(char_array_4[j]);
-    
+
     char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
     char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
     char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
-    
+
     for (j = 0; (j < i - 1); j++)
       rDecoded.push_back((uint8)char_array_3[j]);
   }
 }
 
-/* End of base64 code by RenŽ Nyffenegger */ 
+/* End of base64 code by RenŽ Nyffenegger */
 
 
 

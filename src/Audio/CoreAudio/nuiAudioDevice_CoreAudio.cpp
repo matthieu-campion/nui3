@@ -83,9 +83,9 @@ class AudioDeviceState
     }
     
     double mSampleRate;
-    uint32 mBufferSize;
-    uint32 mInputLatency;
-    uint32 mOutputLatency;
+    int32 mBufferSize;
+    int32 mInputLatency;
+    int32 mOutputLatency;
   };
 
 nuiAudioDevice_CoreAudio::nuiAudioDevice_CoreAudio(AudioDeviceID id)
@@ -121,21 +121,21 @@ nuiAudioDevice_CoreAudio::~nuiAudioDevice_CoreAudio()
   Close();
 }
 
-bool nuiAudioDevice_CoreAudio::Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction)
+bool nuiAudioDevice_CoreAudio::Open(std::vector<int32>& rInputChannels, std::vector<int32>& rOutputChannels, double SampleRate, int32 BufferSize, nuiAudioProcessFn pProcessFunction)
 {
   mAudioProcessFn = pProcessFunction;
   
   {
     mActiveInputChannels = rInputChannels;
     mInputSamples.resize(mActiveInputChannels.size());
-    for (uint32 ch = 0; ch < mInputSamples.size(); ch++)
+    for (int32 ch = 0; ch < mInputSamples.size(); ch++)
       mInputSamples[ch].resize(BufferSize);
   }
   
   {
     mActiveOutputChannels = rOutputChannels;
     mOutputSamples.resize(mActiveOutputChannels.size());
-    for (uint32 ch = 0; ch < mOutputSamples.size(); ch++)
+    for (int32 ch = 0; ch < mOutputSamples.size(); ch++)
       mOutputSamples[ch].resize(BufferSize);
   }
   
@@ -160,11 +160,11 @@ bool nuiAudioDevice_CoreAudio::Open(std::vector<uint32>& rInputChannels, std::ve
   // change buffer size
   UInt32 FPB = BufferSize;
   {
-    uint32 minbufsize = mBufferSizes[0];
-    uint32 maxbufsize = mBufferSizes[0];
-    for (uint32 i = 1; i < mBufferSizes.size(); i++)
+    int32 minbufsize = mBufferSizes[0];
+    int32 maxbufsize = mBufferSizes[0];
+    for (int32 i = 1; i < mBufferSizes.size(); i++)
     {
-      uint32 s = mBufferSizes[i];
+      int32 s = mBufferSizes[i];
       minbufsize = MIN(minbufsize, s); 
       maxbufsize = MAX(maxbufsize, s); 
     }
@@ -242,17 +242,17 @@ OSStatus nuiAudioDevice_CoreAudio::IOProc(AudioDeviceID inDevice, const AudioTim
 OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTimeStamp* inNow, const AudioBufferList* inInputData, const AudioTimeStamp* inInputTime,
                                            AudioBufferList* outOutputData, const AudioTimeStamp* inOutputTime)
 {
-  uint32 ch = 0;
+  int32 ch = 0;
   
   if (mInMap.empty() && !mActiveInputChannels.empty())
   {
     // Create input and output maping tables:
     mInMap.resize(mInputChannels.size());
-    uint32 buf = 0;
-    uint32 bufch = 0;
+    int32 buf = 0;
+    int32 bufch = 0;
     for (ch = 0; ch < mInputChannels.size(); ch++)
     {
-      mInMap[ch] = std::pair<uint32, uint32>(buf, bufch);
+      mInMap[ch] = std::pair<int32, int32>(buf, bufch);
       
       bufch++;
       if (bufch >= inInputData->mBuffers[buf].mNumberChannels)
@@ -266,11 +266,11 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
   if (mOutMap.empty() && !mActiveOutputChannels.empty())
   {
     mOutMap.resize(mOutputChannels.size());
-    uint32 buf = 0;
-    uint32 bufch = 0;
+    int32 buf = 0;
+    int32 bufch = 0;
     for (ch = 0; ch < mOutputChannels.size(); ch++)
     {
-      mOutMap[ch] = std::pair<uint32, uint32>(buf, bufch);
+      mOutMap[ch] = std::pair<int32, int32>(buf, bufch);
       
       bufch++;
       if (bufch >= outOutputData->mBuffers[buf].mNumberChannels)
@@ -285,15 +285,15 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
   mInputBuffers.resize(mActiveInputChannels.size());
   for (ch = 0; ch < mActiveInputChannels.size(); ch++)
   {
-    uint32 Channel = mActiveInputChannels[ch];
+    int32 Channel = mActiveInputChannels[ch];
     NGL_ASSERT(Channel < mInputChannels.size());
     
     // Find the buffer and the channel inside the buffer:
-    uint32 buffer  = mInMap[Channel].first;
-    uint32 channel = mInMap[Channel].second;
+    int32 buffer  = mInMap[Channel].first;
+    int32 channel = mInMap[Channel].second;
     
     // Copy the data if needed (only when it's interleaved)
-    uint32 stride = inInputData->mBuffers[buffer].mNumberChannels;
+    int32 stride = inInputData->mBuffers[buffer].mNumberChannels;
     if (stride == 1)
     {
       mInputBuffers[ch] = (float*)inInputData->mBuffers[buffer].mData;
@@ -303,7 +303,7 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
       // We need to deinterleave:
       float* pData = (float*)inInputData->mBuffers[buffer].mData;
       pData += channel;
-      for (uint32 s = 0; s < mBufferSize; s++)
+      for (int32 s = 0; s < mBufferSize; s++)
       {
         mInputSamples[Channel][s] = *pData;
         pData += stride;
@@ -316,15 +316,15 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
   mOutputBuffers.resize(mActiveOutputChannels.size());
   for (ch = 0; ch < mActiveOutputChannels.size(); ch++)
   {
-    uint32 Channel = mActiveOutputChannels[ch];
+    int32 Channel = mActiveOutputChannels[ch];
     NGL_ASSERT(Channel < mOutputChannels.size());
     
     // Find the buffer and the channel inside the buffer:
-    uint32 buffer  = mOutMap[Channel].first;
-    uint32 channel = mOutMap[Channel].second;
+    int32 buffer  = mOutMap[Channel].first;
+    int32 channel = mOutMap[Channel].second;
     
     // Copy the data if needed (only when it's interleaved)
-    uint32 stride = outOutputData->mBuffers[buffer].mNumberChannels;
+    int32 stride = outOutputData->mBuffers[buffer].mNumberChannels;
     if (stride == 1)
     {
       mOutputBuffers[Channel] = (float*)outOutputData->mBuffers[buffer].mData;
@@ -338,22 +338,22 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // We are now ready to call our processing delegate:
-  mAudioProcessFn(mInputBuffers, mOutputBuffers, mBufferSize, inOutputTime ? inOutputTime->mHostTime : 0);
+  mAudioProcessFn(mInputBuffers, mOutputBuffers, mBufferSize);
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   // Put back the output data in the actual buffers:
   mOutputBuffers.resize(mActiveOutputChannels.size());
   for (ch = 0; ch < mActiveOutputChannels.size(); ch++)
   {
-    uint32 Channel = mActiveOutputChannels[ch];
+    int32 Channel = mActiveOutputChannels[ch];
     NGL_ASSERT(Channel < mOutputChannels.size());
     
     // Find the buffer and the channel inside the buffer:
-    uint32 buffer  = mOutMap[Channel].first;
-    uint32 channel = mOutMap[Channel].second;
+    int32 buffer  = mOutMap[Channel].first;
+    int32 channel = mOutMap[Channel].second;
     
     // Copy the data if needed (only when it's interleaved)
-    uint32 stride = outOutputData->mBuffers[buffer].mNumberChannels;
+    int32 stride = outOutputData->mBuffers[buffer].mNumberChannels;
     if (stride == 1)
     {
       // Do nothing, the buffer was modified inplace
@@ -364,7 +364,7 @@ OSStatus nuiAudioDevice_CoreAudio::Process(AudioDeviceID inDevice, const AudioTi
       float* pData = (float*)outOutputData->mBuffers[buffer].mData;
       float* pOutputSamples = &(mOutputSamples[Channel][0]);
       pData += channel;
-      for (uint32 s = 0; s < mBufferSize; s++)
+      for (int32 s = 0; s < mBufferSize; s++)
       {
 #ifdef DEBUG
         // Clip the output data, as we are debugging we may have audio bugs blowing out the speakers, not to mention your ears...
@@ -393,15 +393,15 @@ void nuiAudioDevice_CoreAudio::EnumSampleRates()
   UInt32 Size = RangeCount * sizeof(AudioValueRange);
   GetPropertyData(0, false, kAudioDevicePropertyAvailableNominalSampleRates, Size, &ranges[0]);
   
-  uint32 ioNumberRanges = Size / sizeof(AudioValueRange);
+  int32 ioNumberRanges = Size / sizeof(AudioValueRange);
   
   std::set<double> rates;
   double defaultrates[] = { 8000, 16000, 22050, 32000, 44100, 48000, 88200, 96000, 128000, 176400, 192000, 0 };
   
-  for (uint32 i = 0; i < ioNumberRanges; i++)
+  for (int32 i = 0; i < ioNumberRanges; i++)
   {
     double sr = ranges[i].mMinimum;
-    uint32 j = 0;
+    int32 j = 0;
     while (defaultrates[j] && sr > defaultrates[j])
       j++;
     
@@ -434,15 +434,15 @@ void nuiAudioDevice_CoreAudio::EnumBufferSizes()
   UInt32 Size = RangeCount * sizeof(AudioValueRange);
   GetPropertyData(0, false, kAudioDevicePropertyBufferFrameSizeRange, Size, &ranges[0]);
   
-  uint32 ioNumberRanges = Size / sizeof(AudioValueRange);
+  int32 ioNumberRanges = Size / sizeof(AudioValueRange);
   
   std::set<double> sizes;
   double defaultsizes[] = { 8, 16, 32, 64, 96, 128, 192, 256, 384, 512, 768, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 0 };
   
-  for (uint32 i = 0; i < ioNumberRanges; i++)
+  for (int32 i = 0; i < ioNumberRanges; i++)
   {
     double sr = ranges[i].mMinimum;
-    uint32 j = 0;
+    int32 j = 0;
     while (defaultsizes[j] && sr > defaultsizes[j])
       j++;
     
@@ -463,7 +463,7 @@ void nuiAudioDevice_CoreAudio::EnumBufferSizes()
   }    
 }
 
-nglString nuiAudioDevice_CoreAudio::GetChannelName(bool IsInput, uint32 index) const
+nglString nuiAudioDevice_CoreAudio::GetChannelName(bool IsInput, int32 index) const
 {
   UInt32 size = 0;
   OSStatus error = AudioDeviceGetPropertyInfo(mDeviceID, index + 1, IsInput, kAudioDevicePropertyChannelName, &size, NULL); 
@@ -496,7 +496,7 @@ void nuiAudioDevice_CoreAudio::EnumChannels()
   // get number of input channels
   OSErr err = 0;
   UInt32 outSize = 0;
-  uint32 theNumberInputChannels = 0;
+  int32 theNumberInputChannels = 0;
   err = AudioDeviceGetPropertyInfo( mDeviceID, 0, 1, kAudioDevicePropertyStreamConfiguration, &outSize, NULL);
   if((err == noErr) && (outSize != 0))
   {
@@ -508,7 +508,7 @@ void nuiAudioDevice_CoreAudio::EnumChannels()
       if(err == noErr)
       {
         // count the total number of input channels in the stream
-        for (uint32 theIndex = 0; theIndex < theBufferList->mNumberBuffers; ++theIndex)
+        for (int32 theIndex = 0; theIndex < theBufferList->mNumberBuffers; ++theIndex)
           theNumberInputChannels += theBufferList->mBuffers[theIndex].mNumberChannels;
       }
       free(theBufferList);
@@ -517,7 +517,7 @@ void nuiAudioDevice_CoreAudio::EnumChannels()
   
   // get number of output channels
   outSize = 0;
-  uint32 theNumberOutputChannels = 0;
+  int32 theNumberOutputChannels = 0;
   err = AudioDeviceGetPropertyInfo( mDeviceID, 0, 0, kAudioDevicePropertyStreamConfiguration, &outSize, NULL);
   if ((err == noErr) && (outSize != 0))
   {
@@ -529,7 +529,7 @@ void nuiAudioDevice_CoreAudio::EnumChannels()
       if(err == noErr)
       {
         // count the total number of output channels in the stream
-        for(uint32 theIndex = 0; theIndex < theBufferList->mNumberBuffers; ++theIndex)
+        for(int32 theIndex = 0; theIndex < theBufferList->mNumberBuffers; ++theIndex)
           theNumberOutputChannels += theBufferList->mBuffers[theIndex].mNumberChannels;
       }
       free(theBufferList);
@@ -539,12 +539,12 @@ void nuiAudioDevice_CoreAudio::EnumChannels()
   /// Get The Channel names:
   OSStatus error; 
   
-  for (uint32 i = 0; i < theNumberOutputChannels; i++)
+  for (int32 i = 0; i < theNumberOutputChannels; i++)
   {
     mOutputChannels.push_back(GetChannelName(false, i));
   }
   
-  for (uint32 i = 0; i < theNumberInputChannels; i++)
+  for (int32 i = 0; i < theNumberInputChannels; i++)
   {
     mInputChannels.push_back(GetChannelName(true, i));
   }
@@ -584,7 +584,7 @@ nuiAudioDeviceAPI_CoreAudio::~nuiAudioDeviceAPI_CoreAudio()
 {
 }
 
-uint32 nuiAudioDeviceAPI_CoreAudio::GetDeviceCount() const
+int32 nuiAudioDeviceAPI_CoreAudio::GetDeviceCount() const
 {
   UInt32 propsize;
   mDeviceIDs.clear();
@@ -597,14 +597,14 @@ uint32 nuiAudioDeviceAPI_CoreAudio::GetDeviceCount() const
   return mDeviceIDs.size();
 }
 
-nuiAudioDevice* nuiAudioDeviceAPI_CoreAudio::GetDevice(uint32 index)
+nuiAudioDevice* nuiAudioDeviceAPI_CoreAudio::GetDevice(int32 index)
 {
   return new nuiAudioDevice_CoreAudio(mDeviceIDs[index]);
 }
 
 nuiAudioDevice* nuiAudioDeviceAPI_CoreAudio::GetDevice(const nglString& rDeviceName)
 {
-  for (uint32 i = 0; i < mDeviceIDs.size(); i++)
+  for (int32 i = 0; i < mDeviceIDs.size(); i++)
   {
     if (GetDeviceName(i) == rDeviceName)
       return GetDevice(i);
@@ -612,7 +612,7 @@ nuiAudioDevice* nuiAudioDeviceAPI_CoreAudio::GetDevice(const nglString& rDeviceN
   return NULL;
 }
 
-nglString nuiAudioDeviceAPI_CoreAudio::GetDeviceName(uint32 index) const
+nglString nuiAudioDeviceAPI_CoreAudio::GetDeviceName(int32 index) const
 {
   UInt32 propsize;
   CFStringRef tempStr;

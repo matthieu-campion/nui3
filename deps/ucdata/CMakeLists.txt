@@ -11,7 +11,7 @@ add_definitions(
 )
 
 set(UCDATA_SOURCES
-   ucdata.c  
+   ucdata.cpp
    ucpgba.c  
 )
 

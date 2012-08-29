@@ -317,6 +317,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
     NGL_ASSERT(!"initWithFrame: Could not initialize NSWindow");
   }
 
+  NSString title;
   [self setTitle:@"Testing Simple Cocoa Application"];
   [self setAcceptsMouseMovedEvents:TRUE];
   

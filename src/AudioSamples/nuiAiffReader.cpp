@@ -95,7 +95,7 @@ nuiSampleReader* nuiAiffReader::Clone(nglIStream& rStream) const
   return pReader;
 }
 
-void nuiAiffReader::SetPosition(uint32 position)
+void nuiAiffReader::SetPosition(int64 position)
 {
   if (!mInitialized)
     return;
@@ -124,7 +124,7 @@ bool nuiAiffReader::ReadInfo()
     return false;
   std::vector<char> fileFormat(4);
   char* waveFormat = "AIFF";
-  for(uint32 i = 0; i < 4; i++)
+  for(int32 i = 0; i < 4; i++)
   {
     if( 1 != mrStream.ReadUInt8((uint8*)&(fileFormat[i]), 1))
       return false;
@@ -171,19 +171,19 @@ bool nuiAiffReader::ReadInfo()
   return true;
 }
 
-uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFormat format)
+int32 nuiAiffReader::ReadIN(void* pBuffer, int32 SampleFrames, nuiSampleBitFormat format)
 {
   if (!SampleFrames)
     return 0;
   SetPosition((uint32)mPosition);
-  const uint32 channels = mInfo.GetChannels();
-  uint32 length = mInfo.GetSampleFrames();
+  const int32 channels = mInfo.GetChannels();
+  int32 length = mInfo.GetSampleFrames();
   if (mPosition >= length)
     return 0;
   SampleFrames = MIN(SampleFrames, length - mPosition);
   
-  const uint64 SamplePointsToRead = SampleFrames * channels;
-  uint32 SampleFramesRead = 0;
+  const int64 SamplePointsToRead = SampleFrames * channels;
+  int32 SampleFramesRead = 0;
   
   switch(format)
   {
@@ -194,7 +194,7 @@ uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFor
         case 8 :
         {
           int16* pTempInt16 = (int16*)pBuffer;
-          uint32 sizeRead = mrStream.ReadUInt8( ((uint8*)pTempInt16) + SamplePointsToRead , SamplePointsToRead);
+          int32 sizeRead = mrStream.ReadUInt8( ((uint8*)pTempInt16) + SamplePointsToRead , SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
           nuiAudioConvert_Signed8bitsBufferTo16Bits(pTempInt16, sizeRead);
         }
@@ -202,7 +202,7 @@ uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFor
           
         case 16 :
         {
-          uint32 sizeRead = mrStream.ReadInt16( (int16*)pBuffer, SamplePointsToRead);
+          int32 sizeRead = mrStream.ReadInt16( (int16*)pBuffer, SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
         }
           break;
@@ -223,7 +223,7 @@ uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFor
         case 8 :
         {
           float* pTempFloat = (float*)pBuffer;
-          uint32 sizeRead = mrStream.ReadUInt8( (uint8*)pTempFloat + 3 * SamplePointsToRead , SamplePointsToRead);
+          int32 sizeRead = mrStream.ReadUInt8( (uint8*)pTempFloat + 3 * SamplePointsToRead , SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
           nuiAudioConvert_Signed8bitsBufferToFloat(pTempFloat, sizeRead);
         }
@@ -232,7 +232,7 @@ uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFor
         case 16 :
         {
           float* pTempFloat = (float*)pBuffer;
-          uint32 sizeRead = mrStream.ReadInt16( (int16*)pTempFloat + SamplePointsToRead, SamplePointsToRead);
+          int32 sizeRead = mrStream.ReadInt16( (int16*)pTempFloat + SamplePointsToRead, SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
           nuiAudioConvert_16bitsBufferToFloat(pTempFloat, SamplePointsToRead);
         }
@@ -244,9 +244,9 @@ uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFor
           uint8* pTempBuffer;
           pTempBuffer = new uint8[SamplePointsToRead * 3]; //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
           
-          uint32 sizeRead = mrStream.ReadUInt8(pTempBuffer, SamplePointsToRead * 3);
+          int32 sizeRead = mrStream.ReadUInt8(pTempBuffer, SamplePointsToRead * 3);
           SampleFramesRead = sizeRead / channels / 3;
-          for (uint32 i = 0; i < sizeRead / 3; i++)
+          for (int32 i = 0; i < sizeRead / 3; i++)
           {
             pTempFloat[i] = nuiAudioConvert_24bitsToFloatFromBigEndian(pTempBuffer + (3 * i));
           }
@@ -257,7 +257,7 @@ uint32 nuiAiffReader::ReadIN(void* pBuffer, uint32 SampleFrames, nuiSampleBitFor
           
         case 32 :
         {
-          uint32 sizeRead = mrStream.ReadFloat((float*)pBuffer, SamplePointsToRead);
+          int32 sizeRead = mrStream.ReadFloat((float*)pBuffer, SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
           mPosition += SampleFramesRead;
         }

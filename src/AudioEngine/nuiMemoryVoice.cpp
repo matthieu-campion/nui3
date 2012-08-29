@@ -39,7 +39,7 @@ bool nuiMemoryVoice::IsValid() const
   return (mpMemorySound != NULL);
 }
 
-uint32 nuiMemoryVoice::GetChannels() const
+int32 nuiMemoryVoice::GetChannels() const
 {
   if (!IsValid())
     return 0;
@@ -47,7 +47,7 @@ uint32 nuiMemoryVoice::GetChannels() const
   return mpMemorySound->GetChannels();
 }
 
-uint32 nuiMemoryVoice::GetSampleFrames() const
+int32 nuiMemoryVoice::GetSampleFrames() const
 {
   if (!IsValid())
     return 0;
@@ -55,7 +55,7 @@ uint32 nuiMemoryVoice::GetSampleFrames() const
   return mpMemorySound->GetSampleFrames();
 }
 
-uint32 nuiMemoryVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames)
+int32 nuiMemoryVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, int32 SampleFrames)
 {
   if (!IsValid())
     return 0;
@@ -63,8 +63,8 @@ uint32 nuiMemoryVoice::ReadSamples(const std::vector<float*>& rOutput, int64 pos
   if (position > mpMemorySound->GetSampleFrames())
     return 0;
   
-  uint32 todo = MIN(SampleFrames, mpMemorySound->GetSampleFrames() - position);
-  uint32 read = mpMemorySound->ReadSamples(rOutput, position, todo);
+  int32 todo = MIN(SampleFrames, mpMemorySound->GetSampleFrames() - position);
+  int32 read = mpMemorySound->ReadSamples(rOutput, position, todo);
   return read;
 }
 

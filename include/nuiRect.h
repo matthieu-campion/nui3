@@ -13,21 +13,6 @@
 #include "nuiFlags.h"
 #include "nuiColor.h"
 
-//#define NUI_USE_FLOATS
-//#define NUI_USE_DOUBLES
-
-#if !defined NUI_USE_DOUBLES && !defined NUI_USE_FLOATS
-  #define NUI_USE_FLOATS
-#endif
-
-#ifdef NUI_USE_FLOATS
-typedef float nuiSize;
-typedef double nuiAltSize;
-#else
-typedef float nuiAltSize;
-typedef double nuiSize;
-#endif
-
 typedef nglMatrix<nuiSize> nuiMatrix;
 typedef nglVector<nuiSize> nuiVector;
 typedef nglVector2<nuiSize> nuiVector2;
@@ -51,18 +36,18 @@ public:
   {
     Set(0.0f, 0.0f, Width, Height, true);
   }
-  
+
   nuiRect(int32 x1, int32 y1, int32 x2, int32 y2, bool SecondPairIsSize = true)
   {
     Set(x1,y1,x2,y2,SecondPairIsSize);
   }
-  
+
   nuiRect(int32 Width, int32 Height)
   {
     Set(0, 0, Width, Height);
   }
-  
-  
+
+
 /*
   nuiRect(int x1, int y1, int x2, int y2, bool SecondPairIsSize = true)
   {
@@ -117,17 +102,17 @@ public:
   {
     Set(mLeft, mTop, w, h ,true);
   }
-  
+
   void SetWidth(nuiSize w)
   {
     Set(mLeft, mTop, w, GetHeight() ,true);
   }
-  
+
   void SetHeight(nuiSize h)
   {
     Set(mLeft, mTop, GetWidth(), h ,true);
   }
-  
+
   nuiSize GetWidth() const
   {
     return mRight - mLeft;
@@ -245,10 +230,10 @@ public:
   nuiRect& operator= (const nuiRect& Rect);
   bool operator== (const nuiRect& Rect) const;
   bool IsEqual(const nuiRect& Rect) const;
-  
+
   nuiPosition GetPosition(nuiSize X,nuiSize Y, nuiSize HotSpotIn = 1.5, nuiSize HotSpotOut = 1.5) const;
-  
-  
+
+
 public:
   nuiSize mLeft,
       mRight,

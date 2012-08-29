@@ -62,7 +62,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderLeft: 20;
-  BorderTop: 160;
+  BorderTop: 20;
 }
 
 "PopButton1"!
@@ -71,7 +71,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderLeft: 20;
-  BorderTop: 220;
+  BorderTop: 80;
 }
 
 "PopButton2"!
@@ -80,7 +80,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderLeft: 20;
-  BorderTop: 280;
+  BorderTop: 140;
 }
 
 "PopButton3"!
@@ -89,7 +89,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderLeft: 20;
-  BorderTop: 360;
+  BorderTop: 220;
 }
 
 "PopButton4"!
@@ -98,7 +98,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderLeft: 20;
-  BorderTop: 420;
+  BorderTop: 300;
 }
 
 
@@ -108,7 +108,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderRight: 20;
-  BorderTop: 160;
+  BorderTop: 20;
 }
 
 "PushButton1"!
@@ -117,7 +117,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderRight: 20;
-  BorderTop: 220;
+  BorderTop: 80;
 }
 
 "PushButton2"!
@@ -126,7 +126,7 @@ MyViewController2!
   UserWidth: 120;
   UserHeight: 32;
   BorderRight: 20;
-  BorderTop: 280;
+  BorderTop: 140;
 }
 
 

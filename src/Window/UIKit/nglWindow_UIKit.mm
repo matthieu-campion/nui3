@@ -170,9 +170,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   {
     [glView removeFromSuperview];
     [glView release];
+    glView = nil;
   }
-  
-  [self disconnect];
+  //[self disconnect];
   [super dealloc];
 }
 
@@ -858,7 +858,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 // UITextFieldDelegate method.  Invoked when user types something.
 - (BOOL)textField:(UITextField *)_textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-  NGL_OUT(_T("change chars in range %d - %d\n"), range.location, range.length);
+//  NGL_OUT(_T("change chars in range %d - %d\n"), range.location, range.length);
 	if ([string length] == 0)
   {
     mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_BACKSPACE, 8, 8)); // 8 = BS = BackSpace
@@ -1236,6 +1236,7 @@ nglWindow::~nglWindow()
 {
   if (mpUIWindow)
   {
+
     UIWindow* win = (UIWindow*)mpUIWindow;
     [win disconnect];
     UIWindow* oldwin = [[UIApplication sharedApplication].windows objectAtIndex:0];

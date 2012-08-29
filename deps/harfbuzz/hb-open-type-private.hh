@@ -31,8 +31,6 @@
 
 #include "hb-blob.h"
 
-HB_BEGIN_DECLS
-HB_END_DECLS
 
 
 /*
@@ -340,12 +338,12 @@ struct Sanitizer
  */
 
 
-template <typename Type, int Bytes> class BEInt;
+template <typename Type, int Bytes> struct BEInt;
 
 /* LONGTERMTODO: On machines allowing unaligned access, we can make the
  * following tighter by using byteswap instructions on ints directly. */
 template <typename Type>
-class BEInt<Type, 2>
+struct BEInt<Type, 2>
 {
   public:
   inline void set (Type i) { hb_be_uint16_put (v,i); }
@@ -355,7 +353,7 @@ class BEInt<Type, 2>
   private: uint8_t v[2];
 };
 template <typename Type>
-class BEInt<Type, 4>
+struct BEInt<Type, 4>
 {
   public:
   inline void set (Type i) { hb_be_uint32_put (v,i); }
@@ -384,10 +382,21 @@ struct IntType
   DEFINE_SIZE_STATIC (sizeof (Type));
 };
 
+/* Typedef these to avoid clash with windows.h */
+#define USHORT	HB_USHORT
+#define SHORT	HB_SHORT
+#define ULONG	HB_ULONG
+#define LONG	HB_LONG
 typedef IntType<uint16_t> USHORT;	/* 16-bit unsigned integer. */
 typedef IntType<int16_t>  SHORT;	/* 16-bit signed integer. */
 typedef IntType<uint32_t> ULONG;	/* 32-bit unsigned integer. */
 typedef IntType<int32_t>  LONG;		/* 32-bit signed integer. */
+
+/* 16-bit signed integer (SHORT) that describes a quantity in FUnits. */
+typedef SHORT FWORD;
+
+/* 16-bit unsigned integer (USHORT) that describes a quantity in FUnits. */
+typedef USHORT UFWORD;
 
 /* Date represented in number of seconds since 12:00 midnight, January 1,
  * 1904. The value is represented as a signed 64-bit integer. */
@@ -688,8 +697,8 @@ struct SortedArrayOf : ArrayOf<Type> {
 
   template <typename SearchType>
   inline int search (const SearchType &x) const {
-    class Cmp {
-      public: static int cmp (const SearchType *a, const Type *b) { return b->cmp (*a); }
+    struct Cmp {
+      static int cmp (const SearchType *a, const Type *b) { return b->cmp (*a); }
     };
     const Type *p = (const Type *) bsearch (&x, this->array, this->len, sizeof (this->array[0]), (hb_compare_func_t) Cmp::cmp);
     return p ? p - this->array : -1;
@@ -697,7 +706,5 @@ struct SortedArrayOf : ArrayOf<Type> {
 };
 
 
-HB_BEGIN_DECLS
-HB_END_DECLS
 
 #endif /* HB_OPEN_TYPE_PRIVATE_HH */

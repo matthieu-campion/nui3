@@ -19,15 +19,15 @@ public:
   
   virtual nuiSampleReader* Clone(nglIStream& rStream) const;
   
-  virtual uint32 ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
-  virtual uint32 ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
+  virtual int32 ReadDE(std::vector<void*> buffers, int32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
+  virtual int32 ReadIN(void* pBuffer, int32 sampleframes, nuiSampleBitFormat format = eSampleFloat32);
   
-  virtual void SetPosition(uint32 position);
+  virtual void SetPosition(int64 position);
   
 private:
   bool CreateAudioDecoderPrivate();
   virtual bool ReadInfo();
-  bool Seek(uint64 SampleFrame);
+  bool Seek(int64 SampleFrame);
   void Clear();
 
   class nuiAudioDecoderPrivate* mpPrivate;

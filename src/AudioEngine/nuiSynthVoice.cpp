@@ -60,7 +60,7 @@ bool nuiSynthVoice::IsValid() const
   return (mpSound != NULL) && (mSignalType < nuiSynthSound::eLastType) && (mFreq > 0) && (mPhase >= 0) && (mPhase <= 1);
 }
 
-uint32 nuiSynthVoice::GetChannels() const
+int32 nuiSynthVoice::GetChannels() const
 {
   return 1;
 }
@@ -116,25 +116,25 @@ void nuiSynthVoice::UpdateWavePosition(float toadd)
     mWavePosition += SYNTH_SOUND_TABLE_SIZE;
 }
 
-uint32 nuiSynthVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames)
+int32 nuiSynthVoice::ReadSamples(const std::vector<float*>& rOutput, int64 position, int32 SampleFrames)
 {
   if (mPosition > mLength)
     return 0;
   
-  uint32 todo = MIN(SampleFrames, mLength - mPosition);
+  int32 todo = MIN(SampleFrames, mLength - mPosition);
   
   int posInt;
   float interp;
   float val;
   nuiSynthSound::Wave& rWave = nuiSynthSound::mWaveTables[(int)mSignalType][0];
-  for (uint32 i = 0; i < todo; i++)
+  for (int32 i = 0; i < todo; i++)
   {
     posInt = ToBelow(mWavePosition);
     interp = mWavePosition - posInt;
     mLevel += mLevelCoeff * mLevel;
     val = interp * rWave[posInt] + (1.f - interp) * rWave[posInt + 1];
     val *= mLevel;
-    for (uint32 c = 0; c < rOutput.size(); c++)
+    for (int32 c = 0; c < rOutput.size(); c++)
     {
       rOutput[c][i] = val;
     }

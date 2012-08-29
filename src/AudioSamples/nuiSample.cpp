@@ -14,7 +14,7 @@ nuiSample::nuiSample(const nuiSampleInfo& rInfos)
   
   mSamples.resize(mInfos.GetChannels());
   
-  uint8 i;
+  int32 i;
   for (i = 0; i < mSamples.size(); i++)
   {
     mSamples[i].resize(mInfos.GetSampleFrames());
@@ -27,8 +27,8 @@ nuiSample::nuiSample(nuiSampleReader& rReader)
 {
   rReader.GetInfo(mInfos);
   
-  uint32 Channels = mInfos.GetChannels();
-  uint32 SampleFrames = (uint32)mInfos.GetSampleFrames();
+  int32 Channels = mInfos.GetChannels();
+  int32 SampleFrames = (int32)mInfos.GetSampleFrames();
   
   mSamples.resize(Channels);
   
@@ -36,8 +36,8 @@ nuiSample::nuiSample(nuiSampleReader& rReader)
   rReader.SetPosition(0);
   rReader.ReadIN(TempBuffer,SampleFrames,eSampleFloat32);
   
-  uint32 c;
-  uint32 s;
+  int32 c;
+  int32 s;
   for (c = 0; c < Channels; c++)
   {
     mSamples[c].resize(SampleFrames);
@@ -65,7 +65,7 @@ nuiSample::~nuiSample()
 //
 //Save
 //
-bool nuiSample::Save(nuiSampleWriter& rWriter, uint32 BitsPerSample)
+bool nuiSample::Save(nuiSampleWriter& rWriter, int32 BitsPerSample)
 {
   //Write Infos
   nuiSampleInfo MyInfo = mInfos;
@@ -76,14 +76,14 @@ bool nuiSample::Save(nuiSampleWriter& rWriter, uint32 BitsPerSample)
     return false;
   
   
-  uint32 Channels = mInfos.GetChannels();
-  uint32 SampleFrames = (uint32)mInfos.GetSampleFrames();
+  int32 Channels = mInfos.GetChannels();
+  int32 SampleFrames = (int32)mInfos.GetSampleFrames();
   
   //Datas Buffer
   float* TempBuffer = new float[SampleFrames * Channels];
   //
-  uint32 c;
-  uint32 s;
+  int32 c;
+  int32 s;
   for (c = 0; c < Channels; c++)
   {
     for (s = 0; s < SampleFrames; s++)
@@ -107,25 +107,25 @@ bool nuiSample::Save(nuiSampleWriter& rWriter, uint32 BitsPerSample)
 //
 //GetData
 //
-float* nuiSample::GetData(uint8 channel)
+float* nuiSample::GetData(int8 channel)
 {
   return &mSamples[channel][0];
 }
 //
-const float* nuiSample::GetData(uint8 channel) const
+const float* nuiSample::GetData(int8 channel) const
 {
   return &mSamples[channel][0];
 }
 
 
 //
-//Insert(uint32 Pos, uint32 NbSamples)
+//Insert(int32 Pos, int32 NbSamples)
 //
-bool nuiSample::Insert(uint32& Pos, uint32 NbSamples)
+bool nuiSample::Insert(int32& Pos, int32 NbSamples)
 {
-  uint32 TempPos = Pos;
+  int32 TempPos = Pos;
   
-  uint8 c;
+  int8 c;
   for (c = 0; c < mInfos.GetChannels(); c++)
   {
     std::vector< float >::iterator MyIterator = mSamples[c].begin();
@@ -144,25 +144,25 @@ bool nuiSample::Insert(uint32& Pos, uint32 NbSamples)
 
 
 //
-//Insert(uint32 Pos, nuiSample* pSample)
+//Insert(int32 Pos, nuiSample* pSample)
 //
-bool nuiSample::Insert(uint32 Pos, nuiSample* pSample)
+bool nuiSample::Insert(int32 Pos, nuiSample* pSample)
 {
   if (NULL == pSample)
     return false;
   if (pSample->mInfos.GetChannels() != mInfos.GetChannels())
     return false;
   
-  uint32 TempPos = Pos;
+  int32 TempPos = Pos;
   double PosRead = 0;
   
-  uint32 SamplesToWrite = (uint32)(pSample->mInfos.GetSampleFrames() / pSample->mInfos.GetSampleRate() * mInfos.GetSampleRate());
+  int32 SamplesToWrite = (int32)(pSample->mInfos.GetSampleFrames() / pSample->mInfos.GetSampleRate() * mInfos.GetSampleRate());
   
   float* pDest = new float[SamplesToWrite];
   
   Insert(Pos,SamplesToWrite);
   
-  uint8 c;
+  int32 c;
   for (c = 0; c < pSample->mInfos.GetChannels(); c++)
   {   
     pSample->InterpolateChannel(eInterpolLinear,PosRead,c,pSample->mInfos.GetSampleRate() / mInfos.GetSampleRate(),pDest,SamplesToWrite);
@@ -180,10 +180,10 @@ bool nuiSample::Insert(uint32 Pos, nuiSample* pSample)
 //
 //Delete
 //
-bool nuiSample::Delete(uint32 Pos, uint32 NbSamples)
+bool nuiSample::Delete(int32 Pos, int32 NbSamples)
 {
-  uint64 SampleFrames;
-  uint8 c;
+  int64 SampleFrames;
+  int32 c;
   for (c = 0; c < mInfos.GetChannels(); c++)
   {
     std::vector< float >::iterator MyIterator = mSamples[c].begin();
@@ -203,10 +203,10 @@ nuiSample* nuiSample::Clone() const
 {
   nuiSample* pSample = new nuiSample(mInfos);
   
-  uint32 Channels = mInfos.GetChannels();
-  uint32 SampleFrames = (uint32)mInfos.GetSampleFrames();
+  int32 Channels = mInfos.GetChannels();
+  int32 SampleFrames = (int32)mInfos.GetSampleFrames();
   //
-  uint32 c;
+  int32 c;
   for (c = 0; c < Channels; c++)
   {
     memcpy(pSample->GetData(c), GetData(c), sizeof(float) * SampleFrames);
@@ -222,9 +222,9 @@ nuiSample* nuiSample::Clone(double SampleRate) const
 {
   nuiSample* pSample = new nuiSample(mInfos);
   pSample->mInfos.SetSampleRate(SampleRate);
-  pSample->mInfos.SetSampleFrames((uint32)(mInfos.GetSampleFrames() / (mInfos.GetSampleRate()) * SampleRate));
+  pSample->mInfos.SetSampleFrames((int32)(mInfos.GetSampleFrames() / (mInfos.GetSampleRate()) * SampleRate));
   
-  uint8 c;
+  int8 c;
   for (c = 0; c < mInfos.GetChannels(); c++)
   {
     double position = 0;
@@ -237,10 +237,10 @@ nuiSample* nuiSample::Clone(double SampleRate) const
 //
 //InterpolateChannel
 //
-bool nuiSample::InterpolateChannel(nuiInterpolationMethod method, double& rPosition, uint8 Channel, double increment, float* pDest, uint64 DestSize, double multVolume) const
+bool nuiSample::InterpolateChannel(nuiInterpolationMethod method, double& rPosition, int8 Channel, double increment, float* pDest, int64 DestSize, double multVolume) const
 {
   nuiAudioResampler<float>* resampler = new nuiAudioResampler<float>(eInterpolLinear);
-  uint32 samplesWritten = (uint32)resampler->Process(pDest, &mSamples[Channel][0], (uint32)DestSize, (uint32)DestSize, rPosition, true, multVolume);
+  int32 samplesWritten = (int32)resampler->Process(pDest, &mSamples[Channel][0], (int32)DestSize, (int32)DestSize, rPosition, true, multVolume);
   delete resampler;
   
   return (samplesWritten == DestSize);
@@ -250,10 +250,10 @@ bool nuiSample::InterpolateChannel(nuiInterpolationMethod method, double& rPosit
 //
 //InterpolateChannelAdd
 //
-bool nuiSample::InterpolateChannelAdd(nuiInterpolationMethod method, double& rPosition, uint8 Channel, double increment, float* pDest, uint64 DestSize, double multVolume) const
+bool nuiSample::InterpolateChannelAdd(nuiInterpolationMethod method, double& rPosition, int8 Channel, double increment, float* pDest, int64 DestSize, double multVolume) const
 {
   nuiAudioResampler<float>* resampler = new nuiAudioResampler<float>(eInterpolLinear);
-  uint32 samplesWritten = (uint32)resampler->Process(pDest, &mSamples[Channel][0], (uint32)DestSize, (uint32)DestSize, rPosition, false, multVolume);
+  int32 samplesWritten = (int32)resampler->Process(pDest, &mSamples[Channel][0], (int32)DestSize, (int32)DestSize, rPosition, false, multVolume);
   delete resampler;
   
   return (samplesWritten == DestSize);

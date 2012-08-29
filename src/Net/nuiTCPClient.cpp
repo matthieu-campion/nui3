@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -49,22 +49,27 @@ bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
   int res = connect(mSocket, addr->ai_addr, addr->ai_addrlen);
   if (res)
     DumpError(errno);
-  
+
   freeaddrinfo(addr);
 
   mConnected = res == 0;
-  
+
   return mConnected;
 }
 
 bool nuiTCPClient::Connect(const nglString& rHost, int16 port)
 {
-  return Connect(nuiNetworkHost(rHost, port));
+  return Connect(nuiNetworkHost(rHost, port, nuiNetworkHost::eTCP));
 }
 
 bool nuiTCPClient::Connect(uint32 ipaddress, int16 port)
 {
-  return Connect(nuiNetworkHost(ipaddress, port));
+  return Connect(nuiNetworkHost(ipaddress, port, nuiNetworkHost::eTCP));
+}
+
+bool nuiTCPClient::Send(const nglString& rString)
+{
+  return Send((uint8*)rString.GetChars(), rString.GetLength());
 }
 
 
@@ -77,13 +82,19 @@ bool nuiTCPClient::Send(const uint8* pData, int len)
 {
   if (!IsConnected())
     return false;
-  
+
 #ifdef WIN32
-  send(mSocket, (const char*)pData, len, 0);
+  int res = send(mSocket, (const char*)pData, len, 0);
 #else
-  send(mSocket, pData, len, 0);
+  int res = send(mSocket, pData, len, 0);
 #endif
-  return false;
+
+  if (res < 0 || res != len)
+  {
+    mConnected = false;
+    return false;
+  }
+  return true;
 }
 
 
@@ -101,7 +112,7 @@ bool nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
 
   if (!PendingBytes || result != 0)
     return false;
-  
+
   rData.resize(PendingBytes);
 #ifdef WIN32
   int res = recv(mSocket, (char*)&rData[0], rData.size(), MSG_WAITALL);
@@ -131,12 +142,16 @@ bool nuiTCPClient::Receive(std::vector<uint8>& rData)
 {
   if (!IsConnected())
     return false;
-  
+
 #ifdef WIN32
   int res = recv(mSocket, (char*)&rData[0], rData.size(), MSG_WAITALL);
+  printf("%x recv returned %d\n", this, res);
 #else
-  int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
+  //int res = recv(mSocket, &rData[0], rData.size(), MSG_WAITALL);
+  int res = read(mSocket, &rData[0], rData.size());
+  //printf("%p read returned %d\n", this, res);
 #endif
+
 
   if (res == 0)
   {
@@ -149,7 +164,7 @@ bool nuiTCPClient::Receive(std::vector<uint8>& rData)
   }
 
   rData.resize(res);
-  
+
   return res != 0;
 }
 
@@ -159,14 +174,14 @@ bool nuiTCPClient::Close()
   if (!IsConnected())
     return false;
 
-  
+
 #ifdef WIN32
   //DisconnectEx(mSocket, NULL, 0, 0);
   closesocket(mSocket);
 #else
   close(mSocket);
 #endif
-  
+
   mSocket = -1;
   return true;
 }
@@ -187,7 +202,7 @@ int32 nuiTCPClient::GetAvailable() const
 
   if (result != 0)
     PendingBytes = 0;
-  
+
   return PendingBytes;
 }
 

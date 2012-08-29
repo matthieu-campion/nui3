@@ -19,9 +19,9 @@ public:
     eUDP
   };
   
-  nuiNetworkHost(int port = 0, Protocol protocol = eAny); ///< Init the object to local host with the given port
-  nuiNetworkHost(const nglString& rHost, int port = 0, Protocol = eAny);
-  nuiNetworkHost(uint32 IPAddress, int port = 0, Protocol = eAny);
+  nuiNetworkHost(int port, Protocol protocol); ///< Init the object to local host with the given port
+  nuiNetworkHost(const nglString& rHost, int port, Protocol);
+  nuiNetworkHost(uint32 IPAddress, int port, Protocol);
   nuiNetworkHost(const nuiNetworkHost& rHost);
 
   ~nuiNetworkHost();

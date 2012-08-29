@@ -11,8 +11,6 @@
 //#include "nui.h"
 #include "nuiTimer.h"
 
-#include "nuiEventRegistry.h"
-
 class nuiTask;
 
 enum nuiAnimWhence
@@ -140,10 +138,10 @@ public:
 
   virtual void OnFrame(); ///< Overload this method to get notified of each timer tick, for exemple to call Invalidate() in order to redraw the animation.
 
-  nuiSimpleEventSource<nuiAnimationStart> AnimStart;
-  nuiSimpleEventSource<nuiAnimationStop> AnimStop;
-  nuiSimpleEventSource<nuiAnimationStop> AnimPause;
-  nuiSimpleEventSource<nuiAnimationLoop> AnimLoop;
+  nuiSimpleEventSource<0> AnimStart;
+  nuiSimpleEventSource<0> AnimStop;
+  nuiSimpleEventSource<0> AnimPause;
+  nuiSimpleEventSource<0> AnimLoop;
 
   void Play(const nuiEvent& rEvent); ///< The animation will start playing as soon as this method is called. Use this method if you want to start playing an animation when an nuiEvent is fired.
   void Stop(const nuiEvent& rEvent); ///< The animation will stop playing as soon as this method is called. Use this method if you want to stop playing an animation when an nuiEvent is fired.

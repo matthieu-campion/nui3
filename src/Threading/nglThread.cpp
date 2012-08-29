@@ -35,7 +35,7 @@ bool nglThread::GetAutoDelete() const
 //
 //	Get thread from list
 //
-nglThread* nglGetThreadFromGlobalList(nglThread::ID threadID)  
+nglThread* nglGetThreadFromGlobalList(nglThread::ID threadID)
 {
   nglCriticalSectionGuard	guard(nglGlobalThreadMapCS);
   std::map<nglThread::ID,nglThread*>::const_iterator it = nglGlobalThreadMap.find(threadID);
@@ -75,13 +75,13 @@ bool nglDelThreadFromGlobalList(nglThread* thread)
 ////////////////////////
 // nglThreadDelegate
 ////////////////////////
-nglThreadDelegate::nglThreadDelegate(const ThreadDelegate& rStartFunction, Priority priority)
-: nglThread(priority), mDelegate(rStartFunction)
+nglThreadDelegate::nglThreadDelegate(const ThreadDelegate& rStartFunction, Priority priority, size_t StackSize)
+: nglThread(priority, StackSize), mDelegate(rStartFunction)
 {
 }
 
-nglThreadDelegate::nglThreadDelegate(const ThreadDelegate& rStartFunction, const nglString& rName, Priority priority)
-: nglThread(rName, priority), mDelegate(rStartFunction)
+nglThreadDelegate::nglThreadDelegate(const ThreadDelegate& rStartFunction, const nglString& rName, Priority priority, size_t StackSize)
+: nglThread(rName, priority, StackSize), mDelegate(rStartFunction)
 {
 }
 

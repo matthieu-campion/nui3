@@ -22,7 +22,7 @@
 #include "nui.h"
 #include "ngl_glext_table.h"
 
-#ifdef GL_OES_VERSION_1_1
+#if ((defined GL_OES_VERSION_1_1) || (defined _ANDROID_))
 
 // No GL ES extentions in nglContext
 GLExtNameInfo gpGLExtensionNameTable[] = { NULL, 0 };

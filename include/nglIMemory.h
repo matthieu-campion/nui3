@@ -28,7 +28,7 @@ class NGL_API nglIMemory : public nglIStream
 public:
   /** @name Life cycle */
   //@{
-  nglIMemory(const void* pBuffer, int64 ByteCnt);
+  nglIMemory(const void* pBuffer, int64 ByteCnt, bool OwnBuffer = false);
   /*!<
     \param pBuffer user buffer
     \param ByteCnt byte count of user buffer (if any)
@@ -37,6 +37,8 @@ public:
     nglIMemory, ie. it won't be freed when the stream is deleted.
   */
   //@}
+  
+  virtual ~nglIMemory();
 
   /** @name State/error methods */
   //@{
@@ -57,6 +59,7 @@ public:
 
 protected:
   char*   mpBuffer;
+  bool mOwnBuffer;
   nglSize mSize;
   nglSize mOffset;
 };

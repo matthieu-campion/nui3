@@ -192,6 +192,7 @@ nuiDecoration* nuiStateDecoration::GetDecorationForWidgetState(const nuiWidget* 
   else if (pChoice4)
     pChoice = pChoice4;
 
+  NGL_ASSERT(pChoice != this);
   return pChoice;
 }
 

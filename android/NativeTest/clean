@@ -1,0 +1,8 @@
+export NDK_MODULE_PATH=$(pwd)/../../
+export NDK_PATH=$(pwd)/../../../android-ndk
+export SDK_PATH=$(pwd)/../../../android-sdk
+echo ----------------------------------------------------------------------------------------
+echo Clean lib
+echo ----------------------------------------------------------------------------------------
+$NDK_PATH/ndk-build clean 
+

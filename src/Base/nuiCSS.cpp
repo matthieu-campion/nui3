@@ -1178,7 +1178,7 @@ public:
       
       if (mChar == _T(')'))
         break;
-    } while (mChar == _T(';'));
+    } while (mChar == _T(';') || mChar == _T(','));
       
     if (!GetChar() && !SkipBlank())
     {
@@ -2122,6 +2122,7 @@ bool nuiCSS::Load(nglIStream& rStream, const nglPath& rSourcePath)
   if (!lexer.Load())
   {
     mErrorString.CFormat(_T("Error line %d (%d): %s"), lexer.GetLine(), lexer.GetColumn(), lexer.GetErrorStr().GetChars() );
+    NGL_OUT(_T("Error loading css:\n%s\n"), mErrorString.GetChars());
     return false;
   }
   //NGL_OUT(_T("Loaded %d css rules\n"), GetRulesCount());

@@ -228,7 +228,7 @@ private:
 	nglFileMode     mMode;
 	nglEndian       mEndian;
 	bool         mAutoFlush;
-#if (defined _LINUX_) || (defined __APPLE__)
+#if (defined _LINUX_) || (defined __APPLE__) || (defined _ANDROID_) || (defined _MINUI3_)
 	int          mFD;
 #endif
 #ifdef WINCE

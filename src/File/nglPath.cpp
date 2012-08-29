@@ -27,25 +27,11 @@ using namespace std;
 #endif
 
 
-#ifdef __MWERKS__
-char* strdup(const char* pString)
-{
-	if (!pString)
-		return NULL;
-	int len = strlen(pString);
-	char* pResult = (char*)malloc(len+1);
-	if (!pResult)
-		return NULL;
-	memcpy(pResult,pString, len+1);
-	return pResult;
-}
-#endif
-
 using namespace std;
 
 
 #ifndef _T
-#define _T(X) L##X
+#define _T(X) X
 #endif
 
 const nglChar nglPath::PortableCharset[] = _T("/.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_");
@@ -150,7 +136,9 @@ nglPath::nglPath (nglPathBase Base)
         #elif defined _WIN32_
         InternalSetPath(getenv("TEMP"));
         #elif defined(_UIKIT_)
-        InternalSetPath(nuiCocoaGetPath_Temp());    
+        InternalSetPath(nuiCocoaGetPath_Temp());  
+        #elif defined (_ANDROID_)
+        InternalSetPath("/sdcard");
         #else
         InternalSetPath(_T("/tmp"));
         #endif
@@ -1598,7 +1586,9 @@ nglIStream* nglPath::OpenRead() const
   {
     nglVolume* pVolume = nglVolume::GetVolume(volume);
     if (pVolume)
+    {
       return pVolume->OpenRead(*this);
+    }
   }
   
   nglIFile* pFile = new nglIFile(*this);

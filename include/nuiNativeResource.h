@@ -16,7 +16,7 @@ class nuiNativeResource : public nglIStream
 public:
   nuiNativeResource(const nglPath& rPath);
   ~nuiNativeResource();
-  
+
   bool IsValid() const;
   static bool GetResourcesList(std::vector<nglPath>& rResources);
 
@@ -40,19 +40,19 @@ public:
   int64 Read (void* pData, int64 WordCount, uint WordSize);
   int64 Peek (void* pData, int64 WordCount, uint WordSize);
 
-  
-  
+
+
   virtual void SetEndian(nglEndian nglEndian);
   virtual bool SetTextEncoding (nglTextEncoding Encoding);
   virtual void SetTextFormat (nglTextFormat Format);
-  
-  
+
+
 private:
   nglIStream* mpIStream;
-  bool mValid; 
+  bool mValid;
 };
 
-#if (defined _LINUX_) || (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_)
+#if (defined _LINUX_) || (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_) || (defined _ANDROID_) || (defined _MINUI3_)
 nglPath nuiGetNativeResourcePath();
 #endif
 

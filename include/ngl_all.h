@@ -107,7 +107,7 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include <dirent.h>
 #endif
 
-//#if (((defined _DEBUG) || (defined DEBUG)) || (defined _DEBUG_)) 
+//#if (((defined _DEBUG) || (defined DEBUG)) || (defined _DEBUG_))
 //#include "mmgr.h"
 //#endif
 
@@ -117,21 +117,13 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include "nglPath.h"
 
 #include "ngl3DSLoader.h"
-#include "nglApplication.h"
 #include "nglBitmapTools.h"
 #include "nglCPUInfo.h"
 
-#include "nglClipBoard.h"
 
 #include "nglConsole.h"
-#include "nglContext.h"
-
-#include "nglDataObjects.h"
-#include "nglDataTypesRegistry.h"
 
 #include "nglDeviceInfo.h"
-
-#include "nglDragAndDropObjects.h"
 
 #include "nglEndian.h"
 #include "nglError.h"
@@ -145,8 +137,7 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include "nglIZip.h"
 #include "nglImage.h"
 #include "nglImageCodec.h"
-#include "nglInputDevice.h"
-#include "nglKeyboard.h"
+
 #include "nglLog.h"
 #include "nglMath.h"
 #include "nglMatrix.h"
@@ -161,11 +152,25 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include "nglString.h"
 #include "nglTimer.h"
 #include "nglVector.h"
-#include "nglVideoMode.h"
-#include "nglWindow.h"
 #include "nglZipFS.h"
 
 #include "nglMath.h"
+
+#include "nglThread.h"
+#include "nglLock.h"
+
+#ifndef _MINUI3_
+  #include "nglDataObjects.h"
+  #include "nglContext.h"
+  #include "nglVideoMode.h"
+  #include "nglWindow.h"
+  #include "nglApplication.h"
+  #include "nglClipBoard.h"
+  #include "nglDataTypesRegistry.h"
+  #include "nglDragAndDropObjects.h"
+  #include "nglInputDevice.h"
+  #include "nglKeyboard.h"
+#endif
 
 #endif // __ngl_all_h__
 

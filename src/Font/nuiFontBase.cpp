@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
 
 #include "nuiFontBase.h"
 
@@ -825,7 +824,6 @@ nuiFontBase::nuiFontBase (const nuiFontBase& rFont)
   
   mSize        = rFont.mSize;
   mResolution  = rFont.mResolution;
-  mpConv       = rFont.mpConv;
   mRenderMode  = rFont.mRenderMode;
   
   Init();
@@ -1257,7 +1255,7 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
   /*
    * The internal LoadFinish() method automatically tries to find a Unicode charmap,
    * and decides if a charset conversion (Unicode to locale or locale to Unicode) must be
-   * performed (using mpConv). We must also handle the case where the font has no charmap.
+   * performed. We must also handle the case where the font has no charmap.
    */
   
   int todo = MIN(SourceLength, IndexesLength);
@@ -1290,49 +1288,6 @@ int nuiFontBase::GetGlyphIndexes (const nglUChar* pSource, int SourceLength, uin
   NGL_OUT(_T("' [%d], 0x%p [%d])\n"), SourceLength, pIndexes, IndexesLength);
 #endif
   
-  if (mpConv)
-  {
-    // nglChar -> locale
-    int to_write0 = SourceLength;
-    char* buffer = (char*) alloca(to_write0);
-    
-    const char* source   = (const char*) pSource;
-    int         to_read  = SourceLength;
-    char*       dest     = (char*) buffer;
-    int         to_write = to_write0;
-    
-#ifdef DBG_INDEX
-    NGL_OUT(_T("  to_write: %d bytes (buffer: 0x%p)\n"), to_write, dest);
-#endif
-    mpConv->Process(source, to_read, dest, to_write);
-    
-    // Convert from byte count to glyph count
-    todo = to_write0 - to_write;
-    
-    todo /= sizeof(nglChar);
-    
-#ifdef DBG_INDEX
-    NGL_OUT(_T("  todo    : %d glyphs\n"), todo);
-    NGL_OUT(_T("  codes   :"));
-    for (i = 0; i < todo; i++) NGL_OUT(_T(" %d"), buffer[i]);
-    NGL_OUT(_T("\n"));
-    
-    NGL_OUT(_T("  indexes :"));
-#endif
-    done = todo;
-    while (todo > 0)
-    {
-      *pIndexes++ = FTC_CMapCache_Lookup (gFTCMapCache, face_id, mCharMap, *buffer++);
-#ifdef DBG_INDEX
-      NGL_OUT(_T(" %d"), pIndexes[-1]);
-#endif
-      todo--;
-    }
-#ifdef DBG_INDEX
-    NGL_OUT(_T("\n"));
-#endif
-  }
-  else
   {
     done = todo;
     while (todo > 0)
@@ -1587,7 +1542,6 @@ void nuiFontBase::Defaults()
   
   // Will be set at Load() time
   mCharMap    = 0;
-  mpConv      = NULL;
   mRenderMode = 0;
   
   mLastResort = false;
@@ -1741,12 +1695,7 @@ bool nuiFontBase::LoadFinish(float Size)
    */
   if (FT_Select_Charmap (face, FT_ENCODING_UNICODE) != FT_Err_Ok)
   {
-#ifdef USE_WCHAR
-    // We can't select Unicode output, we'll do nglChar -> locale and use the first map (if available)
-    mpConv = nglString::GetStringConv(nglEncodingPair(eEncodingInternal, eEncodingNative));
-#else
     // We expect that the first charmap is actually the right one for the locale's encoding
-#endif
     FT_Set_Charmap (face, face->charmaps[0]);
   }
 #ifndef USE_WCHAR
@@ -1757,7 +1706,6 @@ bool nuiFontBase::LoadFinish(float Size)
   mCharMap = FT_Get_Charmap_Index(face->charmap);
   
   NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  selected charmap   : %s (#%d)"), GetCharMapName(), GetCharMap()); )
-  NGL_DEBUG( NGL_LOG(_T("font"), NGL_LOG_DEBUG, _T("  charmap conversion : %s"), YESNO(mpConv)); )
   
   mValid = true;
 
@@ -2141,7 +2089,7 @@ nui_hb_get_glyph_h_origin (hb_font_t *font,
                           void *user_data)
 {
   /* We always work in the horizontal coordinates. */
-  return TRUE;
+  return true;
 }
 
 static hb_bool_t
@@ -2156,14 +2104,14 @@ nui_hb_get_glyph_v_origin (hb_font_t *font,
   int load_flags = FT_LOAD_DEFAULT;
   
   if (FT_Load_Glyph (ft_face, glyph, load_flags))
-    return FALSE;
+    return false;
   
   /* Note: FreeType's vertical metrics grows downward while other FreeType coordinates
    * have a Y growing upward.  Hence the extra negation. */
   *x = ft_face->glyph->metrics.horiBearingX -   ft_face->glyph->metrics.vertBearingX;
   *y = ft_face->glyph->metrics.horiBearingY - (-ft_face->glyph->metrics.vertBearingY);
   
-  return TRUE;
+  return false;
 }
 
 static hb_position_t
@@ -2204,13 +2152,13 @@ nui_hb_get_glyph_extents (hb_font_t *font,
   int load_flags = FT_LOAD_DEFAULT;
   
   if (FT_Load_Glyph (ft_face, glyph, load_flags))
-    return FALSE;
+    return false;
   
   extents->x_bearing = ft_face->glyph->metrics.horiBearingX;
   extents->y_bearing = ft_face->glyph->metrics.horiBearingY;
   extents->width = ft_face->glyph->metrics.width;
   extents->height = ft_face->glyph->metrics.height;
-  return TRUE;
+  return true;
 }
 
 static hb_bool_t
@@ -2226,23 +2174,24 @@ nui_hb_get_glyph_contour_point (hb_font_t *font,
   int load_flags = FT_LOAD_DEFAULT;
   
   if (FT_Load_Glyph (ft_face, glyph, load_flags))
-    return FALSE;
+    return false;
   
   if (ft_face->glyph->format != FT_GLYPH_FORMAT_OUTLINE)
-    return FALSE;
+    return false;
   
   if (point_index >= (unsigned int) ft_face->glyph->outline.n_points)
-    return FALSE;
+    return false;
   
   *x = ft_face->glyph->outline.points[point_index].x;
   *y = ft_face->glyph->outline.points[point_index].y;
   
-  return TRUE;
+  return true;
 }
 
 
 void nuiFontBase::Shape(nuiTextRun* pRun)
 {
+  //NGL_OUT("nuiFontBase::Shape with font %s", GetFamilyName().GetChars());
   if (pRun->IsDummy())
     return;
   NGL_ASSERT(this == pRun->mStyle.GetFont());
@@ -2278,7 +2227,6 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
                     ft_face->size->metrics.x_ppem,
                     ft_face->size->metrics.y_ppem);
 
-  //hb_font_t *hb_font = hb_ft_font_create(ft_face, NULL);
   hb_buffer_t *hb_buffer;
   hb_glyph_info_t *hb_glyph;
   hb_glyph_position_t *hb_position;
@@ -2289,14 +2237,30 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
 
   text = pRun->GetUnicodeChars();
   len = pRun->GetLength();
+//   nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
+//   NGL_OUT("Text: %s\n", t.GetChars());
   
-  hb_buffer = hb_buffer_create(len);
+  hb_buffer = hb_buffer_create();
   
   hb_buffer_set_unicode_funcs(hb_buffer, nui_hb_get_unicode_funcs());
   
   //hb_buffer_set_direction(hb_buffer, HB_DIRECTION_TTB);
   hb_buffer_set_script(hb_buffer, hb_get_script_from_nui(pRun->GetScript()));
-  hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
+  if (sizeof(nglUChar) == 2)
+  {
+    //nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS2);
+    //NGL_OUT("Text: %s\n", t.GetChars());
+    
+    hb_buffer_add_utf16(hb_buffer, (const uint16_t *)text, len, 0, len);
+  }
+  else
+  {
+    //nglString t((const nglChar*)text, len * sizeof(nglUChar), eUCS4);
+    //NGL_OUT("Text: %s\n", t.GetChars());
+ 
+    hb_buffer_add_utf32(hb_buffer, (const uint32_t *)text, len, 0, len);
+  }
+
   //if (language)
   //  hb_buffer_set_language(hb_buffer, hb_language_from_string(language));
   
@@ -2315,7 +2279,7 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
 
   const float factor = nuiGetInvScaleFactor() * (1.0 / 64.0);
   
-  //printf("Shape %p\n", pRun);
+  //NGL_OUT("Shape %p\n", pRun);
   for (i = 0; i < num_glyphs; i++)
   {
     GetGlyphInfo(pRun->mGlyphs[i], hb_glyph->codepoint, eGlyphNative);
@@ -2324,14 +2288,14 @@ void nuiFontBase::Shape(nuiTextRun* pRun)
     pRun->mGlyphs[i].mY = -(hb_position->y_offset)    * factor;
     x += hb_position->x_advance;
     
-    //printf("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
+    //NGL_OUT("%d - %d (%d, %d) ##", hb_glyph->codepoint, hb_glyph->cluster,  ToNearest(pRun->mGlyphs[i].mX), ToNearest(pRun->mGlyphs[i].mY));
 
     hb_glyph++;
     hb_position++;
 
   }
 
-  //printf("\n");
+  //NGL_OUT("\n");
   
   pRun->mAdvanceX = x * factor;
   hb_buffer_destroy(hb_buffer);

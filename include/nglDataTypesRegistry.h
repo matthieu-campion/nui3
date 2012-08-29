@@ -29,6 +29,9 @@ typedef uint        nglNativeObjectType;
 #ifdef _UIKIT_
 typedef uint        nglNativeObjectType;
 #endif
+#ifdef _ANDROID_
+typedef uint        nglNativeObjectType;
+#endif
 #ifdef _CARBON_
 typedef FlavorType  nglNativeObjectType;
 #endif

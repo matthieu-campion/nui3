@@ -148,6 +148,9 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   mpHideTimer = new nuiTimer(HIDE_SCROLLBARS_DELAY);
   mSVSink.Connect(mpHideTimer->Tick, &nuiScrollView::OnHideTick);
   
+  mpShowAnimV = mpShowAnimH = NULL;
+  mpHideAnimV = mpHideAnimH = NULL;
+  
 #ifdef _UIKIT_
   ActivateMobileMode();
 #endif
@@ -1087,7 +1090,9 @@ void nuiScrollView::ShowScrollBars(bool autoHide)
 }
 
 void nuiScrollView::HideScrollBars()
-{  
+{ 
+  if (mpShowAnimH) 
+  {
   mpShowAnimH->Stop();
   mpShowAnimV->Stop();
   
@@ -1098,7 +1103,7 @@ void nuiScrollView::HideScrollBars()
   mpHideAnimH->Stop();
   mpHideAnimH->SetTime(0);  
   mpHideAnimH->Play();
-
+  }
 }
 
 void nuiScrollView::SetHideScrollBars(bool hide)
@@ -1122,6 +1127,10 @@ void nuiScrollView::SetHideScrollBars(bool hide)
     delete mpShowAnimV;
     delete mpHideAnimH;
     delete mpHideAnimV;
+    mpShowAnimH = NULL;
+    mpShowAnimV = NULL;
+    mpHideAnimH = NULL;
+    mpHideAnimV = NULL;
     mpHorizontal->SetAlpha(1);
     mpVertical->SetAlpha(1);
   }
