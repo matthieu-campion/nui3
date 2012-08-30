@@ -134,8 +134,8 @@ bool nglVideoMode::SetMode (nglVideoMode* pVideoMode, bool Lock)
 #endif
 }
 
-static float gScaleFactor = 1.0f;
-static float gInvScaleFactor = 1.0f;
+static float gScaleFactor = 2.0f;
+static float gInvScaleFactor = 1.0/2.0f;
 
 float nuiGetScaleFactor()
 {

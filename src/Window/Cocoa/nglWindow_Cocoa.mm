@@ -223,7 +223,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   
   oglContext = [[NSOpenGLContext alloc] initWithFormat: format shareContext: nil];
   GLint v = 1;
-  [oglContext setValues:&v forParameter:NSOpenGLCPSwapInterval];
+  [oglContext setValues:&v forParameter: NSOpenGLCPSwapInterval];
   [oglContext setView:self];
   [oglContext makeCurrentContext];
   return self;
@@ -250,6 +250,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 // this is called whenever the view changes (is unhidden or resized)
 - (void)drawRect:(NSRect)frameRect
 {
+//  [self convertRectToBacking:[self bounds]];
   [oglContext update];
   [[self window] doPaint];
 }
