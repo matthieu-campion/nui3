@@ -9,6 +9,7 @@
 
 #include "nui.h"
 #include "nuiSocket.h"
+#include "nglCriticalSection.h"
 
 class nuiPipe
 {
@@ -20,11 +21,13 @@ public:
   size_t Write(const nglString& rString);
   size_t Read(uint8* pBuffer, size_t size);
   size_t GetSize() const;
-  const uint8* GetBuffer() const;
+  const uint8* LockBuffer();
+  void UnlockBuffer();
   void Eat(size_t size);
   void Clear();
 
 protected:
+  mutable nglCriticalSection mCS;
   std::vector<uint8> mBuffer;
 };
 

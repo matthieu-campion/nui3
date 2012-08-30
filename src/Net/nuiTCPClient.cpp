@@ -186,6 +186,7 @@ bool nuiTCPClient::IsWriteConnected() const
 
 bool nuiTCPClient::IsReadConnected() const
 {
+  /*
   bool retval = false;
   int bytestoread = 0;
   timeval timeout;
@@ -201,6 +202,8 @@ bool nuiTCPClient::IsReadConnected() const
   retval = ((bytestoread == 0) && (sio == 1));
 
   return retval;
+   */
+  return mReadConnected;
 }
 
 int32 nuiTCPClient::GetAvailable() const
@@ -289,25 +292,26 @@ void nuiTCPClient::SendWriteBuffer()
   if (!s)
     return;
 
-  const uint8* pBuffer = mOut.GetBuffer();
+  const uint8* pBuffer = mOut.LockBuffer();
 
   int done = Send(pBuffer, s);
   if (done >= 0)
     mOut.Eat(done);
-  //NGL_OUT("%p %d eat %d\n", this, GetSocket(), done);
+
+  mOut.UnlockBuffer();
+  //  NGL_LOG("socket", NGL_LOG_INFO, "%p %d eat %d\n", this, GetSocket(), done);
 }
 
 void nuiTCPClient::OnReadClosed()
 {
-  printf("%d read closed\n", GetSocket());
+  NGL_LOG("socket", NGL_LOG_INFO, "%d read closed\n", GetSocket());
   nuiSocket::OnReadClosed();
   mReadConnected = false;
-
 }
 
 void nuiTCPClient::OnWriteClosed()
 {
-  NGL_OUT("%d write closed\n", GetSocket());
+  NGL_LOG("socket", NGL_LOG_INFO, "%d write closed\n", GetSocket());
   nuiSocket::OnWriteClosed();
   mWriteConnected = false;
 }
@@ -327,6 +331,7 @@ nuiPipe::~nuiPipe()
 
 size_t nuiPipe::Write(const uint8* pBuffer, size_t size)
 {
+  nglCriticalSectionGuard guard(mCS);
   size_t p = mBuffer.size();
   mBuffer.resize(size + p);
   memcpy(&mBuffer[p], pBuffer, size);
@@ -341,6 +346,7 @@ size_t nuiPipe::Write(const nglString& rString)
 
 size_t nuiPipe::Read(uint8* pBuffer, size_t size)
 {
+  nglCriticalSectionGuard guard(mCS);
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
@@ -353,16 +359,25 @@ size_t nuiPipe::Read(uint8* pBuffer, size_t size)
 
 size_t nuiPipe::GetSize() const
 {
+  nglCriticalSectionGuard guard(mCS);
   return mBuffer.size();
 }
 
-const uint8* nuiPipe::GetBuffer() const
+const uint8* nuiPipe::LockBuffer()
 {
+  mCS.Lock();
   return &mBuffer[0];
 }
 
+void nuiPipe::UnlockBuffer()
+{
+  mCS.Unlock();
+}
+
+
 void nuiPipe::Eat(size_t size)
 {
+  nglCriticalSectionGuard guard(mCS);
   size_t p = mBuffer.size();
   size_t todo = MIN(size, p);
   size_t remain = p - todo;
@@ -374,6 +389,7 @@ void nuiPipe::Eat(size_t size)
 
 void nuiPipe::Clear()
 {
+  nglCriticalSectionGuard guard(mCS);
   mBuffer.clear();
 }
 
