@@ -361,7 +361,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 nuiSocketPool::nuiSocketPool()
 {
   mEPoll = epoll_create(100);
-  mEventCount = 0;
+  mNbSockets = 0;
 }
 
 nuiSocketPool::~nuiSocketPool()
@@ -387,7 +387,7 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
     NGL_LOG("socket", NGL_LOG_ERROR, "epoll::Add : %s (errno %d)\n", strerror(err), err);
   }
 
-  mEventCount++;
+  mNbSockets++;
 }
 
 void nuiSocketPool::Del(nuiSocket* pSocket)
@@ -404,7 +404,7 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   }
 
 
-  mEventCount--;
+  mNbSockets--;
   if (IsInDispatch())
     mDeletedFromPool.insert(pSocket);
 }
@@ -413,10 +413,10 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
   SetInDispatch(true);
 
-  if (mEventCount > mEvents.size())
-    mEvents.resize(mEventCount);
+  if (mNbSockets > mEvents.size())
+    mEvents.resize(mNbSockets);
 
-  int res = epoll_wait(mEPoll, &mEvents[0], mEventCount, timeout_millisec);
+  int res = epoll_wait(mEPoll, &mEvents[0], mNbSockets, timeout_millisec);
 
   if(res == -1)
   {

@@ -91,16 +91,15 @@ public:
   int DispatchEvents(int timeout_millisec);
 
 private:
+  int mNbSockets;
 #ifdef NGL_KQUEUE
   // Kernel queue implementation (FreeBSD, Darwin...)
   std::vector<struct kevent> mEvents;
   int mQueue;
-  int mNbSockets;
 #endif
 
 #ifdef NGL_EPOLL
   int mEPoll;
-  int mEventCount;
   std::vector<struct epoll_event> mEvents;
 #endif
 
