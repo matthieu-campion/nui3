@@ -204,6 +204,11 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   if(self == nil)
     return nil;
 
+  if ( [self respondsToSelector:@selector(setWantsBestResolutionOpenGLSurface:) ] )
+  {
+    [self setWantsBestResolutionOpenGLSurface: YES];
+  }
+
   // create and activate the context object which maintains the OpenGL state
   NSOpenGLPixelFormatAttribute attribs[] =
   {

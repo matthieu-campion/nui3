@@ -97,6 +97,7 @@ static float gInvScaleFactor = 1.0f;
 
 float nuiGetScaleFactor()
 {
+  
   return gScaleFactor;
 }
 
