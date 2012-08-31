@@ -434,6 +434,8 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     return EWOULDBLOCK;
   }
 
+  NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents got %d events\n", res);
+
   for (int i = 0; i < res; i++)
   {
     nuiSocket* pSocket = (nuiSocket*)mEvents[i].data.ptr;
@@ -499,6 +501,5 @@ void nuiSocketPool::SetInDispatch(bool set)
   else
     ngl_atomic_compare_and_swap(mInDispatch, 1, 0);
 }
-
 
 

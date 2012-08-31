@@ -363,6 +363,26 @@ bool nuiHTTPHandler::Log(int32 code)
   NGL_OUT("%d.%d.%d.%d \"%s %s\" %d %s\n", pIp[0], pIp[1], pIp[2], pIp[3], mMethod.GetChars(), mURL.GetChars(), code, t.GetChars());
 }
 
+const nglString& nuiHTTPHandler::GetURL() const
+{
+  return mURL;
+}
+
+const nglString& nuiHTTPHandler::GetMethod() const
+{
+  return mMethod;
+}
+
+const nglString& nuiHTTPHandler::GetProtocol() const
+{
+  return mProtocol;
+}
+
+const nglString& nuiHTTPHandler::GetVersion() const
+{
+  return mVersion;
+}
+
 
 //class nuiHTTPServerThread : public nglThread
 nuiHTTPServerThread::nuiHTTPServerThread(nuiHTTPHandler* pHandler, size_t StackSize)

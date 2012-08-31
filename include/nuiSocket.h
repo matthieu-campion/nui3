@@ -89,7 +89,6 @@ public:
   void Del(nuiSocket* pSocket);
 
   int DispatchEvents(int timeout_millisec);
-
 private:
   int mNbSockets;
 #ifdef NGL_KQUEUE

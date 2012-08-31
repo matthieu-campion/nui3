@@ -70,6 +70,8 @@ public:
 
   void SetAutoDelete(bool set); ///< Delete the client when the send buffer is empty after a call to SendWriteBuffer()
   void SendWriteBuffer();
+
+  void SetAutoPool(nuiSocketPool* pPool);
 protected:
   friend class nuiTCPServer;
   nuiTCPClient(int sock);
@@ -84,6 +86,7 @@ protected:
   size_t ReadFromOutputBuffer(uint8* pBuffer, size_t size);
 
   bool mAutoDelete;
+  nuiSocketPool* mpAutoPool;
 };
 
 

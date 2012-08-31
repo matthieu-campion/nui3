@@ -26,6 +26,7 @@ nuiTCPClient::nuiTCPClient()
   mReadConnected = false;
   mWriteConnected = false;
   mAutoDelete = false;
+  mpAutoPool = NULL;
 }
 
 nuiTCPClient::nuiTCPClient(int sock)
@@ -34,6 +35,7 @@ nuiTCPClient::nuiTCPClient(int sock)
   mReadConnected = true;
   mWriteConnected = true;
   mAutoDelete = false;
+  mpAutoPool = NULL;
 }
 
 nuiTCPClient::~nuiTCPClient()
@@ -262,6 +264,13 @@ void nuiTCPClient::SetAutoDelete(bool set)
   mAutoDelete = set;
 }
 
+void nuiTCPClient::SetAutoPool(nuiSocketPool* pPool)
+{
+  mpAutoPool = pPool;
+  if (pPool)
+    pPool->Add(this, nuiSocketPool::eStateChange);
+}
+
 
 void nuiTCPClient::OnCanRead()
 {
@@ -287,18 +296,37 @@ void nuiTCPClient::OnCanWrite()
 
 void nuiTCPClient::SendWriteBuffer()
 {
+  const uint8* pBuffer = mOut.LockBuffer();
   size_t s = mOut.GetSize();
 
   if (!s)
+  {
+    mOut.UnlockBuffer();
     return;
-
-  const uint8* pBuffer = mOut.LockBuffer();
+  }
 
   int done = Send(pBuffer, s);
   if (done >= 0)
     mOut.Eat(done);
 
+  NGL_LOG("socket", NGL_LOG_INFO, "sent %d of %d bytes", done, s);
+
   mOut.UnlockBuffer();
+
+  if (mpAutoPool)
+  {
+    if (mOut.GetSize() > 0)
+    {
+      if (!mpPool)
+        mpAutoPool->Add(this, nuiSocketPool::eStateChange);
+    }
+    else
+    {
+      if (mpPool)
+        mpAutoPool->Del(this);
+    }
+  }
+
   //  NGL_LOG("socket", NGL_LOG_INFO, "%p %d eat %d\n", this, GetSocket(), done);
 }
 

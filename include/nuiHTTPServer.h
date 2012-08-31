@@ -67,6 +67,12 @@ public:
 
   bool ReplyAndClose();
 
+  const nglString& GetURL() const;
+  const nglString& GetMethod() const;
+  const nglString& GetProtocol() const;
+  const nglString& GetVersion() const;
+
+
 protected:
   enum State
   {
