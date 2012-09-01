@@ -20,6 +20,9 @@
 
 #include "ucdata.h"
 
+#if (defined _UNIX_)
+#include <signal.h>
+#endif
 
 
 /* Defined in <platform>/nglKernel.cpp
