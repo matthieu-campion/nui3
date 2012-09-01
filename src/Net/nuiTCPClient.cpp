@@ -316,7 +316,7 @@ void nuiTCPClient::SendWriteBuffer()
   if (done >= 0)
     mOut.Eat(done);
 
-  NGL_LOG("socket", NGL_LOG_INFO, "sent %d of %d bytes", done, s);
+  //NGL_LOG("socket", NGL_LOG_INFO, "sent %d of %d bytes", done, s);
 
   mOut.UnlockBuffer();
 
