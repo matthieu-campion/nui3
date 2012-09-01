@@ -156,16 +156,6 @@ bool nglKernel::SysInit()
   return true;
 }
 
-void nglKernel::CatchSignal (int Signal, void (*pHandler)(int))
-{
-  struct sigaction act;
-
-  act.sa_handler = pHandler;
-  sigemptyset (&act.sa_mask);
-  act.sa_flags = (Signal == SIGCHLD) ? SA_NOCLDSTOP : 0;
-  sigaction (Signal, &act, NULL);
-}
-
 void nglKernel::OnSignal(int Signal) /* static method */
 {
   switch (Signal)

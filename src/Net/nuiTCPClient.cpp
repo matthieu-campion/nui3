@@ -266,9 +266,16 @@ void nuiTCPClient::SetAutoDelete(bool set)
 
 void nuiTCPClient::SetAutoPool(nuiSocketPool* pPool)
 {
+  if (mpAutoPool != pPool)
+    if (mpAutoPool)
+      mpAutoPool->Del(this);
+
+  if (mpPool != pPool && mpPool)
+    mpPool->Del(this);
+
   mpAutoPool = pPool;
-  if (pPool)
-    pPool->Add(this, nuiSocketPool::eStateChange);
+  if (mpAutoPool)
+    mpAutoPool->Add(this, nuiSocketPool::eStateChange);
 }
 
 

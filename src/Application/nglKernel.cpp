@@ -436,6 +436,17 @@ void nglKernel::UnregisterObserver(nuiNotificationObserver* pObserver, const ngl
   mpNotificationManager->UnregisterObserver(pObserver, rNotificationName);
 }
 
+#if (defined _UNIX_) || (defined _MINUI3_) || (defined _COCOA_) || (defined _CARBON_)
+void nglKernel::CatchSignal (int Signal, void (*pHandler)(int))
+{
+  struct sigaction act;
+
+  act.sa_handler = pHandler;
+  sigemptyset (&act.sa_mask);
+  act.sa_flags = (Signal == SIGCHLD) ? SA_NOCLDSTOP : 0;
+  sigaction (Signal, &act, NULL);
+}
+#endif
 
 
 

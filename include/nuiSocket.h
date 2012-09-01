@@ -55,6 +55,7 @@ public:
 
   virtual void Close();
 
+  static void DumpError(int err, const char* msg = NULL);
 protected:
   friend class nuiSocketPool;
   nuiSocket(SocketType Socket = -1);
@@ -62,7 +63,6 @@ protected:
   void SetPool(nuiSocketPool* pPool);
 
   struct addrinfo* GetAddrInfo(const nuiNetworkHost& rHost) const;
-  void DumpError(int err) const;
 
   SocketType mSocket;
   EventDelegate mReadDelegate;
