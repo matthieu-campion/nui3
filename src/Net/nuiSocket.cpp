@@ -399,7 +399,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     nuiSocket::DumpError(res, "epoll::WaitForEvents");
     SetInDispatch(false);
     mDeletedFromPool.clear();
-    return err;
+    return errno;
   }
 
   if (res == 0)
