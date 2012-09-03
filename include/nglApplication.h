@@ -237,7 +237,15 @@ private:
   int  SysLoop();
 #endif // _WIN32_
 
-#ifdef _CARBON_
+#ifdef _COCOA_
+  int Main(int ArgCount, const char** pArgs);
+  friend int main(int ArgCount, const char** pArgs);
+  bool Init(int argc, const char** argv);
+  int  Run();
+//#endif
+
+//#ifdef _CARBON_
+#elif (defined _CARBON_)
 protected:
   int  mExitCode;
 
@@ -268,24 +276,17 @@ protected:
 	 You should free up memory when this happens, warn the user or quit the application.
 	 */
 	
-  int  Main(int argc, const char** argv);
-  bool Init(int argc, const char** argv);
+  int  Main(int argc, char** argv);
+  bool Init(int argc, char** argv);
   int  Run();
 
 //  static OSErr QuitAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
-  friend int main(int argc, const char** argv);
+  friend int main(int argc, char** argv);
 
 ///< Yes, it has to be public (called from an obj-c class ...)
 public:
 #endif//_UIKIT_
 
-#ifdef _COCOA_
-  int Main(int ArgCount, const char** pArgs);
-  friend int main(int ArgCount, const char** pArgs);
-  bool Init(int argc, const char** argv);
-  int  Run();
-#endif
-  
 #ifdef _UNIX_
 private:
   friend int main(int, const char**);
@@ -352,15 +353,22 @@ extern NGL_API class nglKernel* App;
   #define __NGL_APP_MAINCALL WinMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd)
 #endif // _WIN32_
 
-#if defined(_UNIX_) || defined(_CARBON_) || defined(_UIKIT_)
+#if defined(_COCOA_)
   #define __NGL_APP_MAINDECL int main(int argc, const char** argv)
   #define __NGL_APP_MAINCALL Main(argc, argv)
-#endif // _UNIX_
-
-#if defined(_COCOA_)
-#define __NGL_APP_MAINDECL int main(int argc, const char** argv)
-#define __NGL_APP_MAINCALL Main(argc, argv)
 #endif // _COCOA_
+
+#ifdef _CARBON_
+#error "_CARBON_ shouldn't be defined"
+#endif
+#ifdef _UIKIT_
+#error "_UIKIT_ shouldn't be defined"
+#endif
+
+#if defined(_UNIX_) || defined(_CARBON_) || defined(_UIKIT_)
+  #define __NGL_APP_MAINDECL int main(int argc, char** argv)
+  #define __NGL_APP_MAINCALL Main(argc, argv)
+#endif // _UNIX_
 
 #if (defined _DEBUG_) && (defined _WIN32_)
   #define NGL_CHECK_MEMORY _CrtMemDumpAllObjectsSince( NULL );

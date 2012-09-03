@@ -891,7 +891,6 @@
 		73F086B912E9BA0700656E84 /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		73F086BA12E9BA0700656E84 /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		73F086BB12E9BA0700656E84 /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
-		73F086BC12E9BA0700656E84 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		73F086BD12E9BA0700656E84 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		73F086BE12E9BA0700656E84 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
 		73F086BF12E9BA0700656E84 /* nglConsole_Darwin.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FA11CB86C40025CA71 /* nglConsole_Darwin.mm */; };
@@ -2724,7 +2723,6 @@
 		E52417B411CB860B0025CA71 /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E52417B811CB860B0025CA71 /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		E52417E711CB860B0025CA71 /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
-		E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		E524180111CB86C40025CA71 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417F711CB86C40025CA71 /* ngl_uikit.h */; };
 		E524180211CB86C40025CA71 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		E524180311CB86C40025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
@@ -3337,7 +3335,6 @@
 		E524208B11CBCE9E0025CA71 /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E524208F11CBCE9E0025CA71 /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		E52420BE11CBCE9E0025CA71 /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
-		E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		E52420C011CBCE9E0025CA71 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		E52420C111CBCE9E0025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
 		E52420C211CBCE9E0025CA71 /* nglConsole_Darwin.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FA11CB86C40025CA71 /* nglConsole_Darwin.mm */; };
@@ -7824,7 +7821,6 @@
 		E51E565C0FF248AB00FDF3BE /* nuiHTMLHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLHeader.cpp; sourceTree = "<group>"; };
 		E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiURL_CoreFoundation.mm; path = src/Net/CoreFoundation/nuiURL_CoreFoundation.mm; sourceTree = SOURCE_ROOT; };
 		E52417F311CB860B0025CA71 /* libnuiPhoneD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiPhoneD.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiAudioDevice_AudioUnit.mm; path = Audio/AudioUnit/nuiAudioDevice_AudioUnit.mm; sourceTree = "<group>"; };
 		E52417F711CB86C40025CA71 /* ngl_uikit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ngl_uikit.h; path = src/Application/UIKit/ngl_uikit.h; sourceTree = SOURCE_ROOT; };
 		E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglApplication_UIKit.mm; path = src/Application/UIKit/nglApplication_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglClipBoard_UIKit.mm; path = src/Application/UIKit/nglClipBoard_UIKit.mm; sourceTree = SOURCE_ROOT; };
@@ -10136,7 +10132,6 @@
 		E52E1A230CD7EE46006FBCDD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */,
 				BC9CB4A30D3E48000093CAC3 /* nuiAudioResampler.h */,
 				BC9CB3F60D3E3D9A0093CAC3 /* nuiAudioConvert.cpp */,
 				BC9CB3FC0D3E3DA70093CAC3 /* nuiAudioConvert.h */,
@@ -16802,7 +16797,6 @@
 				73F086B912E9BA0700656E84 /* nuiHTMLTable.cpp in Sources */,
 				73F086BA12E9BA0700656E84 /* nuiAVIwriter.cpp in Sources */,
 				73F086BB12E9BA0700656E84 /* nuiURL_CoreFoundation.mm in Sources */,
-				73F086BC12E9BA0700656E84 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				73F086BD12E9BA0700656E84 /* nglApplication_UIKit.mm in Sources */,
 				73F086BE12E9BA0700656E84 /* nglClipBoard_UIKit.mm in Sources */,
 				73F086BF12E9BA0700656E84 /* nglConsole_Darwin.mm in Sources */,
@@ -17363,7 +17357,6 @@
 				E52417B411CB860B0025CA71 /* nuiHTMLTable.cpp in Sources */,
 				E52417B811CB860B0025CA71 /* nuiAVIwriter.cpp in Sources */,
 				E52417E711CB860B0025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
-				E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				E524180211CB86C40025CA71 /* nglApplication_UIKit.mm in Sources */,
 				E524180311CB86C40025CA71 /* nglClipBoard_UIKit.mm in Sources */,
 				E524180411CB86C40025CA71 /* nglConsole_Darwin.mm in Sources */,
@@ -17700,7 +17693,6 @@
 				E524208B11CBCE9E0025CA71 /* nuiHTMLTable.cpp in Sources */,
 				E524208F11CBCE9E0025CA71 /* nuiAVIwriter.cpp in Sources */,
 				E52420BE11CBCE9E0025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
-				E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				E52420C011CBCE9E0025CA71 /* nglApplication_UIKit.mm in Sources */,
 				E52420C111CBCE9E0025CA71 /* nglClipBoard_UIKit.mm in Sources */,
 				E52420C211CBCE9E0025CA71 /* nglConsole_Darwin.mm in Sources */,
@@ -20220,6 +20212,18 @@
 					DEBUG,
 					_COCOA_,
 				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					NGL_STATIC_BUILD,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					FT_CONFIG_OPTION_SYSTEM_ZLIB,
+					HAVE_BCOPY,
+					FEATURE_NANOJIT,
+					JS_TRACER,
+					XP_UNIX,
+					AVMPLUS_AMD64,
+					_COCOA_,
+				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=ppc]" = (
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
@@ -20235,12 +20239,14 @@
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
+					FT_MACINTOSH,
 					DARWIN_NO_CARBON,
 					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					HAVE_BCOPY,
 					FEATURE_NANOJIT,
 					JS_TRACER,
 					XP_UNIX,
+					HAVE_FT_FACE_GETCHARVARIANTINDEX,
 					AVMPLUS_AMD64,
 					_COCOA_,
 				);
@@ -20326,8 +20332,9 @@
 					XP_UNIX,
 					HAVE_FT_FACE_GETCHARVARIANTINDEX,
 					AVMPLUS_IA32,
+					_COCOA_,
 				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
 					FT_MACINTOSH,

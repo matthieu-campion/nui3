@@ -34,6 +34,11 @@
   #ifdef _CARBON_
   #define _CARBON_FONTS_
   #endif
+
+  #ifdef _COCOA_
+  #define _CARBON_FONTS_
+  #endif
+
 #else
   #define _WIN32_FONTS_
 #endif
@@ -615,7 +620,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 {
 #ifdef FONT_TEST_HACK
   rFolders[_T("System0")] = _T("/System/Library/Fonts/Cache/");
-#elif (defined _CARBON_)
+#elif (defined _CARBON_) || (defined _COCOA_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/Library/Fonts/");
   rFolders[_T("System2")] = _T("~/Library/Fonts/");
@@ -1056,8 +1061,8 @@ nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
 {
   nuiFontBase::Init();
 
-  const bool FORCE_FONT_ENUM = 0;
-  if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
+  const bool FORCE_FONT_ENUM = false;
+  if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty())// && gManager.mFontFolders.empty())
   {
     App->AddExit(nuiFontManager::ExitManager);
     gManager.AddSystemFolders();
