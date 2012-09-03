@@ -55,7 +55,8 @@ public:
 
   virtual void Close();
 
-  static void DumpError(int err, const char* msg = NULL);
+  static void DumpError(int err);
+  static void DumpError(int err, const char* msg, ...);
 protected:
   friend class nuiSocketPool;
   nuiSocket(SocketType Socket = -1);

@@ -18,7 +18,9 @@
 #include <netdb.h>
 #endif
 
-void nuiSocket::DumpError(int err, const char* msg)
+#define __FUNC__ "%s:%d",__FILE__,__LINE__
+
+void nuiSocket::DumpError(int err, const char* msg, ...)
 {
   if (!err)
     return;
@@ -26,9 +28,23 @@ void nuiSocket::DumpError(int err, const char* msg)
   nglString error(strerror(errno));
 
   if (msg)
-    NGL_OUT(_T("[%s] Socket Error: %s\n"), msg, error.GetChars());
+  {
+    nglString m;
+    va_list args;
+
+    va_start(args, msg);
+    m.Formatv(msg, args);
+    va_end(args);
+
+    NGL_OUT(_T("[%s] Socket Error: %s\n"), m.GetChars(), error.GetChars());
+  }
   else
     NGL_OUT(_T("Socket Error: %s\n"), error.GetChars());
+}
+
+void nuiSocket::DumpError(int err)
+{
+  DumpError(err, "?");
 }
 
 
@@ -36,11 +52,15 @@ void nuiSocket::DumpError(int err, const char* msg)
 nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
 : mSocket(Socket), mpPool(NULL)
 {
-#if (!defined _LINUX_)
-  int n = 0;
-  setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
-#endif
   mNonBlocking = false;
+#if (!defined _LINUX_)
+  if (Socket != -1)
+  {
+    int n = 0;
+    int res = setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+    DumpError(res, __FUNC__);
+  }
+#endif
 }
 
 bool nuiSocket::Init(int domain, int type, int protocol)
@@ -48,7 +68,8 @@ bool nuiSocket::Init(int domain, int type, int protocol)
   mSocket = socket(domain, type, protocol);
 #if (!defined _LINUX_)
   int n = 0;
-  setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+  int res = setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
+  DumpError(res, __FUNC__);
 #endif
   return mSocket >= 0;
 }
@@ -65,13 +86,15 @@ void nuiSocket::Close()
 
   if (mSocket > 0)
   {
-    shutdown(mSocket, 2);
+    int res = shutdown(mSocket, SHUT_RDWR);
+    DumpError(res, __FUNC__);
 #ifdef WIN32
     //DisconnectEx(mSocket, NULL, 0, 0);
-    closesocket(mSocket);
+    res = closesocket(mSocket);
 #else
-    close(mSocket);
+    res = close(mSocket);
 #endif
+    DumpError(res, __FUNC__);
   }
 
   mSocket = -1;
@@ -93,6 +116,8 @@ bool nuiSocket::GetLocalHost(nuiNetworkHost& rHost) const
   struct sockaddr_in addr;
   socklen_t addrlen = sizeof(addr);
   int res = getsockname(mSocket, (struct sockaddr*)&addr, &addrlen);
+  DumpError(res, __FUNC__);
+
   if (res != 0)
     return false;
 
@@ -106,6 +131,8 @@ bool nuiSocket::GetDistantHost(nuiNetworkHost& rHost) const
   struct sockaddr_in addr;
   socklen_t addrlen = sizeof(addr);
   int res = getpeername(mSocket, (struct sockaddr*)&addr, &addrlen);
+  DumpError(res, __FUNC__);
+
   if (res != 0)
     return false;
 
@@ -146,7 +173,8 @@ void nuiSocket::SetNonBlocking(bool set)
 #else
   /* Otherwise, use the old way of doing it */
   flags = set ? 1 : 0;
-  ioctl(mSocket, FIOBIO, &flags);
+  int res = ioctl(mSocket, FIOBIO, &flags);
+  DumpError(res, __FUNC__);
 #endif
 }
 
