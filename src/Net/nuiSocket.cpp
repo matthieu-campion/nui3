@@ -86,8 +86,9 @@ void nuiSocket::Close()
 
   if (mSocket > 0)
   {
-    int res = shutdown(mSocket, SHUT_RDWR);
-    DumpError(res, __FUNC__);
+    int res = 0;
+//    int res = shutdown(mSocket, SHUT_RDWR);
+//    DumpError(res, __FUNC__);
 #ifdef WIN32
     //DisconnectEx(mSocket, NULL, 0, 0);
     res = closesocket(mSocket);

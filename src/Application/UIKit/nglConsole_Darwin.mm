@@ -15,7 +15,7 @@ nglConsole::nglConsole(bool IsVisible)
 {
   mIsVisible = IsVisible;
   if (mIsVisible)
-    NGL_OUT (NGL_CONSOLE_PROMPT);
+    NGL_OUT(NGL_CONSOLE_PROMPT);
 }
 
 nglConsole::~nglConsole()
@@ -27,7 +27,7 @@ nglConsole::~nglConsole()
  * Public methods
  */
 
-void nglConsole::Show (bool IsVisible)
+void nglConsole::Show(bool IsVisible)
 {
   mIsVisible = IsVisible;
 }
@@ -36,10 +36,10 @@ void nglConsole::Show (bool IsVisible)
  * Internals
  */
 
-void nglConsole::OnOutput (const nglString& rText)
+void nglConsole::OnOutput(const nglString& rText)
 {
-  printf (rText.GetChars());
-  fflush (stdout);
+  printf(rText.GetChars());
+  fflush(stdout);
 }
 
 #define BUFFER_MAX 4096
