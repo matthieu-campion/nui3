@@ -334,9 +334,11 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   if (res == 0)
     return EWOULDBLOCK;
 
+  std::set<nuiSocket*>::iterator it;
+  std::set<nuiSocket*>::iterator end;
   {
     nglCriticalSectionGuard g(mCS);
-    std::set<nuiSocket*>::iterator end == mDeletedFromPool.end();
+    end = mDeletedFromPool.end();
   }
 
   for (int i = 0; i < res; i++)
@@ -345,7 +347,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
     {
       nglCriticalSectionGuard g(mCS);
-      std::set<nuiSocket*>::iterator it = mDeletedFromPool.find(pSocket);
+      it = mDeletedFromPool.find(pSocket);
     }
 
     if (it == end)

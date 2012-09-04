@@ -7403,7 +7403,6 @@
 		E5FB9C20147D5CEE001A1829 /* nglPath_Unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */; };
 		E5FB9C21147D5CEE001A1829 /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E51B694D0C4E564D008EF7A3 /* ConvertUTF.cpp */; };
 		E5FB9C22147D5CEE001A1829 /* nuiSignalsSlots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57BC7550C63E9E00026DE07 /* nuiSignalsSlots.cpp */; };
-		E5FB9C23147D5CEE001A1829 /* nuiBindingManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */; };
 		E5FB9C2D147D5CEE001A1829 /* nuiToken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A1704D0C907095005DC748 /* nuiToken.cpp */; };
 		E5FB9C2E147D5CEE001A1829 /* nglThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E505C87E0C958C16001D802C /* nglThread.cpp */; };
 		E5FB9C2F147D5CEE001A1829 /* nglThread_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E505C87F0C958C16001D802C /* nglThread_posix.cpp */; };
@@ -7426,7 +7425,6 @@
 		E5FB9C5F147D5CEE001A1829 /* nglLightLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC4389DB0DC82C5400AF5002 /* nglLightLock.cpp */; };
 		E5FB9C60147D5CEE001A1829 /* nglLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC438B010DC873DB00AF5002 /* nglLock.cpp */; };
 		E5FB9C63147D5CEE001A1829 /* nuiMemoryPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56892C190DE4887E005806AD /* nuiMemoryPool.cpp */; };
-		E5FB9C65147D5CEE001A1829 /* nuiMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC77BAE70DF94C2500E0EC0D /* nuiMainMenu.cpp */; };
 		E5FB9C6B147D5CEE001A1829 /* nuiBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57502A30E77EF6800D240DE /* nuiBindings.cpp */; };
 		E5FB9C76147D5CEE001A1829 /* nuiTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5166B1F0EC4947E00559D21 /* nuiTranslator.cpp */; };
 		E5FB9C77147D5CEE001A1829 /* nuiLocale.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5166D290EC4F09500559D21 /* nuiLocale.cpp */; };
@@ -7486,7 +7484,6 @@
 		E5FB9CD5147D5CEE001A1829 /* nuiSynthVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 401705C512E06878008769D5 /* nuiSynthVoice.cpp */; };
 		E5FB9CD6147D5CEE001A1829 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5345F3012F3317500F435D9 /* TextureAtlas.cpp */; };
 		E5FB9CE1147D5CEE001A1829 /* nglStringConv_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E592C5AB0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp */; };
-		E5FB9CEB147D5CEE001A1829 /* nuiMidi_CoreMidi.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5ED550D13FDEC0C004EFA83 /* nuiMidi_CoreMidi.mm */; };
 		E5FB9CEC147D5CEE001A1829 /* nuiMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ED551513FDED23004EFA83 /* nuiMidi.cpp */; };
 		E5FB9CED147D5CEE001A1829 /* nuiArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E53B3E7D1407CA7E005AD549 /* nuiArchive.cpp */; };
 		E5FB9CF0147D5CEE001A1829 /* libthirdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5DD341012E09CA800F1EF4E /* libthirdparty.a */; };
@@ -19944,7 +19941,6 @@
 				E5FB9C20147D5CEE001A1829 /* nglPath_Unix.cpp in Sources */,
 				E5FB9C21147D5CEE001A1829 /* ConvertUTF.cpp in Sources */,
 				E5FB9C22147D5CEE001A1829 /* nuiSignalsSlots.cpp in Sources */,
-				E5FB9C23147D5CEE001A1829 /* nuiBindingManager.cpp in Sources */,
 				E5FB9C2D147D5CEE001A1829 /* nuiToken.cpp in Sources */,
 				E5FB9C2E147D5CEE001A1829 /* nglThread.cpp in Sources */,
 				E5FB9C2F147D5CEE001A1829 /* nglThread_posix.cpp in Sources */,
@@ -19967,7 +19963,6 @@
 				E5FB9C5F147D5CEE001A1829 /* nglLightLock.cpp in Sources */,
 				E5FB9C60147D5CEE001A1829 /* nglLock.cpp in Sources */,
 				E5FB9C63147D5CEE001A1829 /* nuiMemoryPool.cpp in Sources */,
-				E5FB9C65147D5CEE001A1829 /* nuiMainMenu.cpp in Sources */,
 				E5FB9C6B147D5CEE001A1829 /* nuiBindings.cpp in Sources */,
 				E5FB9C76147D5CEE001A1829 /* nuiTranslator.cpp in Sources */,
 				E5FB9C77147D5CEE001A1829 /* nuiLocale.cpp in Sources */,
@@ -20027,7 +20022,6 @@
 				E5FB9CD5147D5CEE001A1829 /* nuiSynthVoice.cpp in Sources */,
 				E5FB9CD6147D5CEE001A1829 /* TextureAtlas.cpp in Sources */,
 				E5FB9CE1147D5CEE001A1829 /* nglStringConv_CoreFoundation.cpp in Sources */,
-				E5FB9CEB147D5CEE001A1829 /* nuiMidi_CoreMidi.mm in Sources */,
 				E5FB9CEC147D5CEE001A1829 /* nuiMidi.cpp in Sources */,
 				E5FB9CED147D5CEE001A1829 /* nuiArchive.cpp in Sources */,
 				E5C3FA4214BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
@@ -20651,7 +20645,6 @@
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 					_DEBUG,
 					DEBUG,
-					_CARBON_,
 					_MINUI3_,
 				);
 				INSTALL_PATH = /usr/local/lib;

@@ -53,18 +53,20 @@ template <> uint64 nuiAttributeTypeTrait<float>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<double>::mTypeId;
 
 template <> uint64 nuiAttributeTypeTrait<nglString>::mTypeId;
-template <> uint64 nuiAttributeTypeTrait<nuiPoint>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiRect>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiBorder>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiColor>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiRange>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiVector>::mTypeId;
-template <> uint64 nuiAttributeTypeTrait<nglMatrixf>::mTypeId;
-template <> uint64 nuiAttributeTypeTrait<nuiBlendFunc>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiExpandMode>::mTypeId;
 
 template <> uint64 nuiAttributeTypeTrait<void>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<void*>::mTypeId;
+
+#ifndef _MINUI3_
+template <> uint64 nuiAttributeTypeTrait<nuiPoint>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiBlendFunc>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nglMatrixf>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiObject*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiWidget*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiContainer*>::mTypeId;
@@ -72,6 +74,8 @@ template <> uint64 nuiAttributeTypeTrait<nuiSimpleContainer*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiTopLevel*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiMainWindow*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiLabel*>::mTypeId;
+#endif
+
 #endif
 
 
