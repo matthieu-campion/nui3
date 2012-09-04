@@ -26,7 +26,7 @@ public:
     Reset();
   }
 
-  bool Wait(uint32 time = ULONG_MAX); ///< Wait for the event to be set. The wait time is given in milliseconds. If time == ULONG_MAX the wait will be infinite. The method returns true if the event was set, false otherwise.
+  bool Wait(uint32 time = std::numeric_limits<uint32>::max()); ///< Wait for the event to be set. The wait time is given in milliseconds. If time == ULONG_MAX the wait will be infinite. The method returns true if the event was set, false otherwise.
 
 #ifdef WIN32
   HANDLE nglSyncEvent::GetNativeHandle() const;

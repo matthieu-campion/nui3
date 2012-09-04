@@ -438,7 +438,7 @@ void nglThreadChecker::Checker(double currentTime)
       if (FindDeadLock_2ndPass(state.GetLockPointer(), log))
       {
        // it's a dead-lock. do what u have to do.        
-        printf(_T("\nnglThreadChecker WARNING : dead-lock on %s '%s' [0x%x]!\n"), 
+        printf(_T("\nnglThreadChecker WARNING : dead-lock on %s '%s' [%p]!\n"), 
           state.GetLockPointer()->GetLabel().GetChars(), state.GetLockPointer()->GetName().GetChars(), state.GetLockPointer());
         printf(_T("%s\n"), log.GetChars());  
         _Dump(currentTime);
@@ -473,7 +473,7 @@ void nglThreadChecker::Checker(double currentTime)
         state.SetWarning(nglThreadState::eWarningLong);
         // it's a long lock. do what u have to do.
         printf(_T("nglThreadChecker WARNING!\n"));
-        printf(_T("nglThreadChecker WARNING : the %s '%s' [0x%x] has been locked for more than %.3fsec in thread '%s' [0x%x]\n"), 
+        printf(_T("nglThreadChecker WARNING : the %s '%s' [%p] has been locked for more than %.3fsec in thread '%s' [%p]\n"), 
         state.GetLockPointer()->GetLabel().GetChars(),
         state.GetLockPointer()->GetName().GetChars(), state.GetLockPointer(), delay, threadName.GetChars(), threadID);
         _Dump(currentTime);

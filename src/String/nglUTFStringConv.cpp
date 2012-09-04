@@ -63,58 +63,66 @@ UTFConverter nglUTFStringConv::GetUTFConverter(nglTextEncoding From, nglTextEnco
   switch (From)
   {
     case eUTF8:
-    {
-      switch (To)
       {
-        case eUCS2:
+        switch (To)
         {
-          return (UTFConverter)ConvertUTF8toUTF16;
+          case eUCS2:
+            {
+              return (UTFConverter)ConvertUTF8toUTF16;
+            }
+            break;
+          case eUCS4:
+            {
+              return (UTFConverter)ConvertUTF8toUTF32;
+            }
+            break;
+          default:
+            break;
         }
-          break;
-        case eUCS4:
-        {
-          return (UTFConverter)ConvertUTF8toUTF32;
-        }
-          break;
       }
-    }
       break;
     case eUCS2:
-    {
-      switch (To)
       {
-        case eUTF8:
+        switch (To)
         {
-          return (UTFConverter)ConvertUTF16toUTF8;
+          case eUTF8:
+            {
+              return (UTFConverter)ConvertUTF16toUTF8;
+            }
+            break;
+          case eUCS4:
+            {
+              return (UTFConverter)ConvertUTF16toUTF32;
+            }
+            break;
+          default:
+            break;
         }
-          break;
-        case eUCS4:
-        {
-          return (UTFConverter)ConvertUTF16toUTF32;
-        }
-          break;
       }
-    }
       break;
     case eUCS4:
-    {
-      switch (To)
       {
-        case eUTF8:
+        switch (To)
         {
-          return (UTFConverter)ConvertUTF32toUTF8;
+          case eUTF8:
+            {
+              return (UTFConverter)ConvertUTF32toUTF8;
+            }
+            break;
+          case eUCS2:
+            {
+              return (UTFConverter)ConvertUTF32toUTF16;
+            }
+            break;
+          default:
+            break;
         }
-          break;
-        case eUCS2:
-        {
-          return (UTFConverter)ConvertUTF32toUTF16;
-        }
-          break;
       }
-    }
+      break;
+    default:
       break;
   }
-  
+
   return NULL;
 }
 

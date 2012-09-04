@@ -34,6 +34,8 @@ nuiHTTPHandler* nuiURLHandler::Handle(const nglString& rURL)
       args.push_back(rURL.Extract(mRegExp.SubStart(i), mRegExp.SubLength(i)));
     return mDelegate(rURL, args);
   }
+
+  return NULL;
 }
 
 
@@ -340,6 +342,8 @@ bool nuiHTTPHandler::ReplyError(int32 code, const nglString& rErrorStr)
 
   // Log the error:
   Log(code);
+
+  return true;
 }
 
 bool nuiHTTPHandler::ReplyAndClose()
@@ -361,6 +365,8 @@ bool nuiHTTPHandler::Log(int32 code)
   uint8* pIp = (uint8*)&ip;
   nglString t = nglTime().GetLocalTimeStr("%a, %d %b %Y %H:%M:%S %z");
   NGL_OUT("%d.%d.%d.%d \"%s %s\" %d %s\n", pIp[0], pIp[1], pIp[2], pIp[3], mMethod.GetChars(), mURL.GetChars(), code, t.GetChars());
+
+  return true;
 }
 
 const nglString& nuiHTTPHandler::GetURL() const

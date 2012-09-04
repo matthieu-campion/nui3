@@ -69,7 +69,7 @@ void nglConsole::Show (bool IsVisible)
 void nglConsole::OnOutput (const nglString& rText)
 {
   // 'char' mode : string buffer is considered to use the locale's encoding
-  printf (rText.GetChars());
+  printf ("%s", rText.GetChars());
   fflush (stdout);
 }
 

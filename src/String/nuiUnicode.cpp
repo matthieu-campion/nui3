@@ -14,7 +14,7 @@ typedef struct nuiUnicodeRangeDesc
   uint32 RangeStart;
   uint32 RangeEnd;
   nuiUnicodeRange Range;
-};
+} nuiUnicodeRangeDesc;
 
 nuiUnicodeRangeDesc nuiUnicodeRanges[] =
 {// Start  End   , Enum                                   
