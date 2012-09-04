@@ -91,7 +91,6 @@ public:
 
   int DispatchEvents(int timeout_millisec);
 private:
-  int mNbSockets;
 #ifdef NGL_KQUEUE
   // Kernel queue implementation (FreeBSD, Darwin...)
   std::vector<struct kevent> mEvents;
@@ -99,12 +98,15 @@ private:
 #endif
 
 #ifdef NGL_EPOLL
-  int mEPoll;
   std::vector<struct epoll_event> mEvents;
+  int mEPoll;
 #endif
 
+  nglCriticalSection mCS;
   std::set<nuiSocket*> mDeletedFromPool;
   nglAtomic mInDispatch;
+
+  int mNbSockets;
 
   bool IsInDispatch() const;
   void SetInDispatch(bool set);
