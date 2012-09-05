@@ -69,8 +69,8 @@ void nglConsole::Show (bool IsVisible)
 void nglConsole::OnOutput (const nglString& rText)
 {
   // 'char' mode : string buffer is considered to use the locale's encoding
-  printf ("%s", rText.GetChars());
-  fflush (stdout);
+  write (1, rText.GetChars(), rText.GetLength());
+  //fflush (stdout);
 }
 
 #define IN_BUFFER_SIZE 1024

@@ -104,7 +104,7 @@ private:
 
   nglCriticalSection mCS;
   std::set<nuiSocket*> mDeletedFromPool;
-  nglAtomic mInDispatch;
+  int mInDispatch;
 
   int mNbSockets;
 

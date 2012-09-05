@@ -16,6 +16,7 @@ const nglLog::StampFlags nglLog::TimeStamp   = 1 << 0;
 const nglLog::StampFlags nglLog::DateStamp   = 1 << 1;
 const nglLog::StampFlags nglLog::DomainStamp = 1 << 2;
 
+#define DISABLE_LOG 1
 
 /*
  * Life cycle
@@ -32,10 +33,10 @@ nglLog::nglLog (bool UseConsole)
 
 nglLog::~nglLog ()
 {
-  mLock.LockWrite();
+  //mLock.LockWrite();
   mOutputList.clear();
   mDomainList.clear();
-  mLock.UnlockWrite();
+  //mLock.UnlockWrite();
 }
 
 /*
@@ -64,33 +65,41 @@ void nglLog::UseConsole(bool Use)
 
 bool nglLog::AddOutput (nglOStream* pStream)
 {
+  #if DISABLE_LOG
+  return false;
+  #endif
+
   if (!pStream)
     return false;
 
-  mLock.LockWrite();
+  //mLock.LockWrite();
   mOutputList.push_back(pStream);
-  mLock.UnlockWrite();
+  //mLock.UnlockWrite();
   return true;
 }
 
 bool nglLog::DelOutput (nglOStream* pStream)
 {
+  #if DISABLE_LOG
+  return false;
+  #endif
+
   if (!pStream)
     return false;
 
   OutputList::iterator output;
 
-  mLock.LockWrite();
+  //mLock.LockWrite();
   for (output = mOutputList.begin(); output != mOutputList.end(); ++output)
   {
     if (*output == pStream)
     {
       mOutputList.erase(output);
-      mLock.UnlockWrite();
+      //mLock.UnlockWrite();
       return true;
     }
   }
-  mLock.UnlockWrite();
+  //mLock.UnlockWrite();
   return false;
 }
 
@@ -101,6 +110,10 @@ bool nglLog::DelOutput (nglOStream* pStream)
 
 uint nglLog::GetLevel (const nglChar* pDomain)
 {
+  #if DISABLE_LOG
+  return 0;
+  #endif
+
   Domain* slot = LookupDomain(pDomain);
 
   return slot ? slot->Level : 0;
@@ -108,12 +121,16 @@ uint nglLog::GetLevel (const nglChar* pDomain)
 
 void nglLog::SetLevel (const nglChar* pDomain, uint Level)
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (!pDomain)
     return;
 
   if (strcmp(pDomain, _T("all")) == 0)
   {
-    mLock.LockRead();
+    //mLock.LockRead();
     DomainList::iterator dom = mDomainList.begin();
     DomainList::iterator end = mDomainList.end();
 
@@ -121,7 +138,7 @@ void nglLog::SetLevel (const nglChar* pDomain, uint Level)
     {
       ngl_atomic_set(dom->Level, Level);
     }
-    mLock.UnlockRead();
+    //mLock.UnlockRead();
 
     mDefaultLevel = Level;
     return;
@@ -142,6 +159,10 @@ void nglLog::SetLevel (const nglChar* pDomain, uint Level)
 
 void nglLog::Log (const nglChar* pDomain, uint Level, const nglChar* pText, ...)
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (pText == NULL)
     return;
 
@@ -155,6 +176,10 @@ void nglLog::Log (const nglChar* pDomain, uint Level, const nglChar* pText, ...)
 
 void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_list Args)
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (pText == NULL)
     return;
 
@@ -178,7 +203,7 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
   }
 
   {
-    nglCriticalSectionGuard guard(mCS);
+    //nglCriticalSectionGuard guard(mCS);
     // Compose mPrefix
     mPrefix.Wipe();
     if (mStampFlags & DateStamp)
@@ -243,7 +268,11 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
 
 void nglLog::Dump (uint Level) const
 {
-  mLock.LockRead();
+  #if DISABLE_LOG
+  return;
+  #endif
+
+  //mLock.LockRead();
   DomainList::const_iterator dom = mDomainList.begin();
   DomainList::const_iterator end = mDomainList.end();
 
@@ -257,7 +286,7 @@ void nglLog::Dump (uint Level) const
     text.Format(format.GetChars(), (*dom).Name.GetChars(), (*dom).Count);
     Output(text);
   }
-  mLock.UnlockRead();
+  //mLock.UnlockRead();
 }
 
 
@@ -267,11 +296,15 @@ void nglLog::Dump (uint Level) const
 
 nglLog::Domain* nglLog::LookupDomain (const nglChar* pName)
 {
+  #if DISABLE_LOG
+  return NULL;
+  #endif
+
   // Sanity check
   if (!pName)
     return NULL;
 
-  mLock.LockRead();
+  //mLock.LockRead();
   // Search in domain list
   DomainList::iterator dom = mDomainList.begin();
   DomainList::iterator end = mDomainList.end();
@@ -281,22 +314,26 @@ nglLog::Domain* nglLog::LookupDomain (const nglChar* pName)
     if (dom->Name == pName)
     {
       Domain* pDom = &(*dom);
-      mLock.UnlockRead();
+      //mLock.UnlockRead();
       return pDom;
     }
   }
-  mLock.UnlockRead();
+  //mLock.UnlockRead();
 
   // Not found ? Create it.
-  mLock.LockWrite();
+  //mLock.LockWrite();
   mDomainList.push_back(Domain(pName, mDefaultLevel));
   Domain* pDom = &mDomainList.back();
-  mLock.UnlockWrite();
+  //mLock.UnlockWrite();
   return pDom;
 }
 
 void nglLog::Output (const nglString& rText) const
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (mUseConsole)
   {
     NGL_OUT(rText);

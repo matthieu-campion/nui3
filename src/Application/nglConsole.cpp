@@ -10,6 +10,7 @@
 #include "nglKernel.h"
 #include "nglConsole.h"
 
+
 using namespace std;
 
 /*
@@ -23,6 +24,10 @@ list<nglString*>& nglConsole::GetHistory()
 
 int nglConsole::GetHistory (list<const nglString*>& rMatches, nglString& rFilter, bool IsCaseSensitive)
 {
+  #if NGL_DISABLE_CONSOLE
+  return 0;
+  #else
+
   int count = 0;
   list<nglString*>::reverse_iterator h_entry;
   list<nglString*>::reverse_iterator h_begin = mHistory.rbegin();
@@ -37,10 +42,15 @@ int nglConsole::GetHistory (list<const nglString*>& rMatches, nglString& rFilter
     }
 
   return count;
+  #endif
 }
 
 nglString nglConsole::GetHistory (uint Line)
 {
+  #if NGL_DISABLE_CONSOLE
+  return nglString::Null;
+  #else
+
   uint i;
   list<nglString*>::iterator h_entry;
   list<nglString*>::iterator h_end = mHistory.end();
@@ -50,16 +60,26 @@ nglString nglConsole::GetHistory (uint Line)
         h_entry++, i++);
 
   return (i == Line) && h_entry != h_end ? **h_entry : nglString::Null;
+  #endif
 }
 
 void nglConsole::UseHistory (bool Use, bool UseExpansion)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   mUseHistory = Use;
   mUseHExpansion = UseExpansion;
+  #endif
 }
 
 void nglConsole::SetHistory (uint LineMax, uint CharMax)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   while ((!mHistory.empty()) &&
          (((LineMax > 0) && (mLineCnt > LineMax)) ||
           ((CharMax > 0) && (mCharCnt > CharMax))))
@@ -76,15 +96,25 @@ void nglConsole::SetHistory (uint LineMax, uint CharMax)
   }
   mLineMax = LineMax;
   mCharMax = CharMax;
+  #endif
 }
 
 void nglConsole::SetHistoryCase (bool IsCaseSensitive)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   mHistoryCase = IsCaseSensitive;
+  #endif
 }
 
 void nglConsole::AddToHistory (const nglString& rLine)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   nglString* newline;
   uint new_linecnt, new_charcnt;
 
@@ -116,10 +146,15 @@ void nglConsole::AddToHistory (const nglString& rLine)
   mHistory.push_front (newline);
   mLineCnt = new_linecnt;
   mCharCnt = new_charcnt;
+  #endif
 }
 
 void nglConsole::ClearHistory ()
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   // free history content
   list<nglString*>::iterator h_entry;
   list<nglString*>::iterator h_end = mHistory.end();
@@ -127,6 +162,7 @@ void nglConsole::ClearHistory ()
     delete *h_entry;
 
   mHistory.clear();
+  #endif
 }
 
 /*
@@ -135,12 +171,22 @@ void nglConsole::ClearHistory ()
 
 void nglConsole::UseCompletion (bool Use)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   mUseCompletion = Use;
+  #endif
 }
 
 void nglConsole::SetCompletionCase (bool IsCaseSensitive)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   mCompletionCase = IsCaseSensitive;
+  #endif
 }
 
 
@@ -164,6 +210,10 @@ list<nglString>& nglConsole::OnCompletion (nglString& rLine, uint Start, uint En
 
 void nglConsole::Input (nglString& rLine)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   rLine.TrimRight();
   if (mUseHExpansion && (!rLine.Compare(_T("!"), 0, 1)))
   {
@@ -185,6 +235,7 @@ void nglConsole::Input (nglString& rLine)
       }
   }
   OnInput (rLine);
+  #endif
 }
 
 list<nglString>& nglConsole::Completion (nglString& rLine, uint Start, uint End, list<nglString>& rAppendTo)
@@ -219,6 +270,10 @@ list<nglString>& nglConsole::Completion (nglString& rLine, uint Start, uint End,
 
 void nglConsole::Setup()
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   mUseHistory = false;
   mUseHExpansion = false;
   mUseCompletion = false;
@@ -228,20 +283,31 @@ void nglConsole::Setup()
   mLineMax = 100;
   mCharCnt = 0;
   mCharMax = 0;
+  #endif
 }
 
 void nglConsole::Output (const nglChar* pFormat, ...)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   nglCriticalSectionGuard guard(mCS);
   va_list args;
 
   va_start (args, pFormat);
   Outputv (pFormat, args);
   va_end (args);
+  #endif
+
 }
 
 void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   if (this)   //#HACK This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
   {
     nglCriticalSectionGuard guard(mCS);
@@ -259,12 +325,17 @@ void nglConsole::Outputv (const nglChar* pFormat, va_list Args)
 #else
     LOGI("%s", out.GetChars());
 #endif
-
   }
+  #endif
 }
 
 void nglConsole::Output (const nglString& rText)
 {
+  #if NGL_DISABLE_CONSOLE
+  return;
+  #else
+
   nglCriticalSectionGuard guard(mCS);
   OnOutput (rText);
+  #endif
 }

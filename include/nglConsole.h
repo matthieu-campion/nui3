@@ -18,6 +18,8 @@
 #include "nglString.h"
 #include "nglCriticalSection.h"
 
+#define NGL_DISABLE_CONSOLE 1
+
 
 //! Interactive portable console
 /*!
@@ -79,7 +81,7 @@ public:
     if (!rLine.Compare("exit")) Quit (0); else
       NGL_OUT ("sorry, unknown command\n");
   }
-};  
+};
 
 MyApplication::OnInit()
 {
@@ -120,7 +122,7 @@ public:
   {
     // Here some GL code to display mBacklog content
   }
-};  
+};
 \endcode
 
 
@@ -202,7 +204,7 @@ public:
 
   /** @name History */
   //@{
-  std::list<nglString*>& GetHistory(); 
+  std::list<nglString*>& GetHistory();
   /*!<
     Return all history entries
   */
@@ -305,16 +307,13 @@ private:
   uint                  mCharMax;
   uint                  mCharCnt;
   std::list<nglString*> mHistory;
+#if !NGL_DISABLE_CONSOLE
   nglString             mOutputBuffer;
 
   nglCriticalSection mCS;
+#endif
 
   nglConsole(const nglConsole&)
-#if defined __LINUX__ || defined _ANDROID_
-#ifdef USE_WCHAR
-  : mOutputConv(eEncodingInternal, eEncodingNative)
-#endif
-#endif
   {
      // Undefined copy constructor
   }
@@ -324,22 +323,15 @@ private:
   std::list<nglString>& Completion(nglString& rLine, uint Start, uint End, std::list<nglString>& rAppendTo);
 
 
-#ifdef _UNIX_
+#if (defined _UNIX_ || defined _CARBON_ || defined _UIKIT_ || defined _COCOA_)
 private:
   bool      mIsVisible;
   nglString mInputBuffer;
 
   void OnEvent(uint Flags);
-#endif //_UNIX_
+#endif
 
-#if (defined _CARBON_ || defined _UIKIT_ || defined _COCOA_)
-private:
-  bool mIsVisible;
 
-  void OnEvent(int Flags);
-#endif //_CARBON_||_UIKIT_||COCOA
-
-  
 #ifdef _WIN32_
 public:
   unsigned int mInputHeight;
@@ -381,10 +373,6 @@ private:
   nglString mLine;
 
   static DWORD WINAPI ThreadProc(LPVOID lpParameter);
-#elif defined(__LINUX__) || defined(_ANDROID_)
-	#ifdef USE_WCHAR
-	  nglStringConv mOutputConv;
-	#endif
 #endif // _WIN32_
 };
 
