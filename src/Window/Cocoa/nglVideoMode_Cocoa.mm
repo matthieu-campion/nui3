@@ -92,19 +92,24 @@ bool nglVideoMode::SetMode (nglVideoMode* pVideoMode, bool Lock)
   return done;
 }
 
-//static float gScaleFactor = 1.0f;
-//static float gInvScaleFactor = 1.0f;
-static float gScaleFactor = 2.0f;
-static float gInvScaleFactor = 1.0f/2.0f;
+static float gScaleFactor = 0;
+static float gInvScaleFactor = 0;
 
 float nuiGetScaleFactor()
 {
-  
+  if (gScaleFactor == 0)
+  {
+    gScaleFactor = [NSScreen mainScreen].backingScaleFactor;
+  }  
   return gScaleFactor;
 }
 
 float nuiGetInvScaleFactor()
 {
+  if (gInvScaleFactor == 0)
+  {
+    gInvScaleFactor = 1.0f / nuiGetScaleFactor();
+  }
   return gInvScaleFactor;
 }
 
