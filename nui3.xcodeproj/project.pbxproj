@@ -5639,7 +5639,6 @@
 		E5D643D41209AB9C009C26A9 /* nglPlugin_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6E9711E7315F000FB337 /* nglPlugin_Cocoa.mm */; };
 		E5D643D51209AB9C009C26A9 /* nglContext_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA011E7322A000FB337 /* nglContext_Cocoa.mm */; };
 		E5D643D61209AB9C009C26A9 /* nuiMainMenu_Cocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA211E7322A000FB337 /* nuiMainMenu_Cocoa.cpp */; };
-		E5D643D71209AB9C009C26A9 /* nglVideoMode_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E210C3CECAB00902DFE /* nglVideoMode_CoreFoundation.cpp */; };
 		E5D643D81209AB9C009C26A9 /* nglVideoMode_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59CD10A11E7C9F200955611 /* nglVideoMode_Cocoa.mm */; };
 		E5D643D91209AB9C009C26A9 /* nglWindow_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */; };
 		E5D6450C120A0B39009C26A9 /* nglImageCGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52419D911CB9D3C0025CA71 /* nglImageCGCodec.cpp */; };
@@ -6986,7 +6985,6 @@
 		E5EF6E9D11E7315F000FB337 /* nglPlugin_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6E9711E7315F000FB337 /* nglPlugin_Cocoa.mm */; };
 		E5EF6EA311E7322A000FB337 /* nglContext_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA011E7322A000FB337 /* nglContext_Cocoa.mm */; };
 		E5EF6EA511E7322A000FB337 /* nuiMainMenu_Cocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA211E7322A000FB337 /* nuiMainMenu_Cocoa.cpp */; };
-		E5EF6EF611E75CCA000FB337 /* nglVideoMode_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E210C3CECAB00902DFE /* nglVideoMode_CoreFoundation.cpp */; };
 		E5F0C24D13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F0C24C13A0ACC900EC0FB0 /* nuiTextStyle.h */; };
 		E5F0C24E13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F0C24C13A0ACC900EC0FB0 /* nuiTextStyle.h */; };
 		E5F0C24F13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F0C24C13A0ACC900EC0FB0 /* nuiTextStyle.h */; };
@@ -18744,7 +18742,6 @@
 				E5EF6E9D11E7315F000FB337 /* nglPlugin_Cocoa.mm in Sources */,
 				E5EF6EA311E7322A000FB337 /* nglContext_Cocoa.mm in Sources */,
 				E5EF6EA511E7322A000FB337 /* nuiMainMenu_Cocoa.cpp in Sources */,
-				E5EF6EF611E75CCA000FB337 /* nglVideoMode_CoreFoundation.cpp in Sources */,
 				E59CD10B11E7C9F200955611 /* nglVideoMode_Cocoa.mm in Sources */,
 				E59CD17711EA0D2900955611 /* nglWindow_Cocoa.mm in Sources */,
 				E5D6450C120A0B39009C26A9 /* nglImageCGCodec.cpp in Sources */,
@@ -19093,7 +19090,6 @@
 				E5D643D41209AB9C009C26A9 /* nglPlugin_Cocoa.mm in Sources */,
 				E5D643D51209AB9C009C26A9 /* nglContext_Cocoa.mm in Sources */,
 				E5D643D61209AB9C009C26A9 /* nuiMainMenu_Cocoa.cpp in Sources */,
-				E5D643D71209AB9C009C26A9 /* nglVideoMode_CoreFoundation.cpp in Sources */,
 				E5D643D81209AB9C009C26A9 /* nglVideoMode_Cocoa.mm in Sources */,
 				E5D643D91209AB9C009C26A9 /* nglWindow_Cocoa.mm in Sources */,
 				E5D6450D120A0B3A009C26A9 /* nglImageCGCodec.cpp in Sources */,
