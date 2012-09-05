@@ -29,11 +29,11 @@ public:
 
   /** @name Type getters */
   //@{
-  const nglString&    GetMimeType();
+  const nglString&    GetMimeType() const;
   /*!<
     \return mime type
   */
-  nglNativeObjectType GetNativeType();
+  nglNativeObjectType GetNativeType() const;
   /*!<
     return native object type associated to the mime type
   */
@@ -83,8 +83,8 @@ public:
   //@}
   
   virtual void                        AddFile(const nglString& rPath);  ///< Add a File from its path
-  virtual const std::list<nglString>& GetFiles();                       ///< return File paths list
-  virtual nglSize                     GetDataSize();                    ///< return total size of all file paths list
+  virtual const std::list<nglString>& GetFiles() const;                 ///< return File paths list
+  virtual nglSize                     GetDataSize() const;              ///< return total size of all file paths list
   
   void SetNumberOfFiles(size_t num);
 
@@ -127,8 +127,8 @@ public:
   
   virtual void              SetData(const nglString& rDataText);    ///< Set rDataText to the mDataText
   virtual void              AppendData(const nglString& rDataText); ///< Append text rDataText to present mDataText
-  virtual const nglString&  GetData();                              ///< return a reference to mDataText
-  virtual nglSize           GetDataSize();                          ///<
+  virtual const nglString&  GetData() const;                        ///< return a reference to mDataText
+  virtual nglSize           GetDataSize() const;                    ///<
   
   void SetTextSize(uint32 size);
 
@@ -194,6 +194,10 @@ public:
 #endif
       
 #ifdef _CARBON_
+      App->GetDataTypesRegistry().RegisterDataType(rMimeType, 'nui3', &nglInternalDataObject<C>::Create);
+#endif
+
+#ifdef _COCOA_
       App->GetDataTypesRegistry().RegisterDataType(rMimeType, 'nui3', &nglInternalDataObject<C>::Create);
 #endif
 

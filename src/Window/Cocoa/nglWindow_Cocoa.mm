@@ -287,6 +287,20 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 @end
 
 
+NSDragOperation GetNSDragOperation(nglDropEffect Effect)
+{
+  switch (Effect)
+  {
+    case eDropEffectLink:
+      return NSDragOperationLink;
+    case eDropEffectCopy:
+      return NSDragOperationCopy;
+    case eDropEffectMove:
+      return NSDragOperationMove;
+  }
+  return NSDragOperationNone;
+}
+
 @implementation nglNSWindow
 
 - (nglWindow *) getNGLWindow
@@ -309,7 +323,9 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 	
 	mInvalidationTimer = nil;
 	mDisplayLink = nil;
-	
+
+  mpLastMouseEvent = nil;
+
   BOOL deffering = NO;
   uint32 styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
   NSBackingStoreType buffering = NSBackingStoreBuffered;
@@ -323,8 +339,6 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
     NGL_ASSERT(!"initWithFrame: Could not initialize NSWindow");
   }
 
-  NSString title;
-  [self setTitle:@"Testing Simple Cocoa Application"];
   [self setAcceptsMouseMovedEvents:TRUE];
   
   NSRect glrect = {0};
@@ -335,7 +349,8 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   [self setContentView: pView];
   [self setDelegate: pView];
   
-  
+  [self registerForDraggedTypes: [NSArray arrayWithObjects: NSFilenamesPboardType/*, NSColorPboardType*/, nil]];
+
   //[self makeKeyAndOrderFront:nil];
   
 //NGL_OUT(_T("[nglNSWindow initWithFrame]\n"));
@@ -405,6 +420,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+  mpLastMouseEvent = theEvent;
   nglMouseInfo info;
   info.Buttons = 1 << [theEvent buttonNumber];
   info.TouchId = 0;
@@ -560,6 +576,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 ////////// Keyboard:
 - (BOOL)keyDown:(NSEvent *)theEvent
 {
+  return false; ///< FIXME
   NSString *chars = [theEvent characters];
   NSString *rawchars = [theEvent charactersIgnoringModifiers];
   nglString c((CFStringRef)chars);
@@ -707,6 +724,291 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 }
 
 
+#pragma mark Drag and drop
+
+- (BOOL) startDragging: (nglDragAndDrop*) pDragged
+{
+//  NSPasteboardItem *pbItem = [NSPasteboardItem new];
+//  [pbItem setDataProvider:(NSPasteboardItemDataProvider*)self forTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
+//  
+//  //create a new NSDraggingItem with our pasteboard item.
+//  NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
+//  [pbItem release];
+//  
+//  /* The coordinates of the dragging frame are relative to our view.  Setting them to our view's bounds will cause the drag image
+//   * to be the same size as our view.  Alternatively, you can set the draggingFrame to an NSRect that is the size of the image in
+//   * the view but this can cause the dragged image to not line up with the mouse if the actual image is smaller than the size of the
+//   * our view. */
+//  NSRect draggingRect = self.bounds;
+//  
+//  /* While our dragging item is represented by an image, this image can be made up of multiple images which
+//   * are automatically composited together in painting order.  However, since we are only dragging a single
+//   * item composed of a single image, we can use the convince method below. For a more complex example
+//   * please see the MultiPhotoFrame sample. */
+//  [dragItem setDraggingFrame:draggingRect contents:[self image]];
+//  
+//  //create a dragging session with our drag item and ourself as the source.
+//  NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:[NSArray arrayWithObject:[dragItem autorelease]] event:event source:self];
+//  //causes the dragging item to slide back to the source if the drag fails.
+//  draggingSession.animatesToStartingPositionsOnCancelOrFail = YES;  
+//  draggingSession.draggingFormation = NSDraggingFormationNone;
+//////////////////////////////////////////////////////////////////////
+//  NSArray* items;
+//  NSDraggingItem* pItem;
+//
+//  const std::map<nglString, nglDataObject*>& rTypes = pDragged->GetSupportedTypesMap();
+//  std::map<nglString, nglDataObject*>::const_iterator it = rTypes.begin();
+//  std::map<nglString, nglDataObject*>::const_iterator end= rTypes.end();
+//  while (it != end)
+//  {
+//    const nglString& rMime = it->first;
+//    const nglDataObject* pObject = it->second;
+//
+//    if (rMime == _T("ngl/Files"))
+//    {
+//      const nglDataFilesObject* pFiles = dynamic_cast<const nglDataFilesObject*>(pObject);
+//      const std::list<nglString>& rFiles = pFiles->GetFiles();
+//      for (std::list<nglString>::const_iterator it = rFiles.begin(); it != rFiles.end(); ++it)
+//      {
+//        const nglString& rFile = *it;
+//        NSString* file = (NSString*)rFile.ToCFString();
+//        [items ];
+//      }
+//
+//      NSDraggingItem* pItem = [NSDraggingItem create];
+//    }
+//    else if (_T("ngl/PromiseFiles"))
+//    {
+//    
+//    }
+//    else if (_T("ngl/Text"))
+//    {
+//    
+//    }
+//    else
+//    {
+//    
+//    }
+//    
+//    ++it;
+//
+//    
+//  }
+//
+//  NSEvent* event = mpLastMouseEvent;
+//  NSDraggingSession* pDragSession =
+//    [(nglNSWindow*)mpNSWindow beginDraggingSessionWithItems: items
+//                                                      event: event
+//                                                     source: self];
+//  if (pDragSession)
+//  {
+//    return YES;
+//  }
+  return NO;
+}
+
+
+- (NSDragOperation) draggingEntered: (id <NSDraggingInfo>) sender
+{
+  NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+  NSPasteboard *pboard = [sender draggingPasteboard];
+  NSPoint p = [sender draggingLocation]; 
+  p.y = mpNGLWindow->GetHeight()-p.y;
+
+  nglDragAndDrop dragged(eDropEffectNone, NULL, (int)p.x, (int)p.y);
+
+  switch (sourceDragMask)
+  {
+    case NSDragOperationCopy:
+      dragged.AddSupportedDropEffect(eDropEffectCopy);
+    case NSDragOperationLink:
+      dragged.AddSupportedDropEffect(eDropEffectLink);
+//    case NSDragOperationGeneric:
+//    case NSDragOperationPrivate:
+//    case NSDragOperationMove:
+//    case NSDragOperationDelete:
+//    case NSDragOperationEvery:
+  }
+
+  mpNGLWindow->OnDragEnter();
+  nglMouseInfo::Flags Button=0;
+
+  //if ( [[pboard types] containsObject: NSColorPboardType] )
+  if ( [[pboard types] containsObject: NSFilenamesPboardType] )
+  {
+    NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
+    nglDataFilesObject* pFiles = new nglDataFilesObject(_T("ngl/Files"));
+    dragged.AddType(pFiles);
+    
+    for (uint i = 0; i < [files count]; ++i)
+    {
+      NSString* path = [files objectAtIndex: i];
+      nglString str([path cStringUsingEncoding: NSUTF8StringEncoding]);
+      pFiles->AddFile(str);
+    }
+    
+    nglDropEffect effect = mpNGLWindow->OnCanDrop(&dragged, (int)p.x, (int)p.y, Button);
+    return GetNSDragOperation(effect);
+  }
+
+  return NSDragOperationNone;
+}
+
+- (NSDragOperation) draggingUpdated: (id <NSDraggingInfo>)sender
+{
+  NSPasteboard *pboard = [sender draggingPasteboard];
+  NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+  NSPoint p = [sender draggingLocation];
+  p.y = mpNGLWindow->GetHeight()-p.y;
+
+  
+  nglDragAndDrop dragged(eDropEffectNone, NULL, (int)p.x, (int)p.y);
+  
+  switch (sourceDragMask)
+  {
+    case NSDragOperationCopy:
+      dragged.AddSupportedDropEffect(eDropEffectCopy);
+    case NSDragOperationLink:
+      dragged.AddSupportedDropEffect(eDropEffectLink);
+      //    case NSDragOperationGeneric:
+      //    case NSDragOperationPrivate:
+      //    case NSDragOperationMove:
+      //    case NSDragOperationDelete:
+      //    case NSDragOperationEvery:
+  }
+
+  nglMouseInfo::Flags Button=0;
+  
+//if ( [[pboard types] containsObject: NSColorPboardType] )
+  if ( [[pboard types] containsObject: NSFilenamesPboardType] )
+  {
+    NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
+    nglDataFilesObject* pFiles = new nglDataFilesObject(_T("ngl/Files"));
+    dragged.AddType(pFiles);
+
+    for (uint i = 0; i < [files count]; ++i)
+    {
+      NSString* path = [files objectAtIndex: i];
+      nglString str([path cStringUsingEncoding: NSUTF8StringEncoding]);
+      pFiles->AddFile(str);
+    }
+    
+    nglDropEffect effect = mpNGLWindow->OnCanDrop(&dragged, (int)p.x, (int)p.y, Button);
+    return GetNSDragOperation(effect);
+  }
+  return NSDragOperationNone;
+}
+
+- (void) draggingExited: (id <NSDraggingInfo>)sender
+{
+  mpNGLWindow->OnDragLeave();
+}
+
+- (BOOL) prepareForDragOperation: (id <NSDraggingInfo>)sender
+{
+  NSPasteboard *pboard = [sender draggingPasteboard];
+  NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+  NSPoint p = [sender draggingLocation];
+  p.y = mpNGLWindow->GetHeight()-p.y;
+  
+  
+  nglDragAndDrop dragged(eDropEffectNone, NULL, (int)p.x, (int)p.y);
+  
+  switch (sourceDragMask)
+  {
+    case NSDragOperationCopy:
+      dragged.AddSupportedDropEffect(eDropEffectCopy);
+    case NSDragOperationLink:
+      dragged.AddSupportedDropEffect(eDropEffectLink);
+      //    case NSDragOperationGeneric:
+      //    case NSDragOperationPrivate:
+      //    case NSDragOperationMove:
+      //    case NSDragOperationDelete:
+      //    case NSDragOperationEvery:
+  }
+  
+  nglMouseInfo::Flags Button=0;
+  
+  //if ( [[pboard types] containsObject: NSColorPboardType] )
+  if ( [[pboard types] containsObject: NSFilenamesPboardType] )
+  {
+    NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
+    nglDataFilesObject* pFiles = new nglDataFilesObject(_T("ngl/Files"));
+    dragged.AddType(pFiles);
+    
+    for (uint i = 0; i < [files count]; ++i)
+    {
+      NSString* path = [files objectAtIndex: i];
+      nglString str([path cStringUsingEncoding: NSUTF8StringEncoding]);
+      pFiles->AddFile(str);
+    }
+    
+    nglDropEffect effect = mpNGLWindow->OnCanDrop(&dragged, (int)p.x, (int)p.y, Button);
+    return effect != eDropEffectNone ? YES : NO;
+  }
+  return NO;
+}
+
+- (BOOL) performDragOperation: (id <NSDraggingInfo>) sender
+{
+  NSPasteboard *pboard = [sender draggingPasteboard];
+  NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+  NSPoint p = [sender draggingLocation];
+  p.y = mpNGLWindow->GetHeight()-p.y;
+  
+  
+  nglDragAndDrop dragged(eDropEffectNone, NULL, (int)p.x, (int)p.y);
+  
+  switch (sourceDragMask)
+  {
+    case NSDragOperationCopy:
+      dragged.AddSupportedDropEffect(eDropEffectCopy);
+    case NSDragOperationLink:
+      dragged.AddSupportedDropEffect(eDropEffectLink);
+      //    case NSDragOperationGeneric:
+      //    case NSDragOperationPrivate:
+      //    case NSDragOperationMove:
+      //    case NSDragOperationDelete:
+      //    case NSDragOperationEvery:
+  }
+  
+  nglMouseInfo::Flags Button=0;
+  
+  //if ( [[pboard types] containsObject: NSColorPboardType] )
+  if ( [[pboard types] containsObject: NSFilenamesPboardType] )
+  {
+    NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
+    nglDataFilesObject* pFiles = new nglDataFilesObject(_T("ngl/Files"));
+    dragged.AddType(pFiles);
+    
+    for (uint i = 0; i < [files count]; ++i)
+    {
+      NSString* path = [files objectAtIndex: i];
+      nglString str([path cStringUsingEncoding: NSUTF8StringEncoding]);
+      pFiles->AddFile(str);
+    }
+    
+    nglDropEffect effect = mpNGLWindow->OnCanDrop(&dragged, (int)p.x, (int)p.y, Button);
+    if (effect != eDropEffectNone)
+    {
+      mpNGLWindow->OnDropped(&dragged, (int)p.x, (int)p.y, Button);
+      return YES;
+    }
+  }
+  return NO;
+}
+
+- (void) concludeDragOperation: (id <NSDraggingInfo>)sender
+{
+  [super concludeDragOperation: sender];
+}
+
+- (void) draggingEnded: (id <NSDraggingInfo>)sender
+{
+  [super draggingEnded: sender];
+}
+
+
 @end///< nglNSWindow
 
 
@@ -755,6 +1057,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
   mAutoRotate = true;
   
+  mpDragged = NULL;
+
   mAngle = rInfo.Rotate;
   NSRect rect = [[NSScreen mainScreen] visibleFrame];
   mWidth = 0;
@@ -781,14 +1085,14 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
   // Create the actual window
   nglNSWindow* pNSWindow = [[nglNSWindow alloc] initWithFrame:rect andNGLWindow: this];
-
+  
   mOSInfo.mpNSWindow = pNSWindow;
   mpNSWindow = pNSWindow;
 
 
   //[pNSWindow makeKeyAndVisible];
   
-  NGL_LOG(_T("window"), NGL_LOG_INFO, _T("trying to create GLES context"));
+  NGL_LOG(_T("window"), NGL_LOG_INFO, _T("trying to create GL context"));
   rContext.Dump(NGL_LOG_INFO);
   
   if (rContext.TargetAPI != eTargetAPI_OpenGL)
@@ -800,12 +1104,13 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   }
 	
 	NSRect r = [(nglNSWindow*)mpNSWindow frame];
-	printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+//	printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	r = [NSScreen mainScreen].visibleFrame;
-	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+//	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
 	SetSize(rect.size.width, rect.size.height);
-  
+  SetTitle(rInfo.Title);
+
 //  [pNSWindow UpdateOrientation];
   
 /* Ultra basic UIKit view integration on top of nuiWidgets
@@ -992,7 +1297,7 @@ bool nglWindow::MakeCurrent() const
 
 void nglWindow::Invalidate()
 {
-  printf("nglWindow::Invalidate()\n");
+//  printf("nglWindow::Invalidate()\n");
   [(nglNSWindow*)mpNSWindow invalidate];
 }
 
@@ -1057,7 +1362,9 @@ bool nglWindow::IsEnteringText() const
 /// Drag and Drop:
 bool nglWindow::Drag(nglDragAndDrop* pDragObject)
 {
-  return false;
+  mpDragged = pDragObject;
+  
+  return [(nglNSWindow*)mpNSWindow startDragging: mpDragged];
 }
 
 nglDropEffect nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)

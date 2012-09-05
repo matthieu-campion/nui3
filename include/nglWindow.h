@@ -883,6 +883,11 @@ private:
   void* mpNSWindow;
   nglContextInfo mContextInfo;
   StateChange mState;
+  nglDragAndDrop* mpDragged;
+public:
+  void SetDraggedObject(nglDragAndDrop* pDragged) { mpDragged = pDragged; }
+  nglDragAndDrop* GetDraggedObject() { return mpDragged; }
+  
 #endif
   
 #ifdef _WIN32_
