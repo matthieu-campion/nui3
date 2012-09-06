@@ -58,6 +58,8 @@ private:
 
 };
 
+#define __FUNC__ "%s:%d",__FILE__,__LINE__
+
 class nuiSocket
 {
 public:

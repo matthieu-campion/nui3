@@ -123,7 +123,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
       //NGL_OUT("...Body data... (%d)\n", d.size());
       OnBodyData(d);
       index = rData.size();
-      
+
       if (mState == Done)
         return;
     }
@@ -158,10 +158,10 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
-            
+
             if (mState == Done)
               return;
-            
+
 
             while (mCurrentLine[pos] == ' ')
               pos++;
@@ -175,10 +175,10 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
-            
+
             if (mState == Done)
               return;
-            
+
 
             pos = pos2;
             while (mCurrentLine[pos] == ' ')
@@ -197,7 +197,7 @@ void nuiHTTPHandler::ParseData(const std::vector<uint8>& rData)
               Close();
               return;
             }
-            
+
             if (mState == Done)
               return;
 
@@ -457,9 +457,22 @@ void nuiHTTPServer::OnNewClient(nuiHTTPHandler* pClient)
 
 void nuiHTTPServer::OnCanRead()
 {
-  nuiTCPClient* pClient = Accept();
-  if (pClient)
-    OnNewClient((nuiHTTPHandler*)pClient);
+  if (IsNonBlocking())
+  {
+    nuiTCPClient* pClient = Accept();
+    while (pClient)
+    {
+      if (pClient)
+        OnNewClient((nuiHTTPHandler*)pClient);
+      pClient = Accept();
+    }
+  }
+  else
+  {
+    nuiTCPClient* pClient = Accept();
+    if (pClient)
+      OnNewClient((nuiHTTPHandler*)pClient);
+  }
 }
 
 

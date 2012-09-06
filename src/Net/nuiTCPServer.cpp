@@ -54,13 +54,13 @@ bool nuiTCPServer::Bind(const nuiNetworkHost& rHost)
   if (res)
   {
     printf("setsockopt error %d\n", errno);
-    DumpError(errno);
+    DumpError(res, __FUNC__);
     return false;
   }
   struct addrinfo* addr = nuiSocket::GetAddrInfo(rHost);
   res = bind(mSocket, addr->ai_addr, addr->ai_addrlen);
   if (res)
-    DumpError(errno);
+    DumpError(res, __FUNC__);
 
   freeaddrinfo(addr);
 
@@ -77,9 +77,14 @@ nuiTCPClient* nuiTCPServer::Accept()
   int n = 1;
   int s = accept(mSocket, NULL, NULL);
 
-  //printf("%x accept %d\n", this, s);
-  nuiTCPClient* pClient = OnCreateClient(s);
-  return pClient;
+  if (s >= 0)
+  {
+    //printf("%x accept %d\n", this, s);
+    nuiTCPClient* pClient = OnCreateClient(s);
+    return pClient;
+  }
+
+  return NULL;
 }
 
 nuiTCPClient* nuiTCPServer::OnCreateClient(nuiSocket::SocketType sock)
