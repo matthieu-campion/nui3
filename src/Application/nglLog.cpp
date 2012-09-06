@@ -203,7 +203,7 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
   }
 
   {
-    //nglCriticalSectionGuard guard(mCS);
+    nglCriticalSectionGuard guard(mCS);
     // Compose mPrefix
     mPrefix.Wipe();
     if (mStampFlags & DateStamp)
