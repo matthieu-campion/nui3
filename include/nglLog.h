@@ -15,8 +15,8 @@
 
 //#include "nui.h"
 #include "nglString.h"
-//#include "nglReaderWriterLock.h"
-//#include "nglCriticalSection.h"
+#include "nglReaderWriterLock.h"
+#include "nglCriticalSection.h"
 class nglOStream;
 
 /* Verbosity levels
@@ -176,10 +176,8 @@ private:
   Domain* LookupDomain (const nglChar* pName);
   void    Output (const nglString& rText) const;
 
-  #if 0
   mutable nglReaderWriterLock mLock;
   nglCriticalSection mCS;
-  #endif
 };
 
 #endif // __nglLog_h__

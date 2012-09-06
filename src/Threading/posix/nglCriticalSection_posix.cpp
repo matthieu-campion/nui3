@@ -36,7 +36,6 @@ public:
 
 nglCriticalSectionPrivate::nglCriticalSectionPrivate ()
 {
-  return;
   int res = 0;
 	pthread_mutexattr_t mta;
 	res = pthread_mutexattr_init(&mta);
@@ -51,27 +50,23 @@ nglCriticalSectionPrivate::nglCriticalSectionPrivate ()
 
 nglCriticalSectionPrivate::~nglCriticalSectionPrivate ()
 {
-  return;
 	int res = pthread_mutex_destroy(&cmutex);
   NGL_ASSERT(res == 0);
 }
 
 void nglCriticalSectionPrivate::lock () const
 {
-  return;
 	int res = pthread_mutex_lock(&cmutex);
   NGL_ASSERT(res == 0);
 }
 
 bool nglCriticalSectionPrivate::tryLock () const
 {
-  return true;
 	return (pthread_mutex_trylock(&cmutex) == 0);
 }
 
 void nglCriticalSectionPrivate::unlock () const
 {
-  return;
 	int res = pthread_mutex_unlock(&cmutex);
   NGL_ASSERT(res == 0);
 }
@@ -94,21 +89,18 @@ void nglCriticalSectionPrivate::unlock () const
 nglCriticalSection::nglCriticalSection(bool registerToThreadChecker)
   : nglLock(registerToThreadChecker)
 {
-  return;
 	mpPrivate = new nglCriticalSectionPrivate();
 }
 
 nglCriticalSection::nglCriticalSection(const nglString& rName, bool registerToThreadChecker)
   : nglLock(rName, registerToThreadChecker)
 {
-  return;
 	mpPrivate = new nglCriticalSectionPrivate();
 }
 
 
 nglCriticalSection::~nglCriticalSection()
 {
-  return;
 	delete mpPrivate;
 }
 
@@ -123,7 +115,6 @@ const nglString& nglCriticalSection::GetLabel() const
 // virtual from nglLock
 void nglCriticalSection::_Lock(nglThread::ID threadID)
 {
-  return;
 	mpPrivate->lock();
 }
 
@@ -131,7 +122,6 @@ void nglCriticalSection::_Lock(nglThread::ID threadID)
 // virtual from nglLock
 void nglCriticalSection::_Unlock()
 {
-  return;
 	mpPrivate->unlock();
 }
 
@@ -140,7 +130,6 @@ void nglCriticalSection::_Unlock()
 // virtual from nglLock
 bool nglCriticalSection::_TryLock(nglThread::ID threadID)
 {
-  return true;
   return mpPrivate->tryLock();
 }
 

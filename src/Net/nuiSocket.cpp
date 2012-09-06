@@ -18,6 +18,14 @@
 #include <netdb.h>
 #endif
 
+#if (defined __APPLE__) || (defined _DARWIN_) || (defined _FREEBSD_)
+#include <sys/event.h>
+#define NGL_KQUEUE
+#elif (defined _LINUX_) || (defined _ANDROID_)
+#include <sys/epoll.h>
+#define NGL_EPOLL
+#endif
+
 #define __FUNC__ "%s:%d",__FILE__,__LINE__
 
 void nuiSocket::DumpError(int err, const char* msg, ...)
@@ -299,7 +307,7 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   mNbSockets--;
 
   {
-    //nglCriticalSectionGuard g(mCS);
+    nglCriticalSectionGuard g(mCS);
     mDeletedFromPool.insert(pSocket);
   }
 }
@@ -338,7 +346,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   std::set<nuiSocket*>::iterator it;
   std::set<nuiSocket*>::iterator end;
   {
-    //nglCriticalSectionGuard g(mCS);
+    nglCriticalSectionGuard g(mCS);
     end = mDeletedFromPool.end();
   }
 
@@ -347,7 +355,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     nuiSocket* pSocket = (nuiSocket*)mEvents[i].udata;
 
     {
-      //nglCriticalSectionGuard g(mCS);
+      nglCriticalSectionGuard g(mCS);
       it = mDeletedFromPool.find(pSocket);
     }
 
@@ -374,7 +382,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   }
 
   {
-    //nglCriticalSectionGuard g(mCS);
+    nglCriticalSectionGuard g(mCS);
     mDeletedFromPool.clear();
   }
 
@@ -438,7 +446,7 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   mNbSockets--;
   if (IsInDispatch())
   {
-    //nglCriticalSectionGuard g(mCS);
+    nglCriticalSectionGuard g(mCS);
     mDeletedFromPool.insert(pSocket);
   }
 }
@@ -447,21 +455,21 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
   SetInDispatch(true);
 
-  if (mNbSockets > mEvents.size())
-    mEvents.resize(mNbSockets);
+//   if (mNbSockets > mEvents.size())
+//     mEvents.resize(mNbSockets);
 
-  //struct epoll_event evt;
+  struct epoll_event mEvents[20];
   //int res = epoll_wait(mEPoll, &mEve
 
   //int res = epoll_wait(mEPoll, &evt, 1, timeout_millisec);
-  int res = epoll_wait(mEPoll, &mEvents[0], mEvents.size(), timeout_millisec);
+  int res = epoll_wait(mEPoll, &mEvents[0], 20, timeout_millisec);
 
   if(res == -1)
   {
     nuiSocket::DumpError(res, "epoll::WaitForEvents");
     SetInDispatch(false);
     {
-      //nglCriticalSectionGuard g(mCS);
+      nglCriticalSectionGuard g(mCS);
       mDeletedFromPool.clear();
     }
     return errno;
@@ -471,7 +479,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   {
     SetInDispatch(false);
     {
-      //nglCriticalSectionGuard g(mCS);
+      nglCriticalSectionGuard g(mCS);
       mDeletedFromPool.clear();
     }
 
@@ -492,7 +500,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     // dispatch events:
     bool skip = false;
     {
-      //nglCriticalSectionGuard g(mCS);
+      nglCriticalSectionGuard g(mCS);
       skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
     }
 
@@ -502,7 +510,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
       pSocket->OnCanRead();
 
       {
-        //nglCriticalSectionGuard g(mCS);
+        nglCriticalSectionGuard g(mCS);
         skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
       }
     }
@@ -512,7 +520,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
       //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLOUT %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnCanWrite();
       {
-        //nglCriticalSectionGuard g(mCS);
+        nglCriticalSectionGuard g(mCS);
         skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
       }
     }
@@ -522,7 +530,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
       //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLRDHUP %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnReadClosed();
       {
-        //nglCriticalSectionGuard g(mCS);
+        nglCriticalSectionGuard g(mCS);
         skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
       }
     }
@@ -533,7 +541,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
       pSocket->OnReadClosed();
       pSocket->OnWriteClosed();
       {
-        //nglCriticalSectionGuard g(mCS);
+        nglCriticalSectionGuard g(mCS);
         skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
       }
     }
@@ -544,7 +552,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
       pSocket->OnReadClosed();
       pSocket->OnWriteClosed();
       {
-        //nglCriticalSectionGuard g(mCS);
+        nglCriticalSectionGuard g(mCS);
         skip = (mDeletedFromPool.find(pSocket) != mDeletedFromPool.end());
       }
     }
@@ -552,7 +560,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
   SetInDispatch(false);
   {
-    //nglCriticalSectionGuard g(mCS);
+    nglCriticalSectionGuard g(mCS);
     mDeletedFromPool.clear();
   }
   return 0;
@@ -562,19 +570,15 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
 bool nuiSocketPool::IsInDispatch() const
 {
-  //return ngl_atomic_read(mInDispatch) != 0;
-  return true;
+  return ngl_atomic_read(mInDispatch) != 0;
 }
 
 void nuiSocketPool::SetInDispatch(bool set)
 {
-  return;
-/*
   if (set)
     ngl_atomic_compare_and_swap(mInDispatch, 0, 1);
   else
     ngl_atomic_compare_and_swap(mInDispatch, 1, 0);
-    */
 }
 
 

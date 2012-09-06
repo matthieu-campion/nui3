@@ -18,7 +18,7 @@
 #include "nglString.h"
 #include "nglCriticalSection.h"
 
-#define NGL_DISABLE_CONSOLE 1
+#define NGL_DISABLE_CONSOLE 0
 
 
 //! Interactive portable console

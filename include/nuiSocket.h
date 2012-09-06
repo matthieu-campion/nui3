@@ -10,15 +10,53 @@
 #include "nui.h"
 
 #if (defined __APPLE__) || (defined _DARWIN_) || (defined _FREEBSD_)
-#include <sys/event.h>
 #define NGL_KQUEUE
 #elif (defined _LINUX_) || (defined _ANDROID_)
-#include <sys/epoll.h>
 #define NGL_EPOLL
 #endif
 
 class nuiNetworkHost;
 class nuiSocketPool;
+class nuiSocket;
+
+class nuiSocketPool
+{
+public:
+  nuiSocketPool();
+  virtual ~nuiSocketPool();
+
+  enum TriggerMode
+  {
+    eContinuous,
+    eStateChange
+  };
+
+  void Add(nuiSocket* pSocket, TriggerMode Mode);
+  void Del(nuiSocket* pSocket);
+
+  int DispatchEvents(int timeout_millisec);
+private:
+  bool IsInDispatch() const;
+  void SetInDispatch(bool set);
+  nglCriticalSection mCS;
+  std::set<nuiSocket*> mDeletedFromPool;
+  nglAtomic mInDispatch;
+
+  int mNbSockets;
+
+
+#ifdef NGL_KQUEUE
+  // Kernel queue implementation (FreeBSD, Darwin...)
+  std::vector<struct kevent> mEvents;
+  int mQueue;
+#endif
+
+#ifdef NGL_EPOLL
+  //std::vector<struct epoll_event> mEvents;
+  int mEPoll;
+#endif
+
+};
 
 class nuiSocket
 {
@@ -72,42 +110,4 @@ protected:
   EventDelegate mWriteCloseDelegate;
   bool mNonBlocking;
   nuiSocketPool* mpPool;
-};
-
-class nuiSocketPool
-{
-public:
-  enum TriggerMode
-  {
-    eContinuous,
-    eStateChange
-  };
-
-  nuiSocketPool();
-  virtual ~nuiSocketPool();
-
-  void Add(nuiSocket* pSocket, TriggerMode Mode);
-  void Del(nuiSocket* pSocket);
-
-  int DispatchEvents(int timeout_millisec);
-private:
-#ifdef NGL_KQUEUE
-  // Kernel queue implementation (FreeBSD, Darwin...)
-  std::vector<struct kevent> mEvents;
-  int mQueue;
-#endif
-
-#ifdef NGL_EPOLL
-  std::vector<struct epoll_event> mEvents;
-  int mEPoll;
-#endif
-
-  nglCriticalSection mCS;
-  std::set<nuiSocket*> mDeletedFromPool;
-  int mInDispatch;
-
-  int mNbSockets;
-
-  bool IsInDispatch() const;
-  void SetInDispatch(bool set);
 };
