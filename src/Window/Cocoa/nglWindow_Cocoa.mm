@@ -576,7 +576,6 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
 ////////// Keyboard:
 - (BOOL)keyDown:(NSEvent *)theEvent
 {
-  return false; ///< FIXME
   NSString *chars = [theEvent characters];
   NSString *rawchars = [theEvent charactersIgnoringModifiers];
   nglString c((CFStringRef)chars);
