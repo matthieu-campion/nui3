@@ -1174,7 +1174,7 @@
   /* there's a Mac-specific extended implementation of FT_New_Face() */
   /* in src/base/ftmac.c                                             */
 
-#if !defined( FT_MACINTOSH ) || defined( DARWIN_NO_CARBON )
+#if !defined( FT_MACINTOSH )// || defined( DARWIN_NO_CARBON )
 
   /* documentation is in freetype.h */
 
