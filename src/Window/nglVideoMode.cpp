@@ -64,3 +64,14 @@ nglString nglVideoMode::Dump() const
   }
   return str;
 }
+
+float nglVideoMode::GetScaleFactor() const
+{
+  return mScaleFactor;
+}
+
+float nglVideoMode::GetInvScaleFactor() const
+{
+  return mInvScaleFactor;
+}
+

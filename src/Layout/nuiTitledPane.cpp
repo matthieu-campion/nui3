@@ -56,21 +56,6 @@ bool nuiTitledPane::AddChild(nuiWidgetPtr pChild)
 }
 
 
-bool nuiTitledPane::Load(const nuiXMLNode* pNode)
-{
-  return nuiVBox::Load(pNode);
-}
-
-
-
-
-nuiXMLNode* nuiTitledPane::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-	return nuiVBox::Serialize(pParentNode, Recursive);
-}
-
-
-
 nuiTitledPane::~nuiTitledPane()
 {
 }

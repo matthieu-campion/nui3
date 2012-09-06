@@ -23,7 +23,7 @@ PreferencesBase::PreferencesBase(const nglString& rPrefName)
   mXml.push_back(sessXml);
   nglPath prefPath(ePathUserPreferences);
   
-  prefPath += "/NUI";
+  prefPath += nglPath("/NUI");
   
   if(!prefPath.Exists())
     prefPath.Create();
@@ -40,7 +40,7 @@ PreferencesBase::PreferencesBase(const nglString& rPrefName)
   nglIFile xmlIFile(prefPath);
   if (!mXml[eAppPref]->Load(xmlIFile))
   {
-    wprintf(_T("Preferences : ERROR in loading the xml preferences file '%ls'!\n"), prefPath.GetPathName().GetChars());
+    printf("Preferences : ERROR in loading the xml preferences file '%ls'!\n", prefPath.GetPathName().GetChars());
     NGL_ASSERT(0);
   }
   xmlIFile.Close();

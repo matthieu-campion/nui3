@@ -132,7 +132,10 @@ Application::~Application()
 void Application::OnExit (int Code)
 {
   if (mpMainWindow)
-    delete mpMainWindow;
+  {
+    mpMainWindow->Release();
+    mpMainWindow = NULL;
+  }
 
   nuiUninit();
 }
@@ -246,8 +249,8 @@ void Application::OnInit()
     Quit (1);
     return;
   }
-  mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
-  mpMainWindow->DBG_SetMouseOverObject(DebugObject);
+  mpMainWindow->Acquire();
+  mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);  mpMainWindow->DBG_SetMouseOverObject(DebugObject);
   mpMainWindow->SetState(nglWindow::eShow);
 
   mpMainWindow->AddChild(new TouchTest);

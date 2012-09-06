@@ -15,6 +15,9 @@ nglVideoMode::nglVideoMode()
   // Get current video mode
   mMode.dmSize = sizeof(DEVMODE);
   EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &mMode);
+  
+  mScaleFactor = 1.0f;
+  mInvScaleFactor = 1.0f / mScaleFactor;
 }
 
 nglVideoMode::nglVideoMode (const nglVideoMode& rMode)
@@ -71,3 +74,19 @@ uint nglVideoMode::GetFrequency() const
 {
   return mMode.dmDisplayFrequency;
 }
+
+static float gScaleFactor = 1.0f;
+static float gInvScaleFactor = 1.0f;
+
+float nuiGetScaleFactor()
+{
+  return gScaleFactor;
+}
+
+float nuiGetInvScaleFactor()
+{
+  return gInvScaleFactor;
+}
+
+
+

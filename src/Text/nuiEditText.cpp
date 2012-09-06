@@ -11,7 +11,7 @@
 
 //class nuiEditTest2 : nuiSimpleContainer
 nuiEditText::nuiEditText(const nglString& rText)
-: nuiComposite(),
+: nuiSimpleContainer(),
   mCursorPos(0),
   mAnchorPos(0),
   mCompositionPos(-1),
@@ -41,34 +41,6 @@ nuiEditText::nuiEditText(const nglString& rText)
   InitKeyBindings();
 }
 
-bool nuiEditText::Load(const nuiXMLNode* pNode)
-{
-  mCursorPos = 0;
-  mAnchorPos = 0;
-  mCompositionPos = -1;
-  mCompositionLength = 0;
-  mDropCursorPos = -1;
-  mCommandStackPos = 0;
-  mpFont = NULL;
-  mTextHeight = 0;
-  mSelectGap = 0;
-  mCommandDown = false;
-  mShiftDown = false;
-  mAltDown = false;
-  mSelecting = false;
-  mSelectionActive = false;
-  mIsEditable = true;
-  mFollowModifications = true;
-  mStartDragging = false;
-  
-  SetFont(nuiTheme::Default);
-  SetText(pNode->GetValue());
-  InitCommands();
-  InitKeyBindings();
-  
-  return true;
-}
-
 nuiEditText::~nuiEditText()
 {
   ClearBlocks();
@@ -91,11 +63,6 @@ void nuiEditText::InitAttributes()
                 nuiMakeDelegate(this, &nuiEditText::_SetFont)));
 }
 
-
-nuiXMLNode* nuiEditText::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  return nuiSimpleContainer::Serialize(pParentNode, Recursive);
-}
 
 void nuiEditText::InitProperties()
 {
@@ -143,7 +110,7 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
     PosY += pBlock->GetHeight();
   }
 
-  nglFontInfo fontinfo;
+  nuiFontInfo fontinfo;
   mpFont->GetInfo(fontinfo);
 
   if (HasFocus())
@@ -159,7 +126,7 @@ bool nuiEditText::Draw(nuiDrawContext* pContext)
 
     if (mStartDragging)
     {
-      nglFontInfo info;
+      nuiFontInfo info;
       mpFont->GetInfo(info);
       CursorX = 0;
       CursorY = info.Ascender;
@@ -484,7 +451,7 @@ void nuiEditText::MoveDropCursorTo(nuiSize X, nuiSize Y)
   //if (mFollowModifications)
   {
     nuiSize x, y;
-    nglFontInfo info;
+    nuiFontInfo info;
     mpFont->GetInfo(info);
     x = 0;
     y = info.Ascender;
@@ -1722,7 +1689,7 @@ void nuiEditText::SetCursorPos(uint Pos)
   {
     nuiSize x, y;
     GetCursorPos(x,y);
-    nglFontInfo info;
+    nuiFontInfo info;
     mpFont->GetInfo(info);
     nuiRect r(x, y - mpFont->GetHeight(), 2.0f, mpFont->GetHeight()*2.0f);
     SetHotRect(r);
@@ -1747,7 +1714,7 @@ void nuiEditText::GetCursorPos(uint& rX, uint& rY)
 
 void nuiEditText::GetCursorPos(nuiSize& rX, nuiSize& rY)
 {
-  nglFontInfo info;
+  nuiFontInfo info;
   mpFont->GetInfo(info);
   rX = 0;
   rY = info.Ascender;
@@ -1790,7 +1757,7 @@ bool nuiEditText::SetFont(nuiFont* pFont, bool AlreadyAcquired)
   {
     if (!AlreadyAcquired)
       mpFont->Acquire();
-    nglFontInfo fontinfo;
+    nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
     mTextHeight = (nuiSize)ToAbove(fontinfo.AdvanceMaxH);
     nuiSize linegap = mTextHeight - (fontinfo.Ascender - fontinfo.Descender);
@@ -1918,75 +1885,6 @@ void nuiEditText::SetFollowModifications(bool Set)
   mFollowModifications = Set;
 }
 
-/////////////////////////////////////////
-// nuiEditText::FontLayout
-nuiEditText::FontLayout::FontLayout(nglFontBase& rFont, float PenX , float PenY)
-: nuiFontLayout(rFont, PenX, PenY)
-{
-  mLineIndices.push_back(0); // Always create a default first line on the first char!
-}
-
-nuiEditText::FontLayout::~FontLayout()
-{
-}
-
-
-void nuiEditText::FontLayout::OnGlyph (nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph)
-{
-  nuiFontLayout::OnGlyph(pFont, rString, Pos, pGlyph);
-#if 0  
-  nglChar c = rString[Pos];
-
-  // Handle new line control char
-
-  if (c == '\n')
-  {
-    mGlyphPrev = 0;
-    return;
-  }
-  else if (c == '\t')
-  {
-    nglFontInfo info;
-    mFont.GetInfo(info);
-    uint ndx = 0;
-    mFont.GetGlyphIndexes(_T(" "), 1, &ndx, 1);
-    nglGlyphInfo Glyph;
-    Glyph.Index = ndx;
-    Glyph.AdvanceX = info.AdvanceMaxW * mSpacesPerTab;
-    Glyph.AdvanceY = 0;
-    Glyph.BearingX = 0;
-    Glyph.BearingY = 0;
-    Glyph.Height = 0;
-    Glyph.Width = Glyph.AdvanceX;
-
-    AddGlyph(mPenX, mPenY, Pos, &Glyph);
-    mPenX += Glyph.AdvanceX;
-  }
-
-  if (c < _T(' ') ||  // skip control chars (includes newline)
-    !pGlyph)        // no glyph to render
-  {
-    mGlyphPrev = 0;
-    return;
-  }
-
-  // Add kerning vector if applicable
-  float kx = 0, ky = 0;
-  if (GetKerning(pGlyph->Index, kx, ky))
-  {
-    mPenX += kx;
-    mPenY += ky;
-  }
-
-  // Add this glyph to the layout with the current position pen position
-  AddGlyph(mPenX, mPenY, Pos, pGlyph);
-
-  // Proceed with glyph advance
-  mPenX += pGlyph->AdvanceX;
-  mPenY += pGlyph->AdvanceY;
-#endif
-}
-
 
 
 /////////////////////////////////////////////
@@ -2026,11 +1924,12 @@ void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y
     }
     else
     {
-      const std::vector<uint>& rLines = mpLayout->GetLines();
+      std::vector<uint> rLines; 
+      mpLayout->GetLines(rLines);
       uint lines = (uint)rLines.size();
       nuiSize height = mpFont->GetHeight();
       nuiSize offset = mRect.Top();
-
+      
       for (uint i = 0; i < lines; i++)
       {
         uint linepos = rLines[i] + GetPos();
@@ -2039,24 +1938,24 @@ void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y
         {
           // We have at least a part in the selection
           nuiSize StartX = 0, 
-            StopX = width, 
-            StartY = offset + i * height, 
-            StopY = offset + (i+1) * height;
-
+          StopX = width, 
+          StartY = offset + i * height, 
+          StopY = offset + (i+1) * height;
+          
           nuiSize dummy = 0;
-
+          
           if (SelectionBegin >= linepos)
           {
             GetCoordsFromPos(SelectionBegin, StartX, dummy);
           }
-
+          
           if (SelectionEnd <= lineend)
           {
             GetCoordsFromPos(SelectionEnd, StopX, dummy);
           }
-
+          
           nuiRect r(StartX, StartY, StopX, StopY, false);
-
+          
           pContext->DrawRect(r, eFillShape);
         }
       }
@@ -2075,7 +1974,8 @@ void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y
     }
     else
     {
-      const std::vector<uint>& rLines = mpLayout->GetLines();
+      std::vector<uint> rLines; 
+      mpLayout->GetLines(rLines);
       uint lines = (uint)rLines.size();
       nuiSize height = mpFont->GetHeight();
       nuiSize offset = mRect.Top();
@@ -2114,7 +2014,7 @@ void nuiEditText::TextBlock::Draw(nuiDrawContext* pContext, nuiSize X, nuiSize Y
   }
   
   pContext->SetFont(mpFont);
-  pContext->DrawText(X, Y, *mpLayout);
+  pContext->DrawText(X, Y + mpLayout->GetAscender(), *mpLayout);
 
 }
 
@@ -2159,7 +2059,7 @@ void nuiEditText::TextBlock::SetEnd(uint End)
 
 uint nuiEditText::TextBlock::GetLineHeight()
 {
-  nglFontInfo info;
+  nuiFontInfo info;
   mpFont->GetInfo(info);
   return ToAbove(info.Height);
 }
@@ -2218,14 +2118,13 @@ bool nuiEditText::TextBlock::GetCoordsFromPos(uint Pos, nuiSize& rX, nuiSize& rY
   if (Pos == count)
     index--;
 
-  const nglGlyphLayout* pGlyph = mpLayout->GetGlyph(index);
-  rX = pGlyph->X + mRect.Left();
-  rY = pGlyph->Y + mRect.Top();
+  const nuiTextGlyph* pGlyph = mpLayout->GetGlyph(index);
+  rX = pGlyph->mX + mRect.Left();
+  rY = pGlyph->mY + mRect.Bottom();
 
   if (Pos == count)
   {
-    nglGlyphInfo glyphinfo;
-    pGlyph->mpFont->GetGlyphInfo(glyphinfo, pGlyph->Index, nglFontBase::eGlyphNative);
+    nuiGlyphInfo glyphinfo;
     rX += glyphinfo.AdvanceX;
   }
   return true;
@@ -2238,12 +2137,14 @@ uint nuiEditText::TextBlock::GetPosFromCoords(uint X, uint Y)
 
 uint nuiEditText::TextBlock::GetPosFromCoords(nuiSize X, nuiSize Y)
 {
+  std::vector<uint> lines;
+  mpLayout->GetLines(lines);
   uint line = ToBelow((Y - mRect.Top()) / mpFont->GetHeight());
-  uint linescount = (uint)mpLayout->GetLines().size();
+  uint linescount = (uint)lines.size();
   if (line >= linescount)
     line = linescount - 1;
-  uint pos = mpLayout->GetLines()[line];
-  const nglGlyphLayout* pGlyph = NULL;
+  uint pos = lines[line];
+  const nuiTextGlyph* pGlyph = NULL;
   nuiSize lastx = 0;
 
   uint count = mpLayout->GetGlyphCount();
@@ -2252,11 +2153,11 @@ uint nuiEditText::TextBlock::GetPosFromCoords(nuiSize X, nuiSize Y)
     pGlyph = mpLayout->GetGlyph(i);
     if (pGlyph)
     {
-      nglGlyphInfo info;
-      mpFont->GetGlyphInfo(info, pGlyph->Index, nglFontBase::eGlyphNative);
-      nuiSize newx = pGlyph->X + (info.AdvanceX * .5f);
+      nuiGlyphInfo info;
+      mpFont->GetGlyphInfo(info, pGlyph->Index, nuiFontBase::eGlyphNative);
+      nuiSize newx = pGlyph->mX + (info.AdvanceX * .5f);
       if (X >= lastx && X < newx)
-        return GetPos() + pGlyph->Pos;
+        return GetPos() + pGlyph->mCluster;
 
       lastx = newx;
     }
@@ -2264,7 +2165,7 @@ uint nuiEditText::TextBlock::GetPosFromCoords(nuiSize X, nuiSize Y)
 
   if (pGlyph)
   {
-    return GetLineEndFromPos(mpLayout->GetLines()[line]);
+    return GetLineEndFromPos(lines[line]);
   }
   return GetPos();
 }
@@ -2289,14 +2190,14 @@ void nuiEditText::TextBlock::Layout()
   delete mpLayout;
   mpLayout = NULL;
 
-  nglFontInfo fontinfo;
+  nuiFontInfo fontinfo;
   mpFont->GetInfo(fontinfo);
-  mpLayout = new FontLayout(*mpFont, 0, fontinfo.Ascender);
+  mpLayout = new nuiTextLayout(mpFont, nuiHorizontal);
   nglString tmp(mrString.Extract(GetPos(), GetLength()));
   mpLayout->Layout(tmp);
 
   /*
-  nglGlyphInfo metrics;
+  nuiGlyphInfo metrics;
   mpLayout->GetMetrics(metrics);
   if (metrics.Height == 0)
     metrics.Height = mpFont->GetHeight();

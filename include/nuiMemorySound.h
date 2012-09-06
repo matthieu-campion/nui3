@@ -13,10 +13,10 @@ class nuiMemorySound : public nuiSound
 public:
   friend class nuiSoundManager;
   
-  uint32 GetSampleFrames() const;
-  uint32 GetChannels()const;
+  int32 GetSampleFrames() const;
+  int32 GetChannels()const;
   
-  uint32 ReadSamples(const std::vector<float*>& rBuffers, int64 position, uint32 SampleFrames);
+  int32 ReadSamples(const std::vector<float*>& rBuffers, int64 position, int32 SampleFrames);
   
 protected:
   nuiMemorySound(const nglPath& rPath);

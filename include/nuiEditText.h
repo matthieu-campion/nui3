@@ -7,28 +7,26 @@
 #ifndef __nuiEditText_h__
 #define __nuiEditText_h__
 
-#include "nuiComposite.h"
+#include "nuiSimpleContainer.h"
 #include "nuiTheme.h"
 
 #include "nglDragAndDropObjects.h"
 #include "nglDataObjects.h"
 
 #include "nuiFontBase.h"
+#include "nuiTextLayout.h"
 
 class nuiFont;
-class nuiXMLNode;
 
-class NUI_API nuiEditText : public nuiComposite
+class NUI_API nuiEditText : public nuiSimpleContainer
 {
 protected:
   class NUI_API TextBlock;
 
 public:
   nuiEditText(const nglString& rText = nglString::Empty);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiEditText();
 
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
   void InitProperties();
 
   virtual bool Draw(nuiDrawContext* pContext);
@@ -206,22 +204,6 @@ protected:
   bool InsertText(nuiObject* pParams);
   bool NewLine(nuiObject* pParams);
 
-  class NUI_API FontLayout : public nuiFontLayout
-  {
-  public:
-    FontLayout(nglFontBase& rFont, float PenX = 0.0f, float PenY = 0.0f);
-    virtual ~FontLayout();
-
-    virtual void OnGlyph(nglFontBase* pFont, const nglString& rString, int Pos, nglGlyphInfo* pGlyph);
-
-    const std::vector<uint>& GetLines()
-    {
-      return mLineIndices;
-    }
-  protected:
-    std::vector<uint> mLineIndices;
-  };
-
   class NUI_API TextBlock
   {
   public:
@@ -260,7 +242,7 @@ protected:
   protected:
     uint mBegin;
     uint mEnd;
-    FontLayout* mpLayout;
+    nuiTextLayout* mpLayout;
     nuiRect mRect;
     nuiRect mIdealRect;
     const nglString& mrString;

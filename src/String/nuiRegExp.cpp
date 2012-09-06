@@ -239,7 +239,7 @@ public:
 
 void CRegErrorHandler::regerror( const nglChar* s ) const
 {
-  NGL_OUT(_T("regerror: %ls\n"), s );
+  NGL_OUT(_T("regerror: %s\n"), s );
   m_szError = s;
 }
 
@@ -288,7 +288,7 @@ public:
 
     if (offset == 0)
       return(NULL);
-    
+
     return((OP(p) == BACK) ? p-offset : p+offset);
   }
 #ifdef _RE_DEBUG
@@ -305,7 +305,7 @@ class regexp : public CRegProgramAccessor
 {
   friend class CRegExecutor;
   friend class nuiRegExp;
-  
+
   int m_programSize;
   nglChar* startp[nuiRegExp::NSUBEXP];
   nglChar* endp[nuiRegExp::NSUBEXP];
@@ -314,20 +314,22 @@ class regexp : public CRegProgramAccessor
   nglChar* regmust;   // Internal use only.
   int regmlen;    // Internal use only.
   nglChar* program;
-  
+
   bool status;
   int count;      // used by nuiRegExp to manage the reference counting of regexps
   int numSubs;
 public:
-  
+
   regexp( const nglChar* exp, bool iCase );
   regexp( const regexp & r );
   ~regexp();
-  
+
   void ignoreCase( const nglChar* in, nglChar* out );
-  
+
   bool regcomp( const nglChar* exp );
   bool regexec( const nglChar* string );
+
+#undef Status
   bool Status() const { return status; }
 
   nglString GetReplaceString( const nglChar* sReplaceExp ) const;
@@ -337,7 +339,7 @@ public:
 #ifdef _RE_DEBUG
   void  regdump();
 #endif
-  
+
 #ifdef _DEBUG
   nglString m_originalPattern;
   nglString m_modifiedPattern;
@@ -354,8 +356,8 @@ public:
 
   nglChar* reg(int paren, int *flagp);
 protected:
-  nglChar* regparse;  // Input-scan pointer. 
-  int regnpar;    // () count. 
+  nglChar* regparse;  // Input-scan pointer.
+  int regnpar;    // () count.
 
   nglChar* regbranch(int *flagp);
   nglChar* regpiece(int *flagp);
@@ -370,7 +372,7 @@ protected:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-// First pass over the expression, testing for validity and returning the 
+// First pass over the expression, testing for validity and returning the
 // program size
 
 class CRegValidator : public CRegCompilerBase
@@ -380,8 +382,8 @@ public:
 
   inline long Size() const { return regsize; }
 private:
-  long regsize;   // Code size. 
-  nglChar regdummy[3];  // NOTHING, 0 next ptr 
+  long regsize;   // Code size.
+  nglChar regdummy[3];  // NOTHING, 0 next ptr
 protected:
   nglChar* regnode(int) { regsize += 3; return regdummy; }
   void regc(int) { regsize++; }
@@ -418,7 +420,7 @@ nglChar* CRegCompiler::regnode(int op)
 
   nglChar* ptr = ret;
   *ptr++ = (nglChar)op;
-  *ptr++ = '\0';    // Null next pointer. 
+  *ptr++ = '\0';    // Null next pointer.
   *ptr++ = '\0';
   regcode = ptr;
 
@@ -447,7 +449,7 @@ void CRegCompiler::regtail(nglChar* p, nglChar* val)
   nglChar* scan;
   nglChar* temp;
 
-  // Find last node. 
+  // Find last node.
   for (scan = p; (temp = regnext(scan)) != NULL; scan = temp)
     continue;
 
@@ -457,7 +459,7 @@ void CRegCompiler::regtail(nglChar* p, nglChar* val)
 // regoptail - regtail on operand of first argument; nop if operandless
 void CRegCompiler::regoptail(nglChar* p, nglChar* val)
 {
-  // "Operandless" and "op != BRANCH" are synonymous in practice. 
+  // "Operandless" and "op != BRANCH" are synonymous in practice.
   if (OP(p) == BRANCH)
     regtail(OPERAND(p), val);
 }
@@ -502,7 +504,7 @@ regexp::regexp( const nglChar* exp, bool iCase )
 
   if ( iCase )
   {
-    nglChar* out = new nglChar[(wcslen( exp ) * 4) + 1];
+    nglChar* out = new nglChar[(strlen( exp ) * 4) + 1];
     ignoreCase( exp, out );
 
 #if _DEBUG
@@ -581,28 +583,28 @@ bool regexp::regcomp(const nglChar* exp)
   if (tester.reg(0, &flags) == NULL)
     return false;
 
-  // Small enough for pointer-storage convention? 
-  if (tester.Size() >= 0x7fffL) // Probably could be 0xffffL. 
+  // Small enough for pointer-storage convention?
+  if (tester.Size() >= 0x7fffL) // Probably could be 0xffffL.
   {
     regerror(REGERR_TO_BIG);
     return NULL;
   }
 
   m_programSize = tester.Size();
-  // Allocate space. 
+  // Allocate space.
   program = new nglChar[m_programSize];
 
   CRegCompiler comp( exp, program );
-  // Second pass: emit code. 
+  // Second pass: emit code.
   if (comp.reg(0, &flags) == NULL)
     return false;
 
-  scan = program + 1;     // First BRANCH. 
+  scan = program + 1;     // First BRANCH.
   if (OP(regnext(scan)) == END)
-  {   // Only one top-level choice. 
+  {   // Only one top-level choice.
     scan = OPERAND(scan);
 
-    // Starting-point info. 
+    // Starting-point info.
     if (OP(scan) == EXACTLY)
       regstart = *OPERAND(scan);
     else if (OP(scan) == BOL)
@@ -614,17 +616,17 @@ bool regexp::regcomp(const nglChar* exp)
     // the regstart check works with the beginning of the r.e.
     // and avoiding duplication strengthens checking.  Not a
     // strong reason, but sufficient in the absence of others.
-     
-    if (flags&SPSTART) 
+
+    if (flags&SPSTART)
     {
       nglChar* longest = NULL;
       size_t len = 0;
 
       for (; scan != NULL; scan = regnext(scan))
-        if (OP(scan) == EXACTLY && wcslen(OPERAND(scan)) >= len)
+        if (OP(scan) == EXACTLY && strlen(OPERAND(scan)) >= len)
         {
           longest = OPERAND(scan);
-          len = wcslen(OPERAND(scan));
+          len = strlen(OPERAND(scan));
         }
       regmust = longest;
       regmlen = (int)len;
@@ -655,11 +657,11 @@ nglChar* CRegCompilerBase::reg( int paren, int *flagp )
   int parno = 0;
   int flags;
 
-  *flagp = HASWIDTH;  // Tentatively. 
+  *flagp = HASWIDTH;  // Tentatively.
 
   if (paren)
   {
-    // Make an OPEN node. 
+    // Make an OPEN node.
     if (regnpar >= nuiRegExp::NSUBEXP)
     {
       regerror(REGERR_TO_MANY_PAREN);
@@ -670,15 +672,15 @@ nglChar* CRegCompilerBase::reg( int paren, int *flagp )
     ret = regnode(OPEN+parno);
   }
 
-  // Pick up the branches, linking them together. 
+  // Pick up the branches, linking them together.
   br = regbranch(&flags);
   if (br == NULL)
     return(NULL);
   if (paren)
-    regtail(ret, br); // OPEN -> first. 
+    regtail(ret, br); // OPEN -> first.
   else
     ret = br;
-  *flagp &= ~(~flags&HASWIDTH); // Clear bit if bit 0. 
+  *flagp &= ~(~flags&HASWIDTH); // Clear bit if bit 0.
   *flagp |= flags&SPSTART;
   while (*regparse == '|')
   {
@@ -686,20 +688,20 @@ nglChar* CRegCompilerBase::reg( int paren, int *flagp )
     br = regbranch(&flags);
     if (br == NULL)
       return(NULL);
-    regtail(ret, br); // BRANCH -> BRANCH. 
+    regtail(ret, br); // BRANCH -> BRANCH.
     *flagp &= ~(~flags&HASWIDTH);
     *flagp |= flags&SPSTART;
   }
 
-  // Make a closing node, and hook it on the end. 
+  // Make a closing node, and hook it on the end.
   ender = regnode((paren) ? CLOSE+parno : END);
   regtail(ret, ender);
 
-  // Hook the tails of the branches to the closing node. 
+  // Hook the tails of the branches to the closing node.
   for (br = ret; br != NULL; br = regnext(br))
     regoptail(br, ender);
 
-  // Check for proper termination. 
+  // Check for proper termination.
   if (paren && *regparse++ != ')')
   {
     regerror( REGERR_UNTERMINATED_PAREN );
@@ -717,7 +719,7 @@ nglChar* CRegCompilerBase::reg( int paren, int *flagp )
       regerror( REGERR_INTERNAL_ERROR_JUNK );
       return NULL;
     }
-    // NOTREACHED 
+    // NOTREACHED
   }
 
   return(ret);
@@ -735,7 +737,7 @@ nglChar* CRegCompilerBase::regbranch(int *flagp)
   int flags;
   int c;
 
-  *flagp = WORST;       // Tentatively. 
+  *flagp = WORST;       // Tentatively.
 
   ret = regnode(BRANCH);
   chain = NULL;
@@ -745,13 +747,13 @@ nglChar* CRegCompilerBase::regbranch(int *flagp)
     if (latest == NULL)
       return(NULL);
     *flagp |= flags&HASWIDTH;
-    if (chain == NULL)    // First piece. 
+    if (chain == NULL)    // First piece.
       *flagp |= flags&SPSTART;
     else
       regtail(chain, latest);
     chain = latest;
   }
-  if (chain == NULL)      // Loop ran zero times. 
+  if (chain == NULL)      // Loop ran zero times.
     (void) regnode(NOTHING);
 
   return(ret);
@@ -799,30 +801,30 @@ nglChar* CRegCompilerBase::regpiece(int *flagp)
     reginsert(STAR, ret);
   else if (op == _T( '*' ))
   {
-    // Emit x* as (x&|), where & means "self". 
-    reginsert(BRANCH, ret);       // Either x 
-    regoptail(ret, regnode(BACK));    // and loop 
-    regoptail(ret, ret);        // back 
-    regtail(ret, regnode(BRANCH));    // or 
-    regtail(ret, regnode(NOTHING));   // null. 
+    // Emit x* as (x&|), where & means "self".
+    reginsert(BRANCH, ret);       // Either x
+    regoptail(ret, regnode(BACK));    // and loop
+    regoptail(ret, ret);        // back
+    regtail(ret, regnode(BRANCH));    // or
+    regtail(ret, regnode(NOTHING));   // null.
   }
   else if (op == _T( '+' ) && (flags&SIMPLE))
     reginsert(PLUS, ret);
   else if (op == _T( '+' ))
   {
-    // Emit x+ as x(&|), where & means "self". 
-    next = regnode(BRANCH);       // Either 
+    // Emit x+ as x(&|), where & means "self".
+    next = regnode(BRANCH);       // Either
     regtail(ret, next);
-    regtail(regnode(BACK), ret);    // loop back 
-    regtail(next, regnode(BRANCH));   // or 
-    regtail(ret, regnode(NOTHING));   // null. 
+    regtail(regnode(BACK), ret);    // loop back
+    regtail(next, regnode(BRANCH));   // or
+    regtail(ret, regnode(NOTHING));   // null.
   }
   else if (op == _T( '?' ))
   {
-    // Emit x? as (x|) 
-    reginsert(BRANCH, ret);       // Either x 
-    regtail(ret, regnode(BRANCH));    // or 
-    next = regnode(NOTHING);      // null. 
+    // Emit x? as (x|)
+    reginsert(BRANCH, ret);       // Either x
+    regtail(ret, regnode(BRANCH));    // or
+    next = regnode(NOTHING);      // null.
     regtail(ret, next);
     regoptail(ret, next);
   }
@@ -848,7 +850,7 @@ nglChar* CRegCompilerBase::regatom(int * flagp)
   nglChar* ret;
   int flags;
 
-  *flagp = WORST;   // Tentatively. 
+  *flagp = WORST;   // Tentatively.
 
   switch ( *regparse++ )
   {
@@ -870,7 +872,7 @@ nglChar* CRegCompilerBase::regatom(int * flagp)
       int c;
 
       if (*regparse == '^')
-      { // Complement of range. 
+      { // Complement of range.
         ret = regnode(ANYBUT);
         regparse++;
       }
@@ -919,7 +921,7 @@ nglChar* CRegCompilerBase::regatom(int * flagp)
     case '\0':
     case '|':
     case ')':
-      // supposed to be caught earlier 
+      // supposed to be caught earlier
       regerror( REGERR_INTERNAL_UNEXPECTED_CHAR );
       return NULL;
     case '?':
@@ -960,7 +962,7 @@ nglChar* CRegCompilerBase::regatom(int * flagp)
     // On entry, the char at regparse[-1] is going to go
     // into the string, no matter what it is.  (It could be
     // following a \ if we are entered from the '\' case.)
-    // 
+    //
     // Basic idea is to pick up a good char in  ch  and
     // examine the next char.  If it's *+? then we twiddle.
     // If it's \ then we frozzle.  If it's other magic char
@@ -1014,7 +1016,7 @@ nglChar* CRegCompilerBase::regatom(int * flagp)
           default:
             /* Backup point is \, scan               * point is after it. */
             regprev = regparse;
-            regparse++; 
+            regparse++;
             continue; /* NOT break; */
           }
         }
@@ -1041,9 +1043,9 @@ class CRegExecutor : public CRegProgramAccessor
 {
   friend bool regexp::regexec( const nglChar* str );
 
-  nglChar* reginput;    // String-input pointer. 
-  nglChar* regbol;      // Beginning of input, for ^ check. 
-  nglChar* * regstartp;   // Pointer to startp array. 
+  nglChar* reginput;    // String-input pointer.
+  nglChar* regbol;      // Beginning of input, for ^ check.
+  nglChar* * regstartp;   // Pointer to startp array.
   nglChar* * regendp;   // Ditto for endp.
 
   regexp * prog;
@@ -1071,37 +1073,37 @@ int regnarrate = 0;
 
 bool regexp::regexec( const nglChar* str )
 {
-  nglChar* string = (nglChar*)str;  // avert const poisoning 
+  nglChar* string = (nglChar*)str;  // avert const poisoning
 
-  // Be paranoid. 
+  // Be paranoid.
   if ( string == NULL )
   {
     regerror( REGERR_NULLARG );
     return false;
   }
 
-  // Check validity of program. 
+  // Check validity of program.
   if (*program != MAGIC)
   {
     regerror( REGERR_CORRUPTED );
     return false;
   }
 
-  // If there is a "must appear" string, look for it. 
-  if ( regmust != NULL && wcsstr( string, regmust ) == NULL )
+  // If there is a "must appear" string, look for it.
+  if ( regmust != NULL && strstr( string, regmust ) == NULL )
     return false;
 
   CRegExecutor executor( this, string );
 
-  // Simplest case:  anchored match need be tried only once. 
+  // Simplest case:  anchored match need be tried only once.
   if ( reganch )
     return( executor.regtry( string ) );
 
-  // Messy cases:  unanchored match. 
+  // Messy cases:  unanchored match.
   if ( regstart != '\0' )
   {
-    // We know what nglChar it must start with. 
-    for ( nglChar* s = string; s != NULL; s = wcschr( s+1 , regstart ) )
+    // We know what nglChar it must start with.
+    for ( nglChar* s = string; s != NULL; s = strchr( s+1 , regstart ) )
     {
       if ( executor.regtry( s) )
         return true;
@@ -1112,7 +1114,7 @@ bool regexp::regexec( const nglChar* str )
   }
   else
   {
-    // We don't -- general case. 
+    // We don't -- general case.
     for ( nglChar* s = string; ! executor.regtry( s ); s++ )
       if (*s == '\0')
         return false;
@@ -1157,8 +1159,8 @@ bool CRegExecutor::regtry( nglChar* string )
 
 bool CRegExecutor::regmatch( nglChar* prog )
 {
-  nglChar* scan;  // Current node. 
-  nglChar* next;    // Next node. 
+  nglChar* scan;  // Current node.
+  nglChar* next;    // Next node.
 
 #ifdef _RE_DEBUG
   if (prog != NULL && regnarrate)
@@ -1207,11 +1209,11 @@ bool CRegExecutor::regmatch( nglChar* prog )
         size_t len;
         nglChar* const opnd = OPERAND(scan);
 
-        // Inline the first character, for speed. 
+        // Inline the first character, for speed.
         if (*opnd != *reginput)
           return false;
-        len = wcslen(opnd);
-        if (len > 1 && wcsncmp(opnd, reginput, len) != 0)
+        len = strlen(opnd);
+        if (len > 1 && strncmp(opnd, reginput, len) != 0)
           return false;
         reginput += len;
 
@@ -1219,13 +1221,13 @@ bool CRegExecutor::regmatch( nglChar* prog )
       }
       case ANYOF:
         if (*reginput == '\0' ||
-            wcschr(OPERAND(scan), *reginput) == NULL)
+            strchr(OPERAND(scan), *reginput) == NULL)
           return false;
         reginput++;
         break;
       case ANYBUT:
         if (*reginput == '\0' ||
-            wcschr(OPERAND(scan), *reginput) != NULL)
+            strchr(OPERAND(scan), *reginput) != NULL)
           return false;
         reginput++;
         break;
@@ -1245,7 +1247,7 @@ bool CRegExecutor::regmatch( nglChar* prog )
           // Don't set startp if some later
           // invocation of the same parentheses
           // already has.
-           
+
           if (regstartp[no] == NULL)
             regstartp[no] = input;
           return true;
@@ -1266,7 +1268,7 @@ bool CRegExecutor::regmatch( nglChar* prog )
           // Don't set endp if some later
           // invocation of the same parentheses
           // already has.
-           
+
           if (regendp[no] == NULL)
             regendp[no] = input;
           return true;
@@ -1279,8 +1281,8 @@ bool CRegExecutor::regmatch( nglChar* prog )
       {
         nglChar* const save = reginput;
 
-        if (OP(next) != BRANCH)   // No choice. 
-          next = OPERAND(scan); // Avoid recursion. 
+        if (OP(next) != BRANCH)   // No choice.
+          next = OPERAND(scan); // Avoid recursion.
         else
         {
           while (OP(scan) == BRANCH)
@@ -1291,7 +1293,7 @@ bool CRegExecutor::regmatch( nglChar* prog )
             scan = regnext(scan);
           }
           return false;
-          // NOTREACHED 
+          // NOTREACHED
         }
         break;
       }
@@ -1305,7 +1307,7 @@ bool CRegExecutor::regmatch( nglChar* prog )
         for (no = regrepeat(OPERAND(scan)) + 1; no > min; no--)
         {
           reginput = save + no - 1;
-          // If it could work, try it. 
+          // If it could work, try it.
           if (nextch == '\0' || *reginput == nextch)
             if (regmatch(next))
               return true;
@@ -1314,7 +1316,7 @@ bool CRegExecutor::regmatch( nglChar* prog )
         break;
       }
       case END:
-        return true;  // Success! 
+        return true;  // Success!
         break;
       default:
         regerror( REGERR_CORRUPTION );
@@ -1341,7 +1343,7 @@ size_t CRegExecutor::regrepeat( nglChar* node )
   switch (OP(node))
   {
     case ANY:
-      return(wcslen(reginput));
+      return(strlen(reginput));
       break;
     case EXACTLY:
       ch = *OPERAND(node);
@@ -1351,17 +1353,17 @@ size_t CRegExecutor::regrepeat( nglChar* node )
       return(count);
       break;
     case ANYOF:
-      return(wcsspn(reginput, OPERAND(node)));
+      return(strspn(reginput, OPERAND(node)));
       break;
     case ANYBUT:
-      return(wcscspn(reginput, OPERAND(node)));
+      return(strcspn(reginput, OPERAND(node)));
       break;
-    default:    // Oh dear.  Called inappropriately. 
+    default:    // Oh dear.  Called inappropriately.
       regerror( REGERR_BAD_REGREPEAT );
-      return(0);  // Best compromise. 
+      return(0);  // Best compromise.
       break;
   }
-  // NOTREACHED 
+  // NOTREACHED
 }
 
 #ifdef _RE_DEBUG
@@ -1371,23 +1373,23 @@ size_t CRegExecutor::regrepeat( nglChar* node )
 void regexp::regdump()
 {
   nglChar* s;
-  nglChar op = EXACTLY; // Arbitrary non-END op. 
+  nglChar op = EXACTLY; // Arbitrary non-END op.
   nglChar* next;
 
   s = _tcsinc(program);
   while (op != END)
-  { // While that wasn't END last time... 
+  { // While that wasn't END last time...
     op = OP(s);
-    _tprintf(_T( "%2d%s" ), s-program, regprop(s)); // Where, what. 
+    _tprintf(_T( "%2d%s" ), s-program, regprop(s)); // Where, what.
     next = regnext(s);
-    if (next == NULL)   // Next ptr. 
+    if (next == NULL)   // Next ptr.
       _tprintf(_T( "(0)" ));
-    else 
+    else
       _tprintf(_T( "(%d)" ), (s-program)+(next-s));
     s += 3;
     if (op == ANYOF || op == ANYBUT || op == EXACTLY)
     {
-      // Literal string, where present. 
+      // Literal string, where present.
       while (*s != '\0')
       {
         _putnglChar(*s);
@@ -1398,7 +1400,7 @@ void regexp::regdump()
     _putnglChar('\n');
   }
 
-  // Header fields of interest. 
+  // Header fields of interest.
   if (regstart != '\0')
     _tprintf(_T( "start `%c' " ), regstart);
   if (reganch)
@@ -1437,13 +1439,13 @@ nglChar* CRegProgramAccessor::regprop( nglChar* op )
   case OPEN+1: case OPEN+2: case OPEN+3:
   case OPEN+4: case OPEN+5: case OPEN+6:
   case OPEN+7: case OPEN+8: case OPEN+9:
-    _stprintf(buf+wcslen(buf), _T( "OPEN%d" ), OP(op)-OPEN);
+    _stprintf(buf+strlen(buf), _T( "OPEN%d" ), OP(op)-OPEN);
     p = NULL;
     break;
   case CLOSE+1: case CLOSE+2: case CLOSE+3:
   case CLOSE+4: case CLOSE+5: case CLOSE+6:
   case CLOSE+7: case CLOSE+8: case CLOSE+9:
-    _stprintf(buf+wcslen(buf), _T( "CLOSE%d" ), OP(op)-CLOSE);
+    _stprintf(buf+strlen(buf), _T( "CLOSE%d" ), OP(op)-CLOSE);
     p = NULL;
     break;
   default:
@@ -1466,13 +1468,15 @@ nuiRegExp::nuiRegExp()
 
 nuiRegExp::nuiRegExp( const nglChar* exp, bool iCase )
   : rc( new regexp( exp, iCase ) ),
-  mpString(NULL)
+  mpString(NULL),
+  mExpression(exp)
 {
 }
 
 nuiRegExp::nuiRegExp( const nglString& exp, bool iCase )
   : rc( new regexp( exp.GetChars(), iCase ) ),
-  mpString(NULL)
+  mpString(NULL),
+  mExpression(exp)
 {
 }
 
@@ -1480,7 +1484,8 @@ nuiRegExp::nuiRegExp( const nuiRegExp &r )
   : rc( r.rc ),
   m_szError(r.m_szError),
   mString(r.mString),
-  mpString(mString.GetChars())
+  mpString(mString.GetChars()),
+  mExpression(r.GetExpression())
 {
   if ( rc )
     rc->count++;
@@ -1500,7 +1505,9 @@ const nuiRegExp & nuiRegExp::operator=( const nuiRegExp & r )
     mString = r.mString;
     mpString = mString.GetChars();
     m_szError = r.m_szError;
-  } 
+    mExpression = r.GetExpression();
+  }
+  
   return *this;
 }
 
@@ -1682,7 +1689,7 @@ nglString regexp::GetReplaceString( const nglChar* sReplaceExp ) const
 
   // First compute the length of the string
   int replacelen = 0;
-  while ((c = *src++) != _T('\0')) 
+  while ((c = *src++) != _T('\0'))
   {
     if (c == _T('&'))
       no = 0;
@@ -1691,15 +1698,15 @@ nglString regexp::GetReplaceString( const nglChar* sReplaceExp ) const
     else
       no = -1;
 
-    if (no < 0) 
-    { 
-      // Ordinary character. 
+    if (no < 0)
+    {
+      // Ordinary character.
       if (c == _T('\\') && (*src == _T('\\') || *src == _T('&')))
         c = *src++;
       replacelen++;
-    } 
+    }
     else if (startp[no] != NULL && endp[no] != NULL &&
-          endp[no] > startp[no]) 
+          endp[no] > startp[no])
     {
       // Get tagged expression
       len = endp[no] - startp[no];
@@ -1715,7 +1722,7 @@ nglString regexp::GetReplaceString( const nglChar* sReplaceExp ) const
 
   // Now we can create the string
   src = (nglChar *)sReplaceExp;
-  while ((c = *src++) != _T('\0')) 
+  while ((c = *src++) != _T('\0'))
   {
     if (c == _T('&'))
       no = 0;
@@ -1724,19 +1731,19 @@ nglString regexp::GetReplaceString( const nglChar* sReplaceExp ) const
     else
       no = -1;
 
-    if (no < 0) 
-    { 
-      // Ordinary character. 
+    if (no < 0)
+    {
+      // Ordinary character.
       if (c == _T('\\') && (*src == _T('\\') || *src == _T('&')))
         c = *src++;
       *buf++ = c;
-    } 
+    }
     else if (startp[no] != NULL && endp[no] != NULL &&
-          endp[no] > startp[no]) 
+          endp[no] > startp[no])
     {
       // Get tagged expression
       len = endp[no] - startp[no];
-      wcsncpy(buf, startp[no], len);
+      strncpy(buf, startp[no], len);
       buf += len;
       if (len != 0 && *(buf-1) == _T( '\0' ))
       { /* strncpy hit NUL. */
@@ -1765,3 +1772,7 @@ void nuiRegExp::ClearErrorString() const
   m_szError.Wipe();
 }
 
+const nglString& nuiRegExp::GetExpression() const
+{
+  return mExpression;
+}

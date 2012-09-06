@@ -11,7 +11,7 @@
 #include "nglThread.h"
 
 #define STARTELEM(X) for (int32 i = 0; i < X->GetChildrenCount(); i++) { const nuiXMLNode* pProxy = X; nuiXMLNode* pN = pProxy->GetChild(i); const nglString& name(pN->GetName()); 
-#define GETELEM(X, STR) if (name == _T(X)) { nuiXMLNode* pp = pN->GetChild(0); STR = pp ? pp->GetValue() : nglString::Null; /*printf(X ": '%ls'\n", STR.GetChars());*/ } else
+#define GETELEM(X, STR) if (name == _T(X)) { nuiXMLNode* pp = pN->GetChild(0); STR = pp ? pp->GetValue() : nglString::Null; /*printf(X ": '%s'\n", STR.GetChars());*/ } else
 #define GETELEMATTR(X, Y, STR) if (name == _T(X)) STR = pN->GetAttribute(_T(Y)); else
 #define ENDELEM {} }
 
@@ -362,7 +362,7 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
       if (!pNode)
         return false;
       
-      printf("xml item: '%ls'\n", pNode->GetName().GetChars());
+      printf("xml item: '%s'\n", pNode->GetName().GetChars());
       if (pNode->GetName() == _T("channel"))
       {
         
@@ -402,7 +402,7 @@ bool nuiRSS::UpdateFromXML(nuiXMLNode* pXML)
   else if (pXML->GetName() == _T("feed"))
   {
     nuiXMLNode* pNode = pXML;
-    printf("xml item: '%ls'\n", pNode->GetName().GetChars());
+    printf("xml item: '%s'\n", pNode->GetName().GetChars());
     
     if (pNode->GetName() == _T("feed"))
     {

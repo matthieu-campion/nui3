@@ -20,3 +20,4 @@ public:
 private:
   nglString mUrl;
 };
+

@@ -15,10 +15,7 @@ class NUI_API nuiFileList : public nuiList
 {
 public:
   nuiFileList(const nglPath& rPath = ePathCurrent);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiFileList();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   void Selected(const nuiEvent& rEvent); ///< Called whenever a file is double clicked.
 

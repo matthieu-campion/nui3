@@ -19,34 +19,20 @@
 
 
 nuiScrollView::nuiScrollView(bool Horizontal, bool Vertical)
-  : nuiComposite(),
+  : nuiSimpleContainer(),
     mSVSink(this)
 {
   Init(NULL, NULL, Horizontal, Vertical);
 }
 
 nuiScrollView::nuiScrollView(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVerticalScrollBar )
-: nuiComposite(),
+: nuiSimpleContainer(),
   mSVSink(this)
 {
   Init(pHorizontalScrollBar, pVerticalScrollBar, false, false);
 }
 
 
-
-bool nuiScrollView::Load(const nuiXMLNode* pNode)
-{
-  nuiComposite::Load(pNode);
-
-  bool Horizontal = nuiGetBool(pNode, _T("Horizontal"), true);
-  bool Vertical =   nuiGetBool(pNode, _T("Vertical"), true);
-
-  Init(NULL, NULL, Horizontal, Vertical);
-
-  mFillChildren = nuiGetBool(pNode, _T("FillChildren"), mFillChildren);
-  
-  return true;
-}
 
 void nuiScrollView::InitAttributes()
 {
@@ -162,6 +148,9 @@ void nuiScrollView::Init(nuiScrollBar* pHorizontalScrollBar, nuiScrollBar* pVert
   mpHideTimer = new nuiTimer(HIDE_SCROLLBARS_DELAY);
   mSVSink.Connect(mpHideTimer->Tick, &nuiScrollView::OnHideTick);
   
+  mpShowAnimV = mpShowAnimH = NULL;
+  mpHideAnimV = mpHideAnimH = NULL;
+  
 #ifdef _UIKIT_
   ActivateMobileMode();
 #endif
@@ -239,7 +228,7 @@ nuiRect nuiScrollView::CalcIdealSize()
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
-    NGL_OUT(_T("nuiScrollView::CalcIdealSize: %ls\n"), mIdealRect.GetValue().GetChars());
+    NGL_OUT(_T("nuiScrollView::CalcIdealSize: %s\n"), mIdealRect.GetValue().GetChars());
   }
   #endif
   
@@ -251,7 +240,7 @@ bool nuiScrollView::SetRect(const nuiRect& rRect)
   #ifdef _DEBUG_LAYOUT
   if (GetDebug())
   {
-    NGL_OUT(_T("nuiScrollView::SetRect: %ls\n"), rRect.GetValue().GetChars());
+    NGL_OUT(_T("nuiScrollView::SetRect: %s\n"), rRect.GetValue().GetChars());
   }
   #endif
       
@@ -479,7 +468,7 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         #ifdef _DEBUG_LAYOUT
         if (GetDebug())
         {
-          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%ls)\n"), rect.GetValue().GetChars());
+          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%s)\n"), rect.GetValue().GetChars());
         }
         #endif
 
@@ -520,7 +509,7 @@ bool nuiScrollView::SetChildrenRect(nuiSize x, nuiSize y, nuiSize xx, nuiSize yy
         #ifdef _DEBUG_LAYOUT
         if (GetDebug())
         {
-          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%ls)\n"), rect.GetValue().GetChars());
+          NGL_OUT(_T("\tnuiScrollView::SetChildrenRect: SetLayout(%s)\n"), rect.GetValue().GetChars());
         }
         #endif
         
@@ -1101,7 +1090,9 @@ void nuiScrollView::ShowScrollBars(bool autoHide)
 }
 
 void nuiScrollView::HideScrollBars()
-{  
+{ 
+  if (mpShowAnimH) 
+  {
   mpShowAnimH->Stop();
   mpShowAnimV->Stop();
   
@@ -1112,7 +1103,7 @@ void nuiScrollView::HideScrollBars()
   mpHideAnimH->Stop();
   mpHideAnimH->SetTime(0);  
   mpHideAnimH->Play();
-
+  }
 }
 
 void nuiScrollView::SetHideScrollBars(bool hide)
@@ -1136,6 +1127,10 @@ void nuiScrollView::SetHideScrollBars(bool hide)
     delete mpShowAnimV;
     delete mpHideAnimH;
     delete mpHideAnimV;
+    mpShowAnimH = NULL;
+    mpShowAnimV = NULL;
+    mpHideAnimH = NULL;
+    mpHideAnimV = NULL;
     mpHorizontal->SetAlpha(1);
     mpVertical->SetAlpha(1);
   }

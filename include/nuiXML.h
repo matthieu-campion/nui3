@@ -13,12 +13,11 @@
 #include "nglString.h"
 #include "nglIStream.h"
 #include "nglOStream.h"
-#include "nuiApplication.h"
-#include "nuiContainer.h"
+//#include "nuiApplication.h"
 
 class xmlLexer;
 
-class NUI_API nuiStringLessFunctor : public std::binary_function <std::string, std::string, bool> 
+class NUI_API nuiStringLessFunctor : public std::binary_function <std::string, std::string, bool>
 {
 public:
   bool operator()(const std::string& rLeft, const std::string& rRight) const
@@ -55,7 +54,7 @@ public:
   void SetValue(const nglString& rValue); ///< Transforms the node into a text node if it is not allready one and sets its text.
 
   // Node attributes management:
-  
+
   void SetAttribute(const nglString& rName, const nglString& rValue); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const nglString& rName, const nglChar* pValue); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const nglString& rName, uint8 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
@@ -69,14 +68,16 @@ public:
   void SetAttribute(const nglString& rName, bool value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const nglString& rName, float value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const nglString& rName, double value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+#ifndef _MINUI3_
   void SetAttribute(const nglString& rName, nuiPosition value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const nglString& rName, nuiDirection value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const nglString& rName, nuiOrientation value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+#endif
 
   bool DelAttribute(const nglString& rName); ///< Remove an attribute from this node. If the attribute doesn't exists on the node nothing happens.
 
   bool HasAttribute(const nglString& rName) const; ///< Return true if the given attribute is present on the node.
-  
+
   const nglString& GetAttribute(const nglString& rName) const; ///< Return the value of the given attribute. If the attribute doesn't exists on this object the returned string will be nglString::Null.
 
   // char* versions:
@@ -87,16 +88,23 @@ public:
   // Node attributes management:
 
   void SetAttribute(const char* pName, const nglString& rValue);
-  void SetAttribute(const char* pName, const char* pValue); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, const nglChar* pValue); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, uint8 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, int8 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, uint16 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, int16 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, uint32 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+  void SetAttribute(const char* pName, int32 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, uint64 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, int64 value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, bool value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, float value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, double value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+#ifndef _MINUI3_
   void SetAttribute(const char* pName, nuiPosition value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, nuiDirection value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
   void SetAttribute(const char* pName, nuiOrientation value); ///< Set the value of an attribute given its name. If the attribute doesn't exits on this object it will be added and its value updated.
+#endif
 
   bool DelAttribute(const char* pName); ///< Remove an attribute from this node. If the attribute doesn't exists on the node nothing happens.
 
@@ -131,7 +139,7 @@ public:
 
   void SetTag(void* pTag);
   void* GetTag() const;
-  
+
   virtual int64 Write(nglOStream& rStream, uint level = 0) const;
 protected:
   nuiXMLNode(xmlLexer* pLexer, nuiXMLNode* pParent);
@@ -159,7 +167,7 @@ public:
 
   virtual bool Load(nglIStream& rStream); ///< Load an existing xml file from a stream.
   virtual bool Save(nglOStream& rStream) const; ///< Save the current tree to a stream.
- 
+
   virtual nglString Dump(uint level = 0) const; ///< Return the contents of the object as a string.
   virtual void SetDTD(nglString name, nglString file); ///< Set the DTD of this XML doc.
   virtual void SetStyleSheet(nglString type, nglString file); ///< Set the Style sheet of this xml doc.
@@ -189,7 +197,7 @@ class nuiXMLParser ///< nui's SAX Parser
 public:
   nuiXMLParser();
   virtual ~nuiXMLParser();
-  
+
   virtual bool Parse(nglIStream* pStream);
   void Stop();
 
@@ -198,19 +206,19 @@ public:
   virtual void Characters(const nuiXML_Char* s, int len);
   virtual void ProcessingInstruction(const nuiXML_Char* target, const nuiXML_Char* data);
   virtual void Comment(const nuiXML_Char* data);
-  
+
 protected:
   static void StartElement(void* pThis, const nuiXML_Char* name, const nuiXML_Char** atts);
   static void EndElement(void* pThis, const nuiXML_Char* name);
   static void Characters(void* pThis, const nuiXML_Char* s, int len);
   static void ProcessingInstruction(void* pThis, const nuiXML_Char* target, const nuiXML_Char* data);
   static void Comment(void* pThis, const nuiXML_Char* data);
-  
+
   nglIStream* mpStream;
-  
+
   //    static const uint32 BufferSize = 1024;
   static const uint32 BufferSize = 4096;
-  
+
   XML_Parser mParser;
 };
 

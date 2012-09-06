@@ -15,7 +15,7 @@
 class nuiDrawContext;
 
 /// This class implements a basic Font widget.
-class NUI_API nuiFont : public nuiObject, public nuiFontBase
+class NUI_API nuiFont : public nuiFontBase
 {
 public:
   // Constructors and destructors are protected!

@@ -324,7 +324,7 @@ const nglString& nglThreadChecker::_Dump(double currentTime)
     GetThreadName(threadID, name);
     const std::list<nglThreadState>& stack = it->second;
     
-    tmp.CFormat(_T("thread '%ls' [0x%x]:\n"), name.GetChars(), threadID);
+    tmp.CFormat(_T("thread '%s' [0x%x]:\n"), name.GetChars(), threadID);
     mDump.Append(tmp);
     
     uint32 size = stack.size();
@@ -342,7 +342,7 @@ const nglString& nglThreadChecker::_Dump(double currentTime)
         --its;
         const nglThreadState& state = *its;
         
-        tmp.CFormat(_T("\t\t%d: %ls '%ls' [0x%x] [state='%ls'] [timelength=%.3f]\n"), 
+        tmp.CFormat(_T("\t\t%d: %s '%s' [0x%x] [state='%s'] [timelength=%.3f]\n"), 
           size,
           state.GetLockPointer()->GetLabel().GetChars(),
           state.GetLockPointer()->GetName().GetChars(),
@@ -438,11 +438,11 @@ void nglThreadChecker::Checker(double currentTime)
       if (FindDeadLock_2ndPass(state.GetLockPointer(), log))
       {
        // it's a dead-lock. do what u have to do.        
-        wprintf(_T("\nnglThreadChecker WARNING : dead-lock on %ls '%ls' [0x%x]!\n"), 
+        printf(_T("\nnglThreadChecker WARNING : dead-lock on %s '%s' [%p]!\n"), 
           state.GetLockPointer()->GetLabel().GetChars(), state.GetLockPointer()->GetName().GetChars(), state.GetLockPointer());
-        wprintf(_T("%ls\n"), log.GetChars());  
+        printf(_T("%s\n"), log.GetChars());  
         _Dump(currentTime);
-        wprintf(_T("%ls\n"), mDump.GetChars());
+        printf(_T("%s\n"), mDump.GetChars());
         
         // if a dead-lock blocks the main thread, the UI won't be able to refresh any information about that. we choose to exit with a clear information.
         exit(2);
@@ -472,12 +472,12 @@ void nglThreadChecker::Checker(double currentTime)
       {
         state.SetWarning(nglThreadState::eWarningLong);
         // it's a long lock. do what u have to do.
-        wprintf(_T("nglThreadChecker WARNING!\n"));
-        wprintf(_T("nglThreadChecker WARNING : the %ls '%ls' [0x%x] has been locked for more than %.3fsec in thread '%ls' [0x%x]\n"), 
+        printf(_T("nglThreadChecker WARNING!\n"));
+        printf(_T("nglThreadChecker WARNING : the %s '%s' [%p] has been locked for more than %.3fsec in thread '%s' [%p]\n"), 
         state.GetLockPointer()->GetLabel().GetChars(),
         state.GetLockPointer()->GetName().GetChars(), state.GetLockPointer(), delay, threadName.GetChars(), threadID);
         _Dump(currentTime);
-        wprintf(_T("%ls\n"), mDump.GetChars());
+        printf(_T("%s\n"), mDump.GetChars());
       }
     }
 
@@ -538,7 +538,7 @@ void nglThreadChecker::FindDeadLock_1stPass(nglThread::ID waitingThread, nglStri
   nglString tmp;
   nglString name;
   GetThreadName(waitingThread, name);
-  tmp.Format(_T("thread '%ls' [0x%x] "), name.GetChars(), waitingThread);
+  tmp.Format(_T("thread '%s' [0x%x] "), name.GetChars(), waitingThread);
   log.Append(tmp);
   mTestedThread.insert(waitingThread);
 }
@@ -565,7 +565,7 @@ bool nglThreadChecker::FindDeadLock_2ndPass(nglLock* pWaitingLock, nglString& lo
   if (its != mTestedThread.end())
   {
     nglString tmp;
-    tmp.Format(_T(" is waiting for thread '%ls' [0x%x]. And there is the dead-lock!\n"), nextName.GetChars(), nextThread);
+    tmp.Format(_T(" is waiting for thread '%s' [0x%x]. And there is the dead-lock!\n"), nextName.GetChars(), nextThread);
     log.Append(tmp);
     
     return true;
@@ -583,7 +583,7 @@ bool nglThreadChecker::FindDeadLock_2ndPass(nglLock* pWaitingLock, nglString& lo
   if (list.size() == 0)
   {
     nglString tmp;
-    tmp.Format(_T(" is waiting for thread '%ls' [0x%x], no locks in this thread. No Dead-lock then. Test Over.\n"), nextName.GetChars(), nextThread);
+    tmp.Format(_T(" is waiting for thread '%s' [0x%x], no locks in this thread. No Dead-lock then. Test Over.\n"), nextName.GetChars(), nextThread);
     log.Append(tmp);
 
     return false;
@@ -595,7 +595,7 @@ bool nglThreadChecker::FindDeadLock_2ndPass(nglLock* pWaitingLock, nglString& lo
   if (state.GetState() != nglThreadState::eWait)
   {
     nglString tmp;
-    tmp.Format(_T(" is waiting for thread '%ls' [0x%x]. In this thread, %ls '%ls' [0x%x] has already been locked. No Dead-lock then. Test Over.\n"), 
+    tmp.Format(_T(" is waiting for thread '%s' [0x%x]. In this thread, %s '%s' [0x%x] has already been locked. No Dead-lock then. Test Over.\n"), 
       nextName.GetChars(), nextThread, 
       state.GetLockPointer()->GetLabel().GetChars(),
       state.GetLockPointer()->GetName().GetChars(), state.GetLockPointer());
@@ -608,7 +608,7 @@ bool nglThreadChecker::FindDeadLock_2ndPass(nglLock* pWaitingLock, nglString& lo
   // recursive call
 
   nglString tmp;
-  tmp.Format(_T(" is waiting for thread '%ls' [0x%x].\nthread '%ls' [0x%x] "), nextName.GetChars(), nextThread, nextName.GetChars(), nextThread);
+  tmp.Format(_T(" is waiting for thread '%s' [0x%x].\nthread '%s' [0x%x] "), nextName.GetChars(), nextThread, nextName.GetChars(), nextThread);
   log.Append(tmp);
 
   return FindDeadLock_2ndPass(state.GetLockPointer(), log);
@@ -762,7 +762,7 @@ bool nglThreadChecker::_Unlock(nglThread::ID threadID, nglLock* pLock)
         // information found, unregister the previous state
         stack.erase(its);
 
-        // wprintf(_T("ThreadChecker Unlock : threadID 0x%x   CriticalSection 0x%x (named '%ls')\n"), threadID, pCS, pCS->GetName().GetChars());
+        // wprintf(_T("ThreadChecker Unlock : threadID 0x%x   CriticalSection 0x%x (named '%s')\n"), threadID, pCS, pCS->GetName().GetChars());
 
         break;
       }

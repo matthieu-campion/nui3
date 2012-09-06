@@ -176,8 +176,8 @@ static css_error ResolveUrl(void *pw, const char *base, lwc_string *rel, lwc_str
   std::string s(url.GetStdString());
   lwc_intern_string(s.c_str(), s.size(), abs);
   
-  //NGL_OUT(_T("CSS Resolve URL:\n\tbase '%ls'\n"), b.GetChars());
-  //NGL_OUT(_T("\t-> '%ls'\n"), url.GetChars());
+  //NGL_OUT(_T("CSS Resolve URL:\n\tbase '%s'\n"), b.GetChars());
+  //NGL_OUT(_T("\t-> '%s'\n"), url.GetChars());
   
   return CSS_OK;
 }
@@ -189,7 +189,7 @@ bool nuiCSSStyleSheet::IsValid() const
 
 nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nglString& rText, bool Inline, const nuiStyleSheetDoneDelegate& rDelegate)
 {
-  NGL_OUT(_T("Create StyleSheet from text%ls\n"), Inline ? _T(" (inline)") : _T(""));
+  NGL_OUT(_T("Create StyleSheet from text%s\n"), Inline ? _T(" (inline)") : _T(""));
   mpSheet = NULL;
   mURL = rURL;
   mInline = Inline;
@@ -204,7 +204,7 @@ nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nglString& rText
 
 nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, bool Inline, const nglString& rCharset, const nuiStyleSheetDoneDelegate& rDelegate)
 {
-  NGL_OUT(_T("Create StyleSheet from stream (base '%ls')%ls\n"), rURL.GetChars(), Inline ? _T(" (inline)") : _T(""));
+  NGL_OUT(_T("Create StyleSheet from stream (base '%s')%s\n"), rURL.GetChars(), Inline ? _T(" (inline)") : _T(""));
   mpSheet = NULL;
   mURL = rURL;
   mInline = Inline;
@@ -216,7 +216,7 @@ nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, nglIStream& rStream, b
 
 nuiCSSStyleSheet::nuiCSSStyleSheet(const nglString& rURL, const nuiStyleSheetDoneDelegate& rDelegate)
 {
-  NGL_OUT(_T("Create StyleSheet from URL '%ls'\n"), rURL.GetChars());
+  NGL_OUT(_T("Create StyleSheet from URL '%s'\n"), rURL.GetChars());
   mpSheet = NULL;
   mURL = rURL;
   mInline = false;
@@ -239,7 +239,7 @@ void nuiCSSStyleSheet::StreamDone(nuiAsyncIStream* pStream)
   
   if (pResponse)
   {
-    //NGL_OUT(_T("\n\nHTTP Headers:\n%ls\n\n"), pResponse->GetHeadersRep().GetChars());
+    //NGL_OUT(_T("\n\nHTTP Headers:\n%s\n\n"), pResponse->GetHeadersRep().GetChars());
     const nuiHTTPHeaderMap& rHeaders(pResponse->GetHeaders());
     nuiHTTPHeaderMap::const_iterator it = rHeaders.find(_T("location"));
     if (it != rHeaders.end())
@@ -254,7 +254,7 @@ void nuiCSSStyleSheet::StreamDone(nuiAsyncIStream* pStream)
       {
         mURL = newurl;
       }
-      NGL_OUT(_T("\n\nNew CSS location: %ls\n\n"), mURL.GetChars());
+      NGL_OUT(_T("\n\nNew CSS location: %s\n\n"), mURL.GetChars());
       
       mpStream = new nuiAsyncIStream(mURL, true, nuiMakeDelegate(this, &nuiCSSStyleSheet::StreamDone));
       return;
@@ -272,7 +272,7 @@ void nuiCSSStyleSheet::StreamDone(nuiAsyncIStream* pStream)
         enc = contents.Extract(pos + 8);
         enc.Trim();
         encoding = nuiGetTextEncodingFromString(enc);
-        //NGL_OUT(_T("\n\nHTTP Encoding: %ls - %d\n\n"), enc.GetChars(), encoding);
+        //NGL_OUT(_T("\n\nHTTP Encoding: %s - %d\n\n"), enc.GetChars(), encoding);
         
       }
     }
@@ -285,7 +285,7 @@ void nuiCSSStyleSheet::StreamDone(nuiAsyncIStream* pStream)
 
 void nuiCSSStyleSheet::Init(nglIStream& rStream, const nglString& charset)
 {
-  //NGL_OUT(_T("Init CSS '%ls'\n"), mURL.GetChars());
+  //NGL_OUT(_T("Init CSS '%s'\n"), mURL.GetChars());
   mpSheet = NULL;
   
   size_t len, origlen;
@@ -341,7 +341,7 @@ void nuiCSSStyleSheet::Init(nglIStream& rStream, const nglString& charset)
     if (error == CSS_OK)
     {
       nglString urlstr (lwc_string_data(url), lwc_string_length(url));
-      NGL_OUT(_T("CSS Import Request '%ls'\n"), urlstr.GetChars());
+      NGL_OUT(_T("CSS Import Request '%s'\n"), urlstr.GetChars());
       nuiCSSStyleSheet* pImport = new nuiCSSStyleSheet(urlstr, nuiMakeDelegate(this, &nuiCSSStyleSheet::ImportDone));
       mpImports.push_back(pImport);
       
@@ -359,7 +359,7 @@ void nuiCSSStyleSheet::ImportDone(nuiCSSStyleSheet* pImport)
   if (pImport->IsValid())
   {
     css_stylesheet_register_import(mpSheet, pImport->mpSheet);
-    NGL_OUT(_T("CSS Import done '%ls'\n"), mURL.GetChars());
+    NGL_OUT(_T("CSS Import done '%s'\n"), mURL.GetChars());
 
     lwc_string *url;
     uint64_t media;
@@ -370,7 +370,7 @@ void nuiCSSStyleSheet::ImportDone(nuiCSSStyleSheet* pImport)
     if (error == CSS_OK)
     {
       nglString urlstr (lwc_string_data(url), lwc_string_length(url));
-      NGL_OUT(_T("CSS Import Request '%ls'\n"), urlstr.GetChars());
+      NGL_OUT(_T("CSS Import Request '%s'\n"), urlstr.GetChars());
       nuiCSSStyleSheet* pImport = new nuiCSSStyleSheet(urlstr, nuiMakeDelegate(this, &nuiCSSStyleSheet::ImportDone));
       mpImports.push_back(pImport);
       
@@ -384,7 +384,7 @@ void nuiCSSStyleSheet::ImportDone(nuiCSSStyleSheet* pImport)
   }
   else
   {
-    NGL_OUT(_T("CSS Import failed '%ls'\n"), mURL.GetChars());
+    NGL_OUT(_T("CSS Import failed '%s'\n"), mURL.GetChars());
   }
   
 }
@@ -636,7 +636,7 @@ nuiColor nuiCSSStyle::GetColor() const
   uint8 b = (uint8)(col >> 8);
   uint8 a = (uint8)255;
   nuiColor color(r, g, b, a);
-  //NGL_OUT(_T("computed color: %ls\n"), color.GetValue().GetChars());
+  //NGL_OUT(_T("computed color: %s\n"), color.GetValue().GetChars());
   return color;
 }
 
@@ -652,7 +652,7 @@ nuiColor nuiCSSStyle::GetBgColor() const
   uint8 b = (uint8)(col >> 8);
   uint8 a = (uint8)255;
   nuiColor color(r, g, b, a);
-  //NGL_OUT(_T("computed bg color: %ls\n"), color.GetValue().GetChars());
+  //NGL_OUT(_T("computed bg color: %s\n"), color.GetValue().GetChars());
   return color;
 }
 

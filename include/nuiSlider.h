@@ -22,10 +22,7 @@ class NUI_API nuiSlider : public nuiSimpleContainer
 {
 public:
   nuiSlider(nuiOrientation orientation = nuiHorizontal, const nuiRange& rRange = nuiRange());
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiSlider();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   virtual bool Draw(nuiDrawContext* pContext);
 

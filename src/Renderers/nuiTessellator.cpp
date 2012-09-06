@@ -12,7 +12,7 @@
 #include "nuiPathGenerator.h"
 #include "nuiContour.h"
 
-#ifdef _UIKIT_
+#if (defined _UIKIT_) || (defined _ANDROID_)
 #    include "glu//GL/glu.h"
 #    include "glu/libtess/tess.h"
 #endif
@@ -283,7 +283,7 @@ void TessellatorInfo::InternalTessError(GLenum ErrNo)
 #ifdef __NUI_NO_GL__
   NGL_OUT(_T("nui_glu tessellation error\n"));
 #elsif !defined(_OPENGL_ES_)
-  NGL_OUT(_T("nui_glu tessellation error: %ls\n"), gluErrorString(ErrNo));
+  NGL_OUT(_T("nui_glu tessellation error: %s\n"), gluErrorString(ErrNo));
 #endif
 }
 

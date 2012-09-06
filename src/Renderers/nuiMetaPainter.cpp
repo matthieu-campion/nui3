@@ -667,7 +667,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         //FetchPointer();
         FetchInt();
         bool force = FetchInt();
-        str.CFormat(_T("SetState(%ls)"), TRUEFALSE(force));
+        str.CFormat(_T("SetState(%s)"), TRUEFALSE(force));
       }
       break;
     case eDrawArray:
@@ -678,7 +678,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         const nglChar* pMode = GetGLMode(pArray->GetMode());
         float bounds[6];
         pArray->GetBounds(bounds);
-        str.CFormat(_T("DrawArray 0x%x (size %d mode:%ls) (%f , %f)->(%f, %f)"), pArray, pArray->GetVertices().size(), pMode, bounds[0], bounds[1], bounds[3], bounds[4]);
+        str.CFormat(_T("DrawArray 0x%x (size %d mode:%s) (%f , %f)->(%f, %f)"), pArray, pArray->GetVertices().size(), pMode, bounds[0], bounds[1], bounds[3], bounds[4]);
       }
       break;
     case eClearColor:
@@ -695,7 +695,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         nuiWidget* pS = (nuiWidget*)FetchPointer();
         nglString clss(pS->GetObjectClass());
         nglString name(pS->GetObjectName());
-        str.CFormat(_T("DrawChild 0x%x / '%ls - %ls'"), pS, clss.GetChars(), name.GetChars());
+        str.CFormat(_T("DrawChild 0x%x / '%s - %s'"), pS, clss.GetChars(), name.GetChars());
       }
       break;
     case eLoadMatrix:
@@ -735,7 +735,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         FetchBuffer(m.Array, sizeof(nuiSize), 16);
         nglString v;
         m.GetValue(v);
-        str.CFormat(_T("LoadProjectionMatrix(%f, %f, %f, %f) / %ls"), a, b, c, d, v.GetChars());
+        str.CFormat(_T("LoadProjectionMatrix(%f, %f, %f, %f) / %s"), a, b, c, d, v.GetChars());
       }
       break;
     case eMultProjectionMatrix:
@@ -777,7 +777,7 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
       str = _T("ResetClipRect");
       break;
     case eEnableClipping:
-      str.CFormat(_T("EnableClipping(%ls)"), TRUEFALSE(FetchInt()));
+      str.CFormat(_T("EnableClipping(%s)"), TRUEFALSE(FetchInt()));
       break;
     case eBreak:
       str = _T("Break");

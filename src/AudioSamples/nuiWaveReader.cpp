@@ -33,7 +33,7 @@ nuiSampleReader* nuiWaveReader::Clone(nglIStream& rStream) const
   return pReader;
 }
 
-void nuiWaveReader::SetPosition(uint32 position)
+void nuiWaveReader::SetPosition(int64 position)
 {
   if (!mInitialized)
     return;
@@ -65,7 +65,7 @@ bool nuiWaveReader::ReadInfo()
     return false;
   std::vector<char> fileFormat(4);
   char* waveFormat = "WAVE";
-  for(uint32 i = 0; i < 4; i++)
+  for (int32 i = 0; i < 4; i++)
   {
     if( 1 != mrStream.ReadUInt8((uint8*)&(fileFormat[i]), 1))
       return false;
@@ -99,11 +99,11 @@ bool nuiWaveReader::ReadInfo()
   mInfo.SetBitsPerSample(BitsPerSample);
   
   //get number of sample frames
-  for(uint32 i = 0; i < mChunks.size(); i++)
+  for(int32 i = 0; i < mChunks.size(); i++)
   {
     if(mChunks[i]->CompareId("data"))  //attempt to reach "data" Chunk
     {
-      NbSamples = (uint32)mChunks[i]->mDataSize;
+      NbSamples = (int32)mChunks[i]->mDataSize;
       mInfo.SetSampleFrames(NbSamples * 8 / BitsPerSample / NbChannels);
       break;
     }
@@ -117,20 +117,20 @@ bool nuiWaveReader::ReadInfo()
 
 
 
-uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format)
+int32 nuiWaveReader::ReadIN(void* pBuffer, int32 sampleframes, nuiSampleBitFormat format)
 {
   if (!sampleframes)
     return 0;
-  SetPosition((uint32)mPosition);
+  SetPosition((int32)mPosition);
   
-  uint32 length = mInfo.GetSampleFrames();
+  int32 length = mInfo.GetSampleFrames();
   if (mPosition >= length)
     return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
   
-  const uint64 SamplePointsToRead = sampleframes * mInfo.GetChannels();
-  uint64 SampleFramesRead = 0;
-  const uint32 channels = mInfo.GetChannels();
+  const int64 SamplePointsToRead = sampleframes * mInfo.GetChannels();
+  int64 SampleFramesRead = 0;
+  const int32 channels = mInfo.GetChannels();
   switch(format)
   {
     case eSampleInt16 :
@@ -140,7 +140,7 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
         case 8:
         {
           int16* pTempInt16 = (int16*)pBuffer;
-          uint32 sizeRead = (uint32)mrStream.ReadUInt8(((uint8*)pTempInt16) + SamplePointsToRead , SamplePointsToRead);
+          int32 sizeRead = (int32)mrStream.ReadUInt8(((uint8*)pTempInt16) + SamplePointsToRead , SamplePointsToRead);
           nuiAudioConvert_Unsigned8bitsBufferTo16Bits(pTempInt16, sizeRead);
           SampleFramesRead = sizeRead / channels;
         }
@@ -148,7 +148,7 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
           
         case 16:
         {
-          uint32 sizeRead = (uint32)mrStream.ReadInt16((int16*)pBuffer, SamplePointsToRead);
+          int32 sizeRead = (int32)mrStream.ReadInt16((int16*)pBuffer, SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
         }
           break;
@@ -170,7 +170,7 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
         case 8:
         {
           float* pTempFloat = (float*)pBuffer;
-          uint32 sizeRead = (uint32)mrStream.ReadUInt8((uint8*)pTempFloat + 3 * SamplePointsToRead , SamplePointsToRead);
+          int32 sizeRead = (int32)mrStream.ReadUInt8((uint8*)pTempFloat + 3 * SamplePointsToRead , SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
           nuiAudioConvert_Unsigned8bitsBufferToFloat(pTempFloat, sizeRead);
         }
@@ -180,7 +180,7 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
         {
           float* pTempFloat = (float*)pBuffer;
 
-          uint32 sizeRead = (uint32)mrStream.ReadInt16((int16*)pTempFloat + SamplePointsToRead, SamplePointsToRead);
+          int32 sizeRead = (int32)mrStream.ReadInt16((int16*)pTempFloat + SamplePointsToRead, SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
           nuiAudioConvert_16bitsBufferToFloat(pTempFloat, sizeRead);
         }
@@ -192,9 +192,9 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
           uint8* pTempBuffer;
           pTempBuffer = new uint8[SamplePointsToRead * 3]; //nb of sample points * 3 bytes (24 bits) = nb of bytes to read
           
-          uint32 sizeRead = (uint32)mrStream.ReadUInt8(pTempBuffer, SamplePointsToRead * 3);
+          int32 sizeRead = (int32)mrStream.ReadUInt8(pTempBuffer, SamplePointsToRead * 3);
           SampleFramesRead = (sizeRead / channels) / 3;
-          for (uint64 i = 0; i < sizeRead / 3; i++)
+          for (int64 i = 0; i < sizeRead / 3; i++)
           {
             pTempFloat[i] = nuiAudioConvert_24bitsToFloatFromLittleEndian(pTempBuffer + (3 * i));
           }
@@ -205,7 +205,7 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
           
         case 32:
         {
-          uint32 sizeRead = (uint32)mrStream.ReadFloat((float*)pBuffer, SamplePointsToRead);
+          int32 sizeRead = (int32)mrStream.ReadFloat((float*)pBuffer, SamplePointsToRead);
           SampleFramesRead = sizeRead / channels;
         }
           break;
@@ -224,7 +224,7 @@ uint32 nuiWaveReader::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFor
   }
   
   mPosition += SampleFramesRead;
-  return (uint32)SampleFramesRead;
+  return (int32)SampleFramesRead;
 }
 
 

@@ -11,7 +11,7 @@
 
 
 nuiZoomView::nuiZoomView(nuiScrollBar *pHorizontalScrollbar, nuiScrollBar *pVerticalScrollbar, nuiSlider * pHorizontalSlider, nuiSlider * pVerticalSlider, bool calcWidthFromIdealSize, bool calcHeightFromIdealSize)
-: nuiComposite(),
+: nuiSimpleContainer(),
   mSVSink(this)
 {
   SetObjectClass(_T("nuiZoomView"));
@@ -44,45 +44,6 @@ nuiZoomView::nuiZoomView(nuiScrollBar *pHorizontalScrollbar, nuiScrollBar *pVert
   mSVSink.Connect(ChildAdded, &nuiZoomView::OnChildAdded);
   mSVSink.Connect(ChildDeleted, &nuiZoomView::OnChildRemoved);
 }
-
-bool nuiZoomView::Load(const nuiXMLNode* pNode)
-{
-  nuiComposite::Load(pNode);
-  
-  mAlwaysDisplayVScrollbar = false;
-  mAlwaysDisplayHScrollbar = false;
-
-  mHorizontalZoomLevel = 1.f;
-  mVerticalZoomLevel = 1.f;
-
-  nglString hscroll = nuiGetString(pNode, _T("HorizontalScrollBar"), nglString::Empty);
-  nglString vscroll = nuiGetString(pNode, _T("VerticalScrollBar"), nglString::Empty);
-  nglString hslider = nuiGetString(pNode, _T("HorizontalSlider"), nglString::Empty);
-  nglString vslider = nuiGetString(pNode, _T("VerticalSlider"), nglString::Empty);
-
-  nuiContainerPtr pTop = GetRoot();
-
-  mpHorizontalScrollbar = dynamic_cast<nuiScrollBar*>(pTop->GetChild(hscroll));
-  mpVerticalScrollbar = dynamic_cast<nuiScrollBar*>(pTop->GetChild(vscroll));
-  mpHorizontalSlider = dynamic_cast<nuiSlider*>(pTop->GetChild(hslider));
-  mpVerticalSlider = dynamic_cast<nuiSlider*>(pTop->GetChild(vslider));
-
-  if (mpHorizontalScrollbar)
-    mSVSink.Connect(mpHorizontalScrollbar->GetRange().ValueChanged, &nuiZoomView::Scrolled);
-  if (mpVerticalScrollbar)
-    mSVSink.Connect(mpVerticalScrollbar->GetRange().ValueChanged,   &nuiZoomView::Scrolled);
-
-  if (mpHorizontalSlider)
-    mSVSink.Connect(mpHorizontalSlider->GetRange().Changed, &nuiZoomView::Zoomed);
-  if (mpVerticalSlider)
-    mSVSink.Connect(mpVerticalSlider->GetRange().Changed,   &nuiZoomView::Zoomed);
-
-  mSVSink.Connect(ChildAdded, &nuiZoomView::OnChildAdded);
-  mSVSink.Connect(ChildDeleted, &nuiZoomView::OnChildRemoved);
-  
-  return true;
-}
-
 
 nuiZoomView::~nuiZoomView()
 {

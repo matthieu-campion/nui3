@@ -104,3 +104,31 @@ private:
   bool mPermanent;
 };
 
+class NGL_API nuiRefGuard : nuiNonCopyable
+{
+public:
+  nuiRefGuard(const nuiRefCount* pRef)
+  {
+    mpRef = pRef;
+    mpRef->Acquire();
+  }
+  
+  nuiRefGuard(const nuiRefCount& rRef)
+  {
+    mpRef = &rRef;
+    mpRef->Acquire();
+  }
+  
+  
+  ~nuiRefGuard()
+  {
+    mpRef->Release();
+  }
+  
+private:
+  const nuiRefCount* mpRef;
+};
+
+
+#define nuiAutoRef nuiRefGuard nui_local_auto_ref(this);
+

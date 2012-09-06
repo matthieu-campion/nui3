@@ -21,9 +21,6 @@ public:
 	void InitAttributes();
   virtual ~nuiImageDecoration();
   
-  bool Load(const nuiXMLNode* pNode);
-  nuiXMLNode* Serialize(nuiXMLNode* pNode);
-  
   void SetSourceClientRect(const nuiRect& rRect);
   const nuiRect& GetSourceClientRect() const;
   

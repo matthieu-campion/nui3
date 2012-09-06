@@ -557,7 +557,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   NSString *rawchars = [theEvent charactersIgnoringModifiers];
   nglString c((CFStringRef)chars);
   nglString rc((CFStringRef)rawchars);
-  //printf("Key Down: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
+  //printf("Key Down: '%s' / '%s'.\n", c.GetChars(), rc.GetChars());
   if ( [rawchars length] == 1 )
   {
     unichar keyChar = [chars characterAtIndex:0];
@@ -581,7 +581,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   NSString *rawchars = [theEvent charactersIgnoringModifiers];
   nglString c((CFStringRef)chars);
   nglString rc((CFStringRef)rawchars);
-  //printf("Key Up: '%ls' / '%ls'.\n", c.GetChars(), rc.GetChars());
+  //printf("Key Up: '%s' / '%s'.\n", c.GetChars(), rc.GetChars());
   if ( [rawchars length] == 1 )
   {
     unichar keyChar = [chars characterAtIndex:0];

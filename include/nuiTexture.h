@@ -30,8 +30,8 @@ public:
   static nuiTexture* GetTexture(nglImageInfo& rInfo, bool Clone = true); ///< Create an image from an nglImageInfo structure. If \param is true then the image buffer will be cloned, otherwise it will be deleted with the nuiTexture.
   static nuiTexture* GetTexture(const nglImage& rImage); ///< Create an image by copying an existing nglImage.
   static nuiTexture* GetTexture(nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
-  static nuiTexture* GetTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
   static nuiTexture* GetTexture(const nglString& rName); ///< Get a texture from its ID only
+  static nuiTexture* GetTexture(const nglChar* pName); ///< Get a texture from its ID only
   static nuiTexture* GetAATexture(); ///< Returns an antialiasing texture for use with AAPrimitives.cpp
   static nuiTexture* BindTexture(GLuint TextureID, GLenum Target); ///< Returns a texture that will use an existing OpenGL Texture.
   static nuiTexture* CreateTextureProxy(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotatedToTheRight); ///< Create a proxy texture that is at subtexture in an atlas.
@@ -39,8 +39,6 @@ public:
   
   static void ClearAll();
   static void ForceReloadAll(bool Rebind = false);
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   void ForceReload(bool Rebind = false); ///< This method deletes the texture assiciated with the nuiTexture thus forcing its recreation at the next rendertime. If Rebind == false then we consider that the native (GL) texture was lost because the context/window have been destroyed and we have to completely recreate the texture.
   void ResetForceReload();
@@ -122,7 +120,6 @@ protected:
   nuiTexture(nglImageInfo& rInfo, bool Clone = true); ///< Create an image from an nglImageInfo structure. If \param is true then the image buffer will be cloned, otherwise it will be deleted with the nuiTexture.
   nuiTexture(const nglImage& rImage); ///< Create an image by copying an existing nglImage.
   nuiTexture(nglImage* pImage, bool OwnImage); ///< Create an image from an existing nglImage. If \param OwnImage the nglImage object will be deleted with the nuiTexture.
-  nuiTexture(const nuiXMLNode* pNode); ///< Create an image from an xml description.
   nuiTexture(nuiSurface* pSurface); ///< Create an image for rendering to surface
   nuiTexture(GLuint TextureID, GLenum Target); ///< Create an nuiTexture from an existing OpenGL texture ID
   nuiTexture(const nglString& rName, const nglString& rSourceTextureID, const nuiRect& rProxyRect, bool RotatedToTheRight); ///< Create a proxy texture that is at subtexture in an atlas.

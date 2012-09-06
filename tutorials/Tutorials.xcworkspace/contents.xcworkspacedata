@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../nui3.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:VideoDecoder/VideoDecoder.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ScrollView/ScrollView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:NavigationViews/NavigationViews.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MatrixNode/MatrixNode.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:HTMLView/HTMLView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CoverFlow/CoverFlow.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Buttons/Buttons.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Additive/Additive.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "container:TextEdit/TextEdit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TextEdit/../WidgetMatrix/WidgetMatrix.xcodeproj">
+   </FileRef>
+</Workspace>

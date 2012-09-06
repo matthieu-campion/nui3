@@ -470,7 +470,7 @@ bool nuiScrollingLabel::SetRect(const nuiRect& rRect)
 //        std::map<int, nglString>::iterator end = mSubStrings.end();
 //        while (it != end)
 //        {
-//          NGL_OUT(_T("%d %ls\n"), it->first, it->second.GetChars());
+//          NGL_OUT(_T("%d %s\n"), it->first, it->second.GetChars());
 //          ++it;
 //        }
       }
@@ -812,18 +812,18 @@ void nuiScrollingLabel::CreateSubStrings(nuiSize width)
   nglString firstString = mCompleteString; // contains the text we're splitting
   firstString.Trim(); // remove leading and trailing whitespaces
   nglString secondString = nglString::Empty; // contains the text we're splitting
-  nuiFontLayout* pFirstStringLayout = new nuiFontLayout(*(mpLabel->GetFont()), 0, 0, nuiHorizontal);
+  nuiTextLayout* pFirstStringLayout = new nuiTextLayout(mpLabel->GetFont(), nuiHorizontal);
 
   
   
   // (DEBUG PRINT)
-  // NGL_OUT(_T("Splitting %ls\n"), firstString.GetChars());
+  // NGL_OUT(_T("Splitting %s\n"), firstString.GetChars());
   
   
   while (!allSubStringsComplete) // there is at least one substring to create. Create it and repeat on second string, until the whole text has been handled
   {
     delete pFirstStringLayout;
-    pFirstStringLayout = new nuiFontLayout(*(mpLabel->GetFont()), 0, 0, nuiHorizontal);
+    pFirstStringLayout = new nuiTextLayout(mpLabel->GetFont(), nuiHorizontal);
     int nbGlyphs = pFirstStringLayout->Layout(firstString);
     
     nuiSize stringWidth = pFirstStringLayout->GetRect().GetWidth();
@@ -848,7 +848,7 @@ void nuiScrollingLabel::CreateSubStrings(nuiSize width)
       
       
       // (DEBUG PRINT)
-      // NGL_OUT(_T(":%d: '%ls' \t\t // remaining: '%ls'\n"), mNbSubStrings, firstString.GetChars(), secondString.GetChars());
+      // NGL_OUT(_T(":%d: '%s' \t\t // remaining: '%s'\n"), mNbSubStrings, firstString.GetChars(), secondString.GetChars());
       
       // First search for a better position to cut the string, and remove unnecessary whitespaces
       
@@ -893,7 +893,7 @@ void nuiScrollingLabel::CreateSubStrings(nuiSize width)
       
       // (DEBUG PRINT)
       // NGL_OUT(_T("%f / %f "), stringWidth, width);
-      // NGL_OUT(_T("--> '%ls' \t\t // remaining: '%ls'\n"), firstString.GetChars(), secondString.GetChars());
+      // NGL_OUT(_T("--> '%s' \t\t // remaining: '%s'\n"), firstString.GetChars(), secondString.GetChars());
       
       // update the subStrings map
       mSubStrings[mNbSubStrings] = firstString;
@@ -907,11 +907,11 @@ void nuiScrollingLabel::CreateSubStrings(nuiSize width)
     {
       
       // (DEBUG PRINT)
-      // NGL_OUT(_T("... '%ls' \t\t // remaining: '%ls'\n"), firstString.GetChars(), secondString.GetChars());
+      // NGL_OUT(_T("... '%s' \t\t // remaining: '%s'\n"), firstString.GetChars(), secondString.GetChars());
       
       // remove last glyph
-      const nglGlyphLayout* pGlyphLayout = pFirstStringLayout->GetGlyph(nbGlyphs -1);
-      int pos = (pGlyphLayout->Pos);
+      const nuiTextGlyph* pGlyphLayout = pFirstStringLayout->GetGlyph(nbGlyphs -1);
+      int pos = (pGlyphLayout->mCluster);
       
       // update strings to repeat
       secondString = firstString.Extract(pos, firstString.GetLength() - pos) + secondString;

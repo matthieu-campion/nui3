@@ -10,7 +10,6 @@
 #include "nuiRadioButton.h"
 #include "nuiLabel.h"
 #include "nuiDrawContext.h"
-#include "nuiXML.h"
 #include "nuiRadioButtonGroup.h"
 
 nuiRadioButton::nuiRadioButton()
@@ -47,17 +46,6 @@ nuiRadioButton::nuiRadioButton(const nglImage& rImage)
   SetGroup(_T("Default"));
   mpGroupManager = NULL;
   mCanToggle = false;
-}
-
-bool nuiRadioButton::Load(const nuiXMLNode* pNode)
-{
-  nuiToggleButton::Load(pNode);
-  SetObjectClass(_T("nuiRadioButton"));
-  SetGroup(nuiGetString(pNode, _T("Group"), _T("Default")));
-  mpGroupManager = NULL;
-  mCanToggle = false;
-  
-  return true;
 }
 
 nuiRadioButton::~nuiRadioButton()

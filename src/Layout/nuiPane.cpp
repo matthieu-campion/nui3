@@ -9,7 +9,6 @@
 #include "nui.h"
 #include "nuiApplication.h"
 #include "nuiPane.h"
-#include "nuiXML.h"
 #include "nuiDrawContext.h"
 
 nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiShapeMode ShapeMode, nuiBlendFunc BlendFunc)
@@ -44,64 +43,6 @@ nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiSh
   mpShape = NULL;
   SetCurve(0);
 }
-
-bool nuiPane::Load(const nuiXMLNode* pNode)
-{
-	LoadAttributes(pNode);
-	LoadChildren(pNode);
-
-  mInterceptMouse = nuiGetBool ( pNode, _T("InterceptMouse"), false);
-  mLineWidth = nuiGetVal(pNode, _T("LineWidth"), 1.0f);
-  mCanRespectConstraint = true;
-  
-  NUI_ADD_EVENT(ClickedMouse);
-  NUI_ADD_EVENT(UnclickedMouse);
-  NUI_ADD_EVENT(MovedMouse);
-
-  mpShape = NULL;
-  SetCurve(0);
-  
-  return true;
-}
-
-
-bool nuiPane::LoadAttributes(const nuiXMLNode* pNode)
-{
-	return nuiSimpleContainer::LoadAttributes(pNode);
-}
-
-bool nuiPane::LoadChildren(const nuiXMLNode* pNode)
-{
-	return nuiSimpleContainer::LoadChildren(pNode);
-}
-
-
-nuiXMLNode* nuiPane::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-	nuiXMLNode* paneNode = SerializeAttributes(pParentNode, Recursive);
-	SerializeChildren(paneNode, Recursive);
-  
-  return paneNode;
-}
-
-
-void nuiPane::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) const
-{
-	nuiContainer::SerializeChildren(pParentNode, Recursive);
-}
-
-
-nuiXMLNode* nuiPane::SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive) const
-{
-	return nuiContainer::SerializeAttributes(pParentNode, Recursive);
-}
-
-
-
-
-
-
-
 
 
 nuiPane::~nuiPane()
@@ -254,7 +195,7 @@ nuiRect nuiPane::CalcIdealSize()
     pItem->SetLayoutConstraint(constraint);
     nuiRect t = pItem->GetIdealRect();
     temp.Union(t,temp); // Dummy call. Only the side effect is important: the object recalculates its layout.
-    //NGL_OUT(_T("    PaneItem rect %ls\n"), t.GetValue().GetChars());
+    //NGL_OUT(_T("    PaneItem rect %s\n"), t.GetValue().GetChars());
   }
   delete pIt;
 
@@ -266,6 +207,6 @@ nuiRect nuiPane::CalcIdealSize()
 
   temp.MoveTo(0,0);
 
-  //NGL_OUT(_T("    Pane rect %ls\n"), mIdealRect.GetValue().GetChars());
+  //NGL_OUT(_T("    Pane rect %s\n"), mIdealRect.GetValue().GetChars());
   return temp;
 }

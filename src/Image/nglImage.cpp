@@ -225,7 +225,9 @@ nglImage::nglImage (const nglPath& rPath, nglImageCodec* pCodec )
 
   nglIStream* pIFile = rPath.OpenRead();
   if (!pIFile)
+  {
     return;
+  }
   
   if (pIFile->GetState() != eStreamReady)
   {

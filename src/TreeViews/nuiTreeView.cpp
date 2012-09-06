@@ -9,7 +9,6 @@
 #include "nuiTreeView.h"
 #include "nuiLabel.h"
 #include "nuiDrawContext.h"
-#include "nuiXML.h"
 #include "nuiContainer.h"
 
 #define NUI_TREEVIEW_DEPTH_INSET (12.0f)
@@ -297,25 +296,6 @@ nuiTreeView::nuiTreeView(nuiTreeNodePtr pTree, bool displayRoot)
   NUI_ADD_EVENT(SelectionChanged);
 }
 
-bool nuiTreeView::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mpSelectedNode = NULL;
-  mMultiSelectable = true;
-  mInMultiSelection = false;
-  mDeSelectable = true;
-
-  mClickX = mClickY = mNewX = mNewY= 0;
-  mClicked = mDrawMarkee = false;
-  
-  mpTree = NULL;
-
-  AddEvent(_T("TreeViewClicked"), Clicked);
-  NUI_ADD_EVENT(Activated);
-  NUI_ADD_EVENT(SelectionChanged);
-  return true;
-}
-
 nuiTreeView::~nuiTreeView()
 {
   if (mpTree)
@@ -340,17 +320,6 @@ void nuiTreeView::SetHandleColor(const nuiColor& rColor)
   mHandleColor = rColor;
   Invalidate();
 }
-
-
-
-nuiXMLNode* nuiTreeView::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode, Recursive);
-  if (mpTree)
-    mpTree->Serialize(pNode);
-  return pNode;
-}
-
 
 bool nuiTreeView::Draw(nuiDrawContext* pContext)
 {

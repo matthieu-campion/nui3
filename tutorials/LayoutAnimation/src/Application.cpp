@@ -30,15 +30,11 @@ Application::~Application()
 void Application::OnExit (int Code)
 {
   if (mpMainWindow)
-    delete mpMainWindow;
-
-  nuiUninit();
+    mpMainWindow->Release();
 }
 
 void Application::OnInit()
 {
-  nuiInit(NULL);
-
   uint Width = 0, Height = 0;
   bool HasSize = false;
   bool IsFullScreen = false;
@@ -123,7 +119,7 @@ void Application::OnInit()
 
 
   /* Create the nglWindow (and thus a GL context, don't even try to
-   *   instantiate the gui (or nglFont) before the nuiWin !)
+   *   instantiate the gui (or nuiFont) before the nuiWin !)
    */
   nuiContextInfo ContextInfo(nuiContextInfo::StandardContext3D);
   nglWindowInfo Info;
@@ -144,8 +140,9 @@ void Application::OnInit()
     Quit (1);
     return;
   }
-  mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
-  mpMainWindow->DBG_SetMouseOverObject(DebugObject);
+  mpMainWindow->Acquire();
+  mpMainWindow->Acquire();
+  mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);  mpMainWindow->DBG_SetMouseOverObject(DebugObject);
 #ifdef NUI_IPHONE
   mpMainWindow->SetState(nglWindow::eMaximize);
 #else

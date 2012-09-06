@@ -51,19 +51,6 @@ nuiProgressBar::nuiProgressBar()
     StartAutoDraw();
 }
 
-bool nuiProgressBar::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  SetProgress(0);
-  mAlphaIncr = INC;
-  mAlphaAnim = 0;
-  mGlowStrength = 0;
-  if (mGlowStrength != 0 || mAlphaIncr != 0)
-    StartAutoDraw();
-  
-  return true;
-}
-
 nuiProgressBar::~nuiProgressBar()
 {
 }

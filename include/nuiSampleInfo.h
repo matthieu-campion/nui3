@@ -27,28 +27,28 @@ public:
   
   nuiAudioFileFormat GetFileFormat() const;  
   double GetSampleRate() const;
-  uint32 GetChannels() const;
-  uint32 GetBitsPerSample() const;
-  uint64 GetSampleFrames() const;
-  uint64 GetStartFrame() const;
-  uint64 GetStopFrame() const;
+  int32 GetChannels() const;
+  int32 GetBitsPerSample() const;
+  int64 GetSampleFrames() const;
+  int64 GetStartFrame() const;
+  int64 GetStopFrame() const;
   double GetTempo() const;
   uint8 GetFormatTag() const;
-  uint8 GetTimeSignNom() const;
-  uint8 GetTimeSignDenom() const;
+  int8 GetTimeSignNom() const;
+  int8 GetTimeSignDenom() const;
   double GetBeats() const;
   
   void SetFileFormat(nuiAudioFileFormat FileFormat);
   void SetSampleRate(double SampleRate);
-  void SetChannels(uint32 Channels);
-  void SetBitsPerSample(uint32 BPS);
-  void SetSampleFrames(uint64 SampleFrames);
-  void SetStartFrame(uint64 StartFrame);
-  void SetStopFrame(uint64 StopFrame);
+  void SetChannels(int32 Channels);
+  void SetBitsPerSample(int32 BPS);
+  void SetSampleFrames(int64 SampleFrames);
+  void SetStartFrame(int64 StartFrame);
+  void SetStopFrame(int64 StopFrame);
   void SetTempo(double Tempo);
   void SetFormatTag(uint8 FormatTag);
-  void SetTimeSignNom(uint8 TimeSignNom);
-  void SetTimeSignDenom(uint8 TimeSignDenom);
+  void SetTimeSignNom(int8 TimeSignNom);
+  void SetTimeSignDenom(int8 TimeSignDenom);
   void SetBeats(double Beats);
   
   //Sizes in Sample Frames
@@ -58,15 +58,15 @@ public:
 private:
   nuiAudioFileFormat mFileFormat;
   double mSampleRate;
-  uint32 mChannels;
-  uint32 mBitsPerSample;
-  uint64 mSampleFrames;
-  uint64 mStartFrame;
-  uint64 mStopFrame;
+  int32 mChannels;
+  int32 mBitsPerSample;
+  int64 mSampleFrames;
+  int64 mStartFrame;
+  int64 mStopFrame;
   double mTempo;
   uint8 mFormatTag;
-  uint8 mTimeSignNom;
-  uint8 mTimeSignDenom;
+  int8 mTimeSignNom;
+  int8 mTimeSignDenom;
   double mBeats;
 
   //Sizes in Sample Frames

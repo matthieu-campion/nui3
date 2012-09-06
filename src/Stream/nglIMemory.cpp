@@ -11,11 +11,18 @@
 * Life cycle
 */
 
-nglIMemory::nglIMemory(const void* pBuffer, int64 ByteCnt)
+nglIMemory::nglIMemory(const void* pBuffer, int64 ByteCnt, bool OwnBuffer)
 {
   mpBuffer = (char*)pBuffer;
+  mOwnBuffer = OwnBuffer;
   mSize = ByteCnt;
   mOffset = 0;
+}
+
+nglIMemory::~nglIMemory()
+{
+  if (mOwnBuffer)
+    delete[] mpBuffer;
 }
 
 

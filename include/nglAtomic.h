@@ -401,9 +401,9 @@ inline void ngl_atomic_dec(nglAtomic64 &value)
 #endif // 64bits
 
 #endif
-#endif /* __APPLE__ */
+//#endif /* __APPLE__ */
 
-#ifdef _LINUX_
+#elif defined _LINUX_ || defined _MINUI3_
 inline uint32 InterlockedExchangeAdd(int32* Addend, uint32 Increment)
 {
   uint32 ret;
@@ -539,6 +539,76 @@ inline void ngl_atomic_dec(nglAtomic64 &value)
 
 #endif
 #endif /* _LINUX_ */
+
+
+#ifdef _ANDROID_
+inline uint32 InterlockedExchangeAdd(int32* Addend, uint32 Increment)
+{
+  //#FIXME Implement correct interlocked exchange add
+  return *Addend += Increment;
+}
+
+inline uint32 InterlockedExchange(int32* volatile Target, uint32 Value)
+{
+  //#FIXME Implement correct interlocked exchange
+  return *Target = Value;
+}
+
+typedef volatile uint32 nglAtomic32;
+
+// read atomic variable
+inline uint32 ngl_atomic_read(const nglAtomic32 &value)
+{
+  return value;
+}
+
+// set atomic variable
+inline void ngl_atomic_set(nglAtomic32& value, uint32 newValue)
+{
+  InterlockedExchange((int32 *)&value, newValue);
+}
+
+// add integer to atomic variable
+inline void ngl_atomic_add(nglAtomic32& value, uint32 addValue)
+{
+  InterlockedExchangeAdd((int32 *)&value, addValue);
+}
+
+// subtract the atomic variable
+inline void ngl_atomic_sub(nglAtomic32& value, uint32 subValue)
+{
+  InterlockedExchangeAdd((int32 *)&value, -subValue);
+}
+
+// increment atomic variable
+inline void ngl_atomic_inc(nglAtomic32 &value)
+{
+  ngl_atomic_add(value, 1);
+}
+
+// decrement atomic variable
+inline void ngl_atomic_dec(nglAtomic32 &value)
+{
+  ngl_atomic_sub(value, 1);
+}
+
+inline uint32 InterlockedCompareExchange(volatile uint32 *dest, long exch, long comp)
+{
+  //#FIXME Implement correct interlocked exchange
+  uint32 old = *dest;
+  if (old == comp)
+    *dest = exch;
+  return(old);
+}
+
+// compare and swap atomic variable
+inline bool ngl_atomic_compare_and_swap(nglAtomic32& value, uint oldValue, uint newValue)
+{
+  uint32 res = InterlockedCompareExchange(&value, newValue, oldValue);
+  return (res == oldValue);
+}
+#endif /* _ANDROID_ */
+
 
 #ifdef __NUI64__
 typedef volatile nglAtomic64 nglAtomic;

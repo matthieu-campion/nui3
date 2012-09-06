@@ -37,12 +37,12 @@ bool nuiSampleReader::Init()
   return mInitialized;
 }
 
-uint32 nuiSampleReader::GetPosition() const
+int64 nuiSampleReader::GetPosition() const
 {
-  return (uint32)mPosition;
+  return mPosition;
 }
 
-void nuiSampleReader::SetPosition(uint32 position)
+void nuiSampleReader::SetPosition(int64 position)
 {
   NGL_ASSERT(mInitialized);
   mPosition = MIN(position, mInfo.GetSampleFrames() - 1);
@@ -60,16 +60,16 @@ bool nuiSampleReader::GetInfo(nuiSampleInfo& rInfo) const
   return true;
 }
 
-uint64 nuiSampleReader::BytesToSampleFrames(uint64 inBytes) const
+int64 nuiSampleReader::BytesToSampleFrames(int64 inBytes) const
 {
   NGL_ASSERT(mInitialized);
-  uint64 outSampleFrames = inBytes * 8 / (mInfo.GetChannels() * mInfo.GetBitsPerSample());
+  int64 outSampleFrames = inBytes * 8 / (mInfo.GetChannels() * mInfo.GetBitsPerSample());
   return outSampleFrames;
 }
 
-uint64 nuiSampleReader::SampleFramesToBytes(uint64 inSampleFrames) const
+int64 nuiSampleReader::SampleFramesToBytes(int64 inSampleFrames) const
 {
   NGL_ASSERT(mInitialized);
-  uint64 outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
+  int64 outBytes = inSampleFrames * mInfo.GetChannels() * mInfo.GetBitsPerSample() / 8;
   return outBytes;
 }

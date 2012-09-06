@@ -31,7 +31,7 @@ JSBool js_NGL_LOUT(JSContext *mContext, JSObject *obj, uintN argc, jsval *argv, 
     return JS_FALSE;
   
   nglString s(cmd);
-  NGL_OUT(_T("%ls\n"), s.GetChars());
+  NGL_OUT(_T("%s\n"), s.GetChars());
   
   *rval = JSVAL_VOID;  /* return undefined */
   return JS_TRUE;
@@ -330,7 +330,7 @@ JSBool nuiSpiderMonkey::PropertyAdd(JSObject *obj, jsval id, jsval *vp)
   JSString* pStr = JS_ValueToString(mContext, id);
   nglString str(JS_GetStringBytes(pStr));
   
-  NGL_OUT(_T("Add Property %ls\n"), str.GetChars());
+  NGL_OUT(_T("Add Property %s\n"), str.GetChars());
   JSType type = JS_TypeOfValue(mContext, *vp);
   
   if (JSVAL_IS_VOID(*vp))
@@ -353,7 +353,7 @@ JSBool nuiSpiderMonkey::PropertyDel(JSObject *obj, jsval id, jsval *vp)
   JSString* pStr = JS_ValueToString(mContext, id);
   nglString str(JS_GetStringBytes(pStr));
   
-  NGL_OUT(_T("Del Property %ls\n"), str.GetChars());
+  NGL_OUT(_T("Del Property %s\n"), str.GetChars());
   JSType type = JS_TypeOfValue(mContext, *vp);
   
   if (JSVAL_IS_VOID(*vp))
@@ -391,7 +391,7 @@ JSBool nuiSpiderMonkey::PropertyGet(JSObject *obj, jsval id, jsval *vp)
   nuiVariant v;
   attrib.ToVariant(v);
   GetJSValFromVariant(vp, v);
-  //NGL_OUT(_T("Get Property %ls\n"), str.GetChars());
+  //NGL_OUT(_T("Get Property %s\n"), str.GetChars());
   
   return JS_TRUE;
 }
@@ -437,7 +437,7 @@ JSBool nuiSpiderMonkey::PropertySet(JSObject *obj, jsval id, jsval *vp)
       }
     }
   }
-  //NGL_OUT(_T("Set Property %ls\n"), str.GetChars());
+  //NGL_OUT(_T("Set Property %s\n"), str.GetChars());
   
   return JS_TRUE;
 }
@@ -501,12 +501,12 @@ JSObject* nuiSpiderMonkey::DefineJSClass(nuiClass* pClass)
     std::map<nuiClass*, JSObject*>::const_iterator it = mJSClassObjects.find(pClass);
     if (it != mJSClassObjects.end())
     {
-      NGL_OUT(_T("Skipping class '%ls' (already defined)\n\n"), pClass->GetName().GetChars());
+      NGL_OUT(_T("Skipping class '%s' (already defined)\n\n"), pClass->GetName().GetChars());
       return it->second;
     }
   }
   
-  NGL_OUT(_T("\nDefining class '%ls (%d)'\n"), pClass->GetName().GetChars(), pClass->GetClassType());
+  NGL_OUT(_T("\nDefining class '%s (%d)'\n"), pClass->GetName().GetChars(), pClass->GetClassType());
   
   JSClass cls =
   {
@@ -540,7 +540,7 @@ JSObject* nuiSpiderMonkey::DefineJSClass(nuiClass* pClass)
   nuiClass* pParent = pClass->GetParentClass();
   if (pParent)
   {
-    NGL_OUT(_T("\t inherits from '%ls'\n"), pParent->GetName().GetChars());
+    NGL_OUT(_T("\t inherits from '%s'\n"), pParent->GetName().GetChars());
     std::map<nuiClass*, JSObject*>::const_iterator it = mJSClassObjects.find(pParent);
     if (it != mJSClassObjects.end())
     {
@@ -548,7 +548,7 @@ JSObject* nuiSpiderMonkey::DefineJSClass(nuiClass* pClass)
     }
     else
     {
-      NGL_OUT(_T("\t (recursive definition) of '%ls'\n"), pParent->GetName().GetChars());
+      NGL_OUT(_T("\t (recursive definition) of '%s'\n"), pParent->GetName().GetChars());
       pJSProto = DefineJSClass(pParent);
     }
   }
@@ -579,7 +579,7 @@ JSObject* nuiSpiderMonkey::DefineJSClass(nuiClass* pClass)
       
       JSFunction* pJSF = JS_DefineFunction(mContext, pJSObj, name.Export(), nuiGenericJSMethod, pF->GetArgCount(), 0);
       mFunctions[pJSF] = pF;
-      printf("define function %ls (0x%p -> 0x%p)", name.GetChars(), pJSF, pF);
+      printf("define function %s (0x%p -> 0x%p)", name.GetChars(), pJSF, pF);
     }
     
     last = it->first;
@@ -650,7 +650,7 @@ bool nuiSpiderMonkey::Init()
       
       JSFunction* pJSF = JS_DefineFunction(mContext, mGlobal, name.Export(), nuiGenericJSFunction, pF->GetArgCount(), 0);
       mFunctions[pJSF] = pF;
-      printf("define function %ls (0x%p -> 0x%p)", name.GetChars(), pJSF, pF);
+      printf("define function %s (0x%p -> 0x%p)", name.GetChars(), pJSF, pF);
       ++it;
     }
   }

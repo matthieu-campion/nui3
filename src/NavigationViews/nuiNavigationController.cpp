@@ -258,7 +258,6 @@ bool nuiNavigationController::Draw(nuiDrawContext* pContext)
   if (mShowNavigationBar && pNavigationBar)
     DrawChild(pContext, pNavigationBar);
   
-  
   return true;
 }
 
@@ -285,8 +284,40 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
   }
   else if (!mPushed && !mPoped)
   {
-    // nothing to layout right now...
-    nuiSimpleContainer::SetRect(rRect);
+    // Normal layout:
+    IteratorPtr pIt;
+    for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
+    {
+      nuiWidgetPtr pItem = pIt->GetWidget();
+      nuiRect rect(rRect.Size());
+      
+      if (mShowNavigationBar)
+      {
+        nuiViewController* pView = dynamic_cast<nuiViewController*>(pItem);
+
+        if (pView)
+        {
+          nuiNavigationBar* pBar =  mpIn->GetNavigationBar();
+          nuiRect r(pBar->GetIdealRect());
+          r.MoveTo(0, 0);
+          r.SetWidth(rect.GetWidth());
+          pBar->SetLayout(r);
+          
+          if (!pBar->GetTranslucent())
+          {
+            float offset = pBar->GetRect().GetHeight();
+            rect.SetHeight(rect.GetHeight() - offset);
+            rect.Move(0, offset);
+          }
+        }
+      }
+      
+      if (mCanRespectConstraint)
+        pItem->SetLayoutConstraint(mConstraint);
+      pItem->GetIdealRect();
+      pItem->SetLayout(rect);
+    }
+    delete pIt;
     return true;
   }
   
@@ -296,35 +327,48 @@ bool nuiNavigationController::SetRect(const nuiRect& rRect)
   rect.Set(mAnimPosition, rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
   if (mpIn)
   {
-    mpIn->SetLayout(rect);
-    
+    float offset = 0;
     if (mShowNavigationBar)
     {
-      nuiWidget* pBar =  mpIn->GetNavigationBar();
+      nuiNavigationBar* pBar =  mpIn->GetNavigationBar();
       nuiRect r(pBar->GetIdealRect());
       r.MoveTo(0, 0);
       r.SetWidth(rect.GetWidth());
       pBar->SetLayout(r);
+      
+      if (!pBar->GetTranslucent())
+        offset = pBar->GetRect().GetHeight();
     }
+    
+    rect.SetHeight(rect.GetHeight() - offset);
+    rect.Move(0, offset);
+    mpIn->SetLayout(rect);
+    
   }
   
   if (mpOut)
   {
+    float offset = 0;
+    if (mShowNavigationBar)
+    {
+      nuiNavigationBar* pBar =  mpOut->GetNavigationBar();
+      nuiRect r(pBar->GetIdealRect());
+      r.MoveTo(0, 0);
+      r.SetWidth(rect.GetWidth());
+      pBar->SetLayout(r);
+      if (!pBar->GetTranslucent())
+        offset = pBar->GetRect().GetHeight();
+    }
+
     if (mPushed)
       rect.Set(mAnimPosition - rRect.GetWidth(), rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
     else
       rect.Set(mAnimPosition + rRect.GetWidth(), rRect.Top(), rRect.GetWidth(), rRect.GetHeight());
     
+    rect.SetHeight(rect.GetHeight() - offset);
+    rect.Move(0, offset);
     mpOut->SetLayout(rect);
     
-    if (mShowNavigationBar)
-    {
-      nuiWidget* pBar =  mpOut->GetNavigationBar();
-      nuiRect r(pBar->GetIdealRect());
-      r.MoveTo(0, 0);
-      r.SetWidth(rect.GetWidth());
-      pBar->SetLayout(r);
-    }
   }
   
   

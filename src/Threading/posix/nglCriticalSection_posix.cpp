@@ -24,12 +24,11 @@
 
 class nglCriticalSectionPrivate
 {
-	mutable pthread_mutexattr_t mta;
 	mutable pthread_mutex_t cmutex;
 public:
 	nglCriticalSectionPrivate();
 	~nglCriticalSectionPrivate();
-	
+
 	void lock() const;
 	bool tryLock() const;
 	void unlock() const;
@@ -37,20 +36,28 @@ public:
 
 nglCriticalSectionPrivate::nglCriticalSectionPrivate ()
 {
-	pthread_mutexattr_init(&mta);
-	pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
-	pthread_mutex_init(&cmutex, &mta);
+  int res = 0;
+	pthread_mutexattr_t mta;
+	res = pthread_mutexattr_init(&mta);
+  NGL_ASSERT(res == 0);
+	res = pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
+  NGL_ASSERT(res == 0);
+	res = pthread_mutex_init(&cmutex, &mta);
+  NGL_ASSERT(res == 0);
+	res = pthread_mutexattr_destroy(&mta);
+  NGL_ASSERT(res == 0);
 }
 
 nglCriticalSectionPrivate::~nglCriticalSectionPrivate ()
 {
-	pthread_mutex_destroy(&cmutex);
-	pthread_mutexattr_destroy(&mta);
+	int res = pthread_mutex_destroy(&cmutex);
+  NGL_ASSERT(res == 0);
 }
 
 void nglCriticalSectionPrivate::lock () const
 {
-	pthread_mutex_lock(&cmutex);
+	int res = pthread_mutex_lock(&cmutex);
+  NGL_ASSERT(res == 0);
 }
 
 bool nglCriticalSectionPrivate::tryLock () const
@@ -60,7 +67,8 @@ bool nglCriticalSectionPrivate::tryLock () const
 
 void nglCriticalSectionPrivate::unlock () const
 {
-	pthread_mutex_unlock(&cmutex);
+	int res = pthread_mutex_unlock(&cmutex);
+  NGL_ASSERT(res == 0);
 }
 
 

@@ -46,7 +46,7 @@ void nglPathVolume::UpdateVolumes(std::list<nglPathVolume>& rVolumes)
 {
   OSErr    result;
   uint volumeIndex = 1;
-    
+
   /* Call FSGetVolumeInfo in loop to get all volumes starting with the first */
   do
   {
@@ -69,16 +69,16 @@ static OSErr nglFSGetVolParms(
 {
   OSErr      result;
   HParamBlockRec  pb;
-  
+
   pb.ioParam.ioNamePtr = NULL;
   pb.ioParam.ioVRefNum = volRefNum;
   pb.ioParam.ioBuffer = (Ptr)volParmsInfo;
   pb.ioParam.ioReqCount = (SInt32)bufferSize;
   result = PBHGetVolParmsSync(&pb);
-  
+
   /* return number of bytes the file system returned in volParmsInfo buffer */
   *actualInfoSize = (UInt32)pb.ioParam.ioActCount;
-  
+
   return ( result );
 }
 
@@ -177,11 +177,11 @@ static void nglSetPathVolumeFromRefNum(int32 volnum, nglPathVolume& rPath)
   FSVolumeInfo info;
   HFSUniStr255 volumeName;
   FSRef root;
-  
+
   FSGetVolumeInfo(volnum, 0, NULL, kFSVolInfoNone, &info, &volumeName, &root);
-  
+
   // Fetch the name:
-  
+
   rPath.mComment.Import((char*)volumeName.unicode, volumeName.length*2, eUCS2);
 	// Then the root path:
 	char path[1024];
@@ -192,32 +192,32 @@ static void nglSetPathVolumeFromRefNum(int32 volnum, nglPathVolume& rPath)
 	GetVolParmsInfoBuffer buf;
   UInt32 s = sizeof(buf);
 	nglFSGetVolParms(volnum, s, &buf, &s);
- 
+
   rPath.mType = nglPathVolume::eTypeHD;
   if (VolIsNetworkVolume(&buf))
 	  rPath.mType = nglPathVolume::eTypeNetwork;
 
   rPath.mFlags = 0;
   if (VolIsEjectable(&buf))
-    rPath.mFlags |= nglPathVolume::Removable;  
+    rPath.mFlags |= nglPathVolume::Removable;
 }
 
 
 
 nglPathVolume nglPathVolume::AddVolume(std::list<nglPathVolume>& rVolumes, int32 volnum)
 {
-  
+
   std::list<nglPathVolume>::iterator it = rVolumes.begin();
   std::list<nglPathVolume>::iterator end = rVolumes.end();
-  
+
   while (it != end)
   {
     const nglPathVolume& vol(*it);
-    
+
     // If the volume is already in the list, let's return it to the caller.
     if (vol.mRefNum == volnum)
       return vol;
-    
+
     ++it;
   }
 
@@ -226,8 +226,8 @@ nglPathVolume nglPathVolume::AddVolume(std::list<nglPathVolume>& rVolumes, int32
   nglSetPathVolumeFromRefNum(volnum, vol);
   vol.mRefNum = volnum;
   rVolumes.push_back(vol);
-  
-  //printf("Added volume '%ls' from '%ls'.\n", vol.Comment.GetChars(), vol.Path.GetChars());
+
+  //printf("Added volume '%s' from '%s'.\n", vol.Comment.GetChars(), vol.Path.GetChars());
   return vol;
 }
 
@@ -235,31 +235,30 @@ nglPathVolume nglPathVolume::DelVolume(std::list<nglPathVolume>& rVolumes, int32
 {
   std::list<nglPathVolume>::iterator it = rVolumes.begin();
   std::list<nglPathVolume>::iterator end = rVolumes.end();
-  
+
   while (it != end)
   {
     nglPathVolume& vol(*it);
-    
+
     // If the volume is already in the list, let's return it to the caller.
     if (vol.mRefNum == volnum)
     {
       nglPathVolume v(vol);
       rVolumes.erase(it);
-      //printf("Removed volume '%ls' from '%ls'.\n", v.Comment.GetChars(), v.Path.GetChars());
+      //printf("Removed volume '%s' from '%s'.\n", v.Comment.GetChars(), v.Path.GetChars());
       return v;
     }
-    
+
     ++it;
   }
-  
+
   //printf("Could not found removed volume in list.\n");
   return nglPathVolume();
 }
-
 #else
 bool nglPath::ResolveLink()
 {
-  //#TODO implement UIKIT & COCOA versions  
+  //#TODO implement UIKIT & COCOA versions
   return false;
 }
 #endif // _CARBON_
@@ -289,7 +288,7 @@ int nglPath::GetChildren (std::list<nglPath>& rChildren) const
   {
     return -1;
   }
-  
+
   std::string str(mPathName.GetStdString());
   const char* nodename = str.c_str();
 
@@ -314,7 +313,7 @@ int nglPath::GetChildren (std::list<nglPath>& rChildren) const
   {
     if (strcmp (entry->d_name, ".") && strcmp (entry->d_name, ".."))
     {
-      //printf("nglpath - base = '%ls' - child = '%ls'\n", GetChars(), entry->d_name);
+      //printf("nglpath - base = '%s' - child = '%s'\n", GetChars(), entry->d_name);
       nglPath path = *this;
       path += nglPath(entry->d_name);
       rChildren.push_back (path);
@@ -336,18 +335,18 @@ static nglString GetMimeType(const nglString& extension)
 {
   CFStringRef mimeType = NULL;
   CFStringRef ext = extension.ToCFString();
-    
+
   CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, NULL);
   CFRelease(ext);
   if (!UTI)
     return nglString::Null;
-  
+
   mimeType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
   if (!mimeType) // check for edge case
   {
     return nglString::Null;
   }
-  
+
   CFRelease(UTI);
   nglString mime(mimeType);
   CFRelease(mimeType);
@@ -357,7 +356,7 @@ static nglString GetMimeType(const nglString& extension)
 
 nglString nglPath::GetMimeType() const
 {
-  
+
   nglString ext = GetExtension();
   ext.ToLower();
   if (ext.IsEmpty())
@@ -371,7 +370,7 @@ nglString nglPath::GetMimeType() const
   }
 #endif
 
-  
+
   nglPathInfo info;
   nglPath path("/etc/mime.types");
 
@@ -429,8 +428,8 @@ bool nglPath_IsRO(nglString& rOptions)
 }
 
 bool nglPath_SetVolume(nglPathVolume& rVolume,
-                       nglString& rMPoint, 
-                       nglString& rDevice, 
+                       nglString& rMPoint,
+                       nglString& rDevice,
                        nglString& rFSType,
                        nglString& rOptions)
 {
@@ -455,7 +454,7 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
     int controler = (rDevice[7] - 'a') / 2 + 1;
     int channel = (rDevice[7] - 'a') % 2;
     int partition = rDevice[8] - '0';
-    rVolume.mComment.Format(_T("%ls on %d%ls partition (%ls on %d%ls IDE controler)"),
+    rVolume.mComment.Format(_T("%s on %d%s partition (%s on %d%s IDE controler)"),
       rFSType.GetChars(),
       partition, _intrank(partition),
       channel ? _T("slave") : _T("master"),
@@ -466,7 +465,7 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
   {
     int dev = rDevice[7] - 'a';
     int partition = rDevice[8] - '0';
-    rVolume.mComment.Format(_T("%ls on %d%ls partition (%d%ls SCSI device)"),
+    rVolume.mComment.Format(_T("%s on %d%s partition (%d%s SCSI device)"),
       rFSType.GetChars(),
       partition, _intrank(partition),
       dev, _intrank(dev));
@@ -477,7 +476,7 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
       (!rDevice.Compare(_T("/dev/sg"), 0, 7)))
   {
     int dev = rDevice[7] - '0' + 1;
-    rVolume.mComment.Format(_T("%ls (%d%ls SCSI device)"),
+    rVolume.mComment.Format(_T("%s (%d%s SCSI device)"),
       rFSType.GetChars(),
       dev, _intrank(dev));
       rVolume.mFlags |= nglPathVolume::Removable;
@@ -487,20 +486,20 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
   if (!rDevice.Compare(_T("/dev/fd"), 0, 7))
   {
     int dev = rDevice[7] - '0' + 1;
-    rVolume.mComment.Format(_T("%d%ls floppy"), dev, _intrank(dev));
+    rVolume.mComment.Format(_T("%d%s floppy"), dev, _intrank(dev));
     rVolume.mFlags |= nglPathVolume::Removable;
     rVolume.mType = nglPathVolume::eTypeFloppy;
   }
 
   if (rFSType == _T("smbfs"))
   {
-    rVolume.mComment.Format(_T("%ls (SMB)"), rDevice.GetChars());
+    rVolume.mComment.Format(_T("%s (SMB)"), rDevice.GetChars());
     rVolume.mType = nglPathVolume::eTypeNetwork;
   }
   else
   if (rFSType == _T("nfs"))
   {
-    rVolume.mComment.Format(_T("%ls (NFS)"), rDevice.GetChars());
+    rVolume.mComment.Format(_T("%s (NFS)"), rDevice.GetChars());
     rVolume.mType = nglPathVolume::eTypeNetwork;
   }
   else
@@ -565,7 +564,7 @@ uint64 nglPath::GetVolumes(std::list<nglPathVolume>& rVolumes, uint64 Flags)
     line.Tokenize(tokens, _T(" \t"));
 
     for (i = rVolumes.begin(); (i != rVolumes.end()) && ((*i).mPath != tokens[1]); i++);
-    
+
     if (i != rVolumes.end())
       vol = &(*i); // Already in list
     else
@@ -581,7 +580,7 @@ uint64 nglPath::GetVolumes(std::list<nglPathVolume>& rVolumes, uint64 Flags)
       vol->mFlags |= nglPathVolume::ReadOnly;
   }
 #endif
-  
+
   nglVolume::GetVolumes(rVolumes, Flags);
 
   return rVolumes.size();

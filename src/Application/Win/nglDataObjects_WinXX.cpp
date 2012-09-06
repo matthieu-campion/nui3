@@ -113,7 +113,7 @@ void nglDataTextObject::AllocFormatData(FORMATETC * pFormat, STGMEDIUM * pMedium
 void nglDataTextObject::SetFormatData(FORMATETC * pFormat, STGMEDIUM * pMedium)
 {
   nglChar* lpstr = (nglChar*)GlobalLock(pMedium->hGlobal);
-  wcscpy(lpstr, mDataText.GetChars());
+  strcpy(lpstr, mDataText.GetChars());
   GlobalUnlock(pMedium->hGlobal); 
 }
 

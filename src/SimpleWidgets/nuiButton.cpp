@@ -140,29 +140,6 @@ nuiButton::nuiButton(nuiDecoration* pDeco, bool AlreadyAcquired)
 }
 
 
-bool nuiButton::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  if (SetObjectClass(_T("nuiButton")))
-  {
-    InitAttributes();
-  }
-  mClicked = false;
-  mPressed = false;
-  mAutoRepeat = false;
-  mRepeatDelay = 0.5;
-  mRepeatMinDelay = 0.01;
-  mpAutoRepeatTimer = NULL;
-  mActivationOffset = 0;
-
-  NUI_ADD_EVENT(ButtonPressed);
-  NUI_ADD_EVENT(ButtonDePressed);
-  NUI_ADD_EVENT(ButtonDePressedInactive);
-  NUI_ADD_EVENT(Activated);
-  
-  return true;
-}
-
 nuiButton::~nuiButton()
 {
   if (mpAutoRepeatTimer)

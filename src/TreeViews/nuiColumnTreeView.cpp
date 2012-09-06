@@ -48,20 +48,6 @@ nuiColumnTreeView::nuiColumnTreeView(nuiTreeNodePtr pTree)
   InitTimer();
 }
 
-bool nuiColumnTreeView::Load(const nuiXMLNode* pNode)
-{
-  nuiTreeView::Load(pNode);
-  mKey.Wipe();
-
-  mpPreview = NULL;
-  mActivateOnUnclick = false;
-  mNeedCalcVerticalHotRect = true;
-
-  CreateScrollBars();
-  InitTimer();
-  return true;
-}
-
 nuiColumnTreeView::~nuiColumnTreeView()
 {
 }

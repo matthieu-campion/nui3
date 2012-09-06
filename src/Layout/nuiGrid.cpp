@@ -115,19 +115,6 @@ uint32 nuiGrid::GetRowDimensionRange(uint32 dimension) const
   return 0;
 }
 
-bool nuiGrid::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mDefaultHSpacing = 0.0f;
-  mDefaultVSpacing = 0.0f;
-  mNbColumns = nuiGetVal(pNode, _T("NbColumns"), 0);
-  mNbRows = nuiGetVal(pNode, _T("NbRows"), 0);
-
-  Reset(mNbColumns, mNbRows, false);
-  
-  return true;
-}
-
 void nuiGrid::Reset(uint32 nbcolumns, uint32 nbrows, bool clear)
 {
   if (clear)
@@ -433,8 +420,8 @@ bool nuiGrid::SetRect(const nuiRect& rRect)
     sizeX = mWidths[col];
     
     // if (GetDebug())
-    //     printf("  nuiGrid::SetRect [0x%x '%ls'] - column %d size: %f\n", this, GetProperty(_T("Name")).GetChars(), col, sizeX);
-    //NGL_OUT(_T("  nuiGrid::SetRect [0x%x '%ls'] - row %d column %d size: %f\n"), this, GetProperty(_T("Name")).GetChars(), row, col, sizeX);
+    //     printf("  nuiGrid::SetRect [0x%x '%s'] - column %d size: %f\n", this, GetProperty(_T("Name")).GetChars(), col, sizeX);
+    //NGL_OUT(_T("  nuiGrid::SetRect [0x%x '%s'] - row %d column %d size: %f\n"), this, GetProperty(_T("Name")).GetChars(), row, col, sizeX);
     
     std::vector<nuiWidget*>::const_iterator row_end = (*col_it).end();
     for (row_it = (*col_it).begin(); row_it != row_end; ++row_it)

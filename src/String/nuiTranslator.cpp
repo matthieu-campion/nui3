@@ -33,7 +33,7 @@ bool nuiTranslator::LoadLanguages(const nglPath& rLanguageFilesFolder)
   while (it != end)
   {
     const nglPath& rPath(*it);
-    NGL_OUT(_T("Localization file: %ls\n"), rPath.GetChars());
+    NGL_OUT(_T("Localization file: %s\n"), rPath.GetChars());
     if (rPath.GetExtension() == _T("loc"))
     {
       nglPath p(rPath.GetNodeName());
@@ -168,7 +168,7 @@ void nuiTranslator::GetLanguages(std::vector<nglString>& rLanguages) const
 
 const nglString& nuiTranslator::Translate(const nglString& rStringToTranslate, const nglString& rDomain) const
 {
-//  NGL_OUT(_T("nuiTranslator::Translate [%ls] '%ls'\n"), rDomain.GetChars(), rStringToTranslate.GetChars());
+//  NGL_OUT(_T("nuiTranslator::Translate [%s] '%s'\n"), rDomain.GetChars(), rStringToTranslate.GetChars());
   
   DomainMap::const_iterator it = mDomains.find(rDomain);
   if (it == mDomains.end())

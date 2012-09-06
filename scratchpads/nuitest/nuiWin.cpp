@@ -27,7 +27,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiList.h"
 #include "nuiFileList.h"
 #include "nuiEditLine.h"
-#include "nuiSplineEdit.h"
 #include "nuiHoverDummy.h"
 #include "nuiStateDummy.h"
 #include "nuiSVGView.h"
@@ -36,7 +35,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiScrollView.h"
 #include "nuiTreeView.h"
 #include "nuiGrid.h"
-#include "nuiPositioner.h"
 #ifdef USE_SWF
 #include "nuiSWF.h"
 #endif
@@ -53,7 +51,6 @@ licence: see nui3/LICENCE.TXT
 #include "nuiBuilder.h"
 
 #include "nuiTextureHelpers.h"
-#include "nuiOffscreenView.h"
 #include "nuiColumnTreeView.h"
 
 #include "nuiSoftwarePainter.h"
@@ -259,11 +256,6 @@ void nuiWin::OnCreation()
   // Blur Area:
   pElement = new nuiTreeNode(nuiTR("Composited Radial Blur"));
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateBlurArea, NULL);
-  pMainTree->AddChild(pElement);
-
-  // Spline Tester:
-  pElement = new nuiTreeNode(nuiTR("Spline View"));
-  mWinSink.Connect(pElement->Activated, &nuiWin::CreateSplineWindow, NULL);
   pMainTree->AddChild(pElement);
 
   // TreeView Tester:
@@ -570,38 +562,6 @@ void nuiWin::OnCreation()
   mWinSink.Connect(pElement->Activated, &nuiWin::CreateWidgetTexture, NULL);
   pMainTree->AddChild(pElement);
 
-  if (0)
-  { // MODAL TEST
-    //    nuiModalContainer* pWaiterScreen = new nuiModalContainer(GetTopLevel());
-    //    nuiPositioner* pPositioner = new nuiPositioner(pWaiterScreen, nuiCenter);
-    nuiPositioner* pPositioner = new nuiPositioner(nuiCenter);
-    GetTopLevel()->AddChild(pPositioner);
-
-    nuiPane* pPane = new nuiPane(nuiColor(0.7f, 0.7f, 0.7f, 0.8f), nuiColor(0.5f, 0.5f, 0.5f, 1.0f));
-    pPositioner->AddChild(pPane);
-    pPane->SetCurve(8);
-    pPane->SetLineWidth(3);
-    nuiScrollView* pScr = new nuiScrollView();
-    pPane->AddChild(pScr);
-    /*
-    nuiWidgetBox* pBox = new nuiWidgetBox(pScr, nuiVertical);
-    */
-    nglString str;
-    str.CFormat(_T("['AZERTY_azertyig.DAT']"));//\nPlease wait while mounting volume from [_T('AZERTYazerty.DAT')]");
-    nuiLabel* pLabel = new nuiLabel(str);
-    pScr->AddChild(pLabel);
-    pLabel->SetBorder(16, 16, 16, 16);
-
-    nglString font(_T("<nuiFont Size=\"12\" Source=\"../Data/Vera.ttf\"/>"));
-    nuiXML XML(_T("FontDesc"));
-    nglIMemory memory(font.GetChars(),font.GetLength());
-    XML.Load(memory);
-    pLabel->SetFont(nuiFont::GetFont(&XML));
-
-    /*finfo.Descender - */
-  }
-
-
 }
 
 
@@ -668,54 +628,6 @@ void nuiWin::CreateBlurArea(const nuiEvent& rEvent)
   nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(_T("rsrc:/nui.png")));
   pTexture->SetPermanent(true);
   mWinSink.Connect(pUserArea->UserDraw, &nuiWin::DrawBlur, pTexture);
-}
-
-void nuiWin::CreateSplineWindow(const nuiEvent& rEvent)
-{
-  nuiSpline* pSpline = NULL;
-  nglIStream* pFile = nglPath(_T("spline.xml")).OpenRead();
-  if (!pFile)
-  {
-    pSpline = new nuiSpline();
-
-    nuiSplineNode n1(10,100);
-    nuiSplineNode n2(100,10);
-    nuiSplineNode n3(190,100);
-    nuiSplineNode n4(100,190);
-
-    pSpline->AddNode(n1);
-    pSpline->AddNode(n2);
-    pSpline->AddNode(n3);
-    pSpline->AddNode(n4);
-
-    pSpline->SetCatmullRomMode();
-    //pSpline->SetCardinalMode(5.7);
-
-    {
-      nuiXML* pXML = NULL;
-      pXML = (nuiXML*) pSpline->Serialize(NULL);
-      nglOFile file(nglPath((_T("spline.xml"))),eOFileCreate);
-      pXML->Save(file);
-    }
-  }
-  else
-  {
-    nuiXML* pXML = new nuiXML(_T("spline"));
-    {
-      pXML->Load(*pFile);
-    }
-    pSpline = new nuiSpline(pXML);
-    delete pXML;
-  }
-
-  delete pFile;
-
-  nuiWindow* pSplineWin = new nuiWindow(nuiRect(10.0f, 10.0f, 250.0f, 250.0f));
-  mpManager->AddChild(pSplineWin);
-
-  nuiSplineEdit* pSplineEdit = new nuiSplineEdit(pSpline, true);
-  pSplineWin->AddChild(pSplineEdit);
-  pSplineEdit->DisplayTangents(false);
 }
 
 void nuiWin::CreateTreeViewWindow(const nuiEvent& rEvent)
@@ -839,10 +751,6 @@ void nuiWin::CreateMessedUpWindow(const nuiEvent& rEvent)
   pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::OutputSomething, pBtn);
 
-  pBtn = new nuiButton(nuiTR("Create a window from a glade XML description"));
-  pBox->AddCell(pBtn);
-  mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::CreateFromGladeXML, pBtn);
-
   pBtn = new nuiButton(nuiTR("Create a window from an NUI XML description"));
   pBox->AddCell(pBtn);
   mWinSink.Connect(pBtn->ButtonPressed, &nuiWin::CreateFromXML, pBtn);
@@ -927,6 +835,7 @@ void nuiWin::CreateText2Window(const nuiEvent& rEvent)
 
   if (pFile->ReadText(text))
   {
+    //printf("Read text:\n\n%s\n\n", text.GetChars());
     pText->SetText(text);
   }
 
@@ -1665,7 +1574,7 @@ public:
       mpFont = nuiFont::GetFont(&XML);
     }
 
-    nglFontInfo fontinfo;
+    nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
     fontinfo.Dump();
   }
@@ -1685,7 +1594,7 @@ public:
     pContext->DrawRect(r, eFillShape);
 
     // Draw the text layout construction lines:
-    nglFontInfo fontinfo;
+    nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
 
     nuiSize y = r.GetHeight()/2;
@@ -1705,7 +1614,7 @@ public:
     */
 
     // Draw the text:
-    nuiFontLayout layout(*mpFont, 0, 0, nuiHorizontal);
+    nuiTextLayout layout(mpFont, nuiHorizontal);
     layout.Layout(mString);
 
     nuiRect lrect = layout.GetRect();
@@ -1747,10 +1656,10 @@ public:
 
   nuiRect CalcIdealSize()
   {
-    nglFontInfo fontinfo;
+    nuiFontInfo fontinfo;
     mpFont->GetInfo(fontinfo);
 
-    nuiFontLayout layout(*mpFont, 0, 0, nuiHorizontal);
+    nuiTextLayout layout(mpFont, nuiHorizontal);
     layout.Layout(mString);
 
     nuiSize height = fontinfo.Ascender - fontinfo.Descender;
@@ -1943,7 +1852,6 @@ void nuiWin::CreateFrameWindow2(const nuiEvent& rEvent)
 {
   nuiWindow* pWindow = new nuiWindow(nuiRect(10, 10, 400, 300), nglWindow::NoFlag, nuiTR("Frame View test 2"));
   mpManager->AddChild(pWindow);
-  nuiPositioner* pPositioner = new nuiPositioner(nuiCenter);
 
   nuiFrame* pFrame = new nuiFrame(_T("TestFrame2"), nuiTexture::GetTexture(nglPath(_T("rsrc:/frame1.png"))), nuiRect(7, 5, 46, 45));
   nuiLabel* pText = new nuiLabel(nuiTR("Label in a frame"), nuiFont::GetFont(35.0f));
@@ -1951,8 +1859,8 @@ void nuiWin::CreateFrameWindow2(const nuiEvent& rEvent)
   pText->SetPosition(nuiCenter);
   pText->SetColor(eNormalTextFg, nuiColor(0, 0, 0, 128));
 
-  pWindow->AddChild(pPositioner);
-  pPositioner->AddChild(pText);
+  pText->SetPosition(nuiCenter);
+  pWindow->AddChild(pText);
 }
 
 void nuiWin::CreateFrameWindow3(const nuiEvent& rEvent)
@@ -3616,20 +3524,6 @@ void nuiWin::OutputSomething( const nuiEvent& rEvent)
   NGL_OUT((_T("Position: %d\n")),value++);
 }
 
-void nuiWin::CreateFromGladeXML(const nuiEvent& rEvent)
-{
-  nuiXML* pXML = ImportGladeXML((nglChar*)_T("rsrc:/sample1.xml"));
-
-  if (!pXML)
-  {
-    NGL_OUT((_T("\nERROR: unable to load glade XML description :-(.\n")));
-    return;
-  }
-
-  GetTopLevel()->AddChild(nuiCreateWidget(pXML));
-  return;
-}
-
 void nuiWin::CreateFromXML( const nuiEvent& rEvent)
 {
   /*
@@ -3682,10 +3576,10 @@ void nuiWin::HideText( const nuiEvent& rEvent)
 
 void nuiWin::SaveXMLDescription(const nuiEvent& rEvent)
 {
-  nuiXML* pXML = NULL;
-  pXML = (nuiXML*) Serialize(NULL,true);
-  nglOFile file(nglPath((_T("nuiTestOutput.xml"))),eOFileCreate);
-  pXML->Save(file);
+//  nuiXML* pXML = NULL;
+//  pXML = (nuiXML*) Serialize(NULL,true);
+//  nglOFile file(nglPath((_T("nuiTestOutput.xml"))),eOFileCreate);
+//  pXML->Save(file);
 }
 
 void nuiWin::LogText(const nuiEvent& rEvent)
@@ -3772,9 +3666,8 @@ void nuiWin::CreateButtonDecorationWindow(const nuiEvent& rEvent)
   pEnableWin->SetColor(eInactiveWindowBg, nuiColor(0,0,0));
 
   nuiButton* pButton = new nuiButton(new nuiStateDecoration(_T("myRollOver"), _T("rsrc:/stateBt_on.png"), _T("rsrc:/stateBt_off.png"), _T("rsrc:/stateBt_roll.png")));
-  nuiPositioner* pPos = new nuiPositioner(nuiCenter);
-  pEnableWin->AddChild(pPos);
-  pPos->AddChild(pButton);
+  pEnableWin->AddChild(pButton);
+  pButton->SetPosition(nuiCenter);
   mpManager->AddChild(pEnableWin);
 }
 

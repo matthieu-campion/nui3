@@ -20,12 +20,6 @@ class NUI_API nuiPane : public nuiSimpleContainer
 {
 public:
   nuiPane(const nuiColor& rFillColor = nuiColor(.75f,.75f,.75f,.75f), const nuiColor& rStrokeColor = nuiColor(.5f,.5f,.5f,.75f), nuiShapeMode ShapeMode = eStrokeAndFillShape, nuiBlendFunc BlendFunc = nuiBlendTransp);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
-	virtual bool LoadAttributes(const nuiXMLNode* pNode);
-	virtual bool LoadChildren(const nuiXMLNode* pNode);
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;
-	virtual void SerializeChildren(nuiXMLNode* pParentNode, bool Recursive = false) const; // top level children serialization
-	virtual nuiXMLNode* SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive = false) const;
   virtual ~nuiPane();
 
   virtual bool Draw(nuiDrawContext* pContext);

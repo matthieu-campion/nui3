@@ -6,7 +6,7 @@
 */
 
 #include "nui.h"
-#include "nui.h"
+#include "ngl.h"
 #include "nuiDrawContext.h"
 #include "nuiMetaPainter.h"
 #include "nuiGLPainter.h"
@@ -19,9 +19,6 @@
 #include "nuiOutliner.h"
 #include "nuiTexture.h"
 #include "nuiSurface.h"
-
-extern float NUI_SCALE_FACTOR;
-extern float NUI_INV_SCALE_FACTOR;
 
 
 /****************************************************************************
@@ -507,9 +504,10 @@ void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nglString& rString, bo
   mCurrentState.mpFont->Print(this,x,y,rString, AlignGlyphPixels);
 }
 
-void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiFontLayout& rLayout, bool AlignGlyphPixels)
+void nuiDrawContext::DrawText(nuiSize x, nuiSize y, const nuiTextLayout& rLayout, bool AlignGlyphPixels)
 {
-  mCurrentState.mpFont->Print(this,x,y,rLayout, AlignGlyphPixels);
+  rLayout.Print(this, x, y, AlignGlyphPixels);
+  //mCurrentState.mpFont->Print(this,x,y,rLayout, AlignGlyphPixels);
 }
 
 void nuiDrawContext::PermitAntialiasing(bool Set)
@@ -569,19 +567,20 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   pArray->SetColor(mCurrentState.mFillColor);
   pArray->PushVertex();
 
-  pArray->SetTexCoords(tx1,ty1); 
-  pArray->SetVertex(x1, y1);
-  pArray->PushVertex();
-
   pArray->SetTexCoords(tx3,ty3); 
   pArray->SetVertex(x3, y3);
   pArray->PushVertex();
 
+  pArray->SetTexCoords(tx1,ty1); 
+  pArray->SetVertex(x1, y1);
+  pArray->PushVertex();
+  
   // 2
   pArray->SetTexCoords(tx2,ty2); 
   pArray->SetVertex(x2, y2);
   pArray->PushVertex();
-
+  
+  
   DrawArray(pArray);
 
   if (!texturing)
@@ -805,7 +804,7 @@ static void nuiDrawRect(const nuiRect& out, nuiRenderArray& rArray)
   rArray.SetMode(GL_TRIANGLE_STRIP);
   rArray.Reserve(8);
   nuiRect in(out);
-  in.Grow(-NUI_INV_SCALE_FACTOR, -NUI_INV_SCALE_FACTOR);
+  in.Grow(-nuiGetInvScaleFactor(), -nuiGetInvScaleFactor());
   
   rArray.SetVertex(out.Left(), out.Top()); rArray.PushVertex();
   rArray.SetVertex(in.Left(), in.Top()); rArray.PushVertex();
@@ -874,7 +873,7 @@ void nuiDrawContext::DrawRect(const nuiRect& rRect, nuiShapeMode Mode)
     else
     {
       nuiRenderArray* pStrokeArray = new nuiRenderArray(mode);
-      if (NUI_SCALE_FACTOR != 1.0f)
+      if (nuiGetScaleFactor() != 1.0f)
       {
         nuiDrawRect(rRect, *pStrokeArray);
       }
@@ -1160,7 +1159,7 @@ const nuiMatrix& nuiDrawContext::GetProjectionMatrix() const
 
 void nuiDrawContext::Set2DProjectionMatrix(const nuiRect& rRect)
 {
-  //printf("Set2DProjectionMatrix: %ls\n", rRect.GetValue().GetChars());
+  //printf("Set2DProjectionMatrix: %s\n", rRect.GetValue().GetChars());
   nuiMatrix m;
   m.Translate(-1.0f, 1.0f, 0.0f);
   m.Scale(2.0f/rRect.GetWidth(), -2.0f/rRect.GetHeight(), 1.0f);

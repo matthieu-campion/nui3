@@ -27,7 +27,7 @@ class NGL_API nglCriticalSection : public nglLock
 public:
   
   // Constructor(s) / Destructor
-  nglCriticalSection(bool registerToThreadChecker=true);
+  nglCriticalSection(bool registerToThreadChecker = true);
   nglCriticalSection(const nglString& rName, bool registerToThreadChecker = true);
   virtual ~nglCriticalSection();
 

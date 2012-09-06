@@ -26,15 +26,19 @@
  * $Id: ucdata.h,v 1.6 2001/01/02 18:46:20 mleisher Exp $
  */
 
-#ifndef WIN32
-#include <stdint.h>
+#if defined _MSC_VER
+  #if (!defined HB_COMMON_H)
+    typedef signed char int8_t;
+    typedef unsigned char uint8_t;
+    typedef signed short int16_t;
+    typedef unsigned short uint16_t;
+    typedef signed int int32_t;
+    typedef unsigned int uint32_t;
+    typedef signed long long int64_t;
+    typedef unsigned long long uint64_t;
+  #endif
 #else
-typedef char  int8_t;
-typedef short int16_t;
-typedef int   int32_t;
-typedef unsigned char  uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int   uint32_t;
+#include <stdint.h>
 #endif
 
 #ifdef __cplusplus
@@ -124,6 +128,74 @@ extern "C" {
 #define UC_PF 0x00010000 /* Punctuation, Final         */
 
 /*
+ * Property indices for use in ucprop_lookup
+ * 
+ */
+#define UC_MN_I 0 /* Mark, Non-Spacing          */
+#define UC_MC_I 1 /* Mark, Spacing Combining    */
+#define UC_ME_I 2 /* Mark, Enclosing            */
+#define UC_ND_I 3 /* Number, Decimal Digit      */
+#define UC_NL_I 4 /* Number, Letter             */
+#define UC_NO_I 5 /* Number, Other              */
+#define UC_ZS_I 6 /* Separator, Space           */
+#define UC_ZL_I 7 /* Separator, Line            */
+#define UC_ZP_I 8 /* Separator, Paragraph       */
+#define UC_CC_I 9 /* Other, Control             */
+#define UC_CF_I 10 /* Other, Format              */
+#define UC_OS_I 11 /* Other, Surrogate           */
+#define UC_CO_I 12 /* Other, Private Use         */
+#define UC_CN_I 13 /* Other, Not Assigned        */
+#define UC_LU_I 14 /* Letter, Uppercase          */
+#define UC_LL_I 15 /* Letter, Lowercase          */
+#define UC_LT_I 16 /* Letter, Titlecase          */
+#define UC_LM_I 17 /* Letter, Modifier           */
+#define UC_LO_I 18 /* Letter, Other              */
+#define UC_PC_I 19 /* Punctuation, Connector     */
+#define UC_PD_I 20 /* Punctuation, Dash          */
+#define UC_PS_I 21 /* Punctuation, Open          */
+#define UC_PE_I 22 /* Punctuation, Close         */
+#define UC_PO_I 23 /* Punctuation, Other         */
+#define UC_SM_I 24 /* Symbol, Math               */
+#define UC_SC_I 25 /* Symbol, Currency           */
+#define UC_SK_I 26 /* Symbol, Modifier           */
+#define UC_SO_I 27 /* Symbol, Other              */
+#define UC_L_I  28 /* Left-To-Right              */
+#define UC_R_I  29 /* Right-To-Left              */
+#define UC_EN_I 30 /* European Number            */
+#define UC_ES_I 31 /* European Number Separator  */
+  
+  /*
+   * Values that can appear in the `mask2' parameter of the ucisprop()
+   * function.
+   */
+#define UC_ET_I 32 /* European Number Terminator */
+#define UC_AN_I 33 /* Arabic Number              */
+#define UC_CS_I 34 /* Common Number Separator    */
+#define UC_B_I  35 /* Block Separator            */
+#define UC_S_I  36 /* Segment Separator          */
+#define UC_WS_I 37 /* Whitespace                 */
+#define UC_ON_I 38 /* Other Neutrals             */
+  /*
+   * Implementation specific character properties.
+   */
+#define UC_CM_I 39 /* Composite                  */
+#define UC_NB_I 40 /* Non-Breaking               */
+#define UC_SY_I 41 /* Symmetric                  */
+#define UC_HD_I 42 /* Hex Digit                  */
+#define UC_QM_I 43 /* Quote Mark                 */
+#define UC_MR_I 44 /* Mirroring                  */
+#define UC_SS_I 45 /* Space, other               */
+  
+#define UC_CP_I 46 /* Defined                    */
+  
+  /*
+   * Added for UnicodeData-2.1.3.
+   */
+#define UC_PI_I 47 /* Punctuation, Initial       */
+#define UC_PF_I 48 /* Punctuation, Final         */
+
+  
+/*
  * This is the primary function for testing to see if a character has some set
  * of properties.  The macros that test for various character properties all
  * call this function with some set of masks.
@@ -131,6 +203,11 @@ extern "C" {
 extern int32_t ucisprop __((uint32_t code, uint32_t mask1,
                         uint32_t mask2));
 
+extern int32_t ucprop_lookup __((uint32_t code, uint32_t n));
+
+extern void ucprop_get __((uint32_t code, uint32_t* mask1, uint32_t* mask2));
+  
+  
 #define ucisalpha(cc) ucisprop(cc, UC_LU|UC_LL|UC_LM|UC_LO|UC_LT, 0)
 #define ucisdigit(cc) ucisprop(cc, UC_ND, 0)
 #define ucisalnum(cc) ucisprop(cc, UC_LU|UC_LL|UC_LM|UC_LO|UC_LT|UC_ND, 0)

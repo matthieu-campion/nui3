@@ -15,8 +15,6 @@ using namespace std;
 
 #include "nglApplication.h"
 
-#include "nuiInit.h"
-
 /*
  * Carbon resource IDs
  */
@@ -56,12 +54,10 @@ nglApplication::nglApplication()
 
   // nglApplication is a kernel's client, just as plugin instances
   IncRef();
-  nuiInit(NULL);
 }
 
 nglApplication::~nglApplication()
 {
-  nuiUninit();
   SetIdle(false);
 }
 
@@ -165,7 +161,7 @@ void nglApplication::DoMenuCommand(long menuResult)
 /* Startup
  */
 
-int nglApplication::Main(int argc, char** argv)
+int nglApplication::Main(int argc, const char** argv)
 {
   if (!Init (argc, argv))
     return 1;
@@ -174,7 +170,7 @@ int nglApplication::Main(int argc, char** argv)
   return res;
 }
 
-bool nglApplication::Init(int ArgCnt, char** pArg)
+bool nglApplication::Init(int ArgCnt, const char** pArg)
 {
   int i;
 

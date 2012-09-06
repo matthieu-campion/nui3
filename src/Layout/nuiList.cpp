@@ -49,34 +49,6 @@ nuiList::nuiList(nuiOrientation Orientation)
   mMoveAnimEasing = nuiEasingCubicRev;
 }
 
-bool nuiList::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  SetObjectClass(_T("nuiList"));
-  mBorderSize = nuiGetVal ( pNode, _T("BorderSize"), mDefaultBorderSize);
-  mOrientation = nuiGetOrientation ( pNode, nuiVertical);
-  mMultiSelectable = pNode->GetAttribute(nglString(_T("MultiSelectable"))) == _T("true");
-  mUnselectable = pNode->GetAttribute(nglString(_T("Unselectable"))) == _T("true");
-  mFixedAspectRatio = pNode->GetAttribute(nglString(_T("FixedAspectRatio"))) != _T("false");
-  mpLastItem =  NULL;
-  mpLastDestinationItem = NULL;
-  mClicked = false;
-  mMoved = false;
-  mCanMoveItems = false;
-  mpGrabedItem = NULL;
-
-  mCursorLine = 0;
-  mSelection = false;
-  mKeyboardSelect = false;
-  mDisplayCursor = false;
-  mMoveOnly = false;
-  mSelectionStart = 0;
-
-  InitProperties();
-  
-  return true;
-}
-
 void nuiList::InitProperties()
 {  
   AddEvent(_T("ListClicked"), Clicked);

@@ -107,14 +107,7 @@ Generator::~Generator()
 
 void Generator::OnBrowseToolRequest(const nuiEvent& rEvent)
 {
-  int X,Y;
-  GetApp()->GetMainWindow()->GetNGLWindow()->GetPosition(X, Y);
-  GetApp()->GetMainWindow()->SetSize(APP_FULL_WIDTH,APP_FULL_HEIGHT);
-  GetApp()->GetMainWindow()->GetNGLWindow()->SetPosition(X - (APP_FULL_WIDTH - APP_WIDTH)/2, Y - (APP_FULL_HEIGHT - APP_HEIGHT)/2);
-  GetApp()->GetMainWindow()->UpdateLayout();
-  
-  mTimerSink.Connect(mTimer.Tick, &Generator::OnBrowseTool);
-  mTimer.Start();
+  Generator::OnBrowseTool(rEvent);
 }
 
 
@@ -135,14 +128,7 @@ void Generator::OnBrowseTool(const nuiEvent& rEvent)
 
 void Generator::OnBrowseSourceRequest(const nuiEvent& rEvent)
 {
-  int X,Y;
-  GetApp()->GetMainWindow()->GetNGLWindow()->GetPosition(X, Y);
-  GetApp()->GetMainWindow()->SetSize(APP_FULL_WIDTH,APP_FULL_HEIGHT);
-  GetApp()->GetMainWindow()->GetNGLWindow()->SetPosition(X - (APP_FULL_WIDTH - APP_WIDTH)/2, Y - (APP_FULL_HEIGHT - APP_HEIGHT)/2);
-  GetApp()->GetMainWindow()->UpdateLayout();
-  
-  mTimerSink.Connect(mTimer.Tick, &Generator::OnBrowseSource);
-  mTimer.Start();
+  Generator::OnBrowseSource(rEvent);
 }
 
 void Generator::OnBrowseSource(const nuiEvent& rEvent)
@@ -162,13 +148,6 @@ void Generator::OnToolSelected(const nuiEvent& rEvent)
   nuiDialogSelectFile* pDialog = (nuiDialogSelectFile*)rEvent.mpUser;
   nglPath path = pDialog->GetSelectedFile();
   mpToolLabel->SetText(path.GetPathName());
-  
-  
-  int X,Y;
-  GetApp()->GetMainWindow()->GetNGLWindow()->GetPosition(X,Y);
-  GetApp()->GetMainWindow()->SetSize(APP_WIDTH,APP_HEIGHT);
-  GetApp()->GetMainWindow()->GetNGLWindow()->SetPosition(X + (APP_FULL_WIDTH - APP_WIDTH)/2, Y + (APP_FULL_HEIGHT - APP_HEIGHT)/2);    
-  GetApp()->GetMainWindow()->UpdateLayout();  
 }
 
 void Generator::OnSourceSelected(const nuiEvent& rEvent)
@@ -176,12 +155,6 @@ void Generator::OnSourceSelected(const nuiEvent& rEvent)
   nuiDialogSelectDirectory* pDialog = (nuiDialogSelectDirectory*)rEvent.mpUser;
   nglPath path = pDialog->GetSelectedDirectory();
   mpSourceLabel->SetText(path.GetPathName());
-  
-  int X,Y;
-  GetApp()->GetMainWindow()->GetNGLWindow()->GetPosition(X,Y);
-  GetApp()->GetMainWindow()->SetSize(APP_WIDTH,APP_HEIGHT);
-  GetApp()->GetMainWindow()->GetNGLWindow()->SetPosition(X + (APP_FULL_WIDTH - APP_WIDTH)/2, Y + (APP_FULL_HEIGHT - APP_HEIGHT)/2);    
-  GetApp()->GetMainWindow()->UpdateLayout();  
 }
 
 

@@ -90,39 +90,6 @@ void nuiColorDecoration::InitAttributes()
 }
 
 
-bool nuiColorDecoration::Load(const nuiXMLNode* pNode)
-{
-  uint32 code = pNode->GetAttribute(_T("ShapeMode")).GetCInt();
-  switch(code)
-  {
-  case 0: mShapeMode = eStrokeShape; break;
-  case 1: mShapeMode = eFillShape; break;
-  case 2: mShapeMode = eStrokeAndFillShape; break;
-  default: mShapeMode = eDefault; break;
-  }
-
-  mFillColor.SetValue(nuiGetString(pNode, _T("FillColor"), _T("white")));
-  mStrokeSize = nuiGetString(pNode, _T("StrokeSize")).GetCUInt();
-  mStrokeColor.SetValue(nuiGetString(pNode, _T("StrokeColor"), _T("black")));
-  
-  //#FIXME
-  return true;
-}
-
-nuiXMLNode* nuiColorDecoration::Serialize(nuiXMLNode* pNode)
-{
-//#FIXME
-//  pNode->SetName(_T("nuiGradientDecoration"));
-//  pNode->SetAttribute(_T("GradientType"), (int)mGradientType);
-//  pNode->SetAttribute(_T("Color1"), mColor1.GetValue());
-//  pNode->SetAttribute(_T("Color2"), mColor2.GetValue());
-//  pNode->SetAttribute(_T("Color3"), mColor3.GetValue());
-//  pNode->SetAttribute(_T("Color4"), mColor4.GetValue());
-//  pNode->SetAttribute(_T("Overdraw"), mOverdraw);
-
-  return pNode;
-}
-
 // virtual
 void nuiColorDecoration::Draw(nuiDrawContext* pContext, nuiWidget* pWidget, const nuiRect& rDestRect)
 {

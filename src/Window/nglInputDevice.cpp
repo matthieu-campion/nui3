@@ -72,8 +72,8 @@ float nglInputDevice::GetAxeValue(uint Index)
 void nglInputDevice::Dump(uint Level) const
 {
   NGL_LOG(_T("inputdev"), Level, _T("Joystick info"));
-  NGL_LOG(_T("inputdev"), Level, _T("  Port    : %ls"), mpDevice->GetPort().GetChars());
-  NGL_LOG(_T("inputdev"), Level, _T("  Model   : %ls"), mpDevice->GetName().GetChars());
+  NGL_LOG(_T("inputdev"), Level, _T("  Port    : %s"), mpDevice->GetPort().GetChars());
+  NGL_LOG(_T("inputdev"), Level, _T("  Model   : %s"), mpDevice->GetName().GetChars());
   NGL_LOG(_T("inputdev"), Level, _T("  Axis    : %d"), mpDevice->GetAxeCount());
   NGL_LOG(_T("inputdev"), Level, _T("  Buttons : %d"), mpDevice->GetButtonCount());
 }

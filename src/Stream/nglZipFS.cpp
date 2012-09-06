@@ -285,7 +285,7 @@ bool nglZipFS::BuildIndex()
       Node* pChild = pPath->Find(name);
       if (!pChild)
       {
-        //printf("zipfile: %ls\n", name.GetChars());
+        //printf("zipfile: %s\n", name.GetChars());
         pChild = new Node(name, file_info.uncompressed_size, file_pos.pos_in_zip_directory, file_pos.num_of_file, i == 1 && !IsDir);
         pPath->AddChild(pChild);
       }
@@ -530,7 +530,7 @@ bool nglZipFS::GetPathInfo(const nglPath& rPath, nglPathInfo& rInfo)
 {
   nglString p(rPath.GetVolumeLessPath());
   p.TrimLeft(_T('/'));
-  //wprintf(_T("trimed path '%ls'\n"), p.GetChars());
+  //wprintf(_T("trimed path '%s'\n"), p.GetChars());
   nglPath path(p);
 
   Node* pChild = mRoot.Find(path); 
@@ -564,7 +564,7 @@ nglIStream* nglZipFS::OpenRead(const nglPath& rPath)
 {
   nglString p(rPath.GetVolumeLessPath());
   p.TrimLeft(_T('/'));
-  //wprintf(_T("trimed path '%ls'\n"), p.GetChars());
+  //wprintf(_T("trimed path '%s'\n"), p.GetChars());
   nglPath path(p);
   Node* pNode = mRoot.Find(path);
   if (!pNode)
@@ -599,7 +599,7 @@ bool nglZipFS::GetChildren(const nglPath& rPath, std::list<nglPath>& rChildren)
 {
   nglString p(rPath.GetVolumeLessPath());
   p.TrimLeft(_T('/'));
-  //wprintf(_T("trimed path '%ls'\n"), p.GetChars());
+  //wprintf(_T("trimed path '%s'\n"), p.GetChars());
   nglPath path(p);
   Node* pNode = mRoot.Find(path);
   if (!pNode)

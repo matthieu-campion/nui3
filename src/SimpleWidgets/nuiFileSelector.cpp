@@ -76,7 +76,7 @@ nuiTreeNode* nuiFileSelectorBase::GetNewNode(const nglPath& rPath)
         pBox = new nuiHBox(2);
         pIcon = new nuiImage();
         nglString objectName;
-        objectName.Format(_T("nuiFileSelector::TreeFilterIcon::%ls"), rPath.GetExtension().ToLower().GetChars());
+        objectName.Format(_T("nuiFileSelector::TreeFilterIcon::%s"), rPath.GetExtension().ToLower().GetChars());
         pIcon->SetObjectName(objectName);
         pIcon->SetObjectClass(objectName);
         label = new nuiLabel(pathName.GetNodeName().IsEmpty()?_T("/"):pathName.GetNodeName());        
@@ -193,7 +193,7 @@ nuiFileSelectorNode::nuiFileSelectorNode(nuiFileSelectorBase* pSelector, const n
 {
   mpSelector = pSelector;
   SetProperty(_T("Path"), rPath.GetPathName());
-  //NGL_OUT(_T("New nuiFileSelectorNode: '%ls'\n"), rPath.GetChars());
+  //NGL_OUT(_T("New nuiFileSelectorNode: '%s'\n"), rPath.GetChars());
 }
 
 nuiFileSelectorNode::~nuiFileSelectorNode()
@@ -232,7 +232,7 @@ void nuiFileSelectorNode::Open(bool Opened)
       }
       else
       {
-        //NGL_OUT(_T("Skipping invisible file '%ls'\n"), pathName.GetChars());
+        //NGL_OUT(_T("Skipping invisible file '%s'\n"), pathName.GetChars());
       }
 
       ++it;
@@ -540,7 +540,7 @@ nuiWidget* nuiFileSelector::GetFileInfo(const nglPath& rPath)
   pBox->AddCell(pIcon, nuiCenter);
   
   nglString objectName;
-  objectName.Format(_T("nuiFileSelector::InfoViewIcon::%ls"), rPath.GetExtension().ToLower().GetChars());
+  objectName.Format(_T("nuiFileSelector::InfoViewIcon::%s"), rPath.GetExtension().ToLower().GetChars());
   pIcon->SetObjectName(objectName);
   pIcon->SetObjectClass(objectName);
   

@@ -94,7 +94,7 @@ void nuiHTMLContext::UpdateFont()
   
   mpFont = nuiFontManager::GetManager().GetFont(mFont);
   NGL_ASSERT(mpFont);
-  nglGlyphInfo ginfo;
+  nuiGlyphInfo ginfo;
   mpFont->GetGlyphInfo(ginfo, mpFont->GetGlyphIndex(_T(' ')), nuiFontBase::eGlyphBitmap);
   mHSpace = ginfo.AdvanceX;
   

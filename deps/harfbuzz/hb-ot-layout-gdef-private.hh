@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2007,2008,2009  Red Hat, Inc.
- * Copyright (C) 2010  Google, Inc.
+ * Copyright © 2007,2008,2009  Red Hat, Inc.
+ * Copyright © 2010,2011  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.
  *
@@ -31,9 +31,8 @@
 
 #include "hb-ot-layout-common-private.hh"
 
-#include "hb-font-private.h"
+#include "hb-font-private.hh"
 
-HB_BEGIN_DECLS
 
 
 /*
@@ -96,9 +95,9 @@ struct CaretValueFormat1
   friend struct CaretValue;
 
   private:
-  inline int get_caret_value (hb_ot_layout_context_t *c, hb_direction_t direction, hb_codepoint_t glyph_id HB_UNUSED) const
+  inline hb_position_t get_caret_value (hb_font_t *font, hb_direction_t direction, hb_codepoint_t glyph_id HB_UNUSED) const
   {
-    return HB_DIRECTION_IS_HORIZONTAL (direction) ? c->scale_x (coordinate) : c->scale_y (coordinate);
+    return HB_DIRECTION_IS_HORIZONTAL (direction) ? font->em_scale_x (coordinate) : font->em_scale_y (coordinate);
   }
 
   inline bool sanitize (hb_sanitize_context_t *c) {
@@ -118,10 +117,10 @@ struct CaretValueFormat2
   friend struct CaretValue;
 
   private:
-  inline int get_caret_value (hb_ot_layout_context_t *c, hb_direction_t direction, hb_codepoint_t glyph_id) const
+  inline hb_position_t get_caret_value (hb_font_t *font, hb_direction_t direction, hb_codepoint_t glyph_id) const
   {
     hb_position_t x, y;
-    if (hb_font_get_contour_point (c->font, c->face, caretValuePoint, glyph_id, &x, &y))
+    if (hb_font_get_glyph_contour_point_for_origin (font, glyph_id, caretValuePoint, direction, &x, &y))
       return HB_DIRECTION_IS_HORIZONTAL (direction) ? x : y;
     else
       return 0;
@@ -143,11 +142,11 @@ struct CaretValueFormat3
 {
   friend struct CaretValue;
 
-  inline int get_caret_value (hb_ot_layout_context_t *c, hb_direction_t direction, hb_codepoint_t glyph_id) const
+  inline hb_position_t get_caret_value (hb_font_t *font, hb_direction_t direction, hb_codepoint_t glyph_id HB_UNUSED) const
   {
     return HB_DIRECTION_IS_HORIZONTAL (direction) ?
-           c->scale_x (coordinate) + (this+deviceTable).get_x_delta (c) :
-           c->scale_y (coordinate) + (this+deviceTable).get_y_delta (c);
+           font->em_scale_x (coordinate) + (this+deviceTable).get_x_delta (font) :
+           font->em_scale_y (coordinate) + (this+deviceTable).get_y_delta (font);
   }
 
   inline bool sanitize (hb_sanitize_context_t *c) {
@@ -169,12 +168,12 @@ struct CaretValueFormat3
 
 struct CaretValue
 {
-  inline int get_caret_value (hb_ot_layout_context_t *c, hb_direction_t direction, hb_codepoint_t glyph_id) const
+  inline hb_position_t get_caret_value (hb_font_t *font, hb_direction_t direction, hb_codepoint_t glyph_id) const
   {
     switch (u.format) {
-    case 1: return u.format1.get_caret_value (c, direction, glyph_id);
-    case 2: return u.format2.get_caret_value (c, direction, glyph_id);
-    case 3: return u.format3.get_caret_value (c, direction, glyph_id);
+    case 1: return u.format1.get_caret_value (font, direction, glyph_id);
+    case 2: return u.format2.get_caret_value (font, direction, glyph_id);
+    case 3: return u.format3.get_caret_value (font, direction, glyph_id);
     default:return 0;
     }
   }
@@ -203,18 +202,18 @@ struct CaretValue
 
 struct LigGlyph
 {
-  inline unsigned int get_lig_carets (hb_ot_layout_context_t *c,
+  inline unsigned int get_lig_carets (hb_font_t *font,
 				      hb_direction_t direction,
 				      hb_codepoint_t glyph_id,
 				      unsigned int start_offset,
 				      unsigned int *caret_count /* IN/OUT */,
-				      int *caret_array /* OUT */) const
+				      hb_position_t *caret_array /* OUT */) const
   {
     if (caret_count) {
       const OffsetTo<CaretValue> *array = carets.sub_array (start_offset, caret_count);
       unsigned int count = *caret_count;
       for (unsigned int i = 0; i < count; i++)
-	caret_array[i] = (this+array[i]).get_caret_value (c, direction, glyph_id);
+	caret_array[i] = (this+array[i]).get_caret_value (font, direction, glyph_id);
     }
 
     return carets.len;
@@ -236,12 +235,12 @@ struct LigGlyph
 
 struct LigCaretList
 {
-  inline unsigned int get_lig_carets (hb_ot_layout_context_t *c,
+  inline unsigned int get_lig_carets (hb_font_t *font,
 				      hb_direction_t direction,
 				      hb_codepoint_t glyph_id,
 				      unsigned int start_offset,
 				      unsigned int *caret_count /* IN/OUT */,
-				      int *caret_array /* OUT */) const
+				      hb_position_t *caret_array /* OUT */) const
   {
     unsigned int index = (this+coverage) (glyph_id);
     if (index == NOT_COVERED)
@@ -251,7 +250,7 @@ struct LigCaretList
       return 0;
     }
     const LigGlyph &lig_glyph = this+ligGlyph[index];
-    return lig_glyph.get_lig_carets (c, direction, glyph_id, start_offset, caret_count, caret_array);
+    return lig_glyph.get_lig_carets (font, direction, glyph_id, start_offset, caret_count, caret_array);
   }
 
   inline bool sanitize (hb_sanitize_context_t *c) {
@@ -352,17 +351,17 @@ struct GDEF
   { return (this+attachList).get_attach_points (glyph_id, start_offset, point_count, point_array); }
 
   inline bool has_lig_carets (void) const { return ligCaretList != 0; }
-  inline unsigned int get_lig_carets (hb_ot_layout_context_t *c,
+  inline unsigned int get_lig_carets (hb_font_t *font,
 				      hb_direction_t direction,
 				      hb_codepoint_t glyph_id,
 				      unsigned int start_offset,
 				      unsigned int *caret_count /* IN/OUT */,
-				      int *caret_array /* OUT */) const
-  { return (this+ligCaretList).get_lig_carets (c, direction, glyph_id, start_offset, caret_count, caret_array); }
+				      hb_position_t *caret_array /* OUT */) const
+  { return (this+ligCaretList).get_lig_carets (font, direction, glyph_id, start_offset, caret_count, caret_array); }
 
-  inline bool has_mark_sets (void) const { return version >= 0x00010002 && markGlyphSetsDef[0] != 0; }
+  inline bool has_mark_sets (void) const { return version.to_int () >= 0x00010002 && markGlyphSetsDef[0] != 0; }
   inline bool mark_set_covers (unsigned int set_index, hb_codepoint_t glyph_id) const
-  { return version >= 0x00010002 && (this+markGlyphSetsDef[0]).covers (set_index, glyph_id); }
+  { return version.to_int () >= 0x00010002 && (this+markGlyphSetsDef[0]).covers (set_index, glyph_id); }
 
   inline bool sanitize (hb_sanitize_context_t *c) {
     TRACE_SANITIZE ();
@@ -371,7 +370,7 @@ struct GDEF
 	&& attachList.sanitize (c, this)
 	&& ligCaretList.sanitize (c, this)
 	&& markAttachClassDef.sanitize (c, this)
-	&& (version < 0x00010002 || markGlyphSetsDef[0].sanitize (c, this));
+	&& (version.to_int () < 0x00010002 || markGlyphSetsDef[0].sanitize (c, this));
   }
 
 
@@ -424,6 +423,5 @@ struct GDEF
 };
 
 
-HB_END_DECLS
 
 #endif /* HB_OT_LAYOUT_GDEF_PRIVATE_HH */

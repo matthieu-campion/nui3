@@ -30,7 +30,10 @@ Application::~Application()
 void Application::OnExit (int Code)
 {
   if (mpMainWindow)
-    delete mpMainWindow;
+  {
+    mpMainWindow->Release();
+    mpMainWindow = NULL;
+  }
 
   nuiUninit();
 }
@@ -63,7 +66,7 @@ void Application::OnInit()
     Quit (0);
     return;
   }
-  
+
   // Parse args
   int i = 0;
   while (i < GetArgCount())
@@ -84,7 +87,7 @@ void Application::OnInit()
     else if (!arg.Compare(_T("--fullscreen")) || !arg.Compare(_T("-f"))) IsFullScreen = true;
     else if (!arg.Compare(_T("--debugobject")) || !arg.Compare(_T("-d"))) DebugObject = true;
     else if (!arg.Compare(_T("--debuginfo")) || !arg.Compare(_T("-i"))) DebugInfo = true;
-    else if (!arg.Compare(_T("--renderer")) || !arg.Compare(_T("-r"))) 
+    else if (!arg.Compare(_T("--renderer")) || !arg.Compare(_T("-r")))
     {
       arg = GetArg(i+1);
       if (!arg.Compare(_T("opengl"))) Renderer = eOpenGL;
@@ -94,7 +97,7 @@ void Application::OnInit()
     }
     i++;
   }
-  
+
   nuiMainWindow::SetRenderer(Renderer);
 
   if (!HasSize)
@@ -113,7 +116,7 @@ void Application::OnInit()
       Height = 480;
 #else
       Width = 800;
-      Height = 600;      
+      Height = 600;
 #endif
     }
   }
@@ -132,17 +135,17 @@ void Application::OnInit()
   Info.Title = APPLICATION_TITLE;
   Info.XPos = 0;
   Info.YPos = 0;
-        
+
   mpMainWindow = new MainWindow(ContextInfo,Info, ShowFPS);
   if ((!mpMainWindow) || (mpMainWindow->GetError()))
   {
-    if (mpMainWindow) 
+    if (mpMainWindow)
       NGL_OUT(_T("Error: cannot create window (%s)\n"), mpMainWindow->GetErrorStr());
     Quit (1);
     return;
   }
-  mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);
-  mpMainWindow->DBG_SetMouseOverObject(DebugObject);
+  mpMainWindow->Acquire();
+  mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);  mpMainWindow->DBG_SetMouseOverObject(DebugObject);
   mpMainWindow->SetState(nglWindow::eShow);
 
 }

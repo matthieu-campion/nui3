@@ -27,28 +27,14 @@ using namespace std;
 #endif
 
 
-#ifdef __MWERKS__
-char* strdup(const char* pString)
-{
-	if (!pString)
-		return NULL;
-	int len = strlen(pString);
-	char* pResult = (char*)malloc(len+1);
-	if (!pResult)
-		return NULL;
-	memcpy(pResult,pString, len+1);
-	return pResult;
-}
-#endif
-
 using namespace std;
 
 
 #ifndef _T
-#define _T(X) L##X
+#define _T(X) X
 #endif
 
-const nglChar nglPath::PortableCharset[] = L"/.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
+const nglChar nglPath::PortableCharset[] = _T("/.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_");
 
 const nglPathVolume::VolumeFlags nglPathVolume::All        = 0xFFFFFFFF;
 const nglPathVolume::VolumeFlags nglPathVolume::ReadOnly   = (1 << 0);
@@ -98,11 +84,6 @@ nglPathVolume& nglPathVolume::operator=(const nglPathVolume& rPathVolume)
 
 nglPath::nglPath()
 {
-}
-
-nglPath::nglPath (const char* pPathName)
-{
-	InternalSetPath(pPathName);
 }
 
 nglPath::nglPath (const nglChar* pPathName)
@@ -155,7 +136,9 @@ nglPath::nglPath (nglPathBase Base)
         #elif defined _WIN32_
         InternalSetPath(getenv("TEMP"));
         #elif defined(_UIKIT_)
-        InternalSetPath(nuiCocoaGetPath_Temp());    
+        InternalSetPath(nuiCocoaGetPath_Temp());  
+        #elif defined (_ANDROID_)
+        InternalSetPath("/sdcard");
         #else
         InternalSetPath(_T("/tmp"));
         #endif
@@ -745,7 +728,7 @@ bool nglPath::GetInfo(nglPathInfo& rInfo) const
   // output debug
 /*
 wchar_t prout[1024];
-  swprintf(&prout[0], 1024,_T("\n\nFILE '%ls'\naccess seconds %d  Minutes %d   Hours %d   Day %d   Month %d   Year %d   WeekDay %d   DST %d\n"),
+  swprintf(&prout[0], 1024,_T("\n\nFILE '%s'\naccess seconds %d  Minutes %d   Hours %d   Day %d   Month %d   Year %d   WeekDay %d   DST %d\n"),
     GetChars(), accessTimeInfo.Seconds, accessTimeInfo.Minutes, accessTimeInfo.Hours, accessTimeInfo.Day, accessTimeInfo.Month, accessTimeInfo.Year, accessTimeInfo.WeekDay, accessTimeInfo.DST);
  
   OutputDebugString(&prout[0]);
@@ -931,6 +914,29 @@ nglPath::operator const nglChar*() const
 	return mPathName.GetChars();
 }
 
+int32 nglPath::GetChildrenTree(std::list<nglPath>& pChildren) const
+{
+  std::list<nglPath> local;
+  uint32 count = GetChildren(local);
+  
+  std::list<nglPath>::const_iterator it = local.begin();
+  std::list<nglPath>::const_iterator end = local.end();
+  
+  while (it != end)
+  {
+    const nglPath& rP(*it);
+    pChildren.push_back(rP);
+    
+    if (!rP.IsLeaf())
+      count += rP.GetChildrenTree(pChildren);
+    
+    ++it;
+  }
+  
+  return count;
+}
+
+
 
 /*
 * Special paths
@@ -960,12 +966,6 @@ nglPath nglPath::GetAbsolutePath() const
 /*
 * Operators
 */
-
-const nglPath& nglPath::operator=(const char* pSource)
-{
-	InternalSetPath(pSource);
-	return *this;
-}
 
 const nglPath& nglPath::operator=(const nglChar* pSource)
 {
@@ -1007,6 +1007,14 @@ const nglPath& nglPath::operator+=(const nglString& rAppend)
 	nglPath temp(rAppend);
 	*this += temp;
 
+	return *this;
+}
+
+const nglPath& nglPath::operator+=(const nglChar* pAppend)
+{
+	nglPath temp(pAppend);
+	*this += temp;
+  
 	return *this;
 }
 
@@ -1081,24 +1089,12 @@ len = mPathName.GetLength();
 for (i = 0; i < len; i++)
 if (strchr (ValidChars, mPathName[i]) == NULL)
 {
-NGL_DEBUG( NGL_LOG("path", NGL_LOG_WARNING, _T("Warning: path contains non portable chars (%ls)"), (nglChar*)mPathName); )
+NGL_DEBUG( NGL_LOG("path", NGL_LOG_WARNING, _T("Warning: path contains non portable chars (%s)"), (nglChar*)mPathName); )
 return false;
 }
 return true;
 }
 */
-
-bool nglPath::InternalSetPath(const char* pPath)
-{
-	nglString temp;
-
-	if (temp.Import(pPath, eUTF8) == -1)
-	{
-		// Conversion error
-		return false;
-	}
-	return InternalSetPath(temp.GetChars());
-}
 
 bool nglPath::InternalSetPath(const nglChar* pPath)
 {
@@ -1195,13 +1191,13 @@ int32 nglPath::GetChildren(list<nglPath>& rChildren) const
 
 //	#ifdef WINCE
 
-	WCHAR	filter[MAX_PATH + 1];
+	nglChar	filter[MAX_PATH + 1];
 
-	wcscpy(filter, mPathName.GetChars());
-	if (filter[wcslen(filter)-1] ==L'/')
-		wcscat(filter, L"*");
+	strcpy(filter, mPathName.GetChars());
+	if (filter[strlen(filter)-1] =='/')
+		strcat(filter, "*");
 	else
-    wcscat(filter, L"/*");
+    strcat(filter, "/*");
 
 	WIN32_FIND_DATA		findData;
 
@@ -1210,7 +1206,7 @@ int32 nglPath::GetChildren(list<nglPath>& rChildren) const
 
 	do
 	{
-		if(wcscmp(findData.cFileName, L".") && wcscmp(findData.cFileName, L".."))
+		if(strcmp(findData.cFileName, ".") && strcmp(findData.cFileName, ".."))
 		{
       nglPath	path = *this;
       path += nglPath(findData.cFileName);
@@ -1247,14 +1243,14 @@ nglString nglPath::GetMimeType() const
 		return nglString(_T(""));;
 	}
 	RegCloseKey(key);
-	return nglString((char*)value);
+	return nglString((nglChar*)value);
 }
 
 #ifdef WINCE
 uint64 nglPath::GetVolumes(list<nglPathVolume>& rVolumes, uint64 Flags)
 {
 	nglPathVolume	pathvolume;
-	pathvolume.mPath = L"/";
+	pathvolume.mPath = "/";
 	rVolumes.push_back(pathvolume);
 	return rVolumes.size();
 }
@@ -1385,7 +1381,7 @@ bool nglPath::ResolveLink()
 	}
 	else 
 	{
-		if (GetExtension() != L"lnk")
+		if (GetExtension() != "lnk")
 		{
 			return false;
 		}
@@ -1478,7 +1474,10 @@ int32 nglPath::GetRootPart() const
   // Find the volume name:
   int col = mPathName.Find(_T(':'), 0, true);
   int slash = mPathName.Find(_T('/'), 0, true);
-  
+
+  if (col < 0 || slash < 0)
+    return 0;
+
   if (col < slash)
     return MIN(col + 1, mPathName.GetLength());
   
@@ -1494,7 +1493,7 @@ nglString nglPath::GetVolumeName() const
     nglString name(mPathName.Extract(0, rootpart));
     name.Trim(_T('/'));
     name.Trim(_T(':'));
-    //wprintf(_T("GetVolumeName(\"%ls\") -> \"%ls\"\n"), GetChars(), name.GetChars());
+    //wprintf(_T("GetVolumeName(\"%s\") -> \"%s\"\n"), GetChars(), name.GetChars());
     return name;
   }
   
@@ -1572,7 +1571,9 @@ nglIStream* nglPath::OpenRead() const
   {
     nglVolume* pVolume = nglVolume::GetVolume(volume);
     if (pVolume)
+    {
       return pVolume->OpenRead(*this);
+    }
   }
   
   nglIFile* pFile = new nglIFile(*this);

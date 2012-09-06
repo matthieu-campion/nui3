@@ -19,11 +19,19 @@
 
 #include "nui.h"
 #include "nglKernel.h"
+#ifndef _MINUI3_
 #include "nglWindow.h"
+#endif
 #include "ngl_unix.h"
 #include <signal.h>
 #include <locale.h>
 
+#ifdef _LINUX_
+#include <gcrypt.h> 
+GCRY_THREAD_OPTION_PTHREAD_IMPL;
+#endif
+
+#include <curl/curl.h>
 
 using namespace std;
 
@@ -59,29 +67,6 @@ nglKernel::~nglKernel()
 
 }
 
-
-
-/*
- * Clipboard
- */
-
-//changed from nglString nglKernel::GetClipboard() to this, according to nglKernel.h 
-void nglKernel::GetClipboard(nglString& rClipboard)
-{
-  nglString result(_T("*clipboard code not implemented*"));
-
-  // FIXME
-  //now returns void, according to nglKernel.h
-  //return result;
-}
-
-bool nglKernel::SetClipboard(const nglString& rString)
-{
-  // FIXME
-  return false;
-}
-
-
 /*
  * Event handling (stubs rather than pure virtual methods)
  */
@@ -102,6 +87,30 @@ void nglKernel::DelTimer (nglTimer* pTimer)
 {
 }
 
+
+#ifndef _MINUI3_
+
+/*
+ * Clipboard
+ */
+
+//changed from nglString nglKernel::GetClipboard() to this, according to nglKernel.h
+void nglKernel::GetClipboard(nglString& rClipboard)
+{
+  nglString result(_T("*clipboard code not implemented*"));
+
+  // FIXME
+  //now returns void, according to nglKernel.h
+  //return result;
+}
+
+bool nglKernel::SetClipboard(const nglString& rString)
+{
+  // FIXME
+  return false;
+}
+
+
 void* nglKernel::GetDisplay()
 {
   return NULL;
@@ -115,6 +124,7 @@ void nglKernel::DelWindow (class nglWindow* pWin)
 {
 }
 
+#endif // ifndef _MINUI3_
 
 /*
  * Internals (generic kernel setup)
@@ -124,10 +134,10 @@ bool nglKernel::SysInit()
 {
   int signals[] = {
     SIGSEGV,
-    SIGHUP, 
-    SIGINT, 
+    SIGHUP,
+    SIGINT,
     SIGQUIT,
-    SIGPIPE,
+    //SIGPIPE,
     SIGTERM,
     -1
   };
@@ -139,17 +149,11 @@ bool nglKernel::SysInit()
   // Set locale (for strtoup(), time/date formatting and so on)
   setlocale (LC_ALL, "");
 
+#ifdef _LINUX_
+  gcry_control(GCRYCTL_SET_THREAD_CBS, &gcry_threads_pthread);
+#endif
+  curl_global_init(CURL_GLOBAL_ALL);
   return true;
-}
-
-void nglKernel::CatchSignal (int Signal, void (*pHandler)(int))
-{
-  struct sigaction act;
-
-  act.sa_handler = pHandler;
-  sigemptyset (&act.sa_mask);
-  act.sa_flags = (Signal == SIGCHLD) ? SA_NOCLDSTOP : 0;
-  sigaction (Signal, &act, NULL);
 }
 
 void nglKernel::OnSignal(int Signal) /* static method */
@@ -163,7 +167,7 @@ void nglKernel::OnSignal(int Signal) /* static method */
         tcsetattr (STDIN_FILENO, TCSANOW, &App->mTermInfo);
 */
       NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_ERROR, _T("** Segmentation fault\n")); )
-      _exit(2);
+      exit(2);
     }
 
     case SIGHUP:
@@ -173,7 +177,11 @@ void nglKernel::OnSignal(int Signal) /* static method */
     case SIGTERM:
     {
       NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_ERROR, _T("** Caught signal %d\n"), Signal); )
+#ifndef _MINUI3_
       App->Quit(1);
+#else
+      exit(1);
+#endif
     }
   }
 }
@@ -182,6 +190,7 @@ void nglKernel::OnEvent(uint Flags)
 {
 }
 
+#ifndef _MINUI3_
 void nglKernel::EnterModalState()
 {
 }
@@ -189,6 +198,7 @@ void nglKernel::EnterModalState()
 void nglKernel::ExitModalState()
 {
 }
+#endif
 
 void nglKernel::NonBlockingHeartBeat()
 {

@@ -271,7 +271,9 @@ namespace nanojit
 #else
 #include <asm/unistd.h>
 #endif
+#ifndef __APPLE__
 extern "C" void __clear_cache(char *BEG, char *END);
+#endif
 #endif
 
 #if defined(AVMPLUS_UNIX) && defined(NANOJIT_MIPS)
@@ -357,7 +359,9 @@ extern  "C" void sync_instruction_memory(caddr_t v, u_int len);
     #else
     // fixme: __clear_cache is a libgcc feature, test for libgcc or gcc
     void CodeAlloc::flushICache(void *start, size_t len) {
-        __clear_cache((char*)start, (char*)start + len);
+      #if !defined (__APPLE__)
+      __clear_cache((char*)start, (char*)start + len);
+      #endif
     }
     #endif
 #endif // AVMPLUS_MAC && NANOJIT_PPC

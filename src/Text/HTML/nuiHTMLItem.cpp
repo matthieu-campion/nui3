@@ -50,7 +50,7 @@ void nuiHTMLItem::CallDraw(nuiDrawContext* pContext)
   nuiHTMLAttrib* pAttrib = mpNode->GetAttribute(nuiHTMLAttrib::eAttrib_ID);
   if (pAttrib)
     id.Add(_T(" id='")).Add(pAttrib->GetValue()).Add(_T("'"));
-  printf("nuiHTMLItem::CallDraw <%ls%ls> %ls\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars());
+  printf("nuiHTMLItem::CallDraw <%s%s> %s\n", mpNode->GetName().GetChars(), id.GetChars(), mRect.GetValue().GetChars());
 #endif
 
   pContext->PushMatrix();

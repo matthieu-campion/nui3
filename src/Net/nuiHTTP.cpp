@@ -65,6 +65,13 @@ void nuiHTTPMessage::SetBody(const char* pBuffer, nglSize ByteCnt)
   memcpy(&mBody[0], pBuffer, ByteCnt);
 }
 
+void nuiHTTPMessage::AddToBody(const char* pBuffer, nglSize ByteCnt)
+{
+  nglSize pos = mBody.size();
+  mBody.resize(pos + ByteCnt);
+  memcpy(&mBody[pos], pBuffer, ByteCnt);
+}
+
 const std::vector<char>& nuiHTTPMessage::GetBody() const
 {
   return mBody;
@@ -119,6 +126,13 @@ const nglString& nuiHTTPResponse::GetStatusLine() const
 {
   return mStatusLine;
 }
+
+nuiHTTPResponse* nuiHTTPRequest::SendRequest()
+{
+  return SendRequest(NULL, NULL);
+}
+
+
 
 ////////////////
 // nuiHTTPRequest_Thread

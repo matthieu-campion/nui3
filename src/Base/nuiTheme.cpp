@@ -327,7 +327,7 @@ void nuiTheme::DrawWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       
       // window title
       pContext->SetFont(mpWindowTitleFont);
-      nglFontInfo Info;
+      nuiFontInfo Info;
       mpWindowTitleFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrInactiveCaptionTextLight"), color);
       color.Multiply(alpha);
@@ -396,7 +396,7 @@ void nuiTheme::DrawActiveWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       
       // window title
       pContext->SetFont(mpWindowTitleFont);
-      nglFontInfo Info;
+      nuiFontInfo Info;
       mpWindowTitleFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
       color.Multiply(alpha);
@@ -467,7 +467,7 @@ void nuiTheme::DrawMovingWindow(nuiDrawContext* pContext, nuiWindow* pWindow)
       // window title
       nuiFont *pFont = nuiFont::GetFont(11);
       pContext->SetFont(pFont);
-      nglFontInfo Info;
+      nuiFontInfo Info;
       pFont->GetInfo(Info);
       nuiColor::GetColor(_T("nuiDefaultClrCaptionTextLight"), color);
       color.Multiply(alpha);
@@ -652,32 +652,67 @@ void nuiTheme::DrawSliderForeground(nuiDrawContext* pContext, nuiSlider* pSlider
   if (pSlider->GetOrientation() == nuiVertical)
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderVerticalHdl"));
-    NGL_ASSERT(pDeco);
-    const nuiRect& srcRect = pDeco->GetIdealClientRect(pSlider);
-    
-    nuiSize h = rect.GetHeight() - srcRect.GetHeight();
-    rect.mTop = h - (start * h);
-    rect.mBottom = rect.mTop + srcRect.GetHeight();
-    
-    rect.mLeft = (int)(rect.GetWidth() - srcRect.GetWidth())/2;
-    rect.mRight = rect.mLeft + srcRect.GetWidth();
-    
+
+    if (pDeco)
+    {
+      const nuiRect& srcRect = pDeco->GetIdealClientRect(pSlider);
+      
+      nuiSize h = rect.GetHeight() - srcRect.GetHeight();
+      rect.mTop = h - (start * h);
+      rect.mBottom = rect.mTop + srcRect.GetHeight();
+      
+      rect.mLeft = (int)(rect.GetWidth() - srcRect.GetWidth())/2;
+      rect.mRight = rect.mLeft + srcRect.GetWidth();
+    }
   }
   else
   {
     pDeco = nuiDecoration::Get(_T("nuiDefaultDecorationSliderHorizontalHdl"));
-    NGL_ASSERT(pDeco);
-    const nuiRect& srcRect = pDeco->GetIdealClientRect(pSlider);
-    
-    rect.mLeft = (start * (rect.GetWidth() - srcRect.GetWidth()));
-    rect.mRight = rect.mLeft + srcRect.GetWidth();
-    
-    rect.mTop = (int)(rect.GetHeight() - srcRect.GetHeight())/2;
-    rect.mBottom = rect.mTop + srcRect.GetHeight();
+    if (pDeco)
+    {
+      const nuiRect& srcRect = pDeco->GetIdealClientRect(pSlider);
+      
+      rect.mLeft = (start * (rect.GetWidth() - srcRect.GetWidth()));
+      rect.mRight = rect.mLeft + srcRect.GetWidth();
+      
+      rect.mTop = (int)(rect.GetHeight() - srcRect.GetHeight())/2;
+      rect.mBottom = rect.mTop + srcRect.GetHeight();
+    }
   }
   
-  pDeco->Draw(pContext, pSlider, rect);
-  pDeco->Release();
+  if (pDeco)
+  {
+    pDeco->Draw(pContext, pSlider, rect);
+    pDeco->Release();
+  }
+  else
+  {
+    if (pSlider->GetOrientation() == nuiVertical)
+    {
+      nuiRect srcRect = pSlider->GetRect().Size();
+      srcRect.SetHeight(srcRect.GetWidth() / 2);
+      
+      nuiSize h = rect.GetHeight() - srcRect.GetHeight();
+      rect.mTop = h - (start * h);
+      rect.mBottom = rect.mTop + srcRect.GetHeight();
+      
+      rect.mLeft = (int)(rect.GetWidth() - srcRect.GetWidth())/2;
+      rect.mRight = rect.mLeft + srcRect.GetWidth();
+    }
+    else
+    {
+      nuiRect srcRect = pSlider->GetRect().Size();
+      srcRect.SetWidth(srcRect.GetHeight() / 2);
+      
+      rect.mLeft = (start * (rect.GetWidth() - srcRect.GetWidth()));
+      rect.mRight = rect.mLeft + srcRect.GetWidth();
+      
+      rect.mTop = (int)(rect.GetHeight() - srcRect.GetHeight())/2;
+      rect.mBottom = rect.mTop + srcRect.GetHeight();
+    }
+    
+    pContext->DrawRect(rect, eFillShape);
+  }
 }
 
 const nuiColor& nuiTheme::GetElementColor(nuiWidgetElement Element) const
@@ -697,19 +732,48 @@ void nuiTheme::DrawTreeHandle(nuiDrawContext* pContext, const nuiRect& rRect, bo
     pDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowOpen"));
   else
     pDeco = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationArrowClose"));
-  NGL_ASSERT(pDeco);
-  
-  const nuiRect& rectSrc = pDeco->GetIdealClientRect(NULL);
-  
-  nuiSize x,y;
-  x = rRect.Left() + (int)((rRect.GetWidth() - rectSrc.GetWidth()) / 2.f);
-  y = rRect.Top() + (int)((rRect.GetHeight() - rectSrc.GetHeight()) / 2.f);
-  nuiRect rectDest(x, y, rectSrc.GetWidth() , rectSrc.GetHeight());
-  
-  pDeco->SetColor(rColor);
-  pDeco->Draw(pContext, NULL, rectDest);
-  
-  pDeco->Release();
+  if (pDeco)
+  {
+    const nuiRect& rectSrc = pDeco->GetIdealClientRect(NULL);
+    
+    nuiSize x,y;
+    x = rRect.Left() + (int)((rRect.GetWidth() - rectSrc.GetWidth()) / 2.f);
+    y = rRect.Top() + (int)((rRect.GetHeight() - rectSrc.GetHeight()) / 2.f);
+    nuiRect rectDest(x, y, rectSrc.GetWidth() , rectSrc.GetHeight());
+    
+    pDeco->SetColor(rColor);
+    pDeco->Draw(pContext, NULL, rectDest);
+    
+    pDeco->Release();
+  }
+  else
+  {
+    pContext->SetFillColor(rColor);
+    nuiRenderArray* array = new nuiRenderArray(GL_TRIANGLES);
+    float l = MIN(rRect.GetWidth(), rRect.GetHeight());
+    nuiRect r(l, l);
+    r.SetPosition(nuiCenter, rRect);
+    const float x = r.Left();
+    const float y = r.Top();
+    const float w = r.GetWidth();
+    const float h = r.GetHeight();
+    
+    if (IsOpened)
+    {
+      array->SetVertex(x,       y);     array->PushVertex();
+      array->SetVertex(x + w,   y);     array->PushVertex();
+      array->SetVertex(x + w/2, y + h); array->PushVertex();
+    }
+    else
+    {
+      array->SetVertex(x,     y);       array->PushVertex();
+      array->SetVertex(x + w, y + h/2); array->PushVertex();
+      array->SetVertex(x,     y + h);   array->PushVertex();
+    }
+    
+    pContext->DrawArray(array);
+  }
+     
 }
 
 

@@ -37,7 +37,7 @@ nuiSampleReader* nuiAudioDecoder::Clone(nglIStream& rStream) const
 }
 
 
-void nuiAudioDecoder::SetPosition(uint32 pos)
+void nuiAudioDecoder::SetPosition(int64 pos)
 {
   if (!mInitialized)
     return;
@@ -49,57 +49,6 @@ void nuiAudioDecoder::SetPosition(uint32 pos)
   {
     mPosition = pos;
   }
-}
-
-
-uint32 nuiAudioDecoder::ReadIN(void* pBuffer, uint32 sampleframes, nuiSampleBitFormat format)
-{
-  //don't increment mPosition: it's already done in ReadDE
-  uint32 channels = mInfo.GetChannels();
-  
-  uint32 length = mInfo.GetSampleFrames();
-  if (mPosition >= length)
-    return 0;
-  sampleframes = MIN(sampleframes, length - mPosition);
-  
-  std::vector<float*> temp(channels);
-  std::vector<void*> tempVoid(channels);
-  for (uint32 c= 0; c < channels; c++)
-  {
-    temp[c] = new float[sampleframes];
-    tempVoid[c] = (void*)(temp[c]);
-  }
-  
-  uint32 sampleFramesRead = ReadDE(tempVoid, sampleframes, eSampleFloat32);
-  if (format == eSampleFloat32)
-  {
-    float* pFloatBuffer = (float*)pBuffer;
-    //just interleave samples
-    for (uint32 c = 0; c < channels; c++)
-    {
-      for (uint32 s = 0; s < sampleFramesRead; s++)
-      {
-        pFloatBuffer[s * channels + c] = temp[c][s];
-      }
-    }
-  }
-  else
-  {
-    //16 bits int are required, so interleave samples and convert them into float
-    int16* pInt16Buffer = (int16*)pBuffer;
-    for (uint32 c = 0; c < channels; c++)
-    {
-      nuiAudioConvert_DEfloatToINint16(temp[c], pInt16Buffer, c, channels, sampleFramesRead);
-    }
-    
-  }
-  
-  for (uint32 c= 0; c < channels; c++)
-  {
-    delete[] temp[c];
-  }
-  
-  return sampleFramesRead;
 }
 
 

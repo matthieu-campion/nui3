@@ -75,6 +75,7 @@ bool nuiInitBindings()
     nuiAddMethod(GetObjectClassNameIndex, nuiObject::GetObjectClassNameIndex);
   nuiEndClass;
 
+#ifndef _MINUI3_
   nuiBindClass(nuiWidget);
   nuiInheritFrom(nuiObject);
   nuiAddCtor(nuiCreateObject<nuiWidget>);
@@ -150,10 +151,11 @@ bool nuiInitBindings()
   // nuiOrientation:
   nuiAddEnum(nuiHorizontal);
   nuiAddEnum(nuiVertical);
-  
+#endif // ifndef _MINUI3_
+
   nglString str;
   nuiBindingManager::GetManager().Dump(str);
-  NGL_OUT(_T("Binding manager dump:\n%ls\n"), str.GetChars());
+  NGL_OUT(_T("Binding manager dump:\n%s\n"), str.GetChars());
   
   return true;
 }

@@ -27,6 +27,8 @@
 		BC80B1510E8B840100ECDCE7 /* PreferencesBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC80B14E0E8B840100ECDCE7 /* PreferencesBase.cpp */; };
 		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
 		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E533391A13C347650080C465 /* embed_graphics.plist in Resources */ = {isa = PBXBuildFile; fileRef = E533391913C347650080C465 /* embed_graphics.plist */; };
+		E533391B13C347650080C465 /* embed_graphics.plist in Resources */ = {isa = PBXBuildFile; fileRef = E533391913C347650080C465 /* embed_graphics.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +135,7 @@
 		BC80B14E0E8B840100ECDCE7 /* PreferencesBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PreferencesBase.cpp; path = src/PreferencesBase.cpp; sourceTree = SOURCE_ROOT; };
 		BC80B14F0E8B840100ECDCE7 /* PreferencesBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencesBase.h; path = src/PreferencesBase.h; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E533391913C347650080C465 /* embed_graphics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = embed_graphics.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +193,7 @@
 		61A9DE4A0B833CD000BC506C /* src */ = {
 			isa = PBXGroup;
 			children = (
+				E533391913C347650080C465 /* embed_graphics.plist */,
 				61A9DFEF0B83433800BC506C /* Application.cpp */,
 				61A9DFF00B83433800BC506C /* Application.h */,
 				61A9DFF10B83433800BC506C /* MainWindow.cpp */,
@@ -377,6 +381,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E533391A13C347650080C465 /* embed_graphics.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +389,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E533391B13C347650080C465 /* embed_graphics.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +439,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = ../../include;
+				INFOPLIST_FILE = embed_graphics.plist;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lz",
@@ -451,7 +458,6 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PREBINDING = YES;
 				PRODUCT_NAME = embed_graphics;
@@ -479,7 +485,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PREBINDING = YES;
 				PRODUCT_NAME = embed_graphicsD;

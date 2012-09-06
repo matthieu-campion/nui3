@@ -555,7 +555,6 @@ void nglApplication::Quit (int Code)
 
 int nglApplication::Main(int argc, const char** argv)
 {
-  //nuiInit(NULL, NULL);
   NSAutoreleasePool *pPool = [NSAutoreleasePool new];
 
   Init(argc, argv);
@@ -570,7 +569,6 @@ int nglApplication::Main(int argc, const char** argv)
   [applicationObject run];
   
   [pPool release];
-  //nuiUninit();
   return 0;
 }
 

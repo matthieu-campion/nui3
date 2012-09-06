@@ -122,7 +122,7 @@ OSStatus AudioUnitInputCallback(void* inRefCon,
 
 void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
 {
-  NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d   (%d) %d %d\n"),uNumFrames, ioData->mNumberBuffers, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
+  //NGL_OUT(_T("nuiAudioDevice_AudioUnit::Process uNumFrames %d   (%d) %d %d\n"),uNumFrames, ioData->mNumberBuffers, ioData->mBuffers[0].mNumberChannels, ioData->mBuffers[1].mNumberChannels );
   
   mAudioProcessFn(mInputBuffers, mOutputBuffers, uNumFrames);
 
@@ -137,7 +137,7 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
       int32* dst1 = (int32*)ioData->mBuffers[1].mData;
       const float* ptr0 = mOutputBuffers[0];
       const float* ptr1 = mOutputBuffers[1];
-      for (uint32 s = 0; s < uNumFrames; s++)
+      for (int32 s = 0; s < uNumFrames; s++)
       {
         const float sl = nuiClamp(*ptr0, -1.0f, 1.0f);
         const float sr = nuiClamp(*ptr1, -1.0f, 1.0f);
@@ -162,7 +162,7 @@ void nuiAudioDevice_AudioUnit::Process(uint uNumFrames, AudioBufferList* ioData)
       const float* ptr1 = mOutputBuffers[1];
       
       const int32 mult = ((1 << 15) - 1);
-      for (uint32 s = 0; s < uNumFrames; s++)
+      for (int32 s = 0; s < uNumFrames; s++)
       {
         const float sl = nuiClamp(*ptr0, -1.0f, 1.0f);
         const float sr = nuiClamp(*ptr1, -1.0f, 1.0f);
@@ -197,7 +197,7 @@ void nuiAudioDevice_AudioUnit::ProcessInput(AudioUnitRenderActionFlags* ioAction
     const float mult = 1.0 / ((1 << 15) - 1);
     const int16* src0 = (int16*)ioData->mBuffers[0].mData;
     float* dst0 = const_cast<float*>(&mInputBuffers[0][0]);
-    for (uint32 s = 0; s < inNumberFrames; s++)
+    for (int32 s = 0; s < inNumberFrames; s++)
     {
       const float sl = *src0;
       
@@ -214,7 +214,7 @@ void nuiAudioDevice_AudioUnit::ProcessInput(AudioUnitRenderActionFlags* ioAction
 //      const float* ptr1 = mOutputBuffers[1];
 //      
 //      const int32 mult = ((1 << 15) - 1);
-//      for (uint32 s = 0; s < uNumFrames; s++)
+//      for (int32 s = 0; s < uNumFrames; s++)
 //      {
 //        const float sl = *ptr0;
 //        const float sr = *ptr1;
@@ -234,7 +234,7 @@ void nuiAudioDevice_AudioUnit::ProcessInput(AudioUnitRenderActionFlags* ioAction
 
 
 
-bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction)
+bool nuiAudioDevice_AudioUnit::Open(std::vector<int32>& rInputChannels, std::vector<int32>& rOutputChannels, double SampleRate, int32 BufferSize, nuiAudioProcessFn pProcessFunction)
 {
   OSStatus err;
   	
@@ -248,7 +248,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
       
   mOutputBuffers.resize(mActiveOutputChannels.size(), NULL);
   // init buffers
-  for (uint32 i = 0; i < mOutputBuffers.size(); i++)
+  for (int32 i = 0; i < mOutputBuffers.size(); i++)
     mOutputBuffers[i] = (float*)malloc(mBufferSize * sizeof(float));
   
   {
@@ -324,7 +324,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 	//find out about the device's format (but I can save you the suspense:
 	//integer | non-interleaved | packed | little endian | 32 bits (8.24 fixed)
 	AudioStreamBasicDescription out_fmt_desc = {0};
-	uint32 size = sizeof(out_fmt_desc);
+	int32 size = sizeof(out_fmt_desc);
 	
 //	err = AudioUnitGetProperty(mAudioUnit, 
 //                             kAudioUnitProperty_StreamFormat, 
@@ -336,7 +336,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 //    return false;
 //  }
 	
-  uint32 s = 2; //sizeof(AudioUnitSampleType);
+  int32 s = 2; //sizeof(AudioUnitSampleType);
   out_fmt_desc.mFormatID = kAudioFormatLinearPCM;
   if (s == 4)
     out_fmt_desc.mFormatFlags = kLinearPCMFormatFlagIsFloat;
@@ -419,7 +419,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
     //    return false;
     //  }
     
-    uint32 s = 2; //sizeof(AudioUnitSampleType);
+    int32 s = 2; //sizeof(AudioUnitSampleType);
     in_fmt_desc.mFormatID = kAudioFormatLinearPCM;
     if (s == 4)
       in_fmt_desc.mFormatFlags = kLinearPCMFormatFlagIsFloat;
@@ -473,8 +473,8 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
     
     mpIData->mNumberBuffers = 1;
     AudioBuffer& rBuf(*(mpIData->mBuffers));
-    uint32 ins = rInputChannels.size();
-    uint32 c = BufferSize * ins * in_fmt_desc.mBytesPerFrame;
+    int32 ins = rInputChannels.size();
+    int32 c = BufferSize * ins * in_fmt_desc.mBytesPerFrame;
     //printf("Audio inputs: %d - bytes: %d\n", ins, c);
     rBuf.mNumberChannels = ins;
     rBuf.mDataByteSize = c;
@@ -524,7 +524,7 @@ bool nuiAudioDevice_AudioUnit::Open(std::vector<uint32>& rInputChannels, std::ve
 	
 	err = AudioUnitInitialize(mAudioUnit);
   
-  uint32 count = 4;
+  int32 count = 4;
   while (err == -12983 && count--)
   {
     nglThread::MsSleep(100);
@@ -583,7 +583,7 @@ void nuiAudioDevice_AudioUnit::EnumBufferSizes()
   mBufferSizes.push_back(32768);
 }
 
-nglString nuiAudioDevice_AudioUnit::GetChannelName(bool IsInput, uint32 index) const
+nglString nuiAudioDevice_AudioUnit::GetChannelName(bool IsInput, int32 index) const
 {
   if (IsInput)
     return mInputChannels[index];
@@ -613,13 +613,13 @@ nuiAudioDeviceAPI_AudioUnit::~nuiAudioDeviceAPI_AudioUnit()
 }
 
 
-uint32 nuiAudioDeviceAPI_AudioUnit::GetDeviceCount() const
+int32 nuiAudioDeviceAPI_AudioUnit::GetDeviceCount() const
 {
   return 1;
 }
 
 
-nuiAudioDevice* nuiAudioDeviceAPI_AudioUnit::GetDevice(uint32 index)
+nuiAudioDevice* nuiAudioDeviceAPI_AudioUnit::GetDevice(int32 index)
 {
   if (index == 0)
     return new nuiAudioDevice_AudioUnit();
@@ -633,7 +633,7 @@ nuiAudioDevice* nuiAudioDeviceAPI_AudioUnit::GetDevice(const nglString& rDeviceN
   return NULL;
 }
 
-nglString nuiAudioDeviceAPI_AudioUnit::GetDeviceName(uint32 index) const
+nglString nuiAudioDeviceAPI_AudioUnit::GetDeviceName(int32 index) const
 {
   if (index == 0)
     return nglString(_T("Output"));

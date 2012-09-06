@@ -1,3 +1,4 @@
+add_subdirectory (AudioDecoder)
 add_subdirectory (RSS)
 add_subdirectory (Buttons)
 add_subdirectory (Checkerboard)

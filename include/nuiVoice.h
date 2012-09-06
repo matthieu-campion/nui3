@@ -9,6 +9,21 @@
 
 #include "nui.h"
 
+class nuiVoiceEvent
+{
+public:
+  enum Type
+  {
+    FadeOut,
+    FadeIn
+  };
+  nuiVoiceEvent(Type EventType, int64 position, int64 param = 0);
+  
+  Type mType;
+  int64 mPosition;
+  int64 mParam;
+};
+
 
 class nuiVoice : public nuiObject
 {
@@ -19,20 +34,20 @@ public:
   virtual bool IsValid() const = 0;
   bool IsDone() const;
   
-  void Process(const std::vector<float*>& rOutput, uint32 SampleFrames);
+  void Process(const std::vector<float*>& rOutput, int32 SampleFrames);
   
   void Play();
   void Pause();
   bool IsPlaying() const;
   
-  void FadeIn(uint32 length);
-  void FadeOut(uint32 length);
+  void FadeIn(int32 length);
+  void FadeOut(int32 length);
   
   void SetLoop(bool loop);
   bool IsLooping();
   
-//  virtual uint64 GetSampleFrames() const = 0;
-  virtual uint32 GetChannels() const = 0;
+//  virtual int64 GetSampleFrames() const = 0;
+  virtual int32 GetChannels() const = 0;
   
   int64 GetPosition() const;
   void SetPosition(int64 position);
@@ -48,8 +63,10 @@ public:
   float GetPan() const;
   void SetPan(float pan);
   
+  void PostEvent(const nuiVoiceEvent& rEvent);
 protected:
-  virtual uint32 ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames) = 0;
+  virtual int32 ReadSamples(const std::vector<float*>& rOutput, int64 position, int32 SampleFrames) = 0;
+  void ProcessInternal(const std::vector<float*>& rOutput, int32 SampleFrames);
 
   nuiVoice(nuiSound* pSound = NULL);  
   virtual ~nuiVoice();
@@ -73,12 +90,18 @@ protected:
   int64 mPosition;
   
   bool mFadingIn;
-  uint32 mFadeInPosition;
-  uint32 mFadeInLength;
+  int32 mFadeInPosition;
+  int32 mFadeInLength;
   
   bool mFadingOut;
-  uint32 mFadeOutPosition;
-  uint32 mFadeOutLength;
+  int32 mFadeOutPosition;
+  int32 mFadeOutLength;
   
   nglCriticalSection mCs;
+  
+  std::vector<nuiVoiceEvent> mEvents;
+  nglCriticalSection mEventCs;
+  
 };
+
+
