@@ -14,7 +14,6 @@
 nglLock::nglLock(bool registerToThreadChecker)
 {
   mRegisterToThreadChecker = registerToThreadChecker;
-  return;
 
   if (mRegisterToThreadChecker)
     nglThreadChecker::AddRef();
@@ -26,7 +25,6 @@ nglLock::nglLock(const nglString& rName, bool registerToThreadChecker)
   mName = rName;
   mRegisterToThreadChecker = registerToThreadChecker;
 
-  return;
   if (mRegisterToThreadChecker)
     nglThreadChecker::AddRef();
 }
@@ -35,7 +33,6 @@ nglLock::nglLock(const nglString& rName, bool registerToThreadChecker)
 
 nglLock::~nglLock()
 {
-  return;
   if (mRegisterToThreadChecker)
     nglThreadChecker::ReleaseRef();
 }
@@ -43,11 +40,6 @@ nglLock::~nglLock()
 
 void nglLock::Lock()
 {
-  nglThread::ID threadID = nglThread::GetCurThreadID();
-  _Lock(threadID);
-  return;
-
-#if 0
   // for dead-lock checker
   nglThread::ID threadID = nglThread::GetCurThreadID();
   if (mRegisterToThreadChecker)
@@ -58,13 +50,10 @@ void nglLock::Lock()
 
   if (mRegisterToThreadChecker)
     nglThreadChecker::Lock(threadID, this);
-  #endif
 }
 
 void nglLock::Unlock()
 {
-  _Unlock();
-  return;
   // call inherited Unlock implementation (critical section or light lock)
   _Unlock();
 
@@ -83,7 +72,6 @@ bool nglLock::TryLock()
 
   // call inherited TryLock implementation (critical section or light lock)
   bool res = _TryLock(threadID);
-return res;
 
   // for dead-lock checker
   if (res && mRegisterToThreadChecker)
