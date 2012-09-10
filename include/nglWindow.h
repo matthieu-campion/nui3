@@ -428,6 +428,15 @@ window = new nglWindow (context, info, NULL);
   */
   //@}
 
+  /** @name Flags */
+  //@{
+  const Flags& GetFlags() const { return mFlags; }
+  /*!<
+   \return Window specific informations (eg. resizable attr, etc ...).
+   */
+  //@}
+  
+  
   /** @name Mouse */
   //@{
   nglMouseInfo::Mode GetMouseMode() const;

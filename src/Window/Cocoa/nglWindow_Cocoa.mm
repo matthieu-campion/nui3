@@ -327,7 +327,10 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
   mpLastMouseEvent = nil;
 
   BOOL deffering = NO;
-  uint32 styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+  uint32 styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
+  if (!(pNGLWindow->GetFlags() & nglWindow::NoResize))
+    styleMask |= NSResizableWindowMask;
+  
   NSBackingStoreType buffering = NSBackingStoreBuffered;
     
   if ( (self = [self initWithContentRect:rect styleMask:styleMask backing:buffering defer:deffering]) )
@@ -1051,6 +1054,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 {
   mState = eHide;
   mAngle = 0;
+  mFlags = rInfo.Flags;
 
   SetError (NGL_WINDOW_ENONE);
   SetEventMask(nglWindow::AllEvents);
