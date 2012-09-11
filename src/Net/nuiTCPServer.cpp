@@ -26,6 +26,7 @@
 
 nuiTCPServer::nuiTCPServer()
 {
+  mAcceptedCount = 0;
 }
 
 nuiTCPServer::~nuiTCPServer()
@@ -77,6 +78,8 @@ nuiTCPClient* nuiTCPServer::Accept()
   int n = 1;
   int s = accept(mSocket, NULL, NULL);
 
+  mAcceptedCount++;
+
   if (s >= 0)
   {
     //printf("%x accept %d\n", this, s);
@@ -92,3 +95,19 @@ nuiTCPClient* nuiTCPServer::OnCreateClient(nuiSocket::SocketType sock)
   return new nuiTCPClient(sock);
 }
 
+nglString nuiTCPServer::GetDesc() const
+{
+  nuiNetworkHost source(0, 0, nuiNetworkHost::eTCP);
+  GetLocalHost(source);
+  uint32 S = source.GetIP();
+  uint8* s = (uint8*)&S;
+
+  nglString str;
+  str.CFormat("%5d: %s - bound %d.%d.%d.%d:%d (%d clients) [ %s ]",
+              GetSocket(),
+              IsNonBlocking() ? "NoBlock" : "Block  ",
+              s[0], s[1], s[2], s[3], ntohs(source.GetPort()),
+              mAcceptedCount,
+              mName.GetChars());
+  return str;
+}

@@ -72,6 +72,9 @@ public:
   void SendWriteBuffer();
 
   void SetAutoPool(nuiSocketPool* pPool);
+
+  nglString GetDesc() const;
+
 protected:
   friend class nuiTCPServer;
   nuiTCPClient(int sock);

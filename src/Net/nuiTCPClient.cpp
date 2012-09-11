@@ -352,6 +352,32 @@ void nuiTCPClient::OnWriteClosed()
 }
 
 
+nglString nuiTCPClient::GetDesc() const
+{
+  nuiNetworkHost source(0, 0, nuiNetworkHost::eTCP);
+  nuiNetworkHost dest(0, 0, nuiNetworkHost::eTCP);
+  GetLocalHost(source);
+  GetDistantHost(dest);
+  uint32 S = source.GetIP();
+  uint32 D = dest.GetIP();
+  uint8* s = (uint8*)&S;
+  uint8* d = (uint8*)&D;
+
+  nglString str;
+  str.CFormat("%5d: %s - from %d.%d.%d.%d:%d --> %d.%d.%d.%d:%d | i:%d / o:%d | pool: %p%s [ %s ]",
+              GetSocket(),
+              IsNonBlocking() ? "NoBlock" : "Block  ",
+              s[0], s[1], s[2], s[3], ntohs(source.GetPort()),
+              d[0], d[1], d[2], d[3], ntohs(dest.GetPort()),
+              (int)mIn.GetSize(), (int)mOut.GetSize(),
+              mpPool, (mpAutoPool?" (auto)":""),
+              mName.GetChars());
+  return str;
+}
+
+
+
+
 //////////////////////////
 //class nuiPipe
 nuiPipe::nuiPipe()
@@ -427,6 +453,4 @@ void nuiPipe::Clear()
   nglCriticalSectionGuard guard(mCS);
   mBuffer.clear();
 }
-
-
 

@@ -44,9 +44,3 @@ void nglConsole::OnOutput(const nglString& rText)
 
 #define BUFFER_MAX 4096
 
-void nglConsole::OnEvent(int Flags)
-{
-//  char buffer[BUFFER_MAX+1];
-//  int count;
-}
-

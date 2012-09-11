@@ -27,5 +27,10 @@ public:
   
 private:
   virtual nuiTCPClient* OnCreateClient(nuiSocket::SocketType sock);
+
+  nglString GetDesc() const;
+
+  int64 mAcceptedCount;
+
 };
 

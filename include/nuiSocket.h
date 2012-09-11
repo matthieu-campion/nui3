@@ -19,45 +19,6 @@ class nuiNetworkHost;
 class nuiSocketPool;
 class nuiSocket;
 
-class nuiSocketPool
-{
-public:
-  nuiSocketPool();
-  virtual ~nuiSocketPool();
-
-  enum TriggerMode
-  {
-    eContinuous,
-    eStateChange
-  };
-
-  void Add(nuiSocket* pSocket, TriggerMode Mode);
-  void Del(nuiSocket* pSocket);
-
-  int DispatchEvents(int timeout_millisec);
-private:
-  bool IsInDispatch() const;
-  void SetInDispatch(bool set);
-  nglCriticalSection mCS;
-  std::set<nuiSocket*> mDeletedFromPool;
-  nglAtomic mInDispatch;
-
-  int mNbSockets;
-
-
-#ifdef NGL_KQUEUE
-  // Kernel queue implementation (FreeBSD, Darwin...)
-  std::vector<struct kevent> mEvents;
-  int mQueue;
-#endif
-
-#ifdef NGL_EPOLL
-  //std::vector<struct epoll_event> mEvents;
-  int mEPoll;
-#endif
-
-};
-
 #define __FUNC__ "%s:%d",__FILE__,__LINE__
 
 class nuiSocket
@@ -97,6 +58,16 @@ public:
 
   static void DumpError(int err);
   static void DumpError(int err, const char* msg, ...);
+
+  const nglString& GetName() const;
+  void SetName(const nglString& rName);
+  virtual nglString GetDesc() const;
+
+  // Socket introspection:
+  static int64 GetSocketCount();
+  static void VisitSockets(const nuiFastDelegate1<nuiSocket*>& rDelegate);
+
+  static void GetStatusReport(nglString& rResult);
 protected:
   friend class nuiSocketPool;
   nuiSocket(SocketType Socket = -1);
@@ -112,4 +83,53 @@ protected:
   EventDelegate mWriteCloseDelegate;
   bool mNonBlocking;
   nuiSocketPool* mpPool;
+
+  nglString mName;
+
+  static void AddSocket(nuiSocket* pSocket);
+  static void DelSocket(nuiSocket* pSocket);
+  static int64 gmSocketCount;
+  static nglCriticalSection gmCS;
+  static std::set<nuiSocket*> gmAllSockets;
 };
+
+
+class nuiSocketPool
+{
+public:
+  nuiSocketPool();
+  virtual ~nuiSocketPool();
+
+  enum TriggerMode
+  {
+    eContinuous,
+    eStateChange
+  };
+
+  void Add(nuiSocket* pSocket, TriggerMode Mode);
+  void Del(nuiSocket* pSocket);
+
+  int DispatchEvents(int timeout_millisec);
+private:
+  bool IsInDispatch() const;
+  void SetInDispatch(bool set);
+  nglCriticalSection mCS;
+  std::set<nuiSocket*> mDeletedFromPool;
+  nglAtomic mInDispatch;
+
+  int mNbSockets;
+
+
+#ifdef NGL_KQUEUE
+  // Kernel queue implementation (FreeBSD, Darwin...)
+  std::vector<struct kevent> mEvents;
+  int mQueue;
+#endif
+
+#ifdef NGL_EPOLL
+  //std::vector<struct epoll_event> mEvents;
+  int mEPoll;
+#endif
+  
+};
+

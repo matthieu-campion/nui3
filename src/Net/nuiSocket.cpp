@@ -67,6 +67,8 @@ nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
     DumpError(res, __FUNC__);
   }
 #endif
+
+  AddSocket(this);
 }
 
 bool nuiSocket::Init(int domain, int type, int protocol)
@@ -82,6 +84,7 @@ bool nuiSocket::Init(int domain, int type, int protocol)
 
 nuiSocket::~nuiSocket()
 {
+  DelSocket(this);
   Close();
 }
 
@@ -235,10 +238,92 @@ void nuiSocket::OnWriteClosed()
 }
 
 
+const nglString& nuiSocket::GetName() const
+{
+  nglCriticalSectionGuard g(gmCS);
+  return mName;
+}
+
+void nuiSocket::SetName(const nglString& rName)
+{
+  nglCriticalSectionGuard g(gmCS);
+  mName = rName;
+}
+
+nglString nuiSocket::GetDesc() const
+{
+  nuiNetworkHost source(0, 0, nuiNetworkHost::eTCP);
+  nuiNetworkHost dest(0, 0, nuiNetworkHost::eTCP);
+  GetLocalHost(source);
+  GetDistantHost(dest);
+  uint32 S = source.GetIP();
+  uint32 D = dest.GetIP();
+  uint8* s = (uint8*)&S;
+  uint8* d = (uint8*)&D;
+
+  nglString str;
+  str.CFormat("%5d: %s - from %d.%d.%d.%d:%d --> %d.%d.%d.%d:%d [ %s ]",
+                      GetSocket(),
+                      IsNonBlocking() ? "NoBlock" : "Block  ",
+                      s[0], s[1], s[2], s[3], ntohs(source.GetPort()),
+                      d[0], d[1], d[2], d[3], ntohs(dest.GetPort()),
+                      mName.GetChars());
+  return str;
+}
+
+void nuiSocket::AddSocket(nuiSocket* pSocket)
+{
+  nglCriticalSectionGuard g(gmCS);
+  gmAllSockets.insert(pSocket);
+  gmSocketCount++;
+}
+
+void nuiSocket::DelSocket(nuiSocket* pSocket)
+{
+  nglCriticalSectionGuard g(gmCS);
+  gmAllSockets.erase(pSocket);
+}
+
+int64 nuiSocket::GetSocketCount()
+{
+  return gmSocketCount;
+}
+
+void nuiSocket::VisitSockets(const nuiFastDelegate1<nuiSocket*>& rDelegate)
+{
+  nglCriticalSectionGuard g(gmCS);
+
+  for (std::set<nuiSocket*>::const_iterator it = gmAllSockets.begin(); it != gmAllSockets.end(); ++it)
+  {
+    nuiSocket* pSocket = *it;
+    rDelegate(pSocket);
+  }
+}
+
+
+int64 nuiSocket::gmSocketCount = 0;
+nglCriticalSection nuiSocket::gmCS;
+std::set<nuiSocket*> nuiSocket::gmAllSockets;
 
 
 
+void nuiSocket::GetStatusReport(nglString& rResult)
+{
+  nglCriticalSectionGuard g(gmCS);
 
+  rResult.Wipe();
+  rResult.Add("Total sockets created in session: ").Add(gmSocketCount).AddNewLine();
+  rResult.Add("Total current sockets...........: ").Add((int64)gmAllSockets.size()).AddNewLine();
+  rResult.AddNewLine();
+
+
+  for (std::set<nuiSocket*>::const_iterator it = gmAllSockets.begin(); it != gmAllSockets.end(); ++it)
+  {
+    nuiSocket* pSocket = *it;
+
+    rResult.Add("\t").Add(pSocket->GetDesc()).AddNewLine();
+  }
+}
 
 
 
