@@ -72,6 +72,7 @@ public:
   const nglString& GetProtocol() const;
   const nglString& GetVersion() const;
 
+  void OnReadClosed();
 
 protected:
   enum State

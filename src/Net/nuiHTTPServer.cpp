@@ -389,6 +389,13 @@ const nglString& nuiHTTPHandler::GetVersion() const
   return mVersion;
 }
 
+void nuiHTTPHandler::OnReadClosed()
+{
+  if (mState != Body && mState != Done && !GetAvailable())
+    delete this;
+}
+
+
 
 //class nuiHTTPServerThread : public nglThread
 nuiHTTPServerThread::nuiHTTPServerThread(nuiHTTPHandler* pHandler, size_t StackSize)
