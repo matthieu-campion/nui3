@@ -88,6 +88,9 @@ protected:
   size_t WriteToInputBuffer(const uint8* pBuffer, size_t size);
   size_t ReadFromOutputBuffer(uint8* pBuffer, size_t size);
 
+  int64 mReceived;
+  int64 mSent;
+
   bool mAutoDelete;
   nuiSocketPool* mpAutoPool;
 };

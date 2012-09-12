@@ -27,6 +27,8 @@ nuiTCPClient::nuiTCPClient()
   mWriteConnected = false;
   mAutoDelete = false;
   mpAutoPool = NULL;
+  mReceived = 0;
+  mSent = 0;
 }
 
 nuiTCPClient::nuiTCPClient(int sock)
@@ -36,6 +38,8 @@ nuiTCPClient::nuiTCPClient(int sock)
   mWriteConnected = true;
   mAutoDelete = false;
   mpAutoPool = NULL;
+  mReceived = 0;
+  mSent = 0;
 }
 
 nuiTCPClient::~nuiTCPClient()
@@ -97,7 +101,8 @@ int nuiTCPClient::Send(const uint8* pData, int len)
     DumpError(res, __FUNC__);
     mWriteConnected = false;
   }
-
+  else
+    mSent += res;
   return res;
 }
 
@@ -134,6 +139,7 @@ int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
 
   rData.resize(res);
 
+  mReceived += res;
   return res;
 }
 
@@ -149,6 +155,8 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
 
 
   mReadConnected = res != 0;
+  if (res > 0)
+    mReceived += res;
 
   return res;
 }
@@ -364,12 +372,12 @@ nglString nuiTCPClient::GetDesc() const
   uint8* d = (uint8*)&D;
 
   nglString str;
-  str.CFormat("%5d: %s - from %d.%d.%d.%d:%d --> %d.%d.%d.%d:%d | i:%d / o:%d | pool: %p%s [ %s ]",
+  str.CFormat("%5d: %s - from %d.%d.%d.%d:%d --> %d.%d.%d.%d:%d | i:%d / o:%d / a:%d / r:%lld / s:%lld| pool: %p%s [ %s ]",
               GetSocket(),
               IsNonBlocking() ? "NoBlock" : "Block  ",
               s[0], s[1], s[2], s[3], ntohs(source.GetPort()),
               d[0], d[1], d[2], d[3], ntohs(dest.GetPort()),
-              (int)mIn.GetSize(), (int)mOut.GetSize(),
+              (int)mIn.GetSize(), (int)mOut.GetSize(), GetAvailable(), mReceived, mSent,
               mpPool, (mpAutoPool?" (auto)":""),
               mName.GetChars());
   return str;
