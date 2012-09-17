@@ -98,17 +98,17 @@ nglFile::nglFile (const nglPath& rPath, nglFileMode Mode, bool OpenNow)
 
 nglFile::~nglFile()
 {
-  bool close = true;
+  bool closeit = true;
 #if (defined _LINUX_) || (defined __APPLE__) || (defined _ANDROID_) || (defined _MINUI3_)
-	close = (mFD != -1);
+	closeit = (mFD != -1);
 #endif
 #ifdef WINCE
-  close = (mFD != INVALID_HANDLE_VALUE);
+  closeit = (mFD != INVALID_HANDLE_VALUE);
 #elif defined _WIN32_
-  close = (mFD != NULL);
+  closeit = (mFD != NULL);
 #endif
 
-  if (close)
+  if (closeit)
     Close();
 }
 

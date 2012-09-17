@@ -31,7 +31,8 @@ nglIFile::nglIFile (const nglPath& rPath, bool OpenNow)
 
 nglIFile::~nglIFile()
 {
-  if (mOwnFile && (mpFile)) delete mpFile;
+  if (mOwnFile)
+    delete mpFile;
 }
 
 /*
