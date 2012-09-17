@@ -391,6 +391,8 @@ const nglString& nuiHTTPHandler::GetVersion() const
 
 void nuiHTTPHandler::OnReadClosed()
 {
+  nuiTCPClient::OnReadClosed();
+
   if (mState != Body && mState != Done && !GetAvailable())
     delete this;
 }
