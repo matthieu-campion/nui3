@@ -18940,7 +18940,7 @@
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = all;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Default;
 		};
@@ -19005,7 +19005,7 @@
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = all;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Default;
 		};
