@@ -358,12 +358,12 @@ extern NGL_API class nglKernel* App;
   #define __NGL_APP_MAINCALL Main(argc, argv)
 #endif // _COCOA_
 
-#ifdef _CARBON_
-#error "_CARBON_ shouldn't be defined"
-#endif
-#ifdef _UIKIT_
-#error "_UIKIT_ shouldn't be defined"
-#endif
+//#ifdef _CARBON_
+//#error "_CARBON_ shouldn't be defined"
+//#endif
+//#ifdef _UIKIT_
+//#error "_UIKIT_ shouldn't be defined"
+//#endif
 
 #if defined(_UNIX_) || defined(_CARBON_) || defined(_UIKIT_)
   #define __NGL_APP_MAINDECL int main(int argc, char** argv)
