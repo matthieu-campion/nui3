@@ -196,24 +196,28 @@ bool nuiTCPClient::IsWriteConnected() const
 
 bool nuiTCPClient::IsReadConnected() const
 {
-  /*
-  bool retval = false;
-  int bytestoread = 0;
-  timeval timeout;
-  timeout.tv_sec = 0;
-  timeout.tv_usec = 0;
-  fd_set myfd;
+  if (mReadConnected)
+  {
+//   bool retval = false;
+//   int bytestoread = 0;
+//   timeval timeout;
+//   timeout.tv_sec = 0;
+//   timeout.tv_usec = 0;
+//   fd_set myfd;
+//
+//   FD_ZERO(&myfd);
+//   FD_SET(mSocket, &myfd);
+//   int sio = select(FD_SETSIZE, &myfd, (fd_set *)0, (fd_set *)0, &timeout);
+//   //have to do select first for some reason
+//   int dio = ioctl(mSocket, FIONREAD, &bytestoread);//should do error checking on return value of this
+//   retval = ((bytestoread == 0) && (sio == 1));
+//   
+//   return retval;
 
-  FD_ZERO(&myfd);
-  FD_SET(mSocket, &myfd);
-  int sio = select(FD_SETSIZE, &myfd, (fd_set *)0, (fd_set *)0, &timeout);
-  //have to do select first for some reason
-  int dio = ioctl(mSocket, FIONREAD, &bytestoread);//should do error checking on return value of this
-  retval = ((bytestoread == 0) && (sio == 1));
+    return true;
+  }
 
-  return retval;
-   */
-  return mReadConnected;
+  return false;
 }
 
 int32 nuiTCPClient::GetAvailable() const

@@ -5053,6 +5053,7 @@
 		E5C6CE1C0FF6DC38003E6002 /* nuiHTMLStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C6CE1A0FF6DC38003E6002 /* nuiHTMLStyle.cpp */; };
 		E5C6CE1F0FF6DC38003E6002 /* nuiHTMLStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5C6CE190FF6DC38003E6002 /* nuiHTMLStyle.h */; };
 		E5C6CE200FF6DC38003E6002 /* nuiHTMLStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5C6CE1A0FF6DC38003E6002 /* nuiHTMLStyle.cpp */; };
+		E5C9FABC160B4F4500F07936 /* json_batchallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E5C9FABB160B4F4500F07936 /* json_batchallocator.h */; };
 		E5CB6A8713D9D374005C7B6F /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */; };
 		E5CB6A8813D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */; };
 		E5CB6A8913D9D375005C7B6F /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */; };
@@ -9196,6 +9197,7 @@
 		E5C3FA3A14BDC60F00F4FB96 /* nuiHTTPServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTTPServer.cpp; sourceTree = "<group>"; };
 		E5C6CE190FF6DC38003E6002 /* nuiHTMLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nuiHTMLStyle.h; sourceTree = "<group>"; };
 		E5C6CE1A0FF6DC38003E6002 /* nuiHTMLStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLStyle.cpp; sourceTree = "<group>"; };
+		E5C9FABB160B4F4500F07936 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json_batchallocator.h; path = include/nuiJson/json_batchallocator.h; sourceTree = SOURCE_ROOT; };
 		E5CB6A8213D9D342005C7B6F /* hb-ot-shape-normalize.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ot-shape-normalize.cc"; path = "harfbuzz/hb-ot-shape-normalize.cc"; sourceTree = "<group>"; };
 		E5CC3629115EF0F400747AB2 /* nuiAttributeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeType.h; path = include/nuiAttributeType.h; sourceTree = SOURCE_ROOT; };
 		E5D050930D2AD04500B1A021 /* nuiFixedPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiFixedPoint.h; path = include/nuiFixedPoint.h; sourceTree = SOURCE_ROOT; };
@@ -9373,6 +9375,7 @@
 		40033E6A12B14D31000695D2 /* Json */ = {
 			isa = PBXGroup;
 			children = (
+				E5C9FABB160B4F4500F07936 /* json_batchallocator.h */,
 				40033E6E12B14D7D000695D2 /* json_internalarray.inl */,
 				40033E6F12B14D7D000695D2 /* json_internalmap.inl */,
 				40033E7012B14D7D000695D2 /* json_reader.cpp */,
@@ -14553,6 +14556,7 @@
 				E531A99F1440A20F00ED88C9 /* nuiLayout.h in Headers */,
 				E5C3FA3114BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA67F14F686CF00992064 /* nuiStringTemplate.h in Headers */,
+				E5C9FABC160B4F4500F07936 /* json_batchallocator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
