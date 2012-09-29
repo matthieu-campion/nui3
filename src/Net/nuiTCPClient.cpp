@@ -57,6 +57,8 @@ bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
   if (res)
     DumpError(res, __FUNC__);
 
+  UpdateIdle();
+
   freeaddrinfo(addr);
 
   mReadConnected = mWriteConnected = res == 0;
@@ -93,6 +95,8 @@ int nuiTCPClient::Send(const uint8* pData, int len)
   int res = send(mSocket, pData, len, 0);
 #endif
 
+  UpdateIdle();
+
   if (res < 0)
   {
     if (errno == EWOULDBLOCK && mNonBlocking)
@@ -127,6 +131,7 @@ int nuiTCPClient::ReceiveAvailable(std::vector<uint8>& rData)
 #endif
 
   mReadConnected = res != 0;
+  UpdateIdle();
 
   if (res < 0)
   {
@@ -153,6 +158,7 @@ int nuiTCPClient::Receive(uint8* pData, int32 len)
   //printf("%p read returned %d\n", this, res);
 #endif
 
+  UpdateIdle();
 
   mReadConnected = res != 0;
   if (res > 0)

@@ -83,6 +83,7 @@ nuiTCPClient* nuiTCPServer::Accept()
   if (s >= 0)
   {
     //printf("%x accept %d\n", this, s);
+    UpdateIdle();
     nuiTCPClient* pClient = OnCreateClient(s);
     return pClient;
   }
@@ -92,6 +93,7 @@ nuiTCPClient* nuiTCPServer::Accept()
 
 nuiTCPClient* nuiTCPServer::OnCreateClient(nuiSocket::SocketType sock)
 {
+  UpdateIdle();
   return new nuiTCPClient(sock);
 }
 

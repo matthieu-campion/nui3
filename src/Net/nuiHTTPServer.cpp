@@ -85,6 +85,7 @@ nuiHTTPHandler::~nuiHTTPHandler()
 
 void nuiHTTPHandler::OnCanRead()
 {
+  printf("nuiHTTPHandler::OnCanRead()\n\n");
   std::vector<uint8> data;
   ReceiveAvailable(data);
   ParseData(data);

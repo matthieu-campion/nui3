@@ -68,6 +68,10 @@ public:
   static void VisitSockets(const nuiFastDelegate1<nuiSocket*>& rDelegate);
 
   static void GetStatusReport(nglString& rResult);
+
+  bool IsIdle();
+  void SetMaxIdleTime(int32 set);
+  int32 GetMaxIdleTime() const;
 protected:
   friend class nuiSocketPool;
   nuiSocket(SocketType Socket = -1);
@@ -91,6 +95,10 @@ protected:
   static int64 gmSocketCount;
   static nglCriticalSection gmCS;
   static std::set<nuiSocket*> gmAllSockets;
+
+  int32 mMaxIdleTime;
+  nglTime mLastOperationTime;
+  void UpdateIdle();
 };
 
 
@@ -111,14 +119,13 @@ public:
 
   int DispatchEvents(int timeout_millisec);
 private:
-  bool IsInDispatch() const;
-  void SetInDispatch(bool set);
   nglCriticalSection mCS;
   std::set<nuiSocket*> mDeletedFromPool;
-  nglAtomic mInDispatch;
+  std::set<nuiSocket*> mSockets;
 
   int mNbSockets;
 
+  void HandleIdleSockets();
 
 #ifdef NGL_KQUEUE
   // Kernel queue implementation (FreeBSD, Darwin...)

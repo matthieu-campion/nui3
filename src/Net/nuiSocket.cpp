@@ -59,6 +59,8 @@ nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
 : mSocket(Socket), mpPool(NULL)
 {
   mNonBlocking = false;
+  mMaxIdleTime = 0; // Default = do nothing about idling sockets
+  
 #if (!defined _LINUX_)
   if (Socket != -1)
   {
@@ -326,7 +328,27 @@ void nuiSocket::GetStatusReport(nglString& rResult)
 }
 
 
+bool nuiSocket::IsIdle()
+{
+  if (mMaxIdleTime)
+    return ((double)mLastOperationTime + (double)mMaxIdleTime) < (double)nglTime();
+  return false;
+}
 
+void nuiSocket::SetMaxIdleTime(int32 set)
+{
+  mMaxIdleTime = set;
+}
+
+int32 nuiSocket::GetMaxIdleTime() const
+{
+  return mMaxIdleTime;
+}
+
+void nuiSocket::UpdateIdle()
+{
+  mLastOperationTime = nglTime();
+}
 
 
 
@@ -340,7 +362,6 @@ nuiSocketPool::nuiSocketPool()
 {
   mQueue = kqueue();
   mNbSockets = 0;
-  mInDispatch = 0;
 }
 
 nuiSocketPool::~nuiSocketPool()
@@ -367,6 +388,11 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
   res = kevent(mQueue, &ev, 1, NULL, 0, 0);
   nuiSocket::DumpError(res, "nuiSocketPool::Add 2");
 
+  {
+    nglCriticalSectionGuard g(mCS);
+    mSockets.insert(pSocket);
+  }
+
   mNbSockets++;
 }
 
@@ -392,13 +418,12 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   {
     nglCriticalSectionGuard g(mCS);
     mDeletedFromPool.insert(pSocket);
+    mSockets.erase(pSocket);
   }
 }
 
 int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
-  SetInDispatch(true);
-
   mEvents.resize(mNbSockets * 2);
 
   struct timespec to;
@@ -414,7 +439,6 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   if(res == -1)
   {
     nuiSocket::DumpError(res, "kqueue::waitForEvents");
-    SetInDispatch(false);
     if (errno == EINTR)
     {
       //mQueue = kqueue();
@@ -469,7 +493,8 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     mDeletedFromPool.clear();
   }
 
-  SetInDispatch(false);
+  HandleIdleSockets();
+
   return 0;
 }
 
@@ -483,7 +508,6 @@ nuiSocketPool::nuiSocketPool()
   mEPoll = epoll_create(100);
   NGL_OUT("nuiSocketPool::nuiSocketPool() Create OK");
   mNbSockets = 0;
-  mInDispatch = 0;
   NGL_OUT("nuiSocketPool::nuiSocketPool() DONE OK");
 }
 
@@ -510,6 +534,11 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
     nuiSocket::DumpError(res, "epoll::Add");
   }
 
+  {
+    nglCriticalSectionGuard g(mCS);
+    mSockets.insert(pSocket);
+  }
+
   mNbSockets++;
 }
 
@@ -527,17 +556,16 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
 
 
   mNbSockets--;
-  if (IsInDispatch())
   {
     nglCriticalSectionGuard g(mCS);
     mDeletedFromPool.insert(pSocket);
+    mSockets.erase(pSocket);
   }
 }
 
+
 int nuiSocketPool::DispatchEvents(int timeout_millisec)
 {
-  SetInDispatch(true);
-
 //   if (mNbSockets > mEvents.size())
 //     mEvents.resize(mNbSockets);
 
@@ -550,7 +578,6 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
   if(res == -1)
   {
     nuiSocket::DumpError(res, "epoll::WaitForEvents");
-    SetInDispatch(false);
     {
       nglCriticalSectionGuard g(mCS);
       mDeletedFromPool.clear();
@@ -560,7 +587,6 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
   if (res == 0)
   {
-    SetInDispatch(false);
     {
       nglCriticalSectionGuard g(mCS);
       mDeletedFromPool.clear();
@@ -639,27 +665,41 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     }
   }
 
-  SetInDispatch(false);
   {
     nglCriticalSectionGuard g(mCS);
     mDeletedFromPool.clear();
   }
+
+  HandleIdleSockets();
   return 0;
 }
 
 #endif //NGL_EPOLL
 
-bool nuiSocketPool::IsInDispatch() const
+void nuiSocketPool::HandleIdleSockets()
 {
-  return ngl_atomic_read(mInDispatch) != 0;
-}
+  std::set<nuiSocket*> sockets;
+  {
+    nglCriticalSectionGuard g(mCS);
+    sockets = mSockets;
+  }
 
-void nuiSocketPool::SetInDispatch(bool set)
-{
-  if (set)
-    ngl_atomic_compare_and_swap(mInDispatch, 0, 1);
-  else
-    ngl_atomic_compare_and_swap(mInDispatch, 1, 0);
+  std::set<nuiSocket*>::iterator it = sockets.begin();
+  std::set<nuiSocket*>::iterator end = sockets.end();
+
+  while (it != end)
+  {
+    nuiSocket* pSocket = *it;
+    if (pSocket->IsIdle())
+    {
+      NGL_LOG("radio", NGL_LOG_INFO, "nuiSocketPool::HandleIdleSockets kill idle socket %p (socket = %d, more than %d seconds idle)\n", pSocket, pSocket->GetSocket(), pSocket->GetMaxIdleTime());
+      pSocket->Close();
+      pSocket->OnReadClosed();
+    }
+
+    ++it;
+  }
+
 }
 
 
