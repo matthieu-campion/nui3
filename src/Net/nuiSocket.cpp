@@ -504,11 +504,11 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 #ifdef NGL_EPOLL
 nuiSocketPool::nuiSocketPool()
 {
-  NGL_OUT("nuiSocketPool::nuiSocketPool()");
+  //NGL_OUT("nuiSocketPool::nuiSocketPool()");
   mEPoll = epoll_create(100);
-  NGL_OUT("nuiSocketPool::nuiSocketPool() Create OK");
+  //NGL_OUT("nuiSocketPool::nuiSocketPool() Create OK");
   mNbSockets = 0;
-  NGL_OUT("nuiSocketPool::nuiSocketPool() DONE OK");
+  //NGL_OUT("nuiSocketPool::nuiSocketPool() DONE OK");
 }
 
 nuiSocketPool::~nuiSocketPool()
@@ -519,7 +519,7 @@ nuiSocketPool::~nuiSocketPool()
 
 void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 {
-  NGL_OUT("nuiSocketPool::Add(%p, %d, %d)\n", pSocket, Mode, pSocket->GetSocket());
+  //NGL_OUT("nuiSocketPool::Add(%p, %d, %d)\n", pSocket, Mode, pSocket->GetSocket());
   pSocket->SetPool(this);
   struct epoll_event ev;
   ev.events = EPOLLIN | EPOLLOUT | EPOLLRDHUP;
@@ -545,7 +545,7 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 void nuiSocketPool::Del(nuiSocket* pSocket)
 {
   pSocket->SetPool(NULL);
-  NGL_LOG("socket", NGL_LOG_ERROR, "nuiSocketPool::Del(%p, %d)\n", pSocket, pSocket->GetSocket());
+  //NGL_LOG("socket", NGL_LOG_ERROR, "nuiSocketPool::Del(%p, %d)\n", pSocket, pSocket->GetSocket());
 
   int res = epoll_ctl(mEPoll, EPOLL_CTL_DEL, pSocket->GetSocket(), NULL);
 
@@ -595,14 +595,14 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
     return EWOULDBLOCK;
   }
 
-  NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents got %d events\n", res);
+  //NGL_LOG("socket", NGL_LOG_ERROR, "epoll::WaitForEvents got %d events\n", res);
 
   for (int i = 0; i < res; i++)
   {
     nuiSocket* pSocket = (nuiSocket*)mEvents[i].data.ptr;
     uint32_t events = mEvents[i].events;
 
-    NGL_OUT("socket", NGL_LOG_INFO, "epoll event %d s = %d  p = %p f = %x", i, mEvents[i].data.fd, pSocket, events);
+    //NGL_OUT("socket", NGL_LOG_INFO, "epoll event %d s = %d  p = %p f = %x", i, mEvents[i].data.fd, pSocket, events);
 
     // dispatch events:
     bool skip = false;
@@ -634,7 +634,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
     if ((events & EPOLLRDHUP) && !skip)
     {
-      NGL_LOG("socket", NGL_LOG_INFO, "EPOLLRDHUP %p, %d\n", pSocket, pSocket->GetSocket());
+      //NGL_LOG("socket", NGL_LOG_INFO, "EPOLLRDHUP %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnReadClosed();
       {
         nglCriticalSectionGuard g(mCS);
@@ -644,7 +644,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
     if ((events & EPOLLHUP) && !skip)
     {
-      NGL_LOG("socket", NGL_LOG_INFO, "EPOLLHUP %p, %d\n", pSocket, pSocket->GetSocket());
+      //NGL_LOG("socket", NGL_LOG_INFO, "EPOLLHUP %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnReadClosed();
       pSocket->OnWriteClosed();
       {
@@ -655,7 +655,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
     if ((events & EPOLLERR) && !skip)
     {
-      NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLERR %p, %d\n", pSocket, pSocket->GetSocket());
+      //NGL_LOG("socket", NGL_LOG_ERROR, "EPOLLERR %p, %d\n", pSocket, pSocket->GetSocket());
       pSocket->OnReadClosed();
       pSocket->OnWriteClosed();
       {
