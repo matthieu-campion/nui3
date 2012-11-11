@@ -438,8 +438,13 @@ void nuiGrid::AdjustToExpand(nuiSize width, nuiSize height, std::vector<nuiSize>
 
 bool nuiGrid::SetRect(const nuiRect& rRect)
 {
+  if (rRect.GetWidth() != mRect.GetWidth() ||
+      rRect.GetHeight()!= mRect.GetHeight())
+    mNeedIdealRect = true;
+
   nuiWidget::SetRect(rRect);
   
+
   GetIdealRect(); // ensure IdealRect has happened
 
   nuiSize width = rRect.GetWidth() - mSizeRect.GetWidth();
