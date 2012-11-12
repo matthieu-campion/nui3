@@ -20,6 +20,9 @@
 class nglString;
 class nglOStream;
 
+#define NGL_STREAM_PIPE_BUF_SIZE (1024*64)
+
+
 //! Base class for input streams
 /*!
 This is a pure virtual class, all object capable of providing data should
@@ -145,7 +148,7 @@ nglSize ReadText (nglString& rText, nglTextFormat* pFormat);
   
   /** @name Utilities */
   //@{
-  int64 PipeTo(nglOStream& rTarget);
+  int64 PipeTo(nglOStream& rTarget, int32 BufferSize = NGL_STREAM_PIPE_BUF_SIZE);
   /*!< Pipe to an output stream. Can be used to copy files.
     \param rTarget target stream
     \return total number of transfered bytes
@@ -155,7 +158,7 @@ nglSize ReadText (nglString& rText, nglTextFormat* pFormat);
     stream is no more accepting data.
   */
   
-  int64 PipeTo(nglOStream& rTarget, double MaxDuration);
+  int64 PipeTo(nglOStream& rTarget, double MaxDuration, int32 BufferSize = NGL_STREAM_PIPE_BUF_SIZE);
   /*!< Pipe to an output stream during a period of time
     \param rTarget target stream
     \param MaxDuration max processing time (in seconds)

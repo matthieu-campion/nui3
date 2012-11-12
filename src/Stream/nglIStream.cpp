@@ -239,11 +239,10 @@ int64 nglIStream::Peek (void* pData, int64 WordCount, uint WordSize)
   return (int64)count;
 }
 
-#define PIPE_BUF_SIZE 4096
 
-int64 nglIStream::PipeTo(nglOStream& rTarget)
+int64 nglIStream::PipeTo(nglOStream& rTarget, int32 BufferSize)
 {
-  uint8 buffer[PIPE_BUF_SIZE];  
+  uint8 buffer[BufferSize];
   nglStreamState istate = GetState();
   nglStreamState ostate = rTarget.GetState();
   int64 total_piped = 0;  
@@ -251,7 +250,7 @@ int64 nglIStream::PipeTo(nglOStream& rTarget)
 
   while (( istate == eStreamReady || istate == eStreamWait ) && ( ostate == eStreamEnd || ostate == eStreamWait ))
   {    
-    piped_in = Read( buffer, PIPE_BUF_SIZE, 1 );
+    piped_in = Read( buffer, BufferSize, 1 );
     istate = this->GetState();
 
       while ( piped_in > 0 && ( ostate == eStreamEnd || ostate == eStreamWait ) )
@@ -267,10 +266,10 @@ int64 nglIStream::PipeTo(nglOStream& rTarget)
   return total_piped;
 }
 
-int64 nglIStream::PipeTo(nglOStream& rTarget, double MaxDuration)
+int64 nglIStream::PipeTo(nglOStream& rTarget, double MaxDuration, int32 BufferSize)
 {
   nglTime starttime;
-  uint8 buffer[PIPE_BUF_SIZE];  
+  uint8 buffer[BufferSize];
   nglStreamState istate = GetState();
   nglStreamState ostate = rTarget.GetState();
   int64 total_piped = 0;  
@@ -279,7 +278,7 @@ int64 nglIStream::PipeTo(nglOStream& rTarget, double MaxDuration)
   nglTime currenttime;
   while ( ((currenttime - starttime).GetValue() < MaxDuration) && ( istate == eStreamReady || istate == eStreamWait ) && ( ostate == eStreamEnd || ostate == eStreamWait ))
   {    
-    piped_in = Read( buffer, PIPE_BUF_SIZE, 1 );
+    piped_in = Read( buffer, BufferSize, 1 );
     istate = this->GetState();
     
     while ( piped_in > 0 && ( ostate == eStreamEnd || ostate == eStreamWait ) )
