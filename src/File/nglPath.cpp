@@ -414,7 +414,21 @@ bool nglPath::Copy(const nglPath& PathTarget) const
 {
   nglIStream* pInStream = OpenRead();
   nglIOStream* pOutStream = PathTarget.OpenWrite();
-  
+
+  if (!pInStream)
+  {
+    NGL_LOG("path", NGL_LOG_ERROR, "nglPath::Copy Unable to open file '%s' for reading", mPathName.GetChars());
+    delete pOutStream;
+    return false;
+  }
+
+  if (!pOutStream)
+  {
+    NGL_LOG("path", NGL_LOG_ERROR, "nglPath::Copy Unable to open file '%s' for writing", PathTarget.GetPathName().GetChars());
+    delete pInStream;
+    return false;
+  }
+
   nglFileSize available = pInStream->Available();
   int64 piped = pInStream->PipeTo(*pOutStream);
   
