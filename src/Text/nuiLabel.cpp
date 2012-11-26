@@ -407,12 +407,17 @@ nuiRect nuiLabel::CalcIdealSize()
 
 bool nuiLabel::SetRect(const nuiRect& rRect)
 {
+  bool needRecalcLayout = false;
+
+  if (mUseEllipsis || mWrapping)
+    needRecalcLayout = (rRect.GetWidth() != mRect.GetWidth());
+    
   nuiWidget::SetRect(rRect);
 
   nuiRect ideal(mIdealLayoutRect);
 
 
-  if (ideal.GetWidth() > mRect.GetWidth())
+  if (needRecalcLayout || ideal.GetWidth() > mRect.GetWidth())
   {
     if (mUseEllipsis)
     {
@@ -420,9 +425,12 @@ bool nuiLabel::SetRect(const nuiRect& rRect)
       nuiSize diff = ideal.GetWidth() - mRect.GetWidth();
       int NbLetterToRemove = ToNearest(diff / (ideal.GetWidth() / mText.GetLength())) + 3;
       nglString text = mText;
-      int len = text.GetLength();
-      text.DeleteRight(MIN(NbLetterToRemove, len));
-      text.Append(_T("..."));
+      if (NbLetterToRemove > 0)
+      {
+        int len = text.GetLength();
+        text.DeleteRight(MIN(NbLetterToRemove, len));
+        text.Append(_T("..."));
+      }
       delete mpLayout;
       mpLayout = new nuiTextLayout(mpFont);
       mpLayout->SetWrapX(0);

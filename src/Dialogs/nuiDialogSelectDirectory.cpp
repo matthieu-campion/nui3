@@ -115,7 +115,7 @@ void nuiDialogSelectDirectory::OnCreateNewFolderDone(const nuiEvent& rEvent)
   {
     nglString text = mpCreateEditLine->GetText();
     text.Trim();
-    if (text == nglString::Null)
+    if (text.IsNull())
     {
       rEvent.Cancel();
       return;

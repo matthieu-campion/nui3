@@ -184,7 +184,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 
 - (NSSize) windowWillResize: (NSWindow*) win toSize: (NSSize) size
 {
-  printf("windowWillResize %f x %f\n", size.width, size.height);
+//  printf("windowWillResize %f x %f\n", size.width, size.height);
   // inform the context that the view has been resized
   NSRect rect = {0};
   rect.size = size;
@@ -694,14 +694,14 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
 
 - (void)doPaint
 {
-  printf("doPaint 0x%x\n", mpNGLWindow);
+//  printf("doPaint 0x%x\n", mpNGLWindow);
   
   mpNGLWindow->CallOnPaint();
 }
 
 - (void) invalidate
 {
-  printf("invalidate\n");
+//  printf("invalidate\n");
   mInvalidated = true;
 }
 
