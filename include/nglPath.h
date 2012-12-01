@@ -367,6 +367,11 @@ private:
 	static nglPathVolume AddVolume(std::list<nglPathVolume>& rVolumes, int32 volnum);
 	static nglPathVolume DelVolume(std::list<nglPathVolume>& rVolumes, int32 volnum);
 #endif // _CARBON_
+  
+#ifdef _COCOA_
+  friend class nglPath;
+  static void UpdateVolumes(std::list<nglPathVolume>& rVolumes);
+#endif // _COCOA_
 };
 
 bool nglComparePath(const nglPath& rLeft, const nglPath& rRight);
