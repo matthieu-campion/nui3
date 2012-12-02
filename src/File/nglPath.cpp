@@ -672,6 +672,11 @@ bool nglIsFileVisible(const nglString& rPathName)
     }
   }
   return true;
+#elif (defined _COCOA_)
+  nglString node = nglPath(rPathName).GetNodeName();
+  if (!node.IsEmpty() && node[0] == L'.')
+    return false;
+  return true;
 #else
   return true;
 #endif
