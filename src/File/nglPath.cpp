@@ -659,7 +659,7 @@ void nglPath::Split(std::vector<nglString>& rElements)
 
 bool nglIsFileVisible(const nglString& rPathName)
 {
-#ifdef _CARBON_
+#if (defined _CARBON_ || defined _COCOA_)
   FSRef ref;
   OSStatus err = FSPathMakeRefWithOptions((const UInt8*) rPathName.GetStdString(eUTF8).c_str(), kFSPathMakeRefDoNotFollowLeafSymlink, &ref, 0);
   if (err == noErr)
@@ -671,11 +671,6 @@ bool nglIsFileVisible(const nglString& rPathName)
       return ((info.flags & kLSItemInfoIsInvisible) == 0);
     }
   }
-  return true;
-#elif (defined _COCOA_)
-  nglString node = nglPath(rPathName).GetNodeName();
-  if (!node.IsEmpty() && node[0] == L'.')
-    return false;
   return true;
 #else
   return true;
