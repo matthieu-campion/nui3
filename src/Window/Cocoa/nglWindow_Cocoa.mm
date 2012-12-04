@@ -436,6 +436,7 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
+  mpLastMouseEvent = theEvent;
   nglMouseInfo info;
   info.Buttons = 1 << [theEvent buttonNumber];
   info.TouchId = 0;
@@ -447,6 +448,7 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
+  mpLastMouseEvent = theEvent;
   nglMouseInfo info;
   info.Buttons = (uint64)[NSEvent pressedMouseButtons];
   info.TouchId = 0;
@@ -458,6 +460,7 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
+  mpLastMouseEvent = theEvent;
   nglMouseInfo info;
   info.Buttons = (uint64)[NSEvent pressedMouseButtons];
   info.TouchId = 0;
@@ -730,6 +733,57 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
 
 - (BOOL) startDragging: (nglDragAndDrop*) pDragged
 {
+  NSImage *dragImage;
+  NSPoint dragPosition;
+  
+  const std::map<nglString, nglDataObject*>& rTypes = pDragged->GetSupportedTypesMap();
+  std::map<nglString, nglDataObject*>::const_iterator it = rTypes.begin();
+  std::map<nglString, nglDataObject*>::const_iterator end= rTypes.end();
+  if (it != end)
+  {
+    const nglString& rMime = it->first;
+    const nglDataObject* pObject = it->second;
+
+    if (rMime == _T("ngl/Files"))
+    {
+      const nglDataFilesObject* pFiles = dynamic_cast<const nglDataFilesObject*>(pObject);
+      const std::list<nglString>& rFiles = pFiles->GetFiles();
+      NSMutableArray* pArray = [NSMutableArray arrayWithCapacity: rFiles.size()];
+      NGL_ASSERT(rFiles.size()>0);
+      NSString* file = nil;
+      for (std::list<nglString>::const_iterator it = rFiles.begin(); it != rFiles.end(); ++it)
+      {
+        const nglString& rFile = *it;
+        NSString* file = (NSString*)rFile.ToCFString();
+        [pArray addObject: file];
+      }
+      NSPasteboard *pboard = [NSPasteboard pasteboardWithName: NSDragPboard];
+      [pboard declareTypes: [NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
+      [pboard setPropertyList:pArray forType:NSFilenamesPboardType];
+      
+  // Start the drag operation
+      dragImage = [[NSWorkspace sharedWorkspace] iconForFile: file];
+      dragPosition = [mpLastMouseEvent locationInWindow];
+//      dragPosition = [(NSView*)self convertPoint:dragPosition fromView:nil];
+//      dragPosition = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+
+      dragPosition.x -= 16;
+      dragPosition.y -= 16;
+      [self dragImage:dragImage
+                   at:dragPosition
+               offset:NSZeroSize
+                event:mpLastMouseEvent
+           pasteboard:pboard
+               source:self
+            slideBack:YES];
+    }
+    return YES;
+  }
+
+  // Write data to the pasteboard
+
+  
+  
 //  NSPasteboardItem *pbItem = [NSPasteboardItem new];
 //  [pbItem setDataProvider:(NSPasteboardItemDataProvider*)self forTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
 //  
@@ -1007,6 +1061,7 @@ NSDragOperation GetNSDragOperation(nglDropEffect Effect)
 
 - (void) draggingEnded: (id <NSDraggingInfo>)sender
 {
+  mpNGLWindow->OnDragStop(false);
   [super draggingEnded: sender];
 }
 
