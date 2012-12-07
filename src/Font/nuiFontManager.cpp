@@ -1102,6 +1102,8 @@ void nuiFontManager::InitManager(const nglPath& rSavePath)
 
 nuiFontManager& nuiFontManager::LoadManager(nglIStream& rStream, double lastscantime)
 {
+  nuiFontBase::Init();
+
   if (gManager.mFontFolders.empty())
   {
     gManager.AddSystemFolders();

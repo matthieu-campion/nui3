@@ -19852,7 +19852,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = "";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -19917,7 +19916,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = "";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -19981,7 +19979,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					.,
 					include,
@@ -20041,7 +20038,6 @@
 				GCC_THUMB_SUPPORT = YES;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
-				GCC_VERSION = "";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -20080,10 +20076,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -20097,6 +20091,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_PFE_FILE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -20153,7 +20148,6 @@
 					AVMPLUS_ARM,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -20168,7 +20162,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -20179,7 +20172,6 @@
 					_CARBON_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -20244,7 +20236,6 @@
 					_COCOA_,
 				);
 				GCC_THREADSAFE_STATICS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRELINK_LIBS = "-liconv -lz";
@@ -20293,7 +20284,6 @@
 					_COCOA_,
 				);
 				GCC_THREADSAFE_STATICS = NO;
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRELINK_LIBS = "-liconv -lz";
@@ -20307,7 +20297,6 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -20344,7 +20333,6 @@
 					AVMPLUS_AMD64,
 					_COCOA_,
 				);
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
@@ -20386,7 +20374,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
-				GCC_VERSION = "";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -20427,7 +20414,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -20436,7 +20422,6 @@
 					DEBUG,
 					_MINUI3_,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRELINK_LIBS = "-liconv -lz";

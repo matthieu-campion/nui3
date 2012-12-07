@@ -38,15 +38,17 @@ void nglConsole::Show (bool IsVisible)
 
 void nglConsole::OnOutput (const nglString& rText)
 {
-  printf (rText.GetChars());
+  printf ("%s", rText.GetChars());
   fflush (stdout);
 }
 
 #define BUFFER_MAX 4096
 
+#if 0
 void nglConsole::OnEvent(int Flags)
 {
 //  char buffer[BUFFER_MAX+1];
 //  int count;
 }
 
+#endif

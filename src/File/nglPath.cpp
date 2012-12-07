@@ -419,30 +419,12 @@ bool nglPath::Copy(const nglPath& PathTarget) const
   }
   
   nglIOStream* pOutStream = PathTarget.OpenWrite();
-<<<<<<< HEAD
-
-  if (!pInStream)
-  {
-    NGL_LOG("path", NGL_LOG_ERROR, "nglPath::Copy Unable to open file '%s' for reading", mPathName.GetChars());
-    delete pOutStream;
-    return false;
-  }
-
-  if (!pOutStream)
-  {
-    NGL_LOG("path", NGL_LOG_ERROR, "nglPath::Copy Unable to open file '%s' for writing", PathTarget.GetPathName().GetChars());
-    delete pInStream;
-    return false;
-  }
-
-=======
   if (pOutStream == NULL)
   {
     delete pInStream;
     return false;
   }
   
->>>>>>> intua
   nglFileSize available = pInStream->Available();
   int64 piped = pInStream->PipeTo(*pOutStream);
   
@@ -1506,18 +1488,11 @@ int32 nglPath::GetRootPart() const
   // Find the volume name:
   int col = mPathName.Find(_T(':'), 0, true);
   int slash = mPathName.Find(_T('/'), 0, true);
-<<<<<<< HEAD
 
-  if (col < 0 || slash < 0)
-    return 0;
-
-=======
-  
   // Not a volume
   if (col < 0 || slash < 0)
     return 0;
   
->>>>>>> intua
   if (col < slash)
     return MIN(slash + 1, mPathName.GetLength());
   

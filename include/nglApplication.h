@@ -366,7 +366,7 @@ extern NGL_API class nglKernel* App;
 //#endif
 
 #if defined(_UNIX_) || defined(_CARBON_) || defined(_UIKIT_)
-  #define __NGL_APP_MAINDECL int main(int argc, char** argv)
+  #define __NGL_APP_MAINDECL int main(int argc, const char** argv)
   #define __NGL_APP_MAINCALL Main(argc, argv)
 #endif // _UNIX_
 
