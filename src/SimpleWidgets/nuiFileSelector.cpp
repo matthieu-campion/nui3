@@ -282,7 +282,7 @@ nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglPath& rRootPath,
 : nuiFileSelectorBase(), mpFolderList(NULL), mEventSink(this)
 {
   std::list<nglString> filters;
-  if (rFilter != nglString::Null)
+  if (!rFilter.IsNull())
     filters.push_back(rFilter);
   Init(rPath, rRootPath, filters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);
 }
@@ -297,7 +297,7 @@ nuiFileSelector::nuiFileSelector(const nglPath& rPath, const nglString& rFilter,
 : nuiFileSelectorBase(), mpFolderList(NULL), mEventSink(this)
 {
   std::list<nglString> filters;
-  if (rFilter != nglString::Null)
+  if (!rFilter.IsNull())
     filters.push_back(rFilter);
   Init(rPath, rPath, filters, pEntry, showHiddenFiles, mode, ShowVolumes, Opened);
 }
@@ -708,7 +708,7 @@ nglPath nuiFileSelector::GetPath() const
 	if (mpEntry)
 		addin = mpEntry->GetText();
 	
-	if ((addin != nglString::Null) && (node.Compare(addin)))
+	if ((!addin.IsNull()) && (node.Compare(addin)))
 	{
 		if (pathName.IsLeaf())
 			return pathName.GetParent() + addin;

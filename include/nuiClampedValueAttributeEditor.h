@@ -28,7 +28,7 @@ public:
   mIndexed(false),
   mIndex(0)
   {
-    if (rName != nglString::Null)
+    if (!rName.IsNull())
       mName = rName;
     else
       mName = mAttribute.GetName();

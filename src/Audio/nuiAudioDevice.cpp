@@ -230,12 +230,12 @@ void nuiAudioDeviceManager::RegisterAPIS()
 {
   CoreAudioAPI.RegisterWithManager(*this);
 }
-#elif (defined _UIKIT_)
-#include "nuiAudioDevice_AudioUnit.h"
-void nuiAudioDeviceManager::RegisterAPIS()
-{
-  AudioUnitAPI.RegisterWithManager(*this);
-}
+//#elif (defined _UIKIT_)
+//#include "nuiAudioDevice_AudioUnit.h"
+//void nuiAudioDeviceManager::RegisterAPIS()
+//{
+//  AudioUnitAPI.RegisterWithManager(*this);
+//}
 #elif (defined _ANDROID_)
 #include "nuiAudioDevice_Android.h"
 void nuiAudioDeviceManager::RegisterAPIS()

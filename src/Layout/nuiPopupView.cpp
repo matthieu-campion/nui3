@@ -26,7 +26,7 @@ nuiPopupView::nuiPopupView(nuiWidget* pWidget, nuiSize X, nuiSize Y)
 
   SetWantKeyboardFocus(true);
   
-  GetTopLevel()->CancelGrab();
+  //GetTopLevel()->CancelGrab();
 }
 
 nuiPopupView::~nuiPopupView()

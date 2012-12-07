@@ -16,6 +16,7 @@
 #include <CoreText/CoreText.h>
 #endif
 #include <CoreFoundation/CoreFoundation.h>
+#include <sys/xattr.h>
 #endif
 
 #include <ft2build.h>
@@ -33,6 +34,11 @@
   #ifdef _CARBON_
   #define _CARBON_FONTS_
   #endif
+
+  #ifdef _COCOA_
+  #define _CARBON_FONTS_
+  #endif
+
 #else
   #define _WIN32_FONTS_
 #endif
@@ -614,7 +620,7 @@ void nuiFontManager::GetSystemFolders(std::map<nglString, nglPath>& rFolders)
 {
 #ifdef FONT_TEST_HACK
   rFolders[_T("System0")] = _T("/System/Library/Fonts/Cache/");
-#elif (defined _CARBON_)
+#elif (defined _CARBON_) || (defined _COCOA_)
   rFolders[_T("System0")] = _T("/System/Library/Fonts/");
   rFolders[_T("System1")] = _T("/Library/Fonts/");
   rFolders[_T("System2")] = _T("~/Library/Fonts/");
@@ -1038,11 +1044,13 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     std::list<nuiFontRequestResult>::const_iterator it = rFoundFonts.begin();
     std::list<nuiFontRequestResult>::const_iterator end = rFoundFonts.end();
     
+    NGL_OUT("LISTING SCORED FONTS FOR REQUESTED FONT [%s]\n", rRequest.mName.mElement.GetChars());
     while (it != end)
     {
       const nuiFontRequestResult& r(*it);
       const nuiFontDesc* pDesc = r.GetFontDesc();
-    NGL_LOG("font", NGL_LOG_INFO, "font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
+      NGL_OUT("font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
+//    NGL_LOG("font", NGL_LOG_INFO, "font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
       ++it;
     }
   }
@@ -1055,12 +1063,28 @@ nuiFontManager& nuiFontManager::GetManager(bool InitIfNeeded)
 {
   nuiFontBase::Init();
 
-  const bool FORCE_FONT_ENUM = 0;
-  if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty() && gManager.mFontFolders.empty())
+  const bool FORCE_FONT_ENUM = false;
+  if (FORCE_FONT_ENUM || InitIfNeeded && gManager.mpFonts.empty())// && gManager.mFontFolders.empty())
   {
     App->AddExit(nuiFontManager::ExitManager);
     gManager.AddSystemFolders();
     gManager.ScanFolders();
+#if defined(_UIKIT_)
+    if (gManager.GetFontCount())
+    {
+      nglPath fontdb(ePathUserAppSettings);
+      fontdb += nglString(NUI_FONTDB_PATH);
+      nglOFile db(fontdb, eOFileCreate);
+      if (db.IsOpen())
+        gManager.Save(db);
+      
+      // Prevent file from being backed-up on iCloud...
+      uint8 attrValue = 1;
+      int result = setxattr(fontdb.GetPathName().GetStdString().c_str(), "com.apple.MobileBackup", &attrValue, sizeof (attrValue), 0, 0);
+      NGL_ASSERT(result == 0);
+    }
+#endif
+    
   }
   
   return gManager;

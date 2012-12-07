@@ -57,7 +57,7 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 #endif
       App->CallOnInit();
     }
-
+    
     // On iOS, init an AutoReleasePool:
 #if defined(_UIKIT_)
     nui_autoreleasepool = [[NSAutoreleasePool alloc] init];
@@ -79,7 +79,21 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
       nglIFile db(fontdb);
       nuiFontManager::LoadManager(db, fontdb.GetLastMod());
     }
-
+#if !defined(_UIKIT_)
+    else
+    {
+      nuiFontManager::GetManager();
+    }
+    
+    nuiFontManager& rManager(nuiFontManager::GetManager(false));
+    if (rManager.GetFontCount())
+    {
+      nglOFile db(fontdb, eOFileCreate);
+      if (db.IsOpen())
+        rManager.Save(db);
+    }
+#endif
+    
     nuiDecoration::InitDecorationEngine();
     nuiDefaultDecoration::Init();
     nuiBuilder::Init();
@@ -129,12 +143,13 @@ bool nuiUninit()
 #ifndef _MINUI3_
     nuiFont::ClearAll();
     nuiTexture::ClearAll();
-#endif
-
-    #if defined(_UIKIT_)
+    
+#if defined(_UIKIT_)
     [nui_autoreleasepool release];
     nui_autoreleasepool = nil;
-    #endif
+#endif
+    
+#endif//_MINUI3_
 
   }
 #ifdef WIN32

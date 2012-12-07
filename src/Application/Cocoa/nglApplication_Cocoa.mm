@@ -487,6 +487,29 @@ static NSString* GetApplicationName(void)
   objCCallOnExit(0);
 }
 
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+  NSLog(@"[NSApplication openFile: %@", filename);
+  return YES;
+}
+
+/*
+- (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
+{
+  NSLog(@"[NSApplication openFiles: %@", filenames);
+}
+*/
+
+- (BOOL)application:(id)sender openFileWithoutUI:(NSString *)filename
+{
+  NSLog(@"[NSApplication openFileWithoutUI: %@", filename);
+}
+
+- (BOOL)application:(NSApplication *)theApplication openTempFile:(NSString *)filename
+{
+  NSLog(@"[NSApplication openTempFile: %@", filename);
+}
+
 @end
 
 

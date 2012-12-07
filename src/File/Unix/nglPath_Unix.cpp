@@ -263,6 +263,61 @@ bool nglPath::ResolveLink()
 }
 #endif // _CARBON_
 
+#ifdef _COCOA_
+#import <Cocoa/Cocoa.h>
+void nglPathVolume::UpdateVolumes(std::list<nglPathVolume>& rVolumes)
+{
+  NSArray* keys = [NSArray arrayWithObjects:
+                   NSURLVolumeNameKey,
+                   NSURLVolumeIsLocalKey,
+                   NSURLVolumeIsEjectableKey,
+                   NSURLVolumeIsReadOnlyKey,
+                   NSURLVolumeIsBrowsableKey,
+                   nil];
+  
+  NSArray* urls = [[NSFileManager defaultManager] mountedVolumeURLsIncludingResourceValuesForKeys:keys options:0];
+  for (NSURL *url in urls)
+  {
+    NSError* error;
+    NSNumber* isLocal;
+    NSNumber* isEjectable;
+    NSNumber* isReadOnly;
+    NSNumber* isBrowsable;
+    NSString* volumeName;
+    
+    if (![url getResourceValue:&isBrowsable forKey:NSURLVolumeIsBrowsableKey error:&error] || ![isBrowsable boolValue])
+      continue;
+    if (![url getResourceValue:&volumeName forKey:NSURLVolumeNameKey error:&error])
+      continue;
+    if (![url getResourceValue:&isLocal forKey:NSURLVolumeIsEjectableKey error:&error])
+      continue;
+    if (![url getResourceValue:&isEjectable forKey:NSURLVolumeIsEjectableKey error:&error])
+      continue;
+    if (![url getResourceValue:&isReadOnly forKey:NSURLVolumeIsReadOnlyKey error:&error])
+      continue;
+    
+    nglPathVolume v;
+    v.mPath = nglPath([[url path] UTF8String]);
+    if (v.mPath == nglPath(_T("/"))) // Skip '/' ...
+      continue;
+    
+    // Fill type
+    v.mType = nglPathVolume::eTypeHD;
+    if (![isLocal boolValue])
+      v.mType = nglPathVolume::eTypeNetwork;
+    
+    // Fill flags
+    v.mFlags = 0;
+    if ([isEjectable boolValue])
+      v.mFlags |= nglPathVolume::Removable;
+    if ([isReadOnly boolValue])
+      v.mFlags |= nglPathVolume::ReadOnly;
+    
+    rVolumes.push_back(v);
+  }
+}
+#endif
+
 
 /// deprecated
 int nglPath::GetChildren (std::list<nglPath>* pChildren) const
@@ -520,7 +575,7 @@ bool nglPath_SetVolume(nglPathVolume& rVolume,
 
 uint64 nglPath::GetVolumes(std::list<nglPathVolume>& rVolumes, uint64 Flags)
 {
-#ifdef _CARBON_
+#if (defined _CARBON_ || defined _COCOA_)
   nglPathVolume::UpdateVolumes(rVolumes);
 #else
 	#define DEVICE tokens[0]
