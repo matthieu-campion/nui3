@@ -57,6 +57,7 @@ public:
 
   void Close();
 
+  void SetNoDelay(bool set);
 
   // Buffered client interface:
   size_t BufferedSend(const uint8* pBuffer, size_t size, bool BufferOnly = true);

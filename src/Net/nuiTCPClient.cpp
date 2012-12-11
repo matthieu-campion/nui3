@@ -18,6 +18,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <sys/ioctl.h>
+#include <netinet/tcp.h>
 #endif
 
 
@@ -74,6 +75,12 @@ bool nuiTCPClient::Connect(const nglString& rHost, int16 port)
 bool nuiTCPClient::Connect(uint32 ipaddress, int16 port)
 {
   return Connect(nuiNetworkHost(ipaddress, port, nuiNetworkHost::eTCP));
+}
+
+void nuiTCPClient::SetNoDelay(bool set)
+{
+  int flag = set ? 1 : 0;
+  setsockopt(mSocket, IPPROTO_TCP, TCP_NODELAY, (char *) &flag, sizeof(int));
 }
 
 int nuiTCPClient::Send(const nglString& rString)
