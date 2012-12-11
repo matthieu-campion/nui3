@@ -147,7 +147,7 @@ void nuiRSSView::Update(const nuiEvent& rEvent)
         nuiHTMLView* pLabel = new nuiHTMLView(480);
         pLabel->SetText(desc);
         pLabel->SetObjectClass(_T("nuiRSSContents"));
-        if (mFont != nglString::Null)
+        if (!mFont.IsNull())
           pLabel->_SetFont(mFont);
         pLabel->SetTextColor(mTextColor);
         pPane->AddChild(pLabel);

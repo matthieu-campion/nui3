@@ -74,6 +74,7 @@ public:
   bool GetBackground() const; ///< Return true if the label will clear its background before being drawn.
 
   void UseEllipsis(bool useEllipsis); ///< If \param useEllipsis is true the label will display ... at the end of the text if there is not enough space to display it
+  bool GetUseEllipsis() const;
 
   void SetWrapping(bool Wrapping);
   bool IsWrapping() const;

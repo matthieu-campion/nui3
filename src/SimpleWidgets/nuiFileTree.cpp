@@ -25,7 +25,7 @@ nuiFileTree::nuiFileTree(const nglPath& rPath, const nglPath& rRootPath, const n
 : nuiFileSelectorBase(), mEventSink(this)
 {
   std::list<nglString> filters;
-  if (rFilter != nglString::Null)
+  if (!rFilter.IsNull())
     filters.push_back(rFilter);
   
   Init(rPath, rRootPath, filters, showHiddenFiles);

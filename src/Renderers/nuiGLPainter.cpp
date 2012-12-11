@@ -1482,7 +1482,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       //      }
       
       glGenTextures(1, &info.mTexture);
-      NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
+      //NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
       nuiCheckForGLErrors();
       firstload = true;
       reload = true;
@@ -1641,11 +1641,13 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       if (allocated)
         free(pBuffer);
 
+#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
       if (!pTexture->IsBufferRetained())
       { 
         pTexture->ReleaseBuffer();
       }
-      
+#endif
+
     }
   }
   

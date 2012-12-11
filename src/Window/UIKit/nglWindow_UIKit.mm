@@ -387,7 +387,10 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   nglWindow::EventMask mask = mpNGLWindow->GetEventMask();
   if (mask & nglWindow::MouseEvents)
   {
-    [self handleEvent: pEvent];
+    if (mpNGLWindow->IsDragging())
+      [self handleDrag: pEvent];
+    else
+      [self handleEvent: pEvent];
   }
 
   mLastEventTime = t;
@@ -411,17 +414,27 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   CGPoint newp = [pTouch locationInView: (UIView*)self];
   CGPoint oldp = [pTouch previousLocationInView: (UIView*)self];    
 
-  NGL_OUT(_T("Touch Info [%p] [@%d]: [%s], [%d], [x:%f y:%f]->[x:%f y:%f]\n"),
-            pTouch, [pTouch timestamp],
-            touchPhase == UITouchPhaseBegan ?       "Clicked"   :
-            touchPhase == UITouchPhaseMoved ?       "Moved"     :
-            touchPhase == UITouchPhaseStationary ?  "Static"    :
-            touchPhase == UITouchPhaseEnded ?       "Unclicked" :
-            touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown",
-            touchTapCount,
-            oldp.x, oldp.y,
-            newp.x, newp.y
+  NGL_OUT(_T("Touch Info window[%p] view[%p] touch[%p]: phase[%s]\n"),
+          [pTouch window], [pTouch view], pTouch, 
+          touchPhase == UITouchPhaseBegan ?       "Clicked"   :
+          touchPhase == UITouchPhaseMoved ?       "Moved"     :
+          touchPhase == UITouchPhaseStationary ?  "Static"    :
+          touchPhase == UITouchPhaseEnded ?       "Unclicked" :
+          touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown"
           );
+
+//  NGL_OUT(_T("Touch Info window[%p] view[%p] [%p] [@%d]: [%s], [%d], [x:%f y:%f]->[x:%f y:%f]\n"),
+//            [pTouch window], [pTouch view],
+//            pTouch, [pTouch timestamp],
+//            touchPhase == UITouchPhaseBegan ?       "Clicked"   :
+//            touchPhase == UITouchPhaseMoved ?       "Moved"     :
+//            touchPhase == UITouchPhaseStationary ?  "Static"    :
+//            touchPhase == UITouchPhaseEnded ?       "Unclicked" :
+//            touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown",
+//            touchTapCount,
+//            oldp.x, oldp.y,
+//            newp.x, newp.y
+//          );
 }
 
 - (void) dumpTouches: (UIEvent*) pEvent
@@ -469,10 +482,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   //nuiStopWatch watch(_T("nglWindowUIKIT::handleEvent"));
   if (pEvent.type != UIEventTypeTouches)
     return;
+//  [self dumpTouches: pEvent];
   
 	static double sOldTimestamp = 0.0;
   NSSet* pSet = [pEvent allTouches];
-  NGL_ASSERT(pSet);
+  if (!pSet)
+  {
+    NGL_ASSERT(pSet);
+    return;
+  }
   NSArray* pArray = [pSet allObjects];
   NGL_ASSERT(pArray);
   NSUInteger count = [pArray count];
@@ -498,7 +516,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     int y = (int)newp.y;
     
     TouchesInfo::iterator it = mTouches.find(pTouch);
-
+//    NGL_OUT("mTouches size[%d] pTouch[%p] %s\n", mTouches.size(), pTouch, it != mTouches.end() ? "FOUND" : "NOT FOUND");
     if (it != mTouches.end())
     {
 ///< this touch exists
@@ -507,7 +525,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       if (touchPhase == UITouchPhaseEnded || touchPhase == UITouchPhaseCancelled)
       {
 ///< this touch has been released
-        NGL_TOUCHES_OUT(_T("[%p][%d] [available: %d] Release X:%d Y:%d, phase: %s\n"), pTouch, rTouch.mTouchId, gAvailableTouches.size(), x, y, touchPhase == UITouchPhaseEnded ? "UITouchPhaseEnded" : touchPhase == UITouchPhaseCancelled ? "UITouchPhaseEnded" : "SHALL NOT");
+        NGL_TOUCHES_OUT(_T("[%p][%d] [available: %d] Release X:%d Y:%d, phase: %s\n"), pTouch, rTouch.mTouchId, gAvailableTouches.size(), x, y, touchPhase == UITouchPhaseEnded ? "UITouchPhaseEnded" : "UITouchPhaseCancelled");
         
         nglMouseInfo info;
         info.Buttons = nglMouseInfo::ButtonLeft;
@@ -523,13 +541,15 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 //        if (touchTapCount > 1)// && ([pTouch timestamp] - sOldTimestamp < DOUBLE_TAP_DELAY))
 //          info.Buttons |= nglMouseInfo::ButtonDoubleClick;
 
-        mpNGLWindow->CallOnMouseUnclick(info);
 
         gAvailableTouches.push_back(rTouch.mTouchId);
         gPressedTouches[rTouch.mTouchId] = false;
-        
+
         mTouches.erase(it);
-        
+//        NGL_OUT("ERASING pTouch[%p] -> mTouches size[%d]\n", pTouch, mTouches.size());
+        NGL_ASSERT(mTouches.find(pTouch) == mTouches.end());
+
+        mpNGLWindow->CallOnMouseUnclick(info);
       }
       else if (rTouch.X != x || rTouch.Y != y)
       {
@@ -603,7 +623,14 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     }
     else
     {
-      NGL_TOUCHES_OUT(_T("[%p][available: %d] Discarding event: [UITouchPhaseBegan X:%d Y:%d]\n"), pTouch, gAvailableTouches.size(), x, y);
+      NGL_TOUCHES_OUT(_T("[%p][available: %d] Discarding event: [phase: %s X:%d Y:%d]\n"),
+                      pTouch, gAvailableTouches.size(), 
+                      touchPhase == UITouchPhaseBegan ?       "Clicked"   :
+                      touchPhase == UITouchPhaseMoved ?       "Moved"     :
+                      touchPhase == UITouchPhaseStationary ?  "Static"    :
+                      touchPhase == UITouchPhaseEnded ?       "Unclicked" :
+                      touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown",
+                      x, y);
     }
   }
 
@@ -618,6 +645,166 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   NGL_OUT(_T("\n"));
 */
   //[self Paint];
+}
+
+- (void) handleDrag: (UIEvent*) pEvent
+{
+  //nuiStopWatch watch(_T("nglWindowUIKIT::handleEvent"));
+  if (pEvent.type != UIEventTypeTouches)
+    return;
+  //  [self dumpTouches: pEvent];
+  
+	static double sOldTimestamp = 0.0;
+  NSSet* pSet = [pEvent allTouches];
+  if (!pSet)
+  {
+    NGL_ASSERT(pSet);
+    return;
+  }
+  NSArray* pArray = [pSet allObjects];
+  NGL_ASSERT(pArray);
+  NSUInteger count = [pArray count];
+  
+  std::vector<UITouch*> touches;
+  touches.resize((uint)count);
+  [pArray getObjects: &touches[0]];
+  
+  const nuiRect rect(0,0, mpNGLWindow->GetWidth(), mpNGLWindow->GetHeight());
+  
+  for (uint n = 0; n < count; n++)
+  {
+    UITouch* pTouch = touches[n];
+    
+    //    UITouchInfo touchInfo = [pTouch info];
+    UITouchPhase touchPhase = [pTouch phase];
+    uint touchTapCount = [pTouch tapCount];
+    
+    CGPoint newp = [pTouch locationInView: (UIView*)self];
+    CGPoint oldp = [pTouch previousLocationInView: (UIView*)self];
+    
+    int x = (int)newp.x;
+    int y = (int)newp.y;
+    
+    TouchesInfo::iterator it = mTouches.find(pTouch);
+    //    NGL_OUT("mTouches size[%d] pTouch[%p] %s\n", mTouches.size(), pTouch, it != mTouches.end() ? "FOUND" : "NOT FOUND");
+    if (it != mTouches.end())
+    {
+      ///< this touch exists
+      nglTouchInfo& rTouch(it->second);
+      NGL_ASSERT(touchPhase != UITouchPhaseBegan);
+      if (touchPhase == UITouchPhaseEnded || touchPhase == UITouchPhaseCancelled)
+      {
+        ///< this touch has been released
+        NGL_TOUCHES_OUT(_T("[%p][%d] [available: %d] Release X:%d Y:%d, phase: %s\n"), pTouch, rTouch.mTouchId, gAvailableTouches.size(), x, y, touchPhase == UITouchPhaseEnded ? "UITouchPhaseEnded" : "UITouchPhaseCancelled");
+        
+        nglMouseInfo info;
+        info.Buttons = nglMouseInfo::ButtonLeft;
+        info.X = x;
+        info.Y = y;
+        
+        AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
+        
+        info.SwipeInfo = nglMouseInfo::eNoSwipe;
+        info.TouchId = rTouch.mTouchId;
+        
+        ///< if tapcount > 1, unclicked from a double click
+        //        if (touchTapCount > 1)// && ([pTouch timestamp] - sOldTimestamp < DOUBLE_TAP_DELAY))
+        //          info.Buttons |= nglMouseInfo::ButtonDoubleClick;
+        
+        
+        gAvailableTouches.push_back(rTouch.mTouchId);
+        gPressedTouches[rTouch.mTouchId] = false;
+        
+        mTouches.erase(it);
+        //        NGL_OUT("ERASING pTouch[%p] -> mTouches size[%d]\n", pTouch, mTouches.size());
+        NGL_ASSERT(mTouches.find(pTouch) == mTouches.end());
+        
+        if (mpNGLWindow->OnCanDrop(mpNGLWindow->GetDraggedObject(), info.X, info.Y, info.Buttons))
+          mpNGLWindow->OnDropped(mpNGLWindow->GetDraggedObject(), info.X, info.Y, info.Buttons);
+        mpNGLWindow->OnDragStop(true);
+        
+//        mpNGLWindow->CallOnMouseUnclick(info);
+      }
+      else if (rTouch.X != x || rTouch.Y != y)
+      {
+        ///< this touch has moved
+        NGL_TOUCHES_OUT(_T("[%p][%d] Move X:%d Y:%d\n"), pTouch, rTouch.mTouchId, x, y);
+        NGL_ASSERT(touchPhase == UITouchPhaseMoved);
+        rTouch.X = x;
+        rTouch.Y = y;
+        
+        nglMouseInfo info;
+        info.Buttons = nglMouseInfo::ButtonLeft;
+        info.X = x;
+        info.Y = y;
+        
+        AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
+        
+        info.SwipeInfo = nglMouseInfo::eNoSwipe;
+        info.TouchId = rTouch.mTouchId;
+      
+//        mpNGLWindow->CallOnMouseMove(info);
+        mpNGLWindow->OnCanDrop(mpNGLWindow->GetDraggedObject(), info.X, info.Y, info.Buttons);
+      }
+      else
+      {
+        //NGL_ASSERT(touchPhase == UITouchPhaseStationary);
+      }
+    }
+    else if (touchPhase == UITouchPhaseBegan && (gAvailableTouches.size() > 0))
+    {
+      ///< this is a new touch
+      NGL_TOUCHES_OUT(_T("[%p][available: %d] UITouchPhaseBegan X:%d Y:%d\n"), pTouch, gAvailableTouches.size(), x, y);
+      
+      NGL_ASSERT(touchPhase == UITouchPhaseBegan);
+      
+      nglTouchInfo newTouch;
+      newTouch.X = x;
+      newTouch.Y = y;
+      NGL_ASSERT(gAvailableTouches.size() > 0);
+      newTouch.mTouchId = gAvailableTouches.front();
+      
+      gAvailableTouches.pop_front();
+      gPressedTouches[newTouch.mTouchId] = true;
+      
+      NGL_TOUCHES_OUT(_T("[%p][%d] New X:%d Y:%d\n"), pTouch, newTouch.mTouchId, x, y);
+      mTouches[pTouch] = newTouch;
+      
+      nglMouseInfo info;
+      info.Buttons = nglMouseInfo::ButtonLeft;
+      
+			// Double tapping events are way too slow on the iPhone
+			// compare timestamps to see if we should declare the event a double click
+#define DOUBLE_TAP_DELAY	0.25
+      
+      ///< if tapcount > 1, it is a double click
+      if (touchTapCount > 1)// && ([pTouch timestamp] - sOldTimestamp < DOUBLE_TAP_DELAY))
+        info.Buttons |= nglMouseInfo::ButtonDoubleClick;
+      
+			sOldTimestamp = [pTouch timestamp];
+      
+      info.X = x;
+      info.Y = y;
+      
+      AdjustFromAngle(mpNGLWindow->GetRotation(), rect, info);
+      
+      info.SwipeInfo = nglMouseInfo::eNoSwipe;
+      info.TouchId = newTouch.mTouchId;
+      
+//      mpNGLWindow->CallOnMouseClick(info); /// Dont call it
+    }
+    else
+    {
+      NGL_TOUCHES_OUT(_T("[%p][available: %d] Discarding event: [phase: %s X:%d Y:%d]\n"),
+                      pTouch, gAvailableTouches.size(), 
+                      touchPhase == UITouchPhaseBegan ?       "Clicked"   :
+                      touchPhase == UITouchPhaseMoved ?       "Moved"     :
+                      touchPhase == UITouchPhaseStationary ?  "Static"    :
+                      touchPhase == UITouchPhaseEnded ?       "Unclicked" :
+                      touchPhase == UITouchPhaseCancelled ?   "Canceled"  : "Unknown",
+                      x, y);
+    }
+  }
 }
 
 - (void) invalidate
@@ -671,7 +858,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 // UITextFieldDelegate method.  Invoked when user types something.
 - (BOOL)textField:(UITextField *)_textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-  NGL_OUT(_T("change chars in range %d - %d\n"), range.location, range.length);
+//  NGL_OUT(_T("change chars in range %d - %d\n"), range.location, range.length);
 	if ([string length] == 0)
   {
     mpNGLWindow->CallOnKeyDown(nglKeyEvent(NK_BACKSPACE, 8, 8)); // 8 = BS = BackSpace
@@ -679,7 +866,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 	}
 	else
   {
-    nglString str((CFStringRef)string);
+    const char *p = [string UTF8String];
+    nglString str(p);
     mpNGLWindow->CallOnTextInput(str);
 	}
 
@@ -970,6 +1158,8 @@ nglWindow::nglWindow (const nglContextInfo& rContext, const nglWindowInfo& rInfo
 
 void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInfo& rInfo, const nglContext* pShared)
 {
+  mDragging = false;
+  mpDragged = NULL;
   mState = eHide;
   mAngle = 0;
 
@@ -1257,7 +1447,9 @@ bool nglWindow::IsEnteringText() const
 /// Drag and Drop:
 bool nglWindow::Drag(nglDragAndDrop* pDragObject)
 {
-  return false;
+  mDragging = true;
+  mpDragged = pDragObject;
+  return true;
 }
 
 nglDropEffect nglWindow::OnCanDrop(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)
@@ -1271,6 +1463,9 @@ void nglWindow::OnDragEnter()
 
 void nglWindow::OnDragLeave()
 {
+  mDragging = false;
+  delete mpDragged;
+  mpDragged = NULL;
 }
 
 void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& rMimeType)
@@ -1279,6 +1474,9 @@ void nglWindow::OnDragRequestData(nglDragAndDrop* pDragObject, const nglString& 
 
 void nglWindow::OnDragStop(bool canceled)
 {
+  mDragging = false;
+  delete mpDragged;
+  mpDragged = NULL;
 }
 
 void nglWindow::OnDropped(nglDragAndDrop* pDragObject, int X,int Y, nglMouseInfo::Flags Button)

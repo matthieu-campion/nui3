@@ -5,7 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
-
+#define DEBUG_NGLPATH 0
 
 #include "nui.h"
 #include "nglVolume.h"
@@ -413,22 +413,18 @@ bool nglPath::Move(const nglPath& PathTarget)
 bool nglPath::Copy(const nglPath& PathTarget) const
 {
   nglIStream* pInStream = OpenRead();
-  nglIOStream* pOutStream = PathTarget.OpenWrite();
-
-  if (!pInStream)
+  if (pInStream == NULL)
   {
-    NGL_LOG("path", NGL_LOG_ERROR, "nglPath::Copy Unable to open file '%s' for reading", mPathName.GetChars());
-    delete pOutStream;
     return false;
   }
-
-  if (!pOutStream)
+  
+  nglIOStream* pOutStream = PathTarget.OpenWrite();
+  if (pOutStream == NULL)
   {
-    NGL_LOG("path", NGL_LOG_ERROR, "nglPath::Copy Unable to open file '%s' for writing", PathTarget.GetPathName().GetChars());
     delete pInStream;
     return false;
   }
-
+  
   nglFileSize available = pInStream->Available();
   int64 piped = pInStream->PipeTo(*pOutStream);
   
@@ -626,7 +622,7 @@ void nglPath::SetExtension(const nglString& rExtension)
     mPathName.DeleteRight(mPathName.GetLength() - dot);
   }
 
-  mPathName.Add(_T('.')).Add(rExtension);
+  mPathName.Append('.').Append(rExtension);
 }
 
 nglString nglPath::GetParentName() const
@@ -663,7 +659,7 @@ void nglPath::Split(std::vector<nglString>& rElements)
 
 bool nglIsFileVisible(const nglString& rPathName)
 {
-#ifdef _CARBON_
+#if (defined _CARBON_ || defined _COCOA_)
   FSRef ref;
   OSStatus err = FSPathMakeRefWithOptions((const UInt8*) rPathName.GetStdString(eUTF8).c_str(), kFSPathMakeRefDoNotFollowLeafSymlink, &ref, 0);
   if (err == noErr)
@@ -1171,6 +1167,10 @@ bool nglPath::InternalSetPath(const nglChar* pPath)
 	if (rootpart ? i > rootpart : i > 1)
 		mPathName.TrimRight(_T('/'));
 
+#if DEBUG_NGLPATH
+  NGL_OUT(_T("[nglPath::InternalSetPath] '%s' [Exists %d]\n"), mPathName.GetChars(), Exists());
+  //NGL_ASSERT(Exists());
+#endif
 	return true;
 }
 
@@ -1489,11 +1489,12 @@ int32 nglPath::GetRootPart() const
   int col = mPathName.Find(_T(':'), 0, true);
   int slash = mPathName.Find(_T('/'), 0, true);
 
+  // Not a volume
   if (col < 0 || slash < 0)
     return 0;
-
+  
   if (col < slash)
-    return MIN(col + 1, mPathName.GetLength());
+    return MIN(slash + 1, mPathName.GetLength());
   
 	return 0;
 }

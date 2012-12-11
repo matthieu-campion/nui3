@@ -396,7 +396,7 @@ void nuiScrollBar::SetRange(nuiRange* pRange)
   }
 
   ValueChanged();
-  UpdateLayout();  
+  InvalidateLayout();  
 }
 
 nuiRange& nuiScrollBar::GetRange()
@@ -408,13 +408,15 @@ nuiRange& nuiScrollBar::GetRange()
 void nuiScrollBar::DoInvalidate(const nuiEvent& rEvent)
 {
   ValueChanged();
-  UpdateLayout();
+  if (mRect.GetWidth() > 0 && mRect.GetHeight() > 0)
+    UpdateLayout();
 }
 
 void nuiScrollBar::DoInvalidateLayout(const nuiEvent& rEvent)
 {
   ValueChanged();
-  UpdateLayout();
+  if (mRect.GetWidth() > 0 && mRect.GetHeight() > 0)
+    UpdateLayout();
 }
 
 void nuiScrollBar::SetOrientation(nuiOrientation Orientation)

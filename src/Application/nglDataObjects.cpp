@@ -23,12 +23,12 @@ nglDataObject::nglDataObject(const nglString& rMimeType)
 nglDataObject::~nglDataObject()
 {}
       
-const nglString& nglDataObject::GetMimeType()
+const nglString& nglDataObject::GetMimeType() const
 { 
   return mMimeType;
 }
 
-nglNativeObjectType nglDataObject::GetNativeType()
+nglNativeObjectType nglDataObject::GetNativeType() const
 { 
   return mNativeType;
 }
@@ -49,15 +49,15 @@ nglDataObject* nglDataFilesObject::Create(const nglString& rMimeType)
 }
 
 
-const std::list<nglString>& nglDataFilesObject::GetFiles()
+const std::list<nglString>& nglDataFilesObject::GetFiles() const
 { 
   return mFilePaths;
 }
 
-nglSize nglDataFilesObject::GetDataSize()
+nglSize nglDataFilesObject::GetDataSize() const
 {
   uint32 size = 0;
-  for (std::list<nglString>::iterator i = mFilePaths.begin(); i != mFilePaths.end(); i++)
+  for (std::list<nglString>::const_iterator i = mFilePaths.begin(); i != mFilePaths.end(); i++)
     size += ((*i).GetLength()+1) * (sizeof (nglChar));
   return size;
 }
@@ -92,13 +92,13 @@ void nglDataTextObject::AppendData(const nglString& rDataText)
   mDataText.Append(rDataText); 
 }
 
-const nglString& nglDataTextObject::GetData()
+const nglString& nglDataTextObject::GetData() const
 {
   return mDataText; 
 }
 
-nglSize nglDataTextObject::GetDataSize()
-{ 
+nglSize nglDataTextObject::GetDataSize() const
+{
   if (mTextSize)
     return mTextSize;
   return (mDataText.GetLength()+1) * (sizeof (char)); 

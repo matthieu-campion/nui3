@@ -30,6 +30,8 @@ public:
   nuiContextInfo(Type type = StandardContext2D);
 };
 
+typedef nuiFastDelegate1<nglDragAndDrop*,nuiWidget*>  CreateDragFeedbackDelegate;
+
 /// This class implements the root nui object: the main window of any application.
 class NUI_API nuiMainWindow :  public nuiTopLevel
 {
@@ -66,6 +68,11 @@ public:
   bool Trash();
 
   void SetDebugMode(bool Set);
+
+  void SetCreateDragFeedbackDelegate(const CreateDragFeedbackDelegate& rDelegate)
+  {
+    mCreateDragFeedbackDelegate = rDelegate;
+  }
 
   /** @name Redirected to nglWindow via nuiMainWindow::NGLWindow */
   //@{
@@ -267,6 +274,7 @@ private:
   double mFPSDelay;
   uint32 mFPSCount;
   float mFPS;
+  CreateDragFeedbackDelegate mCreateDragFeedbackDelegate;
 };
 
 #endif // __nuiMainWindow_h__

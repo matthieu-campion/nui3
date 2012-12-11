@@ -101,11 +101,11 @@ void objCCallOnMemoryWarning();
 	}	
 }
 
-- (void) applicationDidEnterBackground:         (UIApplication*) pUIApplication
+- (void) applicationDidEnterBackground:       (UIApplication*) pUIApplication
 {
   NGL_DEBUG( NGL_OUT(_T("[nglUIApplicationDelegate applicationDidEnterBackground]\n")); )
   NGL_ASSERT(App);
-	
+
 	NSEnumerator *e = [[pUIApplication windows] objectEnumerator];
 	
 	id win;
@@ -116,7 +116,7 @@ void objCCallOnMemoryWarning();
 			nglWindow* pWindow = [win getNGLWindow];
 			
 			NGL_ASSERT(pWindow);
-			pWindow->CallOnDesactivation();			
+			pWindow->CallOnDesactivation();
 		}
 	}
 	

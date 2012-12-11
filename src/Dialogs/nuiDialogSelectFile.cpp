@@ -115,7 +115,7 @@ void nuiDialogSelectFile::OnSelectorOK(const nuiEvent& rEvent)
 {
 //  nglString text = mpEditLine->GetText();
 //  text.Trim();
-//  if (text == nglString::Null)
+//  if (text.IsNull())
 //    return false;
   
   mPath = mpSelector->GetPath();
@@ -160,7 +160,7 @@ void nuiDialogSelectFile::OnCreateNewFolderDone(const nuiEvent& rEvent)
   {
     nglString text = mpCreateEditLine->GetText();
     text.Trim();
-    if (text == nglString::Null)
+    if (text.IsNull())
     {
       rEvent.Cancel();
       return;

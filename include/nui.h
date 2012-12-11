@@ -41,6 +41,7 @@ This file includes all nui needed headers to ease the creation of precompiled he
 
 //#define _TU_USE_STL 1
 
+#define NUI_FONTDB_PATH _T("nuiFonts.db5")
 #include "nui_all.h"
 
 #endif // __nui_h__

@@ -80,6 +80,7 @@ and in NGL user application code.
 
 	// Using UIKit for iPhone and iPhone simulator
 	#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
+//#error "Shouldn't go there (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)"
     #define NUI_IOS
     #define _UIKIT_
     #define _CORE_FOUNDATION_
@@ -87,6 +88,7 @@ and in NGL user application code.
     #include <CoreFoundation/CoreFoundation.h>
 
   #elif (defined _COCOA_)
+//#error "Should go there!!! (defined _COCOA_)"
     #define _CORE_FOUNDATION_
     #define __MACHO__
     #define __NGL_MACHO__
@@ -548,8 +550,8 @@ typedef wchar_t nglUChar;
 
 #  elif !defined _MINUI3_
 
-#    include <GL/gl.h>
-#    include <GL/glu.h>
+#    include <OpenGL/gl.h>
+//#    include <GL/glu.h>
 #    include "nui_GL/glext.h"
 #  endif
 #  ifdef _WIN32_

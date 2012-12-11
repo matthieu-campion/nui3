@@ -436,7 +436,7 @@ void nuiStateDecoration::SetState(nuiStateDescription State, nuiDecoration* pDec
 
 void nuiStateDecoration::SetState(nuiStateDescription State, const nglString& rDecorationName)
 {  
-  if (rDecorationName == nglString::Null)
+  if (rDecorationName.IsNull())
     return;
   nuiDecoration* pDecoration = nuiDecoration::Get(rDecorationName, true);
   if (!pDecoration)

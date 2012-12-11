@@ -572,7 +572,6 @@
 		73F0856112E9BA0700656E84 /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
 		73F0856212E9BA0700656E84 /* nuiAttributeType.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CC3629115EF0F400747AB2 /* nuiAttributeType.h */; };
 		73F0856312E9BA0700656E84 /* nuiScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBD201174C07E0031DFA8 /* nuiScriptEngine.h */; };
-		73F0856412E9BA0700656E84 /* nuiSpiderMonkey.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC07211751B620031DFA8 /* nuiSpiderMonkey.h */; };
 		73F0856512E9BA0700656E84 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		73F0856612E9BA0700656E84 /* nuiNetworkHost.h in Headers */ = {isa = PBXBuildFile; fileRef = E50367C211A0AD9E001F4389 /* nuiNetworkHost.h */; };
 		73F0856712E9BA0700656E84 /* nuiSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = E50367C311A0AD9E001F4389 /* nuiSocket.h */; };
@@ -705,7 +704,7 @@
 		73F085EE12E9BA0700656E84 /* nuiWidgetAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */; };
 		73F085EF12E9BA0700656E84 /* nglIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE60C3CECAB00902DFE /* nglIStream.cpp */; };
 		73F085F012E9BA0700656E84 /* nuiShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC00C3CECAB00902DFE /* nuiShape.cpp */; };
-		73F085F112E9BA0700656E84 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; };
+		73F085F112E9BA0700656E84 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; settings = {COMPILER_FLAGS = "-x objective-c++"; }; };
 		73F085F212E9BA0700656E84 /* nuiRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */; };
 		73F085F312E9BA0700656E84 /* nuiTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D690C3CECAB00902DFE /* nuiTimer.cpp */; };
 		73F085F412E9BA0700656E84 /* nglIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */; };
@@ -786,7 +785,7 @@
 		73F0864612E9BA0700656E84 /* nuiPathAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA519EE0CFAE0DD00832BD1 /* nuiPathAttributeEditor.cpp */; };
 		73F0864712E9BA0700656E84 /* nuiRectAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA519EF0CFAE0DD00832BD1 /* nuiRectAttributeEditor.cpp */; };
 		73F0864812E9BA0700656E84 /* nuiStringAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E460CFEF50200650944 /* nuiStringAttributeEditor.cpp */; };
-		73F0864912E9BA0700656E84 /* nuiAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E8B0CFF022B00650944 /* nuiAttribute.cpp */; };
+		73F0864912E9BA0700656E84 /* nuiAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF24E8B0CFF022B00650944 /* nuiAttribute.cpp */; settings = {COMPILER_FLAGS = "-mno-thumb"; }; };
 		73F0864A12E9BA0700656E84 /* nuiLabelAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC58C4AB0D0078DB00C19A59 /* nuiLabelAttribute.cpp */; };
 		73F0864B12E9BA0700656E84 /* nuiBooleanAttributeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA456B10D043D8D009236E9 /* nuiBooleanAttributeEditor.cpp */; };
 		73F0864C12E9BA0700656E84 /* nuiNativeResourceVolume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E578F7E10D0460FE00D2F07C /* nuiNativeResourceVolume.cpp */; };
@@ -883,7 +882,6 @@
 		73F086AE12E9BA0700656E84 /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */; };
 		73F086AF12E9BA0700656E84 /* nglCondition_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E560A371113587BB00AFBEAC /* nglCondition_posix.cpp */; };
 		73F086B112E9BA0700656E84 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD241174C0BE0031DFA8 /* nuiScriptEngine.cpp */; };
-		73F086B212E9BA0700656E84 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC06E11751B530031DFA8 /* nuiSpiderMonkey.cpp */; };
 		73F086B312E9BA0700656E84 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
 		73F086B412E9BA0700656E84 /* nuiApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9B19A118656B600A703BA /* nuiApplication.cpp */; };
 		73F086B512E9BA0700656E84 /* nuiNetworkHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50367B011A0AD7C001F4389 /* nuiNetworkHost.cpp */; };
@@ -893,7 +891,6 @@
 		73F086B912E9BA0700656E84 /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		73F086BA12E9BA0700656E84 /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		73F086BB12E9BA0700656E84 /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
-		73F086BC12E9BA0700656E84 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		73F086BD12E9BA0700656E84 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		73F086BE12E9BA0700656E84 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
 		73F086BF12E9BA0700656E84 /* nglConsole_Darwin.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FA11CB86C40025CA71 /* nglConsole_Darwin.mm */; };
@@ -1482,63 +1479,6 @@
 		73F09A3312E9D09E00656E84 /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
 		73F09A3412E9D09E00656E84 /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDD1100AFB5000F46C4 /* ucpgba.c */; };
 		73F09A3512E9D09E00656E84 /* ucdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.cpp */; };
-		73F09A3612E9D09E00656E84 /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8611750ADF0031DFA8 /* jsapi.cpp */; };
-		73F09A3712E9D09E00656E84 /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8811750ADF0031DFA8 /* jsarena.cpp */; };
-		73F09A3812E9D09E00656E84 /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8A11750ADF0031DFA8 /* jsarray.cpp */; };
-		73F09A3912E9D09E00656E84 /* jsatom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8C11750ADF0031DFA8 /* jsatom.cpp */; };
-		73F09A3A12E9D09E00656E84 /* jsbool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9311750ADF0031DFA8 /* jsbool.cpp */; };
-		73F09A3B12E9D09E00656E84 /* jsbuiltins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9511750ADF0031DFA8 /* jsbuiltins.cpp */; };
-		73F09A3C12E9D09E00656E84 /* jscntxt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9811750ADF0031DFA8 /* jscntxt.cpp */; };
-		73F09A3D12E9D09E00656E84 /* jsdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9E11750ADF0031DFA8 /* jsdate.cpp */; };
-		73F09A3E12E9D09E00656E84 /* jsdbgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA011750ADF0031DFA8 /* jsdbgapi.cpp */; };
-		73F09A3F12E9D09E00656E84 /* jsdhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA211750ADF0031DFA8 /* jsdhash.cpp */; };
-		73F09A4012E9D09E00656E84 /* jsdtoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA411750ADF0031DFA8 /* jsdtoa.cpp */; };
-		73F09A4112E9D09E00656E84 /* jsemit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA811750ADF0031DFA8 /* jsemit.cpp */; };
-		73F09A4212E9D09E00656E84 /* jsexn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDAA11750ADF0031DFA8 /* jsexn.cpp */; };
-		73F09A4312E9D09E00656E84 /* jsfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDAC11750ADF0031DFA8 /* jsfun.cpp */; };
-		73F09A4412E9D09E00656E84 /* jsgc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDAE11750ADF0031DFA8 /* jsgc.cpp */; };
-		73F09A4512E9D09E00656E84 /* jshash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB011750ADF0031DFA8 /* jshash.cpp */; };
-		73F09A4612E9D09E00656E84 /* jsinterp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB311750ADF0031DFA8 /* jsinterp.cpp */; };
-		73F09A4712E9D09E00656E84 /* jsinvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB711750ADF0031DFA8 /* jsinvoke.cpp */; };
-		73F09A4812E9D09E00656E84 /* jsiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB811750ADF0031DFA8 /* jsiter.cpp */; };
-		73F09A4912E9D09E00656E84 /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDBD11750ADF0031DFA8 /* jslock.cpp */; };
-		73F09A4A12E9D09E00656E84 /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC011750ADF0031DFA8 /* jslog2.cpp */; };
-		73F09A4B12E9D09E00656E84 /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC211750ADF0031DFA8 /* jsmath.cpp */; };
-		73F09A4C12E9D09E00656E84 /* jsnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC411750ADF0031DFA8 /* jsnum.cpp */; };
-		73F09A4D12E9D09E00656E84 /* jsobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC611750ADF0031DFA8 /* jsobj.cpp */; };
-		73F09A4E12E9D09E00656E84 /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC911750ADF0031DFA8 /* json.cpp */; };
-		73F09A4F12E9D09E00656E84 /* jsopcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDCB11750ADF0031DFA8 /* jsopcode.cpp */; };
-		73F09A5012E9D09E00656E84 /* jsparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDD111750ADF0031DFA8 /* jsparse.cpp */; };
-		73F09A5112E9D09E00656E84 /* jsprf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDD311750ADF0031DFA8 /* jsprf.cpp */; };
-		73F09A5212E9D09E00656E84 /* jsregexp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDD911750ADF0031DFA8 /* jsregexp.cpp */; };
-		73F09A5312E9D09E00656E84 /* jsscan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDDC11750ADF0031DFA8 /* jsscan.cpp */; };
-		73F09A5412E9D09E00656E84 /* jsscope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDDE11750ADF0031DFA8 /* jsscope.cpp */; };
-		73F09A5512E9D09E00656E84 /* jsscript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDE111750ADF0031DFA8 /* jsscript.cpp */; };
-		73F09A5612E9D09E00656E84 /* jsstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDE711750ADF0031DFA8 /* jsstr.cpp */; };
-		73F09A5712E9D09E00656E84 /* jstask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDEA11750ADF0031DFA8 /* jstask.cpp */; };
-		73F09A5812E9D09E00656E84 /* jstracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDED11750ADF0031DFA8 /* jstracer.cpp */; };
-		73F09A5912E9D09E00656E84 /* jstypedarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDEF11750ADF0031DFA8 /* jstypedarray.cpp */; };
-		73F09A5A12E9D09E00656E84 /* jsutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF211750ADF0031DFA8 /* jsutil.cpp */; };
-		73F09A5B12E9D09E00656E84 /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF711750ADF0031DFA8 /* jsxdrapi.cpp */; };
-		73F09A5C12E9D09E00656E84 /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF911750ADF0031DFA8 /* jsxml.cpp */; };
-		73F09A5D12E9D09E00656E84 /* Allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDFE11750ADF0031DFA8 /* Allocator.cpp */; };
-		73F09A5E12E9D09E00656E84 /* Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0011750ADF0031DFA8 /* Assembler.cpp */; };
-		73F09A5F12E9D09E00656E84 /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0211750ADF0031DFA8 /* avmplus.cpp */; };
-		73F09A6012E9D09E00656E84 /* CodeAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0411750ADF0031DFA8 /* CodeAlloc.cpp */; };
-		73F09A6112E9D09E00656E84 /* Containers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0611750ADF0031DFA8 /* Containers.cpp */; };
-		73F09A6212E9D09E00656E84 /* Fragmento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0811750ADF0031DFA8 /* Fragmento.cpp */; };
-		73F09A6312E9D09E00656E84 /* LIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0A11750ADF0031DFA8 /* LIR.cpp */; };
-		73F09A6412E9D09E00656E84 /* NativeARM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0F11750ADF0031DFA8 /* NativeARM.cpp */; };
-		73F09A6512E9D09E00656E84 /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1111750ADF0031DFA8 /* Nativei386.cpp */; };
-		73F09A6612E9D09E00656E84 /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1311750ADF0031DFA8 /* NativeMIPS.cpp */; };
-		73F09A6712E9D09E00656E84 /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1511750ADF0031DFA8 /* NativePPC.cpp */; };
-		73F09A6812E9D09E00656E84 /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1711750ADF0031DFA8 /* NativeSparc.cpp */; };
-		73F09A6912E9D09E00656E84 /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1911750ADF0031DFA8 /* NativeX64.cpp */; };
-		73F09A6A12E9D09E00656E84 /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1B11750ADF0031DFA8 /* njconfig.cpp */; };
-		73F09A6B12E9D09E00656E84 /* RegAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1E11750ADF0031DFA8 /* RegAlloc.cpp */; };
-		73F09A6C12E9D09E00656E84 /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE2011750ADF0031DFA8 /* VMPI.cpp */; };
-		73F09A6D12E9D09E00656E84 /* prmjtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE2211750ADF0031DFA8 /* prmjtime.cpp */; };
-		73F09A6E12E9D09E00656E84 /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE2611750ADF0031DFA8 /* vprof.cpp */; };
 		73F09A6F12E9D09E00656E84 /* libcss.c in Sources */ = {isa = PBXBuildFile; fileRef = E5C1E24911B7172A000B9C56 /* libcss.c */; };
 		73F09A7012E9D09E00656E84 /* libwapcaplet.c in Sources */ = {isa = PBXBuildFile; fileRef = E5C1E26B11B7172A000B9C56 /* libwapcaplet.c */; };
 		73F09A7112E9D09E00656E84 /* stylesheet.c in Sources */ = {isa = PBXBuildFile; fileRef = E5C1E29511B7172A000B9C56 /* stylesheet.c */; };
@@ -2502,7 +2442,6 @@
 		E524151D11CB860B0025CA71 /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
 		E524151E11CB860B0025CA71 /* nuiAttributeType.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CC3629115EF0F400747AB2 /* nuiAttributeType.h */; };
 		E524151F11CB860B0025CA71 /* nuiScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBD201174C07E0031DFA8 /* nuiScriptEngine.h */; };
-		E524157911CB860B0025CA71 /* nuiSpiderMonkey.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC07211751B620031DFA8 /* nuiSpiderMonkey.h */; };
 		E524157A11CB860B0025CA71 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E524157B11CB860B0025CA71 /* nuiNetworkHost.h in Headers */ = {isa = PBXBuildFile; fileRef = E50367C211A0AD9E001F4389 /* nuiNetworkHost.h */; };
 		E524157C11CB860B0025CA71 /* nuiSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = E50367C311A0AD9E001F4389 /* nuiSocket.h */; };
@@ -2597,7 +2536,7 @@
 		E524167911CB860B0025CA71 /* nuiWidgetAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */; };
 		E524167A11CB860B0025CA71 /* nglIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE60C3CECAB00902DFE /* nglIStream.cpp */; };
 		E524167B11CB860B0025CA71 /* nuiShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC00C3CECAB00902DFE /* nuiShape.cpp */; };
-		E524167C11CB860B0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; };
+		E524167C11CB860B0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; settings = {COMPILER_FLAGS = "-x objective-c++"; }; };
 		E524167D11CB860B0025CA71 /* nuiRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */; };
 		E524167E11CB860B0025CA71 /* nuiTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D690C3CECAB00902DFE /* nuiTimer.cpp */; };
 		E524167F11CB860B0025CA71 /* nglIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */; };
@@ -2775,7 +2714,6 @@
 		E524177011CB860B0025CA71 /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */; };
 		E524177111CB860B0025CA71 /* nglCondition_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E560A371113587BB00AFBEAC /* nglCondition_posix.cpp */; };
 		E524177311CB860B0025CA71 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD241174C0BE0031DFA8 /* nuiScriptEngine.cpp */; };
-		E52417AD11CB860B0025CA71 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC06E11751B530031DFA8 /* nuiSpiderMonkey.cpp */; };
 		E52417AE11CB860B0025CA71 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
 		E52417AF11CB860B0025CA71 /* nuiApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9B19A118656B600A703BA /* nuiApplication.cpp */; };
 		E52417B011CB860B0025CA71 /* nuiNetworkHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50367B011A0AD7C001F4389 /* nuiNetworkHost.cpp */; };
@@ -2785,7 +2723,6 @@
 		E52417B411CB860B0025CA71 /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E52417B811CB860B0025CA71 /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		E52417E711CB860B0025CA71 /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
-		E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		E524180111CB86C40025CA71 /* ngl_uikit.h in Headers */ = {isa = PBXBuildFile; fileRef = E52417F711CB86C40025CA71 /* ngl_uikit.h */; };
 		E524180211CB86C40025CA71 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		E524180311CB86C40025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
@@ -3111,7 +3048,6 @@
 		E5241DF211CBCE9E0025CA71 /* nuiVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = E50066D2115070A700CDD83E /* nuiVariant.h */; };
 		E5241DF311CBCE9E0025CA71 /* nuiAttributeType.h in Headers */ = {isa = PBXBuildFile; fileRef = E5CC3629115EF0F400747AB2 /* nuiAttributeType.h */; };
 		E5241DF411CBCE9E0025CA71 /* nuiScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CBD201174C07E0031DFA8 /* nuiScriptEngine.h */; };
-		E5241E4E11CBCE9E0025CA71 /* nuiSpiderMonkey.h in Headers */ = {isa = PBXBuildFile; fileRef = E52CC07211751B620031DFA8 /* nuiSpiderMonkey.h */; };
 		E5241E4F11CBCE9E0025CA71 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E5241E5011CBCE9E0025CA71 /* nuiNetworkHost.h in Headers */ = {isa = PBXBuildFile; fileRef = E50367C211A0AD9E001F4389 /* nuiNetworkHost.h */; };
 		E5241E5111CBCE9E0025CA71 /* nuiSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = E50367C311A0AD9E001F4389 /* nuiSocket.h */; };
@@ -3212,7 +3148,7 @@
 		E5241F5F11CBCE9E0025CA71 /* nuiWidgetAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E1A0C3CECAB00902DFE /* nuiWidgetAnimation.cpp */; };
 		E5241F6011CBCE9E0025CA71 /* nglIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE60C3CECAB00902DFE /* nglIStream.cpp */; };
 		E5241F6111CBCE9E0025CA71 /* nuiShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC00C3CECAB00902DFE /* nuiShape.cpp */; };
-		E5241F6211CBCE9E0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; };
+		E5241F6211CBCE9E0025CA71 /* nuiInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D5F0C3CECAB00902DFE /* nuiInit.cpp */; settings = {COMPILER_FLAGS = "-x objective-c++"; }; };
 		E5241F6311CBCE9E0025CA71 /* nuiRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */; };
 		E5241F6411CBCE9E0025CA71 /* nuiTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816D690C3CECAB00902DFE /* nuiTimer.cpp */; };
 		E5241F6511CBCE9E0025CA71 /* nglIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */; };
@@ -3390,7 +3326,6 @@
 		E524204711CBCE9E0025CA71 /* nglReaderWriterLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B7A1D511347AE3005403BF /* nglReaderWriterLock.cpp */; };
 		E524204811CBCE9E0025CA71 /* nglCondition_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E560A371113587BB00AFBEAC /* nglCondition_posix.cpp */; };
 		E524204A11CBCE9E0025CA71 /* nuiScriptEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD241174C0BE0031DFA8 /* nuiScriptEngine.cpp */; };
-		E524208411CBCE9E0025CA71 /* nuiSpiderMonkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CC06E11751B530031DFA8 /* nuiSpiderMonkey.cpp */; };
 		E524208511CBCE9E0025CA71 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
 		E524208611CBCE9E0025CA71 /* nuiApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F9B19A118656B600A703BA /* nuiApplication.cpp */; };
 		E524208711CBCE9E0025CA71 /* nuiNetworkHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50367B011A0AD7C001F4389 /* nuiNetworkHost.cpp */; };
@@ -3400,7 +3335,6 @@
 		E524208B11CBCE9E0025CA71 /* nuiHTMLTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E57DDB5C11ADE86A00C0E4DE /* nuiHTMLTable.cpp */; };
 		E524208F11CBCE9E0025CA71 /* nuiAVIwriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCF1A85D11BE67F700806A7A /* nuiAVIwriter.cpp */; };
 		E52420BE11CBCE9E0025CA71 /* nuiURL_CoreFoundation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */; };
-		E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */; };
 		E52420C011CBCE9E0025CA71 /* nglApplication_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */; };
 		E52420C111CBCE9E0025CA71 /* nglClipBoard_UIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */; };
 		E52420C211CBCE9E0025CA71 /* nglConsole_Darwin.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52417FA11CB86C40025CA71 /* nglConsole_Darwin.mm */; };
@@ -5706,7 +5640,6 @@
 		E5D643D41209AB9C009C26A9 /* nglPlugin_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6E9711E7315F000FB337 /* nglPlugin_Cocoa.mm */; };
 		E5D643D51209AB9C009C26A9 /* nglContext_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA011E7322A000FB337 /* nglContext_Cocoa.mm */; };
 		E5D643D61209AB9C009C26A9 /* nuiMainMenu_Cocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA211E7322A000FB337 /* nuiMainMenu_Cocoa.cpp */; };
-		E5D643D71209AB9C009C26A9 /* nglVideoMode_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E210C3CECAB00902DFE /* nglVideoMode_CoreFoundation.cpp */; };
 		E5D643D81209AB9C009C26A9 /* nglVideoMode_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59CD10A11E7C9F200955611 /* nglVideoMode_Cocoa.mm */; };
 		E5D643D91209AB9C009C26A9 /* nglWindow_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E52EA7F4106D6E1F008598F5 /* nglWindow_Cocoa.mm */; };
 		E5D6450C120A0B39009C26A9 /* nglImageCGCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52419D911CB9D3C0025CA71 /* nglImageCGCodec.cpp */; };
@@ -6925,63 +6858,6 @@
 		E5DD3F1F12E0B08300F1EF4E /* gif_err.c in Sources */ = {isa = PBXBuildFile; fileRef = E51E54F40FF12EB600FDF3BE /* gif_err.c */; };
 		E5DD3F3212E0B08300F1EF4E /* ucpgba.c in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDD1100AFB5000F46C4 /* ucpgba.c */; };
 		E5DD3F3312E0B08300F1EF4E /* ucdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5D13BDF1100AFB5000F46C4 /* ucdata.cpp */; };
-		E5DD3F3912E0B08300F1EF4E /* jsapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8611750ADF0031DFA8 /* jsapi.cpp */; };
-		E5DD3F3A12E0B08300F1EF4E /* jsarena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8811750ADF0031DFA8 /* jsarena.cpp */; };
-		E5DD3F3B12E0B08300F1EF4E /* jsarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8A11750ADF0031DFA8 /* jsarray.cpp */; };
-		E5DD3F3C12E0B08300F1EF4E /* jsatom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD8C11750ADF0031DFA8 /* jsatom.cpp */; };
-		E5DD3F3D12E0B08300F1EF4E /* jsbool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9311750ADF0031DFA8 /* jsbool.cpp */; };
-		E5DD3F3E12E0B08300F1EF4E /* jsbuiltins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9511750ADF0031DFA8 /* jsbuiltins.cpp */; };
-		E5DD3F3F12E0B08300F1EF4E /* jscntxt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9811750ADF0031DFA8 /* jscntxt.cpp */; };
-		E5DD3F4012E0B08300F1EF4E /* jsdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBD9E11750ADF0031DFA8 /* jsdate.cpp */; };
-		E5DD3F4112E0B08300F1EF4E /* jsdbgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA011750ADF0031DFA8 /* jsdbgapi.cpp */; };
-		E5DD3F4212E0B08300F1EF4E /* jsdhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA211750ADF0031DFA8 /* jsdhash.cpp */; };
-		E5DD3F4312E0B08300F1EF4E /* jsdtoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA411750ADF0031DFA8 /* jsdtoa.cpp */; };
-		E5DD3F4412E0B08300F1EF4E /* jsemit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDA811750ADF0031DFA8 /* jsemit.cpp */; };
-		E5DD3F4512E0B08300F1EF4E /* jsexn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDAA11750ADF0031DFA8 /* jsexn.cpp */; };
-		E5DD3F4612E0B08300F1EF4E /* jsfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDAC11750ADF0031DFA8 /* jsfun.cpp */; };
-		E5DD3F4712E0B08300F1EF4E /* jsgc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDAE11750ADF0031DFA8 /* jsgc.cpp */; };
-		E5DD3F4812E0B08300F1EF4E /* jshash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB011750ADF0031DFA8 /* jshash.cpp */; };
-		E5DD3F4912E0B08300F1EF4E /* jsinterp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB311750ADF0031DFA8 /* jsinterp.cpp */; };
-		E5DD3F4A12E0B08300F1EF4E /* jsinvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB711750ADF0031DFA8 /* jsinvoke.cpp */; };
-		E5DD3F4B12E0B08300F1EF4E /* jsiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDB811750ADF0031DFA8 /* jsiter.cpp */; };
-		E5DD3F4C12E0B08300F1EF4E /* jslock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDBD11750ADF0031DFA8 /* jslock.cpp */; };
-		E5DD3F4D12E0B08300F1EF4E /* jslog2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC011750ADF0031DFA8 /* jslog2.cpp */; };
-		E5DD3F4E12E0B08300F1EF4E /* jsmath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC211750ADF0031DFA8 /* jsmath.cpp */; };
-		E5DD3F4F12E0B08300F1EF4E /* jsnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC411750ADF0031DFA8 /* jsnum.cpp */; };
-		E5DD3F5012E0B08300F1EF4E /* jsobj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC611750ADF0031DFA8 /* jsobj.cpp */; };
-		E5DD3F5112E0B08300F1EF4E /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDC911750ADF0031DFA8 /* json.cpp */; };
-		E5DD3F5212E0B08300F1EF4E /* jsopcode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDCB11750ADF0031DFA8 /* jsopcode.cpp */; };
-		E5DD3F5312E0B08300F1EF4E /* jsparse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDD111750ADF0031DFA8 /* jsparse.cpp */; };
-		E5DD3F5412E0B08300F1EF4E /* jsprf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDD311750ADF0031DFA8 /* jsprf.cpp */; };
-		E5DD3F5512E0B08300F1EF4E /* jsregexp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDD911750ADF0031DFA8 /* jsregexp.cpp */; };
-		E5DD3F5612E0B08300F1EF4E /* jsscan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDDC11750ADF0031DFA8 /* jsscan.cpp */; };
-		E5DD3F5712E0B08300F1EF4E /* jsscope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDDE11750ADF0031DFA8 /* jsscope.cpp */; };
-		E5DD3F5812E0B08300F1EF4E /* jsscript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDE111750ADF0031DFA8 /* jsscript.cpp */; };
-		E5DD3F5912E0B08300F1EF4E /* jsstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDE711750ADF0031DFA8 /* jsstr.cpp */; };
-		E5DD3F5A12E0B08300F1EF4E /* jstask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDEA11750ADF0031DFA8 /* jstask.cpp */; };
-		E5DD3F5B12E0B08300F1EF4E /* jstracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDED11750ADF0031DFA8 /* jstracer.cpp */; };
-		E5DD3F5C12E0B08300F1EF4E /* jstypedarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDEF11750ADF0031DFA8 /* jstypedarray.cpp */; };
-		E5DD3F5D12E0B08300F1EF4E /* jsutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF211750ADF0031DFA8 /* jsutil.cpp */; };
-		E5DD3F5E12E0B08300F1EF4E /* jsxdrapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF711750ADF0031DFA8 /* jsxdrapi.cpp */; };
-		E5DD3F5F12E0B08300F1EF4E /* jsxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDF911750ADF0031DFA8 /* jsxml.cpp */; };
-		E5DD3F6012E0B08300F1EF4E /* Allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBDFE11750ADF0031DFA8 /* Allocator.cpp */; };
-		E5DD3F6112E0B08300F1EF4E /* Assembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0011750ADF0031DFA8 /* Assembler.cpp */; };
-		E5DD3F6212E0B08300F1EF4E /* avmplus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0211750ADF0031DFA8 /* avmplus.cpp */; };
-		E5DD3F6312E0B08300F1EF4E /* CodeAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0411750ADF0031DFA8 /* CodeAlloc.cpp */; };
-		E5DD3F6412E0B08300F1EF4E /* Containers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0611750ADF0031DFA8 /* Containers.cpp */; };
-		E5DD3F6512E0B08300F1EF4E /* Fragmento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0811750ADF0031DFA8 /* Fragmento.cpp */; };
-		E5DD3F6612E0B08300F1EF4E /* LIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0A11750ADF0031DFA8 /* LIR.cpp */; };
-		E5DD3F6712E0B08300F1EF4E /* NativeARM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE0F11750ADF0031DFA8 /* NativeARM.cpp */; };
-		E5DD3F6812E0B08300F1EF4E /* Nativei386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1111750ADF0031DFA8 /* Nativei386.cpp */; };
-		E5DD3F6912E0B08300F1EF4E /* NativeMIPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1311750ADF0031DFA8 /* NativeMIPS.cpp */; };
-		E5DD3F6A12E0B08300F1EF4E /* NativePPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1511750ADF0031DFA8 /* NativePPC.cpp */; };
-		E5DD3F6B12E0B08300F1EF4E /* NativeSparc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1711750ADF0031DFA8 /* NativeSparc.cpp */; };
-		E5DD3F6C12E0B08300F1EF4E /* NativeX64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1911750ADF0031DFA8 /* NativeX64.cpp */; };
-		E5DD3F6D12E0B08300F1EF4E /* njconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1B11750ADF0031DFA8 /* njconfig.cpp */; };
-		E5DD3F6E12E0B08300F1EF4E /* RegAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE1E11750ADF0031DFA8 /* RegAlloc.cpp */; };
-		E5DD3F6F12E0B08300F1EF4E /* VMPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE2011750ADF0031DFA8 /* VMPI.cpp */; };
-		E5DD3F7012E0B08300F1EF4E /* prmjtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE2211750ADF0031DFA8 /* prmjtime.cpp */; };
-		E5DD3F7112E0B08300F1EF4E /* vprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E52CBE2611750ADF0031DFA8 /* vprof.cpp */; };
 		E5DD3F7A12E0B08300F1EF4E /* libcss.c in Sources */ = {isa = PBXBuildFile; fileRef = E5C1E24911B7172A000B9C56 /* libcss.c */; };
 		E5DD3F7B12E0B08300F1EF4E /* libwapcaplet.c in Sources */ = {isa = PBXBuildFile; fileRef = E5C1E26B11B7172A000B9C56 /* libwapcaplet.c */; };
 		E5DD3F7C12E0B08300F1EF4E /* stylesheet.c in Sources */ = {isa = PBXBuildFile; fileRef = E5C1E29511B7172A000B9C56 /* stylesheet.c */; };
@@ -7110,7 +6986,6 @@
 		E5EF6E9D11E7315F000FB337 /* nglPlugin_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6E9711E7315F000FB337 /* nglPlugin_Cocoa.mm */; };
 		E5EF6EA311E7322A000FB337 /* nglContext_Cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA011E7322A000FB337 /* nglContext_Cocoa.mm */; };
 		E5EF6EA511E7322A000FB337 /* nuiMainMenu_Cocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EF6EA211E7322A000FB337 /* nuiMainMenu_Cocoa.cpp */; };
-		E5EF6EF611E75CCA000FB337 /* nglVideoMode_CoreFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816E210C3CECAB00902DFE /* nglVideoMode_CoreFoundation.cpp */; };
 		E5F0C24D13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F0C24C13A0ACC900EC0FB0 /* nuiTextStyle.h */; };
 		E5F0C24E13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F0C24C13A0ACC900EC0FB0 /* nuiTextStyle.h */; };
 		E5F0C24F13A0ACC900EC0FB0 /* nuiTextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F0C24C13A0ACC900EC0FB0 /* nuiTextStyle.h */; };
@@ -7942,7 +7817,6 @@
 		E51E565C0FF248AB00FDF3BE /* nuiHTMLHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLHeader.cpp; sourceTree = "<group>"; };
 		E52411AB11CA8ED20025CA71 /* nuiURL_CoreFoundation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiURL_CoreFoundation.mm; path = src/Net/CoreFoundation/nuiURL_CoreFoundation.mm; sourceTree = SOURCE_ROOT; };
 		E52417F311CB860B0025CA71 /* libnuiPhoneD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnuiPhoneD.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiAudioDevice_AudioUnit.mm; path = Audio/AudioUnit/nuiAudioDevice_AudioUnit.mm; sourceTree = "<group>"; };
 		E52417F711CB86C40025CA71 /* ngl_uikit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ngl_uikit.h; path = src/Application/UIKit/ngl_uikit.h; sourceTree = SOURCE_ROOT; };
 		E52417F811CB86C40025CA71 /* nglApplication_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglApplication_UIKit.mm; path = src/Application/UIKit/nglApplication_UIKit.mm; sourceTree = SOURCE_ROOT; };
 		E52417F911CB86C40025CA71 /* nglClipBoard_UIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nglClipBoard_UIKit.mm; path = src/Application/UIKit/nglClipBoard_UIKit.mm; sourceTree = SOURCE_ROOT; };
@@ -8358,7 +8232,7 @@
 		E540AB5C10DFAC5000791FBA /* nuiAsyncIStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiAsyncIStream.cpp; sourceTree = "<group>"; };
 		E540AB6010DFAC8F00791FBA /* nuiAsyncIStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAsyncIStream.h; path = include/nuiAsyncIStream.h; sourceTree = SOURCE_ROOT; };
 		E5429EEF0C3F082800225219 /* jmemmgr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = jmemmgr.c; path = deps/libjpeg/jmemmgr.c; sourceTree = SOURCE_ROOT; };
-		E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nglPath_Unix.cpp; path = src/File/Unix/nglPath_Unix.cpp; sourceTree = SOURCE_ROOT; };
+		E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = nglPath_Unix.cpp; path = src/File/Unix/nglPath_Unix.cpp; sourceTree = SOURCE_ROOT; };
 		E542A1AE0C3F0A5900225219 /* libnui3.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E54EDB4D0C8EBF5C00B294C8 /* nuiSpinnerLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpinnerLabel.cpp; path = src/Text/nuiSpinnerLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiSpinnerLabel.h; path = include/nuiSpinnerLabel.h; sourceTree = SOURCE_ROOT; };
@@ -10256,7 +10130,6 @@
 		E52E1A230CD7EE46006FBCDD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				E52417F411CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm */,
 				BC9CB4A30D3E48000093CAC3 /* nuiAudioResampler.h */,
 				BC9CB3F60D3E3D9A0093CAC3 /* nuiAudioConvert.cpp */,
 				BC9CB3FC0D3E3DA70093CAC3 /* nuiAudioConvert.h */,
@@ -12504,7 +12377,6 @@
 				73F0856112E9BA0700656E84 /* nuiVariant.h in Headers */,
 				73F0856212E9BA0700656E84 /* nuiAttributeType.h in Headers */,
 				73F0856312E9BA0700656E84 /* nuiScriptEngine.h in Headers */,
-				73F0856412E9BA0700656E84 /* nuiSpiderMonkey.h in Headers */,
 				73F0856512E9BA0700656E84 /* nuiMimeMultiPart.h in Headers */,
 				73F0856612E9BA0700656E84 /* nuiNetworkHost.h in Headers */,
 				73F0856712E9BA0700656E84 /* nuiSocket.h in Headers */,
@@ -13341,7 +13213,6 @@
 				E524151D11CB860B0025CA71 /* nuiVariant.h in Headers */,
 				E524151E11CB860B0025CA71 /* nuiAttributeType.h in Headers */,
 				E524151F11CB860B0025CA71 /* nuiScriptEngine.h in Headers */,
-				E524157911CB860B0025CA71 /* nuiSpiderMonkey.h in Headers */,
 				E524157A11CB860B0025CA71 /* nuiMimeMultiPart.h in Headers */,
 				E524157B11CB860B0025CA71 /* nuiNetworkHost.h in Headers */,
 				E524157C11CB860B0025CA71 /* nuiSocket.h in Headers */,
@@ -13720,7 +13591,6 @@
 				E5241DF211CBCE9E0025CA71 /* nuiVariant.h in Headers */,
 				E5241DF311CBCE9E0025CA71 /* nuiAttributeType.h in Headers */,
 				E5241DF411CBCE9E0025CA71 /* nuiScriptEngine.h in Headers */,
-				E5241E4E11CBCE9E0025CA71 /* nuiSpiderMonkey.h in Headers */,
 				E5241E4F11CBCE9E0025CA71 /* nuiMimeMultiPart.h in Headers */,
 				E5241E5011CBCE9E0025CA71 /* nuiNetworkHost.h in Headers */,
 				E5241E5111CBCE9E0025CA71 /* nuiSocket.h in Headers */,
@@ -16917,7 +16787,6 @@
 				73F086AE12E9BA0700656E84 /* nglReaderWriterLock.cpp in Sources */,
 				73F086AF12E9BA0700656E84 /* nglCondition_posix.cpp in Sources */,
 				73F086B112E9BA0700656E84 /* nuiScriptEngine.cpp in Sources */,
-				73F086B212E9BA0700656E84 /* nuiSpiderMonkey.cpp in Sources */,
 				73F086B312E9BA0700656E84 /* nuiMimeMultiPart.cpp in Sources */,
 				73F086B412E9BA0700656E84 /* nuiApplication.cpp in Sources */,
 				73F086B512E9BA0700656E84 /* nuiNetworkHost.cpp in Sources */,
@@ -16927,7 +16796,6 @@
 				73F086B912E9BA0700656E84 /* nuiHTMLTable.cpp in Sources */,
 				73F086BA12E9BA0700656E84 /* nuiAVIwriter.cpp in Sources */,
 				73F086BB12E9BA0700656E84 /* nuiURL_CoreFoundation.mm in Sources */,
-				73F086BC12E9BA0700656E84 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				73F086BD12E9BA0700656E84 /* nglApplication_UIKit.mm in Sources */,
 				73F086BE12E9BA0700656E84 /* nglClipBoard_UIKit.mm in Sources */,
 				73F086BF12E9BA0700656E84 /* nglConsole_Darwin.mm in Sources */,
@@ -17133,63 +17001,6 @@
 				73F09A3312E9D09E00656E84 /* gif_err.c in Sources */,
 				73F09A3412E9D09E00656E84 /* ucpgba.c in Sources */,
 				73F09A3512E9D09E00656E84 /* ucdata.cpp in Sources */,
-				73F09A3612E9D09E00656E84 /* jsapi.cpp in Sources */,
-				73F09A3712E9D09E00656E84 /* jsarena.cpp in Sources */,
-				73F09A3812E9D09E00656E84 /* jsarray.cpp in Sources */,
-				73F09A3912E9D09E00656E84 /* jsatom.cpp in Sources */,
-				73F09A3A12E9D09E00656E84 /* jsbool.cpp in Sources */,
-				73F09A3B12E9D09E00656E84 /* jsbuiltins.cpp in Sources */,
-				73F09A3C12E9D09E00656E84 /* jscntxt.cpp in Sources */,
-				73F09A3D12E9D09E00656E84 /* jsdate.cpp in Sources */,
-				73F09A3E12E9D09E00656E84 /* jsdbgapi.cpp in Sources */,
-				73F09A3F12E9D09E00656E84 /* jsdhash.cpp in Sources */,
-				73F09A4012E9D09E00656E84 /* jsdtoa.cpp in Sources */,
-				73F09A4112E9D09E00656E84 /* jsemit.cpp in Sources */,
-				73F09A4212E9D09E00656E84 /* jsexn.cpp in Sources */,
-				73F09A4312E9D09E00656E84 /* jsfun.cpp in Sources */,
-				73F09A4412E9D09E00656E84 /* jsgc.cpp in Sources */,
-				73F09A4512E9D09E00656E84 /* jshash.cpp in Sources */,
-				73F09A4612E9D09E00656E84 /* jsinterp.cpp in Sources */,
-				73F09A4712E9D09E00656E84 /* jsinvoke.cpp in Sources */,
-				73F09A4812E9D09E00656E84 /* jsiter.cpp in Sources */,
-				73F09A4912E9D09E00656E84 /* jslock.cpp in Sources */,
-				73F09A4A12E9D09E00656E84 /* jslog2.cpp in Sources */,
-				73F09A4B12E9D09E00656E84 /* jsmath.cpp in Sources */,
-				73F09A4C12E9D09E00656E84 /* jsnum.cpp in Sources */,
-				73F09A4D12E9D09E00656E84 /* jsobj.cpp in Sources */,
-				73F09A4E12E9D09E00656E84 /* json.cpp in Sources */,
-				73F09A4F12E9D09E00656E84 /* jsopcode.cpp in Sources */,
-				73F09A5012E9D09E00656E84 /* jsparse.cpp in Sources */,
-				73F09A5112E9D09E00656E84 /* jsprf.cpp in Sources */,
-				73F09A5212E9D09E00656E84 /* jsregexp.cpp in Sources */,
-				73F09A5312E9D09E00656E84 /* jsscan.cpp in Sources */,
-				73F09A5412E9D09E00656E84 /* jsscope.cpp in Sources */,
-				73F09A5512E9D09E00656E84 /* jsscript.cpp in Sources */,
-				73F09A5612E9D09E00656E84 /* jsstr.cpp in Sources */,
-				73F09A5712E9D09E00656E84 /* jstask.cpp in Sources */,
-				73F09A5812E9D09E00656E84 /* jstracer.cpp in Sources */,
-				73F09A5912E9D09E00656E84 /* jstypedarray.cpp in Sources */,
-				73F09A5A12E9D09E00656E84 /* jsutil.cpp in Sources */,
-				73F09A5B12E9D09E00656E84 /* jsxdrapi.cpp in Sources */,
-				73F09A5C12E9D09E00656E84 /* jsxml.cpp in Sources */,
-				73F09A5D12E9D09E00656E84 /* Allocator.cpp in Sources */,
-				73F09A5E12E9D09E00656E84 /* Assembler.cpp in Sources */,
-				73F09A5F12E9D09E00656E84 /* avmplus.cpp in Sources */,
-				73F09A6012E9D09E00656E84 /* CodeAlloc.cpp in Sources */,
-				73F09A6112E9D09E00656E84 /* Containers.cpp in Sources */,
-				73F09A6212E9D09E00656E84 /* Fragmento.cpp in Sources */,
-				73F09A6312E9D09E00656E84 /* LIR.cpp in Sources */,
-				73F09A6412E9D09E00656E84 /* NativeARM.cpp in Sources */,
-				73F09A6512E9D09E00656E84 /* Nativei386.cpp in Sources */,
-				73F09A6612E9D09E00656E84 /* NativeMIPS.cpp in Sources */,
-				73F09A6712E9D09E00656E84 /* NativePPC.cpp in Sources */,
-				73F09A6812E9D09E00656E84 /* NativeSparc.cpp in Sources */,
-				73F09A6912E9D09E00656E84 /* NativeX64.cpp in Sources */,
-				73F09A6A12E9D09E00656E84 /* njconfig.cpp in Sources */,
-				73F09A6B12E9D09E00656E84 /* RegAlloc.cpp in Sources */,
-				73F09A6C12E9D09E00656E84 /* VMPI.cpp in Sources */,
-				73F09A6D12E9D09E00656E84 /* prmjtime.cpp in Sources */,
-				73F09A6E12E9D09E00656E84 /* vprof.cpp in Sources */,
 				73F09A6F12E9D09E00656E84 /* libcss.c in Sources */,
 				73F09A7012E9D09E00656E84 /* libwapcaplet.c in Sources */,
 				73F09A7112E9D09E00656E84 /* stylesheet.c in Sources */,
@@ -17536,7 +17347,6 @@
 				E524177011CB860B0025CA71 /* nglReaderWriterLock.cpp in Sources */,
 				E524177111CB860B0025CA71 /* nglCondition_posix.cpp in Sources */,
 				E524177311CB860B0025CA71 /* nuiScriptEngine.cpp in Sources */,
-				E52417AD11CB860B0025CA71 /* nuiSpiderMonkey.cpp in Sources */,
 				E52417AE11CB860B0025CA71 /* nuiMimeMultiPart.cpp in Sources */,
 				E52417AF11CB860B0025CA71 /* nuiApplication.cpp in Sources */,
 				E52417B011CB860B0025CA71 /* nuiNetworkHost.cpp in Sources */,
@@ -17546,7 +17356,6 @@
 				E52417B411CB860B0025CA71 /* nuiHTMLTable.cpp in Sources */,
 				E52417B811CB860B0025CA71 /* nuiAVIwriter.cpp in Sources */,
 				E52417E711CB860B0025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
-				E52417F511CB86810025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				E524180211CB86C40025CA71 /* nglApplication_UIKit.mm in Sources */,
 				E524180311CB86C40025CA71 /* nglClipBoard_UIKit.mm in Sources */,
 				E524180411CB86C40025CA71 /* nglConsole_Darwin.mm in Sources */,
@@ -17874,7 +17683,6 @@
 				E524204711CBCE9E0025CA71 /* nglReaderWriterLock.cpp in Sources */,
 				E524204811CBCE9E0025CA71 /* nglCondition_posix.cpp in Sources */,
 				E524204A11CBCE9E0025CA71 /* nuiScriptEngine.cpp in Sources */,
-				E524208411CBCE9E0025CA71 /* nuiSpiderMonkey.cpp in Sources */,
 				E524208511CBCE9E0025CA71 /* nuiMimeMultiPart.cpp in Sources */,
 				E524208611CBCE9E0025CA71 /* nuiApplication.cpp in Sources */,
 				E524208711CBCE9E0025CA71 /* nuiNetworkHost.cpp in Sources */,
@@ -17884,7 +17692,6 @@
 				E524208B11CBCE9E0025CA71 /* nuiHTMLTable.cpp in Sources */,
 				E524208F11CBCE9E0025CA71 /* nuiAVIwriter.cpp in Sources */,
 				E52420BE11CBCE9E0025CA71 /* nuiURL_CoreFoundation.mm in Sources */,
-				E52420BF11CBCE9E0025CA71 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 				E52420C011CBCE9E0025CA71 /* nglApplication_UIKit.mm in Sources */,
 				E52420C111CBCE9E0025CA71 /* nglClipBoard_UIKit.mm in Sources */,
 				E52420C211CBCE9E0025CA71 /* nglConsole_Darwin.mm in Sources */,
@@ -18936,7 +18743,6 @@
 				E5EF6E9D11E7315F000FB337 /* nglPlugin_Cocoa.mm in Sources */,
 				E5EF6EA311E7322A000FB337 /* nglContext_Cocoa.mm in Sources */,
 				E5EF6EA511E7322A000FB337 /* nuiMainMenu_Cocoa.cpp in Sources */,
-				E5EF6EF611E75CCA000FB337 /* nglVideoMode_CoreFoundation.cpp in Sources */,
 				E59CD10B11E7C9F200955611 /* nglVideoMode_Cocoa.mm in Sources */,
 				E59CD17711EA0D2900955611 /* nglWindow_Cocoa.mm in Sources */,
 				E5D6450C120A0B39009C26A9 /* nglImageCGCodec.cpp in Sources */,
@@ -19285,7 +19091,6 @@
 				E5D643D41209AB9C009C26A9 /* nglPlugin_Cocoa.mm in Sources */,
 				E5D643D51209AB9C009C26A9 /* nglContext_Cocoa.mm in Sources */,
 				E5D643D61209AB9C009C26A9 /* nuiMainMenu_Cocoa.cpp in Sources */,
-				E5D643D71209AB9C009C26A9 /* nglVideoMode_CoreFoundation.cpp in Sources */,
 				E5D643D81209AB9C009C26A9 /* nglVideoMode_Cocoa.mm in Sources */,
 				E5D643D91209AB9C009C26A9 /* nglWindow_Cocoa.mm in Sources */,
 				E5D6450D120A0B3A009C26A9 /* nglImageCGCodec.cpp in Sources */,
@@ -19750,63 +19555,6 @@
 				E5DD3F1F12E0B08300F1EF4E /* gif_err.c in Sources */,
 				E5DD3F3212E0B08300F1EF4E /* ucpgba.c in Sources */,
 				E5DD3F3312E0B08300F1EF4E /* ucdata.cpp in Sources */,
-				E5DD3F3912E0B08300F1EF4E /* jsapi.cpp in Sources */,
-				E5DD3F3A12E0B08300F1EF4E /* jsarena.cpp in Sources */,
-				E5DD3F3B12E0B08300F1EF4E /* jsarray.cpp in Sources */,
-				E5DD3F3C12E0B08300F1EF4E /* jsatom.cpp in Sources */,
-				E5DD3F3D12E0B08300F1EF4E /* jsbool.cpp in Sources */,
-				E5DD3F3E12E0B08300F1EF4E /* jsbuiltins.cpp in Sources */,
-				E5DD3F3F12E0B08300F1EF4E /* jscntxt.cpp in Sources */,
-				E5DD3F4012E0B08300F1EF4E /* jsdate.cpp in Sources */,
-				E5DD3F4112E0B08300F1EF4E /* jsdbgapi.cpp in Sources */,
-				E5DD3F4212E0B08300F1EF4E /* jsdhash.cpp in Sources */,
-				E5DD3F4312E0B08300F1EF4E /* jsdtoa.cpp in Sources */,
-				E5DD3F4412E0B08300F1EF4E /* jsemit.cpp in Sources */,
-				E5DD3F4512E0B08300F1EF4E /* jsexn.cpp in Sources */,
-				E5DD3F4612E0B08300F1EF4E /* jsfun.cpp in Sources */,
-				E5DD3F4712E0B08300F1EF4E /* jsgc.cpp in Sources */,
-				E5DD3F4812E0B08300F1EF4E /* jshash.cpp in Sources */,
-				E5DD3F4912E0B08300F1EF4E /* jsinterp.cpp in Sources */,
-				E5DD3F4A12E0B08300F1EF4E /* jsinvoke.cpp in Sources */,
-				E5DD3F4B12E0B08300F1EF4E /* jsiter.cpp in Sources */,
-				E5DD3F4C12E0B08300F1EF4E /* jslock.cpp in Sources */,
-				E5DD3F4D12E0B08300F1EF4E /* jslog2.cpp in Sources */,
-				E5DD3F4E12E0B08300F1EF4E /* jsmath.cpp in Sources */,
-				E5DD3F4F12E0B08300F1EF4E /* jsnum.cpp in Sources */,
-				E5DD3F5012E0B08300F1EF4E /* jsobj.cpp in Sources */,
-				E5DD3F5112E0B08300F1EF4E /* json.cpp in Sources */,
-				E5DD3F5212E0B08300F1EF4E /* jsopcode.cpp in Sources */,
-				E5DD3F5312E0B08300F1EF4E /* jsparse.cpp in Sources */,
-				E5DD3F5412E0B08300F1EF4E /* jsprf.cpp in Sources */,
-				E5DD3F5512E0B08300F1EF4E /* jsregexp.cpp in Sources */,
-				E5DD3F5612E0B08300F1EF4E /* jsscan.cpp in Sources */,
-				E5DD3F5712E0B08300F1EF4E /* jsscope.cpp in Sources */,
-				E5DD3F5812E0B08300F1EF4E /* jsscript.cpp in Sources */,
-				E5DD3F5912E0B08300F1EF4E /* jsstr.cpp in Sources */,
-				E5DD3F5A12E0B08300F1EF4E /* jstask.cpp in Sources */,
-				E5DD3F5B12E0B08300F1EF4E /* jstracer.cpp in Sources */,
-				E5DD3F5C12E0B08300F1EF4E /* jstypedarray.cpp in Sources */,
-				E5DD3F5D12E0B08300F1EF4E /* jsutil.cpp in Sources */,
-				E5DD3F5E12E0B08300F1EF4E /* jsxdrapi.cpp in Sources */,
-				E5DD3F5F12E0B08300F1EF4E /* jsxml.cpp in Sources */,
-				E5DD3F6012E0B08300F1EF4E /* Allocator.cpp in Sources */,
-				E5DD3F6112E0B08300F1EF4E /* Assembler.cpp in Sources */,
-				E5DD3F6212E0B08300F1EF4E /* avmplus.cpp in Sources */,
-				E5DD3F6312E0B08300F1EF4E /* CodeAlloc.cpp in Sources */,
-				E5DD3F6412E0B08300F1EF4E /* Containers.cpp in Sources */,
-				E5DD3F6512E0B08300F1EF4E /* Fragmento.cpp in Sources */,
-				E5DD3F6612E0B08300F1EF4E /* LIR.cpp in Sources */,
-				E5DD3F6712E0B08300F1EF4E /* NativeARM.cpp in Sources */,
-				E5DD3F6812E0B08300F1EF4E /* Nativei386.cpp in Sources */,
-				E5DD3F6912E0B08300F1EF4E /* NativeMIPS.cpp in Sources */,
-				E5DD3F6A12E0B08300F1EF4E /* NativePPC.cpp in Sources */,
-				E5DD3F6B12E0B08300F1EF4E /* NativeSparc.cpp in Sources */,
-				E5DD3F6C12E0B08300F1EF4E /* NativeX64.cpp in Sources */,
-				E5DD3F6D12E0B08300F1EF4E /* njconfig.cpp in Sources */,
-				E5DD3F6E12E0B08300F1EF4E /* RegAlloc.cpp in Sources */,
-				E5DD3F6F12E0B08300F1EF4E /* VMPI.cpp in Sources */,
-				E5DD3F7012E0B08300F1EF4E /* prmjtime.cpp in Sources */,
-				E5DD3F7112E0B08300F1EF4E /* vprof.cpp in Sources */,
 				E5DD3F7A12E0B08300F1EF4E /* libcss.c in Sources */,
 				E5DD3F7B12E0B08300F1EF4E /* libwapcaplet.c in Sources */,
 				E5DD3F7C12E0B08300F1EF4E /* stylesheet.c in Sources */,
@@ -20083,9 +19831,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(GCC_PREPROCESSOR_DEFINITIONS)";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
@@ -20100,8 +19849,9 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = YES;
+				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -20132,8 +19882,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = nuiPhone_arm7;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = all;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Default;
 		};
@@ -20141,9 +19893,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -20160,8 +19913,9 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = YES;
+				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -20192,8 +19946,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = thirdparty_ios_arm7;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = all;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Default;
 		};
@@ -20221,8 +19977,8 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
 					include,
@@ -20249,7 +20005,8 @@
 					deps/libcss/src/libparserutils,
 					deps/libcss/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = nuiPhoneD;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -20277,8 +20034,10 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = YES;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
+				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -20306,7 +20065,7 @@
 					deps/libcss/src/libparserutils,
 					deps/libcss/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = nuiPhone;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -20317,16 +20076,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PRELINK_LIBS = "-liconv";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = nui3;
 				SDKROOT = macosx;
 			};
@@ -20337,6 +20091,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_PFE_FILE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -20393,11 +20148,11 @@
 					AVMPLUS_ARM,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = ". include deps/libpng deps/gameswf deps/zlib deps/ungif deps/ucdata deps/libjpeg src/Application/Carbon src/Stream/Zip deps/freetype2/include deps/expat/include deps/harfbuzz deps/expat/lib deps/tracemonkey deps/libcss/src deps/libcss/src/libwapcaplet deps/libcss/src/libparserutils deps/libcss/include";
 			};
@@ -20407,8 +20162,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
@@ -20416,8 +20171,10 @@
 					DEBUG,
 					_CARBON_,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = YES;
 				PRELINK_LIBS = "-liconv -lz";
 				PRODUCT_NAME = nui3D;
 				SDKROOT = macosx;
@@ -20427,16 +20184,29 @@
 		E5A8D1D211E33A54004E14CE /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 					_DEBUG,
 					DEBUG,
+					_COCOA_,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					NGL_STATIC_BUILD,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					FT_CONFIG_OPTION_SYSTEM_ZLIB,
+					HAVE_BCOPY,
+					FEATURE_NANOJIT,
+					JS_TRACER,
+					XP_UNIX,
+					AVMPLUS_AMD64,
 					_COCOA_,
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=ppc]" = (
@@ -20454,18 +20224,20 @@
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
+					FT_MACINTOSH,
 					DARWIN_NO_CARBON,
 					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					HAVE_BCOPY,
 					FEATURE_NANOJIT,
 					JS_TRACER,
 					XP_UNIX,
+					HAVE_FT_FACE_GETCHARVARIANTINDEX,
 					AVMPLUS_AMD64,
 					_COCOA_,
 				);
 				GCC_THREADSAFE_STATICS = NO;
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRELINK_LIBS = "-liconv -lz";
 				PRODUCT_NAME = nui3CocoaD;
 				SDKROOT = macosx;
@@ -20480,6 +20252,7 @@
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -20511,9 +20284,8 @@
 					_COCOA_,
 				);
 				GCC_THREADSAFE_STATICS = NO;
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRELINK_LIBS = "-liconv -lz";
 				PRODUCT_NAME = nui3Cocoa;
 				SDKROOT = macosx;
@@ -20523,17 +20295,13 @@
 		E5DD340F12E09CA800F1EF4E /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -20550,8 +20318,9 @@
 					XP_UNIX,
 					HAVE_FT_FACE_GETCHARVARIANTINDEX,
 					AVMPLUS_IA32,
+					_COCOA_,
 				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
 					FT_MACINTOSH,
@@ -20564,9 +20333,9 @@
 					AVMPLUS_AMD64,
 					_COCOA_,
 				);
-				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -20601,8 +20370,10 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
+				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -20635,6 +20406,7 @@
 				PRODUCT_NAME = thirdparty_ios;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Default;
 		};
@@ -20642,7 +20414,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (

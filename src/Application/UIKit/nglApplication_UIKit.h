@@ -12,7 +12,6 @@
 - (void) dealloc;
 - (BOOL) openURL: (NSURL*) pUrl;
 - (void) sendEvent: (UIEvent*) pEvent;
-
 @end//nglUIApplication
 
 @interface nglUIApplicationDelegate : NSObject
