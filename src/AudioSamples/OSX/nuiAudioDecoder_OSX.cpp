@@ -77,7 +77,6 @@ bool nuiAudioDecoderPrivate::Init()
 {
 	AudioFileTypeID typeID = 0;
 
-
   // we only want to read (not write) so give NULL for write callbacks (seems to work...)
   OSStatus err =  AudioFileOpenWithCallbacks(&mrStream, &MyAudioFile_ReadProc, NULL, &MyAudioFile_GetSizeProc, NULL, typeID, &mAudioFileID);
 	
@@ -150,8 +149,8 @@ bool nuiAudioDecoder::ReadInfo()
     return false;
   
   double SampleRate = FileDesc.mSampleRate;
-  uint32 channels = FileDesc.mChannelsPerFrame;
-  uint32 BitsPerSample = 32;
+  int32 channels = FileDesc.mChannelsPerFrame;
+  int32 BitsPerSample = 32;
   ClientDesc.mSampleRate = SampleRate;
   ClientDesc.mChannelsPerFrame = channels;
   ClientDesc.mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked | kAudioFormatFlagIsNonInterleaved;
@@ -179,30 +178,30 @@ bool nuiAudioDecoder::ReadInfo()
   return true;
 }
 
-bool nuiAudioDecoder::Seek(uint64 SampleFrame)
+bool nuiAudioDecoder::Seek(int64 SampleFrame)
 {
   OSStatus err = ExtAudioFileSeek(mpPrivate->mExtAudioFileRef, SampleFrame);
   return (err == noErr);
 }
 
-uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, nuiSampleBitFormat format)
+int32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, int32 sampleframes, nuiSampleBitFormat format)
 {
   if (!mInitialized)
     return 0;
   
-  SetPosition((uint32)mPosition);
+  SetPosition(mPosition);
   
-  uint32 length = mInfo.GetSampleFrames();
+  int32 length = mInfo.GetSampleFrames();
   if (mPosition >= length)
     return 0;
   sampleframes = MIN(sampleframes, length - mPosition);
   
-  uint32 channels = mInfo.GetChannels();
+  int32 channels = mInfo.GetChannels();
   if (buffers.size() != channels)
     return 0;
   
   std::vector<float*> temp(channels);
-  for (uint32 c = 0; c < channels; c++)
+  for (int32 c = 0; c < channels; c++)
   {
     if (format == eSampleFloat32)
       temp[c] = (float*)(buffers[c]);
@@ -211,11 +210,11 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
   }
   
   //
-  uint64 BytesToRead = SampleFramesToBytes(sampleframes);
-  uint32 listSize = sizeof(AudioBufferList) + sizeof(AudioBuffer)* (channels-1);
+  int64 BytesToRead = SampleFramesToBytes(sampleframes);
+  int32 listSize = sizeof(AudioBufferList) + sizeof(AudioBuffer)* (channels-1);
   AudioBufferList* pBufList = reinterpret_cast<AudioBufferList*> (new Byte[listSize]);
   pBufList->mNumberBuffers = channels; // we query non-interleaved samples, so we need as many buffers as channels
-  for (uint32 c = 0; c < pBufList->mNumberBuffers; c++)
+  for (int32 c = 0; c < pBufList->mNumberBuffers; c++)
   {
     // each AudioBuffer represents one channel (non-interleaved samples)
     pBufList->mBuffers[c].mNumberChannels   = 1;
@@ -231,7 +230,7 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
   
   if (format == eSampleInt16)
   {
-    for (uint32 c = 0; c < channels; c++)
+    for (int32 c = 0; c < channels; c++)
     {
       if (err != noErr)
       {
@@ -245,4 +244,55 @@ uint32 nuiAudioDecoder::ReadDE(std::vector<void*> buffers, uint32 sampleframes, 
   
   mPosition += frames;
   return frames;
+}
+
+
+int32 nuiAudioDecoder::ReadIN(void* pBuffer, int32 sampleframes, nuiSampleBitFormat format)
+{
+  //don't increment mPosition: it's already done in ReadDE
+  int32 channels = mInfo.GetChannels();
+  
+  int32 length = mInfo.GetSampleFrames();
+  if (mPosition >= length)
+    return 0;
+  sampleframes = MIN(sampleframes, length - mPosition);
+  
+  std::vector<float*> temp(channels);
+  std::vector<void*> tempVoid(channels);
+  for (int32 c= 0; c < channels; c++)
+  {
+    temp[c] = new float[sampleframes];
+    tempVoid[c] = (void*)(temp[c]);
+  }
+  
+  int32 sampleFramesRead = ReadDE(tempVoid, sampleframes, eSampleFloat32);
+  if (format == eSampleFloat32)
+  {
+    float* pFloatBuffer = (float*)pBuffer;
+    //just interleave samples
+    for (int32 c = 0; c < channels; c++)
+    {
+      for (int32 s = 0; s < sampleFramesRead; s++)
+      {
+        pFloatBuffer[s * channels + c] = temp[c][s];
+      }
+    }
+  }
+  else
+  {
+    //16 bits int are required, so interleave samples and convert them into float
+    int16* pInt16Buffer = (int16*)pBuffer;
+    for (int32 c = 0; c < channels; c++)
+    {
+      nuiAudioConvert_DEfloatToINint16(temp[c], pInt16Buffer, c, channels, sampleFramesRead);
+    }
+    
+  }
+  
+  for (int32 c= 0; c < channels; c++)
+  {
+    delete[] temp[c];
+  }
+  
+  return sampleFramesRead;
 }

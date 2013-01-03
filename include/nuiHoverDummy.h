@@ -14,8 +14,6 @@ class NUI_API nuiHoverDummy : public nuiSimpleContainer
 {
 public:
   nuiHoverDummy(nuiWidgetPtr pHoverOn = NULL, nuiWidgetPtr pHoverOff = NULL);
-  virtual bool Load(const nuiXMLNode* pNode);
-  nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = true) const;
   virtual ~nuiHoverDummy();
 
   void SetDummy(bool Hover, nuiWidgetPtr pWidget); ///< Set the dummy widget to display when the widget is in a particular Hover. 

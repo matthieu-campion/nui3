@@ -32,6 +32,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E5047FFB153A37F200D4D6D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5A62E5911CA542000446489 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5FB9CF3147D5CEE001A1829;
+			remoteInfo = minui3D;
+		};
 		E52420E711CBCE9E0025CA71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E5A62E5911CA542000446489 /* nui3.xcodeproj */;
@@ -277,6 +284,7 @@
 				E57D81AA13B3874D00348211 /* libthirdparty.a */,
 				E57D81AC13B3874D00348211 /* libthirdparty_ios.a */,
 				E57D81AE13B3874D00348211 /* libthirdparty_ios_arm7.a */,
+				E5047FFC153A37F200D4D6D7 /* libminui3D.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,6 +361,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		E5047FFC153A37F200D4D6D7 /* libminui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libminui3D.a;
+			remoteRef = E5047FFB153A37F200D4D6D7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E52420E811CBCE9E0025CA71 /* libnuiPhone.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -536,6 +551,7 @@
 		C99996000DA6EE97001A7116 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_AUTO_VECTORIZATION = YES;
@@ -547,6 +563,7 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				PRODUCT_NAME = LayoutAnimationiPhone;
+				PROVISIONING_PROFILE = "";
 				STRIPFLAGS = "-SXx";
 			};
 			name = Default;
@@ -554,6 +571,7 @@
 		C9F5F9320DA84CAB00E078ED /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -569,6 +587,7 @@
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				PRODUCT_NAME = LayoutAnimationiPhoneD;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Default;
 		};

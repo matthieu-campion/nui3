@@ -65,7 +65,7 @@ bool nglError::InternalSetError (const nglChar* pLogDomain, uint Error, bool Use
 
   mError = Error;
 #ifdef _DEBUG_
-  if (App && UseDomain && (mError > 0)) NGL_LOG(pLogDomain, NGL_LOG_ERROR, _T("Error: %ls\n"), pError);
+  if (App && UseDomain && (mError > 0)) NGL_LOG(pLogDomain, NGL_LOG_ERROR, _T("Error: %s\n"), pError);
 #endif
   return true;
 }

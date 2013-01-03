@@ -22,12 +22,6 @@ class NUI_API nuiBackgroundPane : public nuiSimpleContainer
 {
 public:
   nuiBackgroundPane(nuiBackgroundType type = eOutterBackground);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
-	virtual bool LoadAttributes(const nuiXMLNode* pNode);
-	virtual bool LoadChildren(const nuiXMLNode* pNode);
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive = false) const;
-	virtual void SerializeChildren(nuiXMLNode* pParentNode, bool Recursive = false) const; // top level children serialization
-	virtual nuiXMLNode* SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive = false) const;
   virtual ~nuiBackgroundPane();
   
   nuiBackgroundType GetType() const;

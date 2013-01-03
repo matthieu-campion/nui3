@@ -75,7 +75,7 @@ std::map<nglStringCodec::EncodingPair, nglStringCodec*> nglStringCodec::mCodecs;
 * nglStringConv
 */
 
-nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglChar Default)
+nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglUChar Default)
 {
   mState   = eStringConv_OK;
   mFrom    = From;
@@ -84,7 +84,7 @@ nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding T
   mpCodec  = nglStringCodec::GetCodec(From, To);
 }
 
-nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglChar Default, bool NoInit)
+nglStringConv::nglStringConv(const nglTextEncoding From, const nglTextEncoding To, nglUChar Default, bool NoInit)
 {
   mState   = eStringConv_OK;
   mFrom    = From;

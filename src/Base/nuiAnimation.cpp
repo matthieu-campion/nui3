@@ -182,6 +182,18 @@ void nuiAnimation::ReleaseTimer()
   {
     delete mpTimer;
     AnimSink.DisconnectAll();
+    // also kill all tasks:
+    std::list<std::pair<int32, nuiTask*> >::iterator it = mOnNextTick.begin();
+    std::list<std::pair<int32, nuiTask*> >::iterator end = mOnNextTick.end();
+    while (it != end)
+    {
+      nuiTask* pTask = it->second;
+      NGL_ASSERT(pTask->GetRefCount() == 1); // We should be the last ones to hold on to nuiTasks! If you get there then you have done something wrong like forgetting to release your tasks.
+      NGL_ASSERT(pTask->IsCanceled()); // If you get there then you have done something wrong like forgetting to cancel your tasks.
+      pTask->Release();
+      ++it;
+    }
+    mOnNextTick.clear();
     mpTimer = NULL;
   }
 }
@@ -301,49 +313,11 @@ double nuiAnimation::GetTimeFromEnd() const
 }
 
 
-bool nuiAnimation::Load(const nuiXMLNode* pNode)
-{
-  mCount = 0;
-  mDuration = 0.5;
-  mCurrentTime = 0;
-  mDirection = 1.0;
-  mLoopMode = eAnimLoopForward;
-  mUpdatingTime = false;
-  mEnableCallbacks = true;
-
-  return true;
-}
-
 nuiAnimation::~nuiAnimation()
 {
   if (mpEasing)
     mpEasing->Release();
   ReleaseTimer();
-}
-
-nuiXMLNode* nuiAnimation::Serialize(nuiXMLNode* pParentNode, bool CreateNewNode) const
-{
-  nuiXMLNode* pNode = NULL;
-
-  if (CreateNewNode)
-  {
-    if (pParentNode)
-    {
-      pNode = new nuiXMLNode("nuiAnimation",pParentNode);
-    }
-    else
-    {
-      pNode = new nuiXML("nuiAnimation");
-    }
-  }
-  else
-    pNode = pParentNode;
-
-  if (!pNode)
-    return NULL;
-
-  pNode->SetAttribute(_T("CurrentTime"),mCurrentTime);
-  return pNode;
 }
 
 bool nuiAnimation::SetTime(double Time, nuiAnimWhence Whence)
@@ -608,10 +582,12 @@ void nuiAnimation::StartTasks(const nuiEvent& rEvent)
     }
     else
     {
+      static int count = 0;
       nuiTask* pTask = it->second;
       pTask->Run();
       pTask->Release();
       mOnNextTick.erase(it++);
+      count++;
     }
   }
 }
@@ -652,20 +628,9 @@ nuiMetaAnimation::nuiMetaAnimation ()
 {
 }
 
-bool nuiMetaAnimation::Load(const nuiXMLNode* pNode)
-{
-  nuiAnimation::Load(pNode);
-  return true;
-}
-
 nuiMetaAnimation::~nuiMetaAnimation()
 {
   Clear();
-}
-
-nuiXMLNode* nuiMetaAnimation::Serialize(nuiXMLNode* pNode, bool CreateNewNode) const
-{
-  return nuiAnimation::Serialize(pNode, CreateNewNode);
 }
 
 void nuiMetaAnimation::Play(int32 Count, nuiAnimLoop LoopMode)
@@ -745,20 +710,9 @@ nuiAnimationSequence::nuiAnimationSequence ()
 {
 }
 
-bool nuiAnimationSequence::Load(const nuiXMLNode* pNode)
-{
-  bool res = nuiAnimation::Load(pNode);
-  return res;
-}
-
 nuiAnimationSequence::~nuiAnimationSequence()
 {
   Clear();
-}
-
-nuiXMLNode* nuiAnimationSequence::Serialize(nuiXMLNode* pNode, bool CreateNewNode) const
-{
-  return nuiAnimation::Serialize(pNode, CreateNewNode);
 }
 
 void nuiAnimationSequence::Play(int32 Count, nuiAnimLoop LoopMode)

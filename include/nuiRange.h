@@ -17,11 +17,14 @@
 class NUI_API nuiRange
 {
 public:
-  nuiRange(double Value=0, double Min=0, double Max=50, double Increment=1, double PageIncrement=10, double PageSize=0, double Origin = std::numeric_limits<double>::quiet_NaN());
+  nuiRange(double Value=0, double Min=0, double Max=50, double Increment=1, double PageIncrement=10, double PageSize=0, double Origin = std::numeric_limits<double>::quiet_NaN(), float UnitCurve = 1.0f);
   nuiRange(const nuiRange& rRange);
   virtual ~nuiRange();
 
+  bool IsValid() const;
+  
   void SetValue(double Value);
+  void SetUnitValue(double Value);
   void SetRange(double Minimum,double Maximum);
   void SetIncrement(double Increment);
   void SetPageIncrement(double PageIncrement);
@@ -36,6 +39,7 @@ public:
   bool MakeInRange(double Position, double Size = 0.0);
 
   double GetValue() const;
+  double GetUnitValue() const;
   double GetMinimum() const;
   double GetMaximum() const;
   double GetIncrement() const;
@@ -44,6 +48,7 @@ public:
   double GetOrigin() const;
   double GetRange() const;
   double ConvertToUnit(double RangeValue) const; ///< Convert RangeValue from the Range Value to a value that is 0<= x <=1.
+  double ConvertFromUnit(double RangeValue) const; ///< Convert RangeValue from the Range Value to a value that is 0<= x <=1.
 
   nuiSimpleEventSource<nuiValueChanged> ValueChanged; ///< This event is sent whenever the value is changed.
   nuiSimpleEventSource<nuiChanged> Changed; ///< This event is sent whenever the range is changed (not the value).
@@ -58,6 +63,9 @@ public:
   void ToString(nglString& str);
   bool FromString(const nglString& Value);
   
+  void SetUnitCurve(float curve);
+  float GetUnitCurve() const;
+  
 protected:
   double mMinimum;
   double mMaximum;
@@ -67,6 +75,8 @@ protected:
   double mPageIncrement;
   double mOrigin;
 
+  float mUnitCurve;
+  
   bool mDiscreetStepSize;
 
   bool mEvents;

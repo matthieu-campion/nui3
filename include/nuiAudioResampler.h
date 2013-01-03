@@ -32,17 +32,17 @@ class nuiAudioResampler
     
     nuiInterpolationMethod GetInterpolationMethod() const;
     void SetInterpolationMethod(nuiInterpolationMethod interpol);
-    uint32 GetLatency();
-    uint32 Process(T* destBuffer, const T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
+    int32 GetLatency();
+    int32 Process(T* destBuffer, const T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
     void Reset();
     
   protected:
     T* mBuffer;
     nuiInterpolationMethod mInterpolationMethod;
     
-    uint32 ProcessNoInterpolation(T* destBuffer, const T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
-    uint32 ProcessLinear(T* destBuffer, const T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
-    uint32 ProcessCubic(T* destBuffer, const T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
+    int32 ProcessNoInterpolation(T* destBuffer, const T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
+    int32 ProcessLinear(T* destBuffer, const T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
+    int32 ProcessCubic(T* destBuffer, const T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position = 0.0, bool ReplaceElements = true, double mult = 1.0);
   };
 
 template <typename T>
@@ -58,7 +58,7 @@ nuiAudioResampler<T>::~nuiAudioResampler()
 }
 
 template <typename T>
-uint32 nuiAudioResampler<T>::Process(T* destBuffer, const T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
+int32 nuiAudioResampler<T>::Process(T* destBuffer, const T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
 {
   if (sampleFramesToRead == sampleFramesToWrite)
   {
@@ -84,10 +84,10 @@ uint32 nuiAudioResampler<T>::Process(T* destBuffer, const T* srcBuffer, uint32 s
 }
 
 template <typename T>
-uint32 nuiAudioResampler<T>::ProcessNoInterpolation(T* destBuffer,const  T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
+int32 nuiAudioResampler<T>::ProcessNoInterpolation(T* destBuffer,const  T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
 {
-  uint32 IntPosition = (uint32)position;
-  uint32 i;
+  int32 IntPosition = (int32)position;
+  int32 i;
   srcBuffer = &(srcBuffer[IntPosition]);
   if (ReplaceElements)
   {
@@ -107,7 +107,7 @@ uint32 nuiAudioResampler<T>::ProcessNoInterpolation(T* destBuffer,const  T* srcB
 }
 
 template <typename T>
-uint32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
+int32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
 {
   if (!mBuffer)
   {
@@ -115,7 +115,7 @@ uint32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, ui
     *mBuffer = 0.f;
   }
   
-  uint32 i = 0;
+  int32 i = 0;
   double index = position;
   
   double increment = (double)sampleFramesToRead/(double)sampleFramesToWrite;
@@ -123,7 +123,7 @@ uint32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, ui
   {
     for (;index < 1.0;i++)
     {
-      uint32 idx = (uint32)index;
+      int32 idx = (int32)index;
       double x = index - idx;
       destBuffer[i] = (T)(mult * (mBuffer[0] + x * (srcBuffer[idx] - mBuffer[0])));
       
@@ -132,7 +132,7 @@ uint32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, ui
     
     for (;i<sampleFramesToWrite;i++)
     {
-      uint32 idx = (uint32)index;
+      int32 idx = (int32)index;
       double x = index - idx;
       destBuffer[i] = (T)(mult * (srcBuffer[idx - 1] + x * (srcBuffer[idx] - srcBuffer[idx - 1])));
       
@@ -143,7 +143,7 @@ uint32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, ui
   {
     for (;index < 1.0;i++)
     {
-      uint32 idx = (uint32)index;
+      int32 idx = (int32)index;
       double x = index - idx;
       destBuffer[i] += (T)(mult * (mBuffer[0] + x * (srcBuffer[idx] - mBuffer[0])));
       
@@ -152,7 +152,7 @@ uint32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, ui
     
     for (;i<sampleFramesToWrite;i++)
     {
-      uint32 idx = (uint32)index;
+      int32 idx = (int32)index;
       double x = index - idx;
       destBuffer[i] += (T)(mult * (srcBuffer[idx - 1] + x * (srcBuffer[idx] - srcBuffer[idx - 1])));
       
@@ -160,15 +160,15 @@ uint32 nuiAudioResampler<T>::ProcessLinear(T* destBuffer, const T* srcBuffer, ui
     }
   }
   index -= increment;
-  mBuffer[0] = srcBuffer[(uint32)index];
+  mBuffer[0] = srcBuffer[(int32)index];
   
   return i;
 }
 
 template <typename T>
-uint32 nuiAudioResampler<T>::ProcessCubic(T* destBuffer, const T* srcBuffer, uint32 sampleFramesToRead, uint32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
+int32 nuiAudioResampler<T>::ProcessCubic(T* destBuffer, const T* srcBuffer, int32 sampleFramesToRead, int32 sampleFramesToWrite, double position, bool ReplaceElements, double mult)
 {
-  uint32 i;
+  int32 i;
   double index = position;
   double increment = (double)sampleFramesToRead/(double)sampleFramesToWrite;
   if (!mBuffer)
@@ -188,7 +188,7 @@ uint32 nuiAudioResampler<T>::ProcessCubic(T* destBuffer, const T* srcBuffer, uin
     for (;index<3.0;i++)
     {
       
-      double x = index - (uint)index;
+      double x = index - (int)index;
       double x2 = x*x;
       
       if (ReplaceElements)
@@ -204,7 +204,7 @@ uint32 nuiAudioResampler<T>::ProcessCubic(T* destBuffer, const T* srcBuffer, uin
     T buf[] = {mBuffer[0], mBuffer[1], mBuffer[2], srcBuffer[0], srcBuffer[1], srcBuffer[2]};
     for (i=0;index<3.0;i++)
     {
-      uint32 idx = (uint32)index;
+      int32 idx = (int32)index;
       T a = -buf[idx] + buf[idx+1] - buf[idx+2] + buf[idx+3];
       T b = buf[idx] - buf[idx+1] - a;
       T c = -buf[idx] + buf[idx+2];
@@ -226,7 +226,7 @@ uint32 nuiAudioResampler<T>::ProcessCubic(T* destBuffer, const T* srcBuffer, uin
   
   for (;i<sampleFramesToWrite;i++)
   {
-    uint32 idx = (uint32)index;
+    int32 idx = (int32)index;
     T a = -srcBuffer[idx-3] + srcBuffer[idx-2] - srcBuffer[idx-1] + srcBuffer[idx];
     T b = srcBuffer[idx-3] - srcBuffer[idx-2] - a;
     T c = -srcBuffer[idx-3] + srcBuffer[idx-1];
@@ -243,15 +243,15 @@ uint32 nuiAudioResampler<T>::ProcessCubic(T* destBuffer, const T* srcBuffer, uin
     index += increment;
   }
   
-  mBuffer[0] = srcBuffer[(uint32)index-2];
-  mBuffer[1] = srcBuffer[(uint32)index-1];
-  mBuffer[2] = srcBuffer[(uint32)index];
+  mBuffer[0] = srcBuffer[(int32)index-2];
+  mBuffer[1] = srcBuffer[(int32)index-1];
+  mBuffer[2] = srcBuffer[(int32)index];
   
   return i;
 }
 
 template <typename T>
-uint32 nuiAudioResampler<T>::GetLatency()
+int32 nuiAudioResampler<T>::GetLatency()
 {
   return mInterpolationMethod;
 }

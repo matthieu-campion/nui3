@@ -32,6 +32,9 @@ nglVideoMode::nglVideoMode()
 
   mBPP = 32;
   
+  mScaleFactor = 1.0f;
+  mInvScaleFactor = 1.0f / mScaleFactor;
+
   Init();
 }
 
@@ -85,6 +88,29 @@ bool nglVideoMode::SetMode (nglVideoMode* pVideoMode, bool Lock)
   boolean_t exactMatch;
   CFDictionaryRef mode = CGDisplayBestModeForParametersAndRefreshRate((CGDirectDisplayID)pVideoMode->mDisplay, pVideoMode->mBPP, pVideoMode->mWidth, pVideoMode->mHeight, pVideoMode->mRate, &exactMatch);
   CGDisplaySwitchToMode( (CGDirectDisplayID)pVideoMode->mDisplay, mode);
-  NGL_DEBUG( NGL_LOG(_T("vidmode"), NGL_LOG_INFO, _T("switching to %ls: %ls"), pVideoMode->Dump().GetChars(), done ? _T("ok"):_T("failed")); )
+  NGL_DEBUG( NGL_LOG(_T("vidmode"), NGL_LOG_INFO, _T("switching to %s: %s"), pVideoMode->Dump().GetChars(), done ? _T("ok"):_T("failed")); )
   return done;
 }
+
+static float gScaleFactor = 0;
+static float gInvScaleFactor = 0;
+
+float nuiGetScaleFactor()
+{
+  if (gScaleFactor == 0)
+  {
+    gScaleFactor = [NSScreen mainScreen].backingScaleFactor;
+  }  
+  return gScaleFactor;
+}
+
+float nuiGetInvScaleFactor()
+{
+  if (gInvScaleFactor == 0)
+  {
+    gInvScaleFactor = 1.0f / nuiGetScaleFactor();
+  }
+  return gInvScaleFactor;
+}
+
+

@@ -11,7 +11,6 @@
 #include "nuiApplication.h"
 #include "nuiWindow.h"
 #include "nuiTheme.h"
-#include "nuiXML.h"
 #include "nuiButton.h"
 #include "nuiPane.h"
 #include "nuiLabel.h"
@@ -66,43 +65,6 @@ nuiWindow::nuiWindow(const nuiRect& rRect, nuiWindowFlags Flags, nglString Title
   mTitle = Title;
   InitProperties();
 }
-
-bool nuiWindow::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-  mpCloseButton = NULL;
-  mMoving = eNoMove;
-
-  // FIXME: interpret other attributes...
-
-  nuiWindowFlags Flags = NoFlag;
-  if (nuiGetBool (pNode, _T("StaticChildren"), false)) Flags |= StaticChildren;
-  if (nuiGetBool (pNode, _T("NoResize"), false)) Flags |= NoResize;
-  if (nuiGetBool (pNode, _T("NoMove"), false)) Flags |= NoMove;
-  if (nuiGetBool (pNode, _T("NoCaption"), false)) Flags |= NoCaption;
-  if (nuiGetBool (pNode, _T("NoClose"), false)) Flags |= NoClose;
-  if (nuiGetBool (pNode, _T("Raw"), false)) Flags |= Raw;
-  if (nuiGetBool (pNode, _T("Modal"), false)) Flags |= Modal;
-
-  SetFlags(Flags);
-
-  mTitle = nuiGetString(pNode, _T("Title"), _T(""));
-  mMinimumHeight = nuiGetVal(pNode, _T("MinimumHeight"), 16.0f);
-  mMinimumWidth = nuiGetVal(pNode, _T("MinimumWidth"), 40.0f);
-  InitProperties();
-  
-  return true;
-}
-
-nuiXMLNode* nuiWindow::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiSimpleContainer::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-
-  return pNode;
-}
-
 
 nuiWindow::~nuiWindow()
 {

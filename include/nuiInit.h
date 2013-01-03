@@ -36,6 +36,12 @@ public:
     mpKernel = pKernel;
     SysInit((HINSTANCE)hInstance); 
   }
+#elif defined(_ANDROID_)
+  nuiManualKernel(void* app, nuiKernel* pKernel) 
+  { 
+    mpKernel = pKernel;
+    SysInit((android_app*)app); 
+  }
 #else
   nuiManualKernel(nuiKernel* pKernel) 
   { 
@@ -97,7 +103,8 @@ private:
 
 
 
-bool nuiInit(void* OSInstance, nuiKernel* pKernel = NULL); // OSInstance is the handle of the application's instance (HINSTANCE) in win32, NULL on other systems.
+bool nuiInit(void* OSInstance, nuiKernel* pKernel = NULL); // OSInstance is the handle of the application's instance (HINSTANCE) in win32, NULL on other systems. This call will init a minimal set of features )no default decorations, no widget builder, etc).
+bool nuiInitMinimal(void* OSInstance, nuiKernel* pKernel = NULL); // OSInstance is the handle of the application's instance (HINSTANCE) in win32, NULL on other systems. This call will init all subsystems (default decorations, nuiBuilder, etc).
 bool nuiUninit();
 
 #endif //__nuiInit_h__

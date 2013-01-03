@@ -11,8 +11,6 @@
 //#include "nui.h"
 #include "nuiTimer.h"
 
-#include "nuiEventRegistry.h"
-
 class nuiTask;
 
 enum nuiAnimWhence
@@ -124,9 +122,6 @@ public:
   nuiAnimation();
   virtual ~nuiAnimation();
 
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
-
   bool SetTime(double Time, nuiAnimWhence Whence = eAnimFromStart); ///< Set the time to display. Returns false if Time is out of range (but the current time will be capped on the nearest boundary).
   double GetTime() const; ///< Return the currently displayed time in the animation.
   double GetPosition() const;
@@ -143,10 +138,10 @@ public:
 
   virtual void OnFrame(); ///< Overload this method to get notified of each timer tick, for exemple to call Invalidate() in order to redraw the animation.
 
-  nuiSimpleEventSource<nuiAnimationStart> AnimStart;
-  nuiSimpleEventSource<nuiAnimationStop> AnimStop;
-  nuiSimpleEventSource<nuiAnimationStop> AnimPause;
-  nuiSimpleEventSource<nuiAnimationLoop> AnimLoop;
+  nuiSimpleEventSource<0> AnimStart;
+  nuiSimpleEventSource<0> AnimStop;
+  nuiSimpleEventSource<0> AnimPause;
+  nuiSimpleEventSource<0> AnimLoop;
 
   void Play(const nuiEvent& rEvent); ///< The animation will start playing as soon as this method is called. Use this method if you want to start playing an animation when an nuiEvent is fired.
   void Stop(const nuiEvent& rEvent); ///< The animation will stop playing as soon as this method is called. Use this method if you want to stop playing an animation when an nuiEvent is fired.
@@ -235,10 +230,7 @@ class NUI_API nuiMetaAnimation : public nuiAnimation
 {
 public:
   nuiMetaAnimation ();
-  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiMetaAnimation();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
   virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.
@@ -256,10 +248,7 @@ class NUI_API nuiAnimationSequence : public nuiAnimation
 {
 public:
   nuiAnimationSequence ();
-  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiAnimationSequence();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool CreateNewNode) const;
 
   virtual void Play(int32 Count = 1.0f, nuiAnimLoop LoopMode = eAnimLoopForward); ///< Start playing the animation. Stop after count iterations. 
   virtual void Stop(); ///< Stop Playing the animation.

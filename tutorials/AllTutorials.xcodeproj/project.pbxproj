@@ -854,6 +854,13 @@
 			remoteGlobalIDString = 61A9DFBE0B833E9600BC506C;
 			remoteInfo = FlowLayout;
 		};
+		E5251FEA1430832100F93930 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E51FABA910740168004F6940 /* WidgetCreatorCSS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E57D21A31319531A007B3B7A;
+			remoteInfo = WidgetCreatorCSSCocoaD;
+		};
 		E543D0F51074047F00A01E51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E51FAB4D1073F312004F6940 /* Project object */;
@@ -1219,6 +1226,7 @@
 			children = (
 				E51FACBE10740169004F6940 /* WidgetCreatorCSS.app */,
 				E51FACC010740169004F6940 /* WidgetCreatorCSSD.app */,
+				E5251FEB1430832100F93930 /* WidgetCreatorCSSCocoaD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1752,6 +1760,13 @@
 			fileType = wrapper.application;
 			path = WidgetCreatorCSSD.app;
 			remoteRef = E51FACBF10740169004F6940 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E5251FEB1430832100F93930 /* WidgetCreatorCSSCocoaD.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WidgetCreatorCSSCocoaD.app;
+			remoteRef = E5251FEA1430832100F93930 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E543D1A71074076A00A01E51 /* AudioPlayer.app */ = {

@@ -13,7 +13,15 @@ rootpath = sys.argv[1]
 if rootpath[-1] == '/':
   rootpath = rootpath[:-1]
 
-f = file(sys.argv[2], 'w')
+if (os.path.exists(sys.argv[2])):
+  os.remove(sys.argv[2])
+
+if (len(sys.argv) == 4):
+  if (os.path.exists(sys.argv[3])):
+    os.remove(sys.argv[3])
+
+rcFile = file(sys.argv[2], 'w')
+androidResources = []
 
 for root, dirs, files in os.walk(rootpath):
   pathname = root[len(rootpath)+1:]
@@ -27,6 +35,13 @@ for root, dirs, files in os.walk(rootpath):
           prefix = ''
         else:
           prefix = pathname + '/'
-        f.write('%s        NUI_RESOURCE    "%s"\n' % (prefix + filename, rootpath + '/' + prefix + filename))
+        rcFile.write('%s        NUI_RESOURCE    "%s"\n' % (prefix + filename, rootpath + '/' + prefix + filename))
+        androidResources.append('%s\n' % (prefix + filename))
 
-f.close()
+rcFile.close()
+
+if (len(sys.argv) == 4):
+  androidFile = file(sys.argv[3], 'w')
+  for r in androidResources:
+    androidFile.write(r)
+  androidFile.close()

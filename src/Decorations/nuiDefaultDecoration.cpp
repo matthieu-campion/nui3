@@ -21,6 +21,7 @@
 #include "nuiNavigationBar.h"
 #include "nuiNavigationButton.h"
 
+
 nuiDefaultDecoration::nuiDefaultDecoration()
 {
   NGL_ASSERT(0);
@@ -41,6 +42,8 @@ nuiDefaultDecoration::~nuiDefaultDecoration()
 //
 void nuiDefaultDecoration::Init()
 {
+  nuiInitDefaultDecorationAtlas();
+  
   InitColors();
   InitSelection();
   InitMaps();
@@ -111,12 +114,22 @@ void nuiDefaultDecoration::Init()
 
 void nuiDefaultDecoration::Exit()
 {
-  if (mpKnobSequence)
-    mpKnobSequence->Release();
-  mpKnobSequence = NULL;
+  {
+    // Release the icons:
+    std::list<nuiTexture*>::iterator it = mIcons.begin();
+    std::list<nuiTexture*>::iterator end = mIcons.end();
+    while (it != end)
+    {
+      nuiTexture* pTex = *it;
+      pTex->Release();
+      ++it;
+    }
+    mIcons.clear();
+  }
 
-  mIcons.clear();
   mImages.clear();
+  
+  nuiWidget::ClearDefaultDecorations();
 }
 
 
@@ -190,46 +203,36 @@ void nuiDefaultDecoration::InitSelection()
 void nuiDefaultDecoration::InitMaps()
 {
   // vertical scrollbar background
-  nglIMemory* pIMem = new nglIMemory(gpScrollbarVerticalBkg, gScrollbarVerticalBkgSize);
-  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  nuiTexture* pTex = nuiTexture::GetTexture("ScrollbarVerticalBkg");
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalBkg"), pTex, nuiRect(6,8,0,0));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;
-
+  
   // vertical scrollbar handle
-  pIMem = new nglIMemory(gpScrollbarVerticalHdl, gScrollbarVerticalHdlSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("ScrollbarVerticalHdl");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarVerticalHdl"), pTex, nuiRect(2,6,6,0));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;
-  
+    
   // Horizontal scrollbar background
-  pIMem = new nglIMemory(gpScrollbarHorizontalBkg, gScrollbarHorizontalBkgSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("ScrollbarHorizontalBkg");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalBkg"), pTex, nuiRect(8,6,0,0));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;
-  
+    
   // Horizontal scrollbar handle
-  pIMem = new nglIMemory(gpScrollbarHorizontalHdl, gScrollbarHorizontalHdlSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("ScrollbarHorizontalHdl");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationScrollBarHorizontalHdl"), pTex, nuiRect(6,2,0,6));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;  
   
   
   
   // mobile scrollbar handle
-  pIMem = new nglIMemory(gpScrollbarMobile, gScrollbarMobileSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("ScrollbarMobile");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationMobileScrollbarHandle"), pTex, nuiRect(5,5,1,1));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem; 
   
   
   
@@ -237,77 +240,61 @@ void nuiDefaultDecoration::InitMaps()
   
   
   // vertical slider background
-  pIMem = new nglIMemory(gpSliderVerticalBkg, gSliderVerticalBkgSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("SliderVerticalBkg");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalBkg"), pTex, nuiRect(0,6,4,0));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;
-  
+    
   // vertical slider handle
-  pIMem = new nglIMemory(gpSliderVerticalHdl, gSliderVerticalHdlSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("SliderVerticalHdl");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderVerticalHdl"), pTex, nuiRect(0,0,20,20));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;
-  
+    
   // Horizontal slider background
-  pIMem = new nglIMemory(gpSliderHorizontalBkg, gSliderHorizontalBkgSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("SliderHorizontalBkg");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalBkg"), pTex, nuiRect(6,0,0,4));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;
-  
+    
   // Horizontal slider handle
-  pIMem = new nglIMemory(gpSliderHorizontalHdl, gSliderHorizontalHdlSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("SliderHorizontalHdl");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationSliderHorizontalHdl"), pTex, nuiRect(0,0,20,20));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem; 
   
   
   
   // popup Menu
-  pIMem = new nglIMemory(gpPopupMenu, gPopupMenuSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("PopupMenu");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationPopupMenu"), pTex, nuiRect(8,8,0,14));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;  
 
 
 
   // arrow handle close
-  pIMem = new nglIMemory(gpArrowClose, gArrowCloseSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("ArrowClose");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowClose"), pTex, nuiRect(0,0,7,6), nuiColor(0,0,0));
   pFrame->UseWidgetAlpha(true);
 
-  delete pIMem;  
   
   
   // arrow handle open
-  pIMem = new nglIMemory(gpArrowOpen, gArrowOpenSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("ArrowOpen");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationArrowOpen"), pTex, nuiRect(0,0,6,7), nuiColor(0,0,0));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;  
   
   
   
   
   // Checkerboard for color alpha viewing
-  pIMem = new nglIMemory(gpCheckerboardSmall, gCheckerboardSmallSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("CheckerboardSmall");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationCheckerboardSmall"), pTex, nuiRect(0,0,20,20));
   pFrame->UseWidgetAlpha(true);
-  delete pIMem;  
   
 
 }
@@ -326,42 +313,32 @@ std::list<nuiTexture*> nuiDefaultDecoration::mIcons;
 void nuiDefaultDecoration::InitIcons()
 {
   // volume icon
-  nglIMemory* pIMem = new nglIMemory(gpIconVolume, gIconVolumeSize);
-  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-  delete pIMem;
+  nuiTexture* pTex = nuiTexture::GetTexture("IconVolume");
   NGL_ASSERT(pTex);
   pTex->SetSource(_T("nuiDefaultDecorationIconVolume"));
   mIcons.push_back(pTex);
   
   // folder icon
-  pIMem = new nglIMemory(gpIconFolder, gIconFolderSize);
-  pTex = nuiTexture::GetTexture(pIMem);
-  delete pIMem;
-  NGL_ASSERT(pTex);
+  pTex = nuiTexture::GetTexture("IconFolder");
+    NGL_ASSERT(pTex);
   pTex->SetSource(_T("nuiDefaultDecorationIconFolder"));
   mIcons.push_back(pTex);
 
   // open folder icon
-  pIMem = new nglIMemory(gpIconOpenFolder, gIconOpenFolderSize);
-  pTex = nuiTexture::GetTexture(pIMem);
-  delete pIMem;
-  NGL_ASSERT(pTex);
+  pTex = nuiTexture::GetTexture("IconOpenFolder");
+    NGL_ASSERT(pTex);
   pTex->SetSource(_T("nuiDefaultDecorationIconOpenFolder"));
   mIcons.push_back(pTex);
 
   // parent folder icon
-  pIMem = new nglIMemory(gpIconParentFolder, gIconParentFolderSize);
-  pTex = nuiTexture::GetTexture(pIMem);
-  delete pIMem;
-  NGL_ASSERT(pTex);
+  pTex = nuiTexture::GetTexture("IconParentFolder");
+    NGL_ASSERT(pTex);
   pTex->SetSource(_T("nuiDefaultDecorationIconParentFolder"));
   mIcons.push_back(pTex);
   
   // file icon
-  pIMem = new nglIMemory(gpIconFile, gIconFileSize);
-  pTex = nuiTexture::GetTexture(pIMem);
-  delete pIMem;
-  NGL_ASSERT(pTex);
+  pTex = nuiTexture::GetTexture("IconFile");
+    NGL_ASSERT(pTex);
   pTex->SetSource(_T("nuiDefaultDecorationIconFile"));
   mIcons.push_back(pTex);
 }
@@ -375,23 +352,23 @@ void nuiDefaultDecoration::InitIcons()
 //
 
 // static 
-std::map<nglString, std::pair<char*,long> > nuiDefaultDecoration::mImages;
+std::map<nglString, std::pair<const char*, int32> > nuiDefaultDecoration::mImages;
 
 void nuiDefaultDecoration::InitImages()
 {
-  mImages[_T("nuiFileTree::DraggedFileIcon")] = std::pair<char*,long>((char*)gpImageDraggedFile,(long)gImageDraggedFileSize);
+  mImages[_T("nuiFileTree::DraggedFileIcon")] = std::make_pair(gpImageDraggedFile, gImageDraggedFileSize);
 }
 
 
 //static 
 nglImage* nuiDefaultDecoration::GetImage(const nglString& rRef)
 {
-  std::map<nglString, std::pair<char*,long> >::iterator it = mImages.find(rRef);
+  std::map<nglString, std::pair<const char*, int32> >::iterator it = mImages.find(rRef);
   if (it == mImages.end())
     return NULL;
   
-  const char* pMem = it->second.first;
-  const long size = it->second.second;
+  const char* pMem = (const char*)(it->second.first);
+  int32 size = it->second.second;
   nglIMemory* pIMem = new nglIMemory(pMem, size);
   nglImage* pImage = new nglImage(pIMem);
   return pImage;
@@ -445,21 +422,18 @@ void nuiDefaultDecoration::BackgroundPane(nuiWidget* pWidget)
 
   nglString decoName;
   const char* deco;
-  uint32 decoSize;
   nuiRect rect;
   
   if (pPane->GetType() == eOutterBackground)
   {
     decoName = _T("nuiDefaultDecorationOutterPane");
-    deco = gpPaneOutter;
-    decoSize = gPaneOutterSize;
+    deco = "PaneOutter";
     rect = nuiRect(12,12,0,1);
   }
   else
   {
     decoName = _T("nuiDefaultDecorationInnerPane");
-    deco = gpPaneInner;
-    decoSize = gPaneInnerSize;
+    deco = "PaneInner";
     rect = nuiRect(6,6,0,0);
   }
   
@@ -467,12 +441,10 @@ void nuiDefaultDecoration::BackgroundPane(nuiWidget* pWidget)
   
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(deco, decoSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    nuiTexture* pTex = nuiTexture::GetTexture(deco);
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(decoName, pTex, rect);
     pFrame->UseWidgetAlpha(true);
-    delete pIMem; 
   }
   NGL_ASSERT(pFrame);
   pWidget->SetDecoration(pFrame, eDecorationBorder);
@@ -512,20 +484,16 @@ void nuiDefaultDecoration::EditLine(nuiWidget* pWidget)
   nuiBackgroundPane* pPane = (nuiBackgroundPane*)pWidget;
   
   nglString decoName = _T("nuiDefaultDecorationInnerPane");
-  const char* deco = gpPaneInner;
-  uint32 decoSize = gPaneInnerSize;
   nuiRect rect = nuiRect(6,6,0,0);
   
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(decoName);
   
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(deco, decoSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    nuiTexture* pTex = nuiTexture::GetTexture("PaneInner");
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(decoName, pTex, rect);
     pFrame->UseWidgetAlpha(true);
-    delete pIMem; 
   }
   NGL_ASSERT(pFrame);
   
@@ -551,20 +519,17 @@ void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
     if (!pDeco)
     {
       // handle bar 
-      nglIMemory* pIMem = new nglIMemory(gpSplitterVertical, gSplitterVerticalSize);
-      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+      nuiTexture* pTex = nuiTexture::GetTexture("SplitterVertical");
       NGL_ASSERT(pTex);
       
       nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationVerticalSplitterBar"), pTex, nuiRect(0,0,7,3));
       pFrame->SetInterpolated(false);
       
       // handle spot
-      pIMem = new nglIMemory(gpSplitterVerticalHandle, gSplitterVerticalHandleSize);
-      pTex = nuiTexture::GetTexture(pIMem);
+      pTex = nuiTexture::GetTexture("SplitterVerticalHandle");
       NGL_ASSERT(pTex);
       
-      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"), 
-                                                          pTex, nuiRect(0,0,7,6), nuiCenter);
+      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"), pTex, nuiRect(0,0,7,6), nuiCenter);
 
       // build meta decoration
       pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationVerticalSplitter"));
@@ -583,16 +548,14 @@ void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
     if (!pDeco)
     {
       // handle bar 
-      nglIMemory* pIMem = new nglIMemory(gpSplitterHorizontal, gSplitterHorizontalSize);
-      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+      nuiTexture* pTex = nuiTexture::GetTexture("SplitterHorizontal");
       NGL_ASSERT(pTex);
       
       nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationHorizontalSplitterBar"), pTex, nuiRect(0,0,3,7));
       pFrame->SetInterpolated(false);
       
       // handle spot
-      pIMem = new nglIMemory(gpSplitterHorizontalHandle, gSplitterHorizontalHandleSize);
-      pTex = nuiTexture::GetTexture(pIMem);
+      pTex = nuiTexture::GetTexture("SplitterHorizontalHandle");
       NGL_ASSERT(pTex);
       
       nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationHorizontalSplitterHandle"), 
@@ -609,89 +572,6 @@ void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
   
   
 }
-
-
-//void nuiDefaultDecoration::Splitter(nuiWidget* pWidget)
-//{
-//  nuiSplitter* pSplitter = (nuiSplitter*)pWidget;
-//  nuiSplitterHandle* pHandle = pSplitter->GetHandle();
-//  NGL_ASSERT(pHandle);
-//  
-//  if (pSplitter->GetOrientation() == nuiVertical)
-//  {
-//    pHandle->SetUserSize(6,0);
-//    
-//    nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationVerticalSplitter"));
-//    if (!pDeco)
-//    {
-//      // handle bar gradient
-//      nuiGradientDecoration* pDeco1 = new nuiGradientDecoration(_T("nuiDefaultDecorationVerticalSplitterGradient"), 
-//                                                                nuiRect(0, 0, 0, 0), nuiColor(232,232,232), nuiColor(196,196,196), nuiHorizontal);
-//      
-//      // handle bar borders
-//      nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationVerticalSplitterBorders"));
-//      pDeco2->SetBorderType(_T("All"));
-//      pDeco2->SetStrokeSize(1);
-//      pDeco2->SetStrokeLeftColor(nuiColor(190,190,190));
-//      pDeco2->SetStrokeRightColor(nuiColor(170,170,170));
-//      pDeco2->SetStrokeTopColor(nuiColor(180,180,180));
-//      pDeco2->SetStrokeBottomColor(nuiColor(180,180,180));
-//      
-//      // handle control spot
-//      nglIMemory* pIMem = new nglIMemory(gpSplitterHandleVertical, gSplitterHandleVerticalSize);
-//      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-//      NGL_ASSERT(pTex);
-//      
-//      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"), 
-//                                                          pTex, nuiRect(0,0,5,5), nuiCenter);
-//      
-//      // build meta decoration
-//      pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationVerticalSplitter"));
-//      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterGradient"));
-//      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterBorders"));
-//      pDeco->AddDecoration(_T("nuiDefaultDecorationVerticalSplitterHandle"));
-//      
-//    }
-//    pHandle->SetDecoration(pDeco, eDecorationBorder);  
-//    
-//  }
-//  else
-//  {
-//    pHandle->SetUserSize(0,6);
-//    
-//    nuiMetaDecoration* pDeco = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationHorizontalSplitter"));
-//    if (!pDeco)
-//    {
-//      nuiGradientDecoration* pDeco1 = new nuiGradientDecoration(_T("nuiDefaultDecorationHorizontalSplitterGradient"), 
-//                                                                nuiRect(0, 0, 0, 0), nuiColor(232,232,232), nuiColor(196,196,196), nuiVertical);
-//      nuiBorderDecoration* pDeco2 = new nuiBorderDecoration(_T("nuiDefaultDecorationHorizontalSplitterBorders"));
-//      pDeco2->SetBorderType(_T("All"));
-//      pDeco2->SetStrokeSize(1);
-//      pDeco2->SetStrokeLeftColor(nuiColor(180,180,180));
-//      pDeco2->SetStrokeRightColor(nuiColor(180,180,180));
-//      pDeco2->SetStrokeTopColor(nuiColor(190,190,190));
-//      pDeco2->SetStrokeBottomColor(nuiColor(170,170,170));
-//      
-//      // handle control spot
-//      nglIMemory* pIMem = new nglIMemory(gpSplitterHandleHorizontal, gSplitterHandleHorizontalSize);
-//      nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-//      NGL_ASSERT(pTex);
-//      
-//      nuiImageDecoration* pDeco3 = new nuiImageDecoration(_T("nuiDefaultDecorationHorizontalSplitterHandle"), 
-//                                                          pTex, nuiRect(0,0,5,5), nuiCenter);
-//      
-//      
-//      pDeco = new nuiMetaDecoration(_T("nuiDefaultDecorationHorizontalSplitter"));
-//      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterGradient"));
-//      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterBorders"));
-//      pDeco->AddDecoration(_T("nuiDefaultDecorationHorizontalSplitterHandle"));
-//      
-//    }
-//    pHandle->SetDecoration(pDeco, eDecorationBorder);  
-//  }
-//  
-//  
-//}
 
 
 //**************************************************************************************************************
@@ -714,9 +594,6 @@ void nuiDefaultDecoration::FolderPane(nuiWidget* pWidget)
 }
 
 
-extern float NUI_SCALE_FACTOR;
-
-
 //**************************************************************************************************************
 //
 // nuiButton
@@ -730,25 +607,19 @@ void nuiDefaultDecoration::Button(nuiWidget* pWidget)
     return;
   }
   
-  nglIMemory* pIMemUp = new nglIMemory(gpButtonUp, gButtonUpSize);
-  nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
+  nuiTexture* pTexUp = nuiTexture::GetTexture("ButtonUp");
   NGL_ASSERT(pTexUp);
   nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationButtonUp"), pTexUp, nuiRect(4,4,2,6));
-  delete pIMemUp;
 
   
-  nglIMemory* pIMemHover = new nglIMemory(gpButtonUp, gButtonUpSize);
-  nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
+  nuiTexture* pTexHover = nuiTexture::GetTexture("ButtonUp");
   NGL_ASSERT(pTexHover);
   nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationButtonHover"), pTexHover, nuiRect(4,4,2,6));
-  delete pIMemHover;
   
   
-  nglIMemory* pIMemDown = new nglIMemory(gpButtonDown, gButtonDownSize);
-  nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
+  nuiTexture* pTexDown = nuiTexture::GetTexture("ButtonDown");
   NGL_ASSERT(pTexDown);
   nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationButtonDown"), pTexDown, nuiRect(4,4,2,6));
-  delete pIMemDown;
   
   
   
@@ -787,31 +658,23 @@ void nuiDefaultDecoration::RadioButton(nuiWidget* pWidget)
     return;
   }
   
-  nglIMemory* pIMem = new nglIMemory(gpRadioButtonUp, gRadioButtonUpSize);
-  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  nuiTexture* pTex = nuiTexture::GetTexture("RadioButtonUp");
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUp"), pTex, nuiRect(0,0,13,13));
-  delete pIMem;
+    
   
-  
-  pIMem = new nglIMemory(gpRadioButtonDown, gRadioButtonDownSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  pTex = nuiTexture::GetTexture("RadioButtonDown");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDown"), pTex, nuiRect(0,0,13,13));
-  delete pIMem;
-
-  pIMem = new nglIMemory(gpRadioButtonUpDisabled, gRadioButtonUpDisabledSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  
+  pTex = nuiTexture::GetTexture("RadioButtonUpDisabled");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonUpDisabled"), pTex, nuiRect(0,0,13,13));
-  delete pIMem;
-
-  pIMem = new nglIMemory(gpRadioButtonDownDisabled, gRadioButtonDownDisabledSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+  
+  pTex = nuiTexture::GetTexture("RadioButtonDownDisabled");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationRadioButtonDownDisabled"), pTex, nuiRect(0,0,13,13));
-  delete pIMem;
-  
+    
   
   nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationRadioButton"), 
                                                       _T("nuiDefaultDecorationRadioButtonUp"),
@@ -846,25 +709,19 @@ void nuiDefaultDecoration::CloseButton(nuiWidget* pWidget)
     return;
   }
   
-  nglIMemory* pIMemUp = new nglIMemory(gpCloseButtonUp, gCloseButtonUpSize);
-  nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
+  nuiTexture* pTexUp = nuiTexture::GetTexture("CloseButtonUp");
   NGL_ASSERT(pTexUp);
   nuiFrame* pFrameUp = new nuiFrame(_T("nuiDefaultDecorationCloseButtonUp"), pTexUp, nuiRect(0,0,12,15));
-  delete pIMemUp;
   
   
-  nglIMemory* pIMemHover = new nglIMemory(gpCloseButtonHover, gCloseButtonHoverSize);
-  nuiTexture* pTexHover = nuiTexture::GetTexture(pIMemHover);
+  nuiTexture* pTexHover = nuiTexture::GetTexture("CloseButtonHover");
   NGL_ASSERT(pTexHover);
   nuiFrame* pFrameHover = new nuiFrame(_T("nuiDefaultDecorationCloseButtonHover"), pTexHover, nuiRect(0,0,12,15));
-  delete pIMemHover;
   
   
-  nglIMemory* pIMemDown = new nglIMemory(gpCloseButtonDown, gCloseButtonDownSize);
-  nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
+  nuiTexture* pTexDown = nuiTexture::GetTexture("CloseButtonDown");
   NGL_ASSERT(pTexDown);
   nuiFrame* pFrameDown = new nuiFrame(_T("nuiDefaultDecorationCloseButtonDown"), pTexDown, nuiRect(0,0,12,15));
-  delete pIMemDown;
   
   
   
@@ -903,35 +760,27 @@ void nuiDefaultDecoration::ToggleButton(nuiWidget* pWidget)
       return;
     }
     
-    nglIMemory* pIMem = new nglIMemory(gpToggleButtonUp, gToggleButtonUpSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    nuiTexture* pTex = nuiTexture::GetTexture("ToggleButtonUp");
     NGL_ASSERT(pTex);
     nuiImageDecoration* pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUp"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
-    delete pIMem;
+        
     
-    
-    pIMem = new nglIMemory(gpToggleButtonDown, gToggleButtonDownSize);
-    pTex = nuiTexture::GetTexture(pIMem);
+    pTex = nuiTexture::GetTexture("ToggleButtonDown");
     NGL_ASSERT(pTex);
     pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDown"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
-    delete pIMem;
-    
-    pIMem = new nglIMemory(gpToggleButtonUpDisabled, gToggleButtonUpDisabledSize);
-    pTex = nuiTexture::GetTexture(pIMem);
+        
+    pTex = nuiTexture::GetTexture("ToggleButtonUpDisabled");
     NGL_ASSERT(pTex);
     pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxUpDisabled"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
-    delete pIMem;
-    
-    pIMem = new nglIMemory(gpToggleButtonDownDisabled, gToggleButtonDownDisabledSize);
-    pTex = nuiTexture::GetTexture(pIMem);
+        
+    pTex = nuiTexture::GetTexture("ToggleButtonDownDisabled");
     NGL_ASSERT(pTex);
     pFrame = new nuiImageDecoration(_T("nuiDefaultDecorationToggleButtonCheckBoxDownDisabled"), pTex, nuiRect(0,0,13,13));
     pFrame->SetPosition(nuiLeft);
-    delete pIMem;
-    
+        
     
     nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationToggleButtonCheckBox"), 
                                                         _T("nuiDefaultDecorationToggleButtonCheckBoxUp"),
@@ -962,20 +811,16 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
     return;
   }
   
-  nglIMemory* pIMem = new nglIMemory(gpComboUp, gComboUpSize);
-  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  nuiTexture* pTex = nuiTexture::GetTexture("ComboUp");
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(_T("nuiDefaultDecorationComboBoxUp"), pTex, nuiRect(12,4,2,10));
   pFrame->EnableBorder(false);
-  delete pIMem;
-    
-  pIMem = new nglIMemory(gpComboDown, gComboDownSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+      
+  pTex = nuiTexture::GetTexture("ComboDown");
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(_T("nuiDefaultDecorationComboBoxDown"), pTex, nuiRect(12,4,2,10));
   pFrame->EnableBorder(false);
-  delete pIMem;
-  
+    
   
   
   nuiStateDecoration* pState = new nuiStateDecoration(_T("nuiDefaultDecorationComboBox"));
@@ -995,25 +840,8 @@ void nuiDefaultDecoration::ComboBox(nuiWidget* pWidget)
 // nuiKnob
 //
 
-nuiImageSequence* nuiDefaultDecoration::mpKnobSequence;
-
 void nuiDefaultDecoration::KnobSequence(nuiWidget* pWidget)
 {
-  nuiKnob* pKnob = (nuiKnob*)pWidget;
-
-  if (!pKnob->GetImageSequence() && !mpKnobSequence)
-  {
-    nglIMemory* pIMem = new nglIMemory(gpKnobSequenceHdl, gKnobSequenceHdlSize);
-    nglImage* pImage = new nglImage(pIMem);
-    NGL_ASSERT(pImage);
-    mpKnobSequence = new nuiImageSequence(31, pImage, nuiVertical);
-    mpKnobSequence->Acquire();
-    delete pIMem;     
-    delete pImage;
-  }
-
-  if (!pKnob->GetImageSequence())
-    pKnob->SetImageSequence(mpKnobSequence);
 }
 
 
@@ -1077,21 +905,6 @@ void nuiDefaultDecoration::FileSelector_FolderIcon(nuiWidget* pWidget)
 
 void nuiDefaultDecoration::FileSelector_TreeView(nuiWidget* pWidget)
 {
-//  nuiGradientDecoration* pDeco = (nuiGradientDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileSelectorWindow"));
-//  if (!pDeco)
-//  {
-////  nuiGradientDecoration* pDeco;
-//    nuiColor color1, color2;
-//    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg1"), color1);
-//    nuiColor::GetColor(_T("nuiDefaultClrWindowBkg2"), color2);
-//    
-//    pDeco = new nuiGradientDecoration(_T("nuiDefaultDecorationFileSelectorWindow"), 
-//                                      nuiRect(0,0, 0,0), color1, color2, nuiVertical, 1, nuiColor(175,175,175), eStrokeAndFillShape);
-//    pDeco->SetOffset1(0.f);
-//    pDeco->SetOffset2(0.5f);
-//  }
-//  pWidget->SetDecoration(pDeco, eDecorationBorder);  
-
   nuiColorDecoration* pDeco = (nuiColorDecoration*)nuiDecoration::Get(_T("nuiDefaultDecorationFileSelectorWindow"));
   if (!pDeco)
   {
@@ -1338,38 +1151,14 @@ void nuiDefaultDecoration::Dialog(nuiSimpleContainer* pCont)
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    nuiTexture* pTex = nuiTexture::GetTexture("PaneOutter");
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
     pFrame->UseWidgetAlpha(true);
-    delete pIMem; 
   }
   NGL_ASSERT(pFrame);
   pCont->SetDecoration(pFrame);  
 }
-
-
-//**************************************************************************************************************
-//
-// nuiDialog
-//
-//void nuiDefaultDecoration::DialogSelectFile(nuiSimpleContainer* pCont)
-//{
-//  nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
-//  if (!pFrame)
-//  {
-//    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
-//    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
-//    NGL_ASSERT(pTex);
-//    pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
-//    pFrame->UseWidgetAlpha(true);
-//    pFrame->EnableBorder(false);
-//    delete pIMem; 
-//  }
-//  NGL_ASSERT(pFrame);
-//  pCont->SetDecoration(pFrame, eDecorationBorder);  
-//}
 
 
 //**************************************************************************************************************
@@ -1386,23 +1175,6 @@ void nuiDefaultDecoration::Dialog_Title(nuiWidget* pWidget)
 
 //**************************************************************************************************************
 //
-// DialogSelectFile::Title
-//
-//void nuiDefaultDecoration::DialogSelectFile_Title(nuiWidget* pWidget)
-//{
-//  nuiLabel* pLabel = (nuiLabel*)pWidget;
-//  
-//  pLabel->SetFont(nuiFont::GetFont(13), true);
-//  pLabel->SetBorder(16,0,16,15);
-//}
-//
-
-
-
-
-
-//**************************************************************************************************************
-//
 // nuiDialog::EditLine
 //
 void nuiDefaultDecoration::Dialog_EditLine(nuiWidget* pWidget)
@@ -1410,12 +1182,10 @@ void nuiDefaultDecoration::Dialog_EditLine(nuiWidget* pWidget)
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationInnerPane"));
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(gpPaneInner, gPaneInnerSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    nuiTexture* pTex = nuiTexture::GetTexture("PaneInner");
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(_T("nuiDefaultDecorationInnerPane"), pTex, nuiRect(6,6,0,0));
     pFrame->UseWidgetAlpha(true);
-    delete pIMem; 
   }
   NGL_ASSERT(pFrame);
   pWidget->SetDecoration(pFrame, eDecorationBorder);    
@@ -1432,12 +1202,10 @@ void nuiDefaultDecoration::MessageBox(nuiMessageBox* pBox)
   nuiFrame* pFrame = (nuiFrame*)nuiDecoration::Get(_T("nuiDefaultDecorationOutterPane"));
   if (!pFrame)
   {
-    nglIMemory* pIMem = new nglIMemory(gpPaneOutter, gPaneOutterSize);
-    nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+    nuiTexture* pTex = nuiTexture::GetTexture("PaneOutter");
     NGL_ASSERT(pTex);
     pFrame = new nuiFrame(_T("nuiDefaultDecorationOutterPane"), pTex, nuiRect(12,12,0,1));
     pFrame->UseWidgetAlpha(true);
-    delete pIMem; 
   }
   NGL_ASSERT(pFrame);
   pBox->SetDecoration(pFrame);
@@ -1471,46 +1239,36 @@ void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
   
   nuiRect frameRect;
 
-  const char* decoUp = gpTabTopUp;
-  const char* decoDown = gpTabTopDown;
-  long decoUpSize = gTabTopUpSize;
-  long decoDownSize = gTabTopDownSize;
+  const char* decoUp = "TabTopUp";
+  const char* decoDown = "TabTopDown";
   
   switch (pView->GetTabPosition())
   {
     case nuiTop:
       decoName = _T("nuiDefaultDecorationTabTop");
-      decoUp = gpTabTopUp;
-      decoDown = gpTabTopDown;
-      decoUpSize = gTabTopUpSize;
-      decoDownSize = gTabTopDownSize;
+      decoUp = "TabTopUp";
+      decoDown = "TabTopDown";
       frameRect = nuiRect(4,5,2,4);
       break;
       
     case nuiLeft:
       decoName = _T("nuiDefaultDecorationTabLeft");
-      decoUp = gpTabLeftUp;
-      decoDown = gpTabLeftDown;
-      decoUpSize = gTabLeftUpSize;
-      decoDownSize = gTabLeftDownSize;
+      decoUp = "TabLeftUp";
+      decoDown = "TabLeftDown";
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiRight:
       decoName = _T("nuiDefaultDecorationTabRight");
-      decoUp = gpTabRightUp;
-      decoDown = gpTabRightDown;
-      decoUpSize = gTabRightUpSize;
-      decoDownSize = gTabRightDownSize;
+      decoUp = "TabRightUp";
+      decoDown = "TabRightDown";
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiBottom:
       decoName = _T("nuiDefaultDecorationTabBottom");
-      decoUp = gpTabBottomUp;
-      decoDown = gpTabBottomDown;
-      decoUpSize = gTabBottomUpSize;
-      decoDownSize = gTabBottomDownSize;
+      decoUp = "TabBottomUp";
+      decoDown = "TabBottomDown";
       frameRect = nuiRect(4,5,2,4);
       break;
       
@@ -1530,18 +1288,14 @@ void nuiDefaultDecoration::TabView_Tab(nuiTabView* pView, nuiWidget* pTab)
   decoUpName = decoName + _T("Up");
   decoDownName = decoName + _T("Down");
   
-  nglIMemory* pIMem = new nglIMemory(decoUp, decoUpSize);
-  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  nuiTexture* pTex = nuiTexture::GetTexture(decoUp);
   NGL_ASSERT(pTex);
   nuiFrame* pFrame = new nuiFrame(decoUpName, pTex, frameRect);
-  delete pIMem;
-  
-  pIMem = new nglIMemory(decoDown, decoDownSize);
-  pTex = nuiTexture::GetTexture(pIMem);
+    
+  pTex = nuiTexture::GetTexture(decoDown);
   NGL_ASSERT(pTex);
   pFrame = new nuiFrame(decoDownName, pTex, frameRect);
-  delete pIMem;
-  
+    
   
   
   nuiStateDecoration* pState = new nuiStateDecoration(decoName);
@@ -1569,36 +1323,31 @@ void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pConte
   
   nuiRect frameRect;
   
-  const char* deco = gpTabTopContents;
-  long decoSize = gTabTopContentsSize;
+  const char* deco = "TabTopContents";
   
   switch (pView->GetTabPosition())
   {
     case nuiTop:
       decoName = _T("nuiDefaultDecorationTabTopContents");
-      deco = gpTabTopContents;
-      decoSize = gTabTopContentsSize;
+      deco = "TabTopContents";
       frameRect = nuiRect(4,5,2,4);
       break;
       
     case nuiLeft:
       decoName = _T("nuiDefaultDecorationTabLeftContents");
-      deco = gpTabLeftContents;
-      decoSize = gTabLeftContentsSize;
+      deco = "TabLeftContents";
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiRight:
       decoName = _T("nuiDefaultDecorationTabRightContents");
-      deco = gpTabRightContents;
-      decoSize = gTabRightContentsSize;
+      deco = "TabRightContents";
       frameRect = nuiRect(5,4,4,2);
       break;
       
     case nuiBottom:
       decoName = _T("nuiDefaultDecorationTabBottomContents");
-      deco = gpTabBottomContents;
-      decoSize = gTabBottomContentsSize;
+      deco = "TabBottomContents";
       frameRect = nuiRect(4,5,2,4);
       break;
   }
@@ -1610,12 +1359,10 @@ void nuiDefaultDecoration::TabView_Contents(nuiTabView* pView, nuiWidget* pConte
     return;
   }
   
-  nglIMemory* pIMem = new nglIMemory(deco, decoSize);
-  nuiTexture* pTex = nuiTexture::GetTexture(pIMem);
+  nuiTexture* pTex = nuiTexture::GetTexture(deco);
   NGL_ASSERT(pTex);
   pDeco = new nuiFrame(decoName, pTex, frameRect);
-  delete pIMem;
-  
+    
   pContents->SetDecoration(pDeco, eDecorationBorder);
   
 }
@@ -1635,12 +1382,7 @@ void nuiDefaultDecoration::NavigationBar(nuiWidget* pWidget)
   if (!pBar->IsVisible())
     return;
   
-  pBar->SetPosition(nuiTopLeft);
-
-  // TODO : plateform? orientation?
-  pBar->SetUserWidth(320.f);
-  pBar->SetUserHeight(44.f);
-  
+  // TODO : plateform? orientation?  
   
   nuiMetaDecoration* pMeta = (nuiMetaDecoration*)nuiDecoration::Get(_T("nuiDefaultNavigationBarDecoration"));
   if (pMeta)
@@ -1694,7 +1436,7 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   nglString decoName;
   nglString barStyle = NavigationBarStyleToString(style);
   
-  decoName.Format(_T("nuiDefaultNavigation%lsButtonDecoration"), barStyle.GetChars());
+  decoName.Format(_T("nuiDefaultNavigation%sButtonDecoration"), barStyle.GetChars());
   nuiStateDecoration* pDeco = (nuiStateDecoration*)nuiDecoration::Get(decoName);
   
   if (pDeco)
@@ -1704,23 +1446,21 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   }
   
   // choose the right map, depending on the style of the navigation bar, and on the button kind
-  const void* pButtonUp = NULL;
-  const void* pButtonDown = NULL;
-  long buttonUpSize = 0;
-  long buttonDownSize = 0;
+  const char* pButtonUp = NULL;
+  const char* pButtonDown = NULL;
   if (leftyButton)
     switch (style)
     {
-      case eBarStyleDefault: pButtonUp = gpNavigationBarDefaultLeftButtonUp; buttonUpSize = gNavigationBarDefaultLeftButtonUpSize; pButtonDown = gpNavigationBarDefaultLeftButtonDown; buttonDownSize = gNavigationBarDefaultLeftButtonDownSize; break;
-      case eBarStyleBlack: pButtonUp = gpNavigationBarBlackLeftButtonUp; buttonUpSize = gNavigationBarBlackLeftButtonUpSize; pButtonDown = gpNavigationBarBlackLeftButtonDown; buttonDownSize = gNavigationBarBlackLeftButtonDownSize; break;
+      case eBarStyleDefault: pButtonUp = "NavigationBarDefaultLeftButtonUp"; pButtonDown = "NavigationBarDefaultLeftButtonDown"; break;
+      case eBarStyleBlack: pButtonUp = "NavigationBarBlackLeftButtonUp"; pButtonDown = "NavigationBarBlackLeftButtonDown"; break;
       //case eBarStyleTint: return _T("Tint");
       case eBarStyleNone: default: break;
     }
   else
     switch (style)
     {
-      case eBarStyleDefault: pButtonUp = gpNavigationBarDefaultButtonUp; buttonUpSize = gNavigationBarDefaultButtonUpSize; pButtonDown = gpNavigationBarDefaultButtonDown; buttonDownSize = gNavigationBarDefaultButtonDownSize; break;
-      case eBarStyleBlack: pButtonUp = gpNavigationBarBlackButtonUp; buttonUpSize = gNavigationBarBlackButtonUpSize; pButtonDown = gpNavigationBarBlackButtonDown; buttonDownSize = gNavigationBarBlackButtonDownSize; break;
+      case eBarStyleDefault: pButtonUp = "NavigationBarDefaultButtonUp"; pButtonDown = "NavigationBarDefaultButtonDown"; break;
+      case eBarStyleBlack: pButtonUp = "NavigationBarBlackButtonUp"; pButtonDown = "NavigationBarBlackButtonDown"; break;
         //case eBarStyleTint: return _T("Tint");
       case eBarStyleNone: default: break;
     }
@@ -1729,29 +1469,25 @@ void nuiDefaultDecoration::NavigationButton(nuiNavigationButton* pWidget, nuiNav
   // assign the texture for the "Up" state
   nglString decoUpName;
   if (leftyButton)
-    decoUpName.Format(_T("nuiDefaultNavigation%lsLeftButtonUp"), barStyle.GetChars());
+    decoUpName.Format(_T("nuiDefaultNavigation%sLeftButtonUp"), barStyle.GetChars());
   else
-    decoUpName.Format(_T("nuiDefaultNavigation%lsButtonUp"), barStyle.GetChars());
+    decoUpName.Format(_T("nuiDefaultNavigation%sButtonUp"), barStyle.GetChars());
 
-  nglIMemory* pIMemUp = new nglIMemory(pButtonUp, buttonUpSize);
-  nuiTexture* pTexUp = nuiTexture::GetTexture(pIMemUp);
+  nuiTexture* pTexUp = nuiTexture::GetTexture("ButtonUp");
   NGL_ASSERT(pTexUp);
   nuiFrame* pFrameUp = new nuiFrame(decoUpName, pTexUp, nuiRect(13,0,1,30));
-  delete pIMemUp;
   
 
   // assign the texture for the "Down" state
   nglString decoDownName;
   if (leftyButton)
-    decoDownName.Format(_T("nuiDefaultNavigation%lsLeftButtonDown"), barStyle.GetChars());
+    decoDownName.Format(_T("nuiDefaultNavigation%sLeftButtonDown"), barStyle.GetChars());
   else
-    decoDownName.Format(_T("nuiDefaultNavigation%lsButtonDown"), barStyle.GetChars());
+    decoDownName.Format(_T("nuiDefaultNavigation%sButtonDown"), barStyle.GetChars());
   
-  nglIMemory* pIMemDown = new nglIMemory(pButtonDown, buttonDownSize);
-  nuiTexture* pTexDown = nuiTexture::GetTexture(pIMemDown);
+  nuiTexture* pTexDown = nuiTexture::GetTexture("ButtonDown");
   NGL_ASSERT(pTexDown);
   nuiFrame* pFrameDown = new nuiFrame(decoDownName, pTexDown, nuiRect(13,0,1,30));
-  delete pIMemDown;
   
   
   // create "state" decoration for 2-states button

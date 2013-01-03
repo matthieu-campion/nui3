@@ -11,7 +11,7 @@
 
 #include "nuiStopWatch.h"
 
-#ifndef _UIKIT_
+#if (!defined _UIKIT_)
 nuiNativeResourceVolume::nuiNativeResourceVolume()
 : nglVolume(_T("rsrc"), nglPath(), _T("Native resources"), nglPathVolume::ReadOnly, nglPathVolume::eTypeUnknown)
 {
@@ -35,7 +35,7 @@ nuiNativeResourceVolume::nuiNativeResourceVolume()
 			if (!nodename.IsEmpty())
       {
         mItems[tmp].insert(nodename);
-        //NGL_OUT(_T("mItems[%ls] <- '%ls'\n"), tmp.GetChars(), nodename.GetChars());
+        //NGL_OUT(_T("mItems[%s] <- '%s'\n"), tmp.GetChars(), nodename.GetChars());
       }
 		}
   }
@@ -147,9 +147,9 @@ bool nuiNativeResourceVolume::GetChildren(const nglPath& rPath, std::list<nglPat
 {
   nglString p(rPath.GetVolumeLessPath());
   p.TrimLeft(_T('/'));
-  //wprintf(_T("trimed path '%ls'\n"), p.GetChars());
+  //wprintf(_T("trimed path '%s'\n"), p.GetChars());
   nglPath path(p);
-  //wprintf(_T("GetChildren(\"%ls\") [%ls] [%ls]\n"), rPath.GetChars(), path.GetChars(), p.GetChars());
+  //wprintf(_T("GetChildren(\"%s\") [%s] [%s]\n"), rPath.GetChars(), path.GetChars(), p.GetChars());
   
   std::map<nglPath, std::set<nglString> >::const_iterator fit = mItems.find(path);
   

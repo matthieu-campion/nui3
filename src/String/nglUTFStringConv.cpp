@@ -48,37 +48,14 @@ nglUTFStringConv::~nglUTFStringConv()
 
 UTFConverter nglUTFStringConv::GetUTFConverter(nglTextEncoding From, nglTextEncoding To)
 {
-#ifdef _WIN32_
   if (From == eEncodingNative)
     From = eUTF8;
   if (From == eEncodingInternal)
-    From = eUCS2;
-  if (To == eEncodingNative)
-    To = eUTF8;
-  if (To == eEncodingInternal)
-    To = eUCS2;
-#endif
-#if (defined _CARBON_) || (defined _UIKIT_) || (defined _COCOA_) 
-  if (From == eEncodingNative)
     From = eUTF8;
-  if (From == eEncodingInternal)
-    From = eUCS4;
   if (To == eEncodingNative)
     To = eUTF8;
   if (To == eEncodingInternal)
-    To = eUCS4;
-#endif
-//TODO check these are good values (at least, no more segfault) 
-#ifdef _LINUX_
-  if (From == eEncodingNative)
-    From = eUTF8;
-  if (From == eEncodingInternal)
-    From = eUCS4;
-  if (To == eEncodingNative)
     To = eUTF8;
-  if (To == eEncodingInternal)
-    To = eUCS4;
-#endif
 
   if (From == To)
     return (UTFConverter)NoConversion;
@@ -86,58 +63,66 @@ UTFConverter nglUTFStringConv::GetUTFConverter(nglTextEncoding From, nglTextEnco
   switch (From)
   {
     case eUTF8:
-    {
-      switch (To)
       {
-        case eUCS2:
+        switch (To)
         {
-          return (UTFConverter)ConvertUTF8toUTF16;
+          case eUCS2:
+            {
+              return (UTFConverter)ConvertUTF8toUTF16;
+            }
+            break;
+          case eUCS4:
+            {
+              return (UTFConverter)ConvertUTF8toUTF32;
+            }
+            break;
+          default:
+            break;
         }
-          break;
-        case eUCS4:
-        {
-          return (UTFConverter)ConvertUTF8toUTF32;
-        }
-          break;
       }
-    }
       break;
     case eUCS2:
-    {
-      switch (To)
       {
-        case eUTF8:
+        switch (To)
         {
-          return (UTFConverter)ConvertUTF16toUTF8;
+          case eUTF8:
+            {
+              return (UTFConverter)ConvertUTF16toUTF8;
+            }
+            break;
+          case eUCS4:
+            {
+              return (UTFConverter)ConvertUTF16toUTF32;
+            }
+            break;
+          default:
+            break;
         }
-          break;
-        case eUCS4:
-        {
-          return (UTFConverter)ConvertUTF16toUTF32;
-        }
-          break;
       }
-    }
       break;
     case eUCS4:
-    {
-      switch (To)
       {
-        case eUTF8:
+        switch (To)
         {
-          return (UTFConverter)ConvertUTF32toUTF8;
+          case eUTF8:
+            {
+              return (UTFConverter)ConvertUTF32toUTF8;
+            }
+            break;
+          case eUCS2:
+            {
+              return (UTFConverter)ConvertUTF32toUTF16;
+            }
+            break;
+          default:
+            break;
         }
-          break;
-        case eUCS2:
-        {
-          return (UTFConverter)ConvertUTF32toUTF16;
-        }
-          break;
       }
-    }
+      break;
+    default:
       break;
   }
-  
+
   return NULL;
 }
 
@@ -150,6 +135,10 @@ int32 nglUTFStringConv::Process(const char*& pSource, int32& rToRead, char*& pTa
   rToRead = pSourceEnd - pSource;
   rToWrite = pTargetEnd - pTarget;
   
+  if (rToWrite < 0)
+  {
+    NGL_OUT("rToWrite < 0 !!!");
+  }
   NGL_ASSERT(rToWrite >= 0);
   
   switch (res)

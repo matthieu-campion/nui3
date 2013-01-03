@@ -123,7 +123,8 @@ protected:
   uint32 mViewPort[4];
 };
 
-void nuiCheckForGLErrors();
+bool nuiCheckForGLErrorsReal();
+#define nuiCheckForGLErrors() { NGL_ASSERT(nuiCheckForGLErrorsReal()); }
 
 #endif //   #ifndef __NUI_NO_GL__
 

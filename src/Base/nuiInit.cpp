@@ -1,29 +1,42 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
 #include "nui.h"
 #include "nuiInit.h"
+
+#ifndef _MINUI3_
 #include "nuiTexture.h"
 #include "nuiFontManager.h"
 #include "nglThreadChecker.h"
 #include "nuiDecoration.h"
 
-#if (defined _UIKIT_)
-#include "../Font/nuiPhoneFontDB.h"
-#include "nglIMemory.h"
+#define NUI_FONTDB_PATH _T("nuiFonts.db5")
 #endif
 
-#define NUI_FONTDB_PATH _T("nuiFonts.db4")
+#if (defined _UIKIT_)
+# import <Foundation/NSAutoreleasePool.h>
+#endif
+
+
 
 static uint32 gNUIReferences = 0;
 
+bool nuiInitMinimal(void* OSHandle = NULL, nuiKernel* pKernel)
+{
+  bool res = nuiInit(OSHandle, pKernel);
+  return res;
+}
+
+#if defined(_UIKIT_)
+static NSAutoreleasePool* nui_autoreleasepool = nil;
+#endif
+
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 {
-  //printf("nuiInit(%d)\n", gNUIReferences);
   if (gNUIReferences == 0)
   {
 #ifdef WIN32
@@ -32,65 +45,45 @@ bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
     // MAKEWORD(1,1) for Winsock 1.1, MAKEWORD(2,0) for Winsock 2.0:
     int res = WSAStartup(MAKEWORD(1,1), &wsaData);
 #endif
-    
+
     if (!App)
-    {      
+    {
 #ifdef _WIN32_
+      App = new nuiManualKernel(OSHandle, pKernel);
+#elif defined(_ANDROID_)
       App = new nuiManualKernel(OSHandle, pKernel);
 #else
       App = new nuiManualKernel(pKernel);
 #endif
       App->CallOnInit();
     }
-  }
-  
-  gNUIReferences++;
-  
-  // Init the texture manager:
-  nuiTexture::InitTextures();
-  
-  // Init the font manager:
-  
-#if (defined _UIKIT_) && (!TARGET_IPHONE_SIMULATOR)
-  nglIMemory Memory(gpnuiPhoneFontDB, gnuiPhoneFontDBSize);
-  nuiFontManager::LoadManager(Memory, nglTime());
-#else
-  
-  //#if (!defined TARGET_IPHONE_SIMULATOR) || (!TARGET_IPHONE_SIMULATOR)
-  nglPath fontdb(ePathUserAppSettings);
-  fontdb += nglString(NUI_FONTDB_PATH);
-  
-  if (fontdb.Exists() && fontdb.IsLeaf())
-  {
-    nglIFile db(fontdb);
-    nuiFontManager::LoadManager(db, fontdb.GetLastMod());
-  }  
-  else
-  {
-    nuiFontManager::GetManager();
-  }
-  //#endif
-#endif
-  
-  nuiDecoration::InitDecorationEngine();
-  
-  
-  return App != NULL && !App->GetError();
-}
-
-bool nuiUninit()
-{
-  //printf("nuiUnInit(%d)\n", gNUIReferences);
-  NGL_ASSERT(gNUIReferences != 0);
-  gNUIReferences--;
-  
-  if (!gNUIReferences)
-  {
-    // Destroy all the windows that are still alive:
-    nuiMainWindow::DestroyAllWindows();
     
+    // On iOS, init an AutoReleasePool:
+#if defined(_UIKIT_)
+    nui_autoreleasepool = [[NSAutoreleasePool alloc] init];
+#endif
+
+#ifndef _MINUI3_
+    // Init the texture manager:
+    nuiTexture::InitTextures();
+
+    // Init the font manager:
+
+
     nglPath fontdb(ePathUserAppSettings);
     fontdb += nglString(NUI_FONTDB_PATH);
+
+    nuiFontManager::InitManager(fontdb);
+    if (fontdb.Exists() && fontdb.IsLeaf())
+    {
+      nglIFile db(fontdb);
+      nuiFontManager::LoadManager(db, fontdb.GetLastMod());
+    }
+#if !defined(_UIKIT_)
+    else
+    {
+      nuiFontManager::GetManager();
+    }
     
     nuiFontManager& rManager(nuiFontManager::GetManager(false));
     if (rManager.GetFontCount())
@@ -99,18 +92,46 @@ bool nuiUninit()
       if (db.IsOpen())
         rManager.Save(db);
     }
+#endif
     
+    nuiDecoration::InitDecorationEngine();
+    nuiDefaultDecoration::Init();
+    nuiBuilder::Init();
+#endif
+  }
+
+  gNUIReferences++;
+
+
+  return App != NULL && !App->GetError();
+}
+
+bool nuiUninit()
+{
+  //printf("nuiUnInit(%d)\n", gNUIReferences);
+  NGL_ASSERT(gNUIReferences != 0);
+  gNUIReferences--;
+
+  if (!gNUIReferences)
+  {
+    // Destroy all the windows that are still alive:
+#ifndef _MINUI3_
+    nuiMainWindow::DestroyAllWindows();
+
     // From now on, all the contexts are dead so we have to release the remaining textures without trying to free their opengl resources
     // because those have been destroyed at the same time than the opengl context
     nuiDecoration::ExitDecorationEngine();
-    
+#endif
+
     nuiManualKernel* pApp = nuiManualKernel::Get();
     if (pApp)
     {
       App->CallOnExit(0);
+#ifndef _MINUI3_
       nuiDecoration::ExitDecorationEngine();
       nuiFont::ClearAll();
       nuiBuilder::Get().Uninit();
+#endif
       delete (pApp);
       App = NULL;
       //nuiTexture::ClearAll();
@@ -119,8 +140,17 @@ bool nuiUninit()
 #endif
       return true;
     }
+#ifndef _MINUI3_
     nuiFont::ClearAll();
     nuiTexture::ClearAll();
+    
+#if defined(_UIKIT_)
+    [nui_autoreleasepool release];
+    nui_autoreleasepool = nil;
+#endif
+    
+#endif//_MINUI3_
+
   }
 #ifdef WIN32
   WSACleanup();

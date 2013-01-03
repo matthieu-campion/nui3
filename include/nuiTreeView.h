@@ -126,10 +126,7 @@ class NUI_API nuiTreeView : public nuiSimpleContainer
 {
 public:
   nuiTreeView(nuiTreeNode* pTree = NULL, bool displayRoot=true);
-  bool Load(const nuiXMLNode* pNode);
   virtual ~nuiTreeView();
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   virtual bool Draw(nuiDrawContext* pContext);
 

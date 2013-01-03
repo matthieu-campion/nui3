@@ -20,7 +20,7 @@ class nuiClampedValueAttributeEditor : public nuiAttributeEditor
 {
 public:
   
-  nuiClampedValueAttributeEditor(const nuiAttrib<T>& rAttribute, const nuiRange& rRange, const nglString& rName = nglString::Null, uint32 flag = 1)
+  nuiClampedValueAttributeEditor(const nuiAttrib<T>& rAttribute, const nuiRange& rRange, const nglString& rName = nglString::Null)
 	: nuiAttributeEditor(),
   mAttribute(rAttribute),
   mEventSink(this),
@@ -28,7 +28,7 @@ public:
   mIndexed(false),
   mIndex(0)
   {
-    if (rName != nglString::Null)
+    if (!rName.IsNull())
       mName = rName;
     else
       mName = mAttribute.GetName();
@@ -43,12 +43,12 @@ public:
     mpBox->SetExpand(nuiExpandShrinkAndGrow);
     AddChild(mpBox);
     
-    Init(flag);
+    Init();
     mSink.Connect(mAttribute.GetChangedSignal(), nuiMakeDelegate(this, &nuiClampedValueAttributeEditor::OnAttributeChanged));
   }
   
   
-  nuiClampedValueAttributeEditor(const nglString& rName, const nuiAttrib<T>& rAttribute, uint32 index, const nuiRange& rRange, uint32 flag = 1)
+  nuiClampedValueAttributeEditor(const nglString& rName, const nuiAttrib<T>& rAttribute, uint32 index, const nuiRange& rRange)
 	: nuiAttributeEditor(),
   mAttribute(rAttribute),
   mName(rName),
@@ -67,7 +67,7 @@ public:
     mpBox->SetExpand(nuiExpandShrinkAndGrow);
     AddChild(mpBox);
     
-    Init(flag);
+    Init();
     mSink.Connect(mAttribute.GetChangedSignal0(), nuiMakeDelegate(this, &nuiClampedValueAttributeEditor::OnIndexedAttributeChanged));
   }
   
@@ -100,9 +100,9 @@ protected:
   
   
   
-  void Init(uint32 flag)
+  void Init()
   {
-    float v = 0;
+    T v = 0;
     if (mIndexed)
       v = mAttribute.Get(mIndex);
     else
@@ -110,11 +110,13 @@ protected:
     
     mRange.SetValue(v);
     nuiLabel* pLabel = new nuiLabel(mName);
+    pLabel->SetObjectName("nuiClampedValueAttributeEditor::Name");
     pLabel->SetPosition(nuiCenter);
     pLabel->SetBorder(0,0,0,4);
     mpBox->SetCell(2, pLabel);
     
     mpKnob = new nuiKnob(mRange);
+    mpKnob->SetObjectName("nuiClampedValueAttributeEditor::Knob");
     nuiImageSequence* pSequence = NULL;
     
     mpKnob->SetImageSequence(pSequence);
@@ -129,6 +131,7 @@ protected:
       mAttribute.Format(str);
     
     mpLabel = new nuiLabel(str);
+    mpLabel->SetObjectName("nuiClampedValueAttributeEditor::Value");
     mpLabel->SetPosition(nuiCenter);
     mpLabel->SetBorder(0,0,2,0);
     mpBox->SetCell(1, mpLabel);
@@ -152,13 +155,13 @@ protected:
     
     if (mIndexed)
     {
-      mAttribute.Set(mIndex, (float)mpKnob->GetRange().GetValue());
+      mAttribute.Set(mIndex, (T)mpKnob->GetRange().GetValue());
       mAttribute.Format(mIndex, str);
       setValue = mAttribute.Get(mIndex);
     }
     else
     {
-      mAttribute.Set((float)mpKnob->GetRange().GetValue());
+      mAttribute.Set((T)mpKnob->GetRange().GetValue());
       mAttribute.Format(str);
       setValue = mAttribute.Get();
     }

@@ -76,7 +76,7 @@ void nglApplication::Quit(int Code)
  * Application entry point
  */
 
-int nglApplication::Main (int ArgCnt, char** pArg)
+int nglApplication::Main (int ArgCnt, const char** pArg)
 {
   if (!Init(ArgCnt, pArg))
     return 1;
@@ -89,7 +89,7 @@ int nglApplication::Main (int ArgCnt, char** pArg)
   return mExitCode;
 }
 
-bool nglApplication::Init (int ArgCnt, char** pArg)
+bool nglApplication::Init (int ArgCnt, const char** pArg)
 {
   int i;
 

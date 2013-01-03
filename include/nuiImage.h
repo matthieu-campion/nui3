@@ -37,10 +37,6 @@ public:
   const nuiRect& GetTextureRect() const;
   void ResetTextureRect();
   
-  virtual bool Load (const nuiXMLNode* pNode); ///< Create an image from an xml description.
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
-
   virtual ~nuiImage();
 
   virtual void ForceReload(); ///< This method deletes the texture associated with the nuiImage thus forcing its recreation at the next rendertime.

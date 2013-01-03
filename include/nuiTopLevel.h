@@ -14,6 +14,8 @@
 #include "nuiDrawContext.h"
 #include "nuiNotification.h"
 
+#define DISABLE_TOOLTIP
+
 class nuiLabel;
 class nuiCSS;
 class nuiToolTip;
@@ -24,7 +26,6 @@ public:
   /** @name Life */
   //@{
   nuiTopLevel(const nglPath& rPath); ///< Create an nuiTopLevel.
-  bool Load(const nuiXMLNode* pNode); ///< Create an nuiObject from an XML description.
   virtual ~nuiTopLevel(); 
   //@}
 
@@ -82,11 +83,16 @@ public:
 
   /** @name Generic tooltips */
   //@{
+#ifndef DISABLE_TOOLTIP
   virtual bool ActivateToolTip(nuiWidgetPtr pWidget, bool Now = false); ///< nuiMainWindow override the default tool-tip mechanism to actually display them.
   virtual bool ReleaseToolTip(nuiWidgetPtr pWidget); ///< Remove the current tool-tip for the given widget. 
   virtual void SetToolTipOn(bool AutoStop);
   virtual void ToolTipOn(const nuiEvent& rEvent);
   virtual void ToolTipOff(const nuiEvent& rEvent);
+#else
+  virtual bool ActivateToolTip(nuiWidgetPtr pWidget, bool Now = false) {} ///< nuiMainWindow override the default tool-tip mechanism to actually display them.
+  virtual bool ReleaseToolTip(nuiWidgetPtr pWidget) {} ///< Remove the current tool-tip for the given widget. 
+#endif
   //@}
 
   virtual bool IsKeyDown (nglKeyCode Key) const;
@@ -112,7 +118,9 @@ public:
 
   void EnablePartialRedraw(bool Set = true) { mPartialRedraw = Set; }
   bool IsPartialRedrawEnabled() { return mPartialRedraw; }
+#ifndef DISABLE_TOOLTIP
   void DisplayToolTips(nuiDrawContext* pContext);
+#endif
   void EnableClearBackground(bool set = true) { mClearBackground = set; Invalidate(); }
   bool IsClearBackgroundEnabled() const { return mClearBackground; }
 
@@ -140,6 +148,7 @@ public:
   void ApplyWidgetCSS(nuiWidget* pWidget, bool Recursive, uint32 MatchersTag);
   void SetCSS(nuiCSS* pCSS);
   nuiCSS* GetCSS() const;
+  bool LoadCSS(const nglPath& rPath);
   
   virtual void EnterModalState();
   virtual void ExitModalState();
@@ -159,12 +168,13 @@ protected:
   void Exit();
   void SetDrawContext(nuiDrawContext* pDrawContext);
   virtual void BroadcastInvalidateRect(nuiWidgetPtr pSender, const nuiRect& rRect);
-  void OnMessageQueueTick(const nuiEvent& rEvent);
+//  void OnMessageQueueTick(const nuiEvent& rEvent);
   void UpdateHoverList(nglMouseInfo& rInfo);
   
   nuiWidgetPtr mpFocus;
   nuiWidgetPtr mpUnderMouse;
 
+#ifndef DISABLE_TOOLTIP
   // ToolTips:
   nuiTimer mToolTipTimerOn;
   nuiTimer mToolTipTimerOff;
@@ -173,7 +183,10 @@ protected:
   bool mDisplayToolTip;
   nuiWidgetPtr mpToolTipSource;
   nuiToolTip* mpToolTipLabel;
+#endif
   nuiLabel* mpInfoLabel;
+
+  nuiWidget* mpDragFeedback;
 
   typedef std::map<nglTouchId, nuiWidgetPtr> nuiGrabMap;
   nuiGrabMap mpGrab;
@@ -211,7 +224,10 @@ protected:
   nuiEventSink<nuiTopLevel> mTopLevelSink;
   bool mPartialRedraw;
   bool mIsDrawing;
+#ifndef DISABLE_TOOLTIP
   void SetToolTipRect();
+#endif
+  void SetDragFeedbackRect(int X, int Y);
 
   nglMouseInfo::Flags mLastClickedButton;
 

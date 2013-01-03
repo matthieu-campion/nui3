@@ -10,7 +10,7 @@
 using namespace std;
 
 // Defines & includes
-#if (defined _LINUX_) || (defined __APPLE__)
+#if (defined _LINUX_) || (defined __APPLE__) || (defined _MINUI3_)
 	#define		ngl_fstat(fd,buffer)		_fstat64( (fd), (buffer))
 #endif
 
@@ -31,7 +31,7 @@ using namespace std;
 /* These errors are shared by all platform-specific implementations
 */
 //FIXME this is not used
-#if 0 
+#if 0
 static const nglChar* gpFileErrorTable[] =
 {
 	/*  0 */ _T("No error"),
@@ -83,7 +83,7 @@ nglFile::nglFile (const nglPath& rPath, nglFileMode Mode, bool OpenNow)
 	mMode      = Mode;
 	mEndian    = eEndianNative;
 	mAutoFlush = false;
-#if (defined _LINUX_) || (defined __APPLE__)
+#if (defined _LINUX_) || (defined __APPLE__) || (defined _ANDROID_) || (defined _MINUI3_)
 	mFD        = -1;
 #endif
 #ifdef WINCE
@@ -98,17 +98,17 @@ nglFile::nglFile (const nglPath& rPath, nglFileMode Mode, bool OpenNow)
 
 nglFile::~nglFile()
 {
-  bool close = true;
-#if (defined _LINUX_) || (defined __APPLE__)
-	close = (mFD != -1);
+  bool closeit = true;
+#if (defined _LINUX_) || (defined __APPLE__) || (defined _ANDROID_) || (defined _MINUI3_)
+	closeit = (mFD != -1);
 #endif
 #ifdef WINCE
-  close = (mFD != INVALID_HANDLE_VALUE);
+  closeit = (mFD != INVALID_HANDLE_VALUE);
 #elif defined _WIN32_
-  close = (mFD != NULL);
+  closeit = (mFD != NULL);
 #endif
-  
-  if (close)
+
+  if (closeit)
     Close();
 }
 
@@ -417,7 +417,7 @@ nglFileSize nglFile::GetSize() const
 #ifdef WINCE
 	if(mFD == INVALID_HANDLE_VALUE)
 		return 0;
-	
+
 	DWORD	high = 0;
 	DWORD	low = GetFileSize(mFD, &high);
 	if(low==0xFFFFFFFF)		return 0;
@@ -543,21 +543,21 @@ bool nglFile::Open()
 	switch (mMode)
 	{
 		case eFileRead:
-			mFD = _wfsopen(filename.GetChars(), L"rb", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "rb", _SH_DENYNO);
 			break;
 
 		case eFileWrite:
-			mFD = _wfsopen(filename.GetChars(), L"wb", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "wb", _SH_DENYNO);
 			break;
 
 		case eFileModify:
-			mFD = _wfsopen(filename.GetChars(), L"rb+", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "rb+", _SH_DENYNO);
       if (!mFD)
-        mFD = _wfsopen(filename.GetChars(), L"wb", _SH_DENYNO);
+        mFD = _fsopen(filename.GetChars(), "wb", _SH_DENYNO);
       break;
 
 		case eFileAppend:
-			mFD = _wfsopen(filename.GetChars(), L"ab+", _SH_DENYNO);
+			mFD = _fsopen(filename.GetChars(), "ab+", _SH_DENYNO);
 			break;
 	}
 
@@ -774,7 +774,7 @@ int64 nglFile::Write (const void* pData, int64 WordCount, uint WordSize)
 #endif // _WIN32_
 
 
-#if ((defined __APPLE__)||(defined _LINUX_))
+#if ((defined __APPLE__)||(defined _LINUX_)) || (defined _ANDROID_) || (defined _MINUI3_)
 
 /* Implemented in file/File_shr.cpp */
 extern const nglChar* File_mode(nglFileMode mode);
@@ -788,7 +788,7 @@ nglFileSize nglFile::GetSize() const
 {
   struct stat info;
   int res = fstat (mFD, &info);
-  
+
   return (res == -1) ? 0 : info.st_size;
 }
 
@@ -801,10 +801,10 @@ bool nglFile::Open()
 {
   if (IsOpen())
     return false;
-  
+
   int flags;
 	const char* filename = mPath.GetPathName().Export();
-#if (defined _LINUX_) || (defined __APPLE__)
+#if (defined _LINUX_) || (defined __APPLE__) || (defined _MINUI3_)
 	nglPath resolvedPath = mPath;
 	bool resolved = resolvedPath.ResolveLink();
 	if (resolved)
@@ -813,10 +813,10 @@ bool nglFile::Open()
 		filename = resolvedPath.GetPathName().Export();
 	}
 #endif
-  
+
     switch (mMode)
     {
-      case eFileRead  : 
+      case eFileRead  :
         flags = O_RDONLY;
         break;
       case eFileWrite :
@@ -836,7 +836,7 @@ bool nglFile::Open()
   flags += _O_BINARY;
 #endif
   mFD = open(filename, flags, 00644);
-  
+
   free(const_cast<char *>(filename));
   if (mFD == -1)
   {
@@ -849,7 +849,7 @@ void nglFile::Close()
 {
   if (!IsOpen())
     return;
-  
+
   if (mAutoFlush)
     Flush();
   close(mFD);
@@ -864,7 +864,7 @@ bool nglFile::IsOpen() const
 bool nglFile::IsEOF() const
 {
   char c;
-  
+
   if (!IsOpen()) return true;
   if (read(mFD, &c, 1) == 1)
   {
@@ -884,7 +884,7 @@ nglFileOffset nglFile::GetPos() const
 nglFileOffset nglFile::SetPos(nglFileOffset Offset, nglFileWhence Whence)
 {
   nglFileOffset pos = 0;
-  
+
   if (!IsOpen()) return 0;
   switch (Whence)
   {
@@ -922,14 +922,14 @@ void nglFile::Flush()
 int64 nglFile::Read (void* pData, int64 WordCount, uint WordSize)
 {
   int64 done, rest;
-  
+
   if (!IsOpen() || (pData == NULL) || (WordCount == 0)) return 0;
   done = read (mFD, pData, WordCount * WordSize);
-  
+
   if (WordSize == 1) return done;
   rest = done % WordSize;
   if (rest != 0) SetPos (rest, eFileRewind);
-  
+
   // Here we suppose only LE & BE byte order (we forget PDP)
   done /= WordSize;
   if ((done > 0) && (mEndian != eEndianNative))
@@ -945,9 +945,9 @@ int64 nglFile::Read (void* pData, int64 WordCount, uint WordSize)
 int64 nglFile::Write (const void* pData, int64 WordCount, uint WordSize)
 {
   int64 done, rest;
-  
+
   if (!IsOpen() || (mMode == eFileRead) || (pData == NULL) || (WordCount == 0)) return 0;
-  
+
   // Here we suppose only LE & BE byte order (we forget PDP)
   if ((WordSize > 1) && (mEndian != eEndianNative))
   {
@@ -969,7 +969,7 @@ int64 nglFile::Write (const void* pData, int64 WordCount, uint WordSize)
     done = write (mFD, pData, WordCount * WordSize);
   }
   if (mAutoFlush) Flush();
-  
+
   if (WordSize == 1) return done;
   rest = done % WordSize;
   if (rest != 0) SetPos (rest, eFileRewind);

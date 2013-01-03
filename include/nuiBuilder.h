@@ -77,6 +77,7 @@ public:
     return mBuilder;
   }
 
+  static void Init();
   void Uninit();
 protected:
   nuiBuilderMap mBuilderMap;
@@ -86,8 +87,6 @@ protected:
 private:
   nuiBuilder();
   ~nuiBuilder();
-  
-  void Init();
 };
 
 template <class T>
@@ -99,7 +98,6 @@ nuiWidgetPtr nuiWidgetCreateFunction()
 #define NUI_ADD_WIDGET_CREATOR(X,Y) { nuiBuilder::Get().SetHandler(_T(#X),_T(Y),&nuiWidgetCreateFunction<X>); }
 
 nuiWidget* nuiCreateWidget(const nglString& rClassName);
-nuiWidget* nuiCreateWidget(const nuiXMLNode* pNode);
 
 ///////////////////////////////////////////////////////////////////
 class nuiWidgetCreatorOperation;

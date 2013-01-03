@@ -193,37 +193,6 @@ void nuiGradientDecoration::InitAttributes()
 	AddAttribute(_T("Offset4"), Offset4);
 }
 
-
-
-bool nuiGradientDecoration::Load(const nuiXMLNode* pNode)
-{
-  if (pNode->GetAttribute(_T("GradientType")).GetCInt())
-    mGradientType = nuiGradient4Colors;
-  else
-    mGradientType = nuiGradient2Colors;
-  mColor1.SetValue(nuiGetString(pNode, _T("Color1"), _T("white")));
-  mColor2.SetValue(nuiGetString(pNode, _T("Color2"), _T("Black")));
-  mColor3.SetValue(nuiGetString(pNode, _T("Color3"), _T("White")));
-  mColor4.SetValue(nuiGetString(pNode, _T("Color4"), _T("Black")));
-  mClientRect.SetValue(nuiGetString(pNode, _T("ClientRect")));
-  return true;
-}
-
-nuiXMLNode* nuiGradientDecoration::Serialize(nuiXMLNode* pNode)
-{
-  pNode->SetName(_T("nuiGradientDecoration"));
-  pNode->SetAttribute(_T("GradientType"), (int)mGradientType);
-  pNode->SetAttribute(_T("Color1"), mColor1.GetValue());
-  pNode->SetAttribute(_T("Color2"), mColor2.GetValue());
-  pNode->SetAttribute(_T("Color3"), mColor3.GetValue());
-  pNode->SetAttribute(_T("Color4"), mColor4.GetValue());
-  
-  pNode->SetAttribute(_T("ClientRect"), mClientRect.GetValue());
-
-  return pNode;
-}
-
-
 void nuiGradientDecoration::InitOffsets()
 {
   if (mGradientType == nuiGradient4Colors)

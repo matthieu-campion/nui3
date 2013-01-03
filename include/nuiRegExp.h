@@ -30,10 +30,13 @@ public:
   nglString GetErrorString() const;
   bool CompiledOK() const;
 
+  const nglString& GetExpression() const; ///< Return the text of the regular expression code
+  
 #if defined( _RE_DEBUG )
   void Dump();
 #endif
 private:
+  nglString mExpression;
   const nglChar* mpString; /* used to return substring offsets only */
   nglString mString; /* used to return substring offsets only */
   mutable nglString m_szError;

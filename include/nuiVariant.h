@@ -1,7 +1,7 @@
 /*
  NUI3 - C++ cross-platform GUI framework for OpenGL based applications
  Copyright (C) 2002-2003 Sebastien Metrot & Vincent Caron
- 
+
  licence: see nui3/LICENCE.TXT
  */
 
@@ -13,12 +13,11 @@
 #include "nuiBorder.h"
 #include "nuiObject.h"
 #include "nuiRange.h"
+#ifndef _MINUI3_
 #include "nuiShape.h"
 #include "nuiDecorationDefines.h"
 #include "nuiMouseCursor.h"
 #include "nuiRenderState.h"
-#include "nuiEvent.h"
-
 class nuiPoint;
 class nuiRange;
 class nuiWidget;
@@ -27,8 +26,17 @@ class nuiSimpleContainer;
 class nuiTopLevel;
 class nuiMainWindow;
 class nuiLabel;
+#endif
 
-#ifdef __clang__
+#include "nuiEvent.h"
+
+#define GCC_VERSION (__GNUC__ * 10000 \
+                               + __GNUC_MINOR__ * 100 \
+                               + __GNUC_PATCHLEVEL__)
+          /* Test for GCC > 3.2.0 */
+          //#if GCC_VERSION > 30200
+
+#if defined __clang__ || GCC_VERSION > 40600
 template <> uint64 nuiAttributeTypeTrait<bool>::mTypeId;
 
 template <> uint64 nuiAttributeTypeTrait<int8>::mTypeId;
@@ -45,18 +53,20 @@ template <> uint64 nuiAttributeTypeTrait<float>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<double>::mTypeId;
 
 template <> uint64 nuiAttributeTypeTrait<nglString>::mTypeId;
-template <> uint64 nuiAttributeTypeTrait<nuiPoint>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiRect>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiBorder>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiColor>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiRange>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiVector>::mTypeId;
-template <> uint64 nuiAttributeTypeTrait<nglMatrixf>::mTypeId;
-template <> uint64 nuiAttributeTypeTrait<nuiBlendFunc>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiExpandMode>::mTypeId;
 
 template <> uint64 nuiAttributeTypeTrait<void>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<void*>::mTypeId;
+
+#ifndef _MINUI3_
+template <> uint64 nuiAttributeTypeTrait<nuiPoint>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nuiBlendFunc>::mTypeId;
+template <> uint64 nuiAttributeTypeTrait<nglMatrixf>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiObject*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiWidget*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiContainer*>::mTypeId;
@@ -64,6 +74,8 @@ template <> uint64 nuiAttributeTypeTrait<nuiSimpleContainer*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiTopLevel*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiMainWindow*>::mTypeId;
 template <> uint64 nuiAttributeTypeTrait<nuiLabel*>::mTypeId;
+#endif
+
 #endif
 
 
@@ -79,7 +91,7 @@ public:
     mIsArray = false;
     mType = nuiAttributeTypeTrait<void>::mTypeId;
   }
-  
+
   // POD CTOR
   template <typename Type>
   nuiVariant(Type data)
@@ -105,7 +117,7 @@ public:
     for (int32 i = 0; i < data.size(); i++)
       mData.mpArray->push_back(data[i]);
   }
-  
+
 #define CTOR(TYPE)\
   nuiVariant(TYPE data)\
   {\
@@ -131,14 +143,14 @@ public:
   CTOR(int8);
   CTOR(int32);
   CTOR(int64);
-  
+
   CTOR(uint8);
   CTOR(uint32);
   CTOR(uint64);
-  
+
   CTOR(float);
   CTOR(double);
-  
+
 #define EASYCTOR(TYPE) \
   nuiVariant(TYPE data) \
   {\
@@ -150,6 +162,7 @@ public:
     mData.mInt = (uint64)data;\
   }
 
+#ifndef _MINUI3_
   EASYCTOR(nuiPosition);
   EASYCTOR(nuiOrientation);
   EASYCTOR(nuiBlendFunc);
@@ -159,11 +172,13 @@ public:
   EASYCTOR(nuiShapeMode);
   EASYCTOR(nuiDecorationLayer);
   EASYCTOR(nuiExpandMode);
+#endif
+
 #undef EASYCTOR
-  
+
 #undef CTOR
-  
-  
+
+
   nuiVariant(bool set)
   {
     mIsPointer = false;
@@ -171,10 +186,10 @@ public:
     mType = nuiAttributeTypeTrait<bool>::mTypeId;
     mIsPOD = true;
     mIsArray = false;
-    
+
     mData.mBool = set;
   }
-  
+
   // Classes CTORs
   nuiVariant(const nglString& rData)
   {
@@ -185,7 +200,7 @@ public:
     mType = nuiAttributeTypeTrait<nglString>::mTypeId;
     mString = rData;
   }
-  
+
   nuiVariant(const nglPath& rData)
   {
     mIsPointer = false;
@@ -195,7 +210,8 @@ public:
     mType = nuiAttributeTypeTrait<nglPath>::mTypeId;
     mString = rData.GetPathName();
   }
-  
+
+#ifndef _MINUI3_
   nuiVariant(const nuiColor& rData)
   {
     mIsPointer = false;
@@ -205,7 +221,7 @@ public:
     mType = nuiAttributeTypeTrait<nuiColor>::mTypeId;
     mColor = rData;
   }
-  
+
   nuiVariant(const nuiRect& rData)
   {
     mIsPointer = false;
@@ -215,7 +231,7 @@ public:
     mType = nuiAttributeTypeTrait<nuiRect>::mTypeId;
     mRect = rData;
   }
-  
+
   nuiVariant(const nuiMatrix& rData)
   {
     mIsPointer = false;
@@ -225,7 +241,7 @@ public:
     mType = nuiAttributeTypeTrait<nuiRect>::mTypeId;
     NGL_ASSERT(0);
   }
-  
+
   nuiVariant(const nuiBorder& data)
   {
     mIsPointer = false;
@@ -235,7 +251,7 @@ public:
     mIsArray = false;
     NGL_ASSERT(0);
   }
-  
+
   nuiVariant(const nuiPoint& data)
   {
     mIsPointer = false;
@@ -245,7 +261,7 @@ public:
     mIsArray = false;
     NGL_ASSERT(0);
   }
-  
+
   nuiVariant(const nuiRange& data)
   {
     mIsPointer = false;
@@ -255,7 +271,7 @@ public:
     mIsArray = false;
     NGL_ASSERT(0);
   }
-  
+
   nuiVariant(const nuiVector& data)
   {
     mIsPointer = false;
@@ -265,18 +281,20 @@ public:
     mIsArray = false;
     NGL_ASSERT(0);
   }
-  
+#endif
+
   // Copy CTOR
   nuiVariant(const nuiVariant& rObject)
   {
     mData = rObject.mData;
-    
+
     mString = rObject.mString;
+#ifndef _MINUI3_
     mColor = rObject.mColor;
     mRect = rObject.mRect;
-    
+#endif
     mType = rObject.mType;
-    
+
     mIsPointer = rObject.mIsPointer;
     mIsObject = rObject.mIsObject;
     mIsPOD = rObject.mIsPOD;
@@ -299,12 +317,12 @@ public:
     mData.mpPointer = (void*)pData;
     mIsPOD = false;
     mIsArray = false;
-    
+
     if (mIsObject)
       mData.mpObject->Acquire();
   }
-  
-  
+
+
   // DTOR:
   ~nuiVariant()
   {
@@ -313,27 +331,29 @@ public:
     if (mIsArray)
       delete mData.mpArray;
   }
-  
+
   nuiVariant& operator=(const nuiVariant& rObject)
   {
     if (mIsObject)
       mData.mpObject->Release();
     if (mIsArray)
       delete mData.mpArray;
-    
+
     mData = rObject.mData;
-    
+
     mString = rObject.mString;
+#ifndef _MINUI3_
     mColor = rObject.mColor;
     mRect = rObject.mRect;
-    
+#endif
+
     mType = rObject.mType;
-    
+
     mIsPointer = rObject.mIsPointer;
     mIsObject = rObject.mIsObject;
     mIsPOD = rObject.mIsPOD;
     mIsArray = rObject.mIsArray;
-    
+
     if (mIsObject)
       mData.mpObject->Acquire();
 
@@ -341,12 +361,12 @@ public:
       mData.mpArray = new std::vector<nuiVariant>(*rObject.mData.mpArray);
     return *this;
   }
-  
+
   nuiAttributeType GetType() const
   {
     return mType;
   }
-  
+
   void Clear()
   {
     if (mIsObject)
@@ -360,33 +380,33 @@ public:
     mIsArray = false;
     mType = nuiAttributeTypeTrait<void>::mTypeId;
   }
-  
+
   bool IsVoid() const
   {
     return mType == nuiAttributeTypeTrait<void>::mTypeId;
   }
-  
+
   bool IsPointer() const
   {
     return mIsPointer;
   }
-  
+
   bool IsObject() const
   {
     return mIsObject;
   }
-  
+
   bool IsPOD() const
   {
     return mIsPOD;
   }
-  
+
   bool IsArray() const
   {
     return mIsArray;
   }
-  
-  
+
+
   //////////////////////////////////////
   // Casting:
   template<typename Type>
@@ -394,22 +414,22 @@ public:
   {
     return Type();
   }
-  
+
   template<typename PointerType>
   operator PointerType*() const
   {
     if (nuiAttributeTypeTrait<PointerType*>::mTypeId == mType)
       return reinterpret_cast<PointerType*>(mData.mpPointer);
-    
+
     if (!mIsPointer)
       return NULL;
-    
+
     //if (mIsObject && is_base_of<nuiObject, PointerType>::value)
       return dynamic_cast<PointerType*>(reinterpret_cast<nuiObject*>(mData.mpPointer));
-    
+
     return NULL;
   }
-  
+
   template<typename Type>
   operator std::vector<Type>() const
   {
@@ -429,31 +449,33 @@ public:
 
     return v;
   }
-  
-  
+
+
   // nglString Cast:
   operator nglString() const
   {
     if (mType == nuiAttributeTypeTrait<nglString>::mTypeId)
       return mString;
-    
+
     if (mIsPointer)
       return nglString::Null;
-    
+
+#ifndef _MINUI3_
     if (mType == nuiAttributeTypeTrait<nuiRect>::mTypeId)
       return mRect.GetValue();
-    
+
     if (mType == nuiAttributeTypeTrait<nuiColor>::mTypeId)
       return mColor.GetValue();
-    
+#endif
+
     if (mType == nuiAttributeTypeTrait<nglPath>::mTypeId)
       return mString;
-    
+
     nglString str;
     if (mType == nuiAttributeTypeTrait<float>::mTypeId
         || mType == nuiAttributeTypeTrait<double>::mTypeId)
       str.Add(mData.mFloat);
-    else if (mType == nuiAttributeTypeTrait<int8>::mTypeId 
+    else if (mType == nuiAttributeTypeTrait<int8>::mTypeId
              || mType == nuiAttributeTypeTrait<int16>::mTypeId
              || mType == nuiAttributeTypeTrait<int32>::mTypeId
              || mType == nuiAttributeTypeTrait<int64>::mTypeId)
@@ -463,10 +485,10 @@ public:
              || mType == nuiAttributeTypeTrait<uint32>::mTypeId
              || mType == nuiAttributeTypeTrait<uint64>::mTypeId)
       str.Add(mData.mUInt);
-    
+
     return str;
   }
-  
+
   // nglPath Cast:
   operator nglPath() const
   {
@@ -475,7 +497,7 @@ public:
 
     return nglPath();
   }
-  
+
   // POD Cast:
 #define CAST(TYPE)\
 operator TYPE() const\
@@ -521,22 +543,23 @@ operator TYPE() const\
     NGL_ASSERT(0);\
     return static_cast<TYPE>(0);\
   }
-  
+
   CAST(int8);
   CAST(int16);
   CAST(int32);
   CAST(int64);
-  
+
   CAST(uint8);
   CAST(uint16);
   CAST(uint32);
   CAST(uint64);
-  
+
   CAST(float);
   CAST(double);
-  
+
 #undef CAST
-  
+
+#ifndef _MINUI3_
 #define EASYCAST(X) operator X() const { return (X)(uint32)*this; }
   EASYCAST(nuiPosition);
   EASYCAST(nuiOrientation);
@@ -548,7 +571,8 @@ operator TYPE() const\
   EASYCAST(nuiDecorationLayer);
   EASYCAST(nuiExpandMode);
 #undef EASYCAST
-  
+#endif
+
   operator bool() const
   {
     if (mType == nuiAttributeTypeTrait<bool>::mTypeId)
@@ -559,7 +583,7 @@ operator TYPE() const\
     {
       return (bool)(mData.mFloat != 0);
     }
-    else if (mType == nuiAttributeTypeTrait<int8>::mTypeId 
+    else if (mType == nuiAttributeTypeTrait<int8>::mTypeId
              || mType == nuiAttributeTypeTrait<int16>::mTypeId
              || mType == nuiAttributeTypeTrait<int32>::mTypeId
              || mType == nuiAttributeTypeTrait<int64>::mTypeId)
@@ -573,10 +597,11 @@ operator TYPE() const\
     {
       return (bool)(mData.mUInt != 0);
     }
-    
+
     return false;
   }
 
+#ifndef _MINUI3_
   operator nuiRect() const
   {
     if (mType == nuiAttributeTypeTrait<nuiRect>::mTypeId)
@@ -589,7 +614,7 @@ operator TYPE() const\
     }
     return nuiRect();
   }
-  
+
   operator nuiColor() const
   {
     if (mType == nuiAttributeTypeTrait<nuiColor>::mTypeId)
@@ -598,7 +623,7 @@ operator TYPE() const\
       return nuiColor(mString);
     return nuiColor();
   }
-  
+
   operator nuiMatrix() const
   {
     NGL_ASSERT(0);
@@ -606,7 +631,7 @@ operator TYPE() const\
       return nuiMatrix();
     return nuiMatrix();
   }
-  
+
   operator nuiBorder() const
   {
     NGL_ASSERT(0);
@@ -614,7 +639,7 @@ operator TYPE() const\
       return nuiBorder();
     return nuiBorder();
   }
-  
+
   operator nuiPoint() const
   {
     NGL_ASSERT(0);
@@ -622,7 +647,7 @@ operator TYPE() const\
       return nuiPoint();
     return nuiPoint();
   }
-  
+
   operator nuiRange() const
   {
     NGL_ASSERT(0);
@@ -638,26 +663,28 @@ operator TYPE() const\
       return nuiVector();
     return nuiVector();
   }
-  
-               
+#endif
+
 private:
   nuiAttributeType mType;
-  union 
+  union
   {
     int64 mInt;
     uint64 mUInt;
     double mFloat;
     bool mBool;
-    
+
     void* mpPointer;
     std::vector<nuiVariant>* mpArray;
-    nuiObject* mpObject;    
+    nuiObject* mpObject;
   } mData;
-  
+
   nglString mString;
+#ifndef _MINUI3_
   nuiRect mRect;
   nuiColor mColor;
-  
+#endif
+
   bool mIsPointer : 1;
   bool mIsObject : 1;
   bool mIsPOD : 1;

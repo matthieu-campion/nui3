@@ -420,71 +420,113 @@ static NSString* GetApplicationName(void)
 	
 }
 
-- (void) applicationDidBecomeActive:          (NSApplication*) pNSApplication
+- (void) applicationDidBecomeActive:          (NSNotification*) pNotification
 {
   NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationDidBecomeActive]\n")); )
   NGL_ASSERT(App);
-  
-	
-	NSEnumerator *e = [[pNSApplication windows] objectEnumerator];
-	
-	id win;
-	while ((win = [e nextObject]) )
+  NSApplication* pNSApplication = [pNotification object];
+  if (pNSApplication != nil)
   {
-		if ([win respondsToSelector: @selector(getNGLWindow)] )
-		{
-			nglWindow* pWindow = [win getNGLWindow];
-			
-			NGL_ASSERT(pWindow);
-			pWindow->CallOnActivation();			
-		}
-	}	
+    NSArray* array = [pNSApplication windows];
+    if (array != nil)
+    {
+      NSEnumerator *e = [array objectEnumerator];
+      
+      id win;
+      while (e != nil && (win = [e nextObject]) )
+      {
+        if ([win respondsToSelector: @selector(getNGLWindow)] )
+        {
+          nglWindow* pWindow = [win getNGLWindow];
+          
+          NGL_ASSERT(pWindow);
+          pWindow->CallOnActivation();			
+        }
+      }
+    }
+  }
 }
 
-- (void) applicationWillResignActive:         (NSApplication*) pNSApplication
+- (void) applicationDidEnterBackground:         (NSNotification*) pNotification
 {
-  NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationWillResignActive]\n")); )
+  NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationDidEnterBackground]\n")); )
   NGL_ASSERT(App);
 	
-	
-	NSEnumerator *e = [[pNSApplication windows] objectEnumerator];
-	
-	id win;
-	while ((win = [e nextObject]))
+  NSApplication* pNSApplication = [pNotification object];
+  if (pNSApplication != nil)
   {
-    if ([win respondsToSelector: @selector(getNGLWindow)])
-		{
-			nglWindow* pWindow = [win getNGLWindow];
-			
-			NGL_ASSERT(pWindow);
-			pWindow->CallOnDesactivation();			
-		}
-	}
-	
+    NSArray* array = [pNSApplication windows];
+    if (array != nil)
+    {
+      NSEnumerator *e = [array objectEnumerator];
+
+      id win;
+      while (e != nil && (win = [e nextObject]) )
+      {
+        if ([win respondsToSelector: @selector(getNGLWindow)] )
+        {
+          nglWindow* pWindow = [win getNGLWindow];
+
+          NGL_ASSERT(pWindow);
+          pWindow->CallOnDesactivation();
+        }
+      }
+    }
+  }
 }
 
-- (void) applicationSignificantTimeChange:    (NSApplication*) pNSApplication
+- (void) applicationSignificantTimeChange:    (NSNotification*) pNotification
 {
   //NGL_OUT(_T("[nglNSApplicationDelegate applicationSignificantTimeChange]\n"));
 }
 
-- (void) applicationWillTerminate:            (NSApplication*) pNSApplication
+- (void) applicationWillTerminate:            (NSNotification*) pNotification
 {
   //	NGL_DEBUG( NGL_OUT(_T("[nglNSApplicationDelegate applicationWillTerminate]\n")) );
   
 	objCCallOnWillExit();
   
-	NSEnumerator *e = [[pNSApplication windows] objectEnumerator];
-	
-	id win;
-	while ((win = [e nextObject]))
+  NSApplication* pNSApplication = [pNotification object];
+  if (pNSApplication != nil)
   {
-		[win release];
-	}	
-  
+    NSArray* array = [pNSApplication windows];
+    if (array != nil)
+    {
+      NSEnumerator *e = [[pNSApplication windows] objectEnumerator];
+      
+      id win;
+      while ((win = [e nextObject]))
+      {
+        [win release];
+      }	
+    }
+  }
   
   ///< advise the kernel we're quiting
   objCCallOnExit(0);
+}
+
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+  NSLog(@"[NSApplication openFile: %@", filename);
+  return YES;
+}
+
+/*
+- (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
+{
+  NSLog(@"[NSApplication openFiles: %@", filenames);
+}
+*/
+
+- (BOOL)application:(id)sender openFileWithoutUI:(NSString *)filename
+{
+  NSLog(@"[NSApplication openFileWithoutUI: %@", filename);
+}
+
+- (BOOL)application:(NSApplication *)theApplication openTempFile:(NSString *)filename
+{
+  NSLog(@"[NSApplication openTempFile: %@", filename);
 }
 
 @end
@@ -555,12 +597,11 @@ void nglApplication::Quit (int Code)
 
 int nglApplication::Main(int argc, const char** argv)
 {
-  //nuiInit(NULL, NULL);
   NSAutoreleasePool *pPool = [NSAutoreleasePool new];
 
   Init(argc, argv);
 
-  GetLog().SetLevel(_T("window"), 100);
+  //GetLog().SetLevel(_T("window"), 100);
   
   nglNSApplication *applicationObject = [nglNSApplication sharedApplication];
   
@@ -570,7 +611,6 @@ int nglApplication::Main(int argc, const char** argv)
   [applicationObject run];
   
   [pPool release];
-  //nuiUninit();
   return 0;
 }
 

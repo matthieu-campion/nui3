@@ -18,14 +18,6 @@ nuiEditLine::nuiEditLine(const nglString& rText)
   mMaxDisplayedChar = 0;
 }
 
-bool nuiEditLine::Load(const nuiXMLNode* pNode)
-{
-  nuiEditText::Load(pNode);
-  SetObjectClass(_T("nuiEditLine"));
-  mMaxDisplayedChar = 0;
-  return true;
-}
-
 void nuiEditLine::InitAttributes()
 {
   AddAttribute(new nuiAttribute<int>

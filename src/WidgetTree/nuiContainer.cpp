@@ -26,56 +26,10 @@ nuiContainer::nuiContainer()
   NUI_ADD_EVENT(ChildDeleted);
 }
 
-bool nuiContainer::Load(const nuiXMLNode* pNode)
-{
-  nuiWidget::Load(pNode);
-  return true;
-}
-
-nuiXMLNode* nuiContainer::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{   
-  nuiXMLNode* pNode = NULL;
-
-  if (mSerializeMode == eDontSaveNode)
-    return NULL;
-
-  pNode = SerializeAttributes(pParentNode, Recursive);
-
-  if (Recursive && pNode)
-  {
-    SerializeChildren(pNode);
-  }
-
-  return pNode;
-}
-
-nuiXMLNode* nuiContainer::SerializeAttributes(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  CheckValid();
-  return nuiWidget::Serialize(pParentNode, Recursive);
-}
-
-void nuiContainer::SerializeChildren(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  CheckValid();
-  ConstIteratorPtr pIt;
-  for (pIt = GetFirstChild(false); pIt && pIt->IsValid(); GetNextChild(pIt))
-  {
-    nuiWidgetPtr pItem = pIt->GetWidget();
-    if (pItem)
-      pItem->Serialize(pParentNode,true);
-  }
-  delete pIt;
-}
-
-
-
-
-
 nuiContainer::~nuiContainer()
 {
   CheckValid();
-  //NGL_OUT(_T("Deleting nuiContainer '%ls' (class='%ls')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
+  //NGL_OUT(_T("Deleting nuiContainer '%s' (class='%s')\n"), GetObjectName().GetChars(), GetObjectClass().GetChars());
 }
 
 // We need to do something special about SetObjectXXX in order to avoid pure virtual method called from the constructor.
@@ -93,6 +47,7 @@ void nuiContainer::SetObjectName(const nglString& rName)
 
 bool nuiContainer::Trash()
 {
+  nuiAutoRef;
   return nuiWidget::Trash();
 }
 
@@ -287,7 +242,7 @@ nuiWidgetPtr nuiContainer::GetChild(const nglString& rName, bool recurse )
 
     if (!pNode)
     {
-      //NUI_OUT("Tried to find %ls on %ls", rTok.GetChars(), pOld->GetParamCString(ParamIds::Name));
+      //NUI_OUT("Tried to find %s on %s", rTok.GetChars(), pOld->GetParamCString(ParamIds::Name));
       return NULL;
     }
   }
@@ -462,6 +417,7 @@ void nuiContainer::DrawChild(nuiDrawContext* pContext, nuiWidget* pChild)
 bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -513,6 +469,7 @@ bool nuiContainer::DispatchMouseClick(const nglMouseInfo& rInfo)
 bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 
@@ -564,6 +521,7 @@ bool nuiContainer::DispatchMouseUnclick(const nglMouseInfo& rInfo)
 nuiWidgetPtr nuiContainer::DispatchMouseMove(const nglMouseInfo& rInfo)
 {
   CheckValid();
+  nuiAutoRef;
   if (!mMouseEventEnabled || mTrashed)
     return false;
 

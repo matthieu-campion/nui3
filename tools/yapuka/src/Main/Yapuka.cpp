@@ -42,6 +42,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 nuiApp::nuiApp()
 {
+  if (win)
+    win->Release();
   win = NULL;
 }
 
@@ -54,7 +56,8 @@ void nuiApp::OnExit (int Code)
   GetPreferences().Save();
   
   if (win)
-    delete win;
+    win->Release();
+  win = NULL;
 
   nuiUninit();
 }
@@ -170,6 +173,7 @@ void nuiApp::OnInit()
     Quit (1);
     return;
   }
+  win->Acquire();
   win->DBG_SetMouseOverInfo(DebugInfo);
   win->DBG_SetMouseOverObject(DebugObject);
   win->SetState(nglWindow::eShow);

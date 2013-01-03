@@ -88,8 +88,8 @@ enum nuiUnicodeScript
   eScriptYi
 };
 
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch);
-nuiUnicodeScript nuiGetUnicodeScript(nglChar ch, nglChar& rLow, nglChar& rHigh);
+nuiUnicodeScript nuiGetUnicodeScript(nglUChar ch);
+nuiUnicodeScript nuiGetUnicodeScript(nglUChar ch, nglUChar& rLow, nglUChar& rHigh);
 nglString nuiGetUnicodeScriptName(nuiUnicodeScript script);
 
 
@@ -224,8 +224,8 @@ enum nuiUnicodeRange
   eRangeSupplementaryPrivateUseAreaB
 };
 
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch);
-nuiUnicodeRange nuiGetUnicodeRange(nglChar ch, nglChar& rLow, nglChar& rHigh);
+nuiUnicodeRange nuiGetUnicodeRange(nglUChar ch);
+nuiUnicodeRange nuiGetUnicodeRange(nglUChar ch, nglUChar& rLow, nglUChar& rHigh);
 nglString nuiGetUnicodeRangeName(nuiUnicodeRange range);
 
 enum nuiUnicodeDirection
@@ -234,22 +234,72 @@ enum nuiUnicodeDirection
   eRightToLeft
 };
 
-nuiUnicodeDirection nuiGetUnicodeDirection(nglChar ch);
+nuiUnicodeDirection nuiGetUnicodeDirection(nglUChar ch);
 
 
 
-bool nuiIsUnicodeBlank(nglChar ch);
+bool nuiIsUnicodeBlank(nglUChar ch);
+
+
+class nuiUCharIterator
+{
+public:
+  virtual nglUChar GetNextUChar(int32& position) const = 0;
+  virtual int32 GetLength() const = 0;
+};
+
+class nuiUCharIterator_String : public nuiUCharIterator
+{
+public:
+  nuiUCharIterator_String(const nglString& rString)
+  : mString(rString)
+  {
+  }
+  virtual nglUChar GetNextUChar(int32& position) const
+  {
+    return mString.GetNextUChar(position);
+  }
+  virtual int32 GetLength() const
+  {
+    return mString.GetLength();
+  }
+  
+private:
+  const nglString& mString;
+};
+
+class nuiUCharIterator_Vector : public nuiUCharIterator
+{
+public:
+  nuiUCharIterator_Vector(const std::vector<nglUChar>& rString)
+  : mString(rString)
+  {
+  }
+  virtual nglUChar GetNextUChar(int32& position) const
+  {
+    return mString[position++];
+  }
+  virtual int32 GetLength() const
+  {
+    return mString.size();
+  }
+  
+private:
+  const std::vector<nglUChar>& mString;
+};
 
 class nuiTextRange
 {
 public:
   nuiTextRange();
-  
+  ~nuiTextRange();
+
   uint32 mLength; // Count of unicode code points
   int32 mDirection; // Even: Left to right, Odd: right to left
   nuiUnicodeScript mScript; // What script is this range of text
   nuiUnicodeRange mRange; // What unicode range is this range of text
   bool mBlank; // Does this range contains strictly blank (space, tab, return, etc.) code points.
+  bool mPrintable; // Does this range contains printable code points?
 };
 
 typedef std::list<nuiTextRange> nuiTextRangeList;
@@ -260,11 +310,17 @@ const nuiSplitTextFlag nuiST_WordBoundary    = 1 << 1;
 const nuiSplitTextFlag nuiST_DirectionChange = 1 << 2;
 const nuiSplitTextFlag nuiST_RangeChange     = 1 << 3;
 const nuiSplitTextFlag nuiST_MergeCommonScript = 1 << 4;
+const nuiSplitTextFlag nuiST_Printable       = 1 << 5;
 const nuiSplitTextFlag nuiST_ScriptChange    = nuiST_StrictScriptChange | nuiST_MergeCommonScript;
 const nuiSplitTextFlag nuiST_Natural         = nuiST_ScriptChange | nuiST_WordBoundary | nuiST_DirectionChange | nuiST_MergeCommonScript;
 const nuiSplitTextFlag nuiST_All             = nuiST_Natural | nuiST_RangeChange;
 
-bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural);
+typedef nuiFastDelegate3<nglUChar, nglUChar, int32, bool> nuiTextSplitterDelegate;
+
+bool nuiSplitText(const nglString& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);
+bool nuiSplitText(const std::vector<nglUChar>& rSourceString, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);
+bool nuiSplitText(const nuiUCharIterator& Iterator, nuiTextRangeList& rRanges, nuiSplitTextFlag flags = nuiST_Natural, int32 start = 0, int32 length = -1, const nuiTextSplitterDelegate& rDelegate = NULL);
 
 nglTextEncoding nuiGetTextEncodingFromString(const nglString& WebString);
 
+nglUChar nuiGetMirrorringChar(nglUChar ch); /// See http://www.unicode.org/Public/UNIDATA/BidiMirroring.txt and http://unicode.org/reports/tr9/#Mirroring

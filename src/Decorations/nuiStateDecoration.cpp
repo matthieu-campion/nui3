@@ -133,20 +133,6 @@ void nuiStateDecoration::InitAttributes()
 
 
 
-bool nuiStateDecoration::Load(const nuiXMLNode* pNode)
-{
-  // do nothing
-  return false;
-}
-
-nuiXMLNode* nuiStateDecoration::Serialize(nuiXMLNode* pNode)
-{
-  // do nothing
-  return NULL;
-}
-
-
-
 nuiDecoration* nuiStateDecoration::GetDecoration(const nglString& rName) const
 {
   nuiDecoration* pDecoration = nuiDecoration::Get(rName, true);
@@ -156,7 +142,7 @@ nuiDecoration* nuiStateDecoration::GetDecoration(const nglString& rName) const
   nuiTexture* pTexture = nuiTexture::GetTexture(nglPath(rName));
   if (!pTexture || !pTexture->IsValid())
   {
-    NGL_OUT(_T("nuiStateDecoration::GetDecoration warning : could not load graphic resource '%ls'\n"), rName.GetChars());
+    NGL_OUT(_T("nuiStateDecoration::GetDecoration warning : could not load graphic resource '%s'\n"), rName.GetChars());
     return NULL;
   }
   
@@ -206,6 +192,7 @@ nuiDecoration* nuiStateDecoration::GetDecorationForWidgetState(const nuiWidget* 
   else if (pChoice4)
     pChoice = pChoice4;
 
+  NGL_ASSERT(pChoice != this);
   return pChoice;
 }
 
@@ -449,7 +436,7 @@ void nuiStateDecoration::SetState(nuiStateDescription State, nuiDecoration* pDec
 
 void nuiStateDecoration::SetState(nuiStateDescription State, const nglString& rDecorationName)
 {  
-  if (rDecorationName == nglString::Null)
+  if (rDecorationName.IsNull())
     return;
   nuiDecoration* pDecoration = nuiDecoration::Get(rDecorationName, true);
   if (!pDecoration)

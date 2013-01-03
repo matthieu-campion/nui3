@@ -11,7 +11,7 @@
 #include "nuiFileSound.h"
 
 
-class nuiFileVoice : nuiVoice
+class nuiFileVoice : public nuiVoice
 {
 public:
   friend class nuiFileSound;
@@ -20,12 +20,12 @@ public:
   nuiFileVoice& operator=(const nuiFileVoice& rVoice);
   
   virtual bool IsValid() const;
-  virtual uint32 GetChannels() const;
+  virtual int32 GetChannels() const;
   
-  uint32 GetSampleFrames() const;
+  int32 GetSampleFrames() const;
   
 protected:
-  virtual uint32 ReadSamples(const std::vector<float*>& rOutput, int64 position, uint32 SampleFrames);
+  virtual int32 ReadSamples(const std::vector<float*>& rOutput, int64 position, int32 SampleFrames);
   
 private:
   nuiFileVoice(nuiFileSound* pSound = NULL);

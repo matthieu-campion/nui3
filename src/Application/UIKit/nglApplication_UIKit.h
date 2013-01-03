@@ -12,7 +12,6 @@
 - (void) dealloc;
 - (BOOL) openURL: (NSURL*) pUrl;
 - (void) sendEvent: (UIEvent*) pEvent;
-
 @end//nglUIApplication
 
 @interface nglUIApplicationDelegate : NSObject
@@ -22,7 +21,7 @@
 - (void) applicationDidFinishLaunching:       (UIApplication*) pUIApp;
 - (BOOL) application:(UIApplication *)pUIApplication didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 - (void) applicationDidBecomeActive:          (UIApplication*) pUIApp;
-- (void) applicationWillResignActive:         (UIApplication*) pUIApp;
+- (void) applicationDidEnterBackground:         (UIApplication*) pUIApp;
 - (void) applicationDidReceiveMemoryWarning:  (UIApplication*) pUIApp;
 - (void) applicationSignificantTimeChange:    (UIApplication*) pUIApp;
 - (void) applicationWillTerminate:            (UIApplication*) pUIApp;

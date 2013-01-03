@@ -16,7 +16,6 @@ class NUI_API nuiModalContainer : public nuiSimpleContainer
   friend class nuiWidget;
 public:
   nuiModalContainer(nuiContainerPtr pParent=NULL);
-  virtual bool Load(const nuiXMLNode* pNode);
   virtual ~nuiModalContainer();
 
   virtual void InitParent(nuiContainerPtr pParent); ///< retrieves nuiTopLevel from pParent, and adds this nuiModalContainer to its Children

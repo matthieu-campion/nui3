@@ -19,7 +19,6 @@
 
 class nuiEventSource;
 
-class nuiXMLNode;
 class nuiObject;
 class nuiAttributeBase;
 class nuiAttribBase;
@@ -41,15 +40,11 @@ public:
   //@{
   nuiObject(); ///< Create an nuiObject
   nuiObject(const nglString& rObjectName); ///< constructor with an object name by default
-  bool Load(const nuiXMLNode* pNode); ///< Create an nuiObject from an XML description.
   virtual ~nuiObject(); 
   //@}
 
   /** @name Serialization */
   //@{
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode, bool Recursive = true) const; ///< This method saves the widget state in the given XML Node. If @param Recursive == true (default) then the children nodes will be serialized too. Returns true on succes. 
-	
-	
   void SetSerializeMode (nuiSerializeMode eMode); ///< Set the serialization mode for this object (see nuiSerializeMode enum documentation).
   nuiSerializeMode GetSerializeMode () const; ///< Get the serialization mode for this object (see nuiSerializeMode enum documentation).
   //@}
@@ -114,6 +109,8 @@ public:
   inline void CheckValid() const
   {
 #ifdef _NUI_DEBUG_OBJECTS_
+    if (!mpTrace)
+      printf("Object bugged: CLASS:%s NAME:%s\n", mObjectClassNames[mClassNameIndex].GetChars(), mObjectName.GetChars());
     NGL_ASSERT(mpTrace);
 #else
     if (mpTrace)

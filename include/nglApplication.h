@@ -17,6 +17,7 @@ Abstraction of the running application.
 
 //#include "nui.h"
 #include "nglKernel.h"
+#include "nuiInit.h"
 
 #ifdef _X11_
 #include <X11/Xlib.h>
@@ -236,12 +237,20 @@ private:
   int  SysLoop();
 #endif // _WIN32_
 
-#ifdef _CARBON_
+#ifdef _COCOA_
+  int Main(int ArgCount, const char** pArgs);
+  friend int main(int ArgCount, const char** pArgs);
+  bool Init(int argc, const char** argv);
+  int  Run();
+//#endif
+
+//#ifdef _CARBON_
+#elif (defined _CARBON_)
 protected:
   int  mExitCode;
 
-  int  Main(int argc, char** argv);
-  bool Init(int argc, char** argv);
+  int  Main(int argc, const char** argv);
+  bool Init(int argc, const char** argv);
   int  Run();
   void MakeMenu();
   void DoMenuCommand(long int command);
@@ -249,7 +258,7 @@ protected:
   static OSErr QuitAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
   static OSErr OpenDocumentsAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
 
-  friend int main(int argc, char** argv);
+  friend int main(int argc, const char** argv);
   
 #ifdef __MACHO__  
   friend pascal void TimerAction (EventLoopTimerRef  theTimer, EventLoopIdleTimerMessage inState, void* userData);
@@ -278,19 +287,12 @@ protected:
 public:
 #endif//_UIKIT_
 
-#ifdef _COCOA_
-  int Main(int ArgCount, const char** pArgs);
-  friend int main(int ArgCount, const char** pArgs);
-  bool Init(int argc, const char** argv);
-  int  Run();
-#endif
-  
 #ifdef _UNIX_
 private:
-  friend int main(int, char**);
+  friend int main(int, const char**);
 
-  int  Main(int ArgCnt, char** pArg);
-  bool Init(int ArgCnt, char** pArg);
+  int  Main(int ArgCnt, const char** pArg);
+  bool Init(int ArgCnt, const char** pArg);
   void Exit();
   int  SysLoop();
 
@@ -351,15 +353,22 @@ extern NGL_API class nglKernel* App;
   #define __NGL_APP_MAINCALL WinMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd)
 #endif // _WIN32_
 
+#if defined(_COCOA_)
+  #define __NGL_APP_MAINDECL int main(int argc, const char** argv)
+  #define __NGL_APP_MAINCALL Main(argc, argv)
+#endif // _COCOA_
+
+//#ifdef _CARBON_
+//#error "_CARBON_ shouldn't be defined"
+//#endif
+//#ifdef _UIKIT_
+//#error "_UIKIT_ shouldn't be defined"
+//#endif
+
 #if defined(_UNIX_) || defined(_CARBON_) || defined(_UIKIT_)
-  #define __NGL_APP_MAINDECL int main(int argc, char** argv)
+  #define __NGL_APP_MAINDECL int main(int argc, const char** argv)
   #define __NGL_APP_MAINCALL Main(argc, argv)
 #endif // _UNIX_
-
-#if defined(_COCOA_)
-#define __NGL_APP_MAINDECL int main(int argc, const char** argv)
-#define __NGL_APP_MAINCALL Main(argc, argv)
-#endif // _COCOA_
 
 #if (defined _DEBUG_) && (defined _WIN32_)
   #define NGL_CHECK_MEMORY _CrtMemDumpAllObjectsSince( NULL );
@@ -374,9 +383,11 @@ extern NGL_API class nglKernel* App;
     if (!App) \
     { \
       UserAppClass* user InstanceHook new UserAppClass(); \
+      nuiInit(NULL); \
       ret = ((nglApplication*)user)->__NGL_APP_MAINCALL; \
       delete user; \
       App = NULL; \
+      nuiUninit(); \
     } \
     /*NGL_CHECK_MEMORY*/\
     return ret; \

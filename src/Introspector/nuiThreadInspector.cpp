@@ -280,7 +280,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromThread(nglThread::ID ID)
   
   // thread's name
   nglString label;
-  label.Format(_T("thread '%ls' [0x%x]"), threadName.GetChars(), ID);
+  label.Format(_T("thread '%s' [0x%x]"), threadName.GetChars(), ID);
   pBox->AddCell(new nuiLabel(label,  nuiFont::GetFont(_T("INTROSPECTOR_FONT_BOLD"))));
 
   return pNode;
@@ -300,7 +300,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromLock(const nglThreadState& rState
   
   // lock's name
   nglString tmp;
-  tmp.Format(_T("%ls '%ls' [0x%x]"), 
+  tmp.Format(_T("%s '%s' [0x%x]"), 
     rState.GetLockPointer()->GetLabel().GetChars(), 
     rState.GetLockPointer()->GetName().GetChars(), rState.GetLockPointer());
   nuiLabel* pLabel = new nuiLabel(tmp, nuiFont::GetFont(_T("INTROSPECTOR_FONT_NORMAL")));
@@ -309,7 +309,7 @@ nuiTreeNode* nuiThreadInspector::CreateNodeFromLock(const nglThreadState& rState
   pBox->SetCellPixels(COL_NAME, COL_SIZE_NAME);
 
   // lock's state
-  tmp.Format(_T("- %ls -"), rState.GetStateToString().GetChars());
+  tmp.Format(_T("- %s -"), rState.GetStateToString().GetChars());
   pBox->AddCell(new nuiLabel(tmp, nuiFont::GetFont(_T("INTROSPECTOR_FONT_NORMAL"))));
   pBox->SetCellPixels(COL_STATE, COL_SIZE_STATE);
   
@@ -413,7 +413,7 @@ void nuiThreadInspector::SetNodeFromLock(nuiTreeNode* pLockNode, const nglThread
   nuiHBox* pBox = (nuiHBox*)pLockNode->GetElement();
   
   nglString tmp;
-  tmp.Format(_T("- %ls -"), rState.GetStateToString().GetChars());
+  tmp.Format(_T("- %s -"), rState.GetStateToString().GetChars());
   nuiLabel* pLabel = (nuiLabel*)pBox->GetCell(COL_STATE);
   pLabel->SetText(tmp);
   

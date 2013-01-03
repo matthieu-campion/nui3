@@ -16,7 +16,6 @@ class NUI_API nuiColumnTreeView : public nuiTreeView
 {
 public:
   nuiColumnTreeView(nuiTreeNode* pTree = NULL);
-  bool Load(const nuiXMLNode* pNode);
   virtual ~nuiColumnTreeView();
 
   virtual bool Draw(nuiDrawContext* pContext);

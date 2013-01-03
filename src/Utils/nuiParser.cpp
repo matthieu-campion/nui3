@@ -91,27 +91,27 @@ bool nuiParser::NextChar()
     //  0xF8 // 5
     //  0xFC // 6
     uint32 count = 0;
-    if (c & 0xFC == 0xFC)
+    if ((c & 0xFC) == 0xFC)
     {
       mChar = c & ~0xFC;
       count = 5;
     }
-    else if (c & 0xF8 == 0xF8)
+    else if ((c & 0xF8) == 0xF8)
     {
       mChar = c & ~0xF8;
       count = 4;
     }
-    else if (c & 0xF0 == 0xF0)
+    else if ((c & 0xF0) == 0xF0)
     {
       mChar = c & ~0xF0;
       count = 3;
     }
-    else if (c & 0xE0 == 0xE0)
+    else if ((c & 0xE0) == 0xE0)
     {
       mChar = c & ~0xE0;
       count = 2;
     }
-    else if (c & 0xC0 == 0xC0)
+    else if ((c & 0xC0) == 0xC0)
     {
       mChar = c & ~0xC0;
       count = 1;

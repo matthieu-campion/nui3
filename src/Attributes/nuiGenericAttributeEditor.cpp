@@ -21,20 +21,13 @@ nuiGenericAttributeEditor::nuiGenericAttributeEditor(const nuiAttribBase& rAttri
 {
 	SetObjectClass(_T("nuiGenericAttributeEditor"));
 	
-	//NGL_OUT(_T("Generic Attrib editor '%ls': '%ls'\n"), rAttribute.GetName().GetChars(), contents.GetChars());
+	//NGL_OUT(_T("Generic Attrib editor '%s': '%s'\n"), rAttribute.GetName().GetChars(), contents.GetChars());
+  mpLabel = new nuiLabel();
+  AddChild(mpLabel);
 	if (!mAttribute.IsReadOnly())
-	{
-		nuiPane* pPane = new nuiPane();
-		mpLabel = new nuiLabel();
-		pPane->AddChild(mpLabel);
-    AddChild(pPane);
-		mEventSink.Connect(mpLabel->Clicked, &nuiGenericAttributeEditor::OnActivated);
-	}
-	else
-	{
-		mpLabel = new nuiLabel();
-    AddChild(mpLabel);
-	}
+    mEventSink.Connect(mpLabel->Clicked, &nuiGenericAttributeEditor::OnActivated);
+  else
+    mpLabel->SetEnabled(false);
 	
 	mEventSink.Connect(mAttribute.GetChangedEvent(), &nuiGenericAttributeEditor::OnAttributeChanged);
   OnAttributeChanged(nuiEvent());
@@ -49,6 +42,12 @@ nuiGenericAttributeEditor::~nuiGenericAttributeEditor()
 void nuiGenericAttributeEditor::OnAttributeChanged(const nuiEvent& rEvent)
 {
 	nglString contents;
+  
+  if (!mAttribute.CanGet())
+  {
+    mpLabel->SetText(_T("Write only attribute"));
+    return;
+  }
   
   switch (mAttribute.GetDimension())
   {
@@ -96,7 +95,8 @@ void nuiGenericAttributeEditor::OnActivated(const nuiEvent& rEvent)
 void nuiGenericAttributeEditor::OnRenamed(const nuiEvent& rEvent)
 {
 	nuiLabelRenamer* pRenamer = (nuiLabelRenamer*)rEvent.mpUser;
-  switch (mAttribute.GetDimension())
+  uint32 dim = mAttribute.GetDimension();
+  switch (dim)
   {
     case 0:
       {

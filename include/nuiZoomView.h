@@ -10,17 +10,16 @@
 
 //#include "nui.h"
 #include "nuiWidget.h"
-#include "nuiComposite.h"
+#include "nuiSimpleContainer.h"
 #include "nuiScrollBar.h"
 #include "nuiSlider.h"
 #include "nuiRange.h"
 #include "nuiContainer.h"
 
-class NUI_API nuiZoomView : public nuiComposite
+class NUI_API nuiZoomView : public nuiSimpleContainer
 {
 public:
   nuiZoomView(nuiScrollBar *pHorizontalScrollbar = NULL, nuiScrollBar *pVerticalScrollbar = NULL, nuiSlider * pHorizontalSlider = NULL, nuiSlider * pVerticalSlider = NULL, bool calcWidthFromIdealSize = true, bool calcHeightFromIdealSize = true);
-  virtual bool Load(const nuiXMLNode* pNode);
   virtual ~nuiZoomView();
 
   virtual nuiRect CalcIdealSize();

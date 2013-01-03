@@ -110,27 +110,6 @@ nuiImageSequence::~nuiImageSequence()
     mTextures[i]->Release();
 }
 
-bool nuiImageSequence::Load(const nuiXMLNode* pNode)
-{
-  mColor.SetValue(nuiGetString(pNode, _T("Color"), _T("white")));
-  mpTempImage = new nglImage(nglPath(nuiGetString(pNode, _T("Texture"), nglString::Empty)));
-  mRefreshTextures = true;
-  
-  return true;
-}
-
-nuiXMLNode* nuiImageSequence::Serialize(nuiXMLNode* pNode)
-{
-  pNode->SetName(_T("nuiImageSequence"));
-  pNode->SetAttribute(_T("Color"), mColor.GetValue());
-  
-  pNode->SetAttribute(_T("Texture"), GetTexturePath());
-  return pNode;
-}
-
-
-
-
 nuiRect nuiImageSequence::CalcIdealSize()
 {
   // create the sequence textures the first time ::CalcIdealSize is called.
@@ -174,7 +153,7 @@ bool nuiImageSequence::CreateTextures()
     for (uint32 i = 0; i < mNbFrames; i++)
     {
       nglString filename;
-      filename.CFormat(_T("%ls/%d.png"), mTexturePath.GetChars(), i);
+      filename.CFormat(_T("%s/%d.png"), mTexturePath.GetChars(), i);
       nglPath path(filename);
       nuiTexture* pTex = nuiTexture::GetTexture(path, NULL);
       //pTex->SetTrace(true);

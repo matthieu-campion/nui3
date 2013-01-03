@@ -65,7 +65,7 @@ void nglWindowInfo::Dump (uint Level) const
 {
   NGL_LOG(_T("window"), Level, _T("Window info :"));
 
-  NGL_LOG(_T("window"), Level, _T("  title     : '%ls'"), Title.GetChars());
+  NGL_LOG(_T("window"), Level, _T("  title     : '%s'"), Title.GetChars());
 
   const nglChar* pos = _T("");
   switch (Pos)
@@ -75,22 +75,22 @@ void nglWindowInfo::Dump (uint Level) const
     case ePosMouse : pos = _T("centered on mouse pointer"); break;
     case ePosAuto  : pos = _T("auto"); break;
   }
-  NGL_LOG(_T("window"), Level, _T("  pos       : %d,%d (creation hint: %ls)"), XPos, YPos, pos);
+  NGL_LOG(_T("window"), Level, _T("  pos       : %d,%d (creation hint: %s)"), XPos, YPos, pos);
   NGL_LOG(_T("window"), Level, _T("  size      : %dx%d"), Width, Height);
 
   nglString buffer(_T(""));
   if (Flags & nglWindow::NoResize)   buffer += _T(" NoResize");
   if (Flags & nglWindow::NoBorder)   buffer += _T(" NoBorder");
   if (Flags & nglWindow::FullScreen) buffer += _T(" FullScreen");
-  NGL_LOG(_T("window"), Level, _T("  flags     :%ls"), buffer.IsEmpty() ? _T(" none") : buffer.GetChars());
+  NGL_LOG(_T("window"), Level, _T("  flags     :%s"), buffer.IsEmpty() ? _T(" none") : buffer.GetChars());
 
   buffer.Wipe();
   if (Events & nglWindow::MouseEvents) buffer += _T(" mouse");
   if (Events & nglWindow::KeyEvents) buffer += _T(" keyboard");
-  NGL_LOG(_T("window"), Level, _T("  events    :%ls"), buffer.IsEmpty() ? _T(" none") : buffer.GetChars());
+  NGL_LOG(_T("window"), Level, _T("  events    :%s"), buffer.IsEmpty() ? _T(" none") : buffer.GetChars());
 
-  NGL_LOG(_T("window"), Level, _T("  mouse mode: %ls"), MouseMode == nglMouseInfo::eAbsolute ? _T("absolute") : _T("relative"));
-  NGL_LOG(_T("window"), Level, _T("  key repeat: %ls"), YESNO(KeyRepeat));
+  NGL_LOG(_T("window"), Level, _T("  mouse mode: %s"), MouseMode == nglMouseInfo::eAbsolute ? _T("absolute") : _T("relative"));
+  NGL_LOG(_T("window"), Level, _T("  key repeat: %s"), YESNO(KeyRepeat));
 }
 
 
@@ -329,7 +329,7 @@ void nglWindow::CallOnPaint()
 
 void nglWindow::CallOnState (StateInfo State)
 {
-  NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("State: %ls"), (State == eVisible) ? _T("visible") : _T("hidden")); )
+  NGL_DEBUG( NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("State: %s"), (State == eVisible) ? _T("visible") : _T("hidden")); )
   OnState (State);
 }
 
@@ -366,7 +366,7 @@ bool nglWindow::CallOnKeyUp (const nglKeyEvent& rEvent)
 bool nglWindow::CallOnTextInput (const nglString& rUnicodeString)
 {
 #ifdef _DEBUG_
-  NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInput: '%ls' [%d chars]"), rUnicodeString.GetChars(), rUnicodeString.GetLength());
+  NGL_LOG(_T("window"), NGL_LOG_DEBUG, _T("TextInput: '%s' [%d chars]"), rUnicodeString.GetChars(), rUnicodeString.GetLength());
 #endif // _DEBUG_
   return OnTextInput(rUnicodeString);
 }

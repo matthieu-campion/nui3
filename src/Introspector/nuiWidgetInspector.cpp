@@ -14,7 +14,6 @@
 #include "nuiVBox.h"
 #include "nuiPane.h"
 #include "nuiFolderPane.h"
-#include "nuiPositioner.h"
 #include "nuiScrollView.h"
 #include "nuiLabel.h"
 #include "nuiDrawContext.h"
@@ -155,7 +154,7 @@ nuiWidget* nuiWidgetInspectorNode::GetTarget()
 }
 
 nuiWidgetInspector::nuiWidgetInspector(nuiWidget* pTarget)
-: nuiComposite(),
+: nuiSimpleContainer(),
 mInspectorSink(this)
 {
   SetObjectClass(_T("nuiWidgetInspector"));
@@ -263,7 +262,7 @@ class nuiWidgetProxy : public nuiWidget
   };
 
 nuiWidgetInfo::nuiWidgetInfo(nuiWidget* pTarget)
-: nuiComposite(),
+: nuiSimpleContainer(),
 mWISink(this)
 {
   mpTarget = NULL;
@@ -378,7 +377,7 @@ void nuiWidgetInfo::RebuildInfo(bool Reconstruct)
       text.Add(classes[i]);
     }
     mpClass->SetText(text);
-    //printf("Inheritance: %ls\n", text.GetChars());
+    //printf("Inheritance: %s\n", text.GetChars());
     
     nglString str(typeid(mpTarget).name());
     mpCType->SetText(str);
@@ -479,7 +478,7 @@ void nuiWidgetInfo::RebuildInfo(bool Reconstruct)
       while (it_a != end_a)
       {
         nglString pname(it_a->first);
-        //printf("\tattr: %ls\n", pname.GetChars());
+        //printf("\tattr: %s\n", pname.GetChars());
         nuiAttribBase Base = it_a->second;
         nuiAttributeEditor* pEditor = Base.GetEditor();
         mpAttributeGrid->SetCell(0, i, new nuiLabel(pname + nglString(":")));

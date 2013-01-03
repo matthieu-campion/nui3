@@ -102,24 +102,30 @@ nuiHTTPResponse* nuiHTTPRequest::SendRequest()
   if (!hSession)
     return NULL;
 
-  HINTERNET hConnect = WinHttpConnect(hSession, server.GetChars(), port, 0);
+  LPWSTR wstr = (LPWSTR)server.Export(eUCS2);
+  HINTERNET hConnect = WinHttpConnect(hSession, wstr, port, 0);
+  free(wstr);
   if(!hConnect)
     return NULL;
 
   LPCWSTR types[] = {L"*/*", NULL};
-  HINTERNET hRequest = WinHttpOpenRequest(hConnect, mMethod.GetChars(), objectName.GetChars(), NULL, NULL, types, WINHTTP_FLAG_ESCAPE_PERCENT | (secure ? WINHTTP_FLAG_SECURE : 0));
+  LPCWSTR wstr1 = (LPCWSTR)mMethod.Export(eUCS2);
+  LPCWSTR wstr2 = (LPCWSTR)objectName.Export(eUCS2);
+  HINTERNET hRequest = WinHttpOpenRequest(hConnect, wstr1, wstr2, NULL, NULL, types, WINHTTP_FLAG_ESCAPE_PERCENT | (secure ? WINHTTP_FLAG_SECURE : 0));
 
   nglString headers = GetHeadersRep();
   if (!headers.IsEmpty())
   {
-    const nglChar* pHeaders = headers.GetChars();
+    LPWSTR pHeaders = (LPWSTR)headers.Export(eUCS2);
     uint32 HeaderLength = -1;
     if (!WinHttpAddRequestHeaders(hRequest, pHeaders, HeaderLength, WINHTTP_ADDREQ_FLAG_ADD | WINHTTP_ADDREQ_FLAG_REPLACE))
     {
       NGL_OUT(_T("WinHttpAddRequestHeaders error: %d (0x%x)\n"), GetLastError(), GetLastError());
       ShowError();
+      free(pHeaders);
       return NULL;
     }
+    free(pHeaders);
   }
 
   BOOL success = FALSE;

@@ -74,7 +74,7 @@ void nglReaderWriterLock::LockWrite()
       }
     }
 
-    if (mWriter != nglThread::GetCurThreadID())
+    if (mWriter && mWriter != nglThread::GetCurThreadID())
       mWaitForWrite.Wait();
 
   } while (mWriter != nglThread::GetCurThreadID());

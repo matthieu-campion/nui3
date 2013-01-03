@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>TemplateApp iPhone.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>TemplateApp.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>TemplateAppD iPhone.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>TemplateAppD.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>61A9DFBE0B833E9600BC506C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>61A9DFC80B833EF200BC506C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC3FD50611D1055900447DD4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BCD448BC11D2123000BEF227</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

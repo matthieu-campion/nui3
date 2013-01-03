@@ -25,16 +25,6 @@ nuiText::nuiText(const nglString& rText)
   SetEditable(false);
 }
 
-bool nuiText::Load(const nuiXMLNode* pNode)
-{
-  nuiEditText::Load(pNode);
-  SetObjectClass(_T("nuiText"));
-  SetEditable(false);
-  //Inherits all from nuiEditText...
-  
-  return true;
-}
-
 nuiText::~nuiText()
 {
 }

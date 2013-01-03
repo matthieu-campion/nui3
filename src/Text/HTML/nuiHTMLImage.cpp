@@ -22,10 +22,10 @@ nuiHTMLImage::nuiHTMLImage(nuiHTMLNode* pNode, nuiHTMLNode* pAnchor)
     return;
   
   nglString url = pSrc->GetValue();
-  //printf("incomming url: %ls\n", url.GetChars());
+  //printf("incomming url: %s\n", url.GetChars());
   url = GetAbsoluteURL(url);
   
-  //printf("url: %ls\n", url.GetChars());
+  //printf("url: %s\n", url.GetChars());
   
   // First look up the cache:
   mpTexture = nuiTexture::GetTexture(nglString(url));
@@ -87,7 +87,7 @@ void nuiHTMLImage::Draw(nuiDrawContext* pContext)
   if (!mpTexture || !mpTexture->IsValid())
     return;
   
-  //NGL_OUT(_T("nuiHTMLImage::Draw %ls\n"), mpTexture->GetObjectName().GetChars());
+  //NGL_OUT(_T("nuiHTMLImage::Draw %s\n"), mpTexture->GetObjectName().GetChars());
   pContext->PushState();
   pContext->SetTexture(mpTexture);  
   pContext->SetFillColor(nuiColor(255, 255, 255));

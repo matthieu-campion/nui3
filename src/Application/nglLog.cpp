@@ -16,6 +16,7 @@ const nglLog::StampFlags nglLog::TimeStamp   = 1 << 0;
 const nglLog::StampFlags nglLog::DateStamp   = 1 << 1;
 const nglLog::StampFlags nglLog::DomainStamp = 1 << 2;
 
+#define DISABLE_LOG 0
 
 /*
  * Life cycle
@@ -26,7 +27,7 @@ nglLog::nglLog (bool UseConsole)
   mDefaultLevel = NGL_LOG_DEFAULT;
   mStampFlags = DomainStamp;
   mUseConsole = UseConsole;
-  mDomainFormat = _T("%ls: ");
+  mDomainFormat = _T("%s: ");
   mDomainFormatLen = 0;
 }
 
@@ -64,6 +65,10 @@ void nglLog::UseConsole(bool Use)
 
 bool nglLog::AddOutput (nglOStream* pStream)
 {
+  #if DISABLE_LOG
+  return false;
+  #endif
+
   if (!pStream)
     return false;
 
@@ -75,6 +80,10 @@ bool nglLog::AddOutput (nglOStream* pStream)
 
 bool nglLog::DelOutput (nglOStream* pStream)
 {
+  #if DISABLE_LOG
+  return false;
+  #endif
+
   if (!pStream)
     return false;
 
@@ -101,6 +110,10 @@ bool nglLog::DelOutput (nglOStream* pStream)
 
 uint nglLog::GetLevel (const nglChar* pDomain)
 {
+  #if DISABLE_LOG
+  return 0;
+  #endif
+
   Domain* slot = LookupDomain(pDomain);
 
   return slot ? slot->Level : 0;
@@ -108,10 +121,14 @@ uint nglLog::GetLevel (const nglChar* pDomain)
 
 void nglLog::SetLevel (const nglChar* pDomain, uint Level)
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (!pDomain)
     return;
 
-  if (wcscmp(pDomain, _T("all")) == 0)
+  if (strcmp(pDomain, _T("all")) == 0)
   {
     mLock.LockRead();
     DomainList::iterator dom = mDomainList.begin();
@@ -142,6 +159,10 @@ void nglLog::SetLevel (const nglChar* pDomain, uint Level)
 
 void nglLog::Log (const nglChar* pDomain, uint Level, const nglChar* pText, ...)
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (pText == NULL)
     return;
 
@@ -153,24 +174,12 @@ void nglLog::Log (const nglChar* pDomain, uint Level, const nglChar* pText, ...)
   va_end (args);
 }
 
-void nglLog::Log (const char* pDomain, uint Level, const char* pText, ...)
-{
-  if (pText == NULL)
-    return;
-
-  va_list args;
-  va_start (args, pText);
-
-  
-  nglString str(pDomain);
-  nglString txt(pText);
-  Logv (str.GetChars(), Level, txt.GetChars(), args);
-
-  va_end (args);
-}
-
 void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_list Args)
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (pText == NULL)
     return;
 
@@ -193,78 +202,76 @@ void nglLog::Logv (const nglChar* pDomain, uint Level, const nglChar* pText, va_
     now.GetLocalTime (stamp);
   }
 
-  // Compose mPrefix
-  mPrefix.Wipe();
-  if (mStampFlags & DateStamp)
   {
-    mBody.Format(_T("%.2d/%.2d/%.2d "), stamp.Year - 100, stamp.Month, stamp.Day);
-    mPrefix += mBody;
-  }
-  if (mStampFlags & TimeStamp)
-  {
-    mBody.Format(_T("%.2d:%.2d:%.2d "), stamp.Hours, stamp.Minutes, stamp.Seconds);
-    mPrefix += mBody;
-  }
-  if (mStampFlags & DomainStamp)
-  {
-    const nglChar* dom_name = dom->Name.GetChars();
-
-    if (dom->Count == 1)
+    nglCriticalSectionGuard guard(mCS);
+    // Compose mPrefix
+    mPrefix.Wipe();
+    if (mStampFlags & DateStamp)
     {
-      // On first display from this domain, adjust domain display width
-      uint32 dom_len = wcslen(dom_name);
+      mBody.Format(_T("%.2d/%.2d/%.2d "), stamp.Year - 100, stamp.Month, stamp.Day);
+      mPrefix += mBody;
+    }
+    if (mStampFlags & TimeStamp)
+    {
+      mBody.Format(_T("%.2d:%.2d:%.2d "), stamp.Hours, stamp.Minutes, stamp.Seconds);
+      mPrefix += mBody;
+    }
+    if (mStampFlags & DomainStamp)
+    {
+      const nglChar* dom_name = dom->Name.GetChars();
 
-      if (dom_len > mDomainFormatLen)
+      if (dom->Count == 1)
       {
-        mDomainFormatLen = dom_len;
-        mDomainFormat.Format(_T("%%-%dls: "), mDomainFormatLen);
+        // On first display from this domain, adjust domain display width
+        uint32 dom_len = strlen(dom_name);
+
+        if (dom_len > mDomainFormatLen)
+        {
+          mDomainFormatLen = dom_len;
+          mDomainFormat.Format(_T("%%-%ds: "), mDomainFormatLen);
+        }
       }
+
+      mBody.Format(mDomainFormat.GetChars(), dom_name);
+      mPrefix += mBody;
     }
 
-    mBody.Format(mDomainFormat.GetChars(), dom_name);
-    mPrefix += mBody;
-  }
+    mOutputBuffer.Formatv(pText, Args);
+    mOutputBuffer.TrimRight(_T('\n'));
 
-  mOutputBuffer.Formatv(pText, Args);
-  mOutputBuffer.TrimRight(_T('\n'));
-
-  if (mOutputBuffer.Find(_T('\n')) == -1)
-  {
-    // Single line, display immediatly
-    mBody = mPrefix;
-    mBody += mOutputBuffer;
-    mBody += _T('\n');
-    Output (mBody);
-  }
-  else
-  {
-    // Multiple lines, display individually
-    std::vector<nglString> lines;
-    std::vector<nglString>::iterator line;
-
-    mOutputBuffer.Tokenize(lines, _T('\n'));
-    for (line = lines.begin(); line != lines.end(); ++line)
+    if (mOutputBuffer.Find(_T('\n')) == -1)
     {
+      // Single line, display immediatly
       mBody = mPrefix;
-      mBody += *line;
-      mBody.TrimRight(_T('\n'));
+      mBody += mOutputBuffer;
       mBody += _T('\n');
       Output (mBody);
     }
+    else
+    {
+      // Multiple lines, display individually
+      std::vector<nglString> lines;
+      std::vector<nglString>::iterator line;
+
+      mOutputBuffer.Tokenize(lines, _T('\n'));
+      for (line = lines.begin(); line != lines.end(); ++line)
+      {
+        mBody = mPrefix;
+        mBody += *line;
+        mBody.TrimRight(_T('\n'));
+        mBody += _T('\n');
+        Output (mBody);
+      }
+    }
   }
-}
-
-void nglLog::Logv (const char* pDomain, uint Level, const char* pText, va_list Args)
-{
-  if (pText == NULL) return;
-
-  nglString domain(pDomain);
-  nglString text(pText);
-  Logv(domain.GetChars(), Level, text.GetChars(), Args);
 }
 
 void nglLog::Dump (uint Level) const
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   mLock.LockRead();
   DomainList::const_iterator dom = mDomainList.begin();
   DomainList::const_iterator end = mDomainList.end();
@@ -275,7 +282,7 @@ void nglLog::Dump (uint Level) const
 
   for (; dom != end; dom++)
   {
-    format.Format(_T("#   %ls %%d\n"), mDomainFormat.GetChars());
+    format.Format(_T("#   %s %%d\n"), mDomainFormat.GetChars());
     text.Format(format.GetChars(), (*dom).Name.GetChars(), (*dom).Count);
     Output(text);
   }
@@ -289,6 +296,10 @@ void nglLog::Dump (uint Level) const
 
 nglLog::Domain* nglLog::LookupDomain (const nglChar* pName)
 {
+  #if DISABLE_LOG
+  return NULL;
+  #endif
+
   // Sanity check
   if (!pName)
     return NULL;
@@ -319,6 +330,10 @@ nglLog::Domain* nglLog::LookupDomain (const nglChar* pName)
 
 void nglLog::Output (const nglString& rText) const
 {
+  #if DISABLE_LOG
+  return;
+  #endif
+
   if (mUseConsole)
   {
     NGL_OUT(rText);

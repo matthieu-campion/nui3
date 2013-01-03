@@ -185,6 +185,7 @@ protected:
   nuiMatrixNode_Pivot* mpPivot;
 
   nuiColor mColor;
+  float mAlpha;
   nuiBlendFunc mBlendFunc;
 private:
   

@@ -87,7 +87,9 @@ void nuiKnob::InitAttributes()
 // attributes
 const nglPath& nuiKnob::GetSequencePath() const
 {
-  return mpImageSequence->GetTexturePath();
+  if (mpImageSequence)
+    return mpImageSequence->GetTexturePath();
+  return nglPath();
 }
 
 void nuiKnob::SetSequencePath(const nglPath& rPath)
@@ -101,7 +103,9 @@ void nuiKnob::SetSequencePath(const nglPath& rPath)
 
 nuiOrientation nuiKnob::GetOrientation() const
 {
-  return mpImageSequence->GetOrientation();
+  if (mpImageSequence)
+    return mpImageSequence->GetOrientation();
+  return nuiVertical;
 }
 
 
@@ -116,7 +120,9 @@ void nuiKnob::SetOrientation(nuiOrientation orientation)
 
 uint32 nuiKnob::GetNbFrames() const
 {
-  return mpImageSequence->GetNbFrames();
+  if (mpImageSequence)
+    return mpImageSequence->GetNbFrames();
+  return 0;
 }
 
 
@@ -130,37 +136,6 @@ void nuiKnob::SetNbFrames(uint32 nbFrames)
 
 
 
-
-
-bool nuiKnob::Load(const nuiXMLNode* pNode)
-{
-  nuiSimpleContainer::Load(pNode);
-
-  SetObjectClass(_T("nuiKnob"));
-  mClicked = false;
-  mInteractiveValueChanged = false;
-
-  mSensitivity = mDefaultSensitivity;
-  mFineSensitivityRatio = mDefaultFineSensitivityRatio;
-  mFineSensitivityKey = mDefaultFineSensitivityKey;
-
-  // FIXME: interpret other attributes...
-  mKnobSink.Connect(mRange.Changed, &nuiKnob::DoInvalidate);
-  //mKnobSink.Connect(mRange.ValueChanged, &nuiKnob::DoInvalidate);
-  NUI_ADD_EVENT(ValueChanged);
-  NUI_ADD_EVENT(InteractiveValueChanged);
-  
-  return true;
-}
-
-nuiXMLNode* nuiKnob::Serialize(nuiXMLNode* pParentNode, bool Recursive) const
-{
-  nuiXMLNode* pNode = nuiWidget::Serialize(pParentNode,true);
-  if (!pNode) 
-    return NULL;
-
-  return pNode;
-}
 
 
 nuiKnob::~nuiKnob()
@@ -284,7 +259,7 @@ bool nuiKnob::MouseClicked(nuiSize X, nuiSize Y, nglMouseInfo::Flags Button)
     mClicked = true;
     Grab();
     Invalidate();
-    mClickValue = mRange.GetValue();
+    mClickValue = mRange.GetUnitValue();
     
     return true;
   }
@@ -349,16 +324,16 @@ bool nuiKnob::MouseMoved(nuiSize X, nuiSize Y)
 
     nuiSize x,y;
     nuiSize range = sqrtf(GetRect().GetWidth() * GetRect().GetHeight());
-    x = X-mClickX;
+    x = X - mClickX;
     y = mClickY - Y;
 
     //nuiSize length = range;
-    nuiSize start= mClickValue;
+    nuiSize start = mClickValue;
     nuiSize movement = ( x + y ) / sensitivity;
 
-    start += (mRange.GetRange() - mRange.GetPageSize()) * (movement/range);
+    start += movement/range;
     
-    mRange.SetValue(start);
+    mRange.SetUnitValue(start);
     
     mInteractiveValueChanged = true;
     InteractiveValueChanged();
@@ -417,7 +392,7 @@ nuiRect nuiKnob::CalcIdealSize()
   if (mpChildren.empty())
   {
     if (!mpImageSequence)
-      return nuiRect(0,0,0,0);
+      return nuiRect(0,0,32,32);
     
     const nuiRect& rect = mpImageSequence->CalcIdealSize();
     return rect;
@@ -438,10 +413,37 @@ bool nuiKnob::Draw(nuiDrawContext* pContext)
 {
   if (mpImageSequence)
   {
-    mFrameIndex = (int)((mpImageSequence->GetNbFrames()-1) * (mRange.GetValue() - mRange.GetMinimum())) / (mRange.GetMaximum() - mRange.GetMinimum());
+    mFrameIndex = (int)((mpImageSequence->GetNbFrames()-1) * mRange.GetUnitValue());
     
     mpImageSequence->SetFrameIndex(mFrameIndex);
     mpImageSequence->Draw(pContext, this);
+  }
+  else
+  {
+    nuiRect R(GetRect().Size());
+    float linewidth = 3;
+    
+    pContext->SetStrokeColor(nuiColor(0.3, 0.3, 0.5, GetMixedAlpha()));
+    
+    nuiShape shp;
+    float mx = R.GetWidth() / 2;
+    float my = R.GetHeight() / 2;
+    float r = (MIN(mx, my) - linewidth *.5) * .9;
+    float rr = r * .8;
+
+    float range = .8;
+    float a = (-( 1 - range ) / 2 - (range * mRange.GetUnitValue()));
+    float a1 = (-( 1 - range ) / 2) * 360 - 90;
+    float a2 = (-( 1 - range ) / 2 - range) * 360 - 90;
+    a *= 2 * M_PI;
+
+    shp.AddArc(mx, my, r, r, a1, a2, 0);
+    pContext->SetLineWidth(linewidth);
+    pContext->DrawShape(&shp, eStrokeShape);
+    
+    
+    pContext->SetLineWidth(linewidth * .7);
+    pContext->DrawLine(mx, my, mx + rr * sin(a), my + rr * cos(a));
   }
   
   return nuiSimpleContainer::Draw(pContext);

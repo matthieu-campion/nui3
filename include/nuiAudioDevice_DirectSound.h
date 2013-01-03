@@ -53,13 +53,13 @@ protected:
 
 
 private:
-  BOOL RealDSEnumInputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule);
+  BOOL RealDSEnumInputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule);
 
-  static BOOL CALLBACK DSEnumInputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule, LPVOID lpContext);
+  static BOOL CALLBACK DSEnumInputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule, LPVOID lpContext);
 
-  BOOL RealDSEnumOutputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule);
+  BOOL RealDSEnumOutputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule);
 
-  static BOOL CALLBACK DSEnumOutputCallback(LPGUID lpGuid, LPCWSTR lpcstrDescription, LPCWSTR lpcstrModule, LPVOID lpContext);
+  static BOOL CALLBACK DSEnumOutputCallback(LPGUID lpGuid, LPCSTR lpcstrDescription, LPCSTR lpcstrModule, LPVOID lpContext);
   
 };
 

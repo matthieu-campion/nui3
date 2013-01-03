@@ -35,6 +35,8 @@ ENDIF(LIBTIDY_FOUND)
 set(SOURCES
 
   graphics/DefaultDecoration.cpp
+  graphics/DefaultDecoration/AtlasTexture.cpp
+  graphics/DefaultDecoration/ImageDraggedFile.cpp
 
   src/Base/nui.cpp
   src/Base/nuiAnimation.cpp
@@ -49,9 +51,6 @@ set(SOURCES
   src/Base/nuiDragAndDrop.cpp
   src/Base/nuiEvent.cpp
   src/Base/nuiFlags.cpp
-  src/Base/nuiFont.cpp
-  src/Base/nuiFontBase.cpp
-  src/Base/nuiFontManager.cpp
   src/Base/nuiGladeLoader.cpp
   src/Base/nuiHotKey.cpp
   src/Base/nuiHTML.cpp
@@ -61,7 +60,6 @@ set(SOURCES
   src/Base/nuiNativeResource.cpp
   src/Base/nuiNotification.cpp
   src/Base/nuiObject.cpp
-  src/Base/nuiProperty.cpp
   src/Base/nuiRange.cpp
   src/Base/nuiRect.cpp
   src/Base/nuiSerializeContext.cpp
@@ -71,6 +69,18 @@ set(SOURCES
   src/Base/nuiToken.cpp
   src/Base/nuiTree.cpp
   src/Base/nuiXML.cpp
+
+  src/Font/nuiFont.cpp
+  src/Font/nuiFontBase.cpp
+  src/Font/nuiFontManager.cpp
+  src/Font/nuiPanose.cpp
+  src/Font/hb_nui.cpp
+  src/Font/ngl_default_font.cpp
+  src/Font/nuiFontInstance.cpp
+  src/Font/nuiTextLayout.cpp
+  src/Font/nuiTextLine.cpp
+  src/Font/nuiTextRun.cpp
+  src/Font/nuiTextStyle.cpp
 
   src/Bindings/nuiBindings.cpp
   src/Bindings/nuiScriptEngine.cpp
@@ -165,9 +175,6 @@ set(SOURCES
   src/SimpleWidgets/nuiImage.cpp
   src/SimpleWidgets/nuiImageDropZone.cpp
   src/SimpleWidgets/nuiKnob.cpp
-  src/SimpleWidgets/nuiMesh.cpp
-  src/SimpleWidgets/nuiMeshEngine.cpp
-  src/SimpleWidgets/nuiOffscreenView.cpp
   src/SimpleWidgets/nuiProgressBar.cpp
   src/SimpleWidgets/nuiRadioButton.cpp
   src/SimpleWidgets/nuiRadioButtonGroup.cpp
@@ -177,7 +184,6 @@ set(SOURCES
   src/SimpleWidgets/nuiSeparator.cpp
   src/SimpleWidgets/nuiShapeView.cpp
   src/SimpleWidgets/nuiSlider.cpp
-  src/SimpleWidgets/nuiSplineEdit.cpp
   src/SimpleWidgets/nuiStateDummy.cpp
   src/SimpleWidgets/nuiSVGView.cpp
   src/SimpleWidgets/nuiTabBar.cpp
@@ -207,7 +213,6 @@ set(SOURCES
   src/Layout/nuiModalContainer.cpp
   src/Layout/nuiPane.cpp
   src/Layout/nuiPopupView.cpp
-  src/Layout/nuiPositioner.cpp
   src/Layout/nuiScrollBox.cpp
   src/Layout/nuiScrollView.cpp
   src/Layout/nuiSplitter.cpp
@@ -221,6 +226,19 @@ set(SOURCES
   src/Audio/nuiAudioConvert.cpp
   src/Audio/nuiAudioDevice.cpp
   src/Audio/nuiAudioFifo.cpp
+
+  src/AudioEngine/nuiAudioDb.cpp
+  src/AudioEngine/nuiAudioEngine.cpp
+  src/AudioEngine/nuiFileSound.cpp
+  src/AudioEngine/nuiFileVoice.cpp
+  src/AudioEngine/nuiMemorySound.cpp
+  src/AudioEngine/nuiMemoryVoice.cpp
+  src/AudioEngine/nuiSound.cpp
+  src/AudioEngine/nuiSoundManager.cpp
+  src/AudioEngine/nuiSynthSound.cpp
+  src/AudioEngine/nuiSynthVoice.cpp
+  src/AudioEngine/nuiVoice.cpp
+
 
   src/Attributes/nuiAttribute.cpp
   src/Attributes/nuiAttributeEditor.cpp
@@ -292,16 +310,6 @@ set(SOURCES
   src/File/nglVolume.cpp
   src/File/nuiNativeResourceVolume.cpp
 
-  src/Font/ngl_default_font.cpp
-  src/Font/nglFont.cpp
-  src/Font/nglFontBase.cpp
-  src/Font/nglFontCache.cpp
-  src/Font/nglFontInstance.cpp
-  src/Font/nglFontLayout.cpp
-  src/Font/nglFontTexCache.cpp
-  src/Font/nuiPanose.cpp
-  src/Font/nuiPhoneFontDB.cpp
-
   src/Time/nglTime.cpp
   src/Time/nglTimer.cpp
 
@@ -363,7 +371,6 @@ set(SOURCES
 include_directories(
   deps/freetype2/include
   deps/ucdata
-  deps/agg/include
   deps/harfbuzz
   deps/tracemonkey
   deps/tracemonkey/vprof
@@ -424,8 +431,20 @@ IF (${LINUX})
   # src/File/Unix/nglFile_Unix.cpp
     src/File/Unix/nglPath_Unix.cpp
 
-   src/Threading/posix/nglThread_posix.cpp
-   src/Application/Unix/nglConsole_Unix.cpp
+    src/Threading/posix/nglThread_posix.cpp
+    src/Application/Unix/nglConsole_Unix.cpp
+
+    src/AudioSamples/nuiAiffReader.cpp
+    src/AudioSamples/nuiAudioDecoder.cpp
+    src/AudioSamples/nuiSampleInfo.cpp         
+    src/AudioSamples/nuiSampleWriter.cpp
+    src/AudioSamples/nuiWaveWriter.cpp
+    src/AudioSamples/nuiAiffWriter.cpp
+    src/AudioSamples/nuiChunkSampleReader.cpp
+    src/AudioSamples/nuiSample.cpp             
+    src/AudioSamples/nuiSampleReader.cpp
+    src/AudioSamples/nuiWaveReader.cpp
+    src/AudioSamples/Unix/nuiAudioDecoder_Unix.cpp
 
     ${SOURCES}
   )
@@ -480,6 +499,7 @@ ELSEIF (${WINDOWS})
     src/Threading/win32/nglThread_win32.cpp
 
     src/Net/Win/nuiHTTP_WinXX.cpp
+
   )
 ENDIF (${LINUX})
 
@@ -487,8 +507,8 @@ ENDIF (${LINUX})
 add_subdirectory(deps)
 
 add_library( nui3 SHARED ${SOURCES} )
-target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy ucdata tracemonkey libcss)
+target_link_libraries(nui3 ${CURL_LIBRARY} ${CURL_LIBRARIES} ${EXPAT_LIBRARY} ${FREETYPE_LIBRARY} ${FREETYPE_LIBRARIES} ${EXPAT_LIBRARIES} ${JPEG_LIBRARY} ${JPEG_LIBRARIES} ${PNG_LIBRARY} ${PNG_LIBRARIES} ${GIF_LIBRARY} ${GIF_LIBRARIES} tidy mpg123 ucdata tracemonkey libcss harfbuzz)
 
-add_subdirectory(scratchpads)
 add_subdirectory(tutorials)
+add_subdirectory(scratchpads)
 

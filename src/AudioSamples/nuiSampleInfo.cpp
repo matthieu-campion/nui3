@@ -62,12 +62,12 @@ void nuiSampleInfo::SetSampleRate(double SampleRate)
 Channels
 */
 
-uint32 nuiSampleInfo::GetChannels() const
+int32 nuiSampleInfo::GetChannels() const
 {
   return mChannels;
 }
 
-void nuiSampleInfo::SetChannels(uint32 Channels)
+void nuiSampleInfo::SetChannels(int32 Channels)
 {
   mChannels = Channels;
 }
@@ -77,13 +77,13 @@ void nuiSampleInfo::SetChannels(uint32 Channels)
 BitsPerSample
 */
 
-uint32 nuiSampleInfo::GetBitsPerSample() const
+int32 nuiSampleInfo::GetBitsPerSample() const
 {
   return mBitsPerSample;
 }
 
 
-void nuiSampleInfo::SetBitsPerSample(uint32 BPS)
+void nuiSampleInfo::SetBitsPerSample(int32 BPS)
 {
   mBitsPerSample = BPS;
 }
@@ -93,12 +93,12 @@ void nuiSampleInfo::SetBitsPerSample(uint32 BPS)
 SampleFrames
 */
 
-uint64 nuiSampleInfo::GetSampleFrames() const
+int64 nuiSampleInfo::GetSampleFrames() const
 {
   return mSampleFrames;
 }
 
-void nuiSampleInfo::SetSampleFrames(uint64 SampleFrames)
+void nuiSampleInfo::SetSampleFrames(int64 SampleFrames)
 {
   mSampleFrames = SampleFrames;
 }
@@ -108,12 +108,12 @@ void nuiSampleInfo::SetSampleFrames(uint64 SampleFrames)
 StartFrame
 */
 
-uint64 nuiSampleInfo::GetStartFrame() const
+int64 nuiSampleInfo::GetStartFrame() const
 {
   return mStartFrame;
 }
 
-void nuiSampleInfo::SetStartFrame(uint64 StartFrame)
+void nuiSampleInfo::SetStartFrame(int64 StartFrame)
 {
   mStartFrame = StartFrame;
 }
@@ -123,12 +123,12 @@ void nuiSampleInfo::SetStartFrame(uint64 StartFrame)
 StopFrame
 */
 
-uint64 nuiSampleInfo::GetStopFrame() const
+int64 nuiSampleInfo::GetStopFrame() const
 {
   return mStopFrame;
 }
 
-void nuiSampleInfo::SetStopFrame(uint64 StopFrame)
+void nuiSampleInfo::SetStopFrame(int64 StopFrame)
 {
   mStopFrame = StopFrame;
 }
@@ -165,12 +165,12 @@ void nuiSampleInfo::SetFormatTag(uint8 FormatTag)
 /*
 TimeSignNom
  */
-uint8 nuiSampleInfo::GetTimeSignNom() const
+int8 nuiSampleInfo::GetTimeSignNom() const
 {
   return mTimeSignNom;
 }
 
-void nuiSampleInfo::SetTimeSignNom(uint8 TimeSignNom)
+void nuiSampleInfo::SetTimeSignNom(int8 TimeSignNom)
 {
   mTimeSignNom = TimeSignNom;
 }
@@ -178,12 +178,12 @@ void nuiSampleInfo::SetTimeSignNom(uint8 TimeSignNom)
 /*
  TimeSignDenom
  */
-uint8 nuiSampleInfo::GetTimeSignDenom() const
+int8 nuiSampleInfo::GetTimeSignDenom() const
 {
   return mTimeSignDenom;
 }
 
-void nuiSampleInfo::SetTimeSignDenom(uint8 TimeSignDenom)
+void nuiSampleInfo::SetTimeSignDenom(int8 TimeSignDenom)
 {
   mTimeSignDenom = TimeSignDenom;
 }

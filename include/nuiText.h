@@ -17,7 +17,6 @@ class NUI_API nuiText : public nuiEditText
 {
 public:
   nuiText(const nglString& rText = nglString::Empty);
-  bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiText();
 
 

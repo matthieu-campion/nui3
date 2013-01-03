@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,38 +37,96 @@
 		C9F5F92E0DA84CAB00E078ED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999972E0DA6F405001A7116 /* OpenGLES.framework */; };
 		C9F5F92F0DA84CAB00E078ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99997710DA6F9F2001A7116 /* AudioToolbox.framework */; };
 		C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99998F50DA7CAF2001A7116 /* QuartzCore.framework */; };
-		E553BB0C11C8D36100CCA8EC /* libnuiEd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5795810100ACFB700821E44 /* libnuiEd.a */; };
-		E553BB0D11C8D36500CCA8EC /* libnuiE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E579580E100ACFB700821E44 /* libnuiE.a */; };
+		E57EFAD213C79EA900EB3583 /* libnuiPhoneD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E57EFABF13C79E6800EB3583 /* libnuiPhoneD.a */; };
+		E57EFAD313C79EB100EB3583 /* libnuiPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E57EFAC113C79E6800EB3583 /* libnuiPhone.a */; };
+		E57EFAD513C7A0EF00EB3583 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = E57EFAD413C7A0EF00EB3583 /* test.txt */; };
+		E57EFAD613C7A0EF00EB3583 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = E57EFAD413C7A0EF00EB3583 /* test.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E553B98811C8CE4400CCA8EC /* PBXContainerItemProxy */ = {
+		E57EFABA13C79E6800EB3583 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 735F6CDA0FF2747500E66B1D /* nuiE-iPhone 3.0 */;
-			remoteInfo = "nuiE-iPhone 3.0";
-		};
-		E553B98A11C8CE4800CCA8EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 735F70400FF2747500E66B1D /* nuiEd-iPhone 3.0 */;
-			remoteInfo = "nuiEd-iPhone 3.0";
-		};
-		E579580D100ACFB700821E44 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 735F703F0FF2747500E66B1D;
-			remoteInfo = "nuiE-iPhone 3.0";
+			remoteGlobalIDString = E58172D80C3D103300902DFE;
+			remoteInfo = nui3D;
 		};
-		E579580F100ACFB700821E44 /* PBXContainerItemProxy */ = {
+		E57EFABC13C79E6800EB3583 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 735F73A30FF2747500E66B1D;
-			remoteInfo = "nuiEd-iPhone 3.0";
+			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
+			remoteInfo = nui3;
+		};
+		E57EFABE13C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52417F311CB860B0025CA71;
+			remoteInfo = nuiPhoneD;
+		};
+		E57EFAC013C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E52420E511CBCE9E0025CA71;
+			remoteInfo = nuiPhone;
+		};
+		E57EFAC213C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84;
+			remoteInfo = nuiPhone_arm7;
+		};
+		E57EFAC413C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5A8D1D311E33A54004E14CE;
+			remoteInfo = nui3CocoaD;
+		};
+		E57EFAC613C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
+			remoteInfo = nui3Cocoa;
+		};
+		E57EFAC813C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD341012E09CA800F1EF4E;
+			remoteInfo = thirdparty;
+		};
+		E57EFACA13C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD3FF412E0B08300F1EF4E;
+			remoteInfo = thirdparty_ios;
+		};
+		E57EFACC13C79E6800EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84;
+			remoteInfo = thirdparty_ios_arm7;
+		};
+		E57EFACE13C79E9700EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5241BA911CBCE9E0025CA71;
+			remoteInfo = nuiPhone;
+		};
+		E57EFAD013C79E9E00EB3583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E52412CD11CB860B0025CA71;
+			remoteInfo = nuiPhoneD;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -82,7 +140,6 @@
 		BC1DAD6D0F83643300773749 /* icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = icon.ico; path = resources/icon.ico; sourceTree = SOURCE_ROOT; };
 		BC1DAD6E0F83643300773749 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = resources/icon.png; sourceTree = SOURCE_ROOT; };
 		BC540B7E0EF94188007E66FC /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
-		BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nuiE.xcodeproj; path = ../../nuiE.xcodeproj; sourceTree = SOURCE_ROOT; };
 		BC6A0A410EF93F9700881ACF /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/MainWindow.h; sourceTree = SOURCE_ROOT; };
 		BC6A0A420EF93F9700881ACF /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		BC6A0A430EF93F9700881ACF /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = src/Application.cpp; sourceTree = SOURCE_ROOT; };
@@ -96,6 +153,8 @@
 		C9EA04FD0E2917FA0067EF48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9F2587A0E5861EA00687021 /* dlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dlist.plist; sourceTree = "<group>"; };
 		C9F5F9330DA84CAB00E078ED /* TextEdit_iPhoneD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextEdit_iPhoneD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = "<group>"; };
+		E57EFAD413C7A0EF00EB3583 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.txt; path = resources/test.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57EFAD313C79EB100EB3583 /* libnuiPhone.a in Frameworks */,
 				C99995FC0DA6EE97001A7116 /* Foundation.framework in Frameworks */,
 				C99995FD0DA6EE97001A7116 /* UIKit.framework in Frameworks */,
 				C99995FE0DA6EE97001A7116 /* CoreGraphics.framework in Frameworks */,
@@ -111,7 +171,6 @@
 				C99998F60DA7CAF2001A7116 /* QuartzCore.framework in Frameworks */,
 				C9CD09880DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
 				C9EA04FE0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
-				E553BB0D11C8D36500CCA8EC /* libnuiE.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57EFAD213C79EA900EB3583 /* libnuiPhoneD.a in Frameworks */,
 				C9F5F92B0DA84CAB00E078ED /* Foundation.framework in Frameworks */,
 				C9F5F92C0DA84CAB00E078ED /* UIKit.framework in Frameworks */,
 				C9F5F92D0DA84CAB00E078ED /* CoreGraphics.framework in Frameworks */,
@@ -127,7 +187,6 @@
 				C9F5F9300DA84CAB00E078ED /* QuartzCore.framework in Frameworks */,
 				C9CD09890DDDC04B0082235F /* CFNetwork.framework in Frameworks */,
 				C9EA04FF0E2917FA0067EF48 /* MediaPlayer.framework in Frameworks */,
-				E553BB0C11C8D36100CCA8EC /* libnuiEd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +241,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E57EFAD413C7A0EF00EB3583 /* test.txt */,
 				BC1DAD660F83643300773749 /* css */,
 				BC1DAD690F83643300773749 /* decorations */,
 				BC1DAD6C0F83643300773749 /* icon.icns */,
@@ -209,19 +269,10 @@
 			name = css;
 			sourceTree = "<group>";
 		};
-		BC6A0A360EF93F7800881ACF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E579580E100ACFB700821E44 /* libnuiE.a */,
-				E5795810100ACFB700821E44 /* libnuiEd.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C99996230DA6EED8001A7116 /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */,
+				E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */,
 			);
 			name = dependencies;
 			sourceTree = "<group>";
@@ -235,6 +286,23 @@
 				BC6A0A410EF93F9700881ACF /* MainWindow.h */,
 			);
 			name = sources;
+			sourceTree = "<group>";
+		};
+		E57EFAAB13C79E6700EB3583 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E57EFABB13C79E6800EB3583 /* libnui3D.a */,
+				E57EFABD13C79E6800EB3583 /* libnui3.a */,
+				E57EFABF13C79E6800EB3583 /* libnuiPhoneD.a */,
+				E57EFAC113C79E6800EB3583 /* libnuiPhone.a */,
+				E57EFAC313C79E6800EB3583 /* libnuiPhone_arm7.a */,
+				E57EFAC513C79E6800EB3583 /* libnui3CocoaD.a */,
+				E57EFAC713C79E6800EB3583 /* libnui3Cocoa.a */,
+				E57EFAC913C79E6800EB3583 /* libthirdparty.a */,
+				E57EFACB13C79E6800EB3583 /* libthirdparty_ios.a */,
+				E57EFACD13C79E6800EB3583 /* libthirdparty_ios_arm7.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,7 +319,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E553B98911C8CE4400CCA8EC /* PBXTargetDependency */,
+				E57EFACF13C79E9700EB3583 /* PBXTargetDependency */,
 			);
 			name = TextEdit_iPhone;
 			productName = beatmaker;
@@ -269,7 +337,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E553B98B11C8CE4800CCA8EC /* PBXTargetDependency */,
+				E57EFAD113C79E9E00EB3583 /* PBXTargetDependency */,
 			);
 			name = TextEdit_iPhoneD;
 			productName = beatmaker;
@@ -281,15 +349,22 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "TextEdit_iPhone" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = BC6A0A360EF93F7800881ACF /* Products */;
-					ProjectRef = BC6A0A350EF93F7800881ACF /* nuiE.xcodeproj */;
+					ProductGroup = E57EFAAB13C79E6700EB3583 /* Products */;
+					ProjectRef = E57EFAAA13C79E6700EB3583 /* nui3.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -301,18 +376,74 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E579580E100ACFB700821E44 /* libnuiE.a */ = {
+		E57EFABB13C79E6800EB3583 /* libnui3D.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libnuiE.a;
-			remoteRef = E579580D100ACFB700821E44 /* PBXContainerItemProxy */;
+			path = libnui3D.a;
+			remoteRef = E57EFABA13C79E6800EB3583 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E5795810100ACFB700821E44 /* libnuiEd.a */ = {
+		E57EFABD13C79E6800EB3583 /* libnui3.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libnuiEd.a;
-			remoteRef = E579580F100ACFB700821E44 /* PBXContainerItemProxy */;
+			path = libnui3.a;
+			remoteRef = E57EFABC13C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFABF13C79E6800EB3583 /* libnuiPhoneD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhoneD.a;
+			remoteRef = E57EFABE13C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFAC113C79E6800EB3583 /* libnuiPhone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone.a;
+			remoteRef = E57EFAC013C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFAC313C79E6800EB3583 /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = E57EFAC213C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFAC513C79E6800EB3583 /* libnui3CocoaD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3CocoaD.a;
+			remoteRef = E57EFAC413C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFAC713C79E6800EB3583 /* libnui3Cocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnui3Cocoa.a;
+			remoteRef = E57EFAC613C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFAC913C79E6800EB3583 /* libthirdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty.a;
+			remoteRef = E57EFAC813C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFACB13C79E6800EB3583 /* libthirdparty_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios.a;
+			remoteRef = E57EFACA13C79E6800EB3583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E57EFACD13C79E6800EB3583 /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = E57EFACC13C79E6800EB3583 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -327,6 +458,7 @@
 				BC1DAD760F83643300773749 /* icon.icns in Resources */,
 				BC1DAD770F83643300773749 /* icon.ico in Resources */,
 				BC1DAD780F83643300773749 /* icon.png in Resources */,
+				E57EFAD613C7A0EF00EB3583 /* test.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +471,7 @@
 				BC1DAD710F83643300773749 /* icon.icns in Resources */,
 				BC1DAD720F83643300773749 /* icon.ico in Resources */,
 				BC1DAD730F83643300773749 /* icon.png in Resources */,
+				E57EFAD513C7A0EF00EB3583 /* test.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,15 +499,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E553B98911C8CE4400CCA8EC /* PBXTargetDependency */ = {
+		E57EFACF13C79E9700EB3583 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "nuiE-iPhone 3.0";
-			targetProxy = E553B98811C8CE4400CCA8EC /* PBXContainerItemProxy */;
+			name = nuiPhone;
+			targetProxy = E57EFACE13C79E9700EB3583 /* PBXContainerItemProxy */;
 		};
-		E553B98B11C8CE4800CCA8EC /* PBXTargetDependency */ = {
+		E57EFAD113C79E9E00EB3583 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "nuiEd-iPhone 3.0";
-			targetProxy = E553B98A11C8CE4800CCA8EC /* PBXContainerItemProxy */;
+			name = nuiPhoneD;
+			targetProxy = E57EFAD013C79E9E00EB3583 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -385,6 +518,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sebastien Metrot (L6L77G9KU6)";
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PFE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -394,6 +528,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-x",
@@ -404,7 +539,9 @@
 					"-lz",
 					"-liconv",
 				);
-				SDKROOT = iphoneos2.1;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USE_HEADERMAP = NO;
 			};
 			name = Default;
@@ -412,34 +549,28 @@
 		C99996000DA6EE97001A7116 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_UNROLL_LOOPS = YES;
-				GENERATE_PROFILING_CODE = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = TextEdit_iPhone;
-				STRIPFLAGS = "-SXx";
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Default;
 		};
 		C9F5F9320DA84CAB00E078ED /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -448,7 +579,7 @@
 					NUI_IPHONE,
 				);
 				GCC_THUMB_SUPPORT = NO;
-				GENERATE_PROFILING_CODE = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = TextEdit_iPhoneD;

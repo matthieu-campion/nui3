@@ -11,12 +11,18 @@
 #include "nglLog.h"
 #include "nuiCommand.h"
 
+#ifndef _MINUI3_
 #include "nglDataObjects.h"
+#endif
 
 #include "nuiNativeResourceVolume.h"
 #include "nuiNotification.h"
 
 #include "ucdata.h"
+
+#if (defined _UNIX_)
+#include <signal.h>
+#endif
 
 
 /* Defined in <platform>/nglKernel.cpp
@@ -79,7 +85,9 @@ nglConsole& nglKernel::GetConsole()
 {
   //#HACH This is a hack to have NGL_OUT working event when nuiInit hasn't been called yet
   if (!this)
+  {
     return *(nglConsole*)NULL;
+  }
 
   if (!mpCon)
   {
@@ -122,6 +130,7 @@ const nglString& nglKernel::GetArg (int Index)
 }
 
 
+#ifndef _MINUI3_
 /* Clipboard (platform specific)
  *
 nglString GetClipboard();
@@ -139,6 +148,7 @@ nglDataTypesRegistry& nglKernel::GetDataTypesRegistry()
 {
   return mDataTypesRegistry;
 }
+#endif
 
 /*
  * User callbacks
@@ -201,13 +211,15 @@ void nglKernel::Init()
 
 void nglKernel::Exit(int32 ExitCode)
 {
+#ifndef _MINUI3_
   nuiMainWindow::DestroyAllWindows();
+#endif
   mKernelEventSink.DisconnectAll();
   nglVolume::UnmountAll();
   nuiAnimation::ReleaseTimer();
 
   ExitFuncList::iterator func_i;
-  
+
   for (func_i = mExitFuncs.begin(); func_i != mExitFuncs.end(); ++func_i)
   {
     ExitFunc func;
@@ -233,7 +245,7 @@ void nglKernel::Exit(int32 ExitCode)
     delete mpCon;
     mpCon = NULL;
   }
-  
+
   nglString::ReleaseStringConvs();
 }
 
@@ -312,14 +324,22 @@ const nglChar* nglKernel::OnError (uint& rError) const
 
 void nglKernel::CallOnInit()
 {
+  double now = nglTime();
   ucdata_init_static();
-  NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%ls)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
+  double then = nglTime();
+
+  printf("ucdata_init_static took %f seconds\n", then - now);
+
+#ifndef _MINUI3_
+  NGL_DEBUG( NGL_LOG(_T("kernel"), NGL_LOG_INFO, _T("Init (%d parameter%s)"), GetArgCount(), (GetArgCount() > 1) ? _T("s") : _T("")); )
   nglVolume* pResources = new nuiNativeResourceVolume();
   nglVolume::Mount(pResources);
+#endif
+
   nuiTimer* pTimer = nuiAnimation::AcquireTimer();
   mKernelEventSink.Connect(pTimer->Tick, &nglKernel::ProcessMessages);
   mpNotificationManager = new nuiNotificationManager();
-  
+
   OnInit();
 }
 
@@ -387,7 +407,7 @@ void nglKernel::SetCrashReportEmail(const nglString& rEmail)
 void nglKernel::ProcessMessages(const nuiEvent& rEvent)
 {
   nuiNotification* pNotif;
-  while (pNotif = Get(0))
+  while ((pNotif = Get(0)))
   {
     nuiCommand* pCommand = NULL;
     nuiGetTokenValue<nuiCommand*>(pNotif->GetToken(), pCommand);
@@ -419,6 +439,17 @@ void nglKernel::UnregisterObserver(nuiNotificationObserver* pObserver, const ngl
   mpNotificationManager->UnregisterObserver(pObserver, rNotificationName);
 }
 
+#if (defined _UNIX_) || (defined _MINUI3_) || (defined _COCOA_) || (defined _CARBON_)
+void nglKernel::CatchSignal (int Signal, void (*pHandler)(int))
+{
+  struct sigaction act;
+
+  act.sa_handler = pHandler;
+  sigemptyset (&act.sa_mask);
+  act.sa_flags = (Signal == SIGCHLD) ? SA_NOCLDSTOP : 0;
+  sigaction (Signal, &act, NULL);
+}
+#endif
 
 
 

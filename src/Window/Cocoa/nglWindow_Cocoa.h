@@ -20,6 +20,7 @@
 
   nuiTimer*     mpTimer;
   uint32        mModifiers;
+  NSEvent*      mpLastMouseEvent;
 }
 
 + (Class) layerClass;
@@ -33,6 +34,17 @@
 - (BOOL)keyDown:(NSEvent *)theEvent;
 - (BOOL)keyUp:(NSEvent *)theEvent;
 - (BOOL)flagsChanged:(NSEvent *)theEvent;
+
+- (BOOL) startDragging: (nglDragAndDrop*) pDragged;
+- (NSDragOperation) draggingEntered: (id <NSDraggingInfo>)sender;
+- (NSDragOperation) draggingUpdated: (id <NSDraggingInfo>)sender;
+- (void) draggingExited: (id <NSDraggingInfo>)sender;
+//- (BOOL) prepareForDragOperation: (id <NSDraggingInfo>)sender;
+- (BOOL) performDragOperation: (id <NSDraggingInfo>)sender;
+//- (void) concludeDragOperation: (id <NSDraggingInfo>)sender;
+- (void) draggingEnded: (id <NSDraggingInfo>)sender;
+//- (BOOL) wantsPeriodicDraggingUpdates;
+
 
 @end///< nglNSWindow
 

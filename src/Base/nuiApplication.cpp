@@ -7,19 +7,19 @@
 
 #include "nui.h"
 #include "nuiApplication.h"
-#include "nuiSpiderMonkey.h"
+//#include "nuiSpiderMonkey.h"
 
 nuiApplication::nuiApplication()
 {
-  mpScriptEngine = NULL;
+//  mpScriptEngine = NULL;
 }
 
 nuiApplication::~nuiApplication()
 {
-  if (mpScriptEngine)
-    mpScriptEngine->Release();
+//  if (mpScriptEngine)
+//    mpScriptEngine->Release();
 }
-
+/*
 void nuiApplication::SetScriptEngine(nuiScriptEngine* pEngine)
 {
   if (mpScriptEngine)
@@ -36,5 +36,8 @@ nuiScriptEngine* nuiApplication::GetScriptEngine() const
 
 void nuiApplication::EnableDefaultScriptEngine()
 {
+#ifndef _ANDROID_
   mpScriptEngine = new nuiSpiderMonkey();
+#endif
 }
+*/

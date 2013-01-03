@@ -18,7 +18,7 @@ public:
   
   virtual ~nuiAudioDevice_CoreAudio();
   
-  virtual bool Open(std::vector<uint32>& rInputChannels, std::vector<uint32>& rOutputChannels, double SampleRate, uint32 BufferSize, nuiAudioProcessFn pProcessFunction);
+  virtual bool Open(std::vector<int32>& rInputChannels, std::vector<int32>& rOutputChannels, double SampleRate, int32 BufferSize, nuiAudioProcessFn pProcessFunction);
   
   virtual bool Close();
   
@@ -33,15 +33,15 @@ protected:
   
   void EnumSampleRates();
   void EnumBufferSizes();
-  nglString GetChannelName(bool IsInput, uint32 index) const;
+  nglString GetChannelName(bool IsInput, int32 index) const;
   void EnumChannels();
   UInt32  GetPropertyDataSize(UInt32 inChannel, bool inSection, AudioHardwarePropertyID inPropertyID) const;
   void GetPropertyData(UInt32 inChannel, bool inSection, AudioHardwarePropertyID inPropertyID, UInt32& ioDataSize, void* outData) const;
   void SetPropertyData(UInt32 inChannel, bool inSection, AudioHardwarePropertyID inPropertyID, UInt32 inDataSize, const void* inData, const AudioTimeStamp* inWhen);
   
   nuiAudioProcessFn mAudioProcessFn;
-  std::vector<uint32> mActiveInputChannels;
-  std::vector<uint32> mActiveOutputChannels;
+  std::vector<int32> mActiveInputChannels;
+  std::vector<int32> mActiveOutputChannels;
   
   std::vector<std::vector<float> > mInputSamples;
   std::vector<std::vector<float> > mOutputSamples;
@@ -50,10 +50,10 @@ protected:
   std::vector<float*> mOutputBuffers;
   
   double mSampleRate;
-  uint32 mBufferSize;
+  int32 mBufferSize;
 
-  std::vector<std::pair<uint32, uint32> > mInMap;
-  std::vector<std::pair<uint32, uint32> > mOutMap;
+  std::vector<std::pair<int32, int32> > mInMap;
+  std::vector<std::pair<int32, int32> > mOutMap;
 };
 
 
@@ -65,11 +65,11 @@ public:
   nuiAudioDeviceAPI_CoreAudio();
   virtual ~nuiAudioDeviceAPI_CoreAudio();
   
-  virtual uint32 GetDeviceCount() const;
+  virtual int32 GetDeviceCount() const;
   
-  virtual nuiAudioDevice* GetDevice(uint32 index);
+  virtual nuiAudioDevice* GetDevice(int32 index);
   virtual nuiAudioDevice* GetDevice(const nglString& rDeviceName);
-  virtual nglString GetDeviceName(uint32 index) const;
+  virtual nglString GetDeviceName(int32 index) const;
   virtual nuiAudioDevice* GetDefaultOutputDevice();
   virtual nuiAudioDevice* GetDefaultInputDevice();
   

@@ -50,10 +50,6 @@ public:
 
   virtual ~nuiStateDecoration();
   
-  virtual bool Load(const nuiXMLNode* pNode);
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pNode);
-  
-  
   virtual nuiRect GetIdealClientRect(const nuiWidget* pWidget) const;
           nuiRect GetIdealSourceClientRect() const;
   virtual nuiSize GetBorder(nuiPosition position, const nuiWidget* pWidget) const;

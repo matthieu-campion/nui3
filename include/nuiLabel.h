@@ -23,12 +23,9 @@ public:
   nuiLabel(const nglString& Text = nglString::Empty, nuiTheme::FontStyle FontStyle=nuiTheme::Default);
   nuiLabel(const nglString& Text, const nglString& rObjectName, nuiTheme::FontStyle FontStyle=nuiTheme::Default);
   nuiLabel(const nglString& Text, nuiFont* pFont, bool AlreadyAcquired = false);
-  virtual bool Load(const nuiXMLNode* pNode); ///< Create from an XML description.
   virtual ~nuiLabel();
 
   void IgnoreState(bool ignoreState = true) { mIgnoreState = ignoreState; }
-
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   void InitAttributes();
   void InitProperties();
@@ -77,6 +74,7 @@ public:
   bool GetBackground() const; ///< Return true if the label will clear its background before being drawn.
 
   void UseEllipsis(bool useEllipsis); ///< If \param useEllipsis is true the label will display ... at the end of the text if there is not enough space to display it
+  bool GetUseEllipsis() const;
 
   void SetWrapping(bool Wrapping);
   bool IsWrapping() const;
@@ -90,8 +88,8 @@ protected:
   nuiSize mHMargin;
 
   nglString mText;
-  nuiFontLayout* mpLayout;
-  nuiFontLayout* mpIdealLayout;
+  nuiTextLayout* mpLayout;
+  nuiTextLayout* mpIdealLayout;
   bool mTextChanged;
   bool mFontChanged;
   bool mUseEllipsis;

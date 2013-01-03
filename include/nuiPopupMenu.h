@@ -20,9 +20,7 @@ class NUI_API nuiPopupMenu : public nuiSimpleContainer
 {
 public:
   nuiPopupMenu(nuiWidget* pParent = NULL, nuiTreeNode* pTree = NULL, const nuiRect& rRect = nuiRect(), bool OwnTree = true);
-  bool Load(const nuiXMLNode* pNode);
   virtual ~nuiPopupMenu();
-  virtual nuiXMLNode* Serialize(nuiXMLNode* pParentNode, bool Recursive) const;
 
   virtual bool Draw(nuiDrawContext* pContext);
 

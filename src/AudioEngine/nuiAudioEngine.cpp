@@ -15,7 +15,7 @@
 
 
 
-nuiAudioEngine::nuiAudioEngine(double SampleRate, uint32 BufferSize, ChannelConfig inputConfig)
+nuiAudioEngine::nuiAudioEngine(double SampleRate, int32 BufferSize, ChannelConfig inputConfig)
 : mSampleRate(SampleRate),
   mBufferSize(BufferSize),
   mInputDelegateSet(false),
@@ -39,7 +39,7 @@ nuiAudioEngine::~nuiAudioEngine()
   delete mpOutAudioDevice;
   delete mpInAudioDevice;
   
-  for (uint32 i = 0; i < mVoices.size(); i++)
+  for (int32 i = 0; i < mVoices.size(); i++)
     mVoices[i]->Release();
   
 }
@@ -82,21 +82,52 @@ bool nuiAudioEngine::AudioInit(ChannelConfig inputConfig)
 {
   mpOutAudioDevice = nuiAudioDeviceManager::Get().GetDefaultOutputDevice();
 
-  NGL_OUT(_T("Default output: %ls\n"), mpOutAudioDevice->GetName().GetChars());
+  NGL_OUT(_T("Default output: %s\n"), mpOutAudioDevice->GetName().GetChars());
 
-  std::vector<uint32> InputChannels;
-  std::vector<uint32> OutputChannels;
-  OutputChannels.push_back(0);
-  OutputChannels.push_back(1);
-  
-  bool res = mpOutAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioOutput));
-  
+  bool res = ActivateOutputDevice();
   
   if (inputConfig == eNone)
     return res;
   
-  InputChannels.clear();
-  OutputChannels.clear();
+  mpInAudioDevice = nuiAudioDeviceManager::Get().GetDefaultInputDevice();
+  res &= ActivateInputDevice(inputConfig);
+  
+  return res;
+}
+
+
+
+
+
+void nuiAudioEngine::DeactivateOutputDevice()
+{
+  mpOutAudioDevice->Close();
+}
+
+void nuiAudioEngine::DeactivateInputDevice()
+{
+  mpInAudioDevice->Close();
+}
+
+
+
+bool nuiAudioEngine::ActivateOutputDevice()
+{
+  std::vector<int32> InputChannels;
+  std::vector<int32> OutputChannels;
+  OutputChannels.push_back(0);
+  OutputChannels.push_back(1);
+  bool res = mpOutAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioOutput));
+  return res;
+}
+
+
+
+bool nuiAudioEngine::ActivateInputDevice(ChannelConfig inputConfig)
+{
+  std::vector<int32> InputChannels;
+  std::vector<int32> OutputChannels;
+ 
   if (inputConfig == eMono)
     InputChannels.push_back(0);
   else if (inputConfig == eStereo)
@@ -104,18 +135,18 @@ bool nuiAudioEngine::AudioInit(ChannelConfig inputConfig)
     InputChannels.push_back(0);
     InputChannels.push_back(1);
   }
-  mpInAudioDevice = nuiAudioDeviceManager::Get().GetDefaultInputDevice();
-  res &= mpInAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioInput));
   
+  bool res = mpInAudioDevice->Open(InputChannels, OutputChannels, mSampleRate, mBufferSize, nuiMakeDelegate(this, &nuiAudioEngine::ProcessAudioInput));
   return res;
 }
+
 
 double nuiAudioEngine::GetSampleRate() const
 {
   return mSampleRate;
 }
 
-uint32 nuiAudioEngine::GetBufferSize() const
+int32 nuiAudioEngine::GetBufferSize() const
 {
   return mBufferSize;
 }
@@ -143,7 +174,7 @@ void nuiAudioEngine::UnsetOutputProcessDelegate()
 }
 
 
-void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
+void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, int32 SampleFrames)
 {
 #ifdef AUDIO_PROFILE
   double beginTime = nglTime();
@@ -160,7 +191,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   mRemoveVoicesQueue.clear();
   mCs.Unlock();
   
-  for (uint32 i = 0; i < voicesToRemove.size(); i++)
+  for (int32 i = 0; i < voicesToRemove.size(); i++)
   {
     nuiVoice* pVoiceToRemove = voicesToRemove[i];
     std::vector<nuiVoice*>::iterator it = mVoices.begin();
@@ -178,11 +209,11 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     }
   }
   
-  for (uint32 i = 0; i < voicesToAdd.size(); i++)
+  for (int32 i = 0; i < voicesToAdd.size(); i++)
     mVoices.push_back(voicesToAdd[i]);
   
-  uint32 channels = rOutput.size();
-  for (uint32 c = 0; c < channels; c++)
+  int32 channels = rOutput.size();
+  for (int32 c = 0; c < channels; c++)
   {
     memset(&rOutput[c][0], 0, sizeof(float) * SampleFrames);
   }
@@ -192,7 +223,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     return;
   
   std::vector<float*> buffers;
-  for (uint32 c = 0; c < channels; c++)
+  for (int32 c = 0; c < channels; c++)
   {
     float* pBuffer = new float[SampleFrames];
     memset(pBuffer, 0, SampleFrames * sizeof(float));
@@ -200,7 +231,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   }
     
   
-  for (uint32 i = 0 ; i < mVoices.size(); i++)
+  for (int32 i = 0 ; i < mVoices.size(); i++)
   {
     nuiVoice* pVoice = mVoices[i];
     pVoice->Process(buffers, SampleFrames);
@@ -214,12 +245,12 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     pan = MAX(pan, -1.0);
     float panLeft = MIN(1.0, 1.0 - pan);
     float panRight = MIN(1.0, 1.0 + pan);
-    for (uint32 c = 0; c < channels; c++)
+    for (int32 c = 0; c < channels; c++)
     {
       float* pDst = rOutput[c];
       float* pSrc = buffers[c];
       float mult = mGain * (c == 0 ? panLeft : panRight);
-      for (uint32 i = 0; i < SampleFrames; i++)
+      for (int32 i = 0; i < SampleFrames; i++)
         *pDst++ += (*pSrc++) * mult;
     }
   }
@@ -229,7 +260,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   
 
   std::vector<nuiVoice*>::iterator it = mVoices.begin();
-  uint32 index = 0;
+  int32 index = 0;
   while (it != mVoices.end())
   {
     nuiVoice* pVoice = *it;
@@ -251,9 +282,9 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
   nglOFile* pFile = new nglOFile(path, eOFileAppend);
   if (pFile)
   {
-    for (uint32 c =  0; c < rOutput.size(); c++)
+    for (int32 c =  0; c < rOutput.size(); c++)
     {
-      for (uint32 i = 0; i < SampleFrames; i++)
+      for (int32 i = 0; i < SampleFrames; i++)
       {
         pFile->WriteFloat(rOutput[c] + i, 1);
       }
@@ -263,7 +294,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
 #endif
   
   
-  for (uint32 c = 0; c < channels; c++)
+  for (int32 c = 0; c < channels; c++)
     delete[] buffers[c];
 
     
@@ -277,7 +308,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
    
 }
 
-void nuiAudioEngine::ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, uint32 SampleFrames)
+void nuiAudioEngine::ProcessAudioInput(const std::vector<const float*>& rInput, const std::vector<float*>& rOutput, int32 SampleFrames)
 {
   if (mInputDelegateSet)
     mInputDelegate(rInput, SampleFrames);

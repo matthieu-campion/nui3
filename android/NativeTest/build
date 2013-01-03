@@ -1,0 +1,40 @@
+export NDK_MODULE_PATH=$(pwd)/../../
+export NDK_PATH=$(pwd)/../../../android-ndk
+export SDK_PATH=$(pwd)/../../../android-sdk
+echo ----------------------------------------------------------------------------------------
+echo Build lib
+echo ----------------------------------------------------------------------------------------
+#~/work/dev/android/android-ndk-r5b/ndk-build -j 8 NDK_DEBUG=1
+$NDK_PATH/ndk-build -j 8 NDK_DEBUG=1
+
+
+echo ----------------------------------------------------------------------------------------
+echo make resource files
+echo ----------------------------------------------------------------------------------------
+if test -a assets; then 
+  echo "assets folder already exists"
+else
+  echo "create assets folder (symbolic link to resources)"
+  ln -s resources assets
+fi
+
+../../tools/make_rc.py resources resource.rc resources/resource.android
+
+echo ----------------------------------------------------------------------------------------
+echo Build app
+echo ----------------------------------------------------------------------------------------
+ant debug
+
+echo ----------------------------------------------------------------------------------------
+echo Uninstall old app
+echo ----------------------------------------------------------------------------------------
+$SDK_PATH/platform-tools/adb uninstall com.example.native_activity
+
+echo ----------------------------------------------------------------------------------------
+echo Install new app
+echo ----------------------------------------------------------------------------------------
+$SDK_PATH/platform-tools/adb install bin/NativeActivity-debug.apk
+
+echo ----------------------------------------------------------------------------------------
+echo Build OK
+echo ----------------------------------------------------------------------------------------

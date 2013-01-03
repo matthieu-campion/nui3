@@ -13,7 +13,7 @@
 #ifndef __nglImage__
 #define __nglImage__
 
-//#include "nui.h"
+#include "nui.h"
 #include "nglError.h"
 #include "nuiFlags.h"
 
@@ -21,17 +21,20 @@ class nglIStream;
 class nglOStream;
 class nglPath;
 
-#ifdef _NOGFX_
+#if (defined _NOGFX_) || (defined _MINUI3_)
 // Bare necessities extracted from <GL/gl.h>
-  #define GL_COLOR_INDEX       0x1900
-  #define GL_RGB               0x1907
-  #define GL_RGBA              0x1908
-  #define GL_LUMINANCE         0x1909
-  #define GL_LUMINANCE_ALPHA   0x190A
+  #define GL_COLOR_INDEX        0x1900
+  #define GL_RGB                0x1907
+  #define GL_RGBA               0x1908
+  #define GL_BGR                0x80E0
+  #define GL_BGRA               0x80E1
+  #define GL_LUMINANCE          0x1909
+  #define GL_LUMINANCE_ALPHA    0x190A
+  #define GL_ALPHA              0x1906
 #endif
 
 #ifdef _OPENGL_ES_
-  #define GL_COLOR_INDEX       0x1900
+  #define GL_COLOR_INDEX        0x1900
 #endif
 
 //! Internal nglImage buffer format
@@ -56,8 +59,8 @@ enum nglImagePixelFormat
   eImagePixelIndex = GL_COLOR_INDEX,      ///< The pixel is a palette cell index
   eImagePixelRGB   = GL_RGB,              ///< Red, green and blue
   eImagePixelRGBA  = GL_RGBA,             ///< Red, green, blue and alpha
-#ifndef NUI_IOS
-  eImagePixelBGR   = GL_BGR,			  ///< Blue, green and red
+#if (!defined NUI_IOS) && (!defined _ANDROID_)
+  eImagePixelBGR   = GL_BGR,              ///< Blue, green and red
 #endif
   eImagePixelLum   = GL_LUMINANCE,        ///< Luminance (gray level)
   eImagePixelAlpha = GL_ALPHA,            ///< Alpha (transparency level)
@@ -134,7 +137,7 @@ protected:
   bool mOwnBuffer;  ///< Memory management mode (ie. only release mpBuffer if mOwnBuffer is true)
 
   void Transfert(nglImageInfo& rInfo);
-  
+
   void Copy (const nglImageInfo& rInfo, bool Clone);
   /*!< Copy metadata and optionally buffer data
     \param rInfo image information source
@@ -223,7 +226,7 @@ public:
   /*!< Create an image from a user given description
     \param rInfo image description
     \param policy if eClone, clones the buffer data and manage it. If eReference, copy the buffer pointer but do not give ownership. If eTransfert, copy the buffer pointer and give the ownership (the ownership is removed from the source)
-   
+
     Create a nglImage object from a comprehensive description.
 
     If \a policy is eClone, nglImage makes a copy of rInfo.mpBuffer image data and owns it
@@ -239,16 +242,16 @@ public:
     The object will hold an exact copy of the source image description and buffer data.
     The image buffer data is cloned (and thus managed).
   */
-  
+
   nglImage(const nglImage& rImage, uint32 NewWidth, uint32 NewHeight);
   /*!< Create an image copy from another image, scaling the source image to the given size
    \param rImage source image
    \param scaledWidth requested width
    \param scaledHeight requested height
-   
+
    */
-  
-  
+
+
   virtual ~nglImage();
   //@}
 
@@ -257,7 +260,7 @@ public:
   static bool GetImageInfo(nglImageInfo& rInfo, nglIStream* pInput, nglImageCodec* pCodec = NULL);
   static bool GetImageInfo(nglImageInfo& rInfo, const nglPath& rPath, nglImageCodec* pCodec = NULL );
   //@}
-  
+
   /** @name Image description (info & data) */
   //@{
   bool  GetInfo (nglImageInfo& rInfo) const;
@@ -277,7 +280,7 @@ public:
   char* GetBuffer() const;        ///< Image buffer data. Returns NULL if the info is not available.
 
   bool IsValid() const;
-  
+
   nglImageCodec* GetCodec() const;
   /*!< Fetch current codec
     \return current codec instance pointer
@@ -291,8 +294,8 @@ public:
   bool Save (nglOStream* pOutput, nglImageCodec* pCodec );
   bool Save (const nglPath& rPath, nglImageCodec* pCodec );
   //@}
-  
-  
+
+
   nglImage* Resize(uint32 width, uint32 height);
   /*!< create a copy with a new size
    \param width new image width
@@ -300,33 +303,33 @@ public:
 
    This method uses a simple bresenham algorithm. Should be improved in the future.
    */
-  
+
   nglImage* Crop(uint32 x, uint32 y, uint32 width, uint32 height);
-  /*!< create a copy, cropping the source 
+  /*!< create a copy, cropping the source
    \param x x-coord in the source image
    \param y y-coord in the source image
    \param width new image width
    \param height new image height
-   
+
    return NULL if the coordinates or the new size goes outside the source image.
    */
-  
+
   nglImage* Trim(int32& rXOffset, int32& rYOffset);
   /*!< create a copy, cropping the source so that no fully transparent lines or columns are left.
    \param rXOffset on output, contains the number of x pixels eaten from the left of the image during the operation.
    \param rYOffset on output, contains the number of y pixels eaten from the top of the image during the operation.
-   
+
    return NULL if something bad happened.
    */
-  
+
   nglImage* RotateLeft();
   /*!< create a copy, rotating the whole image to the left
    */
-  
+
   nglImage* RotateRight();
   /*!< create a copy, rotating the whole image to the right
    */
-  
+
   void PreMultiply(); ///< Premultiply the alpha in the image buffer
   void UnPreMultiply(); ///< Try to inverse the effect of PreMultiply.
 

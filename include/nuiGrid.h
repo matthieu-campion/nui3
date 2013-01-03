@@ -24,7 +24,6 @@ public:
   void InitAttributes();
   void Reset(uint32 nbcolumns, uint32 nbrows, bool clear=true);
   
-  bool Load(const nuiXMLNode* pNode);
   virtual ~nuiGrid();
 
   void DisplayGridBorder(bool enable, nuiSize gridBorderSize = 1.f); ///< Allow to display the grid border
@@ -92,6 +91,8 @@ public:
   bool IsCellVisible(uint32 col, uint32 row) const;
   void SetRowVisible(uint32 row, bool set);
   bool IsRowVisible(uint32 row) const;
+  void SetColumnVisible(uint32 col, bool set);
+  bool IsColumnVisible(uint32 col) const;
 
 
   // Add rows/columns:
@@ -157,6 +158,7 @@ protected:
   std::vector<nuiSize> mHeights;
   
   std::vector<bool> mRowVisible;
+  std::vector<bool> mColumnVisible;
 
   std::vector<nuiSize> mColumnWidths;
   std::vector<nuiSize> mRowHeights;

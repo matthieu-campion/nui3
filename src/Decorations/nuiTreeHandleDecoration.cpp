@@ -35,20 +35,6 @@ nuiTreeHandleDecoration::~nuiTreeHandleDecoration()
 
 
 
-bool nuiTreeHandleDecoration::Load(const nuiXMLNode* pNode)
-{
-  // #FIXME TO DO
-  return false;
-}
-
-nuiXMLNode* nuiTreeHandleDecoration::Serialize(nuiXMLNode* pNode)
-{
-  // #FIXME TO DO
-  return NULL;
-}
-
-
-
 void nuiTreeHandleDecoration::InitAttributes()
 {
   AddAttribute(new nuiAttribute<const nuiBorder&>

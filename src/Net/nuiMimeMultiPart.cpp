@@ -98,7 +98,7 @@ void nuiMimeMultiPart::Dump(nglOStream* pStream)
 
   // prepare start and end boundaries:
   nglString start;
-  start.CFormat(_T("--%ls"), mBoundary.GetChars());
+  start.CFormat(_T("--%s"), mBoundary.GetChars());
   
   nglString end;
   end.Add(_T("\n"));
@@ -114,7 +114,7 @@ void nuiMimeMultiPart::Dump(nglOStream* pStream)
     {
       pStream->WriteText(start);
       
-      str.CFormat(_T("Content-Disposition: form-data; name=\"%ls\"\n\n"), it->first.GetChars());
+      str.CFormat(_T("Content-Disposition: form-data; name=\"%s\"\n\n"), it->first.GetChars());
       pStream->WriteText(str);
       pStream->WriteText(it->second);
       pStream->WriteText(_T("\n"));
@@ -127,11 +127,11 @@ void nuiMimeMultiPart::Dump(nglOStream* pStream)
     for (uint32 i = 0; i < mpFiles.size(); i++)
     {
       pStream->WriteText(start);
-      str.CFormat(_T("Content-Disposition: form-data; name=\"%ls\"; filename=\"%ls\"\n"), mpFiles[i]->mVarName.GetChars(), mpFiles[i]->mFileName.GetChars());
+      str.CFormat(_T("Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\n"), mpFiles[i]->mVarName.GetChars(), mpFiles[i]->mFileName.GetChars());
       pStream->WriteText(str);
-      str.CFormat(_T("Content-Transfer-Encoding: %ls\n"), mpFiles[i]->mContentTransfertEncoding.GetChars());
+      str.CFormat(_T("Content-Transfer-Encoding: %s\n"), mpFiles[i]->mContentTransfertEncoding.GetChars());
       pStream->WriteText(str);
-      str.CFormat(_T("Content-Type: %ls\n\n"), mpFiles[i]->mType.GetChars());
+      str.CFormat(_T("Content-Type: %s\n\n"), mpFiles[i]->mType.GetChars());
       pStream->WriteText(str);
       pStream->WriteUInt8(&mpFiles[i]->mContents[0], mpFiles[i]->mContents.size());
     }
@@ -145,14 +145,14 @@ void nuiMimeMultiPart::Dump(nglOStream* pStream)
   
   //mem.WriteUInt8((const uint8*)"\0", 1); // Add final 0 for printf
   //nglString enc(mem.GetBufferData(),  mem.GetSize());
-  //NGL_OUT(_T("Mime encoded:\n%ls\n"), enc.GetChars());
+  //NGL_OUT(_T("Mime encoded:\n%s\n"), enc.GetChars());
 }
 
 void nuiMimeMultiPart::Dump(nuiHTTPMessage* pMessage)
 {
   // Change the content-type header:
   nglString header;
-  header.CFormat(_T("multipart/form-data; boundary=%ls"), mBoundary.GetChars());
+  header.CFormat(_T("multipart/form-data; boundary=%s"), mBoundary.GetChars());
   pMessage->AddHeader(_T("Content-Type"), header);
   
   // Output multi part mime to memory:

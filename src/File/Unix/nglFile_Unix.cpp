@@ -17,7 +17,7 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ngl.h"
+#include "nui.h"
 #include "nglKernel.h"
 #include "nglFile.h"
 #include "nglPath.h"
@@ -33,8 +33,29 @@
 #include <unistd.h>
 
 /* Implemented in file/nglFile_shr.cpp */
-extern const nglChar* nglFile_mode(nglFileMode mode);
-extern const nglChar* nglFile_endian(nglEndian endian);
+const nglChar* nglFile_mode(nglFileMode mode)
+{
+  switch (mode)
+  {
+    case eFileRead: return "Read";
+    case eFileWrite: return "Write";
+    case eFileModify: return "Modify";
+    case eFileAppend: return "Append";
+  }
+  return "???";
+}
+
+const nglChar* nglFile_endian(nglEndian endian)
+{
+  switch (endian)
+  {
+    case eEndianBig: return "Big";
+    case eEndianLittle: return "Little";
+    case eEndianPDP: return "PDP";
+  }
+
+  return "???";
+}
 
 /* Legacy code : enable build against Win32's POSIX emulation
 #ifdef _WIN32_
@@ -64,7 +85,7 @@ nglFileSize nglFile::GetSize() const
 {
   struct stat info;
   int res = fstat (mFD, &info);
-  
+
   return (res == -1) ? 0 : info.st_size;
 }
 
@@ -75,8 +96,12 @@ nglFileSize nglFile::GetSize() const
 
 bool nglFile::Open()
 {
+//NGL_OUT("nglFile::Open()\n");
   if (IsOpen())
+  {
+    //NGL_OUT("  -> file already open\n");
     return false;
+  }
 
   int flags;
   std::string str(mPath.GetPathName().GetStdString());
@@ -92,7 +117,7 @@ bool nglFile::Open()
 	#endif // _CARBON_
 
 
-  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("opening '%ls', %ls, %ls (%lsnative)\n"), mPath.GetPathName().GetChars(), nglFile_mode(mMode), nglFile_endian(mEndian), (mEndian == eEndianNative) ? _T("") : _T("non-")); )
+  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("opening '%s', %s, %s (%snative)\n"), mPath.GetPathName().GetChars(), nglFile_mode(mMode), nglFile_endian(mEndian), (mEndian == eEndianNative) ? _T("") : _T("non-")); )
 
   switch (mMode)
   {
@@ -100,12 +125,15 @@ bool nglFile::Open()
     case eFileWrite : flags = O_RDWR + O_CREAT + O_TRUNC; break;
     case eFileModify: flags = O_RDWR + O_CREAT; break;
     case eFileAppend: flags = O_RDWR + O_CREAT + O_APPEND; break;
-    default: return false;
+    default:
+  //NGL_OUT("Invalid Mode... exiting\n");
+        return false;
   }
 #ifdef _WIN32_
   flags += _O_BINARY;
 #endif
   mFD = open (filename, flags, 00644);
+//NGL_OUT("open: %s -> %d\n", filename, mFD);
   if (mFD == -1)
   {
     switch (errno)
@@ -131,7 +159,7 @@ void nglFile::Close()
   if (!IsOpen())
     return;
 
-  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("closing '%ls'\n"), mPath.GetChars()); )
+  NGL_DEBUG( NGL_LOG(_T("file"), NGL_LOG_INFO, _T("closing '%s'\n"), mPath.GetChars()); )
   if (mAutoFlush) Flush();
   close(mFD);
 }

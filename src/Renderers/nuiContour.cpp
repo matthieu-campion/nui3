@@ -18,42 +18,6 @@ nuiContour::nuiContour()
 {
 }
 
-nuiContour::nuiContour(nuiXMLNode* pNode)
-: mEventSink(this)
-{
-  if (pNode->GetName() != _T("nuiContour"))
-    return;
-
-  const nuiXMLNodeList& children = pNode->GetChildren();
-
-  nuiXMLNodeList::const_iterator it;
-  nuiXMLNodeList::const_iterator end = children.end();
-
-  for (it = children.begin(); it != end; ++it)
-  {
-    nuiXMLNode* pChild = *it;
-    if (pChild)
-    {
-      nglString name = pChild->GetName();
-      nuiPathGenerator* pContourElement = NULL;
-      if (name == _T("nuiPolyLine"))
-        pContourElement = new nuiPolyLine(pChild);
-      else if (name == _T("nuiRectPath"))
-        pContourElement = new nuiRectPath(pChild);
-      else if (name == _T("nuiSpline"))
-        pContourElement = new nuiSpline(pChild);
-      else if (name == _T("nuiArc"))
-        pContourElement = new nuiArc(pChild);
-
-      if (pContourElement)
-      {
-//        mEventSink.Connect(pContourElement->Changed, &nuiContour::ElementChanged, pContourElement);
-        mpElements.push_back(pContourElement);
-      }
-    }
-  }
-}
-
 nuiContour::~nuiContour()
 {
   std::list<nuiPathGenerator*>::iterator it;
@@ -61,23 +25,6 @@ nuiContour::~nuiContour()
   for (it = mpElements.begin(); it != end; ++it)
     if (*it)
       delete *it;
-}
-
-nuiXMLNode* nuiContour::Serialize(nuiXMLNode* pParentNode) const
-{
-  nuiXMLNode* pNode = NULL;
-  if (pParentNode)
-    pNode = new nuiXMLNode(_T("nuiContour"),pParentNode);
-  else
-    pNode = new nuiXML(_T("nuiContour"));
-
-  std::list<nuiPathGenerator*>::const_iterator it;
-  std::list<nuiPathGenerator*>::const_iterator end = mpElements.end();
-
-  for (it = mpElements.begin(); it != end; ++it)
-    (*it)->Serialize(pNode);
-
-  return pNode;
 }
 
 void nuiContour::AddLines(const nuiPath& rVertices)
