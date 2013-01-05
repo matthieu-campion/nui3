@@ -35,26 +35,25 @@ public:
 
   bool Drag(nglDragAndDrop* pDragObject);
 
-//  void SetDropObject(nglDragAndDrop* pDrop) { mpDropObject = pDrop; }
+  void SetDropObject(nglDragAndDrop* pDrop) { mpDropObject = pDrop; }
   void SetDragObject(nglDragAndDrop* pDrag) { mpDragObject = pDrag; }
-//  nglDragAndDrop* GetDropObject()           { return mpDropObject; }
+  nglDragAndDrop* GetDropObject()           { return mpDropObject; }
   nglDragAndDrop* GetDragObject()           { return mpDragObject; }
   
-//  bool HasDropObject()                      { return mpDropObject ? true : false; }
+  bool HasDropObject()                      { return mpDropObject ? true : false; }
   bool HasDragObject()                      { return mpDragObject ? true : false; }
 
   void SetCanDrop(bool can)                 { mCanDrop = can; }
   bool CanDrop()                            { return mCanDrop; }
-//protected:
-  
-public:
+
+protected:
   nglWindow*  mpWin;
   WindowRef   mWinRef;
 
   bool        mCanDrop;
   
   nglDragAndDrop* mpDragObject;
-//  nglDragAndDrop* mpDropObject;
+  nglDragAndDrop* mpDropObject;
   
   
   EventRecord mEventRecord; // stupid but needed...
@@ -62,6 +61,11 @@ public:
   DragTrackingHandlerUPP  mDragTrackingHandler;
   DragReceiveHandlerUPP   mDragReceiveHandler;
   DragSendDataUPP         mSendProc;
+
+  friend OSErr nglDragSendData(FlavorType theType, void * dragSendRefCon, DragItemRef theItemRef, DragRef theDrag);
+  friend OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef theDrag);
+  friend OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, void * handlerRefCon, DragRef theDrag);
+  friend class nglWindow;
 };
 
 #endif//__nglDragCarbonDragAndDrop_h__

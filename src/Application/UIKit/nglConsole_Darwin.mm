@@ -38,7 +38,7 @@ void nglConsole::Show(bool IsVisible)
 
 void nglConsole::OnOutput(const nglString& rText)
 {
-  printf(rText.GetChars());
+  printf("%s", rText.GetChars());
   fflush(stdout);
 }
 

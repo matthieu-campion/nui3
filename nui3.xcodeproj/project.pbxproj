@@ -1949,6 +1949,20 @@
 		E50F79F913C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */ = {isa = PBXBuildFile; fileRef = E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */; };
 		E50F79FA13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */ = {isa = PBXBuildFile; fileRef = E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */; };
 		E50F79FB13C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh in Headers */ = {isa = PBXBuildFile; fileRef = E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */; };
+		E50FE78B1691089600A9461A /* nuiGL2Painter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */; };
+		E50FE78C1691089600A9461A /* nuiGL2Painter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */; };
+		E50FE78D1691089600A9461A /* nuiGL2Painter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */; };
+		E50FE78E1691089600A9461A /* nuiGL2Painter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */; };
+		E50FE78F1691089600A9461A /* nuiGL2Painter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */; };
+		E50FE7901691089600A9461A /* nuiGL2Painter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */; };
+		E50FE7911691089600A9461A /* nuiGL2Painter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */; };
+		E50FE794169108A300A9461A /* nuiGL2Painter.h in Headers */ = {isa = PBXBuildFile; fileRef = E50FE793169108A300A9461A /* nuiGL2Painter.h */; };
+		E50FE795169108A300A9461A /* nuiGL2Painter.h in Headers */ = {isa = PBXBuildFile; fileRef = E50FE793169108A300A9461A /* nuiGL2Painter.h */; };
+		E50FE796169108A300A9461A /* nuiGL2Painter.h in Headers */ = {isa = PBXBuildFile; fileRef = E50FE793169108A300A9461A /* nuiGL2Painter.h */; };
+		E50FE797169108A300A9461A /* nuiGL2Painter.h in Headers */ = {isa = PBXBuildFile; fileRef = E50FE793169108A300A9461A /* nuiGL2Painter.h */; };
+		E50FE798169108A300A9461A /* nuiGL2Painter.h in Headers */ = {isa = PBXBuildFile; fileRef = E50FE793169108A300A9461A /* nuiGL2Painter.h */; };
+		E50FE799169108A300A9461A /* nuiGL2Painter.h in Headers */ = {isa = PBXBuildFile; fileRef = E50FE793169108A300A9461A /* nuiGL2Painter.h */; };
+		E50FE79A169108A300A9461A /* nuiGL2Painter.h in Headers */ = {isa = PBXBuildFile; fileRef = E50FE793169108A300A9461A /* nuiGL2Painter.h */; };
 		E511F7411367149000DE93B0 /* hb-blob-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = E511F5C11367145700DE93B0 /* hb-blob-private.hh */; };
 		E511F7421367149000DE93B0 /* hb-blob.cc in Sources */ = {isa = PBXBuildFile; fileRef = E511F5C21367145700DE93B0 /* hb-blob.cc */; };
 		E511F7431367149000DE93B0 /* hb-blob.h in Headers */ = {isa = PBXBuildFile; fileRef = E511F5C31367145700DE93B0 /* hb-blob.h */; };
@@ -7744,6 +7758,8 @@
 		E50DB8440D7783EC005B9316 /* nuiHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiHTML.h; path = include/nuiHTML.h; sourceTree = SOURCE_ROOT; };
 		E50DB84A0D779C4B005B9316 /* nuiHTML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTML.cpp; sourceTree = "<group>"; };
 		E50F79F813C1CACB002CB5A0 /* hb-ot-shape-complex-indic-machine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-ot-shape-complex-indic-machine.hh"; path = "harfbuzz/hb-ot-shape-complex-indic-machine.hh"; sourceTree = "<group>"; };
+		E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiGL2Painter.cpp; sourceTree = "<group>"; };
+		E50FE793169108A300A9461A /* nuiGL2Painter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiGL2Painter.h; path = include/nuiGL2Painter.h; sourceTree = SOURCE_ROOT; };
 		E511F5C11367145700DE93B0 /* hb-blob-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-blob-private.hh"; path = "harfbuzz/hb-blob-private.hh"; sourceTree = "<group>"; };
 		E511F5C21367145700DE93B0 /* hb-blob.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-blob.cc"; path = "harfbuzz/hb-blob.cc"; sourceTree = "<group>"; };
 		E511F5C31367145700DE93B0 /* hb-blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-blob.h"; path = "harfbuzz/hb-blob.h"; sourceTree = "<group>"; };
@@ -11926,6 +11942,8 @@
 				E5816CBC0C3CECAB00902DFE /* nuiD3DPainter.h */,
 				E5816DB00C3CECAB00902DFE /* nuiGLPainter.cpp */,
 				E5816CCC0C3CECAB00902DFE /* nuiGLPainter.h */,
+				E50FE78A1691089600A9461A /* nuiGL2Painter.cpp */,
+				E50FE793169108A300A9461A /* nuiGL2Painter.h */,
 				E5816DB40C3CECAB00902DFE /* nuiMetaPainter.cpp */,
 				E5816CDD0C3CECAB00902DFE /* nuiMetaPainter.h */,
 				E5816DB60C3CECAB00902DFE /* nuiPainter.cpp */,
@@ -12442,6 +12460,7 @@
 				E531A9A31440A20F00ED88C9 /* nuiLayout.h in Headers */,
 				E5C3FA3514BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68314F686CF00992064 /* nuiStringTemplate.h in Headers */,
+				E50FE798169108A300A9461A /* nuiGL2Painter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13278,6 +13297,7 @@
 				E531A9A11440A20F00ED88C9 /* nuiLayout.h in Headers */,
 				E5C3FA3314BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68114F686CF00992064 /* nuiStringTemplate.h in Headers */,
+				E50FE796169108A300A9461A /* nuiGL2Painter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13656,6 +13676,7 @@
 				E531A9A21440A20F00ED88C9 /* nuiLayout.h in Headers */,
 				E5C3FA3414BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68214F686CF00992064 /* nuiStringTemplate.h in Headers */,
+				E50FE797169108A300A9461A /* nuiGL2Painter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14040,6 +14061,7 @@
 				E531A9A01440A20F00ED88C9 /* nuiLayout.h in Headers */,
 				E5C3FA3214BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68014F686CF00992064 /* nuiStringTemplate.h in Headers */,
+				E50FE795169108A300A9461A /* nuiGL2Painter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14427,6 +14449,7 @@
 				E5C3FA3114BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA67F14F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E5C9FABC160B4F4500F07936 /* json_batchallocator.h in Headers */,
+				E50FE794169108A300A9461A /* nuiGL2Painter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14813,6 +14836,7 @@
 				E531A9A41440A20F00ED88C9 /* nuiLayout.h in Headers */,
 				E5C3FA3614BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68414F686CF00992064 /* nuiStringTemplate.h in Headers */,
+				E50FE799169108A300A9461A /* nuiGL2Painter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15199,6 +15223,7 @@
 				E531A9A51440A20F00ED88C9 /* nuiLayout.h in Headers */,
 				E5C3FA3714BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68514F686CF00992064 /* nuiStringTemplate.h in Headers */,
+				E50FE79A169108A300A9461A /* nuiGL2Painter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16853,6 +16878,7 @@
 				E531A99A1440A1EE00ED88C9 /* nuiLayout.cpp in Sources */,
 				E5C3FA3F14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67914F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
+				E50FE78F1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17413,6 +17439,7 @@
 				E531A9981440A1EE00ED88C9 /* nuiLayout.cpp in Sources */,
 				E5C3FA3D14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67714F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
+				E50FE78D1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17749,6 +17776,7 @@
 				E531A9991440A1EE00ED88C9 /* nuiLayout.cpp in Sources */,
 				E5C3FA3E14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67814F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
+				E50FE78E1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18095,6 +18123,7 @@
 				E531A9971440A1EE00ED88C9 /* nuiLayout.cpp in Sources */,
 				E5C3FA3C14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67614F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
+				E50FE78C1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18441,6 +18470,7 @@
 				E531A9961440A1EE00ED88C9 /* nuiLayout.cpp in Sources */,
 				E5C3FA3B14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67514F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
+				E50FE78B1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18789,6 +18819,7 @@
 				E531A99B1440A1EE00ED88C9 /* nuiLayout.cpp in Sources */,
 				E5C3FA4014BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67A14F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
+				E50FE7901691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19137,6 +19168,7 @@
 				E531A99C1440A1EE00ED88C9 /* nuiLayout.cpp in Sources */,
 				E5C3FA4114BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67B14F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
+				E50FE7911691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19834,7 +19866,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(GCC_PREPROCESSOR_DEFINITIONS)";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
@@ -19849,7 +19880,6 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -19883,7 +19913,6 @@
 				PRODUCT_NAME = nuiPhone_arm7;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				STRIP_STYLE = all;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -19896,7 +19925,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -19913,7 +19941,6 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -19947,7 +19974,6 @@
 				PRODUCT_NAME = thirdparty_ios_arm7;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				STRIP_STYLE = all;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -19977,7 +20003,6 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				HEADER_SEARCH_PATHS = (
 					.,
@@ -20034,7 +20059,6 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = YES;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -20076,7 +20100,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = "";
@@ -20091,7 +20114,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_PFE_FILE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -20113,7 +20136,6 @@
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
 					FT_MACINTOSH,
-					DARWIN_NO_CARBON,
 					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					HAVE_BCOPY,
 					FEATURE_NANOJIT,
@@ -20126,7 +20148,6 @@
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
 					FT_MACINTOSH,
-					DARWIN_NO_CARBON,
 					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					HAVE_BCOPY,
 					FEATURE_NANOJIT,
@@ -20147,7 +20168,6 @@
 					HAVE_FT_FACE_GETCHARVARIANTINDEX,
 					AVMPLUS_ARM,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -20162,8 +20182,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
@@ -20171,7 +20189,6 @@
 					DEBUG,
 					_CARBON_,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -20187,8 +20204,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_FAST_OBJC_DISPATCH = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -20251,8 +20266,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_FAST_OBJC_DISPATCH = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -20300,10 +20313,8 @@
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -20324,7 +20335,6 @@
 					NGL_STATIC_BUILD,
 					FT2_BUILD_LIBRARY,
 					FT_MACINTOSH,
-					DARWIN_NO_CARBON,
 					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					HAVE_BCOPY,
 					FEATURE_NANOJIT,
@@ -20370,7 +20380,6 @@
 					XP_UNIX,
 					AVMPLUS_IA32,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -20414,7 +20423,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
