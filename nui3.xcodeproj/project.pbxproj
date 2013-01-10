@@ -4939,6 +4939,20 @@
 		E5AA571813C70FA300245C10 /* hb-ot-shape-complex-misc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */; };
 		E5AA571913C70FA400245C10 /* hb-ot-shape-complex-misc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */; };
 		E5AA571A13C70FA500245C10 /* hb-ot-shape-complex-misc.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */; };
+		E5AD0A50169F20EC00836BAA /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AD0A4F169F20EC00836BAA /* nuiShader.h */; };
+		E5AD0A51169F20EC00836BAA /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AD0A4F169F20EC00836BAA /* nuiShader.h */; };
+		E5AD0A52169F20EC00836BAA /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AD0A4F169F20EC00836BAA /* nuiShader.h */; };
+		E5AD0A53169F20EC00836BAA /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AD0A4F169F20EC00836BAA /* nuiShader.h */; };
+		E5AD0A54169F20EC00836BAA /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AD0A4F169F20EC00836BAA /* nuiShader.h */; };
+		E5AD0A55169F20EC00836BAA /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AD0A4F169F20EC00836BAA /* nuiShader.h */; };
+		E5AD0A56169F20EC00836BAA /* nuiShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AD0A4F169F20EC00836BAA /* nuiShader.h */; };
+		E5AD0A5A169F235B00836BAA /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AD0A58169F235B00836BAA /* nuiShader.cpp */; };
+		E5AD0A5B169F235B00836BAA /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AD0A58169F235B00836BAA /* nuiShader.cpp */; };
+		E5AD0A5C169F235B00836BAA /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AD0A58169F235B00836BAA /* nuiShader.cpp */; };
+		E5AD0A5D169F235B00836BAA /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AD0A58169F235B00836BAA /* nuiShader.cpp */; };
+		E5AD0A5E169F235B00836BAA /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AD0A58169F235B00836BAA /* nuiShader.cpp */; };
+		E5AD0A5F169F235B00836BAA /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AD0A58169F235B00836BAA /* nuiShader.cpp */; };
+		E5AD0A60169F235B00836BAA /* nuiShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AD0A58169F235B00836BAA /* nuiShader.cpp */; };
 		E5AFA4D7117548CD0021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E5AFA4D8117548CD0021C1E1 /* nuiMimeMultiPart.h in Headers */ = {isa = PBXBuildFile; fileRef = E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */; };
 		E5AFA4E1117548F20021C1E1 /* nuiMimeMultiPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */; };
@@ -9037,6 +9051,8 @@
 		E5A8BF6511C277A400ECE5FF /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utils.h; path = deps/libcss/src/utils/utils.h; sourceTree = SOURCE_ROOT; };
 		E5A8D1D311E33A54004E14CE /* libnui3CocoaD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3CocoaD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AA570F13C70F8E00245C10 /* hb-ot-shape-complex-misc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ot-shape-complex-misc.cc"; path = "harfbuzz/hb-ot-shape-complex-misc.cc"; sourceTree = "<group>"; };
+		E5AD0A4F169F20EC00836BAA /* nuiShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiShader.h; path = include/nuiShader.h; sourceTree = SOURCE_ROOT; };
+		E5AD0A58169F235B00836BAA /* nuiShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiShader.cpp; sourceTree = "<group>"; };
 		E5AFA4D5117548CD0021C1E1 /* nuiMimeMultiPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiMimeMultiPart.h; path = include/nuiMimeMultiPart.h; sourceTree = SOURCE_ROOT; };
 		E5AFA4DF117548F20021C1E1 /* nuiMimeMultiPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nuiMimeMultiPart.cpp; path = src/Net/nuiMimeMultiPart.cpp; sourceTree = SOURCE_ROOT; };
 		E5B006C5141EC86C003B61C9 /* nuiAttributeEditorBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAttributeEditorBox.h; path = include/nuiAttributeEditorBox.h; sourceTree = SOURCE_ROOT; };
@@ -11236,12 +11252,14 @@
 				E5816CF70C3CECAB00902DFE /* nuiRenderArray.h */,
 				E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */,
 				E5816CF80C3CECAB00902DFE /* nuiRenderState.h */,
+				E5AD0A4F169F20EC00836BAA /* nuiShader.h */,
 				61D085100EAFAA3F00B73835 /* nuiSurface.cpp */,
 				61D085130EAFAA5400B73835 /* nuiSurface.h */,
 				E5816DC50C3CECAB00902DFE /* nuiTexture.cpp */,
 				E5816D0E0C3CECAB00902DFE /* nuiTexture.h */,
 				E5816DC60C3CECAB00902DFE /* nuiTextureHelpers.cpp */,
 				E5816D0F0C3CECAB00902DFE /* nuiTextureHelpers.h */,
+				E5AD0A58169F235B00836BAA /* nuiShader.cpp */,
 			);
 			name = Renderers;
 			path = src/Renderers;
@@ -12461,6 +12479,7 @@
 				E5C3FA3514BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68314F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE798169108A300A9461A /* nuiGL2Painter.h in Headers */,
+				E5AD0A54169F20EC00836BAA /* nuiShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13298,6 +13317,7 @@
 				E5C3FA3314BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68114F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE796169108A300A9461A /* nuiGL2Painter.h in Headers */,
+				E5AD0A52169F20EC00836BAA /* nuiShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13677,6 +13697,7 @@
 				E5C3FA3414BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68214F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE797169108A300A9461A /* nuiGL2Painter.h in Headers */,
+				E5AD0A53169F20EC00836BAA /* nuiShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14062,6 +14083,7 @@
 				E5C3FA3214BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68014F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE795169108A300A9461A /* nuiGL2Painter.h in Headers */,
+				E5AD0A51169F20EC00836BAA /* nuiShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14450,6 +14472,7 @@
 				E52FA67F14F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E5C9FABC160B4F4500F07936 /* json_batchallocator.h in Headers */,
 				E50FE794169108A300A9461A /* nuiGL2Painter.h in Headers */,
+				E5AD0A50169F20EC00836BAA /* nuiShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14837,6 +14860,7 @@
 				E5C3FA3614BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68414F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE799169108A300A9461A /* nuiGL2Painter.h in Headers */,
+				E5AD0A55169F20EC00836BAA /* nuiShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15224,6 +15248,7 @@
 				E5C3FA3714BDC5CC00F4FB96 /* nuiHTTPServer.h in Headers */,
 				E52FA68514F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE79A169108A300A9461A /* nuiGL2Painter.h in Headers */,
+				E5AD0A56169F20EC00836BAA /* nuiShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16879,6 +16904,7 @@
 				E5C3FA3F14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67914F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE78F1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
+				E5AD0A5E169F235B00836BAA /* nuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17440,6 +17466,7 @@
 				E5C3FA3D14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67714F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE78D1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
+				E5AD0A5C169F235B00836BAA /* nuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17777,6 +17804,7 @@
 				E5C3FA3E14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67814F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE78E1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
+				E5AD0A5D169F235B00836BAA /* nuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18124,6 +18152,7 @@
 				E5C3FA3C14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67614F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE78C1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
+				E5AD0A5B169F235B00836BAA /* nuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18471,6 +18500,7 @@
 				E5C3FA3B14BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67514F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE78B1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
+				E5AD0A5A169F235B00836BAA /* nuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18820,6 +18850,7 @@
 				E5C3FA4014BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67A14F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE7901691089600A9461A /* nuiGL2Painter.cpp in Sources */,
+				E5AD0A5F169F235B00836BAA /* nuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19169,6 +19200,7 @@
 				E5C3FA4114BDC60F00F4FB96 /* nuiHTTPServer.cpp in Sources */,
 				E52FA67B14F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE7911691089600A9461A /* nuiGL2Painter.cpp in Sources */,
+				E5AD0A60169F235B00836BAA /* nuiShader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

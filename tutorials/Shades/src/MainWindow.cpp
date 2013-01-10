@@ -255,7 +255,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface2->EnableTexturing(true);
   mpSurface2->SetBlendFunc(nuiBlendTransp);
   
-  //pContext->DrawImage(nuiRect(512, 512), nuiRect(512, 512));
+  pContext->DrawImage(nuiRect(512, 512), nuiRect(512, 512));
   
   for (int32 i = 0; i < mCountY; i++)
   {
