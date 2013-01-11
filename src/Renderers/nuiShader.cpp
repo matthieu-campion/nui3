@@ -420,7 +420,7 @@ void nuiShaderProgram::GetUniformiv(GLint index, GLint* values)
 //////////////////////////////////////////////////////////////////////
 void nuiShaderProgram::BindAttribLocation(GLint index, GLchar* name)
 {
-
+  glBindAttribLocation(mProgram, index, name);
 }
 
 //GLfloat
@@ -446,6 +446,7 @@ void nuiShaderProgram::SetVertexAttrib4f(GLuint index, GLfloat v0, GLfloat v1, G
 
 
 //GLdouble
+#ifndef GL_ES_VERSION_2_0
 void nuiShaderProgram::SetVertexAttrib1d(GLuint index, GLdouble v0)
 {
   glVertexAttrib1d(index, v0);
@@ -494,6 +495,6 @@ void nuiShaderProgram::SetVertexAttribNormalizedByte(GLuint index, GLbyte v0, GL
 {
   glVertexAttrib4Nub(index, v0, v1, v2, v3);
 }
-
+#endif
 
 

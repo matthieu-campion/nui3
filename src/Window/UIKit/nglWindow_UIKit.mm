@@ -785,13 +785,13 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     
 		//self.clearsContextBeforeDrawing = TRUE;
 
-    //EAGLRenderingAPI GLAPI = kEAGLRenderingAPIOpenGLES1;
-    EAGLRenderingAPI GLAPI = kEAGLRenderingAPIOpenGLES2;
+    //EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES1;
+    EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES2;
 
     if (group)
-      context = [[EAGLContext alloc] initWithAPI:GLAPI sharegroup: group];
+      context = [[EAGLContext alloc] initWithAPI:glAPI sharegroup: group];
     else
-      context = [[EAGLContext alloc] initWithAPI:GLAPI];
+      context = [[EAGLContext alloc] initWithAPI:glAPI];
     
     if (!context || ![EAGLContext setCurrentContext:context])
     {

@@ -154,6 +154,7 @@ public:
   void        SetVertexAttrib3f(GLuint index, GLfloat v0, GLfloat v1, GLfloat v2); //!< Specify value of attribute.
   void        SetVertexAttrib4f(GLuint index, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3); //!< Specify value of attribute.
 
+#ifndef GL_ES_VERSION_2_0
   //GLdouble
   void        SetVertexAttrib1d(GLuint index, GLdouble v0); //!< Specify value of attribute.
   void        SetVertexAttrib2d(GLuint index, GLdouble v0, GLdouble v1); //!< Specify value of attribute.
@@ -168,6 +169,7 @@ public:
 
   // Normalized Byte (for example for RGBA colors)
   void        SetVertexAttribNormalizedByte(GLuint index, GLbyte v0, GLbyte v1, GLbyte v2, GLbyte v3); //!< Specify value of attribute. Values will be normalized.
+#endif
 
 private:
   GLuint mProgram;
