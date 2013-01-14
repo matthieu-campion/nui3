@@ -127,7 +127,7 @@ nglThreadChecker::~nglThreadChecker()
 //
 //*****************************************************************************************
 
-void nglThreadChecker::EnableChecker(bool set)
+void nglThreadChecker::EnableChecker(bool set, bool start)
 {
   if (mEnabled == set)
     return;
@@ -135,9 +135,12 @@ void nglThreadChecker::EnableChecker(bool set)
   if (!set)
   {
     // stop checker
-    mpChecker->Stop();
-    mpChecker->Join();
-    mEnabled = false;   
+    if (mpChecker->IsRunning())
+    {
+      mpChecker->Stop();
+      mpChecker->Join();
+    }
+    mEnabled = false;
   }    
   else
   {
@@ -146,11 +149,18 @@ void nglThreadChecker::EnableChecker(bool set)
     {
       mpChecker = new nglThreadChecker();
     }
-    mpChecker->Start();
+    if (start)
+      mpChecker->Start();
     mEnabled = true;
   }
   
 }
+
+bool nglThreadChecker::IsRunning() const
+{
+  return mRunning;
+}
+
 
 bool nglThreadChecker::IsCheckerEnabled()
 {
@@ -291,7 +301,10 @@ bool nglThreadChecker::GetStates(std::map<nglThread::ID, std::list<nglThreadStat
 
 const nglString& nglThreadChecker::Dump()
 {
-  if (!mEnabled)
+  if (!mpChecker)
+    return "nglThreadChecker disabled";
+
+  if (!mpChecker->IsRunning())
   {
     mpChecker->mAtomicLock.Lock();
     mpChecker->Checker(0);
