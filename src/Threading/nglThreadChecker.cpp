@@ -111,7 +111,7 @@ nglString nglThreadState::GetWarningToString() const
 
 
 nglThreadChecker::nglThreadChecker()
-  : nglThread()
+  : nglThread("nglThreadChecker")
 {
 }
 
@@ -311,6 +311,7 @@ const nglString& nglThreadChecker::Dump()
 
 const nglString& nglThreadChecker::_Dump(double currentTime)
 {
+  mAtomicLock.Lock();
   mDump = nglString::Empty;
 
   nglString tmp;
@@ -359,6 +360,7 @@ const nglString& nglThreadChecker::_Dump(double currentTime)
   mDump.Append(_T("------------------------\n"));
 
   
+  mAtomicLock.Unlock();
   return mDump;
 }
 
@@ -800,8 +802,11 @@ bool nglThreadChecker::_UnregisterThread(nglThread::ID ID)
   
   std::map<nglThread::ID, std::list<nglThreadState> >::iterator it = mThreadStates.find(ID);
   if (it == mThreadStates.end())
+  {
+    mAtomicLock.Unlock();
     return false;
-    
+  }
+
   mThreadStates.erase(it);
 
   mAtomicLock.Unlock();
@@ -815,7 +820,9 @@ bool nglThreadChecker::_UnregisterThread(nglThread::ID ID)
 
 void nglThreadChecker::_GetStates(std::map<nglThread::ID, std::list<nglThreadState> >& states)
 {
+  mAtomicLock.Lock();
   states = mThreadStates;
+  mAtomicLock.Unlock();
 }
 
 
