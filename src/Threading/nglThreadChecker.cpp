@@ -292,8 +292,12 @@ bool nglThreadChecker::GetStates(std::map<nglThread::ID, std::list<nglThreadStat
 const nglString& nglThreadChecker::Dump()
 {
   if (!mEnabled)
-    return nglString::Null;
-    
+  {
+    mpChecker->mAtomicLock.Lock();
+    mpChecker->Checker(0);
+    mpChecker->mAtomicLock.Unlock();
+  }
+
   return mpChecker->_Dump(nglTime());
 }
 
