@@ -68,9 +68,6 @@ class nglThreadChecker : public nglThread
 {
 public:
 
-  nglThreadChecker();
-  virtual ~nglThreadChecker();
-
   //**********************************************
   // interface for applications
   //
@@ -99,6 +96,8 @@ public:
   static bool GetThreadName(nglThread::ID ID, nglString& rName);
   
 private:
+  nglThreadChecker();
+  virtual ~nglThreadChecker();
 
   void Stop();
 
