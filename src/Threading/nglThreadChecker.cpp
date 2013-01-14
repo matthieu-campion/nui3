@@ -304,14 +304,13 @@ const nglString& nglThreadChecker::Dump()
   if (!mpChecker)
     return CheckerDisabled;
 
+  mpChecker->mAtomicLock.Lock();
   if (!mpChecker->IsRunning())
-  {
-    mpChecker->mAtomicLock.Lock();
-    mpChecker->Checker(0);
-    mpChecker->mAtomicLock.Unlock();
-  }
+    mpChecker->BuildLocksMap();
+  const nglString& str = mpChecker->_Dump(nglTime());
+  mpChecker->mAtomicLock.Unlock();
 
-  return mpChecker->_Dump(nglTime());
+  return str;
 }
 
 
@@ -328,7 +327,6 @@ const nglString& nglThreadChecker::Dump()
 
 const nglString& nglThreadChecker::_Dump(double currentTime)
 {
-  mAtomicLock.Lock();
   mDump = nglString::Empty;
 
   nglString tmp;
@@ -375,9 +373,6 @@ const nglString& nglThreadChecker::_Dump(double currentTime)
     }
   }
   mDump.Append(_T("------------------------\n"));
-
-  
-  mAtomicLock.Unlock();
   return mDump;
 }
 
