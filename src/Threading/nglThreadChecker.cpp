@@ -297,12 +297,12 @@ bool nglThreadChecker::GetStates(std::map<nglThread::ID, std::list<nglThreadStat
 
 
 //**************************************************************************
-
+static nglString CheckerDisabled("nglThreadChecker disabled");
 
 const nglString& nglThreadChecker::Dump()
 {
   if (!mpChecker)
-    return "nglThreadChecker disabled";
+    return CheckerDisabled;
 
   if (!mpChecker->IsRunning())
   {
@@ -574,6 +574,13 @@ bool nglThreadChecker::FindDeadLock_2ndPass(nglLock* pWaitingLock, nglString& lo
 {
   // retrieve corresponding thread
   std::map<nglLock*, nglThread::ID>::iterator itm = mLockmap.find(pWaitingLock);
+  if (itm == mLockmap.end())
+  {
+    nglString tmp;
+    tmp.CFormat("Error: unable to find lock %p '%s' (%s)", pWaitingLock, pWaitingLock->GetName().GetChars(), pWaitingLock->GetLabel().GetChars());
+    return false;
+  }
+
   NGL_ASSERT(itm != mLockmap.end());
   nglThread::ID nextThread = itm->second;
   nglString nextName;
