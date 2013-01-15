@@ -111,7 +111,7 @@ nglString nglThreadState::GetWarningToString() const
 
 
 nglThreadChecker::nglThreadChecker()
-  : nglThread()
+  : nglThread("nglThreadChecker")
 {
 }
 
@@ -127,7 +127,7 @@ nglThreadChecker::~nglThreadChecker()
 //
 //*****************************************************************************************
 
-void nglThreadChecker::EnableChecker(bool set)
+void nglThreadChecker::EnableChecker(bool set, bool start)
 {
   if (mEnabled == set)
     return;
@@ -135,9 +135,12 @@ void nglThreadChecker::EnableChecker(bool set)
   if (!set)
   {
     // stop checker
-    mpChecker->Stop();
-    mpChecker->Join();
-    mEnabled = false;   
+    if (mpChecker->IsRunning())
+    {
+      mpChecker->Stop();
+      mpChecker->Join();
+    }
+    mEnabled = false;
   }    
   else
   {
@@ -146,11 +149,18 @@ void nglThreadChecker::EnableChecker(bool set)
     {
       mpChecker = new nglThreadChecker();
     }
-    mpChecker->Start();
+    if (start)
+      mpChecker->Start();
     mEnabled = true;
   }
   
 }
+
+bool nglThreadChecker::IsRunning() const
+{
+  return mRunning;
+}
+
 
 bool nglThreadChecker::IsCheckerEnabled()
 {
@@ -287,14 +297,20 @@ bool nglThreadChecker::GetStates(std::map<nglThread::ID, std::list<nglThreadStat
 
 
 //**************************************************************************
-
+static nglString CheckerDisabled("nglThreadChecker disabled");
 
 const nglString& nglThreadChecker::Dump()
 {
-  if (!mEnabled)
-    return nglString::Null;
-    
-  return mpChecker->_Dump(nglTime());
+  if (!mpChecker)
+    return CheckerDisabled;
+
+  mpChecker->mAtomicLock.Lock();
+  if (!mpChecker->IsRunning())
+    mpChecker->BuildLocksMap();
+  const nglString& str = mpChecker->_Dump(nglTime());
+  mpChecker->mAtomicLock.Unlock();
+
+  return str;
 }
 
 
@@ -357,8 +373,6 @@ const nglString& nglThreadChecker::_Dump(double currentTime)
     }
   }
   mDump.Append(_T("------------------------\n"));
-
-  
   return mDump;
 }
 
@@ -555,6 +569,13 @@ bool nglThreadChecker::FindDeadLock_2ndPass(nglLock* pWaitingLock, nglString& lo
 {
   // retrieve corresponding thread
   std::map<nglLock*, nglThread::ID>::iterator itm = mLockmap.find(pWaitingLock);
+  if (itm == mLockmap.end())
+  {
+    nglString tmp;
+    tmp.CFormat("Error: unable to find lock %p '%s' (%s)", pWaitingLock, pWaitingLock->GetName().GetChars(), pWaitingLock->GetLabel().GetChars());
+    return false;
+  }
+
   NGL_ASSERT(itm != mLockmap.end());
   nglThread::ID nextThread = itm->second;
   nglString nextName;
@@ -800,8 +821,11 @@ bool nglThreadChecker::_UnregisterThread(nglThread::ID ID)
   
   std::map<nglThread::ID, std::list<nglThreadState> >::iterator it = mThreadStates.find(ID);
   if (it == mThreadStates.end())
+  {
+    mAtomicLock.Unlock();
     return false;
-    
+  }
+
   mThreadStates.erase(it);
 
   mAtomicLock.Unlock();
@@ -815,7 +839,9 @@ bool nglThreadChecker::_UnregisterThread(nglThread::ID ID)
 
 void nglThreadChecker::_GetStates(std::map<nglThread::ID, std::list<nglThreadState> >& states)
 {
+  mAtomicLock.Lock();
   states = mThreadStates;
+  mAtomicLock.Unlock();
 }
 
 

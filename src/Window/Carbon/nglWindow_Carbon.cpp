@@ -209,7 +209,7 @@ nglCarbonDragAndDrop::nglCarbonDragAndDrop(nglWindow* pWin, WindowRef winRef)
   osErr = InstallTrackingHandler(mDragTrackingHandler, mWinRef, this);
   osErr = InstallReceiveHandler(mDragReceiveHandler, mWinRef, this);
   
-//  mpDropObject = NULL;
+  mpDropObject = NULL;
   mpDragObject = NULL;
 }
 
@@ -244,7 +244,7 @@ bool nglCarbonDragAndDrop::Drag(nglDragAndDrop* pDragObject)
       pObj->AddDragItemFlavor(mDragRef, item, type);
     }
   }
-
+  
   err = SetDragSendProc(mDragRef, mSendProc, this);
   NGL_ASSERT(!err);
   
@@ -342,8 +342,7 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
   if (!pDnd->CanDrop())
     return dragNotAcceptedErr;
   
-//  nglDragAndDrop* pDrag = pDnd->GetDropObject();
-  nglDragAndDrop* pDrag = pDnd->GetDragObject();
+  nglDragAndDrop* pDrag = pDnd->GetDropObject();
   
   UInt16 numItems;
   err = CountDragItems (theDrag, &numItems);
@@ -402,8 +401,7 @@ OSErr nglDragReceiveHandler(WindowRef theWindow, void * handlerRefCon, DragRef t
 	}
 	
   
-//  pDnd->mpWin->OnDropped(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
-  pDnd->mpWin->OnDropped(pDnd->GetDragObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
+  pDnd->mpWin->OnDropped(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
   /* Clean up Done in nglDragTrackingHandler when leaving Window, which also occurs after a drop */
 
   return noErr;
@@ -426,11 +424,11 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
     case kDragTrackingEnterWindow:
       {
         //NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingEnterWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
+        NGL_ASSERT(!pDnd->HasDropObject());
+        
         nglDragAndDrop* pDrag = new nglDragAndDrop(eDropEffectCopy);
-//        NGL_ASSERT(!pDnd->HasDropObject());
-//        pDnd->SetDropObject(pDrag);
-        if (!pDnd->HasDragObject())
-          pDnd->SetDragObject(pDrag);      
+        pDnd->SetDropObject(pDrag);
+        
         DragActions actions;
         err = GetDragAllowableActions(theDrag, &actions);
         NGL_ASSERT(!err);
@@ -484,8 +482,7 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
         mouse.v -= rect.top;
         nglMouseInfo::Flags Button;
         
-//        NGL_ASSERT(pDnd->GetDropObject());
-        NGL_ASSERT(pDnd->GetDragObject());
+        NGL_ASSERT(pDnd->GetDropObject());
         DragAttributes flags;
         err = GetDragAttributes(theDrag, &flags);
         int XOffset = pDnd->mpWin->mXOffset;
@@ -496,14 +493,12 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
           YOffset = 0;
         }
         
-//        bool can = pDnd->mpWin->OnCanDrop(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
-        bool can = pDnd->mpWin->OnCanDrop(pDnd->GetDragObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
+        bool can = pDnd->mpWin->OnCanDrop(pDnd->GetDropObject(), mouse.h - XOffset, mouse.v - YOffset, Button);
         pDnd->SetCanDrop(can);
         
         if (can)
         {
-//          nglDropEffect effect = pDnd->GetDropObject()->GetDesiredDropEffect();
-          nglDropEffect effect = pDnd->GetDragObject()->GetDesiredDropEffect();
+          nglDropEffect effect = pDnd->GetDropObject()->GetDesiredDropEffect();
           DragActions actions = GetDragActions(effect);
           SetDragDropAction(theDrag, actions);
         }
@@ -520,12 +515,9 @@ OSErr nglDragTrackingHandler (DragTrackingMessage message, WindowRef theWindow, 
       {
         //NGL_OUT(_T("nglDragTrackingHandler(kDragTrackingLeaveWindow, 0x%x, 0x%x, 0x%x)\n"), theWindow, handlerRefCon, theDrag);
         pDnd->mpWin->OnDragLeave();
-        NGL_ASSERT(pDnd->HasDragObject());
-//        NGL_ASSERT(pDnd->HasDropObject());
-//        delete pDnd->GetDropObject();
-//        pDnd->SetDropObject(NULL);
-        delete pDnd->GetDragObject();
-        pDnd->SetDragObject(NULL);
+        NGL_ASSERT(pDnd->HasDropObject());
+        delete pDnd->GetDropObject();
+        pDnd->SetDropObject(NULL);
       }
       break;
       

@@ -276,12 +276,12 @@ protected:
 	 You should free up memory when this happens, warn the user or quit the application.
 	 */
 	
-  int  Main(int argc, char** argv);
-  bool Init(int argc, char** argv);
+  int  Main(int argc, const char** argv);
+  bool Init(int argc, const char** argv);
   int  Run();
 
 //  static OSErr QuitAppleEventHandler( const AppleEvent *appleEvt, AppleEvent* reply, UInt32 refcon );
-  friend int main(int argc, char** argv);
+  friend int main(int argc, const char** argv);
 
 ///< Yes, it has to be public (called from an obj-c class ...)
 public:

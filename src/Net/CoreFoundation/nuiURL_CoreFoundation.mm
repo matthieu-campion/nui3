@@ -28,13 +28,13 @@ nuiURL::~nuiURL()
 
 bool nuiURL::IsNull()
 {
-  return mUrl.IsNull();
+  return (mUrl == nglString::Null);
 }
 
 bool nuiURL::OpenBrowser()
 {
 
-  if (mUrl.IsNull())
+  if (mUrl == nglString::Null)
     return false;
   
   // Create a CFString and then a CFUrl

@@ -227,6 +227,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   request.SetName(_T("Helvetica"), 1);
   request.MustHaveSize(250, 1);
   nuiFont* pFont = nuiFontManager::GetManager().GetFont(request); //  nuiFont::GetFont(250);
+  printf("Font: %p", pFont);
   mpSurface1->SetFont(pFont);
   mpSurface1->SetTextColor(nuiColor(255, 255, 255, 255, true));
   mpSurface1->DrawText(50, 240, _T("Text"));
@@ -254,7 +255,7 @@ bool MainWindow::Draw(nuiDrawContext* pContext)
   mpSurface2->EnableTexturing(true);
   mpSurface2->SetBlendFunc(nuiBlendTransp);
   
-  //pContext->DrawImage(nuiRect(512, 512), nuiRect(512, 512));
+  pContext->DrawImage(nuiRect(512, 512), nuiRect(512, 512));
   
   for (int32 i = 0; i < mCountY; i++)
   {

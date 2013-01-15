@@ -33,18 +33,23 @@ the NGL_APP_CREATE macro for instance.
 
 /* Default verbose level
 */
+
+#if (defined _UNIX_) || (defined _MINUI3_) || (defined _COCOA_) || (defined _CARBON_)
+void nglDumpStackTrace();
+#endif
+
 #ifdef _DEBUG_
 // The mac (and GCC?) has brain dead assert system that does NOTHING.
 # ifdef _CARBON_
 #   define __ASSERT_SYS(test) { if (!(test)) Debugger(); }
 # elif defined(_WIN32_)
-#ifdef __NUI64__
-#  define __ASSERT_SYS(test) { assert(test); }
-#else
-#  define __ASSERT_SYS(test) { if (!(test)) { __asm { int 3 } }; }
-#endif
-#else
-#  define __ASSERT_SYS(test) assert(test);
+#   ifdef __NUI64__
+#     define __ASSERT_SYS(test) { assert(test); }
+#   else
+#     define __ASSERT_SYS(test) { if (!(test)) { __asm { int 3 } }; }
+#   endif
+# else
+#   define __ASSERT_SYS(test) if (!(test)) { nglDumpStackTrace(); exit(-1); }
 # endif
 # define NGL_LOG_DEFAULT NGL_LOG_INFO
 #else

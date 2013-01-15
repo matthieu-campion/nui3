@@ -68,13 +68,10 @@ class nglThreadChecker : public nglThread
 {
 public:
 
-  nglThreadChecker();
-  virtual ~nglThreadChecker();
-
   //**********************************************
   // interface for applications
   //
-  static void EnableChecker(bool set);                ///< main method. enable/disable the nglThreadChecker. it's disabled by default.
+  static void EnableChecker(bool set, bool start = true);                ///< main method. enable/disable the nglThreadChecker. it's disabled by default.
   static bool IsCheckerEnabled();                
   static void SetCheckerThreshold(double threshold);  ///< set the timeout value in seconds for dead-locks checker. default is 10s.
   static void EnableLongLockChecker(bool set);        ///< enable/disable the checker for long lock operation. it's disabled by default.
@@ -99,6 +96,8 @@ public:
   static bool GetThreadName(nglThread::ID ID, nglString& rName);
   
 private:
+  nglThreadChecker();
+  virtual ~nglThreadChecker();
 
   void Stop();
 
@@ -122,7 +121,7 @@ private:
   virtual void OnStart(); ///< Main thread method to process the checkers
   void Checker(double currentTime);
   
-  
+  bool IsRunning() const;
   bool mRunning;
   
   std::map<nglThread::ID, std::list<nglThreadState> > mThreadStates; 
