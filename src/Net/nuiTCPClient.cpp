@@ -56,7 +56,7 @@ bool nuiTCPClient::Connect(const nuiNetworkHost& rHost)
   struct addrinfo* addr = nuiSocket::GetAddrInfo(rHost);
   int res = connect(mSocket, addr->ai_addr, addr->ai_addrlen);
   if (res)
-    DumpError(res, __FUNC__);
+    DumpError(this, res, __FUNC__);
 
   UpdateIdle();
 
@@ -109,7 +109,7 @@ int nuiTCPClient::Send(const uint8* pData, int len)
     if (errno == EWOULDBLOCK && mNonBlocking)
       return res;
 
-    DumpError(res, __FUNC__);
+    DumpError(this, res, __FUNC__);
     mWriteConnected = false;
   }
   else

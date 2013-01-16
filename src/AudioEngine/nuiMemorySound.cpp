@@ -37,11 +37,12 @@ nuiMemorySound::~nuiMemorySound()
 }
 
 bool nuiMemorySound::LoadSamples(nglIStream* pSStream)
-{
+{  
   nglIStream* pStream = pSStream;
-
+  
   if (!mPath.Exists() && !pStream)
   {
+    NGL_OUT("nuiMemorySound: file '%ls' does not exist\n", mPath.GetPathName().GetChars());
     return false;
   }
   
