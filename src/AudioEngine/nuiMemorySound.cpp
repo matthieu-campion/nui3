@@ -37,10 +37,7 @@ nuiMemorySound::~nuiMemorySound()
 }
 
 bool nuiMemorySound::LoadSamples(nglIStream* pSStream)
-{
-  delete mpStream;
-  mpStream = NULL;
-  
+{  
   nglIStream* pStream = pSStream;
   
   if (!mPath.Exists() && !pStream)
