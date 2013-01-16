@@ -26,7 +26,7 @@
 #define NGL_EPOLL
 #endif
 
-void nuiSocket::DumpError(int err, const char* msg, ...)
+void nuiSocket::DumpError(const nuiSocket* pSocket, int err, const char* msg, ...)
 {
   if (!err)
     return;
@@ -42,15 +42,15 @@ void nuiSocket::DumpError(int err, const char* msg, ...)
     m.Formatv(msg, args);
     va_end(args);
 
-    NGL_OUT(_T("[%s] Socket Error: %s\n"), m.GetChars(), error.GetChars());
+    NGL_OUT(_T("[%s] Socket Error (%p %d): %s\n"), m.GetChars(), pSocket, pSocket?pSocket->GetSocket():0, error.GetChars());
   }
   else
-    NGL_OUT(_T("Socket Error: %s\n"), error.GetChars());
+    NGL_OUT(_T("Socket Error (%p, %d): %s\n"), pSocket, pSocket?pSocket->GetSocket():0, error.GetChars());
 }
 
-void nuiSocket::DumpError(int err)
+void nuiSocket::DumpError(const nuiSocket* pSocket, int err)
 {
-  DumpError(err, "?");
+  DumpError(pSocket, err, "?");
 }
 
 
@@ -66,7 +66,7 @@ nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
   {
     int n = 0;
     int res = setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
-    DumpError(res, __FUNC__);
+    DumpError(this, res, __FUNC__);
   }
 #endif
 
@@ -79,7 +79,7 @@ bool nuiSocket::Init(int domain, int type, int protocol)
 #if (!defined _LINUX_)
   int n = 0;
   int res = setsockopt(mSocket, SOL_SOCKET, SO_NOSIGPIPE, &n, sizeof(n));
-  DumpError(res, __FUNC__);
+  DumpError(this, res, __FUNC__);
 #endif
   return mSocket >= 0;
 }
@@ -99,14 +99,14 @@ void nuiSocket::Close()
   {
     int res = 0;
 //    int res = shutdown(mSocket, SHUT_RDWR);
-//    DumpError(res, __FUNC__);
+//    DumpError(this, res, __FUNC__);
 #ifdef WIN32
     //DisconnectEx(mSocket, NULL, 0, 0);
     res = closesocket(mSocket);
 #else
     res = close(mSocket);
 #endif
-    DumpError(res, __FUNC__);
+    DumpError(this, res, __FUNC__);
   }
 
   mSocket = -1;
@@ -128,7 +128,7 @@ bool nuiSocket::GetLocalHost(nuiNetworkHost& rHost) const
   struct sockaddr_in addr;
   socklen_t addrlen = sizeof(addr);
   int res = getsockname(mSocket, (struct sockaddr*)&addr, &addrlen);
-  DumpError(res, __FUNC__);
+  DumpError(this, res, __FUNC__);
 
   if (res != 0)
     return false;
@@ -143,7 +143,7 @@ bool nuiSocket::GetDistantHost(nuiNetworkHost& rHost) const
   struct sockaddr_in addr;
   socklen_t addrlen = sizeof(addr);
   int res = getpeername(mSocket, (struct sockaddr*)&addr, &addrlen);
-  DumpError(res, __FUNC__);
+  DumpError(this, res, __FUNC__);
 
   if (res != 0)
     return false;
@@ -186,7 +186,7 @@ void nuiSocket::SetNonBlocking(bool set)
   /* Otherwise, use the old way of doing it */
   flags = set ? 1 : 0;
   int res = ioctl(mSocket, FIOBIO, &flags);
-  DumpError(res, __FUNC__);
+  DumpError(this, res, __FUNC__);
 #endif
 }
 
@@ -382,11 +382,11 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 //    ev.flags |= EV_CLEAR;
   ev.udata = pSocket;
   int res = kevent(mQueue, &ev, 1, NULL, 0, 0);
-  nuiSocket::DumpError(res, "nuiSocketPool::Add 1");
+  nuiSocket::DumpError(NULL, res, "nuiSocketPool::Add 1");
 
   ev.filter = EVFILT_WRITE;
   res = kevent(mQueue, &ev, 1, NULL, 0, 0);
-  nuiSocket::DumpError(res, "nuiSocketPool::Add 2");
+  nuiSocket::DumpError(NULL, res, "nuiSocketPool::Add 2");
 
   {
     nglCriticalSectionGuard g(mCS);
@@ -407,11 +407,11 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
   ev.udata = pSocket;
 
   int res = kevent(mQueue, &ev, 1, NULL, 0, 0);
-  nuiSocket::DumpError(res, "nuiSocketPool::Del 1");
+  nuiSocket::DumpError(NULL, res, "nuiSocketPool::Del 1");
 
   ev.filter = EVFILT_WRITE;
   res = kevent(mQueue, &ev, 1, NULL, 0, 0);
-  nuiSocket::DumpError(res, "nuiSocketPool::Del 2");
+  nuiSocket::DumpError(NULL, res, "nuiSocketPool::Del 2");
 
   mNbSockets--;
 
@@ -438,7 +438,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
   if(res == -1)
   {
-    nuiSocket::DumpError(res, "kqueue::waitForEvents");
+    nuiSocket::DumpError(NULL, res, "kqueue::waitForEvents");
     if (errno == EINTR)
     {
       //mQueue = kqueue();
@@ -531,7 +531,7 @@ void nuiSocketPool::Add(nuiSocket* pSocket, TriggerMode Mode)
 
   if (res != 0)
   {
-    nuiSocket::DumpError(res, "epoll::Add");
+    nuiSocket::DumpError(NULL, res, "epoll::Add");
   }
 
   {
@@ -551,7 +551,7 @@ void nuiSocketPool::Del(nuiSocket* pSocket)
 
   if (res != 0)
   {
-    nuiSocket::DumpError(res, "epoll::Del");
+    nuiSocket::DumpError(NULL, res, "epoll::Del");
   }
 
 
@@ -577,7 +577,7 @@ int nuiSocketPool::DispatchEvents(int timeout_millisec)
 
   if(res == -1)
   {
-    nuiSocket::DumpError(res, "epoll::WaitForEvents");
+    nuiSocket::DumpError(NULL, res, "epoll::WaitForEvents");
     {
       nglCriticalSectionGuard g(mCS);
       mDeletedFromPool.clear();

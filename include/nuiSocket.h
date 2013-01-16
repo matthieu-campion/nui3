@@ -56,8 +56,8 @@ public:
 
   virtual void Close();
 
-  static void DumpError(int err);
-  static void DumpError(int err, const char* msg, ...);
+  static void DumpError(const nuiSocket* pSocket, int err);
+  static void DumpError(const nuiSocket* pSocket, int err, const char* msg, ...);
 
   const nglString& GetName() const;
   void SetName(const nglString& rName);

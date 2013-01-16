@@ -55,13 +55,13 @@ bool nuiTCPServer::Bind(const nuiNetworkHost& rHost)
   if (res)
   {
     printf("setsockopt error %d\n", errno);
-    DumpError(res, __FUNC__);
+    DumpError(this, res, __FUNC__);
     return false;
   }
   struct addrinfo* addr = nuiSocket::GetAddrInfo(rHost);
   res = bind(mSocket, addr->ai_addr, addr->ai_addrlen);
   if (res)
-    DumpError(res, __FUNC__);
+    DumpError(this, res, __FUNC__);
 
   freeaddrinfo(addr);
 

@@ -36,7 +36,7 @@ class nuiTCPClient : public nuiSocket
 {
 public:
   nuiTCPClient();
-  ~nuiTCPClient();
+  virtual ~nuiTCPClient();
 
   bool Connect(const nuiNetworkHost& rHost);
   bool Connect(const nglString& rHost, int16 port);
