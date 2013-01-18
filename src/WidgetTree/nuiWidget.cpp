@@ -98,7 +98,7 @@ nuiWidget::nuiWidget()
   
   Init();
 
-//  InitDefaultDecorations();
+  InitDefaultDecorations();
   
   // Property bindings:
   InitProperties();
@@ -123,7 +123,7 @@ nuiWidget::nuiWidget(const nglString& rObjectName)
   
   Init();
   
-//  InitDefaultDecorations();
+  InitDefaultDecorations();
   
   // Property bindings:
   InitProperties();
@@ -4636,13 +4636,13 @@ void nuiWidget::ExitDefaultDecorations()
 }
 
 // static 
-//void nuiWidget::SetDefaultDecoration(int32 objectClassIndex, nuiDecorationDelegate dlg)
-//{
-//  if (objectClassIndex >= mDefaultDecorations.size())
-//    mDefaultDecorations.resize(objectClassIndex+1);
-//
-//  mDefaultDecorations[objectClassIndex] = dlg;
-//}
+void nuiWidget::SetDefaultDecoration(int32 objectClassIndex, nuiDecorationDelegate dlg)
+{
+  if (objectClassIndex >= mDefaultDecorations.size())
+    mDefaultDecorations.resize(objectClassIndex+1);
+
+  mDefaultDecorations[objectClassIndex] = dlg;
+}
 
 
 void nuiWidget::SetDecoration(const nglString& rName)

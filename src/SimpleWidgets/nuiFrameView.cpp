@@ -40,6 +40,7 @@ bool nuiFrameView::Load(const nuiXMLNode* pNode)
     else
       nuiBuilder::Get().CreateWidget(pChildNode->GetName());
   }
+  
   return true;
 }
 

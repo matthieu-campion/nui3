@@ -835,14 +835,14 @@ public:
     {
       // Create a widget creator
       // Eat the +
-//      bool res = GetChar();
-//      if (!res)
-//        return false;
-//      
-//      nuiWidgetCreator* pCreator = ReadWidgetCreator();
-//      if (!pCreator)
-//        return false;
-//      nuiBuilder::Get().SetHandler(pCreator->GetObjectName(), pCreator);
+      bool res = GetChar();
+      if (!res)
+        return false;
+      
+      nuiWidgetCreator* pCreator = ReadWidgetCreator();
+      if (!pCreator)
+        return false;
+      nuiBuilder::Get().SetHandler(pCreator->GetObjectName(), pCreator);
       return true;
     }
     else if (mChar == _T('@'))
