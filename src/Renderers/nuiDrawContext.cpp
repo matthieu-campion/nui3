@@ -1526,8 +1526,8 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
   {
 #ifndef __NUI_NO_GL__
   case eOpenGL:
-    //pPainter = new nuiGLPainter(pContext, rRect);
-    pPainter = new nuiGL2Painter(pContext, rRect);
+    pPainter = new nuiGLPainter(pContext, rRect);
+    //pPainter = new nuiGL2Painter(pContext, rRect);
     break;
 #endif
 #ifndef __NUI_NO_D3D__

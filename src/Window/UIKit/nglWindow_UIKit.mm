@@ -264,7 +264,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   angle = mpNGLWindow->GetRotation();
   if (mAngle != angle)
   {
-    NSLog(@"new window angle: %f (old %f)\n", angle, (float)mAngle);
+    NSLog(@"new window angle: %f (old %f)\n", (float)angle, (float)mAngle);
     switch (angle)
     {
       case 0:
@@ -785,8 +785,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     
 		//self.clearsContextBeforeDrawing = TRUE;
 
-    //EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES1;
-    EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES2;
+    EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES1;
+    //EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES2;
 
     if (group)
       context = [[EAGLContext alloc] initWithAPI:glAPI sharegroup: group];

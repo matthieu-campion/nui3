@@ -48,8 +48,10 @@ void nglDumpStackTrace();
 #   else
 #     define __ASSERT_SYS(test) { if (!(test)) { __asm { int 3 } }; }
 #   endif
-# else
+# elif defined(_LINUX_)
 #   define __ASSERT_SYS(test) if (!(test)) { nglDumpStackTrace(); exit(-1); }
+# else
+#   define __ASSERT_SYS(test) { assert(test); }
 # endif
 # define NGL_LOG_DEFAULT NGL_LOG_INFO
 #else
