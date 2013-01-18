@@ -20015,6 +20015,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+<<<<<<< HEAD
+=======
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+>>>>>>> 65d97d72a1c22c34b561b003ed5f25458b4bed43
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -20133,6 +20137,12 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
+<<<<<<< HEAD
+=======
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GCC_VERSION = 4.2;
+>>>>>>> 65d97d72a1c22c34b561b003ed5f25458b4bed43
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -20200,6 +20210,11 @@
 					HAVE_FT_FACE_GETCHARVARIANTINDEX,
 					AVMPLUS_ARM,
 				);
+<<<<<<< HEAD
+=======
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+>>>>>>> 65d97d72a1c22c34b561b003ed5f25458b4bed43
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -20221,6 +20236,11 @@
 					DEBUG,
 					_CARBON_,
 				);
+<<<<<<< HEAD
+=======
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_VERSION = 4.2;
+>>>>>>> 65d97d72a1c22c34b561b003ed5f25458b4bed43
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -20329,6 +20349,10 @@
 					_COCOA_,
 				);
 				GCC_THREADSAFE_STATICS = NO;
+<<<<<<< HEAD
+=======
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+>>>>>>> 65d97d72a1c22c34b561b003ed5f25458b4bed43
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRELINK_LIBS = "-liconv -lz";
@@ -20375,6 +20399,10 @@
 					AVMPLUS_AMD64,
 					_COCOA_,
 				);
+<<<<<<< HEAD
+=======
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+>>>>>>> 65d97d72a1c22c34b561b003ed5f25458b4bed43
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
