@@ -7,19 +7,19 @@
 
 #include "nui.h"
 #include "nuiApplication.h"
-//#include "nuiSpiderMonkey.h"
+#include "nuiSpiderMonkey.h"
 
 nuiApplication::nuiApplication()
 {
-//  mpScriptEngine = NULL;
+  mpScriptEngine = NULL;
 }
 
 nuiApplication::~nuiApplication()
 {
-//  if (mpScriptEngine)
-//    mpScriptEngine->Release();
+  if (mpScriptEngine)
+    mpScriptEngine->Release();
 }
-/*
+
 void nuiApplication::SetScriptEngine(nuiScriptEngine* pEngine)
 {
   if (mpScriptEngine)
@@ -40,4 +40,3 @@ void nuiApplication::EnableDefaultScriptEngine()
   mpScriptEngine = new nuiSpiderMonkey();
 #endif
 }
-*/

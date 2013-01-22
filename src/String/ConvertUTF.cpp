@@ -330,9 +330,6 @@ ConversionResult ConvertUTF16toUTF8 (const UTF16** sourceStart, const UTF16* sou
         ch >>= 6;
 	    case 1: 
         *--target =  (UTF8)(ch | firstByteMark[bytesToWrite]);
-//      case 0:
-//        result = sourceIllegal;
-//        break;
     }
     target += bytesToWrite;
   }

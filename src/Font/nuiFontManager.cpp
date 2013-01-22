@@ -1044,13 +1044,11 @@ void nuiFontManager::RequestFont(nuiFontRequest& rRequest, std::list<nuiFontRequ
     std::list<nuiFontRequestResult>::const_iterator it = rFoundFonts.begin();
     std::list<nuiFontRequestResult>::const_iterator end = rFoundFonts.end();
     
-    NGL_OUT("LISTING SCORED FONTS FOR REQUESTED FONT [%s]\n", rRequest.mName.mElement.GetChars());
     while (it != end)
     {
       const nuiFontRequestResult& r(*it);
       const nuiFontDesc* pDesc = r.GetFontDesc();
-      NGL_OUT("font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
-//    NGL_LOG("font", NGL_LOG_INFO, "font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
+    NGL_LOG("font", NGL_LOG_INFO, "font '%s' bold: %s italic: %s (%f)\n", pDesc->GetName().GetChars(), pDesc->GetBold()?"Y":"N", pDesc->GetItalic()?"Y":"N", r.GetScore());
       ++it;
     }
   }
