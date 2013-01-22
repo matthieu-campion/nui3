@@ -197,12 +197,32 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   [[NSApplication sharedApplication] terminate:self];
 }
 
+static float gScaleFactor = 1.0f;
+static float gInvScaleFactor = 1.0f;
+
+float nuiGetScaleFactor()
+{
+  return gScaleFactor;
+}
+
+float nuiGetInvScaleFactor()
+{
+  return gInvScaleFactor;
+}
+
+
+
 /* default initializer for descendents of NSView */
 - (id)initWithFrame:(NSRect)frame {
   
   self = [super initWithFrame:frame];
   if(self == nil)
     return nil;
+
+  if ( [self respondsToSelector:@selector(setWantsBestResolutionOpenGLSurface:) ] )
+  {
+    [self setWantsBestResolutionOpenGLSurface: YES];
+  }
 
   // create and activate the context object which maintains the OpenGL state
   NSOpenGLPixelFormatAttribute attribs[] =
@@ -221,8 +241,15 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   [oglContext setValues:&v forParameter:NSOpenGLCPSwapInterval];
   [oglContext setView:self];
   [oglContext makeCurrentContext];
+  NSRect r = [self convertRectToBacking:[self bounds]];
+  gScaleFactor = r.size.width / self.bounds.size.width;
+  gInvScaleFactor = 1.0f / gScaleFactor;
+
+  
   return self;
 }
+
+
 
 - (void)lockFocus
 {
