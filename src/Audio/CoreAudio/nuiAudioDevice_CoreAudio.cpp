@@ -20,7 +20,22 @@
   } while ( 0 )
 #else
   #ifdef _COCOA_
-    #define nui_verify_noerr(errorCode)
+    #define nui_verify_noerr(errorCode)        \
+    do                                         \
+    {                                          \
+      int evalOnceErrorCode = (errorCode);     \
+      if ( 0 != evalOnceErrorCode )            \
+      {                                        \
+        DEBUG_ASSERT_MESSAGE(                  \
+          DEBUG_ASSERT_COMPONENT_NAME_STRING,  \
+          #errorCode " == 0 ",                 \
+          0,                                   \
+          0,                                   \
+          __FILE__,                            \
+          __LINE__,                            \
+          evalOnceErrorCode);                  \
+      }                                        \
+    } while ( 0 )
   #else
     #define nui_verify_noerr(errorCode)        \
     do                                         \
@@ -586,9 +601,9 @@ nuiAudioDeviceAPI_CoreAudio::~nuiAudioDeviceAPI_CoreAudio()
 
 int32 nuiAudioDeviceAPI_CoreAudio::GetDeviceCount() const
 {
-  UInt32 propsize;
+  UInt32 propsize = 0;
   mDeviceIDs.clear();
-  
+
   nui_verify_noerr(AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDevices, &propsize, NULL));
   int nDevices = propsize / sizeof(AudioDeviceID);	
   mDeviceIDs.resize(nDevices);
