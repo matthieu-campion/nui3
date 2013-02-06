@@ -75,7 +75,7 @@ class nuiAudioDeviceManager
 {
 public:
   static nuiAudioDeviceManager& Get();
-  ~nuiAudioDeviceManager();
+  virtual ~nuiAudioDeviceManager();
   
   void Update();
   

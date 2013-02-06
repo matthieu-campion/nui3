@@ -3780,6 +3780,12 @@
 		E542A19F0C3F0A5900225219 /* nuiButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC80C3CECAB00902DFE /* nuiButton.cpp */; };
 		E542A1A00C3F0A5900225219 /* nglOStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DEA0C3CECAB00902DFE /* nglOStream.cpp */; };
 		E542A1A70C3F0A5900225219 /* nglPath_Unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */; };
+		E54D8FBC16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */; };
+		E54D8FBD16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */; };
+		E54D8FBE16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */; };
+		E54D8FC016C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = E54D8FBF16C1D81300102723 /* nuiAudioDevice_AudioUnit.h */; };
+		E54D8FC116C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = E54D8FBF16C1D81300102723 /* nuiAudioDevice_AudioUnit.h */; };
+		E54D8FC216C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = E54D8FBF16C1D81300102723 /* nuiAudioDevice_AudioUnit.h */; };
 		E54EDB4E0C8EBF5C00B294C8 /* nuiSpinnerLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E54EDB4D0C8EBF5C00B294C8 /* nuiSpinnerLabel.cpp */; };
 		E54EDB4F0C8EBF5D00B294C8 /* nuiSpinnerLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E54EDB4D0C8EBF5C00B294C8 /* nuiSpinnerLabel.cpp */; };
 		E54EDB7D0C8EF49400B294C8 /* nuiSpinnerLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */; };
@@ -8390,6 +8396,8 @@
 		E5429EEF0C3F082800225219 /* jmemmgr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = jmemmgr.c; path = deps/libjpeg/jmemmgr.c; sourceTree = SOURCE_ROOT; };
 		E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = nglPath_Unix.cpp; path = src/File/Unix/nglPath_Unix.cpp; sourceTree = SOURCE_ROOT; };
 		E542A1AE0C3F0A5900225219 /* libnui3.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiAudioDevice_AudioUnit.mm; path = Audio/AudioUnit/nuiAudioDevice_AudioUnit.mm; sourceTree = "<group>"; };
+		E54D8FBF16C1D81300102723 /* nuiAudioDevice_AudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice_AudioUnit.h; path = include/nuiAudioDevice_AudioUnit.h; sourceTree = SOURCE_ROOT; };
 		E54EDB4D0C8EBF5C00B294C8 /* nuiSpinnerLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpinnerLabel.cpp; path = src/Text/nuiSpinnerLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E54EDB7C0C8EF49400B294C8 /* nuiSpinnerLabel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiSpinnerLabel.h; path = include/nuiSpinnerLabel.h; sourceTree = SOURCE_ROOT; };
 		E55236EB0CD3382B00BF0B87 /* nuiBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiBox.h; path = include/nuiBox.h; sourceTree = SOURCE_ROOT; };
@@ -10288,6 +10296,8 @@
 		E52E1A230CD7EE46006FBCDD /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				E54D8FBF16C1D81300102723 /* nuiAudioDevice_AudioUnit.h */,
+				E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */,
 				BC9CB4A30D3E48000093CAC3 /* nuiAudioResampler.h */,
 				BC9CB3F60D3E3D9A0093CAC3 /* nuiAudioConvert.cpp */,
 				BC9CB3FC0D3E3DA70093CAC3 /* nuiAudioConvert.h */,
@@ -12606,6 +12616,7 @@
 				E52FA68314F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE798169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A54169F20EC00836BAA /* nuiShader.h in Headers */,
+				E54D8FC216C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13444,6 +13455,7 @@
 				E52FA68114F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE796169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A52169F20EC00836BAA /* nuiShader.h in Headers */,
+				E54D8FC016C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13824,6 +13836,7 @@
 				E52FA68214F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE797169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A53169F20EC00836BAA /* nuiShader.h in Headers */,
+				E54D8FC116C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17032,6 +17045,7 @@
 				E50FE78F1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 				E5AD0A5E169F235B00836BAA /* nuiShader.cpp in Sources */,
 				E5C4EB7416AF43590029047C /* nuiSpiderMonkey.cpp in Sources */,
+				E54D8FBE16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17655,6 +17669,7 @@
 				E50FE78D1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 				E5AD0A5C169F235B00836BAA /* nuiShader.cpp in Sources */,
 				E5C4EB7116AF43570029047C /* nuiSpiderMonkey.cpp in Sources */,
+				E54D8FBC16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17994,6 +18009,7 @@
 				E50FE78E1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 				E5AD0A5D169F235B00836BAA /* nuiShader.cpp in Sources */,
 				E5C4EB7316AF43580029047C /* nuiSpiderMonkey.cpp in Sources */,
+				E54D8FBD16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
