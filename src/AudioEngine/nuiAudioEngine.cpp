@@ -237,7 +237,6 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
     pVoice->Process(buffers, SampleFrames);
   }
   
-  
   if (!mMute && mGain > 0)
   {
     float pan = mPan;
@@ -254,7 +253,7 @@ void nuiAudioEngine::ProcessAudioOutput(const std::vector<const float*>& rInput,
         *pDst++ += (*pSrc++) * mult;
     }
   }
-  
+    
   if (mOutputDelegateSet)
     mOutputDelegate(rOutput, SampleFrames);
   

@@ -1017,24 +1017,38 @@ bool nglString::Copy(nglChar Ch)
 
 bool nglString::Copy(const nglChar* pSource)
 {
-  mIsNull = false;
-  mString = pSource;
+  if (pSource)
+  {
+    mIsNull = false;
+    mString = pSource;
+  }
+  else
+  {
+    Nullify();
+  }
   return true;
 }
 
 bool nglString::Copy(const nglChar* pSource, int32 len)
 {
-  mIsNull = false;
-  mString.resize(len);
-  for (int32 i = 0; i < len; i++)
-    mString[i] = pSource[i];
-  //mString[len] = 0;
+  if (pSource)
+  {
+    mIsNull = false;
+    mString.resize(len);
+    for (int32 i = 0; i < len; i++)
+      mString[i] = pSource[i];
+    //mString[len] = 0;
+  }
+  else
+  {
+    Nullify();
+  }
   return true;
 }
 
 bool nglString::Copy(const nglString& rSource)
 {
-  mIsNull = false;
+  mIsNull = rSource.mIsNull;
   mString = rSource.mString;
   return true;
 }
