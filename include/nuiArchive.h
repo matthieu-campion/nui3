@@ -77,40 +77,107 @@ public:
   
   virtual bool OpenGroup(const nglString& rName)
   {
-    return mpCurrentNode->GetName() == rName;
+    nuiXMLNode* pNode = mpCurrentNode->GetChild(mChildIndex);
+
+    if (pNode && pNode->GetName() == rName)
+    {
+      mStack.push_back(mChildIndex);
+      mpCurrentNode = pNode;
+      mChildIndex = 0;
+      return true;
+    }
+
+    return false;
   }
   
-  virtual void CloseGroup();
+  virtual void CloseGroup()
+  {
+    mpCurrentNode = mpCurrentNode->GetParent();
+    mChildIndex = mStack.back();
+    mChildIndex++;
+    mStack.pop_back();
+  }
   
-  virtual void Bind(bool& rValue, const nglString& rName);
+  virtual void Bind(bool& rValue, const nglString& rName)
+  {
+    nuiGetBool(mpCurrentNode, rName, rValue);
+  }
 
-  virtual void Bind(float& rValue, const nglString& rName);
-  virtual void Bind(double& rValue, const nglString& rName);
-  
-  virtual void Bind(int8& rValue, const nglString& rName);
-  virtual void Bind(int16& rValue, const nglString& rName);
-  virtual void Bind(int32& rValue, const nglString& rName);
-  virtual void Bind(int64& rValue, const nglString& rName);
-  
-  virtual void Bind(uint8& rValue, const nglString& rName);
-  virtual void Bind(uint16& rValue, const nglString& rName);
-  virtual void Bind(uint32& rValue, const nglString& rName);
-  virtual void Bind(uint64& rValue, const nglString& rName);
-  
-  virtual void Bind(nglString& rValue, const nglString& rName);
+  virtual void Bind(float& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+  virtual void Bind(double& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+
+  virtual void Bind(int8& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+  virtual void Bind(int16& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+  virtual void Bind(int32& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+  virtual void Bind(int64& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+
+  virtual void Bind(uint8& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+  virtual void Bind(uint16& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+  virtual void Bind(uint32& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+  virtual void Bind(uint64& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
+
+  virtual void Bind(nglString& rValue, const nglString& rName)
+  {
+    nuiGet(mpCurrentNode, rName, rValue);
+  }
+
 
   template <typename Type>
   void Bind(Type& rValue, const nglString& rName)
   {
-    if (!OpenGroup(rName))
+    if (!rName.IsNull())
     {
-      NGL_LOG("nuiArchive_XML_Loader", NGL_LOG_ERROR, "'%s' element not found", rName.GetChars());
-      return;
+      if (!OpenGroup(rName))
+      {
+        NGL_LOG("nuiArchive_XML_Loader", NGL_LOG_ERROR, "'%s' element not found", rName.GetChars());
+        return;
+      }
     }
     
     rValue.Bind(*this);
     
-    CloseGroup();
+    if (!rName.IsNull())
+      CloseGroup();
   }
   
 
@@ -118,6 +185,7 @@ protected:
   nuiXMLNode* mpRootNode;
   nuiXMLNode* mpCurrentNode;
   uint32 mChildIndex;
+  std::list<uint32> mStack;
 };
 
 class nuiArchive_XML_Saver : public nuiArchive
