@@ -2849,13 +2849,27 @@ CFStringRef nglString::ToCFString() const
   return cfStr;
 }
 
-nglString::nglString(CFStringRef str)
+nglString::nglString(CFStringRef string)
 {
-  CFIndex length = CFStringGetLength(str);
-  UniChar* buffer = (UniChar*)malloc(length * sizeof(UniChar));
-  CFStringGetCharacters(str, CFRangeMake(0, length), buffer);
-  Import((char*)buffer, length * sizeof(UniChar), eUCS2);
-  free(buffer);
+  CFIndex length = CFStringGetLength(string);
+  {
+    const char* str = CFStringGetCStringPtr(string, kCFStringEncodingUTF8);
+    if (str)
+    {
+      mString = str;
+      return;
+    }
+  }
+  
+  char* str = (char*)malloc(length * 3);
+  Boolean res = CFStringGetCString (
+                              string,
+                              &mString[0],
+                              length * 3,
+                              kCFStringEncodingUTF8
+                              );
+  mString = str;
+  free(str);
 }
 #endif
 
