@@ -11,15 +11,8 @@
 // !TODO : better load method
 
 #include "nui.h"
-#include NGL_CONFIG_H
 
 #ifdef HAVE_LIBJPEG
-
-#include "nglKernel.h"
-#include "nglImage.h"
-#include "nglImageJPEGCodec.h"
-#include "nglIStream.h"
-#include "nglOStream.h"
 
 #ifdef _WIN32_ // Because of name collision in between the _WIN32_ platform SDK and jpeglib
 #define XMD_H

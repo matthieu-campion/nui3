@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiAudioConvert.h"
 
 
 void nuiAudioConvert_INint16ToDEfloat(const int16* input, float* output, int32 curChannel, int32 nbChannels, int32 nbSampleFrames)

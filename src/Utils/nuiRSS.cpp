@@ -6,9 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiRSS.h"
-#include "nuiHTTP.h"
-#include "nglThread.h"
 
 #define STARTELEM(X) for (int32 i = 0; i < X->GetChildrenCount(); i++) { const nuiXMLNode* pProxy = X; nuiXMLNode* pN = pProxy->GetChild(i); const nglString& name(pN->GetName()); 
 #define GETELEM(X, STR) if (name == _T(X)) { nuiXMLNode* pp = pN->GetChild(0); STR = pp ? pp->GetValue() : nglString::Null; /*printf(X ": '%s'\n", STR.GetChars());*/ } else

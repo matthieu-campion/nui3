@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiCommand.h"
-#include "nuiCommandManager.h"
 
 
 

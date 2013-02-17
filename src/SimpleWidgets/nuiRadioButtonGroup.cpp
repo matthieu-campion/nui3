@@ -7,8 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiRadioButtonGroup.h"
-#include "nuiRadioButton.h"
 
 
 nuiRadioButtonGroup::nuiRadioButtonGroup()

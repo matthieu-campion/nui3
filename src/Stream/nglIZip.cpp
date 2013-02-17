@@ -8,9 +8,6 @@
 
 
 #include "nui.h"
-#include "nglIStream.h"
-#include "nglIZip.h"
-#include "nglZipFS.h"
 
 
 nglIZip::~nglIZip()

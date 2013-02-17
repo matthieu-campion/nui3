@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiTranslator.h"
-#include "nuiCSV.h"
 
 nuiTranslator::nuiTranslator(const nglPath& rLanguagesFilesFolder)
 {

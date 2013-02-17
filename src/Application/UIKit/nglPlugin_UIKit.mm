@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglPlugin.h"
 
 // nglPluginKernel:
 class nglPluginKernel: public nglKernel

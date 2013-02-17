@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglLock.h"
-
-#include "nglThreadChecker.h"
 
 
 nglLock::nglLock(bool registerToThreadChecker)

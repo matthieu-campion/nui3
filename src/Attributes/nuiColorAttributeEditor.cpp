@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiColorAttributeEditor.h"
-#include "nuiHBox.h"
-#include "nuiColorSelector.h"
-#include "nuiPopupView.h"
 
  
 nuiColorAttributeEditor::nuiColorAttributeEditor(const nuiAttrib<nuiColor>& rAttribute)

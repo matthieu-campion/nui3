@@ -6,10 +6,7 @@
  */
 
 #include "nui.h"
-#include "nuiAiffWriter.h"
-#include "nuiAudioConvert.h"
 #include "nuiChunksDefinitions.h"
-#include "nuiAiffReader.h" // to include the definition of the 'extended' type
 
 nuiAiffWriter::nuiAiffWriter(nglOStream& rStream) : 
   nuiSampleWriter(rStream),

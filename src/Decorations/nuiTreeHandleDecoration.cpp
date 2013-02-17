@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiTreeHandleDecoration.h"
-#include "nuiFrame.h"
-#include "nuiContour.h"
 
 
 

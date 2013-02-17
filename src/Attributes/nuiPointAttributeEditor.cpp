@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPointAttributeEditor.h"
 
  
 nuiPointAttributeEditor::nuiPointAttributeEditor(const nuiAttrib<nuiPoint>& rAttribute)

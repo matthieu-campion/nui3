@@ -1,14 +1,5 @@
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglContext.h"
-
-
-#include <Cocoa/Cocoa.h>
 #include "nglWindow_Cocoa.h"
-
-#include <OpenGL/OpenGL.h>
-
-#include <QuartzCore/QuartzCore.h>
 
 //#include "ngl_uikit.h"
 

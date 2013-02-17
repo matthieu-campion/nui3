@@ -7,13 +7,7 @@
 
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiGL2Painter.h"
-#include "nuiWidget.h"
-#include "nuiTheme.h"
-#include "nglMatrix.h"
 #include "AAPrimitives.h"
-#include "nuiTexture.h"
 
 #ifndef __NUI_NO_GL__
 

@@ -6,14 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiContainer.h"
-#include "nuiMatrixView.h"
-#include "nglString.h"
-#include "nuiApplication.h"
-#include "nuiDrawContext.h"
-#include "nuiFormater.h"
-#include "nuiShape.h"
-#include "nuiDrawContext.h"
 
 nuiMatrixViewFormater nuiMatrixView::mDefaultFormater;
 nuiRange nuiMatrixView::mDefaultRange(0.0f, 0.0f, 100.0f, 1.0f, 10.0f, 0.0f);

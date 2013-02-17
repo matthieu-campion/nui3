@@ -7,7 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiMetaDecoration.h"
 
 
 nuiMetaDecoration::nuiMetaDecoration(const nglString& rName)

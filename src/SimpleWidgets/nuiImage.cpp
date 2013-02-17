@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nglImage.h"
-#include "nuiImage.h"
-#include "nuiDrawContext.h"
-#include "nglString.h"
 
 nuiImage::nuiImage (nuiTexture* pTexture, bool AlreadyAcquired)
   : nuiWidget(), mColor(255, 255, 255, 255)

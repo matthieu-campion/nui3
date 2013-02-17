@@ -8,10 +8,6 @@
 
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "ngl3DSLoader.h"
-#include "nglString.h"
-#include "nglFile.h"
 
 
 #define DUMP

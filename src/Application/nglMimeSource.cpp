@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglMimeSource.h"
 
 #ifdef _WIN32_
   const nglMimeSource::nglMimeDataType nglMimeSource::TextMimeData = CF_TEXT;

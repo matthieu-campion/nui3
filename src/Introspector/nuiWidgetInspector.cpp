@@ -6,21 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiWidgetInspector.h"
-#include "nuiColumnTreeView.h"
-#include "nuiTreeView.h"
-#include "nuiSplitter.h"
-#include "nuiGrid.h"
-#include "nuiVBox.h"
-#include "nuiPane.h"
-#include "nuiFolderPane.h"
-#include "nuiScrollView.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiColorDecoration.h"
-#include "nuiAttributeEditor.h"
-#include "nuiIntrospector.h"
-#include "nuiMetaPainter.h"
 
 class nuiMetaPainterInspector : public nuiSimpleContainer
   {

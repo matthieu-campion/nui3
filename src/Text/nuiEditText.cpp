@@ -2,12 +2,6 @@
 // 
 
 #include "nui.h"
-#include "nuiEditText.h"
-#include "nuiFont.h"
-#include "nuiXML.h"
-#include "nuiDrawContext.h"
-
-#include "nglDataObjects.h"
 
 //class nuiEditTest2 : nuiSimpleContainer
 nuiEditText::nuiEditText(const nglString& rText)
@@ -1892,11 +1886,11 @@ void nuiEditText::SetFollowModifications(bool Set)
 /////////////////////////////////////////////
 nuiEditText::TextBlock::TextBlock(nuiFont* pFont, const nglString& rString, uint begin, uint end)
 : mBegin(begin),
-mEnd(end),
-mpLayout(NULL),
-mrString(rString),
-mpFont(pFont),
-mLayoutOK(false)
+  mEnd(end),
+  mpLayout(NULL),
+  mrString(rString),
+  mpFont(pFont),
+  mLayoutOK(false)
 {
   mBegin = begin;
   mEnd = end;

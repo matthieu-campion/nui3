@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglUTFStringConv.h"
 
 ConversionResult NoConversion(const char** sourceStart, const char* sourceEnd, char** targetStart, char* targetEnd, ConversionFlags flags)
 {

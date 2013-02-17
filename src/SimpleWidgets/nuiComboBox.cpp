@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiComboBox.h"
 
 #define DEFAULT_HANDLE_WIDTH    10.f
 #define DEFAULT_HANDLE_HEIGHT   10.f

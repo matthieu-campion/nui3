@@ -5,8 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
-
-#include "nuiGestureRecognizer.h"
+#include "nui.h"
 
 
 

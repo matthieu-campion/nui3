@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiFont.h"
-#include "nuiXML.h"
-#include "nuiDrawContext.h"
 
 nuiFont* nuiFont::GetFont(const nglPath& rPath, nuiSize size, int face, const nglString& rID)
 {

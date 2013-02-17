@@ -5,11 +5,9 @@
  licence: see nui3/LICENCE.TXT
  */
 
-
+#import "nui.h"
 #import <Cocoa/Cocoa.h>
 #import <QTKit/QTKit.h>
-
-#include "nuiVideoDecoder.h"
 
 class nuiVideoDecoderPrivate
 {

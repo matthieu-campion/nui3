@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiApplication.h"
-#include "nuiXML.h"
-#include "nuiFontManager.h"
 
 #define NUI_LABEL_HMARGIN 6.f
 #define NUI_LABEL_VMARGIN 0.f

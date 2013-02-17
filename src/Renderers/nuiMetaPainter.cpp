@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiMetaPainter.h"
-#include "nuiDrawContext.h"
 
 // nuiMetaPainter:
 nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext) 

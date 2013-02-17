@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDialogSelectDirectory.h"
 
 
 nuiDialogSelectDirectory::nuiDialogSelectDirectory(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, nuiSize Left, nuiSize Top, nuiSize Width, nuiSize Height)

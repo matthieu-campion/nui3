@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiProgressBar.h"
-#include "nuiShape.h"
-#include "nuiDrawContext.h"
 
 #define AMP 0
 #define INC 0

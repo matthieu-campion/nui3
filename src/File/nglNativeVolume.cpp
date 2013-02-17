@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglNativeVolume.h"
 
 nglNativeVolume::nglNativeVolume(const nglString& rVolumeName, const nglPathVolume& rPathVolume)
 : nglVolume(rVolumeName, rPathVolume.mPath, rPathVolume.mComment, rPathVolume.mFlags, rPathVolume.mType)

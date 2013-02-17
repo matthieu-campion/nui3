@@ -7,8 +7,6 @@
 
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglConsole.h"
 
 
 using namespace std;

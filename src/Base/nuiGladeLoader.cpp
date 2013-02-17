@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglIFile.h"
-#include "nuiXML.h"
-#include "nuiApplication.h"
 
 bool NodeToAttribute(nuiXMLNode* pFrom, nuiXMLNode* pTo, nglChar* from, nglChar* to = NULL);
 

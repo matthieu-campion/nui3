@@ -9,9 +9,6 @@
 
 
 #include "nui.h"
-#include "nuiSoftwarePainter.h"
-#include "nglCPUInfo.h"
-#include "nuiTexture.h"
 
 #ifndef _CARBON_
 #define NUI_USE_BGRA

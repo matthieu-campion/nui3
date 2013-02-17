@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPainter.h"
 
 ///////////////////////////////////
 // nuiPainter implementation:

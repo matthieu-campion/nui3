@@ -11,8 +11,6 @@
 */
 
 #include "nui.h"
-#include "nglImage.h"
-#include "nglImageCodec.h"
 
 nglImageCodecInfo::nglImageCodecInfo()
 {

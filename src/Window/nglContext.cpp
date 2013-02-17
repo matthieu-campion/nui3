@@ -8,9 +8,6 @@
 
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglContext.h"
-#include "nglVideoMode.h"
 #include "glext/ngl_glext_table.h"
 
 /*

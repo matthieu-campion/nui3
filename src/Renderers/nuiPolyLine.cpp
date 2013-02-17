@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPolyLine.h"
 
 // nuiPolyLine:
 nuiPolyLine::nuiPolyLine(const nuiPath& rVertices)

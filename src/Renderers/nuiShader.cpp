@@ -7,7 +7,6 @@
 //
 
 #include "nui.h"
-#include "nuiShader.h"
 
 nuiShader::nuiShader(nuiShaderKind kind, const nglString& rSource)
 : mKind(kind), mShader(0), mSource(rSource)

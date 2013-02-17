@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiHTTPServer.h"
-#include "nuiNetworkHost.h"
 
 
 //class nuiURLHandler

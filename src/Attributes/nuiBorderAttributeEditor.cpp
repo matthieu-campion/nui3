@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiBorderAttributeEditor.h"
 
  
 nuiBorderAttributeEditor::nuiBorderAttributeEditor(const nuiAttrib<nuiBorder>& rAttribute)

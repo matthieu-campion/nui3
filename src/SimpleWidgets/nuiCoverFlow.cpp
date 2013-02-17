@@ -6,7 +6,6 @@ licence: see nui3/LICENCE.TXT
 */
 
 #include "nui.h"
-#include "nuiCoverFlow.h"
 
 nuiCoverFlow::nuiCoverFlow()
 : mSelectedImage(0),

@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiCommandContainer.h"
 
 using namespace std;
 

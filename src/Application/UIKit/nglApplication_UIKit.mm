@@ -2,7 +2,6 @@
 
 using namespace std;
 
-#include "nglApplication.h"
 #include "nglApplication_UIKit.h"
 
 #include "../../Window/UIKit/nglWindow_UIKit.h"

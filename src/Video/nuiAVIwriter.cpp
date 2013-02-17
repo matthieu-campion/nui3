@@ -4,8 +4,8 @@
  
  licence: see nui3/LICENCE.TXT
  */
-#include "nuiAVIwriter.h"
 
+#include "nui.h"
 
 
 

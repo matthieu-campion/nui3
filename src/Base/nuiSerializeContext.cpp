@@ -7,7 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiSerializeContext.h"
 
 nuiSerializeContext::nuiSerializeContext(nuiXMLNode* pNode, nuiSerializeOperation Operation, bool recursive)
 : nuiObject()

@@ -6,10 +6,7 @@
 */
 
 #include "nui.h"
-#include "nuiRangeAttributeEditor.h"
-#include "nuiHBox.h"
-#include "nuiFontManager.h"
- 
+
 nuiRangeAttributeEditor::nuiRangeAttributeEditor(const nuiAttrib<const nuiRange&>& rAttribute)
 	: nuiAttributeEditor(),
     mEventSink(this),

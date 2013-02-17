@@ -3,27 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
 		61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
 		61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
-		61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
 		61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
 		61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
 		61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
 		61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
-		61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
 		61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
 		61A9DFF30B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		61A9DFF50B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
-		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
-		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
-		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E5B3A4E316D058DC0054F81C /* libnui3Cocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C186FD135DC5570062231B /* libnui3Cocoa.a */; };
+		E5B3A4E516D058E60054F81C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5B3A4E416D058E60054F81C /* Cocoa.framework */; };
+		E5B3A4E816D059000054F81C /* libnui3CocoaD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C186FB135DC5570062231B /* libnui3CocoaD.a */; };
+		E5B3A4E916D059000054F81C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5B3A4E416D058E60054F81C /* Cocoa.framework */; };
 		E5C18700135DC5D90062231B /* resources in Resources */ = {isa = PBXBuildFile; fileRef = E5C186FF135DC5D90062231B /* resources */; };
 /* End PBXBuildFile section */
 
@@ -41,20 +40,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
 			remoteInfo = nui3;
-		};
-		BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E5429F110C3F0A5900225219;
-			remoteInfo = nui3;
-		};
-		BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E58172D70C3D103300902DFE;
-			remoteInfo = nui3D;
 		};
 		E547D7C11382BA0C00382881 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -83,6 +68,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = 73F09AC312E9D09E00656E84;
 			remoteInfo = thirdparty_ios_arm7;
+		};
+		E5B3A4DF16D058470054F81C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5FB9CF3147D5CEE001A1829;
+			remoteInfo = minui3D;
+		};
+		E5B3A4E116D058D10054F81C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5D63EBB1209AB9C009C26A9;
+			remoteInfo = nui3Cocoa;
+		};
+		E5B3A4E616D058F50054F81C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE;
+			remoteInfo = nui3CocoaD;
 		};
 		E5C186F6135DC5570062231B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -129,6 +135,7 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E5B3A4E416D058E60054F81C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../../System/Library/Frameworks/Cocoa.framework; sourceTree = "<group>"; };
 		E5C186FF135DC5D90062231B /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,12 +144,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B3A4E516D058E60054F81C /* Cocoa.framework in Frameworks */,
+				E5B3A4E316D058DC0054F81C /* libnui3Cocoa.a in Frameworks */,
 				61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */,
 				61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
 				61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */,
-				61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */,
-				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,12 +157,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B3A4E816D059000054F81C /* libnui3CocoaD.a in Frameworks */,
+				E5B3A4E916D059000054F81C /* Cocoa.framework in Frameworks */,
 				61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */,
 				61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
 				61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */,
-				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
-				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +172,7 @@
 		61A9DE3D0B833C9200BC506C = {
 			isa = PBXGroup;
 			children = (
+				E5B3A4E416D058E60054F81C /* Cocoa.framework */,
 				E5C186FF135DC5D90062231B /* resources */,
 				BC6A09AB0EF92BAB00881ACF /* Info.plist */,
 				BC6A09CA0EF9300600881ACF /* css */,
@@ -228,6 +236,7 @@
 				E547D7C41382BA0C00382881 /* libthirdparty.a */,
 				E547D7C61382BA0C00382881 /* libthirdparty_ios.a */,
 				E547D7C81382BA0C00382881 /* libthirdparty_ios_arm7.a */,
+				E5B3A4E016D058470054F81C /* libminui3D.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -247,7 +256,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
+				E5B3A4E216D058D10054F81C /* PBXTargetDependency */,
 			);
 			name = TextEdit;
 			productName = Temp;
@@ -265,7 +274,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
+				E5B3A4E716D058F50054F81C /* PBXTargetDependency */,
 			);
 			name = TextEditD;
 			productName = Tempd;
@@ -277,8 +286,11 @@
 /* Begin PBXProject section */
 		61A9DE3F0B833C9200BC506C /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
 			buildConfigurationList = 61A9DE400B833C9200BC506C /* Build configuration list for PBXProject "TextEdit" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -344,6 +356,13 @@
 			remoteRef = E547D7C71382BA0C00382881 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E5B3A4E016D058470054F81C /* libminui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libminui3D.a;
+			remoteRef = E5B3A4DF16D058470054F81C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E5C186F7135DC5570062231B /* libnuiPhoneD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -379,7 +398,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */,
 				E5C18700135DC5D90062231B /* resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,15 +457,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */ = {
+		E5B3A4E216D058D10054F81C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = nui3;
-			targetProxy = BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */;
+			name = nui3Cocoa;
+			targetProxy = E5B3A4E116D058D10054F81C /* PBXContainerItemProxy */;
 		};
-		BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */ = {
+		E5B3A4E716D058F50054F81C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = nui3D;
-			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
+			name = nui3CocoaD;
+			targetProxy = E5B3A4E616D058F50054F81C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -455,9 +473,7 @@
 		61A9DE410B833C9200BC506C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ../../include;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
@@ -470,16 +486,14 @@
 		61A9DFC30B833E9600BC506C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = _COCOA_;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = TextEdit;
@@ -497,15 +511,18 @@
 		61A9DFCD0B833EF300BC506C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_DEBUG,
+					_COCOA_,
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = TextEditD;

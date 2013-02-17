@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiRect.h"
 
 void nuiRect::Transform(const nuiMatrix& rMatrix)
 {

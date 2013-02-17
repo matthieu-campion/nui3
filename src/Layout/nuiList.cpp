@@ -6,13 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiApplication.h"
-#include "nuiList.h"
-#include "nuiDrawContext.h"
-#include "nuiMainWindow.h"
-#include "nuiXML.h"
-#include "nuiLabel.h"
-#include "nuiAttributeAnimation.h"
 
 using namespace std;
 

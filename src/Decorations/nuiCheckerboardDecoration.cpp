@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiCheckerboardDecoration.h"
 
 nuiCheckerboardDecoration::nuiCheckerboardDecoration(const nglString& rName)
 : nuiDecoration(rName)

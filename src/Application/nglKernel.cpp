@@ -6,17 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglConsole.h"
-#include "nglLog.h"
-#include "nuiCommand.h"
-
-#ifndef _MINUI3_
-#include "nglDataObjects.h"
-#endif
-
-#include "nuiNativeResourceVolume.h"
-#include "nuiNotification.h"
 
 #include "ucdata.h"
 

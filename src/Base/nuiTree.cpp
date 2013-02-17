@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiTree.h"
 
 nuiTreeBase::nuiTreeBase()
 : mTreeNodeEventSink(this)

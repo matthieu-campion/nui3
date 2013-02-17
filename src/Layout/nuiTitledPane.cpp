@@ -8,10 +8,6 @@
 
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiTitledPane.h"
-#include "nuiDrawContext.h"
 
 
 nuiTitledPane::nuiTitledPane(nuiWidget* pTitleWidget)

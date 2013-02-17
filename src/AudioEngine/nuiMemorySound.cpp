@@ -6,12 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiMemorySound.h"
-#include "nuiWaveReader.h"
-#include "nuiAiffReader.h"
-#include "nuiAudioDecoder.h"
-
-#include "nuiMemoryVoice.h"
 
 nuiMemorySound::nuiMemorySound(const nglPath& rPath)
 : mLength(0),

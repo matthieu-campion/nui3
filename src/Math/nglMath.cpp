@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglMath.h"
 
 
 uint Log2Ceil(uint Value)

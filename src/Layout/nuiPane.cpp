@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiPane.h"
-#include "nuiDrawContext.h"
 
 nuiPane::nuiPane(const nuiColor& rFillColor, const nuiColor& rStrokeColor, nuiShapeMode ShapeMode, nuiBlendFunc BlendFunc)
  : nuiSimpleContainer()

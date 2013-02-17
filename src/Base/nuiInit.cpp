@@ -6,14 +6,8 @@
  */
 
 #include "nui.h"
-#include "nuiInit.h"
 
 #ifndef _MINUI3_
-#include "nuiTexture.h"
-#include "nuiFontManager.h"
-#include "nglThreadChecker.h"
-#include "nuiDecoration.h"
-
 #define NUI_FONTDB_PATH _T("nuiFonts.db5")
 #endif
 
@@ -25,15 +19,82 @@
 
 static uint32 gNUIReferences = 0;
 
-bool nuiInitMinimal(void* OSHandle = NULL, nuiKernel* pKernel)
-{
-  bool res = nuiInit(OSHandle, pKernel);
-  return res;
-}
 
 #if defined(_UIKIT_)
 static NSAutoreleasePool* nui_autoreleasepool = nil;
 #endif
+
+
+bool nuiInitMinimal(void* OSHandle = NULL, nuiKernel* pKernel)
+{
+  if (gNUIReferences == 0)
+  {
+#ifdef WIN32
+    WSADATA wsaData;   // if this doesn't work
+    //WSAData wsaData; // then try this instead
+    // MAKEWORD(1,1) for Winsock 1.1, MAKEWORD(2,0) for Winsock 2.0:
+    int res = WSAStartup(MAKEWORD(1,1), &wsaData);
+#endif
+
+    if (!App)
+    {
+#ifdef _WIN32_
+      App = new nuiManualKernel(OSHandle, pKernel);
+#elif defined(_ANDROID_)
+      App = new nuiManualKernel(OSHandle, pKernel);
+#else
+      App = new nuiManualKernel(pKernel);
+#endif
+      App->CallOnInit();
+    }
+
+    // On iOS, init an AutoReleasePool:
+#if defined(_UIKIT_)
+    nui_autoreleasepool = [[NSAutoreleasePool alloc] init];
+#endif
+
+#ifndef _MINUI3_
+    // Init the texture manager:
+    nuiTexture::InitTextures();
+
+    // Init the font manager:
+
+
+    nglPath fontdb(ePathUserAppSettings);
+    fontdb += nglString(NUI_FONTDB_PATH);
+
+    nuiFontManager::InitManager(fontdb);
+    if (fontdb.Exists() && fontdb.IsLeaf())
+    {
+      nglIFile db(fontdb);
+      nuiFontManager::LoadManager(db, fontdb.GetLastMod());
+    }
+#if !defined(_UIKIT_)
+    else
+    {
+      nuiFontManager::GetManager();
+    }
+
+    nuiFontManager& rManager(nuiFontManager::GetManager(false));
+    if (rManager.GetFontCount())
+    {
+      nglOFile db(fontdb, eOFileCreate);
+      if (db.IsOpen())
+        rManager.Save(db);
+    }
+#endif
+
+//    nuiDecoration::InitDecorationEngine();
+//    nuiDefaultDecoration::Init();
+//    nuiBuilder::Init();
+#endif
+  }
+
+  gNUIReferences++;
+
+
+  return App != NULL && !App->GetError();
+}
 
 bool nuiInit(void* OSHandle = NULL, nuiKernel* pKernel)
 {

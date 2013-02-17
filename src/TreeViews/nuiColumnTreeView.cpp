@@ -9,14 +9,6 @@
 
 
 #include "nui.h"
-#include "nuiColumnTreeView.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiXML.h"
-#include "nuiContainer.h"
-#include "nuiScrollBar.h"
-#include "nuiPane.h"
-#include "nuiShapeView.h"
 
 #define NUI_COLUMNTREEVIEW_INTERLINE (3.0f)
 #define NUI_COLUMNTREEVIEW_HANDLE_SIZE (12.0f)

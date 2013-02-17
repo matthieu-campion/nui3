@@ -143,7 +143,6 @@ void Application::OnInit()
     return;
   }
   mpMainWindow->Acquire();
-  mpMainWindow->Acquire();
   mpMainWindow->DBG_SetMouseOverInfo(DebugInfo);  mpMainWindow->DBG_SetMouseOverObject(DebugObject);
   mpMainWindow->SetState(nglWindow::eShow);
 

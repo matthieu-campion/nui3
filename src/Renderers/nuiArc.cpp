@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiArc.h"
 
 // nuiArc:
 nuiArc::nuiArc(const nuiPoint& rStartVertex, const nuiPoint& rStopVertex, float XRadius, float YRadius, float Angle, bool LargeArc, bool Sweep)

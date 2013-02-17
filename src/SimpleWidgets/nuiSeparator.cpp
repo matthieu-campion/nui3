@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiSeparator.h"
 
 nuiSeparator::nuiSeparator(nuiOrientation orientation)
 : nuiWidget()

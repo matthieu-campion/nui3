@@ -18,8 +18,6 @@
 */
 
 #include "nui.h"
-#include "nglVideoMode.h"
-#include "nglKernel.h"
 
 #include <Cocoa/Cocoa.h>
 

@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiApplication.h"
-#include "nuiBackgroundPane.h"
-#include "nuiXML.h"
 
 nuiBackgroundPane::nuiBackgroundPane(nuiBackgroundType type)
  : nuiSimpleContainer(), mType(type)

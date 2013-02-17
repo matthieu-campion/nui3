@@ -9,12 +9,6 @@
 
 
 #include "nui.h"
-#include "nuiContainer.h"
-#include "nuiDrawContext.h"
-#include "nuiMetaPainter.h"
-#include "nuiXML.h"
-#include "nuiBuilder.h"
-#include "nuiTopLevel.h"
 
 //#define NUI_CHECK_LAYOUTS
 

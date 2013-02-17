@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiRectAttributeEditor.h"
 
  
 nuiRectAttributeEditor::nuiRectAttributeEditor(const nuiAttrib<nuiRect>& rAttribute)

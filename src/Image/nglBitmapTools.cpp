@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglBitmapTools.h"
 
 
 NGL_API void nglInvertLineSwap32 (char* pDst, char* pSrc, uint32 pixelcount)

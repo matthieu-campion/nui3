@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiTextLayout.h"
 
 nuiTextStyle::nuiTextStyle()
 : mpFont(NULL),

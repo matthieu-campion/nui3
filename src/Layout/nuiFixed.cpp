@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiFixed.h"
-#include "nuiXML.h"
-#include "nuiDrawContext.h"
 
 nuiFixed::nuiFixed()
   : nuiSimpleContainer()

@@ -8,8 +8,6 @@
 
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglError.h"
 
 
 nglError::nglError()

@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiAttributeAnimation.h"
 
 //class nuiAttributeAnimation : public nuiAnimation
 nuiAttributeAnimationBase::nuiAttributeAnimationBase()

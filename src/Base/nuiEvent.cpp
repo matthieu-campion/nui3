@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiEvent.h"
 
 using namespace std;
 

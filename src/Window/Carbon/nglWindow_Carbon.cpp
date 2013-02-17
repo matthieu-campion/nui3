@@ -18,17 +18,7 @@
  */
 
 #include "nui.h"
-#include "nglApplication.h"
-#include "nglVideoMode.h"
-#include "nglContext.h"
-#include "nglWindow.h"
-#include "nglKeyboard.h"
 #include "ngl_carbon.h"
-
-#include "nglImage.h"
-#include "nuiMouseCursor.h"
-
-#include "nuiMainMenu.h"
 
 #define NGL_WINDOW_EBASE      (NGL_CONTEXT_ELAST+1)
 

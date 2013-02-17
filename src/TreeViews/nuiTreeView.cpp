@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiTreeView.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiContainer.h"
 
 #define NUI_TREEVIEW_DEPTH_INSET (12.0f)
 #define NUI_TREEVIEW_INTERLINE (2.0f)

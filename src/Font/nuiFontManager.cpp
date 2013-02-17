@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiFontManager.h"
-#include "nglPath.h"
-#include "nglIStream.h"
-#include "nuiVBox.h"
 
 #ifdef _UIKIT_
 #ifdef __IPHONE_3_2

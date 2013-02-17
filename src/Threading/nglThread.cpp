@@ -7,8 +7,6 @@
 
 
 #include "nui.h"
-#include "nglThread.h"
-#include "nglCriticalSection.h"
 
 std::map<nglThread::ID,nglThread*> nglGlobalThreadMap;
 nglCriticalSection nglGlobalThreadMapCS(_T("nglThread_nglGlobalThreadMapCS"));

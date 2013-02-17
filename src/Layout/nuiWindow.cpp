@@ -6,16 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiMainWindow.h"
-#include "nuiApplication.h"
-#include "nuiWindow.h"
-#include "nuiTheme.h"
-#include "nuiButton.h"
-#include "nuiPane.h"
-#include "nuiLabel.h"
-#include "nuiWidgetAnimation.h"
-#include "nuiWindowManager.h"
 
 #define RAWFLAG 8
 #define NOCAPTIONFLAG 16

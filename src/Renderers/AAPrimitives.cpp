@@ -13,7 +13,6 @@
 
 #ifndef __NUI_NO_AA__
 
-#include "nglMath.h"
 #include "AAPrimitives.h"
 
 #ifndef CLAMP

@@ -6,10 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiSoundManager.h"
-#include "nuiFileSound.h"
-#include "nuiMemorySound.h"
-#include "nuiSynthSound.h"
 
 nuiSoundManager nuiSoundManager::Instance;
 

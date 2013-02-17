@@ -6,13 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiMessageBox.h"
-#include "nuiLabel.h"
-#include "nuiButton.h"
-#include "nuiPane.h"
-#include "nuiVBox.h"
-
-#include "nuiColorDecoration.h"
 
 const nuiMessageBox::Button nuiMessageBox::ButtonYes    = 1;
 const nuiMessageBox::Button nuiMessageBox::ButtonNo     = 0;

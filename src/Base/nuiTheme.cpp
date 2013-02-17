@@ -6,24 +6,6 @@
  */
 
 #include "nui.h"
-#include "nglIFile.h"
-#include "nuiApplication.h"
-#include "nuiTheme.h"
-#include "nuiDrawContext.h"
-#include "nuiScrollBar.h"
-#include "nuiWindow.h"
-#include "nuiButton.h"
-#include "nuiTabBar.h"
-#include "nuiXML.h"
-#include "nuiScrollBar.h"
-#include "nuiSlider.h"
-#include "nuiSplitter.h"
-#include "nglIMemory.h"
-#include "nuiToggleButton.h"
-#include "nuiContour.h"
-#include "nuiDialog.h"
-#include "nuiLabel.h"
-#include "nuiFrame.h"
 
 #define DEFAULTFONTSIZE 11.0f
 

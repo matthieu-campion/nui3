@@ -8,8 +8,6 @@
 
 
 #include "nui.h"
-#include "nglTimer.h"
-#include "nglKernel.h"
 
 
 /*

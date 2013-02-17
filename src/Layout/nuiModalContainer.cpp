@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiModalContainer.h"
-#include "nuiTopLevel.h"
 
 nuiModalContainer::nuiModalContainer(nuiContainerPtr pParent)
 : nuiSimpleContainer(),

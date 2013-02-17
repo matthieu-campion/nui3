@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiWidgetAnimation.h"
 
 //class nuiWidgetAnimation (BASE CLASS)
 nuiWidgetAnimation::nuiWidgetAnimation (nuiWidgetPtr pTarget, double DurationInSeconds)

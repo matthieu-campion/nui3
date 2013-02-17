@@ -7,8 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiNavigationButton.h"
-
 
 
 nuiNavigationButton::nuiNavigationButton(nuiBarButtonSystemItem systemItem)

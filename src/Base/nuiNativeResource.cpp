@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiNativeResource.h"
 
 
 #ifdef _WIN32_

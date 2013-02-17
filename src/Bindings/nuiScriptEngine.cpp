@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiScriptEngine.h"
 
 static nglIStream* GetSource(const nglString& rName)
 {

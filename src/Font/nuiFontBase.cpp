@@ -7,28 +7,9 @@
 
 #include "nui.h"
 
-#include "nuiFontBase.h"
-
-#include "nglKernel.h"
-#include "nglMath.h"
-#include "nuiTexture.h"
-
-#include "nuiTextLayout.h"
-#include "nglImage.h"
-
-#include "nuiDrawContext.h"
-#include "nglBitmapTools.h"
-
-#include "nuiFontManager.h"
-
-#include "nglKernel.h"
-#include "nglVideoMode.h"
-#include "nuiFontBase.h"
-#include "nuiFontInstance.h"
-#include "nglMath.h"
 #include "ngl_default_font.h"
+#include "nuiFontInstance.h"
 
-#include "nuiUnicode.h"
 #include "hb.h"
 #include "hb-ft.h"
 #include "hb_nui.h"

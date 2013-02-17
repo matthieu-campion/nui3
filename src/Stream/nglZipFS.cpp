@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglZipFS.h"
-#include "nglIOStream.h"
-#include "nglIZip.h"
 #include "unzip.h"
 #include "zip.h"
 

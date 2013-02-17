@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiColor.h"
-#include "nglMath.h"
 
 
 

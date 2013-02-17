@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiSample.h"
 
 nuiSample::nuiSample(const nuiSampleInfo& rInfos)
 {

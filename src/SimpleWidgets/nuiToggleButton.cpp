@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiToggleButton.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
 
 nuiSize nuiToggleButton::mDefaultCheckSize = 14;
 

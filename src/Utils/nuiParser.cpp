@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiParser.h"
 
 
 //class nuiParser

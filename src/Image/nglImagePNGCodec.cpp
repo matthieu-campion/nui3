@@ -6,13 +6,8 @@
 */
 
 #include "nui.h"
-#include NGL_CONFIG_H
-
-#include "nglImage.h"
 #include "nglImagePNGCodec.h"
 #include "png.h"
-#include "nglIStream.h"
-#include "nglOStream.h"
 
 
 class nglImagePNGCodec : public nglImageCodec

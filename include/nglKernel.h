@@ -396,6 +396,7 @@ private:
   } // Undefined copy constructor
 
   friend bool nuiInit(void* OSHandle, class nuiKernel* pKernel);
+  friend bool nuiInitMinimal(void* OSHandle, class nuiKernel* pKernel);
   friend bool nuiUninit();
 
 

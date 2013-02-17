@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiSynthSound.h"
-#include "nuiSynthVoice.h"
 
 
 nuiSynthSound::nuiSynthSound(double sampleRate, double releaseTime)

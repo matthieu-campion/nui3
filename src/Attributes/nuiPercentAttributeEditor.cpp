@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPercentAttributeEditor.h"
-#include "nuiVBox.h"
-#include "nuiHBox.h"
 
 
 

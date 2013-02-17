@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiColorSelector.h"
-#include "nuiMetaDecoration.h"
-#include "nuiFrame.h"
 
 
 

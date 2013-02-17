@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiBooleanAttributeEditor.h"
-#include "nuiHBox.h"
 
  
 nuiBooleanAttributeEditor::nuiBooleanAttributeEditor(const nuiAttrib<bool>& rAttribute)

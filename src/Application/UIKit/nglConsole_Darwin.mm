@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglKernel.h"
 
 #define NGL_CONSOLE_PROMPT _T("> ")
 

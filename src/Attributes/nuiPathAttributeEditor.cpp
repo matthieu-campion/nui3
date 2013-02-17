@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPathAttributeEditor.h"
 
  
 nuiPathAttributeEditor::nuiPathAttributeEditor(const nuiAttrib<nglPath>& rAttribute)

@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiTexture.h"
 
 void nuiRadialBlur(nuiDrawContext* pContext, nuiTexture* pTexture, const nuiRect& rDestinationBase, float ScaleCoef, const nuiVector2& Direction, uint Iterations, float Strength, float PreMultiplyAlpha)
 {

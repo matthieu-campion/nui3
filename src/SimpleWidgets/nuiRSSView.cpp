@@ -6,12 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiRSSView.h"
-#include "nuiVBox.h"
-#include "nuiFolderPane.h"
-#include "nglIMemory.h"
-#include "nuiHTML.h"
-#include "nuiHTMLView.h"
 
 //class nuiRSSView : public nuiSimpleContainer
 nuiRSSView::nuiRSSView(const nglString& rURL, int32 SecondsBetweenUpdates, nglIStream* pOriginalStream, bool ForceNoHTML)

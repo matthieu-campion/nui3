@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiRectView.h"
 
 nuiRectView::nuiRectView(const nuiRect& rRect)
 : nuiWidget()

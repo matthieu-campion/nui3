@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiSynthVoice.h"
 
 nuiSynthVoice::nuiSynthVoice(double SampleRate, double releaseTime, nuiSynthSound* pSound)
 : nuiVoice(pSound),

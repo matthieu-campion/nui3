@@ -7,8 +7,6 @@
 
 #include "nui.h"
 #include "nglImageGIFCodec.h"
-#include "nglIMemory.h"
-#include "nglImage.h"
 
 #include "gif_lib.h"
 

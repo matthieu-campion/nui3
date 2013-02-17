@@ -7,7 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiHBox.h"
 
 nuiHBox::nuiHBox(uint32 nbcells)
 : nuiBox(nbcells, 1)

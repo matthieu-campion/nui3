@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiScrollingLabel.h"
-#include "nuiFontBase.h"
 
 nuiScrollingLabel::nuiScrollingLabel(const nglString& rText, nuiTheme::FontStyle FontStyle, nuiScrollLoop ScrollLoop, bool smartScroll, bool centered)
 : mScrollingLabelSink(this)

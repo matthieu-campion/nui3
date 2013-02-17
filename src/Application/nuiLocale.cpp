@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiLocale.h"
 
 nglString nuiLocale::GetCurrentCountry()
 {

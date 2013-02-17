@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiEditLine.h"
 
 using namespace std;
 

@@ -6,20 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiCSS.h"
-#include "nglIStream.h"
-#include "nglOStream.h"
-
-#include "nuiFrame.h"
-#include "nuiMetaDecoration.h"
-#include "nuiStateDecoration.h"
-#include "nuiBorderDecoration.h"
-#include "nuiColorDecoration.h"
-#include "nuiGradientDecoration.h"
-#include "nuiImageDecoration.h"
-#include "nuiTreeHandleDecoration.h"
-#include "nuiMetaDecoration.h"
-#include "nuiFontManager.h"
 
 
 ///////////////////////////////

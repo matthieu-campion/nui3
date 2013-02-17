@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglCriticalSection.h"
 
 #if defined(__ppc__) || defined(__ppc64__)
 #include <ppc_intrinsics.h>

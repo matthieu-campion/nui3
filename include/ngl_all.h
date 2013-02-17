@@ -153,11 +153,31 @@ Lookup precompiled headers in the VC doc to learn how to use them.
 #include "nglTimer.h"
 #include "nglVector.h"
 #include "nglZipFS.h"
+#include "nglVolume.h"
+#include "nglNativeVolume.h"
+#include "nuiNativeResource.h"
+#include "nuiNativeResourceVolume.h"
+
+#include "nglUTFStringConv.h"
+
+#include "nuiAsyncIStream.h"
+#include "nuiTranslator.h"
+#include "nuiCSV.h"
+
+#include "nuiCommand.h"
 
 #include "nglMath.h"
 
 #include "nglThread.h"
 #include "nglLock.h"
+#include "nglThreadChecker.h"
+#include "nglLightLock.h"
+#include "nglCondition.h"
+#include "nglCriticalSection.h"
+#include "nglSyncEvent.h"
+#include "nglReaderWriterLock.h"
+#include "nuiParser.h"
+
 
 #ifndef _MINUI3_
   #include "nglDataObjects.h"
@@ -170,6 +190,10 @@ Lookup precompiled headers in the VC doc to learn how to use them.
   #include "nglDragAndDropObjects.h"
   #include "nglInputDevice.h"
   #include "nglKeyboard.h"
+  #include "ngl3DSLoader.h"
+  #include "nglInputDevice.h"
+  #include "nglKeyboard.h"
+  #include "nuiMouseCursor.h"
 #endif
 
 #endif // __ngl_all_h__

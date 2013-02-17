@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiPopupValueAttributeEditor.h"
-#include "nuiEditLine.h"
 
 
 

@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiLayout.h"
 
 const char* nuiGetLayoutAttributeName(nuiLayoutAttribute attrib)
 {

@@ -14,33 +14,5 @@ This file includes all nui external and internal headers to create the precompil
 */
 
 #include "nui.h"
-#include "ngl_all.h"
-#include "nuiObject.h"
-#include "nuiEvent.h"
-
-#ifndef _MINUI3_
-#include "nuiContainer.h"
-#include "nuiWidget.h"
-#include "nuiTopLevel.h"
-#include "nuiDrawContext.h"
-#include "nuiMouseEvent.h"
-#include "nuiRect.h"
-#include "nuiTheme.h"
-#include "nuiFont.h"
-#include "nuiRange.h"
-#include "nuiColor.h"
-#include "nuiTexture.h"
-#include "nuiSurface.h"
-#include "nuiShape.h"
-#include "nuiPath.h"
-#include "nuiContour.h"
-#include "nuiPainter.h"
-#include "nuiMetaPainter.h"
-#include "nuiGLPainter.h"
-#include "nuiSoftwarePainter.h"
-#include "nuiPoint.h"
-#include "nuiRenderState.h"
-#include "nuiWindowManager.h"
-#endif
 
 

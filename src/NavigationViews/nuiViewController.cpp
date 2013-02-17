@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiViewController.h"
-#include "nuiNavigationBar.h"
 
 
 nuiViewController::nuiViewController()

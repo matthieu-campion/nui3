@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiHotKeyEditor.h"
 
 nuiHotKeyEditor::nuiHotKeyEditor()
 : nuiSimpleContainer(), mEventSink(this)

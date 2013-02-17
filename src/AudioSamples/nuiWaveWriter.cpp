@@ -6,9 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiWaveWriter.h"
-#include "nuiWaveReader.h"
-#include "nuiAudioConvert.h"
 #include "nuiChunksDefinitions.h"
 
 

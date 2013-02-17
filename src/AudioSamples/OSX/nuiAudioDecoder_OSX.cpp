@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiAudioDecoder.h"
-#include "nuiAudioConvert.h"
 
 #include <AvailabilityMacros.h>
 

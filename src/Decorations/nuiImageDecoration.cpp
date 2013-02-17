@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiImageDecoration.h"
 
 nuiImageDecoration::nuiImageDecoration(const nglString& rName)
 : nuiDecoration(rName),

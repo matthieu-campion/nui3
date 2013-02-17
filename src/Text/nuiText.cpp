@@ -6,14 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nglString.h"
-#include "nuiApplication.h"
-#include "nuiText.h"
-#include "nuiDrawContext.h"
-#include "nuiScrollBar.h"
-
-#include "nuiMainWindow.h"
 
 #define SBWIDTH 12
 #define INTERLINE 4

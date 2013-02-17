@@ -6,10 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiNavigationBar.h"
-#include "nuiDefaultDecoration.h"
-#include "nuiNavigationButton.h"
-#include "nuiFontManager.h"
 
 nuiNavigationBar::nuiNavigationBar()
 : nuiHBox(3), mEventSink(this)

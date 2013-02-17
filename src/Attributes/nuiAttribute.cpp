@@ -6,23 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiAttribute.h"
-#ifndef _MINUI3_
-#include "nuiPercentAttributeEditor.h"
-#include "nuiPointAttributeEditor.h"
-#include "nuiColorAttributeEditor.h"
-#include "nuiRectAttributeEditor.h"
-#include "nuiStringAttributeEditor.h"
-#include "nuiBooleanAttributeEditor.h"
-#include "nuiSizeAttributeEditor.h"
-#include "nuiBorderAttributeEditor.h"
-#include "nuiRangeAttributeEditor.h"
-#include "nuiRangeKnobAttributeEditor.h"
-#include "nuiGenericAttributeEditor.h"
-#include "nuiClampedValueAttributeEditor.h"
-#include "nuiPopupValueAttributeEditor.h"
-#include "nuiComboAttributeEditor.h"
-#endif
 
 uint32 nuiFakeGetRange1(uint32 dimension)
 {

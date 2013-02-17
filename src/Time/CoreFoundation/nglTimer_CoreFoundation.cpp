@@ -1,10 +1,5 @@
 #include "nui.h"
 
-#include "nglApplication.h"
-#include "nglTimer.h"
-
-#include "nuiStopWatch.h"
-
 #define TIMER_MIN_PERIOD     0.00001 // (somewhat 'reasonable')
 
 static std::set<nglTimer*> gNGLTimers;

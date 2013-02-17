@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiColorDecoration.h"
 
 nuiColorDecoration::nuiColorDecoration(const nglString& rName)
 : nuiDecoration(rName)

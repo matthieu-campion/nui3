@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiMatrixNode.h"
 
 //class nuiMatrixNode : public nuiObject
 nuiMatrixNode::nuiMatrixNode()

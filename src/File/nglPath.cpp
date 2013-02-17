@@ -8,9 +8,6 @@
 #define DEBUG_NGLPATH 0
 
 #include "nui.h"
-#include "nglVolume.h"
-#include "nglIFile.h"
-#include "nglIOFile.h"
 
 #if (defined _UIKIT_) || (defined _COCOA_)
 #include "Cocoa/nglPath_Cocoa.h"

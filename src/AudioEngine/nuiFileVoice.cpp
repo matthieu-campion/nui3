@@ -6,11 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiFileVoice.h"
-#include "nuiFileSound.h"
-#include "nuiWaveReader.h"
-#include "nuiAiffReader.h"
-#include "nuiAudioDecoder.h"
 
 nuiFileVoice::nuiFileVoice(nuiFileSound* pSound)
 : nuiVoice(pSound),

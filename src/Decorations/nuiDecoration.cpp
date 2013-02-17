@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDecoration.h"
-#include "nuiComboAttributeEditor.h"
 
 nuiDecoration::nuiDecoration(const nglString& rName)
 {

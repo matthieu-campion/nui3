@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiNotification.h"
 
 nuiNotification::nuiNotification(const nglString& rName)
 {

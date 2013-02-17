@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglCPUInfo.h"
 
 
 /* CPU family can be set at build time

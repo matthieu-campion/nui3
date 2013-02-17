@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiFrameView.h"
 
 
 ////////////////// nuiFrameView

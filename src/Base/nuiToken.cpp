@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiToken.h"
 
 template<> nuiTokenType nuiTokenTrait<int32>::GetType()
 {

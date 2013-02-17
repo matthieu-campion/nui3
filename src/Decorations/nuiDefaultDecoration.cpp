@@ -6,20 +6,7 @@
 */
 
 #include "nui.h"
-#include "nuiDefaultDecoration.h"
-#include "nuiColorDecoration.h"
-#include "nuiGradientDecoration.h"
-#include "nuiBorderDecoration.h"
-#include "nuiMetaDecoration.h"
-#include "nuiImageDecoration.h"
 #include "../graphics/DefaultDecoration.h"
-#include "nuiFrame.h"
-#include "nuiMessageBox.h"
-#include "nuiTabView.h"
-#include "nuiBackgroundPane.h"
-#include "nuiKnob.h"
-#include "nuiNavigationBar.h"
-#include "nuiNavigationButton.h"
 
 
 nuiDefaultDecoration::nuiDefaultDecoration()

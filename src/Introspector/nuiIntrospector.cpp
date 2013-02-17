@@ -6,19 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiIntrospector.h"
-#include "nuiSeparator.h"
-#include "nuiWidgetInspector.h"
-#include "nuiThreadInspector.h"
-#include "nuiFontInspector.h"
-#include "nuiDecorationInspector.h"
-#include "nuiTextureInspector.h"
-#include "nuiColorDecoration.h"
-#include "nuiGradientDecoration.h"
-#include "nuiMetaDecoration.h"
-#include "nuiTreeHandleDecoration.h"
-#include "nuiFontManager.h"
-#include "nuiObjectInspector.h"
 
 
 #define CELL_TOOLBAR 0

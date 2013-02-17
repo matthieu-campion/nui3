@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiGLPainter.h"
 
 extern void* gmpNUI_GLUTBridge;
 

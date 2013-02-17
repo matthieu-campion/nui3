@@ -5,7 +5,6 @@
   licence: see nui3/LICENCE.TXT
 */
 #include "nui.h"
-#include "nuiAttributeEditor.h"
 
 
 nuiAttributeEditor::nuiAttributeEditor()

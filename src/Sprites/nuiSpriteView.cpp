@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiSpriteView.h"
-#include "nuiTexture.h"
 
 // class nuiSpriteFrame
 nuiSpriteFrame::nuiSpriteFrame()

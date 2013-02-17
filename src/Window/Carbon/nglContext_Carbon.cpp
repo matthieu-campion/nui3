@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglContext.h"
 #include "ngl_carbon.h"
 
 /*

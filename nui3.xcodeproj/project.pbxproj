@@ -1133,7 +1133,6 @@
 		73F098B712E9D09E00656E84 /* t42types.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3B10C5E6FB50026DE07 /* t42types.h */; };
 		73F098B812E9D09E00656E84 /* fnterrs.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3BC0C5E6FC90026DE07 /* fnterrs.h */; };
 		73F098B912E9D09E00656E84 /* winfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3BD0C5E6FC90026DE07 /* winfnt.h */; };
-		73F098BA12E9D09E00656E84 /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		73F098BB12E9D09E00656E84 /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844E0D6302A3008C7CCB /* amigaconfig.h */; };
 		73F098BC12E9D09E00656E84 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844F0D6302A3008C7CCB /* ascii.h */; };
 		73F098BD12E9D09E00656E84 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 562184500D6302A3008C7CCB /* asciitab.h */; };
@@ -6018,7 +6017,6 @@
 		E5DD300412E09CA700F1EF4E /* t42types.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3B10C5E6FB50026DE07 /* t42types.h */; };
 		E5DD300512E09CA700F1EF4E /* fnterrs.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3BC0C5E6FC90026DE07 /* fnterrs.h */; };
 		E5DD300612E09CA700F1EF4E /* winfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3BD0C5E6FC90026DE07 /* winfnt.h */; };
-		E5DD300B12E09CA700F1EF4E /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		E5DD304512E09CA700F1EF4E /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844E0D6302A3008C7CCB /* amigaconfig.h */; };
 		E5DD304612E09CA700F1EF4E /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844F0D6302A3008C7CCB /* ascii.h */; };
 		E5DD304712E09CA700F1EF4E /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 562184500D6302A3008C7CCB /* asciitab.h */; };
@@ -6672,7 +6670,6 @@
 		E5DD3BCE12E0B08300F1EF4E /* t42types.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3B10C5E6FB50026DE07 /* t42types.h */; };
 		E5DD3BCF12E0B08300F1EF4E /* fnterrs.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3BC0C5E6FC90026DE07 /* fnterrs.h */; };
 		E5DD3BD012E0B08300F1EF4E /* winfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = E57BC3BD0C5E6FC90026DE07 /* winfnt.h */; };
-		E5DD3BD512E0B08300F1EF4E /* nuiDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = E591D80B0C83272700844D3E /* nuiDialog.h */; };
 		E5DD3C0F12E0B08300F1EF4E /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844E0D6302A3008C7CCB /* amigaconfig.h */; };
 		E5DD3C1012E0B08300F1EF4E /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 5621844F0D6302A3008C7CCB /* ascii.h */; };
 		E5DD3C1112E0B08300F1EF4E /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 562184500D6302A3008C7CCB /* asciitab.h */; };
@@ -8809,8 +8806,8 @@
 		E5816CA90C3CECAB00902DFE /* nglVideoMode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglVideoMode.h; path = include/nglVideoMode.h; sourceTree = SOURCE_ROOT; };
 		E5816CAA0C3CECAB00902DFE /* nglWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglWindow.h; path = include/nglWindow.h; sourceTree = SOURCE_ROOT; };
 		E5816CAB0C3CECAB00902DFE /* nglZipFS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nglZipFS.h; path = include/nglZipFS.h; sourceTree = SOURCE_ROOT; };
-		E5816CAC0C3CECAB00902DFE /* nui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nui.h; path = ../../include/nui.h; sourceTree = "<group>"; };
-		E5816CAD0C3CECAB00902DFE /* nui_all.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nui_all.h; path = ../../include/nui_all.h; sourceTree = "<group>"; };
+		E5816CAC0C3CECAB00902DFE /* nui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nui.h; path = ../include/nui.h; sourceTree = "<group>"; };
+		E5816CAD0C3CECAB00902DFE /* nui_all.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nui_all.h; path = ../include/nui_all.h; sourceTree = "<group>"; };
 		E5816CAE0C3CECAB00902DFE /* nuiAnimation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiAnimation.h; path = ../include/nuiAnimation.h; sourceTree = "<group>"; };
 		E5816CAF0C3CECAB00902DFE /* nuiAnimView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiAnimView.h; path = ../../include/nuiAnimView.h; sourceTree = "<group>"; };
 		E5816CB00C3CECAB00902DFE /* nuiApplication.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiApplication.h; path = ../../include/nuiApplication.h; sourceTree = "<group>"; };
@@ -9089,7 +9086,6 @@
 		E591C0510FF17BE0005E5E3D /* nuiHTMLFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiHTMLFont.cpp; sourceTree = "<group>"; };
 		E591D61A0C82DBF600844D3E /* nuiFormatedLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFormatedLabel.cpp; path = src/Text/nuiFormatedLabel.cpp; sourceTree = SOURCE_ROOT; };
 		E591D61B0C82DBF600844D3E /* nuiFormater.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiFormater.cpp; path = src/Text/nuiFormater.cpp; sourceTree = SOURCE_ROOT; };
-		E591D80B0C83272700844D3E /* nuiDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = nuiDialog.h; path = include/nuiDialog.h; sourceTree = SOURCE_ROOT; };
 		E592C0620EFE8AEB00340B35 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E592C5AB0EFEC90600340B35 /* nglStringConv_CoreFoundation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_CoreFoundation.cpp; sourceTree = "<group>"; };
 		E592C5AE0EFEC93600340B35 /* nglStringConv_Carbon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nglStringConv_Carbon.cpp; sourceTree = "<group>"; };
@@ -11065,6 +11061,8 @@
 				E5816E1C0C3CECAB00902DFE /* Window */,
 				E5816C770C3CECAB00902DFE /* ngl.h */,
 				E5816C790C3CECAB00902DFE /* ngl_all.h */,
+				E5816CAC0C3CECAB00902DFE /* nui.h */,
+				E5816CAD0C3CECAB00902DFE /* nui_all.h */,
 				E553C12312A55987009DDD22 /* ngl_config.cocoa.h */,
 				E553C12212A55987009DDD22 /* ngl_config.mac.h */,
 				E553C12112A55987009DDD22 /* ngl_config.uikit.h */,
@@ -11135,8 +11133,6 @@
 			isa = PBXGroup;
 			children = (
 				E5816D520C3CECAB00902DFE /* nui.cpp */,
-				E5816CAC0C3CECAB00902DFE /* nui.h */,
-				E5816CAD0C3CECAB00902DFE /* nui_all.h */,
 				BC34A0720EFA870A002F35C4 /* nuiVersion.h */,
 				E5816CB00C3CECAB00902DFE /* nuiApplication.h */,
 				E5EB3A960C8226A800CF21E2 /* nuiBindingManager.cpp */,
@@ -11353,7 +11349,6 @@
 				E5816D1C0C3CECAB00902DFE /* nuiWindow.h */,
 				E5816DA20C3CECAB00902DFE /* nuiZoomView.cpp */,
 				E5816D1F0C3CECAB00902DFE /* nuiZoomView.h */,
-				E591D80B0C83272700844D3E /* nuiDialog.h */,
 				E531A9951440A1EE00ED88C9 /* nuiLayout.cpp */,
 				E531A99E1440A20F00ED88C9 /* nuiLayout.h */,
 			);
@@ -11471,9 +11466,9 @@
 			isa = PBXGroup;
 			children = (
 				E5816C900C3CECAB00902DFE /* nglIMemory.h */,
+				E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */,
 				E5816DE30C3CECAB00902DFE /* nglIFile.cpp */,
 				E5816C8D0C3CECAB00902DFE /* nglIFile.h */,
-				E5816DE40C3CECAB00902DFE /* nglIMemory.cpp */,
 				E5816DE50C3CECAB00902DFE /* nglIOFile.cpp */,
 				E5816C920C3CECAB00902DFE /* nglIOFile.h */,
 				E5816C930C3CECAB00902DFE /* nglIOStream.h */,
@@ -12830,7 +12825,6 @@
 				73F098B712E9D09E00656E84 /* t42types.h in Headers */,
 				73F098B812E9D09E00656E84 /* fnterrs.h in Headers */,
 				73F098B912E9D09E00656E84 /* winfnt.h in Headers */,
-				73F098BA12E9D09E00656E84 /* nuiDialog.h in Headers */,
 				73F098BB12E9D09E00656E84 /* amigaconfig.h in Headers */,
 				73F098BC12E9D09E00656E84 /* ascii.h in Headers */,
 				73F098BD12E9D09E00656E84 /* asciitab.h in Headers */,
@@ -15601,7 +15595,6 @@
 				E5DD300412E09CA700F1EF4E /* t42types.h in Headers */,
 				E5DD300512E09CA700F1EF4E /* fnterrs.h in Headers */,
 				E5DD300612E09CA700F1EF4E /* winfnt.h in Headers */,
-				E5DD300B12E09CA700F1EF4E /* nuiDialog.h in Headers */,
 				E5DD304512E09CA700F1EF4E /* amigaconfig.h in Headers */,
 				E5DD304612E09CA700F1EF4E /* ascii.h in Headers */,
 				E5DD304712E09CA700F1EF4E /* asciitab.h in Headers */,
@@ -16046,7 +16039,6 @@
 				E5DD3BCE12E0B08300F1EF4E /* t42types.h in Headers */,
 				E5DD3BCF12E0B08300F1EF4E /* fnterrs.h in Headers */,
 				E5DD3BD012E0B08300F1EF4E /* winfnt.h in Headers */,
-				E5DD3BD512E0B08300F1EF4E /* nuiDialog.h in Headers */,
 				E5DD3C0F12E0B08300F1EF4E /* amigaconfig.h in Headers */,
 				E5DD3C1012E0B08300F1EF4E /* ascii.h in Headers */,
 				E5DD3C1112E0B08300F1EF4E /* asciitab.h in Headers */,
@@ -20226,7 +20218,6 @@
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(GCC_PREPROCESSOR_DEFINITIONS)";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (
@@ -20416,6 +20407,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PFE_FILE_C_DIALECTS = "c++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = include/nui.h;
@@ -20615,7 +20607,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NGL_STATIC_BUILD,
@@ -20665,7 +20656,6 @@
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(GCC_PREPROCESSOR_DEFINITIONS)";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*][arch=*]" = (

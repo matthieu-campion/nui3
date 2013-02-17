@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiContour.h"
-#include "nuiRectPath.h"
-#include "nuiArc.h"
-#include "nuiSpline.h"
-#include "nuiPolyLine.h"
 
 //class nuiContour
 nuiContour::nuiContour()

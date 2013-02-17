@@ -9,12 +9,6 @@
 
 
 #include "nui.h"
-#include "nuiTabView.h"
-#include "nuiLabel.h"
-#include "nuiShape.h"
-#include "nuiContour.h"
-#include "nuiGradient.h"
-#include "nuiDrawContext.h"
 
 
 

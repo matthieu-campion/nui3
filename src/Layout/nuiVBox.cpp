@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiVBox.h"
 
 nuiVBox::nuiVBox(uint32 nbcells)
 : nuiBox(1, nbcells)

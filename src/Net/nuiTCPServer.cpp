@@ -6,9 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiNetworkHost.h"
-#include "nuiTCPServer.h"
-#include "nuiTCPClient.h"
 
 #ifdef WIN32
 #include <Ws2tcpip.h>

@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiStateDummy.h"
 
 nuiStateDummy::nuiStateDummy(nuiWidgetPtr pNormal, nuiWidgetPtr pSelected, nuiWidgetPtr pDisabled)
 : nuiSimpleContainer()

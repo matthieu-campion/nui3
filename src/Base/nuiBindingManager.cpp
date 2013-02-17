@@ -7,8 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiBindingManager.h"
-#include "nuiTypeTraits.h"
 
 void TestVariant()
 {

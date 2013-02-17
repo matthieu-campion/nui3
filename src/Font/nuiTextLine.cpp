@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiTextLayout.h"
 
 
 nuiTextLine::nuiTextLine(const nuiTextLayout& rLayout, float X, float Y)

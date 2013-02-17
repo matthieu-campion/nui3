@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiUnicode.h"
 #include "ucdata.h"
 
 typedef struct nuiUnicodeRangeDesc

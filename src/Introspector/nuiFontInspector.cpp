@@ -7,13 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiFontInspector.h"
-#include "nuiGrid.h"
-#include "nuiToggleButton.h"
-#include "nuiLabel.h"
-#include "nuiText.h"
-#include "nuiFont.h"
-#include "nuiIntrospector.h"
 
 int32 nuiFontInspector::UpdatingFonts = 0;
 

@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglVolume.h"
 
 nglVolume::nglVolume(const nglString& rVolumeName, const nglPath& rPath, const nglString& rComment, nglPathVolume::VolumeFlags Flags, nglPathVolume::MediaType rType)
 {

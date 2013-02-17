@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiMidi.h"
-#include "nuiSingleton.h"
 
 //class nuiMidiPort
 nuiMidiPort::nuiMidiPort()

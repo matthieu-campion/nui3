@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiMemoryVoice.h"
 
 nuiMemoryVoice::nuiMemoryVoice(nuiMemorySound* pSound)
 : nuiVoice(pSound),

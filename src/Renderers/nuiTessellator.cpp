@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiTessellator.h"
-#include "nuiRenderArray.h"
-#include "nuiDrawContext.h"
-#include "nuiPathGenerator.h"
-#include "nuiContour.h"
 
 #if (defined _UIKIT_) || (defined _ANDROID_)
 #    include "glu//GL/glu.h"

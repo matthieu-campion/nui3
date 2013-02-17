@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglLog.h"
-#include "nglKernel.h"
-#include "nglTime.h"
-#include "nglOStream.h"
 
 const nglLog::StampFlags nglLog::NoStamp     = 0;
 const nglLog::StampFlags nglLog::TimeStamp   = 1 << 0;

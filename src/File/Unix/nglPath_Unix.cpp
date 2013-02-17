@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglPath.h"
-#include "nglIFile.h"
-#include "nglVolume.h"
 
 nglTime          nglPath::mMimeTypeStamp = nglTime();
 nglPath::MimeMap nglPath::mMimeType;

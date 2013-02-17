@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiHugeImage.h"
-#include "nuiAttributeAnimation.h"
 
 #define TEXTURE_SIZE 1024
 

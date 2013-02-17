@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiSignalsSlots.h"
 
 void nuiSignal::RemoveConnection(nuiSlotsSink &sink, const nuiDelegateMemento &slot)
 {

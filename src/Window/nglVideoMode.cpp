@@ -8,8 +8,6 @@
 
 
 #include "nui.h"
-#include "nglVideoMode.h"
-#include "nglKernel.h"
 
 
 bool nglVideoMode::Find (nglVideoMode& rMode, uint Width, uint Height, uint Depth, uint Frequency)

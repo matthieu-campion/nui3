@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiAnimation.h"
-#include "nuiXML.h"
-#include "nglMath.h"
-#include "nuiTask.h"
 
 nuiTimer* nuiAnimation::mpTimer = NULL;
 int32 nuiAnimation::mAnimCounter = 0;

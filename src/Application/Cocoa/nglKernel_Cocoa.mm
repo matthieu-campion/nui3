@@ -19,11 +19,6 @@
 
 #include "nui.h"
 
-#include "nglKernel.h"
-#include "nglDeviceInfo.h"
-
-#include <Cocoa/Cocoa.h>
-
 using namespace std;
 
 

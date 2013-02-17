@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiStopWatch.h"
 
 nuiStopWatch::nuiStopWatch(const nglString& LogTitle)
 : mLogTitle(LogTitle)

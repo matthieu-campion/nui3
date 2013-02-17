@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiTCPClient.h"
-#include "nuiNetworkHost.h"
 
 #ifdef WIN32
 #include <WinSock2.h>

@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiCSV.h"
 
 #define NUICSV_SEPARATION_TAG _T("<nuicsv/>")
 #define NUICSV_COMMENT_TAG _T("<nuicsv_comment/>")

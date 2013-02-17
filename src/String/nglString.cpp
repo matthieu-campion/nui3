@@ -9,7 +9,6 @@ licence: see nui3/LICENCE.TXT
 
 #pragma warning(disable : 4996)
 
-#include "nglUTFStringConv.h"
 #include "ucdata.h"
 
 #ifdef WINCE

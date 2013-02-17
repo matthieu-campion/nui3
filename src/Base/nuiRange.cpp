@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiRange.h"
 
 #if (defined _WIN32_) || 1
   #define ISNAN_DOUBLE isnan

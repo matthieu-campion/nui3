@@ -31,7 +31,6 @@
 */
 
 #include "nui.h"
-#include "nglCPUInfo.h"
 
 #ifdef _NGL_X86_
 

@@ -7,9 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiNavigationController.h"
-#include "nuiViewController.h"
-#include "nuiNavigationBar.h"
 
 
 #define NOTIF_PENDING_OPERATION _T("nuiNavigationController_PendingOp")

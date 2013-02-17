@@ -6,12 +6,7 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiXML.h"
-#include "nuiDrawContext.h"
-#include "nuiSVGShape.h"
 #include "float.h"
-#include "nuiContour.h"
 
 //#define NUI_SVG_USE_LISTS
 

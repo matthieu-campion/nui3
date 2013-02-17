@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglDragAndDropObjects.h"
-#include "nglKernel.h"
-
-#include "nglDataObjects.h"
 
 nglDragAndDrop::nglDragAndDrop(nglDropEffect defaultDropEffect, nglImage *pFeedbackImage, uint offsetX, uint offsetY)
 {

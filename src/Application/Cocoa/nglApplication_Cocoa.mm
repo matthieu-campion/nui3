@@ -2,11 +2,9 @@
 
 using namespace std;
 
-#include "nglApplication.h"
 #include "nglApplication_Cocoa.h"
 
 #include "../../Window/Cocoa/nglWindow_Cocoa.h"
-#include "nglWindow.h"
 
 /*
 ** nglNSApplication

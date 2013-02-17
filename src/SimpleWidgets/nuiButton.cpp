@@ -6,14 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiButton.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiXML.h"
-#include "nuiDecoration.h"
-#include "nuiFrame.h"
-#include "nuiTask.h"
 
 #define INACTIVE_SHADE_SIZE 8.f
 

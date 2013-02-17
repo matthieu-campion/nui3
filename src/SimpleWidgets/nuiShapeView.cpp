@@ -7,9 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiShapeView.h"
-#include "nuiShape.h"
-#include "nuiDrawContext.h"
 
 //class nuiShapeView : public nuiWidget
 nuiShapeView::nuiShapeView(nuiShape* pShape)

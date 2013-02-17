@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiTextLayout.h"
-#include "nuiFontManager.h"
 #include "ucdata.h"
 
 

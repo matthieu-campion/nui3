@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nglString.h"
-#include "nuiApplication.h"
-#include "nuiDrawContext.h"
-#include "nuiGrid.h"
 
 #define NUI_DEFAULT_COLUMN_EXPAND_GROW   0
 #define NUI_DEFAULT_COLUMN_EXPAND_SHRINK 0

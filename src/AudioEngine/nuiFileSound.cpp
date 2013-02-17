@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiFileSound.h"
-#include "nuiFileVoice.h"
 
 nuiFileSound::nuiFileSound(const nglPath& rPath)
 : mPath(rPath)

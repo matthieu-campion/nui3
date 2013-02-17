@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiSpline.h"
 
 using namespace std;
 

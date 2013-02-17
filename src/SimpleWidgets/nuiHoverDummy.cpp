@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiHoverDummy.h"
-#include "nuiXML.h"
 
 nuiHoverDummy::nuiHoverDummy(nuiWidgetPtr pHoverOn, nuiWidgetPtr pHoverOff)
 : nuiSimpleContainer()

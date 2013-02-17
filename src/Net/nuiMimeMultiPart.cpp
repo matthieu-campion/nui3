@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiMimeMultiPart.h"
-#include "nuiHTTP.h"
 
 nuiMimeMultiPart::nuiMimeMultiPart(const nglString& rName, const nglString& rContentType, const nglString& rBoundary)
 : mName(rName), 

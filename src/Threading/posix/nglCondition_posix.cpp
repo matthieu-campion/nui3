@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglCondition.h"
 
 #include <pthread.h>
 #include <unistd.h>

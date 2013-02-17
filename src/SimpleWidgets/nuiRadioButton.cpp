@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "ngl.h"
-#include "nuiRadioButton.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiRadioButtonGroup.h"
 
 nuiRadioButton::nuiRadioButton()
   : nuiToggleButton()

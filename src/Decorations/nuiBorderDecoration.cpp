@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiBorderDecoration.h"
 
 nuiBorderDecoration::nuiBorderDecoration(const nglString& rName)
 : nuiDecoration(rName)

@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglString.h"
-#include "nglDataObjects.h"
 
 
 void nglDataFilesObject::AddFile(const nglString& rPath)

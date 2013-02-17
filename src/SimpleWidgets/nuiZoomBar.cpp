@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiZoomBar.h"
 
 nuiZoomBar::nuiZoomBar(nuiOrientation Orientation, const nuiRange& rRange, float SideSize, float MiddleSize, nuiSize PageSizeMin, nuiWidgetPtr pThumb)
 : nuiScrollBar(Orientation, rRange, pThumb),

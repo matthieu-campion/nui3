@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiImageDropZone.h"
 
 
 nuiImageDropZone::nuiImageDropZone(const nglPath& rImagePath)

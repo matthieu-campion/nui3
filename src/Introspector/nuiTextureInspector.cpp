@@ -7,15 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiTextureInspector.h"
-#include "nuiGrid.h"
-#include "nuiToggleButton.h"
-#include "nuiLabel.h"
-#include "nuiFont.h"
-#include "nuiIntrospector.h"
-#include "nuiGrid.h"
-#include "nuiText.h"
-#include "nuiColorDecoration.h"
 
 nuiTextureInspector::nuiTextureInspector()
 : mSink(this)

@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiApplication.h"
-#include "nuiSpiderMonkey.h"
 
 nuiApplication::nuiApplication()
 {

@@ -6,14 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiShape.h"
-#include "nuiDrawContext.h"
-#include "nuiPolyLine.h"
-#include "nuiRectPath.h"
-#include "nuiArc.h"
-#include "nuiContour.h"
-#include "nuiTessellator.h"
-#include "nuiOutliner.h"
 
 
 // class nuiShape

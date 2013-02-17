@@ -5,12 +5,6 @@
   licence: see nui3/LICENCE.TXT
 */
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiSplitter.h"
-#include "nuiDrawContext.h"
-
-#include "nuiAttributeAnimation.h"
 
 using namespace std;
 

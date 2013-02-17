@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiSimpleContainer.h"
 
 class nuiSimpleContainerIterator : public nuiContainer::Iterator
 {

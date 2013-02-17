@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiNavigationViewDecoration.h"
 
 nuiNavigationViewDecoration::nuiNavigationViewDecoration(const nglString& rName)
 : nuiDecoration(rName)

@@ -5,9 +5,7 @@
  licence: see nui3/LICENCE.TXT
  */
 
-#include "nuiImageAnimation.h"
-#include "nuiImageSequence.h"
-
+#include "nui.h"
 
 
 nuiImageAnimation::nuiImageAnimation(uint32 nbFrames, const nglPath& rTexturePath, bool framesInSingleFile, nuiOrientation orientation)

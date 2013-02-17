@@ -18,14 +18,9 @@
 */
 
 #include "nui.h"
-
 #include NGL_CONFIG_H
-
-#include "nglImage.h"
 #include "nglImageCGCodec.h"
 
-#include "nglIStream.h"
-#include "nglOStream.h"
 
 #if (defined _COCOA_) || (defined _CARBON_)
 #import <ApplicationServices/ApplicationServices.h>

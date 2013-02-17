@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiHyperLink.h"
-#include "nuiURL.h"
 
 nuiHyperLink::nuiHyperLink()
 : nuiLabel(_T("")),

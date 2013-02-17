@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiImageSequence.h"
 
 nuiImageSequence::nuiImageSequence()
 : mFrameIndex(0)

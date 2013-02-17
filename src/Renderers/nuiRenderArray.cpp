@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglMath.h"
-#include "nuiRenderArray.h"
-#include "nuiColor.h"
 
 /// class nuiRenderArray
 nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh, bool _shape)

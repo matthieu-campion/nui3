@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiAudioFifo.h"
 
 
 // the minimum free space (in sampleFrames) in a ringbuffer to call a reading

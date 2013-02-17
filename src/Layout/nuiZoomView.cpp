@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiZoomView.h"
 
 
 nuiZoomView::nuiZoomView(nuiScrollBar *pHorizontalScrollbar, nuiScrollBar *pVerticalScrollbar, nuiSlider * pHorizontalSlider, nuiSlider * pVerticalSlider, bool calcWidthFromIdealSize, bool calcHeightFromIdealSize)

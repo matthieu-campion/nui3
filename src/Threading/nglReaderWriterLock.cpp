@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglReaderWriterLock.h"
 
 
 nglReaderWriterLock::nglReaderWriterLock()

@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiScrollBar.h"
-#include "nuiDrawContext.h"
 
 #define SCROLL_IDEAL_WIDTH 12
 #define SCROLL_IDEAL_SIZE 50

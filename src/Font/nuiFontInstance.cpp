@@ -7,12 +7,9 @@
 
 #include "nui.h"
 #include NGL_CONFIG_H
-
-#ifdef HAVE_FREETYPE
-
-#include "nglKernel.h"
 #include "nuiFontInstance.h"
 
+#ifdef HAVE_FREETYPE
 
 nuiFontInstance::FontListType nuiFontInstance::gFontList;
 

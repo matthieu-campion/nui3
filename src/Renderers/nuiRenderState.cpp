@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiRenderState.h"
-#include "nuiFont.h"
-#include "nuiTexture.h"
-#include "nuiSurface.h"
 
 
 nuiRenderState::nuiRenderState()

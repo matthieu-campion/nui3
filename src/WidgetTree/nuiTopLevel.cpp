@@ -6,14 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiLabel.h"
-#include "nuiMainWindow.h"
-#include "nuiTopLevel.h"
-#include "nuiMetaPainter.h"
-#include "nuiNotification.h"
-#include "nuiCSS.h"
-#include "nuiStopWatch.h"
-#include "nuiModalContainer.h"
 #include <iterator>
 
 #define PARTIAL_REDRAW_DEFAULT true

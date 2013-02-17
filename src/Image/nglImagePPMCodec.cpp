@@ -7,11 +7,6 @@
 
 #include "nui.h"
 #include "nglImagePPMCodec.h"
-#include "nglImage.h"
-#include "nglIMemory.h"
-#include "nglBitmapTools.h"
-#include "nglIStream.h"
-#include "nglOStream.h"
 
 nglImagePPMCodec::nglImagePPMCodec(void)
 {

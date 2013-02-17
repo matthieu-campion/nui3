@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiLabelAttribute.h"
 
 nuiLabelAttribute::nuiLabelAttribute(const nuiAttrib<const nglString&>& rAttribute, nuiTheme::FontStyle FontStyle)
 	: nuiLabel(rAttribute.Get(), FontStyle)

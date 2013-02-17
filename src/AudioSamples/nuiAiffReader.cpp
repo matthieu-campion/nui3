@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiAiffReader.h"
-#include "nuiAudioConvert.h"
 #include "nuiChunksDefinitions.h"
 
 #ifndef HiWord

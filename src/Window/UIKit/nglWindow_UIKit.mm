@@ -1,13 +1,5 @@
 #include "nui.h"
 
-#include "nglApplication.h"
-#include "nglVideoMode.h"
-#include "nglContext.h"
-#include "nglWindow.h"
-#include "nglKeyboard.h"
-#include "nuiMouseCursor.h"
-#include "nuiStopWatch.h"
-
 #include <QuartzCore/QuartzCore.h>
 
 

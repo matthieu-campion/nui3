@@ -6,14 +6,7 @@
 */
 
 #include "nui.h"
-#include "nglImage.h"
-#include "nuiTexture.h"
-#include "nuiDrawContext.h"
 #include "AAPrimitives.h"
-#include "nuiStopWatch.h"
-
-#include "nuiSurface.h"
-
 #include "../Utils/TextureAtlas.h"
 
 using namespace std;

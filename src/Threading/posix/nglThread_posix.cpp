@@ -6,13 +6,10 @@
 */
 
 #include "nui.h"
-#include "nglThread.h"
 
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/time.h>
-
-#include "nglThreadChecker.h"
 
 
 static void *start_thread(void *arg);

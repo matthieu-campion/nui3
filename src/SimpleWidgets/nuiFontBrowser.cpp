@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiFontBrowser.h"
-#include "nuiColumnTreeView.h"
-#include "nuiFontManager.h"
-#include "nuiVBox.h"
-#include "nuiHBox.h"
 
 //class nuiFontBrowser : public nuiSimpleContainer
 nuiFontBrowser::nuiFontBrowser()

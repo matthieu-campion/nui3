@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiFontManager.h"
-#include "nuiTextLayout.h"
 
 /////////////
 nuiTextRun::nuiTextRun(const nuiTextLayout& rLayout, nuiUnicodeScript script, int32 Position, int32 Length, const nuiTextStyle& rStyle)

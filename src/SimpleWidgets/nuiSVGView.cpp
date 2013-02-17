@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiSVGView.h"
-#include "nglTime.h"
-#include "nglIFile.h"
-#include "nglKernel.h"
-#include "nuiTheme.h"
 
 nuiSVGView::nuiSVGView(nuiSVGShape* pShape)
   : nuiWidget(),

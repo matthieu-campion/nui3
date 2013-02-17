@@ -6,16 +6,12 @@
 */
 
 #include "nui.h"
-#include "nuiHTML.h"
-#include "nglIMemory.h"
-#include "nglOMemory.h"
-#include "nuiUnicode.h"
+#include "nuiWebCSS.h"
 
 #undef Bool
 #include "tidy.h"
 #include "buffio.h"
 
-#include "nuiWebCSS.h"
 
 //class nuiHTMLAttrib
 nuiHTMLAttrib::nuiHTMLAttrib(AttributeType type, const nglString& rName, const nglString& rValue)

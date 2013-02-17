@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPoint.h"
 
 const nuiPoint nuiPoint::Zero;
 const nuiPoint nuiPoint::One(1,1,1);

@@ -7,8 +7,6 @@
 
 #include "nui.h"
 #include "nglImageTGACodec.h"
-#include "nglIMemory.h"
-#include "nglImage.h"
 
 
 nglImageTGACodec::nglImageTGACodec(void)

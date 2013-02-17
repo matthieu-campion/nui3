@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDialogSelectFile.h"
-#include "nuiVBox.h"
-#include "nuiHBox.h"
 
 
 nuiDialogSelectFile::nuiDialogSelectFile(nuiMainWindow* pParent, const nglString& rTitle, const nglPath& rPath, const nglPath& rRootPath, const nglString& defaultEntry, const nglString& rFilter, bool showHiddenFiles, nuiSize Left, nuiSize Top, nuiSize Width, nuiSize Height)

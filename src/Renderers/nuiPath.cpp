@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPath.h"
-#include "nglMath.h"
 
 nuiPath::nuiPath()
 {

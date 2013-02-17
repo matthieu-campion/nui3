@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiSound.h"
-#include "nuiAudioDb.h"
 
 nglString nuiSound::GetStringID(const nglPath& rPath, nuiSound::Type type)
 {

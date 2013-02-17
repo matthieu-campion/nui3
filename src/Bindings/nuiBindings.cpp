@@ -6,10 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiBindings.h"
-#include "nuiBindingManager.h"
-
-#include "nuiWidget.h"
 
 NUI_DECLARE_ATTRIBUTE_TYPE(void);
 NUI_DECLARE_ATTRIBUTE_TYPE(void*);

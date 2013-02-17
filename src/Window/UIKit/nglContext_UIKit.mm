@@ -1,6 +1,4 @@
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglContext.h"
 
 
 #include <UIKit/UIKit.h>

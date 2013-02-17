@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiNativeResourceVolume.h"
-#include "nuiNativeResource.h"
 
 #include "nuiStopWatch.h"
 

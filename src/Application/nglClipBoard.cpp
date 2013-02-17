@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglClipBoard.h"
 
 nglClipBoard::nglClipBoard()
 {

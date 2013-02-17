@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiSizeAttributeEditor.h"
 
  
 nuiSizeAttributeEditor::nuiSizeAttributeEditor(const nuiAttrib<double>& rAttribute)

@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiObject.h"
 
 //#define NUI_OBJECT_DEBUG_TOOLTIPS
 

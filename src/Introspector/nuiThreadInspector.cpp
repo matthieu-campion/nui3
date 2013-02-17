@@ -6,13 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiThreadInspector.h"
-#include "nuiIntrospector.h"
-#include "nglThreadChecker.h"
-#include "nuiAttributeEditor.h"
-#include "nuiFolderPane.h"
-#include "nuiColorDecoration.h"
-#include "nglLightLock.h"
 
 #define COL_NAME 0
 #define COL_STATE 1

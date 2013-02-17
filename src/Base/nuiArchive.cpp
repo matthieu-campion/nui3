@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiArchive.h"
 
 
 nuiArchive::nuiArchive(bool Loading)

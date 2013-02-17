@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiOutliner.h"
-#include "nuiArc.h"
-#include "nuiDrawContext.h"
-#include "nuiRenderArray.h"
 
 #ifndef __NUI_NO_AA__
   #include "AAPrimitives.h"

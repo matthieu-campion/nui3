@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiFlags.h"
-#include "nuiXML.h"
 
 // Get enum from string desc:
 nuiPosition nuiGetPosition (const nglString& Position, nuiPosition Default)

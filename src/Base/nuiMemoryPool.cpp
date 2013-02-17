@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiMemoryPool.h"
 
 nuiMemoryPool::nuiMemoryPool(size_t size)
 {

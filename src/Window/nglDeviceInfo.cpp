@@ -13,7 +13,6 @@
 */
 
 #include "nui.h"
-#include "nglDeviceInfo.h"
 
 //class nglDeviceInfo
 nglDeviceInfo::Type nglDeviceInfo::GetType() const

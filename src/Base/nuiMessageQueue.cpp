@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiMessageQueue.h"
-#include "nuiNotification.h"
 
 
 nuiMessageQueue::nuiMessageQueue()

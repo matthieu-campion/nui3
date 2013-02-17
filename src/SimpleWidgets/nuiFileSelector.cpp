@@ -6,12 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiButton.h"
-#include "nuiFileSelector.h"
-#include "nuiMainWindow.h"
-#include "nuiSplitter.h"
-#include "nuiWindowManager.h"
-#include "nuiPane.h"
 
 //
 

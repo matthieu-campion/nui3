@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiStateDecoration.h"
-#include "nuiFrame.h"
 
 
 

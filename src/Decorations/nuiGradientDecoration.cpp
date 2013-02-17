@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiGradientDecoration.h"
 
 nuiGradientDecoration::nuiGradientDecoration(const nglString& rName)
 : nuiDecoration(rName),

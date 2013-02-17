@@ -6,10 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiAsyncIStream.h"
-#include "nglThread.h"
-#include "nuiCommand.h"
-#include "nuiHTTP.h"
 
 class nuiAsyncIStream::Handler : public nglThread, public nuiCommand
 {

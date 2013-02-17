@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglSyncEvent.h"
 
 #include <pthread.h>
 #include <unistd.h>

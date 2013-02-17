@@ -8,11 +8,6 @@
 // nuiGradient.cpp
 
 #include "nui.h"
-#include "nuiColor.h"
-#include "nuiRect.h"
-#include "nuiGradient.h"
-#include "nuiDrawContext.h"
-#include "nuiContour.h"
 
 nuiGradient::nuiGradient()
 {

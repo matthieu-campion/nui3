@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiRangeKnobAttributeEditor.h"
-#include "nuiKnob.h"
 
 nuiRangeKnobAttributeEditor::nuiRangeKnobAttributeEditor(const nuiAttrib<const nuiRange&>& rAttribute)
 	: nuiAttributeEditor(),

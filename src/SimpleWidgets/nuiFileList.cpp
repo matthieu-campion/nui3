@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiFileList.h"
-#include "nuiLabel.h"
 
 
 nuiFileList::nuiFileList(const nglPath& rPath)

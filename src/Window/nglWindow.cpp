@@ -8,10 +8,6 @@
 
 
 #include "nui.h"
-#include "nglKernel.h"
-#include "nglWindow.h"
-#include "nuiMainMenu.h"
-#include "nuiStopWatch.h"
 
 
 

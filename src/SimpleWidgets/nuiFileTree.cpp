@@ -8,8 +8,6 @@
 
 
 #include "nui.h"
-#include "nuiFileSelector.h"
-#include "nuiFileTree.h"
 
 
 #define FIRST_ROW_HEIGHT  50.f

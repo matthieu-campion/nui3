@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiHTTP.h"
-#include "nuiCommand.h"
 
 using namespace std;
 

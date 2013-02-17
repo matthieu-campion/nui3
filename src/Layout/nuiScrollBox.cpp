@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiHBox.h"
-#include "nuiVBox.h"
-#include "nuiScrollBox.h"
-
 
 nuiScrollBox::nuiScrollBox(nuiWidget* pBackward, nuiWidget* pForward, nuiOrientation Orientation, nuiWidget* pScrolledWidget)
 : mSink(this)

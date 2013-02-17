@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglString.h"
-#include "nuiFont.h"
-#include "nuiWidget.h"
-#include "nuiTheme.h"
-#include "nuiFormatedLabel.h"
 
 
 

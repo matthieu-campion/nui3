@@ -6,10 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiHTMLView.h"
-#include "nuiHTTP.h"
-#include "nuiFontManager.h"
-#include "nuiUnicode.h"
 
 #include "nuiHTMLContext.h"
 #include "nuiHTMLItem.h"
@@ -19,9 +15,6 @@
 #include "nuiHTMLText.h"
 #include "nuiHTMLImage.h"
 #include "nuiHTMLFont.h"
-#include "nuiURL.h"
-
-#include "nuiStopWatch.h"
 
 #include "nuiWebCSS.h"
 

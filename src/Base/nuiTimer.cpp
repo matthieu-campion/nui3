@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiTimer.h"
-#include "nuiEventRegistry.h"
-#include "nuiTask.h"
 
 ////////////////////////
 // nuiTickEvent

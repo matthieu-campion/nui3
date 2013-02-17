@@ -6,12 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiApplication.h"
-#include "nuiFolderPane.h"
-#include "nuiDrawContext.h"
-#include "nuiHBox.h"
-#include "nuiTreeHandleDecoration.h"
-#include "nuiAttributeAnimation.h"
 
 #define CELL_CONTENTS 1
 #define CELL_CLOSINGCONTENTS 2

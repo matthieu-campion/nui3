@@ -8,17 +8,6 @@
 
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiContainer.h"
-#include "nuiMainWindow.h"
-#include "nuiWindow.h"
-#include "nuiXML.h"
-#include "nuiBuilder.h"
-#include "nuiLabel.h"
-#include "nuiIntrospector.h"
-#include "nuiSoftwarePainter.h"
-#include "nuiStopWatch.h"
 
 //#define STUPID
 //#define STUPIDBASE

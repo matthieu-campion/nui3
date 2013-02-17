@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglApplication.h"
-#include "nglTimer.h"
 
 #define TIMER_MIN_PERIOD     0.00001 // (somewhat 'reasonable')
 

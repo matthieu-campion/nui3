@@ -6,20 +6,6 @@
 */
 
 #include "nui.h"
-#include "ngl.h"
-#include "nuiDrawContext.h"
-#include "nuiMetaPainter.h"
-#include "nuiGLPainter.h"
-#include "nuiGL2Painter.h"
-#include "nuiD3DPainter.h"
-#include "nuiSoftwarePainter.h"
-#include "nuiWidget.h"
-#include "nuiTheme.h"
-#include "nuiContour.h"
-#include "nuiTessellator.h"
-#include "nuiOutliner.h"
-#include "nuiTexture.h"
-#include "nuiSurface.h"
 
 
 /****************************************************************************

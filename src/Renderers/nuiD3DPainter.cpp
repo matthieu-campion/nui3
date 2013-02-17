@@ -6,13 +6,7 @@ licence: see nui3/LICENCE.TXT
 */
 
 #include "nui.h"
-#include "nui.h"
 #include "nuiD3DPainter.h"
-#include "nuiWidget.h"
-#include "nuiTheme.h"
-#include "nglMatrix.h"
-#include "AAPrimitives.h"
-#include "nuiTexture.h"
 #include "AAPrimitives.h"
 
 #ifndef _DEBUG

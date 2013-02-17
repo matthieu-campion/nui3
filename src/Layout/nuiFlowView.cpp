@@ -7,8 +7,6 @@
 
 #include "nui.h"
 
-#include "nuiFlowView.h"
-
 nuiFlowView::nuiFlowView(float IdealWidth, float HSpace, float VSpace)
 {
   mIdealWidth = IdealWidth;

@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiWindow.h"
-#include "nuiWindowManager.h"
-#include "nuiTopLevel.h"
 
 
 nuiWindowManager::nuiWindowManager()

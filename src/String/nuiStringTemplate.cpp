@@ -7,7 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiStringTemplate.h"
 
 class nuiSTN_Text : public nuiStringTemplateNode
 {

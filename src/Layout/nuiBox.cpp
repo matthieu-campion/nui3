@@ -6,7 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiBox.h"
 
 void nuiBox::InitBoxAttributes()
 {

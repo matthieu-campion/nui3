@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nglApplication.h"
-#include "nglOFile.h"
 
 using namespace std;
 

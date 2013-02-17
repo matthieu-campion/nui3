@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPathGenerator.h"
 
 // nuiPathGenerator
 nuiPathGenerator::nuiPathGenerator()

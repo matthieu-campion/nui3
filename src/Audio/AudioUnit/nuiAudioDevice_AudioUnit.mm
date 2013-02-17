@@ -6,9 +6,7 @@
  */
 
 #include "nuiAudioDevice.h"
-#include "nglThread.h"
 #include "nuiAudioDevice_AudioUnit.h"
-#include "nuiAudioConvert.h"
 
 
 #define kOutputBus	(0)

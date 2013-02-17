@@ -8,20 +8,6 @@
 
 
 #include "nui.h"
-#include "nuiWidget.h"
-#include "nuiTopLevel.h"
-#include "nuiAnimation.h"
-#include "nuiAttributeAnimation.h"
-#include "nuiDrawContext.h"
-#include "nuiMetaPainter.h"
-#include "nuiMainWindow.h"
-#include "nuiTheme.h"
-#include "nuiDecoration.h"
-#include "nuiWidgetMatcher.h"
-#include "nuiColorDecoration.h"
-#include "nuiTask.h"
-#include "nuiMatrixNode.h"
-#include "nuiCSS.h"
 
 //const bool gGlobalUseRenderCache = false;
 const bool gGlobalUseRenderCache = true;

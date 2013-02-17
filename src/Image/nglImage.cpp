@@ -6,15 +6,6 @@
 */
 
 #include "nui.h"
-#include NGL_CONFIG_H
-
-#include "nglKernel.h"
-#include "nglFile.h"
-#include "nglIFile.h"
-#include "nglOFile.h"
-#include "nglImage.h"
-#include "nglImageCodec.h"
-#include "nglMath.h"
 
 #include "nglImageTGACodec.h"
 #include "nglImagePPMCodec.h"

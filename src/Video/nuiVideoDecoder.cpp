@@ -8,8 +8,6 @@
  */
 #include "nui.h"
 
-#include "nuiVideoDecoder.h"
-
 double nuiVideoDecoder::GetDuration() const
 {
   return mDuration;

@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiDrawContext.h"
-#include "nuiScrollView.h"
-
-#include "nuiGradientDecoration.h"
 
 #define SCROLL_SIZE 12.0f
 #define NUI_SMOOTH_SCROLL_RATIO (0.2f/1.f)

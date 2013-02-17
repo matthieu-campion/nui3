@@ -7,15 +7,6 @@
 
 
 #include "nui.h"
-#include "nuiObjectInspector.h"
-#include "nuiGrid.h"
-#include "nuiToggleButton.h"
-#include "nuiLabel.h"
-#include "nuiFont.h"
-#include "nuiIntrospector.h"
-#include "nuiGrid.h"
-#include "nuiText.h"
-#include "nuiColorDecoration.h"
 
 nuiObjectInspector::nuiObjectInspector()
 : mSink(this)

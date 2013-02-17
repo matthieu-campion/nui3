@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiTabBar.h"
-#include "nuiContainer.h"
-#include "nuiTheme.h"
 
 // nuiTab
 nuiTab::nuiTab()

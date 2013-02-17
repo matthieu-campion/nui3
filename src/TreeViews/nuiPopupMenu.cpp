@@ -6,13 +6,6 @@ licence: see nui3/LICENCE.TXT
 */
 
 #include "nui.h"
-#include "nuiPopupMenu.h"
-#include "nuiLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiTreeView.h"
-#include "nuiTimer.h"
-#include "nuiScrollBar.h"
-#include "nuiTopLevel.h"
 
 #define TIMER_PERIOD                (0.05)
 #define DELAY_TIME                  (0.2)

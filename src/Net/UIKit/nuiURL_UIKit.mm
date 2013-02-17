@@ -7,7 +7,6 @@
 
 #include "nui.h"
 #include <UIKit/UIKit.h>
-#include "nuiURL.h"
 
 bool nuiURL::OpenBrowser()
 {

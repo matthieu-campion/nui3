@@ -10,7 +10,6 @@
 #include "hb.h"
 #include "hb_nui.h"
 #include "ucdata.h"
-#include "nuiUnicode.h"
 
 //#include "hb-unicode-private.hh"
 

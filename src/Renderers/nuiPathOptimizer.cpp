@@ -9,7 +9,6 @@
 // nuiPathOptimizer.cpp
 
 #include "nui.h"
-#include "nuiPathOptimizer.h"
 
 nuiPathOptimizer::nuiPathOptimizer(nuiPathGenerator* pPath, float AngleThreshold, float DistThreshold)
 {

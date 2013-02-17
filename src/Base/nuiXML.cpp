@@ -6,8 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiXML.h"
-#include "nuiFlags.h"
 #define XML_STATIC
 #include "expat.h"
 

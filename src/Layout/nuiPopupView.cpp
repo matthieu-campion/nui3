@@ -6,7 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiPopupView.h"
 
 nuiPopupView::nuiPopupView(nuiWidget* pWidget, nuiSize X, nuiSize Y)
 {

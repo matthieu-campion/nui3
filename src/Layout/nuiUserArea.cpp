@@ -6,10 +6,6 @@
 */
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiUserArea.h"
-#include "nuiDrawContext.h"
 
 
 nuiUserArea::nuiUserArea()

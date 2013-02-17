@@ -6,9 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiAnimView.h"
-#include "nuiXML.h"
-#include "nglMath.h"
 
 nuiAnimView::nuiAnimView()
 : nuiSimpleContainer()

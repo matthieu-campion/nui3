@@ -6,11 +6,6 @@
 */
 
 #include "nui.h"
-#include "nuiLabelRenamer.h"
-#include "nuiStringAttributeEditor.h"
-#include "nuiMouseEvent.h"
-#include "nuiPane.h"
-#include "nuiHBox.h"
 
  
 nuiStringAttributeEditor::nuiStringAttributeEditor(const nuiAttrib<nglString>& rAttribute)

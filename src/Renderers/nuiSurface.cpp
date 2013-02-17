@@ -1,9 +1,5 @@
 #include "nui.h"
 
-#include "nuiSurface.h"
-#include "nuiTexture.h"
-#include "nuiMetaPainter.h"
-
 nuiSurfaceMap nuiSurface::mpSurfaces;
 nuiSurfaceCacheSet nuiSurface::mpSurfaceCaches;
 

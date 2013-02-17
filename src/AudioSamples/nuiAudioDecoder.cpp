@@ -6,8 +6,6 @@
  */
 
 #include "nui.h"
-#include "nuiAudioDecoder.h"
-#include "nuiAudioConvert.h"
 
 nuiAudioDecoder::nuiAudioDecoder(nglIStream& rStream) :
   nuiSampleReader(rStream),

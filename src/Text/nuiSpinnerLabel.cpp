@@ -7,13 +7,6 @@
 
 #include "nui.h"
 
-#include "nuiApplication.h"
-#include "nuiSpinnerLabel.h"
-#include "nuiDrawContext.h"
-#include "nuiXML.h"
-#include "nuiTheme.h"
-#include "nuiLabelRenamer.h"
-
 /*
 #define KNOB_IDEAL_WIDTH 12
 #define KNOB_IDEAL_SIZE 100

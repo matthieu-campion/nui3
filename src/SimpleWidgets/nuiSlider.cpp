@@ -9,11 +9,6 @@
 
 
 #include "nui.h"
-#include "nui.h"
-#include "nuiApplication.h"
-#include "nuiSlider.h"
-#include "nuiDrawContext.h"
-#include "nuiTheme.h"
 
 #define SLIDER_IDEAL_WIDTH 12
 #define SLIDER_IDEAL_SIZE 100

@@ -6,17 +6,6 @@
 */
 #include "nui.h"
 
-#include "nuiDialog.h"
-#include "nuiLabel.h"
-#include "nuiFixed.h"
-#include "nuiPane.h"
-#include "nuiWidgetAnimation.h"
-#include "nuiButton.h"
-#include "nuiGrid.h"
-#include "nuiTopLevel.h"
-
-#include "nuiColorDecoration.h"
-
 nuiDialog::nuiDialog(nuiContainer* pParent)
   : nuiModalContainer(pParent), mSink(this),  
   mpLayoutContainer(NULL), mpGlobalGrid(NULL), mpButtonsGrid(NULL),  
