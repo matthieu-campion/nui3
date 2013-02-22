@@ -14,8 +14,6 @@
 #define __nglDataTypesRegistry_h__
 
 //#include "nui.h"
-#include "nglKernel.h"
-#include "nglString.h"
 
 #ifdef _WIN32_
 typedef UINT        nglNativeObjectType;

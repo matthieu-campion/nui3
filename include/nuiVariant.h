@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include "nui.h"
-#include "nuiAttributeType.h"
 #include "nuiTypeTraits.h"
 #include "nuiBorder.h"
 #include "nuiObject.h"

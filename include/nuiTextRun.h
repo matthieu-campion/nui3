@@ -10,6 +10,8 @@
 #include "nuiTextStyle.h"
 #include "nuiUnicode.h"
 
+class nuiTextLayout;
+
 //! Glyph metrics
 /*!
  All glyph metrics are given in pixels, they depend on the current font size and
