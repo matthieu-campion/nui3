@@ -40,16 +40,24 @@ public:
 class nuiShaderState : public nuiRefCount
 {
 public:
-  nuiShaderState(nuiShaderProgram* pProgram);
   nuiShaderState(const nuiShaderState& rOriginal);
   virtual ~nuiShaderState();
 
   void Clear();
 
+  void Set(const nglString& rName, GLfloat* pVal, int32 size);
+  void Set(const nglString& rName, GLint* pVal, int32 size);
+
+  void GetFloat(const nglString& rName, GLfloat* pVal, int32 size) const;
+  void GetInt(const nglString& rName, GLint* pVal, int32 size) const;
 private:
   std::map<GLuint, std::vector<GLfloat> > mFloats;
   std::map<GLuint, std::vector<GLint> > mInts;
   nuiShaderProgram* mpProgram;
+
+  friend class nuiShaderProgram;
+  nuiShaderState(nuiShaderProgram* pProgram = NULL);
+
 };
 
 
@@ -146,9 +154,13 @@ protected:
 #endif
 
 private:
+  void Init();
   GLuint mProgram;
 
   std::map<nglString, nuiUniformDesc> mUniformMap;
   std::map<GLenum, nuiShader*> mShaders;
+  nuiShaderState mDefaultState;
+
+  static std::map<GLenum, std::pair<GLenum, GLint> > gParamTypeMap;
 };
 
