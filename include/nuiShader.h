@@ -16,34 +16,57 @@ enum nuiShaderKind
   eFragmentShader = GL_FRAGMENT_SHADER
 };
 
-class nuiShader : public nuiRefCount
+class nuiShader;
+class nuiShaderProgram;
+
+class nuiUniformDesc
 {
 public:
-  nuiShader(nuiShaderKind kind, const nglString& rSource);
-  nuiShader(nuiShaderKind kind, nglIStream& rSource);
-  virtual ~nuiShader();
+  nuiUniformDesc()
+  : mType(0), mLocation(0)
+  {}
 
-  bool Load();
-  void Delete();
+  nuiUniformDesc(const nglString& rName, GLenum Type, GLuint Location)
+  : mName(rName), mType(Type), mLocation(Location)
+  {
+  }
 
-  GLuint GetShader() const;
-  bool IsValid() const;
-  const nglString& GetError() const;
-private:
-  nuiShaderKind mKind;
-  nglString mSource;
-  nglString mError;
-  GLuint mShader;
+  nglString mName;
+  GLenum mType;
+  GLuint mLocation;
 };
 
-class nuiShaderProgram
+
+class nuiShaderState : public nuiRefCount
+{
+public:
+  nuiShaderState(nuiShaderProgram* pProgram);
+  nuiShaderState(const nuiShaderState& rOriginal);
+  virtual ~nuiShaderState();
+
+  void Clear();
+
+private:
+  std::map<GLuint, std::vector<GLfloat> > mFloats;
+  std::map<GLuint, std::vector<GLint> > mInts;
+  nuiShaderProgram* mpProgram;
+};
+
+
+
+
+class nuiShaderProgram : public nuiRefCount
 {
 public:
   nuiShaderProgram();
   virtual ~nuiShaderProgram();
 
-  bool AddShader(nuiShader* pShader);
+  void AddShader(nuiShaderKind shaderType, nglIStream& rStream);
+  void AddShader(nuiShaderKind shaderType, const nglString& rSrc);
 
+  bool Link();
+
+  const nuiShaderState& GetState();
 
   // Geometry Shader: Input Type, Output and Number of Vertices out
   void       SetInputPrimitiveType(int InputPrimitiveType);   //!< Set the input primitive type for the geometry shader
@@ -52,63 +75,14 @@ public:
 
   GLint       GetUniformLocation(const char *name);  //!< Retrieve Location (index) of a Uniform Variable
   GLint       GetUniformLocation(const nglString& name);  //!< Retrieve Location (index) of a Uniform Variable
+  const std::map<nglString, nuiUniformDesc>& GetUniforms() const;
 
-  // Submitting Uniform Variables. You can set varname to 0 and specifiy index retrieved with GetUniformLocation (best performance)
-  void       SetUniform1f(const char* varname, GLfloat v0);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-  void       SetUniform2f(const char* varname, GLfloat v0, GLfloat v1);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-  void       SetUniform3f(const char* varname, GLfloat v0, GLfloat v1, GLfloat v2);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-  void       SetUniform4f(const char* varname, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-
-  void       SetUniform1i(const char* varname, GLint v0);  //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-  void       SetUniform2i(const char* varname, GLint v0, GLint v1); //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-  void       SetUniform3i(const char* varname, GLint v0, GLint v1, GLint v2); //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-  void       SetUniform4i(const char* varname, GLint v0, GLint v1, GLint v2, GLint v3); //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-
-  // Arrays
-  void       SetUniform1fv(const char* varname, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform2fv(const char* varname, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform3fv(const char* varname, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform4fv(const char* varname, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-
-  void       SetUniform1iv(const char* varname, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform2iv(const char* varname, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform3iv(const char* varname, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform4iv(const char* varname, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-
-  void       SetUniformMatrix2fv(const char* varname, GLsizei count, GLboolean transpose, GLfloat *value); //!< Specify values of uniform 2x2 matrix. \param varname The name of the uniform variable.
-  void       SetUniformMatrix3fv(const char* varname, GLsizei count, GLboolean transpose, GLfloat *value); //!< Specify values of uniform 3x3 matrix. \param varname The name of the uniform variable.
-  void       SetUniformMatrix4fv(const char* varname, GLsizei count, GLboolean transpose, GLfloat *value); //!< Specify values of uniform 4x4 matrix. \param varname The name of the uniform variable.
-
+  
+protected:
   // Receive Uniform variables:
   void       GetUniformfv(const char* varname, GLfloat* values); //!< Receive value of uniform variable. \param varname The name of the uniform variable.
   void       GetUniformiv(const char* varname, GLint* values); //!< Receive value of uniform variable. \param varname The name of the uniform variable.
 
-  ////////////////// Set Uniforms with index instead of name:
-  // Submitting Uniform Variables. You can set varname to 0 and specifiy index retrieved with GetUniformLocation (best performance)
-  void       SetUniform1f(GLint index, GLfloat v0);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-  void       SetUniform2f(GLint index, GLfloat v0, GLfloat v1);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-  void       SetUniform3f(GLint index, GLfloat v0, GLfloat v1, GLfloat v2);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-  void       SetUniform4f(GLint index, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);  //!< Specify value of uniform variable. \param varname The name of the uniform variable.
-
-  void       SetUniform1i(GLint index, GLint v0);  //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-  void       SetUniform2i(GLint index, GLint v0, GLint v1); //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-  void       SetUniform3i(GLint index, GLint v0, GLint v1, GLint v2); //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-  void       SetUniform4i(GLint index, GLint v0, GLint v1, GLint v2, GLint v3); //!< Specify value of uniform integer variable. \param varname The name of the uniform variable.
-
-  // Arrays
-  void       SetUniform1fv(GLint index, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform2fv(GLint index, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform3fv(GLint index, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform4fv(GLint index, GLsizei count, GLfloat *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-
-  void       SetUniform1iv(GLint index, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform2iv(GLint index, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform3iv(GLint index, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-  void       SetUniform4iv(GLint index, GLsizei count, GLint *value); //!< Specify values of uniform array. \param varname The name of the uniform variable.
-
-  void       SetUniformMatrix2fv(GLint index, GLsizei count, GLboolean transpose, GLfloat *value); //!< Specify values of uniform 2x2 matrix. \param varname The name of the uniform variable.
-  void       SetUniformMatrix3fv(GLint index, GLsizei count, GLboolean transpose, GLfloat *value); //!< Specify values of uniform 3x3 matrix. \param varname The name of the uniform variable.
-  void       SetUniformMatrix4fv(GLint index, GLsizei count, GLboolean transpose, GLfloat *value); //!< Specify values of uniform 4x4 matrix. \param varname The name of the uniform variable.
 
   // Receive Uniform variables:
   void       GetUniformfv(GLint index, GLfloat* values); //!< Receive value of uniform variable. \param varname The name of the uniform variable.
@@ -173,4 +147,8 @@ public:
 
 private:
   GLuint mProgram;
+
+  std::map<nglString, nuiUniformDesc> mUniformMap;
+  std::map<GLenum, nuiShader*> mShaders;
 };
+

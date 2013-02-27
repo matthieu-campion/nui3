@@ -40,6 +40,7 @@ enum nuiRenderer
 {
   eSoftware,
   eOpenGL,
+  eOpenGL2,
   eDirect3D,
   eMeta
 };

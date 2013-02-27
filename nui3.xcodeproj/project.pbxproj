@@ -11372,9 +11372,6 @@
 		E5816DA50C3CECAB00902DFE /* Renderers */ = {
 			isa = PBXGroup;
 			children = (
-				E5DD1A781096111200BBB0EA /* Painters */,
-				E5DD1A791096113400BBB0EA /* Shapes & Contours */,
-				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 				E5816DA60C3CECAB00902DFE /* AAPrimitives.cpp */,
 				E5816DA70C3CECAB00902DFE /* AAPrimitives.h */,
 				E5816DAE0C3CECAB00902DFE /* nuiDrawContext.cpp */,
@@ -11383,6 +11380,7 @@
 				E5816CF70C3CECAB00902DFE /* nuiRenderArray.h */,
 				E5816DBE0C3CECAB00902DFE /* nuiRenderState.cpp */,
 				E5816CF80C3CECAB00902DFE /* nuiRenderState.h */,
+				E5AD0A58169F235B00836BAA /* nuiShader.cpp */,
 				E5AD0A4F169F20EC00836BAA /* nuiShader.h */,
 				61D085100EAFAA3F00B73835 /* nuiSurface.cpp */,
 				61D085130EAFAA5400B73835 /* nuiSurface.h */,
@@ -11390,7 +11388,9 @@
 				E5816D0E0C3CECAB00902DFE /* nuiTexture.h */,
 				E5816DC60C3CECAB00902DFE /* nuiTextureHelpers.cpp */,
 				E5816D0F0C3CECAB00902DFE /* nuiTextureHelpers.h */,
-				E5AD0A58169F235B00836BAA /* nuiShader.cpp */,
+				E5DD1A781096111200BBB0EA /* Painters */,
+				E5DD1A791096113400BBB0EA /* Shapes & Contours */,
+				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
 			);
 			name = Renderers;
 			path = src/Renderers;

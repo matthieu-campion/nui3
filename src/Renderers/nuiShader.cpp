@@ -8,6 +8,174 @@
 
 #include "nui.h"
 
+#define CHECK_GL_ERRORS \
+{\
+GLenum err = glGetError();\
+if (err != GL_NO_ERROR)\
+DLog(@"%s:%d openGL error %d", __FILE__, __LINE__, err);\
+}
+
+struct TypeDesc
+{
+  GLenum mEnum;
+  GLenum mType;
+  GLint mSize;
+} ShaderParamTypeDesc[] =
+{
+  {GL_FLOAT	,	GL_FLOAT,	1},
+  {GL_FLOAT_VEC2	,	GL_FLOAT,	2},
+  {GL_FLOAT_VEC3	,	GL_FLOAT,	3},
+  {GL_FLOAT_VEC4	,	GL_FLOAT,	4},
+  {GL_DOUBLE	,	GL_DOUBLE,	1},
+  {GL_DOUBLE_VEC2	,	GL_DOUBLE,	2},
+  {GL_DOUBLE_VEC3	,	GL_DOUBLE,	3},
+  {GL_DOUBLE_VEC4	,	GL_DOUBLE,	4},
+  {GL_INT, GL_INT, 1},
+  {GL_INT_VEC2, GL_INT, 2},
+  {GL_INT_VEC3, GL_INT, 3},
+  {GL_INT_VEC4, GL_INT, 4},
+  {GL_UNSIGNED_INT, GL_INT, 1},
+  {GL_UNSIGNED_INT_VEC2, GL_INT, 2},
+  {GL_UNSIGNED_INT_VEC3, GL_INT, 3},
+  {GL_UNSIGNED_INT_VEC4, GL_INT, 4},
+  {GL_BOOL, GL_INT, 1},
+  {GL_BOOL_VEC2, GL_INT, 2},
+  {GL_BOOL_VEC3, GL_INT, 3},
+  {GL_BOOL_VEC4, GL_INT, 4},
+  {GL_FLOAT_MAT2	,	GL_FLOAT,	4},
+  {GL_FLOAT_MAT3	,	GL_FLOAT,	9},
+  {GL_FLOAT_MAT4	,	GL_FLOAT,	16},
+  {GL_FLOAT_MAT2x3	,	GL_FLOAT,	6},
+  {GL_FLOAT_MAT2x4	,	GL_FLOAT,	8},
+  {GL_FLOAT_MAT3x2	,	GL_FLOAT,	6},
+  {GL_FLOAT_MAT3x4	,	GL_FLOAT,	12},
+  {GL_FLOAT_MAT4x2	,	GL_FLOAT,	8},
+  {GL_FLOAT_MAT4x3	,	GL_FLOAT,	12},
+  {GL_DOUBLE_MAT2	,	GL_DOUBLE,	4},
+  {GL_DOUBLE_MAT3	,	GL_DOUBLE,	9},
+  {GL_DOUBLE_MAT4	,	GL_DOUBLE,	16},
+  {GL_DOUBLE_MAT2x3	,	GL_DOUBLE,	6},
+  {GL_DOUBLE_MAT2x4	,	GL_DOUBLE,	8},
+  {GL_DOUBLE_MAT3x2	,	GL_DOUBLE,	6},
+  {GL_DOUBLE_MAT3x4	,	GL_DOUBLE,	12},
+  {GL_DOUBLE_MAT4x2	,	GL_DOUBLE,	8},
+  {GL_DOUBLE_MAT4x3	,	GL_DOUBLE,	12},
+  {GL_SAMPLER_1D, GL_INT, 1},
+  {GL_SAMPLER_2D, GL_INT, 1},
+  {GL_SAMPLER_3D, GL_INT, 1},
+  {GL_SAMPLER_CUBE, GL_INT, 1},
+  {GL_SAMPLER_1D_SHADOW, GL_INT, 1},
+  {GL_SAMPLER_2D_SHADOW, GL_INT, 1},
+  {GL_SAMPLER_1D_ARRAY, GL_INT, 1},
+  {GL_SAMPLER_2D_ARRAY, GL_INT, 1},
+  {GL_SAMPLER_1D_ARRAY_SHADOW, GL_INT, 1},
+  {GL_SAMPLER_2D_ARRAY_SHADOW, GL_INT, 1},
+  {GL_SAMPLER_2D_MULTISAMPLE, GL_INT, 1},
+  {GL_SAMPLER_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
+  {GL_SAMPLER_CUBE_SHADOW, GL_INT, 1},
+  {GL_SAMPLER_BUFFER, GL_INT, 1},
+  {GL_SAMPLER_2D_RECT, GL_INT, 1},
+  {GL_SAMPLER_2D_RECT_SHADOW, GL_INT, 1},
+  {GL_INT_SAMPLER_1D, GL_INT, 1},
+  {GL_INT_SAMPLER_2D, GL_INT, 1},
+  {GL_INT_SAMPLER_3D, GL_INT, 1},
+  {GL_INT_SAMPLER_CUBE, GL_INT, 1},
+  {GL_INT_SAMPLER_1D_ARRAY, GL_INT, 1},
+  {GL_INT_SAMPLER_2D_ARRAY, GL_INT, 1},
+  {GL_INT_SAMPLER_2D_MULTISAMPLE, GL_INT, 1},
+  {GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
+  {GL_INT_SAMPLER_BUFFER, GL_INT, 1},
+  {GL_INT_SAMPLER_2D_RECT, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_1D, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_3D, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_CUBE, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_1D_ARRAY, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_ARRAY, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_BUFFER, GL_INT, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_RECT, GL_INT, 1},
+  /*
+  {GL_IMAGE_1D, GL_INT, 1},
+  {GL_IMAGE_2D, GL_INT, 1},
+  {GL_IMAGE_3D, GL_INT, 1},
+  {GL_IMAGE_2D_RECT, GL_INT, 1},
+  {GL_IMAGE_CUBE, GL_INT, 1},
+  {GL_IMAGE_BUFFER, GL_INT, 1},
+  {GL_IMAGE_1D_ARRAY, GL_INT, 1},
+  {GL_IMAGE_2D_ARRAY, GL_INT, 1},
+  {GL_IMAGE_2D_MULTISAMPLE, GL_INT, 1},
+  {GL_IMAGE_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
+  {GL_INT_IMAGE_1D, GL_INT, 1},
+  {GL_INT_IMAGE_2D, GL_INT, 1},
+  {GL_INT_IMAGE_3D, GL_INT, 1},
+  {GL_INT_IMAGE_2D_RECT, GL_INT, 1},
+  {GL_INT_IMAGE_CUBE, GL_INT, 1},
+  {GL_INT_IMAGE_BUFFER, GL_INT, 1},
+  {GL_INT_IMAGE_1D_ARRAY, GL_INT, 1},
+  {GL_INT_IMAGE_2D_ARRAY, GL_INT, 1},
+  {GL_INT_IMAGE_2D_MULTISAMPLE, GL_INT, 1},
+  {GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_1D, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_3D, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_RECT, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_CUBE, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_BUFFER, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_1D_ARRAY, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_ARRAY, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE, GL_INT, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
+  {GL_UNSIGNED_INT_ATOMIC_COUNTER, GL_INT, 1}
+   */
+};
+
+/////////////////////////////////////////////////////
+nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram)
+: mpProgram(pProgram)
+{
+}
+
+nuiShaderState::nuiShaderState(const nuiShaderState& rOriginal)
+: mpProgram(rOriginal.mpProgram), mInts(rOriginal.mInts), mFloats(rOriginal.mFloats)
+{
+}
+
+nuiShaderState::~nuiShaderState()
+{
+}
+
+void nuiShaderState::Clear()
+{
+  mFloats.clear();
+  mInts.clear();
+}
+
+
+
+/////////////////////////////////////////////////////
+class nuiShader : public nuiRefCount
+{
+public:
+  nuiShader(nuiShaderKind kind, const nglString& rSource);
+  nuiShader(nuiShaderKind kind, nglIStream& rSource);
+  virtual ~nuiShader();
+
+  bool Load();
+  void Delete();
+
+  GLuint GetShader() const;
+  bool IsValid() const;
+  const nglString& GetError() const;
+private:
+  nuiShaderKind mKind;
+  nglString mSource;
+  nglString mError;
+  GLuint mShader;
+};
+
+
 nuiShader::nuiShader(nuiShaderKind kind, const nglString& rSource)
 : mKind(kind), mShader(0), mSource(rSource)
 {
@@ -86,6 +254,38 @@ const nglString& nuiShader::GetError() const
 
 
 ////////////////////// nuiShader Program:
+nuiShaderProgram::nuiShaderProgram()
+: mProgram(0)
+{
+}
+
+nuiShaderProgram::~nuiShaderProgram()
+{
+  std::map<GLenum, nuiShader*>::iterator it = mShaders.begin();
+  std::map<GLenum, nuiShader*>::iterator end = mShaders.end();
+  while (it != end)
+  {
+    delete it->second;
+    ++it;
+  }
+
+  if (mProgram)
+    glDeleteProgram(mProgram);
+}
+
+void nuiShaderProgram::AddShader(nuiShaderKind shaderType, nglIStream& rStream)
+{
+  nuiShader* pShader = new nuiShader(shaderType, rStream);
+  mShaders[shaderType] = pShader;
+}
+
+void nuiShaderProgram::AddShader(nuiShaderKind shaderType, const nglString& rSrc)
+{
+  nuiShader* pShader = new nuiShader(shaderType, rSrc);
+  mShaders[shaderType] = pShader;
+}
+
+
 void nuiShaderProgram::SetInputPrimitiveType(int InputPrimitiveType)
 {
 
@@ -111,299 +311,53 @@ GLint nuiShaderProgram::GetUniformLocation(const nglString& name)
 	return glGetUniformLocation(mProgram, name.GetChars());
 }
 
-void nuiShaderProgram::SetUniform1f(const char* varname, GLfloat v0)
+bool nuiShaderProgram::Link()
 {
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
+  mProgram = glCreateProgram();
+  glAttachShader(mProgram, vertexShader);
+  CHECK_GL_ERRORS;
+  glAttachShader(mProgram, fragmentShader);
+  CHECK_GL_ERRORS;
+  glLinkProgram(mProgram);
+  CHECK_GL_ERRORS;
 
-  glUniform1f(index, v0);
+  // 3
+  GLint linkSuccess;
+  glGetProgramiv(mProgram, GL_LINK_STATUS, &linkSuccess);
+  CHECK_GL_ERRORS;
+  if (linkSuccess == GL_FALSE)
+  {
+    GLchar messages[256];
+    glGetProgramInfoLog(mProgram, sizeof(messages), 0, &messages[0]);
+    CHECK_GL_ERRORS;
+    NGL_LOG("painter", NGL_LOG_ERROR, "nuiShaderProgram::Link() %s", messages);
+    exit(1);
+  }
+
+  glUseProgram(mProgram);
+  CHECK_GL_ERRORS;
+
+
+  int total = -1;
+  glGetProgramiv(mProgram, GL_ACTIVE_UNIFORMS, &total);
+  for (int i = 0; i < total; ++i)
+  {
+    int name_len = -1;
+    int num = -1;
+    GLenum type = GL_ZERO;
+    char name[100];
+    glGetActiveUniform(mProgram, GLuint(i), sizeof(name)-1, &name_len, &num, &type, name);
+    name[name_len] = 0;
+    GLuint location = glGetUniformLocation(mProgram, name);
+
+    mUniformMap[name] = nuiUniformDesc(name, type, location);
+  }
 }
 
-void nuiShaderProgram::SetUniform2f(const char* varname, GLfloat v0, GLfloat v1)
+const std::map<nglString, nuiUniformDesc>& nuiShaderProgram::GetUniforms() const
 {
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform2f(index, v0, v1);
+  return mUniformMap;
 }
-
-void nuiShaderProgram::SetUniform3f(const char* varname, GLfloat v0, GLfloat v1, GLfloat v2)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform3f(index, v0, v1, v2);
-}
-
-void nuiShaderProgram::SetUniform4f(const char* varname, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform4f(index, v0, v1, v2, v3);
-}
-
-
-void nuiShaderProgram::SetUniform1i(const char* varname, GLint v0)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform1i(index, v0);
-}
-
-void nuiShaderProgram::SetUniform2i(const char* varname, GLint v0, GLint v1)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform2i(index, v0, v1);
-}
-
-void nuiShaderProgram::SetUniform3i(const char* varname, GLint v0, GLint v1, GLint v2)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform3i(index, v0, v1, v2);
-}
-
-void nuiShaderProgram::SetUniform4i(const char* varname, GLint v0, GLint v1, GLint v2, GLint v3)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform4i(index, v0, v1, v2, v3);
-}
-
-// Arrays
-void nuiShaderProgram::SetUniform1fv(const char* varname, GLsizei count, GLfloat *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform1fv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform2fv(const char* varname, GLsizei count, GLfloat *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform2fv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform3fv(const char* varname, GLsizei count, GLfloat *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform3fv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform4fv(const char* varname, GLsizei count, GLfloat *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform4fv(index, count, value);
-}
-
-
-void nuiShaderProgram::SetUniform1iv(const char* varname, GLsizei count, GLint *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform1iv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform2iv(const char* varname, GLsizei count, GLint *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform2iv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform3iv(const char* varname, GLsizei count, GLint *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform3iv(index, count, value);
-}
-
-
-void nuiShaderProgram::SetUniform4iv(const char* varname, GLsizei count, GLint *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniform4iv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniformMatrix2fv(const char* varname, GLsizei count, GLboolean transpose, GLfloat *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniformMatrix2fv(index, count, transpose, value);
-}
-
-void nuiShaderProgram::SetUniformMatrix3fv(const char* varname, GLsizei count, GLboolean transpose, GLfloat *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniformMatrix3fv(index, count, transpose, value);
-}
-
-void nuiShaderProgram::SetUniformMatrix4fv(const char* varname, GLsizei count, GLboolean transpose, GLfloat *value)
-{
-  GLint index = GetUniformLocation(varname);
-  if (index == -1)
-    return false;  // can't find variable / invalid index
-
-  glUniformMatrix4fv(index, count, transpose, value);
-}
-
-
-// Receive Uniform variables:
-void nuiShaderProgram::GetUniformfv(const char* varname, GLfloat* values)
-{
-  GLint index = GetUniformLocation(varname);
-  NGL_ASSERT(index == -1);
-	glGetUniformfv(mProgram, index, values);
-}
-
-void nuiShaderProgram::GetUniformiv(const char* varname, GLint* values)
-{
-  GLint index = GetUniformLocation(varname);
-  NGL_ASSERT(index == -1);
-	glGetUniformiv(mProgram, index, values);
-}
-
-
-////////////////// Set Uniforms with index instead of name:
-void nuiShaderProgram::SetUniform1f(GLint index, GLfloat v0)
-{
-  glUniform1f(index, v0);
-}
-
-void nuiShaderProgram::SetUniform2f(GLint index, GLfloat v0, GLfloat v1)
-{
-  glUniform2f(index, v0, v1);
-}
-
-void nuiShaderProgram::SetUniform3f(GLint index, GLfloat v0, GLfloat v1, GLfloat v2)
-{
-  glUniform3f(index, v0, v1, v2);
-}
-
-void nuiShaderProgram::SetUniform4f(GLint index, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
-{
-  glUniform4f(index, v0, v1, v2, v3);
-}
-
-
-void nuiShaderProgram::SetUniform1i(GLint index, GLint v0)
-{
-  glUniform1i(index, v0);
-}
-
-void nuiShaderProgram::SetUniform2i(GLint index, GLint v0, GLint v1)
-{
-  glUniform2i(index, v0, v1);
-}
-
-void nuiShaderProgram::SetUniform3i(GLint index, GLint v0, GLint v1, GLint v2)
-{
-  glUniform3i(index, v0, v1, v2);
-}
-
-void nuiShaderProgram::SetUniform4i(GLint index, GLint v0, GLint v1, GLint v2, GLint v3)
-{
-  glUniform4i(index, v0, v1, v2, v3);
-}
-
-
-// Arrays
-void nuiShaderProgram::SetUniform1fv(GLint index, GLsizei count, GLfloat *value)
-{
-  glUniform1fv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform2fv(GLint index, GLsizei count, GLfloat *value)
-{
-  glUniform2fv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform3fv(GLint index, GLsizei count, GLfloat *value)
-{
-  glUniform3fv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform4fv(GLint index, GLsizei count, GLfloat *value)
-{
-  glUniform4fv(index, count, value);
-}
-
-
-void nuiShaderProgram::SetUniform1iv(GLint index, GLsizei count, GLint *value)
-{
-  glUniform1iv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform2iv(GLint index, GLsizei count, GLint *value)
-{
-  glUniform2iv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform3iv(GLint index, GLsizei count, GLint *value)
-{
-  glUniform3iv(index, count, value);
-}
-
-void nuiShaderProgram::SetUniform4iv(GLint index, GLsizei count, GLint *value)
-{
-  glUniform4iv(index, count, value);
-}
-
-
-void nuiShaderProgram::SetUniformMatrix2fv(GLint index, GLsizei count, GLboolean transpose, GLfloat *value)
-{
-  glUniformMatrix2fv(index, count, transpose, value);
-}
-
-void nuiShaderProgram::SetUniformMatrix3fv(GLint index, GLsizei count, GLboolean transpose, GLfloat *value)
-{
-  glUniformMatrix3fv(index, count, transpose, value);
-}
-
-void nuiShaderProgram::SetUniformMatrix4fv(GLint index, GLsizei count, GLboolean transpose, GLfloat *value)
-{
-  glUniformMatrix4fv(index, count, transpose, value);
-}
-
 
 // Receive Uniform variables:
 void nuiShaderProgram::GetUniformfv(GLint index, GLfloat* values)
