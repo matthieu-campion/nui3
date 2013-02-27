@@ -12,7 +12,7 @@
 {\
 GLenum err = glGetError();\
 if (err != GL_NO_ERROR)\
-DLog(@"%s:%d openGL error %d", __FILE__, __LINE__, err);\
+NGL_LOG("painter", NGL_LOG_ERROR,  "%s:%d openGL error %d", __FILE__, __LINE__, err);\
 }
 
 struct TypeDesc
@@ -276,6 +276,8 @@ nuiShaderProgram::~nuiShaderProgram()
 void nuiShaderProgram::AddShader(nuiShaderKind shaderType, nglIStream& rStream)
 {
   nuiShader* pShader = new nuiShader(shaderType, rStream);
+  if (mShaders[shaderType] != NULL)
+    delete mShaders[shaderType];
   mShaders[shaderType] = pShader;
 }
 
@@ -314,10 +316,26 @@ GLint nuiShaderProgram::GetUniformLocation(const nglString& name)
 bool nuiShaderProgram::Link()
 {
   mProgram = glCreateProgram();
-  glAttachShader(mProgram, vertexShader);
-  CHECK_GL_ERRORS;
-  glAttachShader(mProgram, fragmentShader);
-  CHECK_GL_ERRORS;
+
+  std::map<GLenum, nuiShader*>::iterator it = mShaders.begin();
+  std::map<GLenum, nuiShader*>::iterator end = mShaders.end();
+  while (it != end)
+  {
+    nuiShader* pShader = it->second;
+    if (!pShader->Load())
+    {
+      CHECK_GL_ERRORS;
+      NGL_LOG("painter", NGL_LOG_ERROR, "nuiShaderProgram::Link() Unable to load shader");
+      return false;
+    }
+
+    glAttachShader(mProgram, pShader->GetShader());
+    CHECK_GL_ERRORS;
+
+    ++it;
+  }
+
+
   glLinkProgram(mProgram);
   CHECK_GL_ERRORS;
 
