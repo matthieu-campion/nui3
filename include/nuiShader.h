@@ -45,8 +45,8 @@ public:
 
   void Clear();
 
-  void Set(const nglString& rName, GLfloat* pVal, int32 size);
-  void Set(const nglString& rName, GLint* pVal, int32 size);
+  void Set(const nglString& rName, const GLfloat* pVal, int32 size);
+  void Set(const nglString& rName, const GLint* pVal, int32 size);
 
   void GetFloat(const nglString& rName, GLfloat* pVal, int32 size) const;
   void GetInt(const nglString& rName, GLint* pVal, int32 size) const;
@@ -56,7 +56,7 @@ private:
   nuiShaderProgram* mpProgram;
 
   friend class nuiShaderProgram;
-  nuiShaderState(nuiShaderProgram* pProgram = NULL);
+  nuiShaderState(nuiShaderProgram* pProgram);
 
 };
 
@@ -72,9 +72,12 @@ public:
   void AddShader(nuiShaderKind shaderType, nglIStream& rStream);
   void AddShader(nuiShaderKind shaderType, const nglString& rSrc);
 
+  void LoadDefaultShaders();
+
   bool Link();
 
-  const nuiShaderState& GetState();
+  const nuiShaderState& GetDefaultState() const;
+  void GetState(nuiShaderState& rState) const;
 
   // Geometry Shader: Input Type, Output and Number of Vertices out
   void       SetInputPrimitiveType(int InputPrimitiveType);   //!< Set the input primitive type for the geometry shader

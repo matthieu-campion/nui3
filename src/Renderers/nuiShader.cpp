@@ -12,41 +12,33 @@
 {\
 GLenum err = glGetError();\
 if (err != GL_NO_ERROR)\
-NGL_LOG("painter", NGL_LOG_ERROR,  "%s:%d openGL error %d", __FILE__, __LINE__, err);\
+  NGL_LOG("painter", NGL_LOG_ERROR,  "%s:%d openGL error %d", __FILE__, __LINE__, err);\
 }
 
 static const char* defaultVertexShader =
-"attribute vec4 Position;                // vertex position attribute\
-attribute vec2 TexCoord;                // vertex texture coordinate attribute\
-attribute vec4 Color;                // vertex texture coordinate attribute\
-\
-uniform mat4 ModelView;                 // shader modelview matrix uniform\
-uniform mat4 Projection;                // shader projection matrix uniform\
-\
-varying vec2 TexCoordVar;               // vertex texture coordinate varying\
-varying vec4 ColorVar;               // vertex texture coordinate varying\
-\
+"attribute vec4 Position;\
+attribute vec2 TexCoord;\
+attribute vec4 Color;\
+uniform mat4 ModelView;\
+uniform mat4 Projection;\
+varying vec2 TexCoordVar;\
+varying vec4 ColorVar;\
 void main()\
 {\
-vec4 p = ModelView * Position;      // transform vertex position with modelview matrix\
-gl_Position = Projection * p;       // project the transformed position and write it to gl_Position\
-TexCoordVar = TexCoord;             // assign the texture coordinate attribute to its varying\
-ColorVar = Color;                   // assign the tcolor attribute to its varying\
+vec4 p = ModelView * Position;\
+gl_Position = Projection * p;\
+TexCoordVar = TexCoord;\
+ColorVar = Color;\
 }"
 ;
 
 static const char* defaultFragmentShader =
-"precision mediump float;        // set default precision for floats to medium\
-\
-uniform sampler2D texture;      // shader texture uniform\
-\
-varying vec2 texCoordVar;       // fragment texture coordinate varying\
-\
+"uniform sampler2D texture;\
+varying vec4 ColorVar;\
+varying vec2 TexCoordVar;\
 void main()\
 {\
-// sample the texture at the interpolated texture coordinate\
-// and write it to gl_FragColor\
-gl_FragColor = ColorVar * texture2D( texture, TexCoordVar);\
+  gl_FragColor = ColorVar * texture2D( texture, TexCoordVar);\
 }"
 ;
 
@@ -189,6 +181,23 @@ void nuiShaderState::Clear()
   mInts.clear();
 }
 
+void nuiShaderState::Set(const nglString& rName, const GLfloat* pVal, int32 count)
+{
+  GLint loc = mpProgram->GetUniformLocation(rName);
+  std::vector<GLfloat>& rF(mFloats[loc]);
+  rF.resize(count);
+  for (int32 i = 0; i < count; i++)
+    rF[i] = pVal[i];
+}
+
+void nuiShaderState::Set(const nglString& rName, const GLint* pVal, int32 count)
+{
+  GLint loc = mpProgram->GetUniformLocation(rName);
+  std::vector<GLint>& rI(mInts[loc]);
+  rI.resize(count);
+  for (int32 i = 0; i < count; i++)
+    rI[i] = pVal[i];
+}
 
 
 /////////////////////////////////////////////////////
@@ -292,7 +301,7 @@ const nglString& nuiShader::GetError() const
 
 ////////////////////// nuiShader Program:
 nuiShaderProgram::nuiShaderProgram()
-: mProgram(0)
+: mProgram(0), mDefaultState(this)
 {
   Init();
 }
@@ -301,7 +310,7 @@ std::map<GLenum, std::pair<GLenum, GLint> > nuiShaderProgram::gParamTypeMap;
 
 void nuiShaderProgram::Init()
 {
-  if (gParamTypeMap.empty())
+  if (!gParamTypeMap.empty())
     return;
 
   for (int i = 0; ShaderParamTypeDesc[i].mEnum != GL_ZERO; i++)
@@ -338,8 +347,14 @@ void nuiShaderProgram::AddShader(nuiShaderKind shaderType, const nglString& rSrc
   mShaders[shaderType] = pShader;
 }
 
+void nuiShaderProgram::LoadDefaultShaders()
+{
+  AddShader(eVertexShader, defaultVertexShader);
+  AddShader(eFragmentShader, defaultFragmentShader);
+}
 
-const nuiShaderState& nuiShaderProgram::GetState()
+
+const nuiShaderState& nuiShaderProgram::GetDefaultState() const
 {
   return mDefaultState;
 }
@@ -374,22 +389,28 @@ bool nuiShaderProgram::Link()
 {
   mProgram = glCreateProgram();
 
-  std::map<GLenum, nuiShader*>::iterator it = mShaders.begin();
-  std::map<GLenum, nuiShader*>::iterator end = mShaders.end();
-  while (it != end)
+  nuiShaderKind kinds[] =
   {
-    nuiShader* pShader = it->second;
-    if (!pShader->Load())
+    eVertexShader,
+    eFragmentShader
+  };
+  for (int i = 0; i < 2; i++)
+  {
+    nuiShaderKind k = kinds[i];
+    std::map<GLenum, nuiShader*>::iterator it = mShaders.find(k);
+    if (it != mShaders.end())
     {
+      nuiShader* pShader = it->second;
+      if (!pShader->Load())
+      {
+        CHECK_GL_ERRORS;
+        NGL_LOG("painter", NGL_LOG_ERROR, "nuiShaderProgram::Link() Unable to load shader: %s", pShader->GetError().GetChars());
+        return false;
+      }
+
+      glAttachShader(mProgram, pShader->GetShader());
       CHECK_GL_ERRORS;
-      NGL_LOG("painter", NGL_LOG_ERROR, "nuiShaderProgram::Link() Unable to load shader");
-      return false;
     }
-
-    glAttachShader(mProgram, pShader->GetShader());
-    CHECK_GL_ERRORS;
-
-    ++it;
   }
 
 
@@ -426,32 +447,49 @@ bool nuiShaderProgram::Link()
     GLuint location = glGetUniformLocation(mProgram, name);
 
     mUniformMap[name] = nuiUniformDesc(name, type, location);
-
-    std::map<GLenum, std::pair<GLenum, GLint> >::const_iterator it = gParamTypeMap.find(type);
-    std::vector<GLfloat> fval;
-    std::vector<GLint> ival;
-    if (it != gParamTypeMap.end())
-    {
-      const std::pair<GLenum, GLint>& desc(it->second);
-      if (desc.first == GL_FLOAT)
-      {
-        int size = desc.second;
-        fval.resize(size);
-        glGetUniformfv(mProgram, location, &fval[0]);
-        mDefaultState.Set(name, &fval[0], size);
-      }
-      else if (desc.first == GL_INT)
-      {
-        int size = desc.second;
-        ival.resize(size);
-        glGetUniformiv(mProgram, location, &ival[0]);
-        mDefaultState.Set(name, &ival[0], size);
-      }
-    }
   }
+
+  GetState(mDefaultState);
 
   return true;
 }
+
+void nuiShaderProgram::GetState(nuiShaderState& rState) const
+{
+  std::map<nglString, nuiUniformDesc>::const_iterator it = mUniformMap.begin();
+  std::map<nglString, nuiUniformDesc>::const_iterator end = mUniformMap.end();
+
+  while (it != end)
+  {
+    const nuiUniformDesc& desc(it->second);
+
+    std::map<GLenum, std::pair<GLenum, GLint> >::const_iterator itt = gParamTypeMap.find(desc.mType);
+    std::vector<GLfloat> fval;
+    std::vector<GLint> ival;
+    if (itt != gParamTypeMap.end())
+    {
+      const std::pair<GLenum, GLint>& d(itt->second);
+      if (d.first == GL_FLOAT)
+      {
+        int size = d.second;
+        fval.resize(size);
+        glGetUniformfv(mProgram, desc.mLocation, &fval[0]);
+        rState.Set(desc.mName, &fval[0], size);
+      }
+      else if (d.first == GL_INT)
+      {
+        int size = d.second;
+        ival.resize(size);
+        glGetUniformiv(mProgram, desc.mLocation, &ival[0]);
+        rState.Set(desc.mName, &ival[0], size);
+      }
+    }
+    ++it;
+  }
+}
+
+
+
 
 const std::map<nglString, nuiUniformDesc>& nuiShaderProgram::GetUniforms() const
 {
