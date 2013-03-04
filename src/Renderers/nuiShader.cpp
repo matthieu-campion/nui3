@@ -55,18 +55,22 @@ struct TypeDesc
   {GL_FLOAT_VEC2	,	nuiUniformFloat,	2},
   {GL_FLOAT_VEC3	,	nuiUniformFloat,	3},
   {GL_FLOAT_VEC4	,	nuiUniformFloat,	4},
+#ifdef GL_DOUBLE
   {GL_DOUBLE	,	nuiUniformDouble,	1},
   {GL_DOUBLE_VEC2	,	nuiUniformDouble,	2},
   {GL_DOUBLE_VEC3	,	nuiUniformDouble,	3},
   {GL_DOUBLE_VEC4	,	nuiUniformDouble,	4},
+#endif
   {GL_INT, nuiUniformInt, 1},
   {GL_INT_VEC2, nuiUniformInt, 2},
   {GL_INT_VEC3, nuiUniformInt, 3},
   {GL_INT_VEC4, nuiUniformInt, 4},
   {GL_UNSIGNED_INT, nuiUniformInt, 1},
+#ifdef GL_DOUBLE
   {GL_UNSIGNED_INT_VEC2, nuiUniformInt, 2},
   {GL_UNSIGNED_INT_VEC3, nuiUniformInt, 3},
   {GL_UNSIGNED_INT_VEC4, nuiUniformInt, 4},
+#endif
   {GL_BOOL, nuiUniformInt, 1},
   {GL_BOOL_VEC2, nuiUniformInt, 2},
   {GL_BOOL_VEC3, nuiUniformInt, 3},
@@ -74,6 +78,7 @@ struct TypeDesc
   {GL_FLOAT_MAT2	,	nuiUniformFMat,	4},
   {GL_FLOAT_MAT3	,	nuiUniformFMat,	9},
   {GL_FLOAT_MAT4	,	nuiUniformFMat,	16},
+#ifdef GL_DOUBLE
   {GL_FLOAT_MAT2x3	,	nuiUniformFMat,	6},
   {GL_FLOAT_MAT2x4	,	nuiUniformFMat,	8},
   {GL_FLOAT_MAT3x2	,	nuiUniformFMat,	6},
@@ -90,9 +95,11 @@ struct TypeDesc
   {GL_DOUBLE_MAT4x2	,	nuiUniformDMat,	8},
   {GL_DOUBLE_MAT4x3	,	nuiUniformDMat,	12},
   {GL_SAMPLER_1D, nuiUniformInt, 1},
+#endif
   {GL_SAMPLER_2D, nuiUniformInt, 1},
-  {GL_SAMPLER_3D, nuiUniformInt, 1},
   {GL_SAMPLER_CUBE, nuiUniformInt, 1},
+#ifdef GL_DOUBLE
+  {GL_SAMPLER_3D, nuiUniformInt, 1},
   {GL_SAMPLER_1D_SHADOW, nuiUniformInt, 1},
   {GL_SAMPLER_2D_SHADOW, nuiUniformInt, 1},
   {GL_SAMPLER_1D_ARRAY, nuiUniformInt, 1},
@@ -125,6 +132,7 @@ struct TypeDesc
   {GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY, nuiUniformInt, 1},
   {GL_UNSIGNED_INT_SAMPLER_BUFFER, nuiUniformInt, 1},
   {GL_UNSIGNED_INT_SAMPLER_2D_RECT, nuiUniformInt, 1},
+#endif
   /*
   {GL_IMAGE_1D, nuiUniformInt, 1},
   {GL_IMAGE_2D, nuiUniformInt, 1},
