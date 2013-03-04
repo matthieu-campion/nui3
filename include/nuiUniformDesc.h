@@ -35,7 +35,7 @@ public:
   void Set(int32 v1, int32 v2, int32 v3, int32 v4);
   void Set(const nglMatrixf& rMat);
 
-  void Apply();
+  void Apply() const;
 
   nglString mName;
   GLenum mType;

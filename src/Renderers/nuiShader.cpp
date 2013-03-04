@@ -300,8 +300,16 @@ void nuiShaderState::Set(GLint loc, const nglMatrixf& rMat)
   mUniforms[loc].Set(rMat);
 }
 
-void nuiShaderState::Apply()
+void nuiShaderState::Apply() const
 {
+  std::map<GLuint, nuiUniformDesc>::const_iterator it = mUniforms.begin();
+  std::map<GLuint, nuiUniformDesc>::const_iterator end = mUniforms.end();
+
+  while (it != end)
+  {
+    it->second.Apply();
+    ++it;
+  }
 }
 
 

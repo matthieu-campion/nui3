@@ -92,7 +92,7 @@ private:
   friend class nuiShaderProgram;
   nuiShaderState(nuiShaderProgram* pProgram);
 
-  void Apply();
+  void Apply() const;
 };
 
 

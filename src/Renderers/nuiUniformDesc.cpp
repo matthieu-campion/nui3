@@ -194,11 +194,14 @@ void nuiUniformDesc::Set(const nglMatrixf& rMat)
     case GL_FLOAT_MAT4:
       Set(rMat.Array, 4);
       break;
+    default :
+      NGL_ASSERT(0);
+      break;
   }
 }
 
 
-void nuiUniformDesc::Apply()
+void nuiUniformDesc::Apply() const
 {
   switch (mType)
   {
