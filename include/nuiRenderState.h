@@ -62,6 +62,7 @@ public:
   
   bool mTexturing;
   nuiTexture* mpTexture;
+  nuiShaderProgram* mpShader;
 
   // Rendering buffers:
   bool mColorBuffer;

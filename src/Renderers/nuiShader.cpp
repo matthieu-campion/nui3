@@ -47,117 +47,118 @@ void main()\
 struct TypeDesc
 {
   GLenum mEnum;
-  GLenum mType;
+  nuiUniformType mType;
   GLint mSize;
 } ShaderParamTypeDesc[] =
 {
-  {GL_FLOAT	,	GL_FLOAT,	1},
-  {GL_FLOAT_VEC2	,	GL_FLOAT,	2},
-  {GL_FLOAT_VEC3	,	GL_FLOAT,	3},
-  {GL_FLOAT_VEC4	,	GL_FLOAT,	4},
-  {GL_DOUBLE	,	GL_DOUBLE,	1},
-  {GL_DOUBLE_VEC2	,	GL_DOUBLE,	2},
-  {GL_DOUBLE_VEC3	,	GL_DOUBLE,	3},
-  {GL_DOUBLE_VEC4	,	GL_DOUBLE,	4},
-  {GL_INT, GL_INT, 1},
-  {GL_INT_VEC2, GL_INT, 2},
-  {GL_INT_VEC3, GL_INT, 3},
-  {GL_INT_VEC4, GL_INT, 4},
-  {GL_UNSIGNED_INT, GL_INT, 1},
-  {GL_UNSIGNED_INT_VEC2, GL_INT, 2},
-  {GL_UNSIGNED_INT_VEC3, GL_INT, 3},
-  {GL_UNSIGNED_INT_VEC4, GL_INT, 4},
-  {GL_BOOL, GL_INT, 1},
-  {GL_BOOL_VEC2, GL_INT, 2},
-  {GL_BOOL_VEC3, GL_INT, 3},
-  {GL_BOOL_VEC4, GL_INT, 4},
-  {GL_FLOAT_MAT2	,	GL_FLOAT,	4},
-  {GL_FLOAT_MAT3	,	GL_FLOAT,	9},
-  {GL_FLOAT_MAT4	,	GL_FLOAT,	16},
-  {GL_FLOAT_MAT2x3	,	GL_FLOAT,	6},
-  {GL_FLOAT_MAT2x4	,	GL_FLOAT,	8},
-  {GL_FLOAT_MAT3x2	,	GL_FLOAT,	6},
-  {GL_FLOAT_MAT3x4	,	GL_FLOAT,	12},
-  {GL_FLOAT_MAT4x2	,	GL_FLOAT,	8},
-  {GL_FLOAT_MAT4x3	,	GL_FLOAT,	12},
-  {GL_DOUBLE_MAT2	,	GL_DOUBLE,	4},
-  {GL_DOUBLE_MAT3	,	GL_DOUBLE,	9},
-  {GL_DOUBLE_MAT4	,	GL_DOUBLE,	16},
-  {GL_DOUBLE_MAT2x3	,	GL_DOUBLE,	6},
-  {GL_DOUBLE_MAT2x4	,	GL_DOUBLE,	8},
-  {GL_DOUBLE_MAT3x2	,	GL_DOUBLE,	6},
-  {GL_DOUBLE_MAT3x4	,	GL_DOUBLE,	12},
-  {GL_DOUBLE_MAT4x2	,	GL_DOUBLE,	8},
-  {GL_DOUBLE_MAT4x3	,	GL_DOUBLE,	12},
-  {GL_SAMPLER_1D, GL_INT, 1},
-  {GL_SAMPLER_2D, GL_INT, 1},
-  {GL_SAMPLER_3D, GL_INT, 1},
-  {GL_SAMPLER_CUBE, GL_INT, 1},
-  {GL_SAMPLER_1D_SHADOW, GL_INT, 1},
-  {GL_SAMPLER_2D_SHADOW, GL_INT, 1},
-  {GL_SAMPLER_1D_ARRAY, GL_INT, 1},
-  {GL_SAMPLER_2D_ARRAY, GL_INT, 1},
-  {GL_SAMPLER_1D_ARRAY_SHADOW, GL_INT, 1},
-  {GL_SAMPLER_2D_ARRAY_SHADOW, GL_INT, 1},
-  {GL_SAMPLER_2D_MULTISAMPLE, GL_INT, 1},
-  {GL_SAMPLER_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
-  {GL_SAMPLER_CUBE_SHADOW, GL_INT, 1},
-  {GL_SAMPLER_BUFFER, GL_INT, 1},
-  {GL_SAMPLER_2D_RECT, GL_INT, 1},
-  {GL_SAMPLER_2D_RECT_SHADOW, GL_INT, 1},
-  {GL_INT_SAMPLER_1D, GL_INT, 1},
-  {GL_INT_SAMPLER_2D, GL_INT, 1},
-  {GL_INT_SAMPLER_3D, GL_INT, 1},
-  {GL_INT_SAMPLER_CUBE, GL_INT, 1},
-  {GL_INT_SAMPLER_1D_ARRAY, GL_INT, 1},
-  {GL_INT_SAMPLER_2D_ARRAY, GL_INT, 1},
-  {GL_INT_SAMPLER_2D_MULTISAMPLE, GL_INT, 1},
-  {GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
-  {GL_INT_SAMPLER_BUFFER, GL_INT, 1},
-  {GL_INT_SAMPLER_2D_RECT, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_1D, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_2D, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_3D, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_CUBE, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_1D_ARRAY, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_2D_ARRAY, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_BUFFER, GL_INT, 1},
-  {GL_UNSIGNED_INT_SAMPLER_2D_RECT, GL_INT, 1},
+  {GL_FLOAT	,	nuiUniformFloat,	1},
+  {GL_FLOAT_VEC2	,	nuiUniformFloat,	2},
+  {GL_FLOAT_VEC3	,	nuiUniformFloat,	3},
+  {GL_FLOAT_VEC4	,	nuiUniformFloat,	4},
+  {GL_DOUBLE	,	nuiUniformDouble,	1},
+  {GL_DOUBLE_VEC2	,	nuiUniformDouble,	2},
+  {GL_DOUBLE_VEC3	,	nuiUniformDouble,	3},
+  {GL_DOUBLE_VEC4	,	nuiUniformDouble,	4},
+  {GL_INT, nuiUniformInt, 1},
+  {GL_INT_VEC2, nuiUniformInt, 2},
+  {GL_INT_VEC3, nuiUniformInt, 3},
+  {GL_INT_VEC4, nuiUniformInt, 4},
+  {GL_UNSIGNED_INT, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_VEC2, nuiUniformInt, 2},
+  {GL_UNSIGNED_INT_VEC3, nuiUniformInt, 3},
+  {GL_UNSIGNED_INT_VEC4, nuiUniformInt, 4},
+  {GL_BOOL, nuiUniformInt, 1},
+  {GL_BOOL_VEC2, nuiUniformInt, 2},
+  {GL_BOOL_VEC3, nuiUniformInt, 3},
+  {GL_BOOL_VEC4, nuiUniformInt, 4},
+  {GL_FLOAT_MAT2	,	nuiUniformFMat,	4},
+  {GL_FLOAT_MAT3	,	nuiUniformFMat,	9},
+  {GL_FLOAT_MAT4	,	nuiUniformFMat,	16},
+  {GL_FLOAT_MAT2x3	,	nuiUniformFMat,	6},
+  {GL_FLOAT_MAT2x4	,	nuiUniformFMat,	8},
+  {GL_FLOAT_MAT3x2	,	nuiUniformFMat,	6},
+  {GL_FLOAT_MAT3x4	,	nuiUniformFMat,	12},
+  {GL_FLOAT_MAT4x2	,	nuiUniformFMat,	8},
+  {GL_FLOAT_MAT4x3	,	nuiUniformFMat,	12},
+  {GL_DOUBLE_MAT2	,	nuiUniformDMat,	4},
+  {GL_DOUBLE_MAT3	,	nuiUniformDMat,	9},
+  {GL_DOUBLE_MAT4	,	nuiUniformDMat,	16},
+  {GL_DOUBLE_MAT2x3	,	nuiUniformDMat,	6},
+  {GL_DOUBLE_MAT2x4	,	nuiUniformDMat,	8},
+  {GL_DOUBLE_MAT3x2	,	nuiUniformDMat,	6},
+  {GL_DOUBLE_MAT3x4	,	nuiUniformDMat,	12},
+  {GL_DOUBLE_MAT4x2	,	nuiUniformDMat,	8},
+  {GL_DOUBLE_MAT4x3	,	nuiUniformDMat,	12},
+  {GL_SAMPLER_1D, nuiUniformInt, 1},
+  {GL_SAMPLER_2D, nuiUniformInt, 1},
+  {GL_SAMPLER_3D, nuiUniformInt, 1},
+  {GL_SAMPLER_CUBE, nuiUniformInt, 1},
+  {GL_SAMPLER_1D_SHADOW, nuiUniformInt, 1},
+  {GL_SAMPLER_2D_SHADOW, nuiUniformInt, 1},
+  {GL_SAMPLER_1D_ARRAY, nuiUniformInt, 1},
+  {GL_SAMPLER_2D_ARRAY, nuiUniformInt, 1},
+  {GL_SAMPLER_1D_ARRAY_SHADOW, nuiUniformInt, 1},
+  {GL_SAMPLER_2D_ARRAY_SHADOW, nuiUniformInt, 1},
+  {GL_SAMPLER_2D_MULTISAMPLE, nuiUniformInt, 1},
+  {GL_SAMPLER_2D_MULTISAMPLE_ARRAY, nuiUniformInt, 1},
+  {GL_SAMPLER_CUBE_SHADOW, nuiUniformInt, 1},
+  {GL_SAMPLER_BUFFER, nuiUniformInt, 1},
+  {GL_SAMPLER_2D_RECT, nuiUniformInt, 1},
+  {GL_SAMPLER_2D_RECT_SHADOW, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_1D, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_2D, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_3D, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_CUBE, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_1D_ARRAY, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_2D_ARRAY, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_2D_MULTISAMPLE, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_BUFFER, nuiUniformInt, 1},
+  {GL_INT_SAMPLER_2D_RECT, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_1D, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_3D, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_CUBE, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_1D_ARRAY, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_ARRAY, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_BUFFER, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_SAMPLER_2D_RECT, nuiUniformInt, 1},
   /*
-  {GL_IMAGE_1D, GL_INT, 1},
-  {GL_IMAGE_2D, GL_INT, 1},
-  {GL_IMAGE_3D, GL_INT, 1},
-  {GL_IMAGE_2D_RECT, GL_INT, 1},
-  {GL_IMAGE_CUBE, GL_INT, 1},
-  {GL_IMAGE_BUFFER, GL_INT, 1},
-  {GL_IMAGE_1D_ARRAY, GL_INT, 1},
-  {GL_IMAGE_2D_ARRAY, GL_INT, 1},
-  {GL_IMAGE_2D_MULTISAMPLE, GL_INT, 1},
-  {GL_IMAGE_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
-  {GL_INT_IMAGE_1D, GL_INT, 1},
-  {GL_INT_IMAGE_2D, GL_INT, 1},
-  {GL_INT_IMAGE_3D, GL_INT, 1},
-  {GL_INT_IMAGE_2D_RECT, GL_INT, 1},
-  {GL_INT_IMAGE_CUBE, GL_INT, 1},
-  {GL_INT_IMAGE_BUFFER, GL_INT, 1},
-  {GL_INT_IMAGE_1D_ARRAY, GL_INT, 1},
-  {GL_INT_IMAGE_2D_ARRAY, GL_INT, 1},
-  {GL_INT_IMAGE_2D_MULTISAMPLE, GL_INT, 1},
-  {GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_1D, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_2D, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_3D, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_2D_RECT, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_CUBE, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_BUFFER, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_1D_ARRAY, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_2D_ARRAY, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE, GL_INT, 1},
-  {GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY, GL_INT, 1},
-  {GL_UNSIGNED_INT_ATOMIC_COUNTER, GL_INT, 1}
+  {GL_IMAGE_1D, nuiUniformInt, 1},
+  {GL_IMAGE_2D, nuiUniformInt, 1},
+  {GL_IMAGE_3D, nuiUniformInt, 1},
+  {GL_IMAGE_2D_RECT, nuiUniformInt, 1},
+  {GL_IMAGE_CUBE, nuiUniformInt, 1},
+  {GL_IMAGE_BUFFER, nuiUniformInt, 1},
+  {GL_IMAGE_1D_ARRAY, nuiUniformInt, 1},
+  {GL_IMAGE_2D_ARRAY, nuiUniformInt, 1},
+  {GL_IMAGE_2D_MULTISAMPLE, nuiUniformInt, 1},
+  {GL_IMAGE_2D_MULTISAMPLE_ARRAY, nuiUniformInt, 1},
+  {GL_INT_IMAGE_1D, nuiUniformInt, 1},
+  {GL_INT_IMAGE_2D, nuiUniformInt, 1},
+  {GL_INT_IMAGE_3D, nuiUniformInt, 1},
+  {GL_INT_IMAGE_2D_RECT, nuiUniformInt, 1},
+  {GL_INT_IMAGE_CUBE, nuiUniformInt, 1},
+  {GL_INT_IMAGE_BUFFER, nuiUniformInt, 1},
+  {GL_INT_IMAGE_1D_ARRAY, nuiUniformInt, 1},
+  {GL_INT_IMAGE_2D_ARRAY, nuiUniformInt, 1},
+  {GL_INT_IMAGE_2D_MULTISAMPLE, nuiUniformInt, 1},
+  {GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_1D, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_3D, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_RECT, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_CUBE, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_BUFFER, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_1D_ARRAY, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_ARRAY, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY, nuiUniformInt, 1},
+  {GL_UNSIGNED_INT_ATOMIC_COUNTER, nuiUniformInt, 1}
    */
+  {GL_ZERO, nuiUniformFloat, 0}
 };
 
 /////////////////////////////////////////////////////
@@ -184,19 +185,96 @@ void nuiShaderState::Clear()
 void nuiShaderState::Set(const nglString& rName, const GLfloat* pVal, int32 count)
 {
   GLint loc = mpProgram->GetUniformLocation(rName);
-  std::vector<GLfloat>& rF(mFloats[loc]);
-  rF.resize(count);
-  for (int32 i = 0; i < count; i++)
-    rF[i] = pVal[i];
+  Set(loc, pVal, count);
 }
 
 void nuiShaderState::Set(const nglString& rName, const GLint* pVal, int32 count)
 {
   GLint loc = mpProgram->GetUniformLocation(rName);
+  Set(loc, pVal, count);
+}
+
+void nuiShaderState::Set(const nglString& rName, const nuiMatrix& rMatrix)
+{
+  GLint loc = mpProgram->GetUniformLocation(rName);
+  Set(loc, rMatrix);
+}
+
+void nuiShaderState::Set(GLint loc, const GLfloat* pVal, int32 size)
+{
+  std::vector<GLfloat>& rF(mFloats[loc]);
+  rF.resize(size);
+  for (int32 i = 0; i < size; i++)
+    rF[i] = pVal[i];
+}
+
+void nuiShaderState::Set(GLint loc, const GLint* pVal, int32 size)
+{
   std::vector<GLint>& rI(mInts[loc]);
-  rI.resize(count);
-  for (int32 i = 0; i < count; i++)
+  rI.resize(size);
+  for (int32 i = 0; i < size; i++)
     rI[i] = pVal[i];
+}
+
+void nuiShaderState::Set(GLint loc, const nuiMatrix& rMatrix)
+{
+  mMatrices[loc] = rMatrix;
+}
+
+//=============
+const GLfloat* nuiShaderState::GetFloat(const nglString& rName, int32& size) const
+{
+  GLint loc = mpProgram->GetUniformLocation(rName);
+  return GetFloat(loc, size);
+}
+
+const GLint* nuiShaderState::GetInt(const nglString& rName, int32& size) const
+{
+  GLint loc = mpProgram->GetUniformLocation(rName);
+  return GetInt(loc, size);
+}
+
+bool nuiShaderState::GetMatrix(const nglString& rName, nuiMatrix& rMatrix) const
+{
+  GLint loc = mpProgram->GetUniformLocation(rName);
+  return GetMatrix(loc, rMatrix);
+}
+
+//-----------------
+const GLfloat* nuiShaderState::GetFloat(GLint loc, int32& size) const
+{
+  std::map<GLuint, std::vector<GLfloat> >::const_iterator it = mFloats.find(loc);
+  if (it == mFloats.end())
+  {
+    size = 0;
+    return NULL;
+  }
+
+  return &(it->second[0]);
+}
+
+const GLint* nuiShaderState::GetInt(GLint loc, int32& size) const
+{
+  std::map<GLuint, std::vector<GLint> >::const_iterator it = mInts.find(loc);
+  if (it == mInts.end())
+  {
+    size = 0;
+    return NULL;
+  }
+
+  return &(it->second[0]);
+}
+
+bool nuiShaderState::GetMatrix(GLint loc, nuiMatrix& rMatrix) const
+{
+  std::map<GLuint, nuiMatrix >::const_iterator it = mMatrices.find(loc);
+  if (it == mMatrices.end())
+  {
+    return false;
+  }
+
+  rMatrix = it->second;
+  return true;
 }
 
 

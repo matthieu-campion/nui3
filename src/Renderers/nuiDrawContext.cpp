@@ -32,6 +32,7 @@ nuiDrawContext::nuiDrawContext(const nuiRect& rRect)
 nuiDrawContext::~nuiDrawContext()
 {
   SetTexture(NULL);
+  SetShader(NULL);
   SetFont(NULL);
   if (mpAATexture)
     mpAATexture->Release();
@@ -63,6 +64,7 @@ void nuiDrawContext::EndSession()
 void nuiDrawContext::StopRendering()
 {
   SetTexture(NULL);
+  SetShader(NULL);
 }
 
 
@@ -302,6 +304,39 @@ bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) const
 nuiTexture* nuiDrawContext::GetTexture() const
 { 
   return mCurrentState.mpTexture; 
+}
+
+/****************************************************************************
+ *
+ * Shader manipulation
+ *
+ ****************************************************************************/
+
+void nuiDrawContext::SetShader(nuiShaderProgram* pShader)
+{
+  nuiShaderProgram* pOld = mCurrentState.mpShader;
+  if (pShader == pOld)
+    return;
+
+  mCurrentState.mpShader = pShader ;
+  if (pShader)
+  {
+    //pShader->CheckValid();
+    pShader->Acquire();
+  }
+  if (pOld)
+    pOld->Release();
+  mStateChanges++;
+}
+
+bool nuiDrawContext::IsShaderCurrent(nuiShaderProgram* pShader) const
+{
+  return mCurrentState.mpShader == pShader;
+}
+
+nuiShaderProgram* nuiDrawContext::GetShader() const
+{
+  return mCurrentState.mpShader;
 }
 
 /****************************************************************************

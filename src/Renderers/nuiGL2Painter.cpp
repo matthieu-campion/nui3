@@ -105,22 +105,6 @@
 //#error "bleh"
 #endif
 
-void nuiGLLoadMatrix(const float* pMatrix)
-{
-  glLoadMatrixf(pMatrix);
-}
-
-void nuiGLLoadMatrix(const double* pMatrix)
-{
-#ifndef _OPENGL_ES_
-  glLoadMatrixd(pMatrix);
-#else
-  NGL_ASSERT(!"no glLoadMatrixd in gles");
-#endif
-}
-
-
-
 void nuiGL2Painter::BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha, GLenum dstalpha)
 {
   mSrcColor = src;
@@ -971,7 +955,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   
   if (mMatrixChanged)
   {
-    nuiGLLoadMatrix(mMatrixStack.top().Array);
+    glLoadMatrixf(mMatrixStack.top().Array);
     mMatrixChanged = false;
   }
   
@@ -1285,9 +1269,7 @@ void nuiGL2Painter::LoadMatrix(const nuiMatrix& rMatrix)
   NUI_RETURN_IF_RENDERING_DISABLED;
   
   nuiPainter::LoadMatrix(rMatrix);
-  //nuiGLLoadMatrix(rMatrix.Array);
-  //nuiGLLoadMatrix(mMatrixStack.top().Array);
-  
+
   mMatrixChanged = true;
   
   nuiCheckForGLErrors();

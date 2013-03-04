@@ -35,6 +35,7 @@
 #include "nuiPainter.h"
 
 class nuiTexture;
+class nuiShaderProgram;
 
 enum nuiRenderer
 {
@@ -105,6 +106,13 @@ public:
   bool IsTextureCurrent(nuiTexture* pTex) const;
   nuiTexture* GetTexture() const;
   void SetTexture(nuiTexture* pTex);
+  //@}
+
+  /** @name Shader manipulation */
+  //@{
+  bool IsShaderCurrent(nuiShaderProgram* pShader) const;
+  nuiShaderProgram* GetShader() const;
+  void SetShader(nuiShaderProgram* pShader);
   //@}
 
   /** @name Matrix operations */

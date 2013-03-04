@@ -22,6 +22,7 @@ nuiRenderState::nuiRenderState()
   mBlendFunc = nuiBlendTransp;
 
   mpTexture = NULL;
+  mpShader = NULL;
 
   mAntialiasing = false;
   mWinding = nuiShape::eNonZero;
@@ -34,6 +35,7 @@ nuiRenderState::nuiRenderState()
 nuiRenderState::nuiRenderState(const nuiRenderState& rState)
 {
   mpTexture = NULL;
+  mpShader = NULL;
   mpFont = NULL;
 
   Copy(rState);
@@ -71,6 +73,13 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   if (pOldTexture)
     pOldTexture->Release();
 
+  nuiShaderProgram* pOldShader = mpShader;
+  mpShader = rState.mpShader;
+  if (mpShader)
+    mpShader->Acquire();
+  if (pOldShader)
+    pOldShader->Release();
+
   nuiFont* pOldFont = mpFont;
   mpFont = rState.mpFont;
   if (mpFont)
@@ -84,6 +93,9 @@ nuiRenderState::~nuiRenderState()
 {
   if (mpTexture)
     mpTexture->Release();
+
+  if (mpShader)
+    mpShader->Release();
 
   if (mpFont)
     mpFont->Release();
@@ -108,6 +120,7 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mLineCap        == rState.mLineCap)          &&
     (mLineJoin       == rState.mLineJoin)         &&
     (mpTexture       == rState.mpTexture)         &&
+    (mpShader        == rState.mpShader)          &&
     (mpFont          == rState.mpFont);
   
   return state;

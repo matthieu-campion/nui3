@@ -16,6 +16,15 @@ enum nuiShaderKind
   eFragmentShader = GL_FRAGMENT_SHADER
 };
 
+enum nuiUniformType
+{
+  nuiUniformFloat,
+  nuiUniformDouble,
+  nuiUniformInt,
+  nuiUniformFMat,
+  nuiUniformDMat,
+};
+
 class nuiShader;
 class nuiShaderProgram;
 
@@ -47,12 +56,21 @@ public:
 
   void Set(const nglString& rName, const GLfloat* pVal, int32 size);
   void Set(const nglString& rName, const GLint* pVal, int32 size);
+  void Set(const nglString& rName, const nuiMatrix& rMatrix);
+  void Set(GLint loc, const GLfloat* pVal, int32 size);
+  void Set(GLint loc, const GLint* pVal, int32 size);
+  void Set(GLint loc, const nuiMatrix& rMatrix);
 
-  void GetFloat(const nglString& rName, GLfloat* pVal, int32 size) const;
-  void GetInt(const nglString& rName, GLint* pVal, int32 size) const;
+  const GLfloat* GetFloat(const nglString& rName, int32& size) const;
+  const GLint* GetInt(const nglString& rName, int32& size) const;
+  bool GetMatrix(const nglString& rName, nuiMatrix& rMatrix) const;
+  const GLfloat* GetFloat(GLint loc, int32& size) const;
+  const GLint* GetInt(GLint loc, int32& size) const;
+  bool GetMatrix(GLint loc, nuiMatrix& rMatrix) const;
 private:
   std::map<GLuint, std::vector<GLfloat> > mFloats;
   std::map<GLuint, std::vector<GLint> > mInts;
+  std::map<GLuint, nuiMatrix > mMatrices;
   nuiShaderProgram* mpProgram;
 
   friend class nuiShaderProgram;
