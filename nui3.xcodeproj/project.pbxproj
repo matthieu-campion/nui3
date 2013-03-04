@@ -3779,6 +3779,20 @@
 		E542A19F0C3F0A5900225219 /* nuiButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DC80C3CECAB00902DFE /* nuiButton.cpp */; };
 		E542A1A00C3F0A5900225219 /* nglOStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5816DEA0C3CECAB00902DFE /* nglOStream.cpp */; };
 		E542A1A70C3F0A5900225219 /* nglPath_Unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */; };
+		E548CEEF16E4EA9500F98E45 /* nuiUniformDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */; };
+		E548CEF016E4EA9500F98E45 /* nuiUniformDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */; };
+		E548CEF116E4EA9500F98E45 /* nuiUniformDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */; };
+		E548CEF216E4EA9500F98E45 /* nuiUniformDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */; };
+		E548CEF316E4EA9500F98E45 /* nuiUniformDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */; };
+		E548CEF416E4EA9500F98E45 /* nuiUniformDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */; };
+		E548CEF516E4EA9500F98E45 /* nuiUniformDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */; };
+		E548CEF816E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */; };
+		E548CEF916E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */; };
+		E548CEFA16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */; };
+		E548CEFB16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */; };
+		E548CEFC16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */; };
+		E548CEFD16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */; };
+		E548CEFE16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */; };
 		E54D8FBC16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */; };
 		E54D8FBD16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */; };
 		E54D8FBE16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */; };
@@ -8393,6 +8407,8 @@
 		E5429EEF0C3F082800225219 /* jmemmgr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = jmemmgr.c; path = deps/libjpeg/jmemmgr.c; sourceTree = SOURCE_ROOT; };
 		E5429EF60C3F08DC00225219 /* nglPath_Unix.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = nglPath_Unix.cpp; path = src/File/Unix/nglPath_Unix.cpp; sourceTree = SOURCE_ROOT; };
 		E542A1AE0C3F0A5900225219 /* libnui3.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnui3.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiUniformDesc.h; path = include/nuiUniformDesc.h; sourceTree = SOURCE_ROOT; };
+		E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nuiUniformDesc.cpp; sourceTree = "<group>"; };
 		E54D8FBB16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = nuiAudioDevice_AudioUnit.mm; path = Audio/AudioUnit/nuiAudioDevice_AudioUnit.mm; sourceTree = "<group>"; };
 		E54D8FBF16C1D81300102723 /* nuiAudioDevice_AudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nuiAudioDevice_AudioUnit.h; path = include/nuiAudioDevice_AudioUnit.h; sourceTree = SOURCE_ROOT; };
 		E54EDB4D0C8EBF5C00B294C8 /* nuiSpinnerLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = nuiSpinnerLabel.cpp; path = src/Text/nuiSpinnerLabel.cpp; sourceTree = SOURCE_ROOT; };
@@ -11388,6 +11404,8 @@
 				E5816D0E0C3CECAB00902DFE /* nuiTexture.h */,
 				E5816DC60C3CECAB00902DFE /* nuiTextureHelpers.cpp */,
 				E5816D0F0C3CECAB00902DFE /* nuiTextureHelpers.h */,
+				E548CEEE16E4EA9500F98E45 /* nuiUniformDesc.h */,
+				E548CEF616E4EABF00F98E45 /* nuiUniformDesc.cpp */,
 				E5DD1A781096111200BBB0EA /* Painters */,
 				E5DD1A791096113400BBB0EA /* Shapes & Contours */,
 				E55DEDF90D350FE3002DA5BD /* SoftwareRasterizer */,
@@ -12612,6 +12630,7 @@
 				E50FE798169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A54169F20EC00836BAA /* nuiShader.h in Headers */,
 				E54D8FC216C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */,
+				E548CEF316E4EA9500F98E45 /* nuiUniformDesc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13450,6 +13469,7 @@
 				E50FE796169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A52169F20EC00836BAA /* nuiShader.h in Headers */,
 				E54D8FC016C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */,
+				E548CEF116E4EA9500F98E45 /* nuiUniformDesc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13831,6 +13851,7 @@
 				E50FE797169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A53169F20EC00836BAA /* nuiShader.h in Headers */,
 				E54D8FC116C1D81300102723 /* nuiAudioDevice_AudioUnit.h in Headers */,
+				E548CEF216E4EA9500F98E45 /* nuiUniformDesc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14217,6 +14238,7 @@
 				E52FA68014F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE795169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A51169F20EC00836BAA /* nuiShader.h in Headers */,
+				E548CEF016E4EA9500F98E45 /* nuiUniformDesc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14606,6 +14628,7 @@
 				E5C9FABC160B4F4500F07936 /* json_batchallocator.h in Headers */,
 				E50FE794169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A50169F20EC00836BAA /* nuiShader.h in Headers */,
+				E548CEEF16E4EA9500F98E45 /* nuiUniformDesc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14994,6 +15017,7 @@
 				E52FA68414F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE799169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A55169F20EC00836BAA /* nuiShader.h in Headers */,
+				E548CEF416E4EA9500F98E45 /* nuiUniformDesc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15382,6 +15406,7 @@
 				E52FA68514F686CF00992064 /* nuiStringTemplate.h in Headers */,
 				E50FE79A169108A300A9461A /* nuiGL2Painter.h in Headers */,
 				E5AD0A56169F20EC00836BAA /* nuiShader.h in Headers */,
+				E548CEF516E4EA9500F98E45 /* nuiUniformDesc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17038,6 +17063,7 @@
 				E5AD0A5E169F235B00836BAA /* nuiShader.cpp in Sources */,
 				E5C4EB7416AF43590029047C /* nuiSpiderMonkey.cpp in Sources */,
 				E54D8FBE16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */,
+				E548CEFC16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17662,6 +17688,7 @@
 				E5AD0A5C169F235B00836BAA /* nuiShader.cpp in Sources */,
 				E5C4EB7116AF43570029047C /* nuiSpiderMonkey.cpp in Sources */,
 				E54D8FBC16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */,
+				E548CEFA16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18002,6 +18029,7 @@
 				E5AD0A5D169F235B00836BAA /* nuiShader.cpp in Sources */,
 				E5C4EB7316AF43580029047C /* nuiSpiderMonkey.cpp in Sources */,
 				E54D8FBD16C1D7FD00102723 /* nuiAudioDevice_AudioUnit.mm in Sources */,
+				E548CEFB16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18350,6 +18378,7 @@
 				E52FA67614F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE78C1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 				E5AD0A5B169F235B00836BAA /* nuiShader.cpp in Sources */,
+				E548CEF916E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18698,6 +18727,7 @@
 				E52FA67514F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE78B1691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 				E5AD0A5A169F235B00836BAA /* nuiShader.cpp in Sources */,
+				E548CEF816E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19048,6 +19078,7 @@
 				E52FA67A14F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE7901691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 				E5AD0A5F169F235B00836BAA /* nuiShader.cpp in Sources */,
+				E548CEFD16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19398,6 +19429,7 @@
 				E52FA67B14F686AA00992064 /* nuiStringTemplate.cpp in Sources */,
 				E50FE7911691089600A9461A /* nuiGL2Painter.cpp in Sources */,
 				E5AD0A60169F235B00836BAA /* nuiShader.cpp in Sources */,
+				E548CEFE16E4EABF00F98E45 /* nuiUniformDesc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

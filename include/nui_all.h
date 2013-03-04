@@ -69,6 +69,7 @@ typedef double nuiSize;
 #include "nuiShape.h"
 #include "nuiPoint.h"
 #include "nuiDecorationDefines.h"
+#include "nuiUniformDesc.h"
 #include "nuiShader.h"
 #include "nuiRenderState.h"
 #endif

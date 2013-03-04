@@ -28,23 +28,6 @@ enum nuiUniformType
 class nuiShader;
 class nuiShaderProgram;
 
-class nuiUniformDesc
-{
-public:
-  nuiUniformDesc()
-  : mType(0), mLocation(0)
-  {}
-
-  nuiUniformDesc(const nglString& rName, GLenum Type, GLuint Location)
-  : mName(rName), mType(Type), mLocation(Location)
-  {
-  }
-
-  nglString mName;
-  GLenum mType;
-  GLuint mLocation;
-};
-
 
 class nuiShaderState : public nuiRefCount
 {
@@ -54,12 +37,46 @@ public:
 
   void Clear();
 
-  void Set(const nglString& rName, const GLfloat* pVal, int32 size);
-  void Set(const nglString& rName, const GLint* pVal, int32 size);
-  void Set(const nglString& rName, const nuiMatrix& rMatrix);
-  void Set(GLint loc, const GLfloat* pVal, int32 size);
-  void Set(GLint loc, const GLint* pVal, int32 size);
-  void Set(GLint loc, const nuiMatrix& rMatrix);
+  void Set(const nglString& rName, const float* pV, int32 count);
+  void Set(const nglString& rName, const std::vector<float>& rV);
+
+  void Set(const nglString& rName, const int32* pV, int32 count);
+  void Set(const nglString& rName, const std::vector<int32>& rV);
+
+  void Set(const nglString& rName, float v1);
+  void Set(const nglString& rName, float v1, float v2);
+  void Set(const nglString& rName, float v1, float v2, float v3);
+  void Set(const nglString& rName, float v1, float v2, float v3, float v4);
+  void Set(const nglString& rName, const nglVector2f& rVec);
+  void Set(const nglString& rName, const nglVector3f& rVec);
+  void Set(const nglString& rName, const nglVectorf& rVec);
+  void Set(const nglString& rName, const nuiColor& rColor);
+  void Set(const nglString& rName, int32 v1);
+  void Set(const nglString& rName, int32 v1, int32 v2);
+  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3);
+  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3, int32 v4);
+  void Set(const nglString& rName, const nglMatrixf& rMat);
+
+  ///
+  void Set(GLint loc, const float* pV, int32 count);
+  void Set(GLint loc, const std::vector<float>& rV);
+
+  void Set(GLint loc, const int32* pV, int32 count);
+  void Set(GLint loc, const std::vector<int32>& rV);
+
+  void Set(GLint loc, float v1);
+  void Set(GLint loc, float v1, float v2);
+  void Set(GLint loc, float v1, float v2, float v3);
+  void Set(GLint loc, float v1, float v2, float v3, float v4);
+  void Set(GLint loc, const nglVector2f& rVec);
+  void Set(GLint loc, const nglVector3f& rVec);
+  void Set(GLint loc, const nglVectorf& rVec);
+  void Set(GLint loc, const nuiColor& rColor);
+  void Set(GLint loc, int32 v1);
+  void Set(GLint loc, int32 v1, int32 v2);
+  void Set(GLint loc, int32 v1, int32 v2, int32 v3);
+  void Set(GLint loc, int32 v1, int32 v2, int32 v3, int32 v4);
+  void Set(GLint loc, const nglMatrixf& rMat);
 
   const GLfloat* GetFloat(const nglString& rName, int32& size) const;
   const GLint* GetInt(const nglString& rName, int32& size) const;
@@ -67,15 +84,15 @@ public:
   const GLfloat* GetFloat(GLint loc, int32& size) const;
   const GLint* GetInt(GLint loc, int32& size) const;
   bool GetMatrix(GLint loc, nuiMatrix& rMatrix) const;
+
 private:
-  std::map<GLuint, std::vector<GLfloat> > mFloats;
-  std::map<GLuint, std::vector<GLint> > mInts;
-  std::map<GLuint, nuiMatrix > mMatrices;
+  std::map<GLuint, nuiUniformDesc> mUniforms;
   nuiShaderProgram* mpProgram;
 
   friend class nuiShaderProgram;
   nuiShaderState(nuiShaderProgram* pProgram);
 
+  void Apply();
 };
 
 
