@@ -13,7 +13,12 @@ class nuiUniformDesc
 {
 public:
   nuiUniformDesc();
+  nuiUniformDesc(const nuiUniformDesc& rDesc);
   nuiUniformDesc(const nglString& rName, GLenum Type, int count, GLuint Location);
+
+  ~nuiUniformDesc();
+
+  nuiUniformDesc& operator=(const nuiUniformDesc& rDesc);
 
   void Set(const float* pV, int32 count);
   void Set(const std::vector<float>& rV);
@@ -47,5 +52,7 @@ public:
     GLfloat* mpFloats;
     GLint* mpInts;
   } mValues;
+
+  bool operator == (const nuiUniformDesc& rDesc) const;
 };
 

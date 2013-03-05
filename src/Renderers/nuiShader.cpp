@@ -73,10 +73,18 @@ struct TypeDesc
 };
 
 /////////////////////////////////////////////////////
+nuiShaderState::nuiShaderState()
+: mpProgram(NULL),
+  mProjectionMatrix(-1),
+  mModelViewMatrix(-1)
+{
+
+}
+
 nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram)
 : mpProgram(pProgram),
   mProjectionMatrix(pProgram->GetUniformLocation(NUI_PROJECTION_MATRIX_NAME)),
-  mModelViewMatrix(pProgram->GetUniformLocation(NUI_MODELVIEW_ATRIX_NAME))
+  mModelViewMatrix(pProgram->GetUniformLocation(NUI_MODELVIEW_MATRIX_NAME))
 {
 
 }
@@ -329,6 +337,19 @@ void nuiShaderState::Apply() const
 }
 
 
+bool nuiShaderState::operator == (const nuiShaderState& rState) const
+{
+  if (mpProgram != rState.mpProgram)
+    return false;
+
+  if (mProjectionMatrix != rState.mProjectionMatrix)
+    return false;
+
+  if (mModelViewMatrix != rState.mModelViewMatrix)
+    return false;
+
+  return mUniforms == rState.mUniforms;
+}
 
 /////////////////////////////////////////////////////
 class nuiShader : public nuiRefCount
@@ -489,21 +510,6 @@ const nuiShaderState& nuiShaderProgram::GetDefaultState() const
   return mDefaultState;
 }
 
-
-void nuiShaderProgram::SetInputPrimitiveType(int InputPrimitiveType)
-{
-
-}
-
-void nuiShaderProgram::SetOutputPrimitiveType(int OutputPrimitiveType)
-{
-
-}
-
-void nuiShaderProgram::SetVerticesOut(int VerticesOut)
-{
-
-}
 
 GLint nuiShaderProgram::GetUniformLocation(const char *name)
 {

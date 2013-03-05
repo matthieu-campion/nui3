@@ -113,6 +113,8 @@ public:
   bool IsShaderCurrent(nuiShaderProgram* pShader) const;
   nuiShaderProgram* GetShader() const;
   void SetShader(nuiShaderProgram* pShader);
+  void SetShaderState(const nuiShaderState& rState);
+  const nuiShaderState& GetShaderState() const;
   //@}
 
   /** @name Matrix operations */

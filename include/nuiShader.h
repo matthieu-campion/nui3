@@ -17,7 +17,7 @@ enum nuiShaderKind
 };
 
 #define NUI_PROJECTION_MATRIX_NAME "gl_ProjectionMatrix"
-#define NUI_MODELVIEW_ATRIX_NAME "gl_ModelViewMatrix"
+#define NUI_MODELVIEW_MATRIX_NAME "gl_ModelViewMatrix"
 
 enum nuiUniformType
 {
@@ -35,6 +35,8 @@ class nuiShaderProgram;
 class nuiShaderState : public nuiRefCount
 {
 public:
+  nuiShaderState();
+  nuiShaderState(nuiShaderProgram* pProgram);
   nuiShaderState(const nuiShaderState& rOriginal);
   virtual ~nuiShaderState();
 
@@ -91,14 +93,13 @@ public:
   const GLint* GetInt(GLint loc, int32& size) const;
   bool GetMatrix(GLint loc, nuiMatrix& rMatrix) const;
 
+  bool operator == (const nuiShaderState& rState) const;
+
+  void Apply() const;
+
 private:
   std::map<GLuint, nuiUniformDesc> mUniforms;
   nuiShaderProgram* mpProgram;
-
-  friend class nuiShaderProgram;
-  nuiShaderState(nuiShaderProgram* pProgram);
-
-  void Apply() const;
 
   GLint mProjectionMatrix;
   GLint mModelViewMatrix;
@@ -122,11 +123,6 @@ public:
 
   const nuiShaderState& GetDefaultState() const;
   void GetState(nuiShaderState& rState) const;
-
-  // Geometry Shader: Input Type, Output and Number of Vertices out
-  void       SetInputPrimitiveType(int InputPrimitiveType);   //!< Set the input primitive type for the geometry shader
-  void       SetOutputPrimitiveType(int OutputPrimitiveType); //!< Set the output primitive type for the geometry shader
-  void       SetVerticesOut(int VerticesOut);                 //!< Set the maximal number of vertices the geometry shader can output
 
   GLint       GetUniformLocation(const char *name);  //!< Retrieve Location (index) of a Uniform Variable
   GLint       GetUniformLocation(const nglString& name);  //!< Retrieve Location (index) of a Uniform Variable

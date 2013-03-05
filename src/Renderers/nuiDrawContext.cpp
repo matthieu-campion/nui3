@@ -339,6 +339,17 @@ nuiShaderProgram* nuiDrawContext::GetShader() const
   return mCurrentState.mpShader;
 }
 
+void nuiDrawContext::SetShaderState(const nuiShaderState& rState)
+{
+  mCurrentState.mShaderState = rState;
+  mStateChanges++;
+}
+
+const nuiShaderState& nuiDrawContext::GetShaderState() const
+{
+  return mCurrentState.mShaderState;
+}
+
 /****************************************************************************
  *
  * Brush manipulation

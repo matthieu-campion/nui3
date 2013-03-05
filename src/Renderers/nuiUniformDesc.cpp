@@ -9,10 +9,73 @@
 #include "nui.h"
 
 //class nuiUniformDesc
+
 nuiUniformDesc::nuiUniformDesc()
-: mType(0), mCount(0), mLocation(0)
+: mType(0), mCount(0), mLocation(-1)
 {
   mValues.mpFloats = NULL;
+}
+
+nuiUniformDesc::nuiUniformDesc(const nuiUniformDesc& rDesc)
+: mName(rDesc.mName), mType(rDesc.mType), mCount(rDesc.mCount), mLocation(rDesc.mLocation)
+{
+  switch (mType)
+  {
+    case GL_FLOAT:              mValues.mpFloats  = new float[1 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 1 * mCount); break;
+    case GL_FLOAT_VEC2:         mValues.mpFloats  = new float[2 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 2 * mCount); break;
+    case GL_FLOAT_VEC3:         mValues.mpFloats  = new float[3 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 3 * mCount); break;
+    case GL_FLOAT_VEC4:         mValues.mpFloats  = new float[4 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 4 * mCount); break;
+
+    case GL_INT:                mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+    case GL_INT_VEC2:           mValues.mpInts    = new int32[2 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 2 * mCount); break;
+    case GL_INT_VEC3:           mValues.mpInts    = new int32[3 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 3 * mCount); break;
+    case GL_INT_VEC4:           mValues.mpInts    = new int32[4 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 4 * mCount); break;
+    case GL_UNSIGNED_INT:       mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+
+    case GL_FLOAT_MAT2:         mValues.mpFloats  = new float[2 * 2 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 2 * 2 * mCount); break;
+    case GL_FLOAT_MAT3:         mValues.mpFloats  = new float[3 * 3 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 3 * 3 * mCount); break;
+    case GL_FLOAT_MAT4:         mValues.mpFloats  = new float[4 * 4 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 4 * 4 * mCount); break;
+
+    case GL_SAMPLER_2D:         mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+    case GL_SAMPLER_CUBE:       mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+
+    default:
+      NGL_ASSERT(0);
+  }
+}
+
+
+nuiUniformDesc& nuiUniformDesc::operator=(const nuiUniformDesc& rDesc)
+{
+  mName = rDesc.mName;
+  mType = rDesc.mType;
+  mCount = rDesc.mCount;
+  mLocation = rDesc.mLocation;
+  {
+    switch (mType)
+    {
+      case GL_FLOAT:              mValues.mpFloats  = new float[1 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 1 * mCount); break;
+      case GL_FLOAT_VEC2:         mValues.mpFloats  = new float[2 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 2 * mCount); break;
+      case GL_FLOAT_VEC3:         mValues.mpFloats  = new float[3 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 3 * mCount); break;
+      case GL_FLOAT_VEC4:         mValues.mpFloats  = new float[4 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 4 * mCount); break;
+
+      case GL_INT:                mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+      case GL_INT_VEC2:           mValues.mpInts    = new int32[2 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 2 * mCount); break;
+      case GL_INT_VEC3:           mValues.mpInts    = new int32[3 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 3 * mCount); break;
+      case GL_INT_VEC4:           mValues.mpInts    = new int32[4 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 4 * mCount); break;
+      case GL_UNSIGNED_INT:       mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+
+      case GL_FLOAT_MAT2:         mValues.mpFloats  = new float[2 * 2 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 2 * 2 * mCount); break;
+      case GL_FLOAT_MAT3:         mValues.mpFloats  = new float[3 * 3 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 3 * 3 * mCount); break;
+      case GL_FLOAT_MAT4:         mValues.mpFloats  = new float[4 * 4 * mCount]; memcpy(mValues.mpFloats, rDesc.mValues.mpFloats, sizeof(float) * 4 * 4 * mCount); break;
+
+      case GL_SAMPLER_2D:         mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+      case GL_SAMPLER_CUBE:       mValues.mpInts    = new int32[1 * mCount]; memcpy(mValues.mpInts, rDesc.mValues.mpInts, sizeof(int32) * 1 * mCount); break;
+        
+      default:
+        NGL_ASSERT(0);
+    }
+  }
 }
 
 nuiUniformDesc::nuiUniformDesc(const nglString& rName, GLenum Type, int count, GLuint Location)
@@ -42,6 +105,38 @@ nuiUniformDesc::nuiUniformDesc(const nglString& rName, GLenum Type, int count, G
       NGL_ASSERT(0);
   }
 }
+
+nuiUniformDesc::~nuiUniformDesc()
+{
+  switch (mType)
+  {
+    case GL_FLOAT:
+    case GL_FLOAT_VEC2:
+    case GL_FLOAT_VEC3:
+    case GL_FLOAT_VEC4:
+    case GL_FLOAT_MAT2:
+    case GL_FLOAT_MAT3:
+    case GL_FLOAT_MAT4:
+      delete[] mValues.mpFloats;
+      mValues.mpFloats = NULL;
+      break;
+
+    case GL_INT:
+    case GL_INT_VEC2:
+    case GL_INT_VEC3:
+    case GL_INT_VEC4:
+    case GL_UNSIGNED_INT:
+    case GL_SAMPLER_2D:
+    case GL_SAMPLER_CUBE:
+      delete[] mValues.mpInts;
+      mValues.mpInts = NULL;
+      break;
+
+    default:
+      NGL_ASSERT(0);
+  }
+}
+
 
 void nuiUniformDesc::Set(const float* pV, int32 count)
 {
@@ -227,5 +322,53 @@ void nuiUniformDesc::Apply() const
       NGL_ASSERT(0);
   }
 }
+
+
+bool nuiUniformDesc::operator == (const nuiUniformDesc& rDesc) const
+{
+  if (rDesc.mType != mType)
+    return false;
+
+  if (rDesc.mCount != mCount)
+    return false;
+
+  if (rDesc.mLocation != mLocation)
+    return false;
+
+  int32 count = 0;
+  switch (mType)
+  {
+    case GL_FLOAT:        count = 1; break;
+    case GL_FLOAT_VEC2:   count = 2; break;
+    case GL_FLOAT_VEC3:   count = 3; break;
+    case GL_FLOAT_VEC4:   count = 4; break;
+
+    case GL_FLOAT_MAT2:   count = 2 * 2; break;
+    case GL_FLOAT_MAT3:   count = 3 * 3; break;
+    case GL_FLOAT_MAT4:   count = 4 * 4; break;
+
+    case GL_INT:          count = 1; break;
+    case GL_INT_VEC2:     count = 2; break;
+    case GL_INT_VEC3:     count = 3; break;
+    case GL_INT_VEC4:     count = 4; break;
+
+    case GL_UNSIGNED_INT: count = 1; break;
+    case GL_SAMPLER_2D:   count = 1; break;
+    case GL_SAMPLER_CUBE: count = 1; break;
+
+    default:
+      NGL_ASSERT(0);
+  }
+
+  for (int32 i = 0; i < count; i++)
+    if (rDesc.mValues.mpInts[i] != mValues.mpInts[i])
+      return false;
+
+  if (rDesc.mName != mName)
+    return false;
+
+  return true;
+}
+
 
 

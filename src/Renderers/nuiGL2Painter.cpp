@@ -475,7 +475,11 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
       mFinalState.mpShader = mpDefaultShader;
     }
 
+    NGL_ASSERT(mFinalState.mpShader != NULL);
+
     glUseProgram(mpDefaultShader->GetProgram());
+
+    mFinalState.mShaderState.Apply();
   }
 
   // We don't care about the font in the lower layer of rendering

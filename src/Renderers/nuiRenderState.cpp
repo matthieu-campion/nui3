@@ -80,6 +80,8 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   if (pOldShader)
     pOldShader->Release();
 
+  mShaderState = rState.mShaderState;
+
   nuiFont* pOldFont = mpFont;
   mpFont = rState.mpFont;
   if (mpFont)
@@ -121,6 +123,7 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mLineJoin       == rState.mLineJoin)         &&
     (mpTexture       == rState.mpTexture)         &&
     (mpShader        == rState.mpShader)          &&
+    (mShaderState   == rState.mShaderState)          &&
     (mpFont          == rState.mpFont);
   
   return state;
