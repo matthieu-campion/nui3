@@ -16,6 +16,9 @@ enum nuiShaderKind
   eFragmentShader = GL_FRAGMENT_SHADER
 };
 
+#define NUI_PROJECTION_MATRIX_NAME "gl_ProjectionMatrix"
+#define NUI_MODELVIEW_ATRIX_NAME "gl_ModelViewMatrix"
+
 enum nuiUniformType
 {
   nuiUniformFloat,
@@ -78,6 +81,9 @@ public:
   void Set(GLint loc, int32 v1, int32 v2, int32 v3, int32 v4);
   void Set(GLint loc, const nglMatrixf& rMat);
 
+  void SetProjectionMatrix(const nglMatrixf& rMat);
+  void SetModelViewMatrix(const nglMatrixf& rMat);
+
   const GLfloat* GetFloat(const nglString& rName, int32& size) const;
   const GLint* GetInt(const nglString& rName, int32& size) const;
   bool GetMatrix(const nglString& rName, nuiMatrix& rMatrix) const;
@@ -93,6 +99,9 @@ private:
   nuiShaderState(nuiShaderProgram* pProgram);
 
   void Apply() const;
+
+  GLint mProjectionMatrix;
+  GLint mModelViewMatrix;
 };
 
 

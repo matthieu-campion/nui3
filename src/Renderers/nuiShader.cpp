@@ -19,14 +19,14 @@ static const char* defaultVertexShader =
 "attribute vec4 Position;\
 attribute vec2 TexCoord;\
 attribute vec4 Color;\
-uniform mat4 ModelView;\
-uniform mat4 Projection;\
+uniform mat4 gl_ModelViewMatrix;\
+uniform mat4 gl_ProjectionMatrix;\
 varying vec2 TexCoordVar;\
 varying vec4 ColorVar;\
 void main()\
 {\
-vec4 p = ModelView * Position;\
-gl_Position = Projection * p;\
+vec4 p = gl_ModelViewMatrix * Position;\
+gl_Position = gl_ProjectionMatrix * p;\
 TexCoordVar = TexCoord;\
 ColorVar = Color;\
 }"
@@ -74,8 +74,11 @@ struct TypeDesc
 
 /////////////////////////////////////////////////////
 nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram)
-: mpProgram(pProgram)
+: mpProgram(pProgram),
+  mProjectionMatrix(pProgram->GetUniformLocation(NUI_PROJECTION_MATRIX_NAME)),
+  mModelViewMatrix(pProgram->GetUniformLocation(NUI_MODELVIEW_ATRIX_NAME))
 {
+
 }
 
 nuiShaderState::nuiShaderState(const nuiShaderState& rOriginal)
@@ -299,6 +302,19 @@ void nuiShaderState::Set(GLint loc, const nglMatrixf& rMat)
   NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
   mUniforms[loc].Set(rMat);
 }
+
+void nuiShaderState::SetProjectionMatrix(const nglMatrixf& rMat)
+{
+  NGL_ASSERT(mProjectionMatrix >= 0);
+  Set(mProjectionMatrix, rMat);
+}
+
+void nuiShaderState::SetModelViewMatrix(const nglMatrixf& rMat)
+{
+  NGL_ASSERT(mModelViewMatrix >= 0);
+  Set(mModelViewMatrix, rMat);
+}
+
 
 void nuiShaderState::Apply() const
 {
