@@ -584,6 +584,11 @@ bool nuiShaderProgram::Link()
   return true;
 }
 
+GLint nuiShaderProgram::GetProgram() const
+{
+  return mProgram;
+}
+
 void nuiShaderProgram::GetState(nuiShaderState& rState) const
 {
   std::map<nglString, nuiUniformDesc>::const_iterator it = mUniformMap.begin();

@@ -253,7 +253,11 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
     
     nuiCheckForGLErrors();
   }
-  
+
+  mpDefaultShader = new nuiShaderProgram();
+  mpDefaultShader->Acquire();
+  mpDefaultShader->LoadDefaultShaders();
+
 #ifdef _OPENGL_ES_
   //  mDefaultFramebuffer = 0;
   //  mDefaultRenderbuffer = 0;
@@ -267,6 +271,7 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
 nuiGL2Painter::~nuiGL2Painter()
 {
   mActiveContexts--;
+  mpDefaultShader->Release();
   if (mActiveContexts == 0)
     glAAExit();
 }
@@ -453,7 +458,26 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
     mFinalState.mDepthWrite = rState.mDepthWrite;
     glDepthMask(mFinalState.mDepthWrite);
   }
-  
+
+  // Shaders:
+  if (ForceApply || mFinalState.mpShader != rState.mpShader)
+  {
+    if (rState.mpShader)
+      rState.mpShader->Acquire();
+    if (mFinalState.mpShader)
+      mFinalState.mpShader->Release();
+
+    mFinalState.mpShader = rState.mpShader;
+
+    if (mFinalState.mpShader == NULL)
+    {
+      mpDefaultShader->Acquire();
+      mFinalState.mpShader = mpDefaultShader;
+    }
+
+    glUseProgram(mpDefaultShader->GetProgram());
+  }
+
   // We don't care about the font in the lower layer of rendering
   //nuiFont* mpFont;
   // 
@@ -1203,41 +1227,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   else
 #endif // NUI_USE_ANTIALIASING
   {
-    //#TEST meeloo disabling AA texture
-    //     if (pArray->UseGLAATexture())
-    //     {
-    //       glMatrixMode(GL_TEXTURE);
-    //       glPopMatrix();
-    //       glMatrixMode(GL_MODELVIEW);
-    //       glPopMatrix();
-    // 
-    //       if (mFinalState.mpTexture && mFinalState.mTexturing)
-    //       {
-    //         if (mTextureTarget != GL_TEXTURE_2D)
-    //         {
-    //           glDisable(GL_TEXTURE_2D);
-    //           glEnable(mTextureTarget);
-    //         }
-    // 
-    //         UploadTexture(mFinalState.mpTexture);
-    //       }
-    //       else
-    //       {
-    //         glDisable(GL_TEXTURE_2D);
-    //       }
-    // 
-    //       if (!mFinalState.mBlending)
-    //         glDisable(GL_BLEND);
-    //       if (mFinalState.mBlendFunc != nuiBlendTransp)
-    //       {
-    //         GLenum src, dst;
-    //         nuiGetBlendFuncFactors(mFinalState.mBlendFunc, src, dst);
-    //         glBlendFunc(src, dst);
-    //       }
-    //       //ApplyTexture(mState, true);
-    //     }
-    //     else
-    
     if (NeedTranslateHack)
       glTranslatef(-hackX, -hackY, 0);
   }

@@ -121,6 +121,8 @@ protected:
   GLenum mTexEnvMode;
   
   uint32 mViewPort[4];
+
+  nuiShaderProgram* mpDefaultShader;
 };
 
 bool nuiCheckForGLErrorsReal();

@@ -132,7 +132,8 @@ public:
   GLint       GetUniformLocation(const nglString& name);  //!< Retrieve Location (index) of a Uniform Variable
   const std::map<nglString, nuiUniformDesc>& GetUniforms() const;
 
-  
+  GLint GetProgram() const;
+
 protected:
   // Receive Uniform variables:
   void       GetUniformfv(const char* varname, GLfloat* values); //!< Receive value of uniform variable. \param varname The name of the uniform variable.
