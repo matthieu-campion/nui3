@@ -422,7 +422,31 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   NUI_RETURN_IF_RENDERING_DISABLED;
   //ForceApply = true;
   nuiCheckForGLErrors();
-  
+
+  // Shaders:
+  if (ForceApply || mFinalState.mpShader != rState.mpShader || !mFinalState.mpShader)
+  {
+    if (rState.mpShader)
+      rState.mpShader->Acquire();
+    if (mFinalState.mpShader)
+      mFinalState.mpShader->Release();
+
+    mFinalState.mpShader = rState.mpShader;
+
+    if (mFinalState.mpShader == NULL)
+    {
+      mpDefaultShader->Acquire();
+      mFinalState.mpShader = mpDefaultShader;
+      mFinalState.mShaderState = mpDefaultShader->GetDefaultState();
+    }
+
+    NGL_ASSERT(mFinalState.mpShader != NULL);
+
+    glUseProgram(mpDefaultShader->GetProgram());
+
+    mFinalState.mShaderState.Apply();
+  }
+
   // blending
   if (ForceApply || mFinalState.mBlending != rState.mBlending)
   {
@@ -459,30 +483,6 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   {
     mFinalState.mDepthWrite = rState.mDepthWrite;
     glDepthMask(mFinalState.mDepthWrite);
-  }
-
-  // Shaders:
-  if (ForceApply || mFinalState.mpShader != rState.mpShader || !mFinalState.mpShader)
-  {
-    if (rState.mpShader)
-      rState.mpShader->Acquire();
-    if (mFinalState.mpShader)
-      mFinalState.mpShader->Release();
-
-    mFinalState.mpShader = rState.mpShader;
-
-    if (mFinalState.mpShader == NULL)
-    {
-      mpDefaultShader->Acquire();
-      mFinalState.mpShader = mpDefaultShader;
-      mFinalState.mShaderState = mpDefaultShader->GetDefaultState();
-    }
-
-    NGL_ASSERT(mFinalState.mpShader != NULL);
-
-    glUseProgram(mpDefaultShader->GetProgram());
-
-    mFinalState.mShaderState.Apply();
   }
 
   // We don't care about the font in the lower layer of rendering
@@ -984,83 +984,9 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       hackY = 0;
     }
 #endif
+
     //glTranslatef(hackX, hackY, 0);
   }
-
-/*
-  glEnableClientState(GL_VERTEX_ARRAY);
-  mClientVertex = true;
-  glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mX);
-  nuiCheckForGLErrors();
-
-  float r = mR, g = mG, b = mB, a = mA;
-  if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
-  {
-    if (!mClientColor)
-      glEnableClientState(GL_COLOR_ARRAY);
-    mClientColor = true;
-    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mR);
-    nuiCheckForGLErrors();
-  }
-  else
-  {
-    if (mClientColor)
-      glDisableClientState(GL_COLOR_ARRAY);
-    mClientColor = false;
-    
-    nuiColor c;
-    switch (pArray->GetMode())
-    {
-      case GL_POINTS:
-      case GL_LINES:
-      case GL_LINE_LOOP:
-      case GL_LINE_STRIP:
-        c = mFinalState.mStrokeColor;
-        break;
-        
-      case GL_TRIANGLES:
-      case GL_TRIANGLE_STRIP:
-      case GL_TRIANGLE_FAN:
-#ifndef _OPENGL_ES_
-      case GL_QUADS:
-      case GL_QUAD_STRIP:
-      case GL_POLYGON:
-#endif
-        c = mFinalState.mFillColor;
-        break;
-    }
-    
-    r = c.Red();
-    g = c.Green();
-    b = c.Blue();
-    a = c.Alpha();
-    nuiCheckForGLErrors();
-  }
-  
-  if (mR != r || mG != g || mB != b || mA != a)
-  {
-    glColor4f(r, g, b, a);
-    mR = r;
-    mG = g;
-    mB = b;
-    mA = a;
-  }
-  
-  if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
-  {
-    if (!mClientTexCoord)
-      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    mClientTexCoord = true;
-    glTexCoordPointer(2, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mTX);
-    nuiCheckForGLErrors();
-  }
-  else
-  {
-    if (mClientTexCoord)
-      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    mClientTexCoord = false;
-  }
-  */
 
   mFinalState.mpShader->SetVertexPointers(*pArray);
 
@@ -1068,8 +994,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   if (!pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
     {
-//      if (mClientColor)
-//        glDisableClientState(GL_COLOR_ARRAY);
       mClientColor = false;
 
       nuiColor c;
