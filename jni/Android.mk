@@ -279,6 +279,7 @@ NUI_LOCAL_SRC_FILES_RENDERERS_SHAPES_CONTOURS := ../src/Renderers/nuiArc.cpp \
                                                  ../src/Renderers/nuiShape.cpp \
                                                  ../src/Renderers/nuiSpline.cpp \
                                                  ../src/Renderers/nuiUniformDesc.cpp \
+                                                 ../src/Renderers/nuiVertexAttribDesc.cpp \
                                                  ../src/Renderers/nuiSVGShape.cpp \
                                                  ../src/Renderers/nuiTessellator.cpp \
 
@@ -436,6 +437,7 @@ NUI_LOCAL_SRC_FILES_WINDOW := ../src/Window/nglContext.cpp \
 
 NUI_LOCAL_SRC_FILES_DEFAULT_DECORATION := ../graphics/DefaultDecoration.cpp \
                                           ../graphics/DefaultDecoration/AtlasTexture.cpp \
+                                          ../graphics/DefaultDecoration/ImageDraggedFile.cpp \
 
 
 

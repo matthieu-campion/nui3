@@ -12,7 +12,7 @@
         android:configChanges="orientation|keyboardHidden">
 
       <meta-data android:name="android.app.lib_name"
-        android:value="native-activity" />
+        android:value="my_native_module" />
         <intent-filter>
           <action android:name="android.intent.action.MAIN" />
           <category android:name="android.intent.category.LAUNCHER" />

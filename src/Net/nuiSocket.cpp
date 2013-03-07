@@ -24,6 +24,11 @@
 #define NGL_EPOLL
 #endif
 
+#if (defined _ANDROID_)
+#define SO_NOSIGPIPE MSG_NOSIGNAL
+#define EPOLLRDHUP 0x2000
+#endif
+
 void nuiSocket::DumpError(const nuiSocket* pSocket, int err, const char* msg, ...)
 {
   if (!err)
@@ -58,7 +63,7 @@ nuiSocket::nuiSocket(nuiSocket::SocketType Socket)
 {
   mNonBlocking = false;
   mMaxIdleTime = 0; // Default = do nothing about idling sockets
-  
+
 #if (!defined _LINUX_)
   if (Socket != -1)
   {
