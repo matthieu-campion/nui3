@@ -34,46 +34,46 @@ public:
 
   void Clear();
 
-  void Set(const nglString& rName, const float* pV, int32 count);
-  void Set(const nglString& rName, const std::vector<float>& rV);
+  void Set(const nglString& rName, const float* pV, int32 count, bool apply = false);
+  void Set(const nglString& rName, const std::vector<float>& rV, bool apply = false);
 
-  void Set(const nglString& rName, const int32* pV, int32 count);
-  void Set(const nglString& rName, const std::vector<int32>& rV);
+  void Set(const nglString& rName, const int32* pV, int32 count, bool apply = false);
+  void Set(const nglString& rName, const std::vector<int32>& rV, bool apply = false);
 
-  void Set(const nglString& rName, float v1);
-  void Set(const nglString& rName, float v1, float v2);
-  void Set(const nglString& rName, float v1, float v2, float v3);
-  void Set(const nglString& rName, float v1, float v2, float v3, float v4);
-  void Set(const nglString& rName, const nglVector2f& rVec);
-  void Set(const nglString& rName, const nglVector3f& rVec);
-  void Set(const nglString& rName, const nglVectorf& rVec);
-  void Set(const nglString& rName, const nuiColor& rColor);
-  void Set(const nglString& rName, int32 v1);
-  void Set(const nglString& rName, int32 v1, int32 v2);
-  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3);
-  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3, int32 v4);
-  void Set(const nglString& rName, const nglMatrixf& rMat);
+  void Set(const nglString& rName, float v1, bool apply = false);
+  void Set(const nglString& rName, float v1, float v2, bool apply = false);
+  void Set(const nglString& rName, float v1, float v2, float v3, bool apply = false);
+  void Set(const nglString& rName, float v1, float v2, float v3, float v4, bool apply = false);
+  void Set(const nglString& rName, const nglVector2f& rVec, bool apply = false);
+  void Set(const nglString& rName, const nglVector3f& rVec, bool apply = false);
+  void Set(const nglString& rName, const nglVectorf& rVec, bool apply = false);
+  void Set(const nglString& rName, const nuiColor& rColor, bool apply = false);
+  void Set(const nglString& rName, int32 v1, bool apply = false);
+  void Set(const nglString& rName, int32 v1, int32 v2, bool apply = false);
+  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3, bool apply = false);
+  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3, int32 v4, bool apply = false);
+  void Set(const nglString& rName, const nglMatrixf& rMat, bool apply = false);
 
   ///
-  void Set(GLint loc, const float* pV, int32 count);
-  void Set(GLint loc, const std::vector<float>& rV);
+  void Set(GLint loc, const float* pV, int32 count, bool apply = false);
+  void Set(GLint loc, const std::vector<float>& rV, bool apply = false);
 
-  void Set(GLint loc, const int32* pV, int32 count);
-  void Set(GLint loc, const std::vector<int32>& rV);
+  void Set(GLint loc, const int32* pV, int32 count, bool apply = false);
+  void Set(GLint loc, const std::vector<int32>& rV, bool apply = false);
 
-  void Set(GLint loc, float v1);
-  void Set(GLint loc, float v1, float v2);
-  void Set(GLint loc, float v1, float v2, float v3);
-  void Set(GLint loc, float v1, float v2, float v3, float v4);
-  void Set(GLint loc, const nglVector2f& rVec);
-  void Set(GLint loc, const nglVector3f& rVec);
-  void Set(GLint loc, const nglVectorf& rVec);
-  void Set(GLint loc, const nuiColor& rColor);
-  void Set(GLint loc, int32 v1);
-  void Set(GLint loc, int32 v1, int32 v2);
-  void Set(GLint loc, int32 v1, int32 v2, int32 v3);
-  void Set(GLint loc, int32 v1, int32 v2, int32 v3, int32 v4);
-  void Set(GLint loc, const nglMatrixf& rMat);
+  void Set(GLint loc, float v1, bool apply = false);
+  void Set(GLint loc, float v1, float v2, bool apply = false);
+  void Set(GLint loc, float v1, float v2, float v3, bool apply = false);
+  void Set(GLint loc, float v1, float v2, float v3, float v4, bool apply = false);
+  void Set(GLint loc, const nglVector2f& rVec, bool apply = false);
+  void Set(GLint loc, const nglVector3f& rVec, bool apply = false);
+  void Set(GLint loc, const nglVectorf& rVec, bool apply = false);
+  void Set(GLint loc, const nuiColor& rColor, bool apply = false);
+  void Set(GLint loc, int32 v1, bool apply = false);
+  void Set(GLint loc, int32 v1, int32 v2, bool apply = false);
+  void Set(GLint loc, int32 v1, int32 v2, int32 v3, bool apply = false);
+  void Set(GLint loc, int32 v1, int32 v2, int32 v3, int32 v4, bool apply = false);
+  void Set(GLint loc, const nglMatrixf& rMat, bool apply = false);
 
   void SetProjectionMatrix(const nglMatrixf& rMat, bool Apply);
   void SetModelViewMatrix(const nglMatrixf& rMat, bool Apply);
@@ -115,6 +115,7 @@ public:
   bool Link();
 
   const nuiShaderState& GetDefaultState() const;
+  nuiShaderState& GetDefaultState();
   void GetState(nuiShaderState& rState) const;
 
   GLint       GetUniformLocation(const char *name);  //!< Retrieve Location (index) of a Uniform Variable

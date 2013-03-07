@@ -21,25 +21,25 @@ public:
 
   nuiUniformDesc& operator=(const nuiUniformDesc& rDesc);
 
-  void Set(const float* pV, int32 count);
-  void Set(const std::vector<float>& rV);
+  void Set(const float* pV, int32 count, bool apply = false);
+  void Set(const std::vector<float>& rV, bool apply = false);
 
-  void Set(const int32* pV, int32 count);
-  void Set(const std::vector<int32>& rV);
+  void Set(const int32* pV, int32 count, bool apply = false);
+  void Set(const std::vector<int32>& rV, bool apply = false);
 
-  void Set(float v1);
-  void Set(float v1, float v2);
-  void Set(float v1, float v2, float v3);
-  void Set(float v1, float v2, float v3, float v4);
-  void Set(const nglVector2f& rVec);
-  void Set(const nglVector3f& rVec);
-  void Set(const nglVectorf& rVec);
-  void Set(const nuiColor& rColor);
-  void Set(int32 v1);
-  void Set(int32 v1, int32 v2);
-  void Set(int32 v1, int32 v2, int32 v3);
-  void Set(int32 v1, int32 v2, int32 v3, int32 v4);
-  void Set(const nglMatrixf& rMat);
+  void Set(float v1, bool apply = false);
+  void Set(float v1, float v2, bool apply = false);
+  void Set(float v1, float v2, float v3, bool apply = false);
+  void Set(float v1, float v2, float v3, float v4, bool apply = false);
+  void Set(const nglVector2f& rVec, bool apply = false);
+  void Set(const nglVector3f& rVec, bool apply = false);
+  void Set(const nglVectorf& rVec, bool apply = false);
+  void Set(const nuiColor& rColor, bool Apply = false);
+  void Set(int32 v1, bool apply = false);
+  void Set(int32 v1, int32 v2, bool apply = false);
+  void Set(int32 v1, int32 v2, int32 v3, bool apply = false);
+  void Set(int32 v1, int32 v2, int32 v3, int32 v4, bool apply = false);
+  void Set(const nglMatrixf& rMat, bool apply = false);
 
   void Apply() const;
 

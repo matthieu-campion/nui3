@@ -195,7 +195,7 @@ nuiUniformDesc::~nuiUniformDesc()
 }
 
 
-void nuiUniformDesc::Set(const float* pV, int32 count)
+void nuiUniformDesc::Set(const float* pV, int32 count, bool apply)
 {
   switch (mType)
   {
@@ -214,15 +214,18 @@ void nuiUniformDesc::Set(const float* pV, int32 count)
 
   for (int32 i = 0; i < count; i++)
     mValues.mpFloats[i] = pV[i];
+
+  if (apply)
+    Apply();
 }
 
 
-void nuiUniformDesc::Set(const std::vector<float>& rV)
+void nuiUniformDesc::Set(const std::vector<float>& rV, bool apply)
 {
   Set(&rV[0], rV.size());
 }
 
-void nuiUniformDesc::Set(const int32* pV, int32 count)
+void nuiUniformDesc::Set(const int32* pV, int32 count, bool apply)
 {
   switch (mType)
   {
@@ -241,92 +244,95 @@ void nuiUniformDesc::Set(const int32* pV, int32 count)
 
   for (int32 i = 0; i < count; i++)
     mValues.mpInts[i] = pV[i];
+
+  if (apply)
+    Apply();
 }
 
-void nuiUniformDesc::Set(const std::vector<int32>& rV)
+void nuiUniformDesc::Set(const std::vector<int32>& rV, bool apply)
 {
-  Set(&rV[0], rV.size());
+  Set(&rV[0], rV.size(), apply);
 }
 
-void nuiUniformDesc::Set(float v1)
+void nuiUniformDesc::Set(float v1, bool apply)
 {
-  Set(&v1, 1);
+  Set(&v1, 1, apply);
 }
 
-void nuiUniformDesc::Set(float v1, float v2)
+void nuiUniformDesc::Set(float v1, float v2, bool apply)
 {
   float v[] = { v1, v2 };
-  Set(v, 2);
+  Set(v, 2, apply);
 }
 
-void nuiUniformDesc::Set(float v1, float v2, float v3)
+void nuiUniformDesc::Set(float v1, float v2, float v3, bool apply)
 {
   float v[] = { v1, v2, v3 };
-  Set(v, 3);
+  Set(v, 3, apply);
 }
 
-void nuiUniformDesc::Set(float v1, float v2, float v3, float v4)
+void nuiUniformDesc::Set(float v1, float v2, float v3, float v4, bool apply)
 {
   float v[] = { v1, v2, v3, v4 };
-  Set(v, 4);
+  Set(v, 4, apply);
 }
 
 
-void nuiUniformDesc::Set(const nglVector2f& rVec)
+void nuiUniformDesc::Set(const nglVector2f& rVec, bool apply)
 {
   NGL_ASSERT(mType == GL_FLOAT_VEC2 || mType == GL_FLOAT_VEC3 || mType == GL_FLOAT_VEC4);
-  Set(&rVec.Elt[0], 2);
+  Set(&rVec.Elt[0], 2, apply);
 }
 
-void nuiUniformDesc::Set(const nglVector3f& rVec)
+void nuiUniformDesc::Set(const nglVector3f& rVec, bool apply)
 {
   NGL_ASSERT(mType == GL_FLOAT_VEC3 || mType == GL_FLOAT_VEC4);
-  Set(&rVec.Elt[0], 3);
+  Set(&rVec.Elt[0], 3, apply);
 }
 
-void nuiUniformDesc::Set(const nglVectorf& rVec)
+void nuiUniformDesc::Set(const nglVectorf& rVec, bool apply)
 {
   NGL_ASSERT(mType == GL_FLOAT_VEC4);
-  Set(&rVec.Elt[0], 4);
+  Set(&rVec.Elt[0], 4, apply);
 }
 
-void nuiUniformDesc::Set(const nuiColor& rColor)
+void nuiUniformDesc::Set(const nuiColor& rColor, bool apply)
 {
   float v[] = { rColor.Red(), rColor.Green(), rColor.Blue(), rColor.Alpha() };
   switch (mType)
   {
-    case GL_FLOAT:      Set((v[0] + v[1] + v[2]) / 3.0f); break;
-    case GL_FLOAT_VEC2: Set((v[0] + v[1] + v[2]) / 3.0f, v[3]); break;
-    case GL_FLOAT_VEC3: Set(v, 3); break;
-    case GL_FLOAT_VEC4: Set(v, 4); break;
+    case GL_FLOAT:      Set((v[0] + v[1] + v[2]) / 3.0f, apply); break;
+    case GL_FLOAT_VEC2: Set((v[0] + v[1] + v[2]) / 3.0f, v[3], apply); break;
+    case GL_FLOAT_VEC3: Set(v, 3, apply); break;
+    case GL_FLOAT_VEC4: Set(v, 4, apply); break;
     default:            NGL_ASSERT(0); break;
   }
 }
 
-void nuiUniformDesc::Set(int32 v1)
+void nuiUniformDesc::Set(int32 v1, bool apply)
 {
-  Set(&v1, 1);
+  Set(&v1, 1, apply);
 }
 
-void nuiUniformDesc::Set(int32 v1, int32 v2)
+void nuiUniformDesc::Set(int32 v1, int32 v2, bool apply)
 {
   int32 v[] = { v1, v2 };
-  Set(v, 2);
+  Set(v, 2, apply);
 }
 
-void nuiUniformDesc::Set(int32 v1, int32 v2, int32 v3)
+void nuiUniformDesc::Set(int32 v1, int32 v2, int32 v3, bool apply)
 {
   int32 v[] = { v1, v2, v3 };
-  Set(v, 3);
+  Set(v, 3, apply);
 }
 
-void nuiUniformDesc::Set(int32 v1, int32 v2, int32 v3, int32 v4)
+void nuiUniformDesc::Set(int32 v1, int32 v2, int32 v3, int32 v4, bool apply)
 {
   int32 v[] = { v1, v2, v3, v4 };
-  Set(v, 4);
+  Set(v, 4, apply);
 }
 
-void nuiUniformDesc::Set(const nglMatrixf& rMat)
+void nuiUniformDesc::Set(const nglMatrixf& rMat, bool apply)
 {
   float v[16];
   switch (mType)
@@ -335,16 +341,16 @@ void nuiUniformDesc::Set(const nglMatrixf& rMat)
       for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; i++)
           v[i * 2 + j] = rMat.Array[i * 4 + j];
-      Set(v, 4);
+      Set(v, 4, apply);
       break;
     case GL_FLOAT_MAT3:
       for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; i++)
           v[i * 3 + j] = rMat.Array[i * 4 + j];
-      Set(v, 9);
+      Set(v, 9, apply);
       break;
     case GL_FLOAT_MAT4:
-      Set(rMat.Array, 16);
+      Set(rMat.Array, 16, apply);
       break;
     default :
       NGL_ASSERT(0);

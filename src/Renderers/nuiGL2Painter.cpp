@@ -258,6 +258,7 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
   mpDefaultShader->Acquire();
   mpDefaultShader->LoadDefaultShaders();
   mpDefaultShader->Link();
+  mpDefaultShader->GetDefaultState().Set("Color", nuiColor("white"));
 
 #ifdef _OPENGL_ES_
   //  mDefaultFramebuffer = 0;
@@ -428,11 +429,11 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
     mFinalState.mBlending = rState.mBlending;
     if (mFinalState.mBlending)
     {
-//      glEnable(GL_BLEND);
+      glEnable(GL_BLEND);
     }
     else
     {
-//      glDisable(GL_BLEND);
+      glDisable(GL_BLEND);
     }
   }
   
@@ -1063,6 +1064,52 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
 
   mFinalState.mpShader->SetVertexPointers(*pArray);
 
+  float r = mR, g = mG, b = mB, a = mA;
+  if (!pArray->IsArrayEnabled(nuiRenderArray::eColor))
+  {
+    {
+//      if (mClientColor)
+//        glDisableClientState(GL_COLOR_ARRAY);
+      mClientColor = false;
+
+      nuiColor c;
+      switch (pArray->GetMode())
+      {
+        case GL_POINTS:
+        case GL_LINES:
+        case GL_LINE_LOOP:
+        case GL_LINE_STRIP:
+          c = mFinalState.mStrokeColor;
+          break;
+
+        case GL_TRIANGLES:
+        case GL_TRIANGLE_STRIP:
+        case GL_TRIANGLE_FAN:
+#ifndef _OPENGL_ES_
+        case GL_QUADS:
+        case GL_QUAD_STRIP:
+        case GL_POLYGON:
+#endif
+          c = mFinalState.mFillColor;
+          break;
+      }
+
+      r = c.Red();
+      g = c.Green();
+      b = c.Blue();
+      a = c.Alpha();
+      nuiCheckForGLErrors();
+    }
+
+    if (mR != r || mG != g || mB != b || mA != a)
+    {
+      mFinalState.mpShader->GetDefaultState().Set("Color", nuiColor(r, g, b, a), true);
+      mR = r;
+      mG = g;
+      mB = b;
+      mA = a;
+    }
+  }
   nuiCheckForGLErrors();
   
   if (mpSurface && mTwoPassBlend)
