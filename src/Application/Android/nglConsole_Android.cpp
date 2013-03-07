@@ -30,9 +30,6 @@
 
 
 nglConsole::nglConsole(bool IsVisible)
-#ifdef USE_WCHAR
-  : mOutputConv(eEncodingInternal, eEncodingNative)
-#endif
 {
   LOGI("Android console ctor");
   Setup(); // Portable code init

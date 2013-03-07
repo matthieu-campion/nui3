@@ -1,2 +1,16 @@
 Products/
 .DS_Store
+*.swp
+*.o
+*.o.d
+*.class
+*.a
+*.so
+Makefile
+libs/*
+minui3.make
+minui_test.make
+obj/*
+android/NativeTest/bin/*
+android/NativeTest/gen/*
+android/NativeTest/obj/*

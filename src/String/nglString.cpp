@@ -35,7 +35,7 @@ licence: see nui3/LICENCE.TXT
   #define ngl_strncmp strncmp
   #define ngl_strnicmp strncasecmp
   #define ngl_mbs_stricmp strcasecmp
-#elif defined _LINUX_ || defined _MINUI3_
+#elif defined _LINUX_ || defined _MINUI3_ || defined _ANDROID_
   #include <ctype.h>
   #define ngl_vsnprintf vsnprintf
   #define ngl_snprintf	snprintf
@@ -901,8 +901,8 @@ int32 nglString::Import(const char* pBuffer, const nglTextEncoding Encoding)
     return false;
 
   mIsNull = false;
-  
-  
+
+
   if (Encoding == eEncodingInternal)
   {
     Copy(pBuffer);
@@ -925,7 +925,7 @@ int32 nglString::Import (const char* pBuffer, int32 ByteCount, const nglTextEnco
     Copy(pBuffer, ByteCount);
     return GetLength();
   }
-  
+
   mIsNull = false;
   int32 offset = 0;
 
@@ -2859,7 +2859,7 @@ nglString::nglString(CFStringRef string)
       return;
     }
   }
-  
+
   char* str = (char*)malloc(length * 3);
   Boolean res = CFStringGetCString (
                               string,

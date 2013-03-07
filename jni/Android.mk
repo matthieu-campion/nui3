@@ -28,9 +28,9 @@ MY_INCLUDE_FILES :=   \
                       $(LOCAL_PATH)/../src/Application/Unix \
                       $(LOCAL_PATH)/../deps \
 
-MY_C_FLAGS := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DNGL_STATIC_BUILD -DHAVE_BCOPY -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DFT_CONFIG_OPTION_SYSTEM_ZLIB -DHAVE_BCOPY -DFEATURE_NANOJIT -DJS_TRACER -DXP_UNIX -DAVMPLUS_IA32 -D_DEBUG -DDEBUG -fexceptions -fvisibility=hidden -fno-threadsafe-statics -Wno-deprecated-declarations
+MY_C_FLAGS := -x c++ -fmessage-length=0 -pipe -Wno-trigraphs -O0 -D_ANDROID_ -DNGL_STATIC_BUILD -DHAVE_BCOPY -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DFT_CONFIG_OPTION_SYSTEM_ZLIB -DHAVE_BCOPY -DFEATURE_NANOJIT -DJS_TRACER -DXP_UNIX -DAVMPLUS_IA32 -D_DEBUG -DDEBUG -fexceptions -fvisibility=hidden -fno-threadsafe-statics -Wno-deprecated-declarations -frtti -DGL_GLEXT_PROTOTYPES=1
 
-MY_LDLIBS := -llog -lGLESv1_CM -lz
+MY_LDLIBS := -llog -lGLESv1_CM -lz -lGLESv2
 
 
 LOCAL_C_INCLUDES := $(MY_INCLUDE_FILES)
@@ -133,7 +133,6 @@ NUI_LOCAL_SRC_FILES_BASE := ../src/Base/nuiBindingManager.cpp \
                             ../src/Base/nuiNativeResource.cpp \
                             ../src/Base/nuiNotification.cpp \
                             ../src/Base/nuiObject.cpp \
-                            ../src/Base/nuiProperty.cpp \
                             ../src/Base/nuiRange.cpp \
                             ../src/Base/nuiRect.cpp \
                             ../src/Base/nuiSerializeContext.cpp \
@@ -153,7 +152,6 @@ NUI_LOCAL_SRC_FILES_BINDINGS := ../src/Bindings/nuiBindings.cpp \
 
 
 NUI_LOCAL_SRC_FILES_DECORATIONS := ../src/Decorations/nuiBorderDecoration.cpp \
-                                   ../src/Decorations/nuiCheckerBoardDecoration.cpp \
                                    ../src/Decorations/nuiNavigationViewDecoration.cpp \
                                    ../src/Decorations/nuiColorDecoration.cpp \
                                    ../src/Decorations/nuiDecoration.cpp \
@@ -163,6 +161,7 @@ NUI_LOCAL_SRC_FILES_DECORATIONS := ../src/Decorations/nuiBorderDecoration.cpp \
                                    ../src/Decorations/nuiImageDecoration.cpp \
                                    ../src/Decorations/nuiMetaDecoration.cpp \
                                    ../src/Decorations/nuiStateDecoration.cpp \
+                                   ../src/Decorations/nuiCheckerboardDecoration.cpp \
                                    ../src/Decorations/nuiTreeHandleDecoration.cpp \
 
 
@@ -187,7 +186,6 @@ NUI_LOCAL_SRC_FILES_FONT := ../src/Font/nuiFont.cpp \
                             ../src/Font/nuiTextRun.cpp \
                             ../src/Font/nuiTextLine.cpp \
                             ../src/Font/nuiFontInstance.cpp \
-                            ../src/Font/nuiFontLayout.cpp \
                             ../src/Font/nuiPanose.cpp \
                             ../src/Font/ngl_default_font.cpp \
 
@@ -206,7 +204,7 @@ NUI_LOCAL_SRC_FILES_INTROSPECTOR := ../src/Introspector/nuiIntrospector.cpp \
                                     ../src/Introspector/nuiThreadInspector.cpp \
                                     ../src/Introspector/nuiFontInspector.cpp \
                                     ../src/Introspector/nuiDecorationInspector.cpp \
-                                    ../src/Introspector/nuitextureInspector.cpp \
+                                    ../src/Introspector/nuiTextureInspector.cpp \
                                     ../src/Introspector/nuiObjectInspector.cpp \
 
 
@@ -230,7 +228,6 @@ NUI_LOCAL_SRC_FILES_LAYOUT := ../src/Layout/nuiAnimView.cpp \
                               ../src/Layout/nuiModalContainer.cpp \
                               ../src/Layout/nuiPane.cpp \
                               ../src/Layout/nuiPopupView.cpp \
-                              ../src/Layout/nuiPositioner.cpp \
                               ../src/Layout/nuiScrollBox.cpp \
                               ../src/Layout/nuiScrollView.cpp \
                               ../src/Layout/nuiSplitter.cpp \
@@ -265,6 +262,8 @@ NUI_LOCAL_SRC_FILES_NET := ../src/Net/nuiNetworkHost.cpp \
 
 NUI_LOCAL_SRC_FILES_RENDERERS_PAINTERS := ../src/Renderers/nuiGLPainter.cpp \
                                           ../src/Renderers/nuiPainter.cpp \
+                                          ../src/Renderers/nuiGL2Painter.cpp \
+                                          ../src/Renderers/nuiShader.cpp \
                                           ../src/Renderers/nuiMetaPainter.cpp
 
 NUI_LOCAL_SRC_FILES_RENDERERS_SHAPES_CONTOURS := ../src/Renderers/nuiArc.cpp \
@@ -279,6 +278,7 @@ NUI_LOCAL_SRC_FILES_RENDERERS_SHAPES_CONTOURS := ../src/Renderers/nuiArc.cpp \
                                                  ../src/Renderers/nuiRectPath.cpp \
                                                  ../src/Renderers/nuiShape.cpp \
                                                  ../src/Renderers/nuiSpline.cpp \
+                                                 ../src/Renderers/nuiUniformDesc.cpp \
                                                  ../src/Renderers/nuiSVGShape.cpp \
                                                  ../src/Renderers/nuiTessellator.cpp \
 
@@ -307,7 +307,6 @@ NUI_LOCAL_SRC_FILES_SIMPLE_WIDGETS := ../src/SimpleWidgets/nuiButton.cpp \
                                       ../src/SimpleWidgets/nuiImage.cpp \
                                       ../src/SimpleWidgets/nuiImageDropZone.cpp \
                                       ../src/SimpleWidgets/nuiKnob.cpp \
-                                      ../src/SimpleWidgets/nuiOffscreenView.cpp \
                                       ../src/SimpleWidgets/nuiProgressBar.cpp \
                                       ../src/SimpleWidgets/nuiRadioButton.cpp \
                                       ../src/SimpleWidgets/nuiRadioButtonGroup.cpp \
@@ -316,7 +315,6 @@ NUI_LOCAL_SRC_FILES_SIMPLE_WIDGETS := ../src/SimpleWidgets/nuiButton.cpp \
                                       ../src/SimpleWidgets/nuiSeparator.cpp \
                                       ../src/SimpleWidgets/nuiShapeView.cpp \
                                       ../src/SimpleWidgets/nuiSlider.cpp \
-                                      ../src/SimpleWidgets/nuiSplineEdit.cpp \
                                       ../src/SimpleWidgets/nuiStateDummy.cpp \
                                       ../src/SimpleWidgets/nuiSVGView.cpp \
                                       ../src/SimpleWidgets/nuiTabBar.cpp \
@@ -437,6 +435,7 @@ NUI_LOCAL_SRC_FILES_WINDOW := ../src/Window/nglContext.cpp \
 
 
 NUI_LOCAL_SRC_FILES_DEFAULT_DECORATION := ../graphics/DefaultDecoration.cpp \
+                                          ../graphics/DefaultDecoration/AtlasTexture.cpp \
 
 
 

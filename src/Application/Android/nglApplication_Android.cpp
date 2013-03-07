@@ -71,11 +71,11 @@ void nglApplication::Quit(int Code)
  * Application entry point
  */
 
-int nglApplication::Main (int ArgCnt, char** pArg)
+int nglApplication::Main (int ArgCnt, char const ** pArg)
 {
   if (!Init(ArgCnt, pArg))
     return 1;
-  
+
   CallOnInit();           // Call user OnInit() call back
   SysLoop();              // Run event pump till application ending
   CallOnExit(mExitCode);  // Call user OnExit() call back
@@ -84,7 +84,7 @@ int nglApplication::Main (int ArgCnt, char** pArg)
   return mExitCode;
 }
 
-bool nglApplication::Init (int ArgCnt, char** pArg)
+bool nglApplication::Init (int ArgCnt, char const** pArg)
 {
   int i;
 
@@ -107,10 +107,10 @@ bool nglApplication::Init (int ArgCnt, char** pArg)
   if (i != -1)
     name.DeleteLeft (i + 1); // Only keep file name if it's a full path
   SetName(name);
-  
+
   // Fetch application's executable path
   nglPath path;
-  
+
   /* Let's try the proc interface, and fallback to argv[0]
    */
   char buffer[PATH_MAX + 1];
@@ -348,7 +348,7 @@ void nglApplication::OnEvent(uint Flags)
 
 
 /*
- * X11 event management 
+ * X11 event management
  */
 
 #ifdef _X11_

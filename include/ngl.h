@@ -191,7 +191,7 @@ and in NGL user application code.
   #pragma comment( lib, "wsock32.lib" )
 
   #define _WINSOCKAPI_  // Prevent inclusion of winsock.h in windows.h
-  #define NODRAWTEXT // Prevent inclusion of DrawText defines in windows.h. 
+  #define NODRAWTEXT // Prevent inclusion of DrawText defines in windows.h.
 
   #ifndef _WIN32_WINNT
     #define _WIN32_WINNT _WIN32_WINNT_WS03
@@ -212,7 +212,7 @@ and in NGL user application code.
   #pragma warning (disable: 4201) // Prevent the "parameter not used" warning
   #pragma warning (disable: 4711) // Prevent the "selected for automatic inline expansion" warning
   #endif
-  
+
   #ifdef _MAYAPLUGIN_ // Maya includes try to redefine the bool type
     #define _BOOL
   #endif
@@ -245,7 +245,7 @@ and in NGL user application code.
 #endif
 
 #ifdef _UNIX_
-	#if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
+	#if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_))
 	  # define _DEBUG_
 	#endif
   #ifndef _GNU_SOURCE
@@ -273,10 +273,10 @@ and in NGL user application code.
  MacOS/UIKit
  */
 #ifdef _UIKIT_
-  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
+  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_))
     #define _DEBUG_
   #endif
-  
+
   #ifndef __cplusplus
 //  #if defined(_OBJC_)
 		#include <UIKit/UIKit.h>
@@ -296,14 +296,14 @@ and in NGL user application code.
   typedef u_int64_t uint64;
 
 	#define NGL_API
-  
+
 #endif//_UIKIT_
 
 /*
  MacOS/Cocoa
  */
 #ifdef _COCOA_
-  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
+  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_))
   #define _DEBUG_
   #endif
 
@@ -312,7 +312,7 @@ and in NGL user application code.
   #include <Cocoa/Cocoa.h>
   #include <CoreGraphics/CoreGraphics.h>
   #endif
-  
+
   #include <ApplicationServices/ApplicationServices.h>
 
   #include <stdlib.h>
@@ -329,7 +329,7 @@ and in NGL user application code.
   typedef u_int64_t uint64;
 
 
-  #define NGL_API __attribute__((visibility("hidden"))) 
+  #define NGL_API __attribute__((visibility("hidden")))
 
 #endif //_COCOA_
 
@@ -338,7 +338,7 @@ and in NGL user application code.
  MacOS/Carbon
  */
 #ifdef _CARBON_
-  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_)) 
+  #if (((defined _DEBUG) || (defined DEBUG)) && !(defined _DEBUG_))
   # define _DEBUG_
   #endif
 
@@ -362,11 +362,11 @@ and in NGL user application code.
     typedef u_int64_t uint64;
   #endif
 
-//  #define NGL_API __attribute__((visibility("hidden"))) 
+//  #define NGL_API __attribute__((visibility("hidden")))
   #define NGL_API
 #endif // _CARBON_
 
-  
+
 /*
  * Common stuff for all platforms
  */
@@ -467,6 +467,10 @@ typedef wchar_t nglUChar;
 #   include <GLES/gl.h>
 #   include <GLES/glext.h>
 
+#   include <GLES2/gl2.h>
+#   include <GLES2/gl2ext.h>
+#   include <GLES2/gl2platform.h>
+
     // Fake GLU for OpenGLES
     typedef double GLdouble;
     typedef double GLclampd;
@@ -544,6 +548,7 @@ typedef wchar_t nglUChar;
 #   include <GLES/gl.h>
 #   include <GL/glu.h>
 #   include <GLES/glext.h>
+#   include <GLES/glew.h>
 
 // Dummy BGR flags. Beware! GLES on Android doesn't seem to handle BGR!!!
 #   define GL_BGR  0x80E0

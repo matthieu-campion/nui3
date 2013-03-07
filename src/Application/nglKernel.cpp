@@ -428,7 +428,7 @@ void nglKernel::UnregisterObserver(nuiNotificationObserver* pObserver, const ngl
   mpNotificationManager->UnregisterObserver(pObserver, rNotificationName);
 }
 
-#if (defined _UNIX_) || (defined _MINUI3_) || (defined _COCOA_) || (defined _CARBON_)
+#if ((defined _UNIX_) || (defined _MINUI3_) || (defined _COCOA_) || (defined _CARBON_)) && !(defined _ANDROID_)
 #include <execinfo.h>
 #include <signal.h>
 #include <syslog.h>

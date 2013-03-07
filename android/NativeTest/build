@@ -1,11 +1,11 @@
 export NDK_MODULE_PATH=$(pwd)/../../
-export NDK_PATH=$(pwd)/../../../android-ndk
-export SDK_PATH=$(pwd)/../../../android-sdk
+export NDK_PATH=/home/jerome/android-ndk-r8d
+export SDK_PATH=/home/jerome/adt-bundle-linux-x86_64/sdk
 echo ----------------------------------------------------------------------------------------
 echo Build lib
 echo ----------------------------------------------------------------------------------------
 #~/work/dev/android/android-ndk-r5b/ndk-build -j 8 NDK_DEBUG=1
-$NDK_PATH/ndk-build -j 8 NDK_DEBUG=1
+$NDK_PATH/ndk-build -j 4 NDK_DEBUG=1
 
 
 echo ----------------------------------------------------------------------------------------
