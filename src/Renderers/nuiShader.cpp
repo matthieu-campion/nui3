@@ -1,3 +1,4 @@
+
 //
 //  nuiShader.cpp
 //  nui3
@@ -16,81 +17,101 @@ if (err != GL_NO_ERROR)\
 }
 
 static const char* defaultVertexShader =
-"attribute vec4 Position;\
-attribute vec2 TexCoord;\
-attribute vec4 Color;\
-uniform mat4 gl_ModelViewMatrix;\
-uniform mat4 gl_ProjectionMatrix;\
-varying vec2 TexCoordVar;\
-varying vec4 ColorVar;\
-void main()\
-{\
-vec4 p = gl_ModelViewMatrix * Position;\
-gl_Position = gl_ProjectionMatrix * p;\
-TexCoordVar = TexCoord;\
-ColorVar = Color;\
+"attribute vec4 Position;\n\
+attribute vec2 TexCoord;\n\
+attribute vec4 Color;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+varying vec2 TexCoordVar;\n\
+varying vec4 ColorVar;\n\
+void main()\n\
+{\n\
+vec4 p = ModelViewMatrix * Position;\n\
+gl_Position = ProjectionMatrix * p;\n\
+TexCoordVar = TexCoord;\n\
+ColorVar = Color;\n\
 }"
 ;
 
 static const char* defaultFragmentShader =
-"uniform sampler2D texture;\
-varying vec4 ColorVar;\
-varying vec2 TexCoordVar;\
-void main()\
-{\
-  gl_FragColor = ColorVar * texture2D( texture, TexCoordVar);\
+"uniform sampler2D texture;\n\
+varying vec4 ColorVar;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+  vec4 _gl_FragColor = ColorVar * texture2D(texture, TexCoordVar);\n\
+  gl_FragColor = texture2D(texture, TexCoordVar);\n\
 }"
 ;
 
+#if 0
+static const char* defaultVertexShader =
+"attribute vec4 Position;\n\
+attribute vec2 TexCoord;\n\
+attribute vec4 Color;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+varying vec2 TexCoordVar;\n\
+varying vec4 ColorVar;\n\
+void main()\n\
+{\n\
+gl_Position = Position;\n\
+TexCoordVar = TexCoord;\n\
+ColorVar = Color;\n\
+}"
+;
 
+static const char* defaultFragmentShader =
+"uniform sampler2D texture;\n\
+varying vec4 ColorVar;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+gl_FragColor = ColorVar * texture2D( texture, TexCoordVar);\n\
+}"
+;
+#endif
 
 struct TypeDesc
 {
   GLenum mEnum;
-  nuiUniformType mType;
+  GLenum mType;
   GLint mSize;
 } ShaderParamTypeDesc[] =
 {
-  {GL_FLOAT	,	nuiUniformFloat,	1},
-  {GL_FLOAT_VEC2	,	nuiUniformFloat,	2},
-  {GL_FLOAT_VEC3	,	nuiUniformFloat,	3},
-  {GL_FLOAT_VEC4	,	nuiUniformFloat,	4},
-  {GL_INT, nuiUniformInt, 1},
-  {GL_INT_VEC2, nuiUniformInt, 2},
-  {GL_INT_VEC3, nuiUniformInt, 3},
-  {GL_INT_VEC4, nuiUniformInt, 4},
-  {GL_UNSIGNED_INT, nuiUniformInt, 1},
-  {GL_BOOL, nuiUniformInt, 1},
-  {GL_BOOL_VEC2, nuiUniformInt, 2},
-  {GL_BOOL_VEC3, nuiUniformInt, 3},
-  {GL_BOOL_VEC4, nuiUniformInt, 4},
-  {GL_FLOAT_MAT2	,	nuiUniformFMat,	4},
-  {GL_FLOAT_MAT3	,	nuiUniformFMat,	9},
-  {GL_FLOAT_MAT4	,	nuiUniformFMat,	16},
-  {GL_SAMPLER_2D, nuiUniformInt, 1},
-  {GL_SAMPLER_CUBE, nuiUniformInt, 1},
-  {GL_ZERO, nuiUniformFloat, 0}
+  {GL_FLOAT	,	GL_FLOAT,	1},
+  {GL_FLOAT_VEC2	,	GL_FLOAT,	2},
+  {GL_FLOAT_VEC3	,	GL_FLOAT,	3},
+  {GL_FLOAT_VEC4	,	GL_FLOAT,	4},
+  {GL_INT, GL_INT, 1},
+  {GL_INT_VEC2, GL_INT, 2},
+  {GL_INT_VEC3, GL_INT, 3},
+  {GL_INT_VEC4, GL_INT, 4},
+  {GL_UNSIGNED_INT, GL_INT, 1},
+  {GL_BOOL, GL_INT, 1},
+  {GL_BOOL_VEC2, GL_INT, 2},
+  {GL_BOOL_VEC3, GL_INT, 3},
+  {GL_BOOL_VEC4, GL_INT, 4},
+  {GL_FLOAT_MAT2,	GL_FLOAT,	4},
+  {GL_FLOAT_MAT3,	GL_FLOAT,	9},
+  {GL_FLOAT_MAT4,	GL_FLOAT,	16},
+  {GL_SAMPLER_2D, GL_INT, 1},
+  {GL_SAMPLER_CUBE, GL_INT, 1},
+  {GL_ZERO, GL_ZERO, 0}
 };
 
 /////////////////////////////////////////////////////
-nuiShaderState::nuiShaderState()
+nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram)
 : mpProgram(NULL),
   mProjectionMatrix(-1),
   mModelViewMatrix(-1)
 {
-
-}
-
-nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram)
-: mpProgram(pProgram),
-  mProjectionMatrix(pProgram->GetUniformLocation(NUI_PROJECTION_MATRIX_NAME)),
-  mModelViewMatrix(pProgram->GetUniformLocation(NUI_MODELVIEW_MATRIX_NAME))
-{
-
+  if (pProgram)
+    InitWithProgram(pProgram);
 }
 
 nuiShaderState::nuiShaderState(const nuiShaderState& rOriginal)
-: mpProgram(rOriginal.mpProgram), mUniforms(rOriginal.mUniforms)
+: mpProgram(rOriginal.mpProgram), mUniforms(rOriginal.mUniforms), mProjectionMatrix(rOriginal.mProjectionMatrix), mModelViewMatrix(rOriginal.mModelViewMatrix)
 {
 }
 
@@ -206,6 +227,31 @@ void nuiShaderState::Set(const nglString& rName, const nglMatrixf& rMat)
   Set(loc, rMat);
 }
 
+void nuiShaderState::InitWithProgram(nuiShaderProgram* pProgram)
+{
+  Clear();
+  mpProgram = pProgram;
+  mProjectionMatrix = mpProgram->GetUniformLocation(NUI_PROJECTION_MATRIX_NAME);
+  mModelViewMatrix = mpProgram->GetUniformLocation(NUI_MODELVIEW_MATRIX_NAME);
+
+  GLuint pgm = mpProgram->GetProgram();
+  {
+    int total = -1;
+    glGetProgramiv(pgm, GL_ACTIVE_UNIFORMS, &total);
+    for (int i = 0; i < total; ++i)
+    {
+      int name_len = -1;
+      int num = -1;
+      GLenum type = GL_ZERO;
+      char name[100];
+      glGetActiveUniform(pgm, GLuint(i), sizeof(name)-1, &name_len, &num, &type, name);
+      name[name_len] = 0;
+      GLuint location = glGetUniformLocation(pgm, name);
+
+      mUniforms.insert(std::make_pair(location, nuiUniformDesc(name, type, num, location, pProgram)));
+    }
+  }
+}
 
 ///
 void nuiShaderState::Set(GLint loc, const float* pV, int32 count)
@@ -311,16 +357,20 @@ void nuiShaderState::Set(GLint loc, const nglMatrixf& rMat)
   mUniforms[loc].Set(rMat);
 }
 
-void nuiShaderState::SetProjectionMatrix(const nglMatrixf& rMat)
+void nuiShaderState::SetProjectionMatrix(const nglMatrixf& rMat, bool Apply)
 {
   NGL_ASSERT(mProjectionMatrix >= 0);
   Set(mProjectionMatrix, rMat);
+  if (Apply)
+    mUniforms.find(mProjectionMatrix)->second.Apply();
 }
 
-void nuiShaderState::SetModelViewMatrix(const nglMatrixf& rMat)
+void nuiShaderState::SetModelViewMatrix(const nglMatrixf& rMat, bool Apply)
 {
   NGL_ASSERT(mModelViewMatrix >= 0);
   Set(mModelViewMatrix, rMat);
+  if (Apply)
+    mUniforms.find(mModelViewMatrix)->second.Apply();
 }
 
 
@@ -349,6 +399,14 @@ bool nuiShaderState::operator == (const nuiShaderState& rState) const
     return false;
 
   return mUniforms == rState.mUniforms;
+}
+
+nuiShaderState& nuiShaderState::operator= (const nuiShaderState& rState)
+{
+  mpProgram = rState.mpProgram;
+  mProjectionMatrix = rState.mProjectionMatrix;
+  mModelViewMatrix = rState.mModelViewMatrix;
+  mUniforms = rState.mUniforms;
 }
 
 /////////////////////////////////////////////////////
@@ -570,22 +628,31 @@ bool nuiShaderProgram::Link()
   CHECK_GL_ERRORS;
 
 
-  int total = -1;
-  glGetProgramiv(mProgram, GL_ACTIVE_UNIFORMS, &total);
-  for (int i = 0; i < total; ++i)
-  {
-    int name_len = -1;
-    int num = -1;
-    GLenum type = GL_ZERO;
-    char name[100];
-    glGetActiveUniform(mProgram, GLuint(i), sizeof(name)-1, &name_len, &num, &type, name);
-    name[name_len] = 0;
-    GLuint location = glGetUniformLocation(mProgram, name);
+  // Enumerate Uniforms:
+  mDefaultState.InitWithProgram(this);
 
-    mUniformMap[name] = nuiUniformDesc(name, type, num, location);
+  // Enumerate Vertex Attributes:
+  {
+    int total = -1;
+    glGetProgramiv(mProgram, GL_ACTIVE_ATTRIBUTES, &total);
+    for (int i = 0; i < total; ++i)
+    {
+      int name_len = -1;
+      int num = -1;
+      GLenum type = GL_ZERO;
+      char name[100];
+      glGetActiveAttrib(mProgram, GLuint(i), sizeof(name)-1, &name_len, &num, &type, name);
+      name[name_len] = 0;
+      GLuint location = glGetAttribLocation(mProgram, name);
+
+      mAttribMap[name] = nuiVertexAttribDesc(name, type, num, location);
+    }
   }
 
-  GetState(mDefaultState);
+  mVA_Position = glGetAttribLocation(mProgram, "Position");
+  mVA_TexCoord = glGetAttribLocation(mProgram, "TexCoord");
+  mVA_Color = glGetAttribLocation(mProgram, "Color");
+
 
   return true;
 }
@@ -597,39 +664,42 @@ GLint nuiShaderProgram::GetProgram() const
 
 void nuiShaderProgram::GetState(nuiShaderState& rState) const
 {
-  std::map<nglString, nuiUniformDesc>::const_iterator it = mUniformMap.begin();
-  std::map<nglString, nuiUniformDesc>::const_iterator end = mUniformMap.end();
-
-  while (it != end)
-  {
-    const nuiUniformDesc& desc(it->second);
-
-    std::map<GLenum, std::pair<GLenum, GLint> >::const_iterator itt = gParamTypeMap.find(desc.mType);
-    std::vector<GLfloat> fval;
-    std::vector<GLint> ival;
-    if (itt != gParamTypeMap.end())
-    {
-      const std::pair<GLenum, GLint>& d(itt->second);
-      if (d.first == GL_FLOAT)
-      {
-        int size = d.second;
-        fval.resize(size);
-        glGetUniformfv(mProgram, desc.mLocation, &fval[0]);
-        rState.Set(desc.mName, &fval[0], size);
-      }
-      else if (d.first == GL_INT)
-      {
-        int size = d.second;
-        ival.resize(size);
-        glGetUniformiv(mProgram, desc.mLocation, &ival[0]);
-        rState.Set(desc.mName, &ival[0], size);
-      }
-    }
-    ++it;
-  }
+  rState = mDefaultState;
 }
 
 
+void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
+{
+  if (mVA_Position != -1)
+  {
+    glEnableVertexAttribArray(mVA_Position);
+    glVertexAttribPointer(mVA_Position, 2, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
+  }
+  else
+  {
+    glDisableVertexAttribArray(mVA_Position);
+  }
+
+  if (mVA_TexCoord != -1)
+  {
+    glEnableVertexAttribArray(mVA_TexCoord);
+    glVertexAttribPointer(mVA_TexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mTX);
+  }
+  else
+  {
+    glDisableVertexAttribArray(mVA_TexCoord);
+  }
+
+  if (mVA_Color != -1)
+  {
+    glEnableVertexAttribArray(mVA_Color);
+    glVertexAttribPointer(mVA_Color, 4, GL_BYTE, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
+  }
+  else
+  {
+    glDisableVertexAttribArray(mVA_Color);
+  }
+}
 
 
 const std::map<nglString, nuiUniformDesc>& nuiShaderProgram::GetUniforms() const
@@ -653,79 +723,5 @@ void nuiShaderProgram::BindAttribLocation(GLint index, GLchar* name)
 {
   glBindAttribLocation(mProgram, index, name);
 }
-
-//GLfloat
-void nuiShaderProgram::SetVertexAttrib1f(GLuint index, GLfloat v0)
-{
-  glVertexAttrib1f(index, v0);
-}
-
-void nuiShaderProgram::SetVertexAttrib2f(GLuint index, GLfloat v0, GLfloat v1)
-{
-  glVertexAttrib2f(index, v0, v1);
-}
-
-void nuiShaderProgram::SetVertexAttrib3f(GLuint index, GLfloat v0, GLfloat v1, GLfloat v2)
-{
-  glVertexAttrib3f(index, v0, v1, v2);
-}
-
-void nuiShaderProgram::SetVertexAttrib4f(GLuint index, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
-{
-  glVertexAttrib4f(index, v0, v1, v2, v3);
-}
-
-
-//GLdouble
-#ifndef GL_ES_VERSION_2_0
-void nuiShaderProgram::SetVertexAttrib1d(GLuint index, GLdouble v0)
-{
-  glVertexAttrib1d(index, v0);
-}
-
-void nuiShaderProgram::SetVertexAttrib2d(GLuint index, GLdouble v0, GLdouble v1)
-{
-  glVertexAttrib2d(index, v0, v1);
-}
-
-void nuiShaderProgram::SetVertexAttrib3d(GLuint index, GLdouble v0, GLdouble v1, GLdouble v2)
-{
-  glVertexAttrib3d(index, v0, v1, v2);
-}
-
-void nuiShaderProgram::SetVertexAttrib4d(GLuint index, GLdouble v0, GLdouble v1, GLdouble v2, GLdouble v3)
-{
-  glVertexAttrib4d(index, v0, v1, v2, v3);
-}
-
-
-//GLshort
-void nuiShaderProgram::SetVertexAttrib1s(GLuint index, GLshort v0)
-{
-  glVertexAttrib1s(index, v0);
-}
-
-void nuiShaderProgram::SetVertexAttrib2s(GLuint index, GLshort v0, GLshort v1)
-{
-  glVertexAttrib2s(index, v0, v1);
-}
-
-void nuiShaderProgram::SetVertexAttrib3s(GLuint index, GLshort v0, GLshort v1, GLshort v2)
-{
-  glVertexAttrib3s(index, v0, v1, v2);
-}
-
-void nuiShaderProgram::SetVertexAttrib4s(GLuint index, GLshort v0, GLshort v1, GLshort v2, GLshort v3)
-{
-  glVertexAttrib4s(index, v0, v1, v2, v3);
-}
-
-
-// Normalized Byte (for example for RGBA colors)
-void nuiShaderProgram::SetVertexAttribNormalizedByte(GLuint index, GLbyte v0, GLbyte v1, GLbyte v2, GLbyte v3)
-{
-  glVertexAttrib4Nub(index, v0, v1, v2, v3);
-}
-#endif
 
 

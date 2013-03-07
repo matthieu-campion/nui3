@@ -11,7 +11,7 @@
 //class nuiUniformDesc
 
 nuiUniformDesc::nuiUniformDesc()
-: mType(0), mCount(0), mLocation(-1)
+: mType(-1), mCount(-1), mLocation(-1)
 {
   mValues.mpFloats = NULL;
 }
@@ -51,6 +51,34 @@ nuiUniformDesc& nuiUniformDesc::operator=(const nuiUniformDesc& rDesc)
   mType = rDesc.mType;
   mCount = rDesc.mCount;
   mLocation = rDesc.mLocation;
+  switch (mType)
+  {
+    case GL_FLOAT:
+    case GL_FLOAT_VEC2:
+    case GL_FLOAT_VEC3:
+    case GL_FLOAT_VEC4:
+    case GL_FLOAT_MAT2:
+    case GL_FLOAT_MAT3:
+    case GL_FLOAT_MAT4:
+      delete[] mValues.mpFloats;
+      mValues.mpFloats = NULL;
+      break;
+
+    case GL_INT:
+    case GL_INT_VEC2:
+    case GL_INT_VEC3:
+    case GL_INT_VEC4:
+    case GL_UNSIGNED_INT:
+    case GL_SAMPLER_2D:
+    case GL_SAMPLER_CUBE:
+      delete[] mValues.mpInts;
+      mValues.mpInts = NULL;
+      break;
+
+    default:
+      NGL_ASSERT(0);
+  }
+
   {
     switch (mType)
     {
@@ -78,7 +106,7 @@ nuiUniformDesc& nuiUniformDesc::operator=(const nuiUniformDesc& rDesc)
   }
 }
 
-nuiUniformDesc::nuiUniformDesc(const nglString& rName, GLenum Type, int count, GLuint Location)
+nuiUniformDesc::nuiUniformDesc(const nglString& rName, GLenum Type, int count, GLuint Location, nuiShaderProgram* pProgram)
 : mName(rName), mType(Type), mCount(count), mLocation(Location)
 {
   switch (mType)
@@ -103,6 +131,35 @@ nuiUniformDesc::nuiUniformDesc(const nglString& rName, GLenum Type, int count, G
 
     default:
       NGL_ASSERT(0);
+  }
+
+  if (pProgram)
+  {
+    switch (mType)
+    {
+      case GL_FLOAT:
+      case GL_FLOAT_VEC2:
+      case GL_FLOAT_VEC3:
+      case GL_FLOAT_VEC4:
+      case GL_FLOAT_MAT2:
+      case GL_FLOAT_MAT3:
+      case GL_FLOAT_MAT4:
+        glGetUniformfv(pProgram->GetProgram(), mLocation, mValues.mpFloats);
+        break;
+
+      case GL_INT:
+      case GL_INT_VEC2:
+      case GL_INT_VEC3:
+      case GL_INT_VEC4:
+      case GL_UNSIGNED_INT:
+      case GL_SAMPLER_2D:
+      case GL_SAMPLER_CUBE:
+        glGetUniformiv(pProgram->GetProgram(), mLocation, mValues.mpInts);
+        break;
+
+      default:
+        NGL_ASSERT(0);
+    }
   }
 }
 
@@ -287,7 +344,7 @@ void nuiUniformDesc::Set(const nglMatrixf& rMat)
       Set(v, 9);
       break;
     case GL_FLOAT_MAT4:
-      Set(rMat.Array, 4);
+      Set(rMat.Array, 16);
       break;
     default :
       NGL_ASSERT(0);

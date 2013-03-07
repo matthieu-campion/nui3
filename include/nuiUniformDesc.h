@@ -8,13 +8,14 @@
 
 #pragma once
 
+class nuiShaderProgram;
 
 class nuiUniformDesc
 {
 public:
   nuiUniformDesc();
   nuiUniformDesc(const nuiUniformDesc& rDesc);
-  nuiUniformDesc(const nglString& rName, GLenum Type, int count, GLuint Location);
+  nuiUniformDesc(const nglString& rName, GLenum Type, int count, GLuint Location, nuiShaderProgram* pProgram = NULL);
 
   ~nuiUniformDesc();
 

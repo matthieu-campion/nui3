@@ -125,7 +125,6 @@ protected:
   nuiShaderProgram* mpDefaultShader;
 };
 
-bool nuiCheckForGLErrorsReal();
 #define nuiCheckForGLErrors() { NGL_ASSERT(nuiCheckForGLErrorsReal()); }
 
 #endif //   #ifndef __NUI_NO_GL__
