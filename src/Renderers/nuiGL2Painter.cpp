@@ -257,6 +257,8 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
   mpDefaultShader = new nuiShaderProgram();
   mpDefaultShader->Acquire();
   mpDefaultShader->LoadDefaultShaders();
+  mpDefaultShader->Link();
+  mpDefaultShader->GetDefaultState().Set("Color", nuiColor("white"));
 
 #ifdef _OPENGL_ES_
   //  mDefaultFramebuffer = 0;
@@ -460,7 +462,7 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   }
 
   // Shaders:
-  if (ForceApply || mFinalState.mpShader != rState.mpShader)
+  if (ForceApply || mFinalState.mpShader != rState.mpShader || !mFinalState.mpShader)
   {
     if (rState.mpShader)
       rState.mpShader->Acquire();
@@ -473,6 +475,7 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
     {
       mpDefaultShader->Acquire();
       mFinalState.mpShader = mpDefaultShader;
+      mFinalState.mShaderState = mpDefaultShader->GetDefaultState();
     }
 
     NGL_ASSERT(mFinalState.mpShader != NULL);
@@ -706,7 +709,7 @@ void nuiGL2Painter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       // Texture Target has changed
       if (outtarget)
       {
-        glDisable(outtarget);
+//        glDisable(outtarget);
         nuiCheckForGLErrors();
       }
       //NGL_OUT(_T("disable outtarget\n"));
@@ -714,7 +717,7 @@ void nuiGL2Painter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       {
         mFinalState.mTexturing = rState.mTexturing;
         //NGL_OUT(_T("enable intarget\n"));
-        glEnable(intarget);
+//        glEnable(intarget);
         nuiCheckForGLErrors();
       }
     }
@@ -727,12 +730,12 @@ void nuiGL2Painter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
         mFinalState.mTexturing = rState.mTexturing;
         if (mFinalState.mTexturing)
         {
-          glEnable(mTextureTarget);
+//          glEnable(mTextureTarget);
           nuiCheckForGLErrors();
         }
         else
         {
-          glDisable(mTextureTarget);
+//          glDisable(mTextureTarget);
           nuiCheckForGLErrors();
         }
       }
@@ -749,13 +752,13 @@ void nuiGL2Painter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       if (mTextureTarget && mFinalState.mTexturing)
       {
         //NGL_OUT(_T("Enable 0x%x\n"), mTextureTarget);
-        glEnable(mTextureTarget);
+//        glEnable(mTextureTarget);
         nuiCheckForGLErrors();
       }
       else
       {
         //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
-        glDisable(mTextureTarget);
+//        glDisable(mTextureTarget);
         nuiCheckForGLErrors();
       }
     }
@@ -764,7 +767,7 @@ void nuiGL2Painter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
       if (mTextureTarget)
       {
         //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
-        glDisable(mTextureTarget);
+//        glDisable(mTextureTarget);
       }
       nuiCheckForGLErrors();
     }
@@ -853,16 +856,13 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
 {
   mRenderOperations++;
   mBatches++;
-  
-  //glDisable(GL_TEXTURE_2D);
-  //glEnable(GL_TEXTURE_2D);
-  //glEnable(GL_TEXTURE_2D);
-  
+
   if (!mEnableDrawArray)
   {
     pArray->Release();
     return;
   }
+
   
   static uint32 ops = 0;
   static uint32 skipped_ops = 0;
@@ -918,32 +918,17 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       return;
     }
   }
-  //  else
-  //  {
-  //    nglVectorf v1(bounds[0], bounds[1], 0); // topleft(x, y)
-  //    nglVectorf v2(bounds[3], bounds[4], 0); // bottomright(x, y)
-  //    v1 = rM * v1;
-  //    v2 = rM * v2;
-  //    
-  //    if (
-  //        (v1[0] > mClip.Right()) ||
-  //        (v1[1] > mClip.Bottom()) ||
-  //        (v2[0] < mClip.Left()) ||
-  //        (v2[1] < mClip.Top())
-  //       )
-  //    {
-  //      return;
-  //    }
-  //  }
-  
+
+  mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), true);
+  mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), true);
+
   uint32 s = pArray->GetSize();
   
   total += s;
   totalinframe += s;
   mins = MIN(mins, s);
   maxs = MAX(maxs, s);
-  //printf("DA (%d) min = %d  max = %d\n", s, mins, maxs);
-  
+
   if (!s)
   {
     pArray->Release();
@@ -956,34 +941,14 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     return;
   }
   
-  //ApplyState(mState, mForceApply);
-  
   mVertices += s;
   GLenum mode = pArray->GetMode();
-  //NGL_OUT(_T("GL Array Mode: %d   vertice count %d\n"), mode, size);
-  
-  /*
-   switch (pArray->GetMode())
-   {
-   LOGENUM(GL_POINTS);
-   LOGENUM(GL_LINES);
-   LOGENUM(GL_LINE_LOOP);
-   LOGENUM(GL_LINE_STRIP);
-   //LOGENUM(GL_TRIANGLES);
-   LOGENUM(GL_TRIANGLE_STRIP);
-   LOGENUM(GL_TRIANGLE_FAN);
-   //LOGENUM(GL_QUADS);
-   LOGENUM(GL_QUAD_STRIP);
-   LOGENUM(GL_POLYGON);
-   }
-   */
-  
   
   NUI_RETURN_IF_RENDERING_DISABLED;
   
   if (mMatrixChanged)
   {
-    glLoadMatrixf(mMatrixStack.top().Array);
+    //glLoadMatrixf(mMatrixStack.top().Array);
     mMatrixChanged = false;
   }
   
@@ -993,7 +958,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   float hackY;
   if (NeedTranslateHack)
   {
-    //    const float ratio=0.5f;
     const float ratio = nuiGetInvScaleFactor() / 2.f;
 #ifdef _UIKIT_
     hackX = ratio;
@@ -1020,41 +984,15 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       hackY = 0;
     }
 #endif
-    glTranslatef(hackX, hackY, 0);
+    //glTranslatef(hackX, hackY, 0);
   }
-  
-  
-#ifdef NUI_USE_ANTIALIASING
-  if (mFinalState.mAntialiasing)
-  {
-#ifdef NUI_USE_MULTISAMPLE_AA
-    glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
-    glEnable(GL_MULTISAMPLE_ARB);
-    nuiCheckForGLErrors();
-#else
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-    BlendFuncSeparate(GL_SRC_ALPHA_SATURATE, GL_ONE);
-    nuiCheckForGLErrors();
-#endif
-  }
-#endif // NUI_USE_ANTIALIASING
-  
-//  if (pArray->IsArrayEnabled(nuiRenderArray::eVertex))
-//  {
-//    if (!mClientVertex)
-      glEnableClientState(GL_VERTEX_ARRAY);
-    mClientVertex = true;
-    glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mX);
-    nuiCheckForGLErrors();
-//  }
-//  else
-//  {
-//    if (mClientVertex)
-//      glDisableClientState(GL_VERTEX_ARRAY);
-//    mClientVertex = false;
-//  }
-  
+
+/*
+  glEnableClientState(GL_VERTEX_ARRAY);
+  mClientVertex = true;
+  glVertexPointer(3, GL_FLOAT, sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mX);
+  nuiCheckForGLErrors();
+
   float r = mR, g = mG, b = mB, a = mA;
   if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
@@ -1122,29 +1060,56 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     mClientTexCoord = false;
   }
-  
-  /*
-   if (pArray->IsArrayEnabled(nuiRenderArray::eNormal))
-   {
-   glEnableClientState(GL_NORMAL_ARRAY);
-   glNormalPointer(GL_FLOAT, sizeof(nuiRenderArray::Vertex)-12, &pArray->GetVertices()[0].mNX);
-   nuiCheckForGLErrors();
-   }
-   else
-   glDisableClientState(GL_NORMAL_ARRAY);
-   */
-  
-  /*
-   if (pArray->IsArrayEnabled(nuiRenderArray::eEdgeFlag))
-   {
-   glEnableClientState(GL_EDGE_FLAG_ARRAY);
-   glEdgeFlagPointer(sizeof(nuiRenderArray::Vertex), &pArray->GetVertices()[0].mEdgeFlag);
-   nuiCheckForGLErrors();
-   }
-   else
-   glDisableClientState(GL_EDGE_FLAG_ARRAY);
-   */
-  
+  */
+
+  mFinalState.mpShader->SetVertexPointers(*pArray);
+
+  float r = mR, g = mG, b = mB, a = mA;
+  if (!pArray->IsArrayEnabled(nuiRenderArray::eColor))
+  {
+    {
+//      if (mClientColor)
+//        glDisableClientState(GL_COLOR_ARRAY);
+      mClientColor = false;
+
+      nuiColor c;
+      switch (pArray->GetMode())
+      {
+        case GL_POINTS:
+        case GL_LINES:
+        case GL_LINE_LOOP:
+        case GL_LINE_STRIP:
+          c = mFinalState.mStrokeColor;
+          break;
+
+        case GL_TRIANGLES:
+        case GL_TRIANGLE_STRIP:
+        case GL_TRIANGLE_FAN:
+#ifndef _OPENGL_ES_
+        case GL_QUADS:
+        case GL_QUAD_STRIP:
+        case GL_POLYGON:
+#endif
+          c = mFinalState.mFillColor;
+          break;
+      }
+
+      r = c.Red();
+      g = c.Green();
+      b = c.Blue();
+      a = c.Alpha();
+      nuiCheckForGLErrors();
+    }
+
+    if (mR != r || mG != g || mB != b || mA != a)
+    {
+      mFinalState.mpShader->GetDefaultState().Set("Color", nuiColor(r, g, b, a), true);
+      mR = r;
+      mG = g;
+      mB = b;
+      mA = a;
+    }
+  }
   nuiCheckForGLErrors();
   
   if (mpSurface && mTwoPassBlend)
@@ -1216,26 +1181,10 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   }
   
   
-#ifdef NUI_USE_ANTIALIASING
-  if (mFinalState.mAntialiasing)
-  {
-#ifdef NUI_USE_MULTISAMPLE_AA
-    glDisable(GL_MULTISAMPLE_ARB);
-#else
-    glDisable(GL_POLYGON_SMOOTH);
-    glDisable(GL_BLEND);
-    BlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-#endif
-    nuiCheckForGLErrors();
-  }
-  else
-#endif // NUI_USE_ANTIALIASING
   {
     if (NeedTranslateHack)
       glTranslatef(-hackX, -hackY, 0);
   }
-  
-  //glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
   
   pArray->Release();
   nuiCheckForGLErrors();
@@ -1389,6 +1338,8 @@ void nuiGL2Painter::CreateTexture(nuiTexture* pTexture)
 
 void nuiGL2Painter::UploadTexture(nuiTexture* pTexture)
 {
+  glActiveTexture(GL_TEXTURE0);
+  
   nuiTexture* pProxy = pTexture->GetProxyTexture();
   if (pProxy)
     pTexture = pProxy;
@@ -1875,7 +1826,6 @@ void nuiGL2Painter::SetSurface(nuiSurface* pSurface)
         NGL_ASSERT(tex_it != mTextures.end());
         TextureInfo& tex_info(tex_it->second);
         
-        //        glBindTexture(GL_TEXTURE_2D, oldTexture);
         glBindTexture(GL_TEXTURE_2D, 0);
         
         nuiCheckForGLErrors();
@@ -1955,46 +1905,6 @@ void nuiGL2Painter::SetSurface(nuiSurface* pSurface)
     CheckFramebufferStatus();
 #endif
   }
-}
-
-bool nuiCheckForGLErrorsReal()
-{
-  GLenum err = GL_NO_ERROR;
-#if 1 // Globally enable/disable OpenGL error checking
-      //#ifdef _DEBUG_
-  bool error = false;
-  err = glGetError();
-  App->GetLog().SetLevel("nuiGL2Painter", 1000);
-  switch (err)
-  {
-      /*
-       case GL_NO_ERROR:
-       NGL_LOG(_T("nuiGL2Painter"), NGL_LOG_ERROR, "error has been recorded. The value of this symbolic constant is guaranteed to be zero.");
-       */
-      break;
-    case GL_INVALID_ENUM: 
-      NGL_LOG(_T("nuiGL2Painter"), NGL_LOG_ERROR, _T("An unacceptable value is specified for an enumerated argument. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_INVALID_VALUE: 
-      NGL_LOG(_T("nuiGL2Painter"), NGL_LOG_ERROR, _T("A numeric argument is out of range. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_INVALID_OPERATION:
-      NGL_LOG(_T("nuiGL2Painter"), NGL_LOG_ERROR, _T("The specified operation is not allowed in the current state. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_STACK_OVERFLOW:
-      NGL_LOG(_T("nuiGL2Painter"), NGL_LOG_ERROR, _T("This function would cause a stack overflow. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_STACK_UNDERFLOW:
-      NGL_LOG(_T("nuiGL2Painter"), NGL_LOG_ERROR, _T("This function would cause a stack underflow. The offending function is ignored, having no side effect other than to set the error flag."));
-      break;
-    case GL_OUT_OF_MEMORY:
-      NGL_LOG(_T("nuiGL2Painter"), NGL_LOG_ERROR, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
-      break;
-  }
-  //#endif
-#endif
-  
-  return err == GL_NO_ERROR;
 }
 
 

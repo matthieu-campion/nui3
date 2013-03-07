@@ -16,17 +16,8 @@ enum nuiShaderKind
   eFragmentShader = GL_FRAGMENT_SHADER
 };
 
-#define NUI_PROJECTION_MATRIX_NAME "gl_ProjectionMatrix"
-#define NUI_MODELVIEW_MATRIX_NAME "gl_ModelViewMatrix"
-
-enum nuiUniformType
-{
-  nuiUniformFloat,
-  nuiUniformDouble,
-  nuiUniformInt,
-  nuiUniformFMat,
-  nuiUniformDMat,
-};
+#define NUI_PROJECTION_MATRIX_NAME "ProjectionMatrix"
+#define NUI_MODELVIEW_MATRIX_NAME "ModelViewMatrix"
 
 class nuiShader;
 class nuiShaderProgram;
@@ -35,56 +26,57 @@ class nuiShaderProgram;
 class nuiShaderState : public nuiRefCount
 {
 public:
-  nuiShaderState();
   nuiShaderState(nuiShaderProgram* pProgram);
   nuiShaderState(const nuiShaderState& rOriginal);
   virtual ~nuiShaderState();
 
+  void InitWithProgram(nuiShaderProgram* pProgram);
+
   void Clear();
 
-  void Set(const nglString& rName, const float* pV, int32 count);
-  void Set(const nglString& rName, const std::vector<float>& rV);
+  void Set(const nglString& rName, const float* pV, int32 count, bool apply = false);
+  void Set(const nglString& rName, const std::vector<float>& rV, bool apply = false);
 
-  void Set(const nglString& rName, const int32* pV, int32 count);
-  void Set(const nglString& rName, const std::vector<int32>& rV);
+  void Set(const nglString& rName, const int32* pV, int32 count, bool apply = false);
+  void Set(const nglString& rName, const std::vector<int32>& rV, bool apply = false);
 
-  void Set(const nglString& rName, float v1);
-  void Set(const nglString& rName, float v1, float v2);
-  void Set(const nglString& rName, float v1, float v2, float v3);
-  void Set(const nglString& rName, float v1, float v2, float v3, float v4);
-  void Set(const nglString& rName, const nglVector2f& rVec);
-  void Set(const nglString& rName, const nglVector3f& rVec);
-  void Set(const nglString& rName, const nglVectorf& rVec);
-  void Set(const nglString& rName, const nuiColor& rColor);
-  void Set(const nglString& rName, int32 v1);
-  void Set(const nglString& rName, int32 v1, int32 v2);
-  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3);
-  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3, int32 v4);
-  void Set(const nglString& rName, const nglMatrixf& rMat);
+  void Set(const nglString& rName, float v1, bool apply = false);
+  void Set(const nglString& rName, float v1, float v2, bool apply = false);
+  void Set(const nglString& rName, float v1, float v2, float v3, bool apply = false);
+  void Set(const nglString& rName, float v1, float v2, float v3, float v4, bool apply = false);
+  void Set(const nglString& rName, const nglVector2f& rVec, bool apply = false);
+  void Set(const nglString& rName, const nglVector3f& rVec, bool apply = false);
+  void Set(const nglString& rName, const nglVectorf& rVec, bool apply = false);
+  void Set(const nglString& rName, const nuiColor& rColor, bool apply = false);
+  void Set(const nglString& rName, int32 v1, bool apply = false);
+  void Set(const nglString& rName, int32 v1, int32 v2, bool apply = false);
+  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3, bool apply = false);
+  void Set(const nglString& rName, int32 v1, int32 v2, int32 v3, int32 v4, bool apply = false);
+  void Set(const nglString& rName, const nglMatrixf& rMat, bool apply = false);
 
   ///
-  void Set(GLint loc, const float* pV, int32 count);
-  void Set(GLint loc, const std::vector<float>& rV);
+  void Set(GLint loc, const float* pV, int32 count, bool apply = false);
+  void Set(GLint loc, const std::vector<float>& rV, bool apply = false);
 
-  void Set(GLint loc, const int32* pV, int32 count);
-  void Set(GLint loc, const std::vector<int32>& rV);
+  void Set(GLint loc, const int32* pV, int32 count, bool apply = false);
+  void Set(GLint loc, const std::vector<int32>& rV, bool apply = false);
 
-  void Set(GLint loc, float v1);
-  void Set(GLint loc, float v1, float v2);
-  void Set(GLint loc, float v1, float v2, float v3);
-  void Set(GLint loc, float v1, float v2, float v3, float v4);
-  void Set(GLint loc, const nglVector2f& rVec);
-  void Set(GLint loc, const nglVector3f& rVec);
-  void Set(GLint loc, const nglVectorf& rVec);
-  void Set(GLint loc, const nuiColor& rColor);
-  void Set(GLint loc, int32 v1);
-  void Set(GLint loc, int32 v1, int32 v2);
-  void Set(GLint loc, int32 v1, int32 v2, int32 v3);
-  void Set(GLint loc, int32 v1, int32 v2, int32 v3, int32 v4);
-  void Set(GLint loc, const nglMatrixf& rMat);
+  void Set(GLint loc, float v1, bool apply = false);
+  void Set(GLint loc, float v1, float v2, bool apply = false);
+  void Set(GLint loc, float v1, float v2, float v3, bool apply = false);
+  void Set(GLint loc, float v1, float v2, float v3, float v4, bool apply = false);
+  void Set(GLint loc, const nglVector2f& rVec, bool apply = false);
+  void Set(GLint loc, const nglVector3f& rVec, bool apply = false);
+  void Set(GLint loc, const nglVectorf& rVec, bool apply = false);
+  void Set(GLint loc, const nuiColor& rColor, bool apply = false);
+  void Set(GLint loc, int32 v1, bool apply = false);
+  void Set(GLint loc, int32 v1, int32 v2, bool apply = false);
+  void Set(GLint loc, int32 v1, int32 v2, int32 v3, bool apply = false);
+  void Set(GLint loc, int32 v1, int32 v2, int32 v3, int32 v4, bool apply = false);
+  void Set(GLint loc, const nglMatrixf& rMat, bool apply = false);
 
-  void SetProjectionMatrix(const nglMatrixf& rMat);
-  void SetModelViewMatrix(const nglMatrixf& rMat);
+  void SetProjectionMatrix(const nglMatrixf& rMat, bool Apply);
+  void SetModelViewMatrix(const nglMatrixf& rMat, bool Apply);
 
   const GLfloat* GetFloat(const nglString& rName, int32& size) const;
   const GLint* GetInt(const nglString& rName, int32& size) const;
@@ -94,6 +86,7 @@ public:
   bool GetMatrix(GLint loc, nuiMatrix& rMatrix) const;
 
   bool operator == (const nuiShaderState& rState) const;
+  nuiShaderState& operator= (const nuiShaderState& rState);
 
   void Apply() const;
 
@@ -122,6 +115,7 @@ public:
   bool Link();
 
   const nuiShaderState& GetDefaultState() const;
+  nuiShaderState& GetDefaultState();
   void GetState(nuiShaderState& rState) const;
 
   GLint       GetUniformLocation(const char *name);  //!< Retrieve Location (index) of a Uniform Variable
@@ -174,36 +168,21 @@ protected:
   //! This method simply calls glBindAttribLocation for the current ProgramObject.
   void        BindAttribLocation(GLint index, GLchar* name);
 
-  //GLfloat
-  void        SetVertexAttrib1f(GLuint index, GLfloat v0); //!< Specify value of attribute.
-  void        SetVertexAttrib2f(GLuint index, GLfloat v0, GLfloat v1); //!< Specify value of attribute.
-  void        SetVertexAttrib3f(GLuint index, GLfloat v0, GLfloat v1, GLfloat v2); //!< Specify value of attribute.
-  void        SetVertexAttrib4f(GLuint index, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3); //!< Specify value of attribute.
-
-#ifndef GL_ES_VERSION_2_0
-  //GLdouble
-  void        SetVertexAttrib1d(GLuint index, GLdouble v0); //!< Specify value of attribute.
-  void        SetVertexAttrib2d(GLuint index, GLdouble v0, GLdouble v1); //!< Specify value of attribute.
-  void        SetVertexAttrib3d(GLuint index, GLdouble v0, GLdouble v1, GLdouble v2); //!< Specify value of attribute.
-  void        SetVertexAttrib4d(GLuint index, GLdouble v0, GLdouble v1, GLdouble v2, GLdouble v3); //!< Specify value of attribute.
-
-  //GLshort
-  void        SetVertexAttrib1s(GLuint index, GLshort v0); //!< Specify value of attribute.
-  void        SetVertexAttrib2s(GLuint index, GLshort v0, GLshort v1); //!< Specify value of attribute.
-  void        SetVertexAttrib3s(GLuint index, GLshort v0, GLshort v1, GLshort v2); //!< Specify value of attribute.
-  void        SetVertexAttrib4s(GLuint index, GLshort v0, GLshort v1, GLshort v2, GLshort v3); //!< Specify value of attribute.
-
-  // Normalized Byte (for example for RGBA colors)
-  void        SetVertexAttribNormalizedByte(GLuint index, GLbyte v0, GLbyte v1, GLbyte v2, GLbyte v3); //!< Specify value of attribute. Values will be normalized.
-#endif
+  friend class nuiGL2Painter;
+  void SetVertexPointers(const nuiRenderArray& rArray);
 
 private:
   void Init();
   GLuint mProgram;
 
   std::map<nglString, nuiUniformDesc> mUniformMap;
+  std::map<nglString, nuiVertexAttribDesc> mAttribMap;
   std::map<GLenum, nuiShader*> mShaders;
   nuiShaderState mDefaultState;
+
+  GLint mVA_Position;
+  GLint mVA_TexCoord;
+  GLint mVA_Color;
 
   static std::map<GLenum, std::pair<GLenum, GLint> > gParamTypeMap;
 };

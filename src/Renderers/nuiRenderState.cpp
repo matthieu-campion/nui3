@@ -9,6 +9,7 @@
 
 
 nuiRenderState::nuiRenderState()
+: mShaderState(NULL)
 {
   mBlending = false;
   mTexturing = false;
@@ -33,6 +34,7 @@ nuiRenderState::nuiRenderState()
 }
 
 nuiRenderState::nuiRenderState(const nuiRenderState& rState)
+: mShaderState(NULL)
 {
   mpTexture = NULL;
   mpShader = NULL;
