@@ -170,12 +170,14 @@ void glAAInit()
 
   glAASetContext();
 
+  /*
   glEnableClientState(GL_COLOR_ARRAY);
   glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &glAA_VAR[0].rgba);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
   glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &glAA_VAR[0].tx);
   glEnableClientState(GL_VERTEX_ARRAY);
   glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &glAA_VAR[0].x);
+   */
 
   // setup defaults
   glAA_old_mode = (GLenum)-1;

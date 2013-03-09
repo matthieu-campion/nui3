@@ -20,16 +20,17 @@ static const char* defaultVertexShader =
 "attribute vec4 Position;\n\
 attribute vec2 TexCoord;\n\
 attribute vec4 Color;\n\
+uniform vec4 DiffuseColor;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
+uniform vec4 Offset;\n\
 varying vec2 TexCoordVar;\n\
 varying vec4 ColorVar;\n\
 void main()\n\
 {\n\
-vec4 p = ModelViewMatrix * Position;\n\
-gl_Position = ProjectionMatrix * p;\n\
+gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 TexCoordVar = TexCoord;\n\
-ColorVar = Color;\n\
+ColorVar = DiffuseColor * Color;\n\
 }"
 ;
 
@@ -40,37 +41,13 @@ varying vec2 TexCoordVar;\n\
 void main()\n\
 {\n\
   vec4 _gl_FragColor = ColorVar * texture2D(texture, TexCoordVar);\n\
-  gl_FragColor = texture2D(texture, TexCoordVar);\n\
+  gl_FragColor = ColorVar * texture2D(texture, TexCoordVar);\n\
+  //float v = texture2D(texture, TexCoordVar)[3];\
+  //gl_FragColor = ColorVar * vec4(v, v, v, v);\n\
+  //gl_FragColor = ColorVar;\n\
 }"
 ;
 
-#if 0
-static const char* defaultVertexShader =
-"attribute vec4 Position;\n\
-attribute vec2 TexCoord;\n\
-attribute vec4 Color;\n\
-uniform mat4 ModelViewMatrix;\n\
-uniform mat4 ProjectionMatrix;\n\
-varying vec2 TexCoordVar;\n\
-varying vec4 ColorVar;\n\
-void main()\n\
-{\n\
-gl_Position = Position;\n\
-TexCoordVar = TexCoord;\n\
-ColorVar = Color;\n\
-}"
-;
-
-static const char* defaultFragmentShader =
-"uniform sampler2D texture;\n\
-varying vec4 ColorVar;\n\
-varying vec2 TexCoordVar;\n\
-void main()\n\
-{\n\
-gl_FragColor = ColorVar * texture2D( texture, TexCoordVar);\n\
-}"
-;
-#endif
 
 struct TypeDesc
 {
@@ -227,6 +204,34 @@ void nuiShaderState::Set(const nglString& rName, const nglMatrixf& rMat, bool Ap
   Set(loc, rMat, Apply);
 }
 
+static const char* Type2String(GLenum type)
+{
+  switch (type)
+  {
+    case GL_FLOAT:        return "float"; break;
+    case GL_FLOAT_VEC2:   return "vec2"; break;
+    case GL_FLOAT_VEC3:   return "vec3"; break;
+    case GL_FLOAT_VEC4:   return "vec4"; break;
+
+    case GL_INT:          return "int"; break;
+    case GL_INT_VEC2:     return "ivec2"; break;
+    case GL_INT_VEC3:     return "ivec3"; break;
+    case GL_INT_VEC4:     return "ivec4"; break;
+    case GL_UNSIGNED_INT: return "uint"; break;
+    case GL_SAMPLER_2D:   return "sampler2d"; break;
+    case GL_SAMPLER_CUBE: return "samplerCube"; break;
+
+    case GL_FLOAT_MAT2:   return "mat2"; break;
+    case GL_FLOAT_MAT3:   return "mat3"; break;
+    case GL_FLOAT_MAT4:   return "mat4"; break;
+
+    default:
+      NGL_ASSERT(0);
+  }
+
+  return "???";
+}
+
 void nuiShaderState::InitWithProgram(nuiShaderProgram* pProgram)
 {
   Clear();
@@ -248,6 +253,7 @@ void nuiShaderState::InitWithProgram(nuiShaderProgram* pProgram)
       name[name_len] = 0;
       GLuint location = glGetUniformLocation(pgm, name);
 
+      NGL_OUT("ShaderProgram %p Uniform:  %s %s[%d]\n", pProgram, Type2String(type), name , num);
       mUniforms.insert(std::make_pair(location, nuiUniformDesc(name, type, num, location, pProgram)));
     }
   }
@@ -698,7 +704,7 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
   if (mVA_Color != -1)
   {
     glEnableVertexAttribArray(mVA_Color);
-    glVertexAttribPointer(mVA_Color, 4, GL_BYTE, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
+    glVertexAttribPointer(mVA_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
   }
   else
   {
@@ -706,11 +712,6 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
   }
 }
 
-
-const std::map<nglString, nuiUniformDesc>& nuiShaderProgram::GetUniforms() const
-{
-  return mUniformMap;
-}
 
 // Receive Uniform variables:
 void nuiShaderProgram::GetUniformfv(GLint index, GLfloat* values)

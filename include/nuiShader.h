@@ -175,7 +175,6 @@ private:
   void Init();
   GLuint mProgram;
 
-  std::map<nglString, nuiUniformDesc> mUniformMap;
   std::map<nglString, nuiVertexAttribDesc> mAttribMap;
   std::map<GLenum, nuiShader*> mShaders;
   nuiShaderState mDefaultState;

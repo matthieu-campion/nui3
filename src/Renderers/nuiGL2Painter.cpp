@@ -21,6 +21,165 @@
 #define NUI_USE_MULTISAMPLE_AA
 #endif
 
+static const char* TextureVertexColor_VTX =
+"attribute vec4 Position;\n\
+attribute vec2 TexCoord;\n\
+attribute vec4 Color;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+uniform vec4 Offset;\n\
+varying vec2 TexCoordVar;\n\
+varying vec4 ColorVar;\n\
+void main()\n\
+{\n\
+TexCoordVar = TexCoord;\n\
+ColorVar = Color;\n\
+gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+}"
+;
+
+static const char* TextureVertexColor_FGT =
+"uniform sampler2D texture;\n\
+varying vec4 ColorVar;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+gl_FragColor = ColorVar * texture2D(texture, TexCoordVar);\n\
+}"
+;
+
+////////////////////////////////////////////////////////////////////////////////
+static const char* TextureAlphaVertexColor_VTX =
+"attribute vec4 Position;\n\
+attribute vec2 TexCoord;\n\
+attribute vec4 Color;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+uniform vec4 Offset;\n\
+varying vec2 TexCoordVar;\n\
+varying vec4 ColorVar;\n\
+void main()\n\
+{\n\
+TexCoordVar = TexCoord;\n\
+ColorVar = Color;\n\
+gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+}"
+;
+
+static const char* TextureAlphaVertexColor_FGT =
+"uniform sampler2D texture;\n\
+varying vec4 ColorVar;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+float v = texture2D(texture, TexCoordVar)[3];\
+gl_FragColor = ColorVar * v;\n\
+}"
+;
+
+//////////////////////////////////////////////////////////////////////////////////
+static const char* TextureDifuseColor_VTX =
+"attribute vec4 Position;\n\
+attribute vec2 TexCoord;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+uniform vec4 Offset;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+TexCoordVar = TexCoord;\n\
+gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+}"
+;
+
+static const char* TextureDifuseColor_FGT =
+"uniform sampler2D texture;\n\
+uniform vec4 DifuseColor;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+gl_FragColor = DifuseColor * texture2D(texture, TexCoordVar);\n\
+//gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);\n\
+}"
+;
+
+//////////////////////////////////////////////////////////////////////////////////
+static const char* TextureAlphaDifuseColor_VTX =
+"attribute vec4 Position;\n\
+attribute vec2 TexCoord;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+uniform vec4 Offset;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+TexCoordVar = TexCoord;\n\
+gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+}"
+;
+
+static const char* TextureAlphaDifuseColor_FGT =
+"uniform sampler2D texture;\n\
+uniform vec4 DifuseColor;\n\
+varying vec2 TexCoordVar;\n\
+void main()\n\
+{\n\
+float v = texture2D(texture, TexCoordVar)[3];\
+gl_FragColor = DifuseColor * vec4(v, v, v, v);\n\
+//gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);\n\
+}"
+;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// No texture cases:
+static const char* VertexColor_VTX =
+"attribute vec4 Position;\n\
+attribute vec4 Color;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+uniform vec4 Offset;\n\
+varying vec4 ColorVar;\n\
+void main()\n\
+{\n\
+ColorVar = Color;\n\
+gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+}"
+;
+
+static const char* VertexColor_FGT =
+"uniform sampler2D texture;\n\
+varying vec4 ColorVar;\n\
+void main()\n\
+{\n\
+gl_FragColor = ColorVar;\n\
+//gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n\
+}"
+;
+
+//////////////////////////////////////////////////////////////////////////////////
+static const char* DifuseColor_VTX =
+"attribute vec4 Position;\n\
+uniform mat4 ModelViewMatrix;\n\
+uniform mat4 ProjectionMatrix;\n\
+uniform vec4 Offset;\n\
+void main()\n\
+{\n\
+gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+}"
+;
+
+static const char* DifuseColor_FGT =
+"uniform sampler2D texture;\n\
+uniform vec4 DifuseColor;\n\
+void main()\n\
+{\n\
+gl_FragColor = DifuseColor;\n\
+//gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n\
+}"
+;
+
+
+
 
 #ifdef _OPENGL_ES_
 
@@ -254,11 +413,50 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
     nuiCheckForGLErrors();
   }
 
-  mpDefaultShader = new nuiShaderProgram();
-  mpDefaultShader->Acquire();
-  mpDefaultShader->LoadDefaultShaders();
-  mpDefaultShader->Link();
-  mpDefaultShader->GetDefaultState().Set("Color", nuiColor("white"));
+  mpShader_TextureVertexColor = new nuiShaderProgram();
+  mpShader_TextureVertexColor->Acquire();
+  mpShader_TextureVertexColor->AddShader(eVertexShader, TextureVertexColor_VTX);
+  mpShader_TextureVertexColor->AddShader(eFragmentShader, TextureVertexColor_FGT);
+  mpShader_TextureVertexColor->Link();
+  mpShader_TextureVertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
+
+  mpShader_TextureAlphaVertexColor = new nuiShaderProgram();
+  mpShader_TextureAlphaVertexColor->Acquire();
+  mpShader_TextureAlphaVertexColor->AddShader(eVertexShader, TextureAlphaVertexColor_VTX);
+  mpShader_TextureAlphaVertexColor->AddShader(eFragmentShader, TextureAlphaVertexColor_FGT);
+  mpShader_TextureAlphaVertexColor->Link();
+  mpShader_TextureAlphaVertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
+
+  mpShader_TextureDifuseColor = new nuiShaderProgram();
+  mpShader_TextureDifuseColor->Acquire();
+  mpShader_TextureDifuseColor->AddShader(eVertexShader, TextureDifuseColor_VTX);
+  mpShader_TextureDifuseColor->AddShader(eFragmentShader, TextureDifuseColor_FGT);
+  mpShader_TextureDifuseColor->Link();
+  mpShader_TextureDifuseColor->GetDefaultState().Set("DiffuseColor", nuiColor(255, 255, 255, 255));
+  mpShader_TextureDifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
+
+  mpShader_TextureAlphaDifuseColor = new nuiShaderProgram();
+  mpShader_TextureAlphaDifuseColor->Acquire();
+  mpShader_TextureAlphaDifuseColor->AddShader(eVertexShader, TextureAlphaDifuseColor_VTX);
+  mpShader_TextureAlphaDifuseColor->AddShader(eFragmentShader, TextureAlphaDifuseColor_FGT);
+  mpShader_TextureAlphaDifuseColor->Link();
+  mpShader_TextureAlphaDifuseColor->GetDefaultState().Set("DiffuseColor", nuiColor(255, 255, 255, 255));
+  mpShader_TextureAlphaDifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
+
+  mpShader_VertexColor = new nuiShaderProgram();
+  mpShader_VertexColor->Acquire();
+  mpShader_VertexColor->AddShader(eVertexShader, VertexColor_VTX);
+  mpShader_VertexColor->AddShader(eFragmentShader, VertexColor_FGT);
+  mpShader_VertexColor->Link();
+  mpShader_VertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
+
+  mpShader_DifuseColor = new nuiShaderProgram();
+  mpShader_DifuseColor->Acquire();
+  mpShader_DifuseColor->AddShader(eVertexShader, DifuseColor_VTX);
+  mpShader_DifuseColor->AddShader(eFragmentShader, DifuseColor_FGT);
+  mpShader_DifuseColor->Link();
+  mpShader_DifuseColor->GetDefaultState().Set("DiffuseColor", nuiColor(255, 255, 255, 255));
+  mpShader_DifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
 
 #ifdef _OPENGL_ES_
   //  mDefaultFramebuffer = 0;
@@ -273,7 +471,12 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
 nuiGL2Painter::~nuiGL2Painter()
 {
   mActiveContexts--;
-  mpDefaultShader->Release();
+  mpShader_TextureVertexColor->Release();
+  mpShader_TextureDifuseColor->Release();
+  mpShader_TextureAlphaVertexColor->Release();
+  mpShader_TextureAlphaDifuseColor->Release();
+  mpShader_DifuseColor->Release();
+  mpShader_VertexColor->Release();
   if (mActiveContexts == 0)
     glAAExit();
 }
@@ -328,22 +531,22 @@ void nuiGL2Painter::SetViewport()
   
   nuiCheckForGLErrors();
   
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
+//  glMatrixMode(GL_PROJECTION);
+//  glLoadIdentity();
   //glScalef(nuiGetScaleFactor(), nuiGetScaleFactor(), 1.0f);
-  if (Angle != 0.0f)
-  {
-    glRotatef(Angle, 0.f,0.f,1.f);
-    glMultMatrixf(rMatrix.Array);
-  }
-  else
-  {
-    glLoadMatrixf(rMatrix.Array);
-  }
-  
+//  if (Angle != 0.0f)
+//  {
+//    glRotatef(Angle, 0.f,0.f,1.f);
+//    glMultMatrixf(rMatrix.Array);
+//  }
+//  else
+//  {
+//    glLoadMatrixf(rMatrix.Array);
+//  }
+
   nuiCheckForGLErrors();
   
-  glMatrixMode (GL_MODELVIEW);
+//  glMatrixMode (GL_MODELVIEW);
   nuiCheckForGLErrors();
 }
 
@@ -362,7 +565,7 @@ void nuiGL2Painter::StartRendering()
   nuiPainter::StartRendering();
   
   SetViewport();
-  glLoadIdentity();
+//  glLoadIdentity();
   
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_SCISSOR_TEST);
@@ -384,25 +587,25 @@ void nuiGL2Painter::StartRendering()
   BlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
   
   //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
-  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
-  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_MODULATE);
+//  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
+//  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_MODULATE);
+//  
+//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_TEXTURE);
+//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_ALPHA, GL_TEXTURE);
+//  
+//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_PRIMARY_COLOR);
+//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_ALPHA, GL_PRIMARY_COLOR);
+//  
+//  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_ALPHA);
+// 	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
+//  
+//  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
+//  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA);
+
   
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_TEXTURE);
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_ALPHA, GL_TEXTURE);
-  
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_PRIMARY_COLOR);
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_ALPHA, GL_PRIMARY_COLOR);
-  
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_ALPHA);
- 	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
-  
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA);
-  
-  
-  glDisableClientState(GL_VERTEX_ARRAY);
-  glDisableClientState(GL_COLOR_ARRAY);
-  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+//  glDisableClientState(GL_VERTEX_ARRAY);
+//  glDisableClientState(GL_COLOR_ARRAY);
+//  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
   mClientVertex = false;
   mClientColor = false;
   mClientTexCoord = false;
@@ -422,30 +625,6 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   NUI_RETURN_IF_RENDERING_DISABLED;
   //ForceApply = true;
   nuiCheckForGLErrors();
-
-  // Shaders:
-  if (ForceApply || mFinalState.mpShader != rState.mpShader || !mFinalState.mpShader)
-  {
-    if (rState.mpShader)
-      rState.mpShader->Acquire();
-    if (mFinalState.mpShader)
-      mFinalState.mpShader->Release();
-
-    mFinalState.mpShader = rState.mpShader;
-
-    if (mFinalState.mpShader == NULL)
-    {
-      mpDefaultShader->Acquire();
-      mFinalState.mpShader = mpDefaultShader;
-      mFinalState.mShaderState = mpDefaultShader->GetDefaultState();
-    }
-
-    NGL_ASSERT(mFinalState.mpShader != NULL);
-
-    glUseProgram(mpDefaultShader->GetProgram());
-
-    mFinalState.mShaderState.Apply();
-  }
 
   // blending
   if (ForceApply || mFinalState.mBlending != rState.mBlending)
@@ -595,7 +774,7 @@ void nuiGL2Painter::SetState(const nuiRenderState& rState, bool ForceApply)
   
   mState = rState;
   mForceApply |= ForceApply;
-  ApplyState(rState, ForceApply);
+  //ApplyState(rState, ForceApply);
 }
 
 void nuiGL2Painter::SetSize(uint32 w, uint32 h)
@@ -919,8 +1098,69 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     }
   }
 
-  mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), true);
-  mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), true);
+  // Shader selection:
+  if (mForceApply || mFinalState.mpShader != mState.mpShader || !mFinalState.mpShader)
+  {
+    if (mState.mpShader)
+      mState.mpShader->Acquire();
+    if (mFinalState.mpShader)
+      mFinalState.mpShader->Release();
+
+    mFinalState.mpShader = mState.mpShader;
+
+    if (mFinalState.mpShader == NULL)
+    {
+      nuiShaderProgram* pShader = NULL;
+      if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
+      {
+        // Vertex Colors is on
+        if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
+        {
+          // texture on
+          if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
+            pShader = mpShader_TextureAlphaVertexColor;
+          else
+            pShader = mpShader_TextureVertexColor;
+        }
+        else
+        {
+          pShader = mpShader_VertexColor;
+        }
+      }
+      else
+      {
+        // Vertex color off -> Difuse Color
+        if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
+        {
+          // texture on
+          if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
+            pShader = mpShader_TextureAlphaDifuseColor;
+          else
+            pShader = mpShader_TextureDifuseColor;
+        }
+        else
+        {
+          pShader = mpShader_DifuseColor;
+        }
+      }
+
+      pShader->Acquire();
+      mFinalState.mpShader = pShader;
+      mFinalState.mShaderState = pShader->GetDefaultState();
+    }
+
+    NGL_ASSERT(mFinalState.mpShader != NULL);
+
+    glUseProgram(mFinalState.mpShader->GetProgram());
+
+  }
+
+  mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), false);
+  mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), false);
+  mFinalState.mShaderState.Apply();
+
+  ApplyState(mState, mForceApply);
+
 
   uint32 s = pArray->GetSize();
   
@@ -985,7 +1225,12 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     }
 #endif
 
+    mFinalState.mpShader->GetDefaultState().Set("Offset", hackX, hackY, true);
     //glTranslatef(hackX, hackY, 0);
+  }
+  else
+  {
+    mFinalState.mpShader->GetDefaultState().Set("Offset", 0.0f, 0.0f, true);
   }
 
   mFinalState.mpShader->SetVertexPointers(*pArray);
@@ -1009,11 +1254,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
         case GL_TRIANGLES:
         case GL_TRIANGLE_STRIP:
         case GL_TRIANGLE_FAN:
-#ifndef _OPENGL_ES_
-        case GL_QUADS:
-        case GL_QUAD_STRIP:
-        case GL_POLYGON:
-#endif
           c = mFinalState.mFillColor;
           break;
       }
@@ -1025,9 +1265,9 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       nuiCheckForGLErrors();
     }
 
-    if (mR != r || mG != g || mB != b || mA != a)
+    //if (mR != r || mG != g || mB != b || mA != a)
     {
-      mFinalState.mpShader->GetDefaultState().Set("Color", nuiColor(r, g, b, a), true);
+      mFinalState.mpShader->GetDefaultState().Set("DifuseColor", nuiColor(r, g, b, a), true);
       mR = r;
       mG = g;
       mB = b;

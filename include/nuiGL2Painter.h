@@ -122,7 +122,12 @@ protected:
   
   uint32 mViewPort[4];
 
-  nuiShaderProgram* mpDefaultShader;
+  nuiShaderProgram* mpShader_TextureVertexColor;
+  nuiShaderProgram* mpShader_TextureAlphaVertexColor;
+  nuiShaderProgram* mpShader_TextureDifuseColor;
+  nuiShaderProgram* mpShader_TextureAlphaDifuseColor;
+  nuiShaderProgram* mpShader_DifuseColor;
+  nuiShaderProgram* mpShader_VertexColor;
 };
 
 #define nuiCheckForGLErrors() { NGL_ASSERT(nuiCheckForGLErrorsReal()); }
