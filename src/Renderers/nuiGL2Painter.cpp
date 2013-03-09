@@ -413,47 +413,53 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
     nuiCheckForGLErrors();
   }
 
+#ifdef _OPENGL_ES_
+  nglString pre = "precision mediump float;\n";
+#else
+  nglString pre;
+#endif
+
   mpShader_TextureVertexColor = new nuiShaderProgram();
   mpShader_TextureVertexColor->Acquire();
-  mpShader_TextureVertexColor->AddShader(eVertexShader, TextureVertexColor_VTX);
-  mpShader_TextureVertexColor->AddShader(eFragmentShader, TextureVertexColor_FGT);
+  mpShader_TextureVertexColor->AddShader(eVertexShader, pre + TextureVertexColor_VTX);
+  mpShader_TextureVertexColor->AddShader(eFragmentShader, pre + TextureVertexColor_FGT);
   mpShader_TextureVertexColor->Link();
   mpShader_TextureVertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
 
   mpShader_TextureAlphaVertexColor = new nuiShaderProgram();
   mpShader_TextureAlphaVertexColor->Acquire();
-  mpShader_TextureAlphaVertexColor->AddShader(eVertexShader, TextureAlphaVertexColor_VTX);
-  mpShader_TextureAlphaVertexColor->AddShader(eFragmentShader, TextureAlphaVertexColor_FGT);
+  mpShader_TextureAlphaVertexColor->AddShader(eVertexShader, pre + TextureAlphaVertexColor_VTX);
+  mpShader_TextureAlphaVertexColor->AddShader(eFragmentShader, pre + TextureAlphaVertexColor_FGT);
   mpShader_TextureAlphaVertexColor->Link();
   mpShader_TextureAlphaVertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
 
   mpShader_TextureDifuseColor = new nuiShaderProgram();
   mpShader_TextureDifuseColor->Acquire();
-  mpShader_TextureDifuseColor->AddShader(eVertexShader, TextureDifuseColor_VTX);
-  mpShader_TextureDifuseColor->AddShader(eFragmentShader, TextureDifuseColor_FGT);
+  mpShader_TextureDifuseColor->AddShader(eVertexShader, pre + TextureDifuseColor_VTX);
+  mpShader_TextureDifuseColor->AddShader(eFragmentShader, pre + TextureDifuseColor_FGT);
   mpShader_TextureDifuseColor->Link();
   mpShader_TextureDifuseColor->GetDefaultState().Set("DiffuseColor", nuiColor(255, 255, 255, 255));
   mpShader_TextureDifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
 
   mpShader_TextureAlphaDifuseColor = new nuiShaderProgram();
   mpShader_TextureAlphaDifuseColor->Acquire();
-  mpShader_TextureAlphaDifuseColor->AddShader(eVertexShader, TextureAlphaDifuseColor_VTX);
-  mpShader_TextureAlphaDifuseColor->AddShader(eFragmentShader, TextureAlphaDifuseColor_FGT);
+  mpShader_TextureAlphaDifuseColor->AddShader(eVertexShader, pre + TextureAlphaDifuseColor_VTX);
+  mpShader_TextureAlphaDifuseColor->AddShader(eFragmentShader, pre + TextureAlphaDifuseColor_FGT);
   mpShader_TextureAlphaDifuseColor->Link();
   mpShader_TextureAlphaDifuseColor->GetDefaultState().Set("DiffuseColor", nuiColor(255, 255, 255, 255));
   mpShader_TextureAlphaDifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
 
   mpShader_VertexColor = new nuiShaderProgram();
   mpShader_VertexColor->Acquire();
-  mpShader_VertexColor->AddShader(eVertexShader, VertexColor_VTX);
-  mpShader_VertexColor->AddShader(eFragmentShader, VertexColor_FGT);
+  mpShader_VertexColor->AddShader(eVertexShader, pre + VertexColor_VTX);
+  mpShader_VertexColor->AddShader(eFragmentShader, pre + VertexColor_FGT);
   mpShader_VertexColor->Link();
   mpShader_VertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
 
   mpShader_DifuseColor = new nuiShaderProgram();
   mpShader_DifuseColor->Acquire();
-  mpShader_DifuseColor->AddShader(eVertexShader, DifuseColor_VTX);
-  mpShader_DifuseColor->AddShader(eFragmentShader, DifuseColor_FGT);
+  mpShader_DifuseColor->AddShader(eVertexShader, pre + DifuseColor_VTX);
+  mpShader_DifuseColor->AddShader(eFragmentShader, pre + DifuseColor_FGT);
   mpShader_DifuseColor->Link();
   mpShader_DifuseColor->GetDefaultState().Set("DiffuseColor", nuiColor(255, 255, 255, 255));
   mpShader_DifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
@@ -569,15 +575,6 @@ void nuiGL2Painter::StartRendering()
   
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_SCISSOR_TEST);
-  glDisable(GL_TEXTURE_2D);
-  
-#ifndef _OPENGL_ES_
-  if (mCanRectangleTexture == 2)
-  {
-    glDisable(GL_TEXTURE_RECTANGLE_ARB);
-  }
-#endif
-  
   glDisable(GL_STENCIL_TEST);
   glDisable(GL_BLEND);
   glDisable(GL_ALPHA_TEST);

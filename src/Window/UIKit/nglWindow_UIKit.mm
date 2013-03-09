@@ -782,8 +782,13 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     
 		//self.clearsContextBeforeDrawing = TRUE;
 
-    EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES1;
-    //EAGLRenderingAPI glAPI = kEAGLRenderingAPIOpenGLES2;
+    EAGLRenderingAPI glAPI;
+    if (nuiMainWindow::GetRenderer() == eOpenGL)
+      glAPI = kEAGLRenderingAPIOpenGLES1;
+    else if (nuiMainWindow::GetRenderer() == eOpenGL2)
+      glAPI = kEAGLRenderingAPIOpenGLES2;
+
+    NGL_ASSERT(glAPI != NULL);
 
     if (group)
       context = [[EAGLContext alloc] initWithAPI:glAPI sharegroup: group];
