@@ -686,19 +686,11 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
     glEnableVertexAttribArray(mVA_Position);
     glVertexAttribPointer(mVA_Position, 2, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
   }
-  else
-  {
-    glDisableVertexAttribArray(mVA_Position);
-  }
 
   if (mVA_TexCoord != -1)
   {
     glEnableVertexAttribArray(mVA_TexCoord);
     glVertexAttribPointer(mVA_TexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mTX);
-  }
-  else
-  {
-    glDisableVertexAttribArray(mVA_TexCoord);
   }
 
   if (mVA_Color != -1)
@@ -706,7 +698,21 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
     glEnableVertexAttribArray(mVA_Color);
     glVertexAttribPointer(mVA_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
   }
-  else
+}
+
+void nuiShaderProgram::ResetVertexPointers(const nuiRenderArray& rArray)
+{
+  if (mVA_Position != -1)
+  {
+    glDisableVertexAttribArray(mVA_Position);
+  }
+
+  if (mVA_TexCoord != -1)
+  {
+    glDisableVertexAttribArray(mVA_TexCoord);
+  }
+
+  if (mVA_Color != -1)
   {
     glDisableVertexAttribArray(mVA_Color);
   }

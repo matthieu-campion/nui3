@@ -28,11 +28,13 @@ attribute vec4 Color;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
+uniform vec2 TextureTranslate;\n\
+uniform vec2 TextureScale;\n\
 varying vec2 TexCoordVar;\n\
 varying vec4 ColorVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = TexCoord;\n\
+TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
 ColorVar = Color;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
@@ -56,11 +58,13 @@ attribute vec4 Color;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
+uniform vec2 TextureTranslate;\n\
+uniform vec2 TextureScale;\n\
 varying vec2 TexCoordVar;\n\
 varying vec4 ColorVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = TexCoord;\n\
+TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
 ColorVar = Color;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
@@ -68,6 +72,8 @@ gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 
 static const char* TextureAlphaVertexColor_FGT =
 "uniform sampler2D texture;\n\
+uniform vec2 TextureTranslate;\n\
+uniform vec2 TextureScale;\n\
 varying vec4 ColorVar;\n\
 varying vec2 TexCoordVar;\n\
 void main()\n\
@@ -84,10 +90,12 @@ attribute vec2 TexCoord;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
+uniform vec2 TextureTranslate;\n\
+uniform vec2 TextureScale;\n\
 varying vec2 TexCoordVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = TexCoord;\n\
+TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
@@ -110,10 +118,12 @@ attribute vec2 TexCoord;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
+uniform vec2 TextureTranslate;\n\
+uniform vec2 TextureScale;\n\
 varying vec2 TexCoordVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = TexCoord;\n\
+TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
@@ -1152,6 +1162,12 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
 
   }
 
+  if (mFinalState.mpTexture && pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
+  {
+    mFinalState.mpShader->GetDefaultState().Set("TextureTranslate", mTextureTranslate, true);
+    mFinalState.mpShader->GetDefaultState().Set("TextureScale", mTextureScale, true);
+  }
+
   mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), false);
   mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), false);
   mFinalState.mShaderState.Apply();
@@ -1346,7 +1362,8 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     if (NeedTranslateHack)
       glTranslatef(-hackX, -hackY, 0);
   }
-  
+
+  mFinalState.mpShader->ResetVertexPointers(*pArray);
   pArray->Release();
   nuiCheckForGLErrors();
 }
@@ -1765,11 +1782,6 @@ void nuiGL2Painter::UploadTexture(nuiTexture* pTexture)
     nuiCheckForGLErrors();
   }
   
-  glMatrixMode(GL_TEXTURE);
-  nuiCheckForGLErrors();
-  glLoadIdentity();
-  nuiCheckForGLErrors();
-  
   uint32 rectangle = GetRectangleTextureSupport();
   nuiCheckForGLErrors();
   
@@ -1790,18 +1802,12 @@ void nuiGL2Painter::UploadTexture(nuiTexture* pTexture)
   
   if (pSurface)
   {
-    glTranslatef(0, ry, 0);
+    mTextureTranslate = nglVector2f(0.0f, ry);
     ry = -ry;    
   }
   
-#ifndef _OPENGL_ES_
-  glScaled(rx, ry, 1);
-#else
-  glScalef((float)rx, (float)ry, 1);
-#endif
-  nuiCheckForGLErrors();
-  
-  glMatrixMode(GL_MODELVIEW);
+  mTextureScale = nglVector2f(rx, ry);
+
   nuiCheckForGLErrors();
 }
 

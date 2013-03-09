@@ -39,6 +39,7 @@ enum nglTargetAPI
 {
   eTargetAPI_None,
   eTargetAPI_OpenGL,
+  eTargetAPI_OpenGL2,
 #ifdef _WIN32_
   eTargetAPI_Direct3D // This one is only valid under win32
 #else

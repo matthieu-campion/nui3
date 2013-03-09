@@ -803,7 +803,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   NGL_LOG(_T("window"), NGL_LOG_INFO, _T("trying to create GLES context"));
   rContext.Dump(NGL_LOG_INFO);
   
-  if (rContext.TargetAPI != eTargetAPI_OpenGL)
+  if (rContext.TargetAPI != eTargetAPI_OpenGL && rContext.TargetAPI != eTargetAPI_OpenGL2)
   {
     // UIKit Implementation only supports OpenGLES renderer so far
     NGL_LOG(_T("window"), NGL_LOG_INFO, _T("bad renderer"));

@@ -98,6 +98,8 @@ nuiMainWindow::nuiMainWindow(uint Width, uint Height, bool Fullscreen, const ngl
   nuiDefaultDecoration::MainWindow(this);
   
   mMainWinSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiMainWindow::InvalidateTimer);
+
+  GetDrawContext();
 }
 
 nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindowInfo& rInfo, const nglContext* pShared, const nglPath& rResPath)
@@ -142,6 +144,8 @@ nuiMainWindow::nuiMainWindow(const nglContextInfo& rContextInfo, const nglWindow
   nuiDefaultDecoration::MainWindow(this);  
 
   mMainWinSink.Connect(nuiAnimation::AcquireTimer()->Tick, &nuiMainWindow::InvalidateTimer);
+
+  GetDrawContext();
 }
 
 nuiMainWindow::~nuiMainWindow()

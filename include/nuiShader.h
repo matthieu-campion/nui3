@@ -170,6 +170,7 @@ protected:
 
   friend class nuiGL2Painter;
   void SetVertexPointers(const nuiRenderArray& rArray);
+  void ResetVertexPointers(const nuiRenderArray& rArray);
 
 private:
   void Init();

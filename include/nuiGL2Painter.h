@@ -128,6 +128,10 @@ protected:
   nuiShaderProgram* mpShader_TextureAlphaDifuseColor;
   nuiShaderProgram* mpShader_DifuseColor;
   nuiShaderProgram* mpShader_VertexColor;
+
+  nglVector2f mTextureTranslate;
+  nglVector2f mTextureScale;
+
 };
 
 #define nuiCheckForGLErrors() { NGL_ASSERT(nuiCheckForGLErrorsReal()); }
