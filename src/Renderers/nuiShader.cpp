@@ -704,7 +704,7 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
   if (mVA_Color != -1)
   {
     glEnableVertexAttribArray(mVA_Color);
-    glVertexAttribPointer(mVA_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
+    glVertexAttribPointer(mVA_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
   }
   else
   {
