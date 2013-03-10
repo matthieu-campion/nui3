@@ -205,8 +205,8 @@ float nuiGetInvScaleFactor()
 
 
 /* default initializer for descendents of NSView */
-- (id)initWithFrame:(NSRect)frame {
-  
+- (id)initWithFrame:(NSRect)frame andSharedContext:(NSOpenGLContext*)contextToShare
+{
   self = [super initWithFrame:frame];
   if(self == nil)
     return nil;
@@ -228,7 +228,7 @@ float nuiGetInvScaleFactor()
   };
   NSOpenGLPixelFormat* format = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
   
-  oglContext = [[NSOpenGLContext alloc] initWithFormat: format shareContext: nil];
+  oglContext = [[NSOpenGLContext alloc] initWithFormat: format shareContext: contextToShare];
   GLint v = 1;
   [oglContext setValues:&v forParameter:NSOpenGLCPSwapInterval];
   [oglContext setView:self];
@@ -313,7 +313,7 @@ float nuiGetInvScaleFactor()
 //}
 
 
-- (id) initWithFrame: (NSRect) rect andNGLWindow: (nglWindow*) pNGLWindow
+- (id) initWithFrame: (NSRect) rect andNGLWindow: (nglWindow*) pNGLWindow andSharedContext:(NSOpenGLContext*)sharedContext
 {
   mModifiers = 0;
 
@@ -343,7 +343,7 @@ float nuiGetInvScaleFactor()
   glrect.size.width = 320;
   glrect.size.height = 240;
   
-  customGLView* pView = [[[customGLView alloc] initWithFrame: glrect] autorelease];
+  customGLView* pView = [[[customGLView alloc] initWithFrame: glrect andSharedContext:sharedContext] autorelease];
   [self setContentView: pView];
   [self setDelegate: pView];
   
@@ -790,9 +790,14 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
       break;
   }
   
-
+  NSOpenGLContext* ctx = nil;
+  if (pShared)
+  {
+    nglNSWindow* pSharedWindow = (nglNSWindow*)((nglWindow*)pShared)->mpNSWindow;
+    ctx = [[pSharedWindow contentView] getContext];
+  }
   // Create the actual window
-  nglNSWindow* pNSWindow = [[nglNSWindow alloc] initWithFrame:rect andNGLWindow: this];
+  nglNSWindow* pNSWindow = [[nglNSWindow alloc] initWithFrame:rect andNGLWindow: this andSharedContext:ctx];
 
   mOSInfo.mpNSWindow = pNSWindow;
   mpNSWindow = pNSWindow;
