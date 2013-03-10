@@ -110,9 +110,6 @@ protected:
   GLenum mDstAlpha;
 
   // Local cache:
-  bool mClientVertex;
-  bool mClientColor;
-  bool mClientTexCoord;
   bool mMatrixChanged;
   float mR;
   float mG;

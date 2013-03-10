@@ -360,9 +360,6 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
   mDefaultFramebuffer = 0;
   mDefaultRenderbuffer = 0;
   mForceApply = false;
-  mClientVertex = false;
-  mClientColor = false;
-  mClientTexCoord = false;
   mMatrixChanged = true;
   mR = -1;
   mG = -1;
@@ -587,35 +584,13 @@ void nuiGL2Painter::StartRendering()
   glDisable(GL_SCISSOR_TEST);
   glDisable(GL_STENCIL_TEST);
   glDisable(GL_BLEND);
+  glEnable(GL_BLEND);
   glDisable(GL_ALPHA_TEST);
   glDisable(GL_CULL_FACE);
 
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
   BlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
   
-  //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
-//  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
-//  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_MODULATE);
-//  
-//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_TEXTURE);
-//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_ALPHA, GL_TEXTURE);
-//  
-//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_PRIMARY_COLOR);
-//  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_ALPHA, GL_PRIMARY_COLOR);
-//  
-//  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_ALPHA);
-// 	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
-//  
-//  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
-//  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA);
-
-  
-//  glDisableClientState(GL_VERTEX_ARRAY);
-//  glDisableClientState(GL_COLOR_ARRAY);
-//  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-  mClientVertex = false;
-  mClientColor = false;
-  mClientTexCoord = false;
   mMatrixChanged = true;
   mR = -1;
   mG = -1;
@@ -972,70 +947,6 @@ void nuiGL2Painter::ClearColor()
   nuiCheckForGLErrors();
 }
 
-/*
- void nuiGL2Painter::BlurRect(const nuiRect& rRect, uint Strength)
- {
- nuiRect Rect = rRect;
- if (mClippingRect.mEnabled)
- Rect.Intersect(mClippingRect,rRect);
- nuiRect size = Rect.Size();
- 
- nuiTexture* pScratchPad = GetScratchPad(ToZero(size.GetWidth()), ToZero(size.GetHeight()));
- 
- if (!pScratchPad)
- return;
- 
- SetTexture(pScratchPad);
- 
- glPushMatrix();
- glLoadIdentity();
- 
- EnableBlending(true);
- EnableTexturing(true);
- SetBlendFunc(nuiBlendTransp);
- 
- do
- {
- glCopyTexSubImage2D(
- GL_TEXTURE_2D, 0, 
- 0, 0, 
- ToZero(rRect.mLeft), ToZero(mHeight) - 1 - ToZero(rRect.mTop) - ToZero(rRect.GetHeight()), 
- ToZero(rRect.GetWidth()), ToZero(rRect.GetHeight())
- );
- 
- SetFillColor(nuiColor(1,1,1,.15f));
- nuiRect rect = Rect;
- 
- rect.Move(-1,-1);
- DrawImage(rect,size);
- rect.Move(1,0);
- DrawImage(rect,size);
- rect.Move(1,0);
- DrawImage(rect,size);
- 
- rect.Move(-2,1);
- DrawImage(rect,size);
- rect.Move(1,0);
- DrawImage(rect,size);
- rect.Move(1,0);
- DrawImage(rect,size);
- 
- rect.Move(-2,1);
- DrawImage(rect,size);
- rect.Move(0,1);
- DrawImage(rect,size);
- rect.Move(0,1);
- DrawImage(rect,size);
- } while ((long)(Strength--) > 0);
- 
- EnableBlending(false);
- EnableTexturing(false);
- 
- glPopMatrix();
- }
- */
-
-
 #define LOGENUM(XXX) case XXX: { NGL_OUT(_T("%s\n"), #XXX); } break;
 
 void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
@@ -1207,8 +1118,8 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   
   
   bool NeedTranslateHack = pArray->IsShape() || ((mode == GL_POINTS || mode == GL_LINES || mode == GL_LINE_LOOP || mode == GL_LINE_STRIP) && !pArray->Is3DMesh());
-  float hackX;
-  float hackY;
+  float hackX = 0;
+  float hackY = 0;
   if (NeedTranslateHack)
   {
     const float ratio = nuiGetInvScaleFactor() / 2.f;
@@ -1237,56 +1148,39 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       hackY = 0;
     }
 #endif
+  }
 
-    mFinalState.mpShader->GetDefaultState().Set("Offset", hackX, hackY, true);
-    //glTranslatef(hackX, hackY, 0);
-  }
-  else
-  {
-    mFinalState.mpShader->GetDefaultState().Set("Offset", 0.0f, 0.0f, true);
-  }
+  mFinalState.mpShader->GetDefaultState().Set("Offset", hackX, hackY, true);
 
   mFinalState.mpShader->SetVertexPointers(*pArray);
 
-  float r = mR, g = mG, b = mB, a = mA;
   if (!pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
+    nuiColor c;
+    switch (pArray->GetMode())
     {
-      mClientColor = false;
+      case GL_POINTS:
+      case GL_LINES:
+      case GL_LINE_LOOP:
+      case GL_LINE_STRIP:
+        c = mFinalState.mStrokeColor;
+        break;
 
-      nuiColor c;
-      switch (pArray->GetMode())
-      {
-        case GL_POINTS:
-        case GL_LINES:
-        case GL_LINE_LOOP:
-        case GL_LINE_STRIP:
-          c = mFinalState.mStrokeColor;
-          break;
-
-        case GL_TRIANGLES:
-        case GL_TRIANGLE_STRIP:
-        case GL_TRIANGLE_FAN:
-          c = mFinalState.mFillColor;
-          break;
-      }
-
-      r = c.Red();
-      g = c.Green();
-      b = c.Blue();
-      a = c.Alpha();
-      nuiCheckForGLErrors();
+      case GL_TRIANGLES:
+      case GL_TRIANGLE_STRIP:
+      case GL_TRIANGLE_FAN:
+        c = mFinalState.mFillColor;
+        break;
     }
 
-    //if (mR != r || mG != g || mB != b || mA != a)
-    {
-      mFinalState.mpShader->GetDefaultState().Set("DifuseColor", nuiColor(r, g, b, a), true);
-      mR = r;
-      mG = g;
-      mB = b;
-      mA = a;
-    }
+    mR = c.Red();
+    mG = c.Green();
+    mB = c.Blue();
+    mA = c.Alpha();
+
   }
+
+  mFinalState.mpShader->GetDefaultState().Set("DifuseColor", nuiColor(mR, mG, mB, mA), true);
   nuiCheckForGLErrors();
   
   if (mpSurface && mTwoPassBlend)
@@ -1749,23 +1643,12 @@ void nuiGL2Painter::UploadTexture(nuiTexture* pTexture)
     }
   }
   
-  if (pTexture->GetPixelFormat() == eImagePixelAlpha)
+  if (mTexEnvMode != pTexture->GetEnvMode())
   {
-    if (mTexEnvMode != GL_COMBINE)
-    {
-      mTexEnvMode = GL_COMBINE;
-      glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mTexEnvMode);
-    }
+    mTexEnvMode = pTexture->GetEnvMode();
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mTexEnvMode);
   }
-  else
-  {
-    if (mTexEnvMode != pTexture->GetEnvMode())
-    {
-      mTexEnvMode = pTexture->GetEnvMode();
-      glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mTexEnvMode);
-    }
-  }
-  
+
   nuiCheckForGLErrors();
   
   if (changedctx)

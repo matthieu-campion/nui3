@@ -518,7 +518,10 @@ bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, cons
     nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLES);
     pArray->EnableArray(nuiRenderArray::eVertex);
     pArray->EnableArray(nuiRenderArray::eTexCoord);
+    pArray->EnableArray(nuiRenderArray::eColor);
     pArray->Reserve(6 * size);
+
+    pArray->SetColor(pContext->GetTextColor());
     
     for (i = 0; i < size; i++)
     {
