@@ -71,7 +71,7 @@ protected:
     TextureInfo();
     
     bool mReload;
-    GLuint mTexture;
+    GLint mTexture;
   };
   std::map<nuiTexture*, TextureInfo> mTextures;
 
@@ -84,11 +84,11 @@ protected:
     FramebufferInfo();
     
     bool mReload;
-    GLuint mFramebuffer;
-    GLuint mTexture; ///< the framebuffer can be used to render to a texture
-    GLuint mRenderbuffer; ///< or a render buffer
-    GLuint mDepthbuffer;
-    GLuint mStencilbuffer;
+    GLint mFramebuffer;
+    GLint mTexture; ///< the framebuffer can be used to render to a texture
+    GLint mRenderbuffer; ///< or a render buffer
+    GLint mDepthbuffer;
+    GLint mStencilbuffer;
   };
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
   GLint mDefaultFramebuffer, mDefaultRenderbuffer;

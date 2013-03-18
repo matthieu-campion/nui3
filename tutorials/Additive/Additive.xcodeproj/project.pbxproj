@@ -7,23 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
 		61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
 		61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
-		61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
 		61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
-		61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD20B833F1500BC506C /* AGL.framework */; };
 		61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD30B833F1500BC506C /* CoreFoundation.framework */; };
 		61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD40B833F1500BC506C /* CoreServices.framework */; };
-		61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD50B833F1500BC506C /* Carbon.framework */; };
 		61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9DFD60B833F1500BC506C /* OpenGL.framework */; };
 		61A9DFF30B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		61A9DFF40B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		61A9DFF50B83433800BC506C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFEF0B83433800BC506C /* Application.cpp */; };
 		61A9DFF60B83433800BC506C /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61A9DFF10B83433800BC506C /* MainWindow.cpp */; };
 		BC6A09AD0EF92BAB00881ACF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC6A09AB0EF92BAB00881ACF /* Info.plist */; };
-		BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */; };
-		BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBCB15C0DFD45B6002E8BC3 /* libnui3D.a */; };
+		E50F422F16EE351A00519AF0 /* libnui3Cocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50C2C5C124277670039C2F4 /* libnui3Cocoa.a */; };
+		E50F423216EE352E00519AF0 /* libnui3CocoaD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50C2C5A124277670039C2F4 /* libnui3CocoaD.a */; };
+		E50F423416EE35AF00519AF0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50F423316EE35AF00519AF0 /* Cocoa.framework */; };
+		E50F423516EE35BE00519AF0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50F423316EE35AF00519AF0 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,20 +38,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = E542A1AE0C3F0A5900225219;
 			remoteInfo = nui3;
-		};
-		BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E5429F110C3F0A5900225219;
-			remoteInfo = nui3;
-		};
-		BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E58172D70C3D103300902DFE;
-			remoteInfo = nui3D;
 		};
 		E50C2C55124277670039C2F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -82,6 +66,41 @@
 			proxyType = 2;
 			remoteGlobalIDString = E5D643E51209AB9C009C26A9;
 			remoteInfo = nui3Cocoa;
+		};
+		E50F422716EE350A00519AF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84;
+			remoteInfo = nuiPhone_arm7;
+		};
+		E50F422916EE350A00519AF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84;
+			remoteInfo = thirdparty_ios_arm7;
+		};
+		E50F422B16EE350A00519AF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5FB9CF3147D5CEE001A1829;
+			remoteInfo = minui3D;
+		};
+		E50F422D16EE351200519AF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5D63EBB1209AB9C009C26A9;
+			remoteInfo = nui3Cocoa;
+		};
+		E50F423016EE352400519AF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E5A8CCAE11E33A54004E14CE;
+			remoteInfo = nui3CocoaD;
 		};
 		E538EBDC12E8D8C200F3E0AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -114,6 +133,7 @@
 		BC6A09AB0EF92BAB00881ACF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		BC6A09CB0EF9301900881ACF /* main.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = main.css; path = resources/css/main.css; sourceTree = SOURCE_ROOT; };
 		BCBCB1520DFD45B5002E8BC3 /* nui3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nui3.xcodeproj; path = ../../nui3.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E50F423316EE35AF00519AF0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../../System/Library/Frameworks/Cocoa.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,12 +141,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61A9DFD70B833F1500BC506C /* AGL.framework in Frameworks */,
+				E50F423416EE35AF00519AF0 /* Cocoa.framework in Frameworks */,
+				E50F422F16EE351A00519AF0 /* libnui3Cocoa.a in Frameworks */,
 				61A9DFD80B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
 				61A9DFD90B833F1500BC506C /* CoreServices.framework in Frameworks */,
-				61A9DFDA0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFDB0B833F1500BC506C /* OpenGL.framework in Frameworks */,
-				BCBCB15F0DFD45BD002E8BC3 /* libnui3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,12 +153,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61A9DFDC0B833F1500BC506C /* AGL.framework in Frameworks */,
+				E50F423516EE35BE00519AF0 /* Cocoa.framework in Frameworks */,
+				E50F423216EE352E00519AF0 /* libnui3CocoaD.a in Frameworks */,
 				61A9DFDD0B833F1500BC506C /* CoreFoundation.framework in Frameworks */,
 				61A9DFDE0B833F1500BC506C /* CoreServices.framework in Frameworks */,
-				61A9DFDF0B833F1500BC506C /* Carbon.framework in Frameworks */,
 				61A9DFE00B833F1500BC506C /* OpenGL.framework in Frameworks */,
-				BCBCB1600DFD45C1002E8BC3 /* libnui3D.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +167,7 @@
 		61A9DE3D0B833C9200BC506C = {
 			isa = PBXGroup;
 			children = (
+				E50F423316EE35AF00519AF0 /* Cocoa.framework */,
 				BC6A09CA0EF9300600881ACF /* css */,
 				BC6A09A20EF92B4B00881ACF /* resources */,
 				61A9DE4A0B833CD000BC506C /* sources */,
@@ -213,10 +232,13 @@
 				BCBCB15E0DFD45B6002E8BC3 /* libnui3.a */,
 				E50C2C56124277670039C2F4 /* libnuiPhoneD.a */,
 				E50C2C58124277670039C2F4 /* libnuiPhone.a */,
+				E50F422816EE350A00519AF0 /* libnuiPhone_arm7.a */,
 				E50C2C5A124277670039C2F4 /* libnui3CocoaD.a */,
 				E50C2C5C124277670039C2F4 /* libnui3Cocoa.a */,
 				E538EBDD12E8D8C200F3E0AE /* libthirdparty.a */,
 				E538EBDF12E8D8C200F3E0AE /* libthirdparty_ios.a */,
+				E50F422A16EE350A00519AF0 /* libthirdparty_ios_arm7.a */,
+				E50F422C16EE350A00519AF0 /* libminui3D.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,7 +258,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */,
+				E50F422E16EE351200519AF0 /* PBXTargetDependency */,
 			);
 			name = Additive;
 			productName = Temp;
@@ -254,7 +276,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */,
+				E50F423116EE352400519AF0 /* PBXTargetDependency */,
 			);
 			name = AdditiveD;
 			productName = Tempd;
@@ -334,6 +356,27 @@
 			fileType = archive.ar;
 			path = libnui3Cocoa.a;
 			remoteRef = E50C2C5B124277670039C2F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E50F422816EE350A00519AF0 /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = E50F422716EE350A00519AF0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E50F422A16EE350A00519AF0 /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = E50F422916EE350A00519AF0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E50F422C16EE350A00519AF0 /* libminui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libminui3D.a;
+			remoteRef = E50F422B16EE350A00519AF0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E538EBDD12E8D8C200F3E0AE /* libthirdparty.a */ = {
@@ -416,15 +459,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BCBCB1640DFD45FA002E8BC3 /* PBXTargetDependency */ = {
+		E50F422E16EE351200519AF0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = nui3;
-			targetProxy = BCBCB1630DFD45FA002E8BC3 /* PBXContainerItemProxy */;
+			name = nui3Cocoa;
+			targetProxy = E50F422D16EE351200519AF0 /* PBXContainerItemProxy */;
 		};
-		BCBCB1660DFD4605002E8BC3 /* PBXTargetDependency */ = {
+		E50F423116EE352400519AF0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = nui3D;
-			targetProxy = BCBCB1650DFD4605002E8BC3 /* PBXContainerItemProxy */;
+			name = nui3CocoaD;
+			targetProxy = E50F423016EE352400519AF0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -441,16 +484,13 @@
 		61A9DFC30B833E9600BC506C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				COPY_PHASE_STRIP = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = _COCOA_;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -480,7 +520,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_DEBUG,",
+					_COCOA_,
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (

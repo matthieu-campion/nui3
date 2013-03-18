@@ -1015,21 +1015,6 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   }
 
 
-#ifdef NUI_USE_ANTIALIASING
-  if (mFinalState.mAntialiasing)
-  {
-#ifdef NUI_USE_MULTISAMPLE_AA
-    glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
-    glEnable(GL_MULTISAMPLE_ARB);
-    nuiCheckForGLErrors();
-#else
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-    BlendFuncSeparate(GL_SRC_ALPHA_SATURATE, GL_ONE);
-    nuiCheckForGLErrors();
-#endif
-  }
-#endif // NUI_USE_ANTIALIASING
 
 //  if (pArray->IsArrayEnabled(nuiRenderArray::eVertex))
 //  {
@@ -1207,61 +1192,10 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   }
 
 
-#ifdef NUI_USE_ANTIALIASING
-  if (mFinalState.mAntialiasing)
   {
-#ifdef NUI_USE_MULTISAMPLE_AA
-    glDisable(GL_MULTISAMPLE_ARB);
-#else
-    glDisable(GL_POLYGON_SMOOTH);
-    glDisable(GL_BLEND);
-    BlendFuncSeparate(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-#endif
-    nuiCheckForGLErrors();
-  }
-  else
-#endif // NUI_USE_ANTIALIASING
-  {
-    //#TEST meeloo disabling AA texture
-    //     if (pArray->UseGLAATexture())
-    //     {
-    //       glMatrixMode(GL_TEXTURE);
-    //       glPopMatrix();
-    //       glMatrixMode(GL_MODELVIEW);
-    //       glPopMatrix();
-    //
-    //       if (mFinalState.mpTexture && mFinalState.mTexturing)
-    //       {
-    //         if (mTextureTarget != GL_TEXTURE_2D)
-    //         {
-    //           glDisable(GL_TEXTURE_2D);
-    //           glEnable(mTextureTarget);
-    //         }
-    //
-    //         UploadTexture(mFinalState.mpTexture);
-    //       }
-    //       else
-    //       {
-    //         glDisable(GL_TEXTURE_2D);
-    //       }
-    //
-    //       if (!mFinalState.mBlending)
-    //         glDisable(GL_BLEND);
-    //       if (mFinalState.mBlendFunc != nuiBlendTransp)
-    //       {
-    //         GLenum src, dst;
-    //         nuiGetBlendFuncFactors(mFinalState.mBlendFunc, src, dst);
-    //         glBlendFunc(src, dst);
-    //       }
-    //       //ApplyTexture(mState, true);
-    //     }
-    //     else
-
     if (NeedTranslateHack)
       glTranslatef(-hackX, -hackY, 0);
   }
-
-  //glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
   pArray->Release();
   nuiCheckForGLErrors();
@@ -1993,6 +1927,7 @@ bool nuiCheckForGLErrorsReal()
   App->GetLog().SetLevel("nuiGLPainter", 1000);
   switch (err)
   {
+    case GL_NO_ERROR:
       /*
        case GL_NO_ERROR:
        NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, "error has been recorded. The value of this symbolic constant is guaranteed to be zero.");
@@ -2015,6 +1950,9 @@ bool nuiCheckForGLErrorsReal()
       break;
     case GL_OUT_OF_MEMORY:
       NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("There is not enough memory left to execute the function. The state of OpenGL is undefined, except for the state of the error flags, after this error is recorded."));
+      break;
+    default:
+      NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("Unkown error %d 0x%x."), err, err);
       break;
   }
   //#endif

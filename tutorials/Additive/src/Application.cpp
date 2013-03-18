@@ -50,7 +50,7 @@ void Application::OnInit()
   bool ShowFPS = false;
 
   
-  nuiRenderer Renderer = eOpenGL;
+  nuiRenderer Renderer = eOpenGL2;
 //  nuiRenderer Renderer = eSoftware;
 //  nuiRenderer Renderer = eDirect3D;
 
@@ -94,6 +94,7 @@ void Application::OnInit()
       arg = GetArg(i+1);
       if (!arg.Compare(_T("opengl"))) Renderer = eOpenGL;
       else if (!arg.Compare(_T("direct3d"))) Renderer = eDirect3D;
+      else if (!arg.Compare(_T("opengl2"))) Renderer = eOpenGL2;
       else if (!arg.Compare(_T("software"))) Renderer = eSoftware;
       i++;
     }

@@ -7,178 +7,96 @@
 
 #pragma once
 
-enum nuiLayoutAttribute
+/* Contraint syntax:
+
+ Each line contains: "HorizontalConstraint/VerticalConstraint"
+ Any one of them can be omited:
+ "/VerticalConstraint"
+ "HorizontalConstraint/"
+ 
+ Both vertical and horizontal constraint can be described like this:
+ 
+ 1 Set Start And Stop: [StartAnchorName,StopAnchorName]
+ 2 Set Start: [StartAnchorName}
+ 3 Set Start and size: [StartAnchorName, size}
+ 4 Set Stop: {StopAnchorName]
+ 5 Set Stop and size: {size, StopAnchorName]
+ 6 Set Middle: {MiddleAnchor}
+ 7 Set Middle And Size: {MiddleAnchor, size}
+ 8 Set Size: size
+ */
+
+enum nuiLayoutConstraintType
 {
-  eLayoutAttribute_None = 0,
+  eFreeLayout,
+  eSetStartAndStop,
 
-  eLayoutAttribute_Left,
-  eLayoutAttribute_Right,
-  eLayoutAttribute_Width,
-  eLayoutAttribute_CenterX,
+  eSetStart,
+  eSetStartAndSize,
 
-  eLayoutAttribute_Top,
-  eLayoutAttribute_Bottom,
-  eLayoutAttribute_Height,
-  eLayoutAttribute_CenterY
+  eSetStop,
+  eSetStopAndSize,
 
-  //baseline
+  eSetMiddle,
+  eSetMiddleAndSize,
+
+  eSetSize
 };
 
-enum nuiLayoutRelation
+class nuiLayoutConstraint
 {
-  eLayoutRelation_Equals,
-  eLayoutRelation_LessThanOrEqual,
-  eLayoutRelation_MoreThanOrEqual
-};
+public:
+  nuiLayoutConstraint();
+  virtual ~nuiLayoutConstraint();
 
-enum nuiLayoutPriority
-{
-  eLayoutPriority_FromWidget,
-  eLayoutPriority_Low,
-  eLayoutPriority_Normal,
-  eLayoutPriority_High,
-  eLayoutPriority_Highest
-};
+  nuiLayoutConstraintType GetType() const;
+  const nglString& GetAnchor(int i) const;
+  float GetSize() const;
 
+  void SetStartAndStop(const nglString& rStart, const nglString& rStop);
+
+  void SetStart(const nglString& rStart);
+  void SetStartAndSize(const nglString& rStart, float size);
+
+  void SetStop(const nglString& rStop);
+  void SetStopAndSize(const nglString& rStop, float size);
+
+  void SetMiddle(const nglString& rMiddle);
+  void SetMiddleAndSize(const nglString& rMiddle, float size);
+
+  void SetSize(float size);
+  void SetFree();
+
+  bool Set(const nglString& rDescription);
+protected:
+  nuiLayoutConstraintType mType;
+  nglString mAnchor[2];
+  float mSize;
+};
 
 class nuiLayout : public nuiSimpleContainer
 {
 public:
   nuiLayout();
   virtual ~nuiLayout();
-  
-  bool AddConstraint(nuiWidget* pWidget, nuiLayoutAttribute Attrib, nuiLayoutRelation Relation, nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, double Multiplier, double Constant, nuiLayoutPriority Priority = eLayoutPriority_Highest);
-  
-  bool AddConstraint(const nglString& rConstraintString);
-  
+
+  void SetVerticalAnchor(const nglString& rName, float position);
+  void SetHorizontallAnchor(const nglString& rName, float position);
+
+  float GetVerticalAnchor(const nglString& rName) const;
+  float GetHorizontallAnchor(const nglString& rName) const;
+
+  void SetConstraint(nuiWidget* pWidget, const nglString& rDescription);
+  void SetConstraint(nuiWidget* pWidget, const nuiLayoutConstraint& rHorizontal, const nuiLayoutConstraint& rVertical);
+  void GetConstraints(nuiWidget* pWidget, nuiLayoutConstraint& rHorizontal, nuiLayoutConstraint& rVertical) const;
+  void GetConstraintString(nuiWidget* pWidget, nglString& rString) const;
+
   bool SetRect(const nuiRect& rRect);
   
-private:  
-  class Constraint
-  {
-  public:
-    Constraint(nuiWidget* pRefWidget, nuiLayoutAttribute RefAttrib, nuiLayoutRelation Relation, double Multiplier, double Constant, nuiLayoutPriority Priority);
-    ~Constraint();
+private:
+  std::map<nuiWidget*, std::pair<nuiLayoutConstraint, nuiLayoutConstraint> > mConstraints;
+  std::map<nglString, float> mAnchors[2];
 
-    nuiWidget* mpRefWidget;
-    nuiLayoutAttribute mRefAttrib;
-    nuiLayoutRelation mRelation;
-    double mMultiplier;
-    double mConstant;
-    nuiLayoutPriority mPriority;
-  };
-
-
-  typedef std::vector<Constraint> ConstraintVector;
-  typedef std::set<nuiWidget*> DependencySet;
-  
-  class LayoutValue
-  {
-  public:
-    LayoutValue()
-    : mValue(0),
-      mMin(std::numeric_limits<double>::min()),
-      mMax(std::numeric_limits<double>::max()),
-      mPriorityMin(eLayoutPriority_FromWidget),
-      mPriorityMax(eLayoutPriority_FromWidget),
-      mSet(false)
-    {
-    }
-    
-    void Reset(double value)
-    {
-      mValue = value;
-      mPriorityMin = eLayoutPriority_FromWidget;
-      mPriorityMax = eLayoutPriority_FromWidget;
-      mMin = std::numeric_limits<double>::min();
-      mMax = std::numeric_limits<double>::max();
-      mSet = false;
-    }
-
-    double mValue;
-    double mMin;
-    double mMax;
-    nuiLayoutPriority mPriorityMin;
-    nuiLayoutPriority mPriorityMax;
-    bool mSet;
-    
-    ConstraintVector mConstraints;
-  };
-
-  class Widget
-  {
-  public:
-    Widget(nuiWidget* pWidget = NULL)
-    : mRefs(0),
-      mpWidget(pWidget)
-    {
-      mIncommingDeps[0] = 0;
-      mIncommingDeps[1] = 0;
-      mVisits[0] = 0;
-      mVisits[1] = 0;
-    }
-    
-    void Reset(const nuiRect& r)
-    {
-      mWidth.Reset(r.GetWidth());
-      mHeight.Reset(r.GetHeight());
-      mTop.Reset(r.Top());
-      mLeft.Reset(r.Left());
-      mBottom.Reset(r.Bottom());
-      mRight.Reset(r.Right());
-      mCenterX.Reset(r.Left() + r.GetWidth() * .5);
-      mCenterY.Reset(r.Top() + r.GetHeight() * .5);
-      mVisits[0] = 0;
-      mVisits[1] = 0;
-      mRect = r;
-    }
-    
-    LayoutValue& GetAttrib(nuiLayoutAttribute attrib)
-    {
-      switch (attrib)
-      {
-        case eLayoutAttribute_Left:     return mLeft;
-        case eLayoutAttribute_Right:    return mRight;
-        case eLayoutAttribute_Width:    return mWidth;
-        case eLayoutAttribute_CenterX:  return mCenterX;
-
-        case eLayoutAttribute_Top:      return mTop;
-        case eLayoutAttribute_Bottom:   return mBottom;
-        case eLayoutAttribute_Height:   return mHeight;
-        case eLayoutAttribute_CenterY:  return mCenterY;
-      }
-      
-      NGL_ASSERTR(0, *(LayoutValue*)NULL);
-    }
-    
-    mutable LayoutValue mWidth;
-    mutable LayoutValue mHeight;
-    mutable LayoutValue mTop;
-    mutable LayoutValue mLeft;
-    mutable LayoutValue mBottom;
-    mutable LayoutValue mRight;
-    mutable LayoutValue mCenterX;
-    mutable LayoutValue mCenterY;
-    
-    int32 mRefs;
-    
-    DependencySet mDeps[2];
-    
-    int32 mIncommingDeps[2];
-    int32 mVisits[2];
-    
-    nuiWidget* mpWidget;
-    
-    nuiRect mRect;
-  };
-  
-  typedef std::map<nuiWidget*, Widget> Widgets;
-  Widgets mWidgets;
-  
-  bool DoLayout(const nuiRect& rRect);
-
-  void AddDependency(nuiWidget* pFromWidget, nuiWidget* pToWidget);
-  
-  void EvaluateConstraints(LayoutValue& rValue);
+  void DoLayout(const nuiRect& rRect);
 };
 
