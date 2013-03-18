@@ -241,15 +241,15 @@ nuiLayout::~nuiLayout()
 {
 }
 
-void nuiLayout::SetHorizontallAnchor(const nglString& rName, float position)
+void nuiLayout::SetHorizontallAnchor(const nglString& rName, float position, nuiAnchorMode mode)
 {
-  mAnchors[0][rName] = position;
+  mAnchors[0][rName] = std::make_pair(position, mode);
 }
 
 
-void nuiLayout::SetVerticalAnchor(const nglString& rName, float position)
+void nuiLayout::SetVerticalAnchor(const nglString& rName, float position, nuiAnchorMode mode)
 {
-  mAnchors[1][rName] = position;
+  mAnchors[1][rName] = std::make_pair(position, mode);
 }
 
 float nuiLayout::GetHorizontallAnchor(const nglString& rName) const
@@ -258,7 +258,7 @@ float nuiLayout::GetHorizontallAnchor(const nglString& rName) const
   if (it == mAnchors[0].end())
     return 0;
 
-  return it->second;
+  return it->second.first;
 }
 
 float nuiLayout::GetVerticalAnchor(const nglString& rName) const
@@ -267,7 +267,25 @@ float nuiLayout::GetVerticalAnchor(const nglString& rName) const
   if (it == mAnchors[1].end())
     return 0;
 
-  return it->second;
+  return it->second.first;
+}
+
+nuiAnchorMode nuiLayout::GetHorizontallAnchorMode(const nglString& rName) const
+{
+  auto it = mAnchors[0].find(rName);
+  if (it == mAnchors[0].end())
+    return eAnchorAbsolute;
+
+  return it->second.second;
+}
+
+nuiAnchorMode nuiLayout::GetVerticalAnchorMode(const nglString& rName) const
+{
+  auto it = mAnchors[1].find(rName);
+  if (it == mAnchors[1].end())
+    return eAnchorAbsolute;
+
+  return it->second.second;
 }
 
 

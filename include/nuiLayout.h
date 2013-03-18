@@ -43,6 +43,13 @@ enum nuiLayoutConstraintType
   eSetSize
 };
 
+enum nuiAnchorMode
+{
+  eAnchorAbsolute,
+  eAnchorRelative
+};
+
+
 class nuiLayoutConstraint
 {
 public:
@@ -80,11 +87,14 @@ public:
   nuiLayout();
   virtual ~nuiLayout();
 
-  void SetVerticalAnchor(const nglString& rName, float position);
-  void SetHorizontallAnchor(const nglString& rName, float position);
+  void SetVerticalAnchor(const nglString& rName, float position, nuiAnchorMode mode);
+  void SetHorizontallAnchor(const nglString& rName, float position, nuiAnchorMode mode);
 
   float GetVerticalAnchor(const nglString& rName) const;
   float GetHorizontallAnchor(const nglString& rName) const;
+
+  nuiAnchorMode GetVerticalAnchorMode(const nglString& rName) const;
+  nuiAnchorMode GetHorizontallAnchorMode(const nglString& rName) const;
 
   void SetConstraint(nuiWidget* pWidget, const nglString& rDescription);
   void SetConstraint(nuiWidget* pWidget, const nuiLayoutConstraint& rHorizontal, const nuiLayoutConstraint& rVertical);
@@ -95,7 +105,7 @@ public:
   
 private:
   std::map<nuiWidget*, std::pair<nuiLayoutConstraint, nuiLayoutConstraint> > mConstraints;
-  std::map<nglString, float> mAnchors[2];
+  std::map<nglString, std::pair<float, nuiAnchorMode> > mAnchors[2];
 
   void DoLayout(const nuiRect& rRect);
 };

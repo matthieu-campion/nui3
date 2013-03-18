@@ -11338,8 +11338,8 @@
 				BC8383520E8D36E500023E3A /* nuiBackgroundPane.h */,
 				E504F2060EFC5C7E00A80C5C /* nuiBox.cpp */,
 				E55236EB0CD3382B00BF0B87 /* nuiBox.h */,
-				E5816CBD0C3CECAB00902DFE /* nuiDialog.h */,
 				E5816D940C3CECAB00902DFE /* nuiDialog.cpp */,
+				E5816CBD0C3CECAB00902DFE /* nuiDialog.h */,
 				E5816D950C3CECAB00902DFE /* nuiFixed.cpp */,
 				E5816CC70C3CECAB00902DFE /* nuiFixed.h */,
 				E56D24060FE2F3C000C16F53 /* nuiFlowView.cpp */,
@@ -11352,6 +11352,8 @@
 				E517B0DC0C85704900190FF9 /* nuiHBox.h */,
 				BC19E1960EA3AC030026CB6B /* nuiImageSequence.cpp */,
 				BC19E1990EA3AC210026CB6B /* nuiImageSequence.h */,
+				E531A9951440A1EE00ED88C9 /* nuiLayout.cpp */,
+				E531A99E1440A20F00ED88C9 /* nuiLayout.h */,
 				E5816D970C3CECAB00902DFE /* nuiList.cpp */,
 				E5816CD90C3CECAB00902DFE /* nuiList.h */,
 				E50A2B0E0C8DBD8200C58F94 /* nuiMatrixView.cpp */,
@@ -11381,8 +11383,6 @@
 				E5816D1C0C3CECAB00902DFE /* nuiWindow.h */,
 				E5816DA20C3CECAB00902DFE /* nuiZoomView.cpp */,
 				E5816D1F0C3CECAB00902DFE /* nuiZoomView.h */,
-				E531A9951440A1EE00ED88C9 /* nuiLayout.cpp */,
-				E531A99E1440A20F00ED88C9 /* nuiLayout.h */,
 			);
 			name = Layout;
 			path = src/Layout;
