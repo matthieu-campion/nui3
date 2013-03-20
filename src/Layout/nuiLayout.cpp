@@ -424,11 +424,13 @@ protected:
   nglString mAnchor;
 };
 
-class LayoutAnchorType : public nuiAttribute<int32>
+
+template <>
+class nuiAttribute<nuiAnchorType> : public nuiAttribute<int32>
 {
 public:
-  LayoutAnchorType(const nglString& rName, nuiLayout* pLayout)
-  : nuiAttribute<int32>(rName, nuiUnitNone, nuiMakeDelegate(this, &LayoutAnchorType::_Get), nuiMakeDelegate(this, &LayoutAnchorType::_Set), NUI_INVALID_RANGE),
+  nuiAttribute<nuiAnchorType>(const nglString& rName, nuiLayout* pLayout)
+  : nuiAttribute<int32>(rName, nuiUnitNone, nuiMakeDelegate(this, &nuiAttribute<nuiAnchorType>::_Get), nuiMakeDelegate(this, &nuiAttribute<nuiAnchorType>::_Set), NUI_INVALID_RANGE),
     mAnchor(rName.Extract(13))
   {
     nuiAttributeBase::SetAsInstanceAttribute(true);
@@ -445,19 +447,24 @@ public:
     }
   }
 
-protected:
-  int32 _Get() const
+  void FormatDefault(nuiAnchorType value, nglString& string) const
   {
-    return (int32)mGetAnchorDelegate(mAnchor);
+    if (value == eAnchorAbsolute)
+    {
+      string = "Absolute";
+    }
+    else if (value == eAnchorRelative)
+    {
+      string = "Relative";
+    }
+    
+    return true;
   }
 
-  void _Set(int32 value)
+  bool ToString(void* pTarget, int32 index0, int32 index1, nglString& rString) const
+  //bool ToString(nuiAnchorType Value, nglString& rString) const
   {
-    mSetAnchorDelegate(mAnchor, (nuiAnchorType)value);
-  }
-
-  bool ToString(int32 Value, nglString& rString) const
-  {
+    nuiAnchorType Value = mGetAnchorDelegate(mAnchor);
     if (Value == eAnchorAbsolute)
     {
       rString = "Absolute";
@@ -471,27 +478,39 @@ protected:
     return false;
   }
 
-  bool FromString(int32& Value, const nglString& rString) const
+  bool FromString(void* pTarget, int32 index0, int32 index1, const nglString& rString) const
+  //bool FromString(nuiAnchorType& Value, const nglString& rString) const
   {
-    if (rString == "Relative")
+    if (rString.Compare("Relative", false) == 0)
     {
-      Value = eAnchorRelative;
+      mSetAnchorDelegate(mAnchor, eAnchorRelative);
       return true;
     }
-    else if (rString == "Absolute")
+    else if (rString.Compare("Absolute", false) == 0)
     {
-      Value = eAnchorAbsolute;
+      mSetAnchorDelegate(mAnchor, eAnchorAbsolute);
       return true;
     }
     return false;
   }
   
 
+
+protected:
+  int32 _Get() const
+  {
+    return (int32)mGetAnchorDelegate(mAnchor);
+  }
+
+  void _Set(int32 value)
+  {
+    mSetAnchorDelegate(mAnchor, (nuiAnchorType)value);
+  }
+
   nuiFastDelegate1<const nglString&, nuiAnchorType> mGetAnchorDelegate;
   nuiFastDelegate2<const nglString&, nuiAnchorType> mSetAnchorDelegate;
   nglString mAnchor;
 };
-
 
 void nuiLayout::SetProperty(const nglString& rName, const nglString& rValue)
 {
@@ -515,7 +534,7 @@ void nuiLayout::SetProperty(const nglString& rName, const nglString& rValue)
   else if (rName.CompareLeft("VAnchorsType_", true) == 0 || rName.CompareLeft("HAnchorsType_", true) == 0)
   {
     // Create an attribute for this anchor, unless it exists already
-    AddAttribute(new LayoutAnchorType(rName, this));
+    AddAttribute(new nuiAttribute<nuiAnchorType>(rName, this));
     {
       nuiAttribBase attr(GetAttribute(rName));
       NGL_ASSERT(attr.IsValid());
@@ -625,6 +644,10 @@ void nuiLayout::DoLayout(const nuiRect& rRect)
   float width = r.GetWidth();
   float height = r.GetHeight();
 
+  SetHorizontalAnchor("left", 0, eAnchorAbsolute);
+  SetHorizontalAnchor("right", width, eAnchorAbsolute);
+  SetVerticalAnchor("top", 0, eAnchorAbsolute);
+  SetVerticalAnchor("bottom", height, eAnchorAbsolute);
   auto it = mConstraints.begin();
   while (it != mConstraints.end())
   {
