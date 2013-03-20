@@ -1111,7 +1111,19 @@ nglString& nglString::Append(const nglString& rSource)
 nglString& nglString::Prepend(nglUChar Ch)
 {
   mIsNull = false;
-  Insert(Ch, 0);
+
+  if (Ch < 128)
+  {
+    Insert((nglChar)Ch, 0);
+    return *this;
+  }
+
+  UTF8 stra[8];
+  memset(stra, 0, 8);
+  UTF8* str = stra;
+  const UTF32* src = (UTF32*)&Ch;
+  ConversionResult res = ConvertUTF32toUTF8(&src, src+1, &str, &stra[7], lenientConversion);
+  Insert((const nglChar*)stra, 0);
   return *this;
 }
 
