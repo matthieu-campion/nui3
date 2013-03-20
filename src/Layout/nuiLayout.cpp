@@ -84,11 +84,27 @@ void nuiLayoutConstraint::SetMiddle(const nglString& rMiddle)
   mSize = 0;
 }
 
+void nuiLayoutConstraint::SetMiddle(const nglString& rStart, const nglString& rStop)
+{
+  mType = eSetMiddle;
+  mAnchor[0] = rStart;
+  mAnchor[1] = rStop;
+  mSize = 0;
+}
+
 void nuiLayoutConstraint::SetMiddleAndSize(const nglString& rMiddle, float size)
 {
   mType = eSetMiddleAndSize;
   mAnchor[0] = rMiddle;
   mAnchor[1].Nullify();
+  mSize = size;
+}
+
+void nuiLayoutConstraint::SetMiddleAndSize(const nglString& rStart, const nglString& rStop, float size)
+{
+  mType = eSetMiddleAndSize;
+  mAnchor[0] = rStart;
+  mAnchor[1] = rStop;
   mSize = size;
 }
 
@@ -174,7 +190,7 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
       c = rDescription.GetNextUChar(index);
     }
 
-    nglString anchor1 = rDescription.Extract(pos, index - pos);
+    nglString anchor1 = rDescription.Extract(pos, index - pos - 1);
 
     if (c == ',')
     {
@@ -183,13 +199,13 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
       int end = index;
       c = rDescription.GetNextUChar(index);
 
-      while (c != ']' && c != '}')
+      while (c != ']' && c != '}' && c != ',')
       {
         end = index;
         c = rDescription.GetNextUChar(index);
       }
 
-      nglString anchor2 = rDescription.Extract(pos, index - pos);
+      nglString anchor2 = rDescription.Extract(pos, index - pos - 1);
       if (c == ']')
       {
         // size and Stop:
@@ -199,7 +215,29 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
       else if (c == '}')
       {
         // Midle and size:
-        SetMiddleAndSize(anchor1, anchor2.GetCFloat());
+        if (anchor2.IsFloat())
+          SetMiddleAndSize(anchor1, anchor2.GetCFloat());
+        else
+          SetMiddle(anchor1, anchor2);
+        return true;
+      }
+      else if (c == ',')
+      {
+        nglString anchor2 = rDescription.Extract(pos, index - pos - 1);
+
+        // Fix stop or fix size
+        int pos = index;
+        int end = index;
+        c = rDescription.GetNextUChar(index);
+
+        while (c != '}')
+        {
+          end = index;
+          c = rDescription.GetNextUChar(index);
+        }
+
+        nglString anchor3 = rDescription.Extract(pos, index - pos - 1);
+        SetMiddleAndSize(anchor1, anchor2, anchor3.GetCFloat());
         return true;
       }
 
@@ -207,7 +245,10 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
     else if (c == '}')
     {
       // Fix middle
-      SetMiddle(anchor1);
+      if (anchor1.IsFloat())
+        SetMiddleAndSize(nglString::Null, anchor1.GetCFloat());
+      else
+        SetMiddle(anchor1);
       return true;
     }
     else if (c == ']')
@@ -614,14 +655,34 @@ void nuiLayout::ComputeConstraint(const nuiLayoutConstraint& rC, float& ActualSt
 
     case eSetMiddle:
       {
-        float middle = Start + (Stop - Start) * 0.5;
+        const nglString& a0(rC.GetAnchor(0));
+        const nglString& a1(rC.GetAnchor(1));
+        float s0 = Start, s1 = Stop;
+        if (!a0.IsEmpty())
+        {
+          s0 = s1 = ComputeAnchorPosition(a0, AnchorIndex, Start, Stop);
+          if (!a1.IsEmpty())
+            s1 = ComputeAnchorPosition(a1, AnchorIndex, Start, Stop);
+        }
+
+        float middle = s0 + (s1 - s0) * 0.5;
         ActualStart = middle - IdealSize * 0.5;
         ActualStop = ActualStart + IdealSize;
       }
       break;
     case eSetMiddleAndSize:
       {
-        float middle = Start + (Stop - Start) * 0.5;
+        const nglString& a0(rC.GetAnchor(0));
+        const nglString& a1(rC.GetAnchor(1));
+        float s0 = Start, s1 = Stop;
+        if (!a0.IsEmpty())
+        {
+          s0 = s1 = ComputeAnchorPosition(a0, AnchorIndex, Start, Stop);
+          if (!a1.IsEmpty())
+            s1 = ComputeAnchorPosition(a1, AnchorIndex, Start, Stop);
+        }
+
+        float middle = s0 + (s1 - s0) * 0.5;
         ActualStart = middle - rC.GetSize() * 0.5;
         ActualStop = ActualStart + rC.GetSize();
       }

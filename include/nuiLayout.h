@@ -69,7 +69,9 @@ public:
   void SetStopAndSize(const nglString& rStop, float size);
 
   void SetMiddle(const nglString& rMiddle);
+  void SetMiddle(const nglString& rStart, const nglString& rStop);
   void SetMiddleAndSize(const nglString& rMiddle, float size);
+  void SetMiddleAndSize(const nglString& rStart, const nglString& rStop, float size);
 
   void SetSize(float size);
   void SetFree();

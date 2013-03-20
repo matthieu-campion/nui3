@@ -1924,7 +1924,7 @@ bool nuiCheckForGLErrorsReal()
       //#ifdef _DEBUG_
   bool error = false;
   err = glGetError();
-  App->GetLog().SetLevel("nuiGLPainter", 1000);
+  //App->GetLog().SetLevel("nuiGLPainter", 1000);
   switch (err)
   {
     case GL_NO_ERROR:

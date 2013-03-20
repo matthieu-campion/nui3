@@ -13,7 +13,7 @@
 nuiNativeResourceVolume::nuiNativeResourceVolume()
 : nglVolume(_T("rsrc"), nglPath(), _T("Native resources"), nglPathVolume::ReadOnly, nglPathVolume::eTypeUnknown)
 {
-  App->GetLog().SetLevel(_T("StopWatch"), 100);
+  //App->GetLog().SetLevel(_T("StopWatch"), 100);
   
   nuiStopWatch watch(_T("nuiNativeResourceVolume creation"));
   std::vector<nglPath> resources;

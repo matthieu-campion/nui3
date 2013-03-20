@@ -297,7 +297,7 @@ bool nuiTexture::CreateAtlasFromPath(const nglPath& rPath, int32 MaxTextureSize,
   if (ForceAtlasSize)
     offset = 1;
 
-  App->GetLog().SetLevel(_T("StopWatch"), 100);
+  //App->GetLog().SetLevel(_T("StopWatch"), 100);
   nuiStopWatch watch(_T("Create atlas"));
   std::vector<AtlasElem> images;
   

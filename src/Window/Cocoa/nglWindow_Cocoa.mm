@@ -176,7 +176,7 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 
 - (NSSize) windowWillResize: (NSWindow*) win toSize: (NSSize) size
 {
-  printf("windowWillResize %f x %f\n", size.width, size.height);
+  //printf("windowWillResize %f x %f\n", size.width, size.height);
   // inform the context that the view has been resized
   NSRect rect = {0};
   rect.size = size;
@@ -687,14 +687,14 @@ float nuiGetInvScaleFactor()
 
 - (void)doPaint
 {
-  printf("doPaint 0x%x\n", mpNGLWindow);
+  //printf("doPaint 0x%x\n", mpNGLWindow);
   
   mpNGLWindow->CallOnPaint();
 }
 
 - (void) invalidate
 {
-  printf("invalidate\n");
+  //printf("invalidate\n");
   mInvalidated = true;
 }
 
@@ -817,9 +817,9 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   }
 	
 	NSRect r = [(nglNSWindow*)mpNSWindow frame];
-	printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+	//printf("currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	r = [NSScreen mainScreen].visibleFrame;
-	printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
+	//printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
 	SetSize(rect.size.width, rect.size.height);
   
@@ -1009,7 +1009,7 @@ bool nglWindow::MakeCurrent() const
 
 void nglWindow::Invalidate()
 {
-  printf("nglWindow::Invalidate()\n");
+  //printf("nglWindow::Invalidate()\n");
   [(nglNSWindow*)mpNSWindow invalidate];
 }
 
