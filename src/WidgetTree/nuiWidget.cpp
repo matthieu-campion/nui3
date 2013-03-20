@@ -4860,12 +4860,6 @@ bool nuiWidget::IsFocusVisible() const
 }
 
 
-void nuiWidget::OnPropertyChanged(const nglString& rName, const nglString&rValue)
-{
-  CheckValid();
-  ApplyCSSForStateChange(NUI_WIDGET_MATCHER_PROPERTY);
-}
-
 void nuiWidget::SetClickThru(bool set)
 {
   CheckValid();

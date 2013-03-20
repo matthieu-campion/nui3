@@ -45,34 +45,11 @@ void nuiCSSAction_SetAttribute::ApplyAction(nuiObject* pObject)
     else
       Attribute.FromString(mIndex0, mIndex1, v);
   }
-}
-
-/////////////////////////////////
-nuiCSSAction_SetProperty::nuiCSSAction_SetProperty(const nglString& rProperty, const nglString& rValue)
-{
-  mProperty = rProperty;
-  mValue = rValue;
-  mValueIsGlobal = rValue[0] == '$';
-  if (mValueIsGlobal)
-    mValue.DeleteLeft(1);
-}
-
-nuiCSSAction_SetProperty::~nuiCSSAction_SetProperty()
-{
-  
-}
-
-void nuiCSSAction_SetProperty::ApplyAction(nuiObject* pObject)
-{
-  //NGL_OUT(_T("CSS Action on class %s proeprty[%s] <- '%s'\n"), pWidget->GetObjectClass().GetChars(), mAttribute.GetChars(), mValue.GetChars());
-  nglString v;
-  if (!mValueIsGlobal)
-    v = mValue;
   else
-    v = nuiObject::GetGlobalProperty(mValue);
-  pObject->SetProperty(mProperty, mValue);
+  {
+    pObject->SetProperty(mAttribute, mValue);
+  }
 }
-
 
 /*
  Target syntax for the nui3 CSS language:
@@ -1624,9 +1601,7 @@ public:
           }
         }
         
-        if (op == _T('='))
-          pMatcher = new nuiWidgetPropertyMatcher(property, str, true, false);
-        else if (op == _T(':'))
+        if (op == _T('=') || op == _T(':'))
           pMatcher = new nuiWidgetAttributeMatcher(property, str, true, false);
         else if (op == _T('$'))
           pMatcher = new nuiGlobalVariableMatcher(property, str);
@@ -1797,17 +1772,12 @@ public:
     if (!ReadAction(symbol, rvalue, op, i0, i1))
       return false;
     
-    if (op == _T(':'))
+    if (op == ':' ||  op == '=')
     {
       nuiCSSAction_SetAttribute* pAction = new nuiCSSAction_SetAttribute(symbol, rvalue, i0, i1);
       mActions.push_back(pAction);
     }
-    else if (op == _T('='))
-    {
-      nuiCSSAction_SetProperty* pAction = new nuiCSSAction_SetProperty(symbol, rvalue);
-      mActions.push_back(pAction);
-    }
-    
+
     return true;
   }
 

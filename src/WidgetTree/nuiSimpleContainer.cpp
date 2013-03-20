@@ -237,9 +237,9 @@ nuiWidgetPtr nuiSimpleContainer::GetChild(nuiSize X, nuiSize Y)
   return nuiContainer::GetChild(X, Y);
 }
 
-nuiWidgetPtr nuiSimpleContainer::GetChild(const nglString& rName, bool deepsearch)
+nuiWidgetPtr nuiSimpleContainer::GetChild(const nglString& rName, bool ResolveNameAsPath)
 {
-  return nuiContainer::GetChild(rName, deepsearch);
+  return nuiContainer::GetChild(rName, ResolveNameAsPath);
 }
 
 bool nuiSimpleContainer::Clear()

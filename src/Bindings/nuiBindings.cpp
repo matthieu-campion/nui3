@@ -63,11 +63,6 @@ bool nuiInitBindings()
     nuiAddMethod(GetObjectClass,  nuiObject::GetObjectClass);
 //    nuiAddMethod(IsOfClass,       nuiObject::IsOfClass);
 //    nuiAddMethod(IsOfClassId,     nuiObject::IsOfClass );
-//    nuiAddMethod(SetProperty,     nuiObject::SetProperty);
-//    nuiAddMethod(GetProperty,     nuiObject::GetProperty);
-//    nuiAddMethod(HasProperty,     nuiObject::HasProperty);
-    nuiAddMethod(ClearProperties, nuiObject::ClearProperties);
-//    nuiAddMethod(ClearProperty,   nuiObject::ClearProperty);
     nuiAddMethod(GetObjectClassNameIndex, nuiObject::GetObjectClassNameIndex);
   nuiEndClass;
 

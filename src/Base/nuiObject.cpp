@@ -337,6 +337,16 @@ bool nuiObject::IsOfClass(int32 ClassIndex) const
   return c == ClassIndex;
 }
 
+bool nuiObject::HasProperty(const nglString& rName) const
+{
+  return GetAttribute(rName).IsValid();
+}
+
+bool nuiObject::HasProperty(const char* pName) const
+{
+  return HasProperty(nglString(pName));
+}
+
 void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
 {
   CheckValid();
@@ -345,22 +355,34 @@ void nuiObject::SetProperty (const nglString& rName, const nglString& rValue)
 //    NGL_OUT(_T("nuiObject::SetProperty for 0x%x %s / %s = %s\n"), this, GetObjectClass().GetChars(), GetObjectName().GetChars(), rValue.GetChars());
 //  }
 
-  mProperties[rName] = rValue;
-  OnPropertyChanged(rName, rValue);
+  nuiAttribBase attrib(GetAttribute(rName));
+  if (attrib.IsValid())
+  {
+    attrib.FromString(rValue);
+  }
+  else
+  {
+    nuiValueAttribute<nglString>* a = new nuiValueAttribute<nglString>(rName, rValue);
+    AddAttribute(rName, a);
+  }
   DebugRefreshInfo();
 }
 
-const nglString& nuiObject::GetProperty (const nglString& rName) const
+nglString nuiObject::GetProperty (const nglString& rName) const
 {
   CheckValid();
-  nuiPropertyMap::const_iterator it = mProperties.find(rName);
-  if (it == mProperties.end())
-    return nglString::Null;
+  nuiAttribBase attrib(GetAttribute(rName));
+  if (attrib.IsValid())
+  {
+    nglString val;
+    attrib.ToString(val);
+    return val;
+  }
 
-  return it->second;
+  return nglString::Null;
 }
 
-const nglString& nuiObject::GetProperty(const char* pName) const
+nglString nuiObject::GetProperty(const char* pName) const
 {
   CheckValid();
   nglString tmp(pName);
@@ -380,83 +402,6 @@ void nuiObject::SetProperty(const char* pName, const char* pValue)
   nglString tmp(pValue);
   SetProperty(pName, tmp);
 }
-
-bool nuiObject::HasProperty(const char* pName) const
-{
-  CheckValid();
-  nglString tmp(pName);
-  return HasProperty(tmp);
-}
-
-bool nuiObject::ClearProperty(const char* pName)
-{
-  CheckValid();
-  nglString tmp(pName);
-  return ClearProperty(tmp);
-}
-
-bool nuiObject::GetProperties (list<nglString>& rPropertyNames) const
-{
-  CheckValid();
-  nuiPropertyMap::const_iterator it;
-  nuiPropertyMap::const_iterator end = mProperties.end();
-  for (it = mProperties.begin(); it!=end; ++it)
-  {
-    rPropertyNames.push_back((*it).first);
-  }
-  return true;
-}
-
-bool nuiObject::HasProperty (const nglString& rName) const
-{
-  CheckValid();
-  return mProperties.find(rName) != mProperties.end();
-}
-
-bool nuiObject::ClearProperty(const nglString& rName)
-{
-  CheckValid();
-  nuiPropertyMap::iterator it = mProperties.find(rName);
-  if (it != mProperties.end())
-  {
-    mProperties.erase(rName);
-    DebugRefreshInfo();
-    return true;
-  }
-
-  return false;
-}
-
-bool nuiObject::ClearProperties(bool ClearNameAndClassToo)
-{
-  CheckValid();
-  if (ClearNameAndClassToo)
-  {
-    mProperties.clear();
-  }
-  else
-  {
-    nuiPropertyMap::iterator it = mProperties.begin();
-    nuiPropertyMap::iterator end = mProperties.end();
-
-    nglString strname("Name");
-    nglString strclass("Class");
-
-    while ( it != end )
-    {
-      if ((*it).first != strname && (*it).first != strclass)
-        mProperties.erase(it++);
-      else
-        ++it;
-    }
-  }
-
-  DebugRefreshInfo();
-  return true;
-}
-
-
-
 
 void nuiObject::SetToken(nuiTokenBase* pToken)
 {
@@ -653,12 +598,6 @@ void nuiObject::AddInstanceAttribute(nuiAttributeBase* pAttribute)
 }
 
 
-void nuiObject::CopyProperties(const nuiObject& rObject)
-{
-  CheckValid();
-  mProperties = rObject.mProperties;
-}
-
 std::vector<nglString> nuiObject::mObjectClassNames;
 std::map<nglString, int32> nuiObject::mObjectClassNamesMap;
 std::vector<std::map<nglString,nuiAttributeBase*> > nuiObject::mClassAttributes;
@@ -767,12 +706,6 @@ bool nuiObject::ClearGlobalProperty(const nglString& rName)
 bool nuiObject::ClearGlobalProperty(const char* pName)
 {
   return ClearGlobalProperty(nglString(pName));
-}
-
-void nuiObject::OnPropertyChanged(const nglString& rProperty, const nglString& rValue)
-{
-  CheckValid();
-  //...
 }
 
 std::map<nuiObject*, nuiObject::Trace> nuiObject::mObjects;

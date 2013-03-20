@@ -11,6 +11,8 @@ licence: see nui3/LICENCE.TXT
 
 #include "ucdata.h"
 
+#include "ConvertUTF.h"
+
 #ifdef WINCE
   #define ngl_vsnprintf	_vsnprintf
   #define ngl_snprintf	_snprintf
@@ -461,7 +463,7 @@ nglString::nglString()
 nglString::nglString(nglUChar Ch)
 : mIsNull(false)
 {
-  mString = Ch;
+  Append(Ch);
 }
 
 //nglString::nglString(int32 integer)
@@ -1076,7 +1078,12 @@ bool nglString::Insert(const nglString& rSource, int32 Index)
 nglString& nglString::Append(nglUChar Ch)
 {
   mIsNull = false;
-  Insert(Ch, GetLength());
+  UTF8 stra[8];
+  memset(stra, 0, 8);
+  UTF8* str = stra;
+  const UTF32* src = (UTF32*)&Ch;
+  ConversionResult res = ConvertUTF32toUTF8(&src, src+1, &str, &stra[7], lenientConversion);
+  Insert((const nglChar*)stra, GetLength());
   return *this;
 }
 

@@ -241,18 +241,56 @@ nuiLayout::~nuiLayout()
 {
 }
 
-void nuiLayout::SetHorizontallAnchor(const nglString& rName, float position, nuiAnchorMode mode)
+void nuiLayout::SetHorizontalAnchor(const nglString& rName, float position, nuiAnchorType mode)
 {
   mAnchors[0][rName] = std::make_pair(position, mode);
 }
 
 
-void nuiLayout::SetVerticalAnchor(const nglString& rName, float position, nuiAnchorMode mode)
+void nuiLayout::SetVerticalAnchor(const nglString& rName, float position, nuiAnchorType mode)
 {
   mAnchors[1][rName] = std::make_pair(position, mode);
 }
 
-float nuiLayout::GetHorizontallAnchor(const nglString& rName) const
+void nuiLayout::SetVerticalAnchorPosition(const nglString& rName, float position)
+{
+  auto it = mAnchors[1].find(rName);
+  if (it != mAnchors[1].end())
+    it->second.first = position;
+  else
+    mAnchors[1][rName] = std::make_pair(position, eAnchorAbsolute);
+}
+
+void nuiLayout::SetHorizontalAnchorPosition(const nglString& rName, float position)
+{
+  auto it = mAnchors[0].find(rName);
+  if (it != mAnchors[0].end())
+    it->second.first = position;
+  else
+    mAnchors[0][rName] = std::make_pair(position, eAnchorAbsolute);
+}
+
+void nuiLayout::SetVerticalAnchorMode(const nglString& rName, nuiAnchorType mode)
+{
+  auto it = mAnchors[1].find(rName);
+  if (it != mAnchors[1].end())
+    it->second.second = mode;
+  else
+    mAnchors[1][rName] = std::make_pair(0, mode);
+}
+
+void nuiLayout::SetHorizontalAnchorMode(const nglString& rName, nuiAnchorType mode)
+{
+  auto it = mAnchors[0].find(rName);
+  if (it != mAnchors[0].end())
+    it->second.second = mode;
+  else
+    mAnchors[0][rName] = std::make_pair(0, mode);
+}
+
+
+
+float nuiLayout::GetHorizontalAnchorPosition(const nglString& rName) const
 {
   auto it = mAnchors[0].find(rName);
   if (it == mAnchors[0].end())
@@ -261,7 +299,7 @@ float nuiLayout::GetHorizontallAnchor(const nglString& rName) const
   return it->second.first;
 }
 
-float nuiLayout::GetVerticalAnchor(const nglString& rName) const
+float nuiLayout::GetVerticalAnchorPosition(const nglString& rName) const
 {
   auto it = mAnchors[1].find(rName);
   if (it == mAnchors[1].end())
@@ -270,7 +308,7 @@ float nuiLayout::GetVerticalAnchor(const nglString& rName) const
   return it->second.first;
 }
 
-nuiAnchorMode nuiLayout::GetHorizontallAnchorMode(const nglString& rName) const
+nuiAnchorType nuiLayout::GetHorizontalAnchorMode(const nglString& rName) const
 {
   auto it = mAnchors[0].find(rName);
   if (it == mAnchors[0].end())
@@ -279,7 +317,7 @@ nuiAnchorMode nuiLayout::GetHorizontallAnchorMode(const nglString& rName) const
   return it->second.second;
 }
 
-nuiAnchorMode nuiLayout::GetVerticalAnchorMode(const nglString& rName) const
+nuiAnchorType nuiLayout::GetVerticalAnchorMode(const nglString& rName) const
 {
   auto it = mAnchors[1].find(rName);
   if (it == mAnchors[1].end())
@@ -336,6 +374,61 @@ void nuiLayout::GetConstraintString(nuiWidget* pWidget, nglString& rString) cons
 {
 
 }
+
+
+class LayoutAnchorValue : public nuiAttribute<float>
+{
+public:
+  LayoutAnchorValue(const nglString& rName, nuiLayout* pLayout)
+  : nuiAttribute<float>(rName, nuiUnitNone, nuiMakeDelegate(this, &LayoutAnchorValue::_Get), nuiMakeDelegate(this, &LayoutAnchorValue::_Set), NUI_INVALID_RANGE)
+  {
+    nuiAttributeBase::SetAsInstanceAttribute(true);
+
+    if (rName.CompareLeft("HAnchors.", true) == true)
+    {
+      mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetHorizontalAnchorPosition);
+      mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetHorizontalAnchorPosition);
+    }
+    else if (rName.CompareLeft("VAnchors.", true) == true)
+    {
+      mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetVerticalAnchorPosition);
+      mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetVerticalAnchorPosition);
+    }
+  }
+
+protected:
+  float _Get() const
+  {
+    return mGetAnchorDelegate(mAnchor);
+  }
+
+  void _Set(float value)
+  {
+    mSetAnchorDelegate(mAnchor, value);
+  }
+
+  nuiFastDelegate1<const nglString&, float> mGetAnchorDelegate;
+  nuiFastDelegate2<const nglString&, float> mSetAnchorDelegate;
+  nglString mAnchor;
+};
+
+
+void nuiLayout::SetProperty(const nglString& rName, const nglString& rValue)
+{
+  nuiAttribBase attr(GetAttribute(rName));
+  if (attr.IsValid())
+  {
+    attr.FromString(rValue);
+    return;
+  }
+
+  if (rName.CompareLeft("VAnchors.", true) == true || rName.CompareLeft("HAnchors.", true) == true)
+  {
+    // Create an attribute for this anchor, unless it exists already
+    AddAttribute(new LayoutAnchorValue(rName, this));
+  }
+}
+
 
 void nuiLayout::DoLayout(const nuiRect& rRect)
 {

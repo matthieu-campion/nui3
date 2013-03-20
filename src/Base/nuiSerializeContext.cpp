@@ -22,8 +22,6 @@ nuiSerializeContext::nuiSerializeContext(const nuiSerializeContext& rContext)
   mpNode = rContext.mpNode;
   mRecursive = rContext.mRecursive;
   mOperation = rContext.mOperation;
-  
-  CopyProperties(rContext);
 }
 
 nuiSerializeContext::~nuiSerializeContext()

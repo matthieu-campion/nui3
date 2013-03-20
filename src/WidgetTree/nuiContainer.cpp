@@ -190,7 +190,7 @@ nuiWidgetPtr nuiContainer::GetChildIf(nuiSize X, nuiSize Y, TestWidgetFunctor* p
 }
 
 
-nuiWidgetPtr nuiContainer::GetChild(const nglString& rName, bool recurse )
+nuiWidgetPtr nuiContainer::GetChild(const nglString& rName, bool ResolveNameAsPath)
 {
   CheckValid();
   IteratorPtr pIt;
@@ -205,7 +205,7 @@ nuiWidgetPtr nuiContainer::GetChild(const nglString& rName, bool recurse )
   }
   delete pIt;
 
-  if (!recurse) // Are we allowed to search the complete tree?
+  if (!ResolveNameAsPath) // Are we allowed to search the complete tree?
     return NULL;
 
   nuiWidgetPtr pNode = this;

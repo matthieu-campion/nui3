@@ -464,7 +464,8 @@ public:
   
   //@}
 
-  virtual nuiWidgetPtr GetChild(const nglString& rName, bool DeepSearch) { return NULL; } ///< Dummy implementation of the GetChild Method for easy widget/Container interaction.
+  virtual nuiWidgetPtr GetChild(const nglString& rName, bool ResolveNameAsPath) { return NULL; } ///< Dummy implementation of the GetChild Method for easy widget/Container interaction.
+  virtual nuiWidgetPtr SearchForChild(const nglString& rName, bool DeepSearch) { return NULL; } ///< Dummy implementation of the GetChild Method for easy widget/Container interaction.
   virtual void ConnectTopLevel(); ///< This method is called when the widget is connected to the Top Level. Overload it to perform specific actions in a widget.
   virtual void DisconnectTopLevel(); ///< This method is called when the widget is disconnected from the Top Level. Overload it to perform specific actions in a widget.
 
@@ -642,7 +643,6 @@ protected:
   LayoutConstraint mConstraint;
 
   void ApplyCSSForStateChange(uint32 MatchersTag); ///< This method will match this widget's state with the CSS and apply the changes needed to display it correctly
-  void OnPropertyChanged(const nglString& rName, const nglString& rValue);
 
   virtual void DrawFocus(nuiDrawContext* pContext, bool FrontOrBack); ///< Draw a decoration to show that the widget has the keyboard focus. The focus is drawn on top of the regular decoration if it exists.
   void DispatchFocus(nuiWidgetPtr pWidget); ///< Advise the objet of a change of focus object. pWidget can be null.

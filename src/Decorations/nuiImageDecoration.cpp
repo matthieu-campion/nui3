@@ -153,7 +153,7 @@ void nuiImageDecoration::SetPosition(nuiPosition pos)
 
 nglPath nuiImageDecoration::GetTexturePath() const
 {
-  if (HasProperty(_T("Texture")))
+  if (GetAttribute(_T("Texture")).IsValid())
     return GetProperty(_T("Texture"));
   
   return mpTexture->GetSource();

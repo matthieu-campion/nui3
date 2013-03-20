@@ -65,19 +65,14 @@ public:
   
   /** @name Properties system */
   //@{
-  void SetProperty(const nglString& rName, const nglString& rValue); ///< Add or change a property of the object.
+  virtual void SetProperty(const nglString& rName, const nglString& rValue); ///< Add or change a property of the object.
   void SetProperty(const char* pName, const nglString& rValue); ///< Add or change a property of the object.
   void SetProperty(const char* pName, const char* pValue); ///< Add or change a property of the object.
-  const nglString& GetProperty(const nglString& rName) const; ///< Return the property value corresponding to the given property name. If the object doesn't have the property the returned string is empty.
-  const nglString& GetProperty(const char* pName) const;
+  nglString GetProperty(const nglString& rName) const; ///< Return the property value corresponding to the given property name. If the object doesn't have the property the returned string is empty.
+  nglString GetProperty(const char* pName) const;
   bool HasProperty(const nglString& rName) const; ///< Return true if the object contains the property.
   bool HasProperty(const char* pName) const; ///< Return true if the object contains the property.
-  bool ClearProperties(bool ClearNameAndClassToo = false); ///< Remove all the properties from the object. By default the "Name" and "Class" properties will not be cleared.
-  bool GetProperties(std::list<nglString>& rPropertyNames) const; ///< Populate @param rPropertyNames with the name of the properties of the object. 
-  bool ClearProperty(const nglString& rName); ///< Remove the given property from the object.
-  bool ClearProperty(const char* pName); ///< Remove the given property from the object.
-  void CopyProperties(const nuiObject& rObject); ///< Copy the properties from rObject into this
-  
+
   nuiSimpleEventSource<0> DebugRefreshInfo; ///< Send an event when the object has changed. This event is only used in debug mode.
 
   void SetToken(nuiTokenBase* pToken);
@@ -130,13 +125,10 @@ protected:
   void AddAttribute(nuiAttributeBase* pAttribute); ///< Add an attribute to this class (beware, all instances of this class will have this attribute. If you wnat the attribute to be private to this instance of the class use AddInstanceAttribute instead).
   //@}
   
-  nuiPropertyMap mProperties;
   static nuiPropertyMap mGlobalProperties;
 
   nuiSerializeMode mSerializeMode;
   
-  virtual void OnPropertyChanged(const nglString& rProperty, const nglString& rValue);
-
 private : 
   void Init(const nglString& rObjectName);
   void InitAttributes();

@@ -43,9 +43,9 @@ enum nuiLayoutConstraintType
   eSetSize
 };
 
-enum nuiAnchorMode
+enum nuiAnchorType
 {
-  eAnchorAbsolute,
+  eAnchorAbsolute = 0,
   eAnchorRelative
 };
 
@@ -87,14 +87,20 @@ public:
   nuiLayout();
   virtual ~nuiLayout();
 
-  void SetVerticalAnchor(const nglString& rName, float position, nuiAnchorMode mode);
-  void SetHorizontallAnchor(const nglString& rName, float position, nuiAnchorMode mode);
+  void SetVerticalAnchor(const nglString& rName, float position, nuiAnchorType mode);
+  void SetHorizontalAnchor(const nglString& rName, float position, nuiAnchorType mode);
 
-  float GetVerticalAnchor(const nglString& rName) const;
-  float GetHorizontallAnchor(const nglString& rName) const;
+  void SetVerticalAnchorPosition(const nglString& rName, float position);
+  void SetHorizontalAnchorPosition(const nglString& rName, float position);
 
-  nuiAnchorMode GetVerticalAnchorMode(const nglString& rName) const;
-  nuiAnchorMode GetHorizontallAnchorMode(const nglString& rName) const;
+  void SetVerticalAnchorMode(const nglString& rName, nuiAnchorType mode);
+  void SetHorizontalAnchorMode(const nglString& rName, nuiAnchorType mode);
+
+  float GetVerticalAnchorPosition(const nglString& rName) const;
+  float GetHorizontalAnchorPosition(const nglString& rName) const;
+
+  nuiAnchorType GetVerticalAnchorMode(const nglString& rName) const;
+  nuiAnchorType GetHorizontalAnchorMode(const nglString& rName) const;
 
   void SetConstraint(nuiWidget* pWidget, const nglString& rDescription);
   void SetConstraint(nuiWidget* pWidget, const nuiLayoutConstraint& rHorizontal, const nuiLayoutConstraint& rVertical);
@@ -102,10 +108,12 @@ public:
   void GetConstraintString(nuiWidget* pWidget, nglString& rString) const;
 
   bool SetRect(const nuiRect& rRect);
-  
+
+  virtual void SetProperty(const nglString& rName, const nglString& rValue); ///< Add or change a property of the object.
+
 private:
   std::map<nuiWidget*, std::pair<nuiLayoutConstraint, nuiLayoutConstraint> > mConstraints;
-  std::map<nglString, std::pair<float, nuiAnchorMode> > mAnchors[2];
+  std::map<nglString, std::pair<float, nuiAnchorType> > mAnchors[2];
 
   void DoLayout(const nuiRect& rRect);
 };

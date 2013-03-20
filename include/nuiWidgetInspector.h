@@ -71,7 +71,6 @@ protected:
   nuiLabel* mpNeedIdealRectCalc;
   nuiLabel* mpGlobalRect;
   nuiGrid* mpMatrix;
-  nuiGrid* mpPropertyGrid;
   nuiGrid* mpAttributeGrid;
   nuiWidgetProxy* mpProxy;
   nuiMetaPainterInspector* mpPainterInspector;

@@ -16,8 +16,7 @@
 #define NUI_WIDGET_MATCHER_CLASS 2
 #define NUI_WIDGET_MATCHER_NAME 3
 #define NUI_WIDGET_MATCHER_STATE 4
-#define NUI_WIDGET_MATCHER_PROPERTY 5
-#define NUI_WIDGET_MATCHER_ATTRIBUTE 6
+#define NUI_WIDGET_MATCHER_ATTRIBUTE 5
 
 #define NUI_WIDGET_MATCHTAG_NONE 0
 #define NUI_WIDGET_MATCHTAG_BLOCK 0
@@ -28,7 +27,6 @@
 #define NUI_WIDGET_MATCHTAG_STATE               (1 < NUI_WIDGET_MATCHER_STATE)
 #define NUI_WIDGET_MATCHTAG_CLASS               (1 < NUI_WIDGET_MATCHER_CLASS)
 #define NUI_WIDGET_MATCHTAG_NAME                (1 < NUI_WIDGET_MATCHER_NAME)
-#define NUI_WIDGET_MATCHTAG_PROPERTY            (1 < NUI_WIDGET_MATCHER_PROPERTY)
 #define NUI_WIDGET_MATCHTAG_ATTRIBUTE           (1 < NUI_WIDGET_MATCHER_ATTRIBUTE)
 
 /**
@@ -184,36 +182,6 @@ public:
   
 protected:
   nglString mName;
-};
-
-class nuiWidgetPropertyMatcher : public nuiWidgetMatcher
-{
-public:
-  nuiWidgetPropertyMatcher(const nglString& rProperty, const nglString& rValue, bool CaseSensitive, bool PartialMatch)
-  : nuiWidgetMatcher(true), mProperty(rProperty), mValue(rValue), mCaseSensitive(CaseSensitive), mPartialMatch(PartialMatch)
-  {
-    mPriority = NUI_WIDGET_MATCHER_PROPERTY;
-  }
-  
-  virtual bool Match(nuiWidget*& pWidget)
-  {
-    const nglString& value = pWidget->GetProperty(mProperty);
-    if (value.IsNull())
-      return false;
-    
-    if (mPartialMatch)
-    {
-      return value.Contains(mValue, mCaseSensitive) != 0;
-    }
-
-    return value.Compare(mValue, mCaseSensitive) == 0;
-  }
-  
-protected:
-  nglString mProperty;
-  nglString mValue;
-  bool mCaseSensitive;
-  bool mPartialMatch;
 };
 
 class nuiWidgetAttributeMatcher : public nuiWidgetMatcher

@@ -422,7 +422,7 @@ void nuiSlider::AdjustHandle()
     {
       nuiRect r = mpHandle->GetIdealRect();
       nuiSize s = (mOrientation == nuiHorizontal) ? r.GetWidth(): r.GetHeight();
-      offset = mpHandle->HasProperty(tmp) ? mpHandle->GetProperty(tmp).GetFloat() : s/2;
+      offset = s/2;
       offset2 = s - offset;
       SetHandleOffset(offset);
     }
@@ -439,8 +439,8 @@ void nuiSlider::AdjustHandle()
       
       s = (mOrientation == nuiHorizontal) ? r.GetWidth() : r.GetHeight();
       
-      nuiSize Min = mpBackground->HasProperty("HandlePosMin") ? mpBackground->GetProperty("HandlePosMin").GetFloat() : offset;
-      nuiSize Max = mpBackground->HasProperty("HandlePosMax") ? mpBackground->GetProperty("HandlePosMax").GetFloat() : s - offset2;
+      nuiSize Min = offset;
+      nuiSize Max = s - offset2;
       
       mHandlePosMin = Min;
       mHandlePosMax = Max;

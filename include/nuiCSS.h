@@ -35,21 +35,6 @@ private:
   int32 mIndex1;
 };
 
-class nuiCSSAction_SetProperty : public nuiCSSAction
-{
-public:
-  nuiCSSAction_SetProperty(const nglString& rProperty, const nglString& rValue);
-  virtual ~nuiCSSAction_SetProperty();
-  
-  void ApplyAction(nuiObject* pObject);
-  
-private:
-  nglString mProperty;
-  nglString mValue;
-  bool mValueIsGlobal;
-};
-
-
 class nuiCSSRule : public nuiCSSAction
 {
 public:
