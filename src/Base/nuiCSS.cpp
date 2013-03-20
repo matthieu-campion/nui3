@@ -282,7 +282,14 @@ public:
       return false;
     }
     
-    while (GetChar() && mChar != _T('\"'))
+    bool skip = false;
+    if (!GetChar())
+    {
+      rResult.Copy(&mAccumulator[0], mAccumulator.size());
+      return false;
+    }
+
+    while (mChar != _T('\"'))
     {
       if (mChar == _T('\\'))
       {
@@ -292,7 +299,32 @@ public:
           return false;
         }
         
-        if (mChar != _T('\"'))
+        if (mChar == _T('u'))
+        {
+          if (!GetChar())
+          {
+            rResult.Copy(&mAccumulator[0], mAccumulator.size());
+            return false;
+          }
+          
+          nglString hex;
+          while (nglIsHexDigit(mChar))
+          {
+            hex += mChar;
+
+            if (!GetChar())
+            {
+              rResult.Copy(&mAccumulator[0], mAccumulator.size());
+              return false;
+            }
+          }
+          
+          nglUChar hexnum = hex.GetCInt(16);
+          hex.Wipe();
+          rResult.Append(hexnum);
+          skip = true;
+        }
+        else if (mChar != _T('\"'))
         {
           rResult.Copy(&mAccumulator[0], mAccumulator.size());
           return false;
@@ -300,7 +332,15 @@ public:
         
       }
 
-      mAccumulator.push_back(mChar);
+      if (!skip)
+      {
+        mAccumulator.push_back(mChar);
+        if (!GetChar())
+        {
+          rResult.Copy(&mAccumulator[0], mAccumulator.size());
+          return false;
+        }
+      }
     }
 
     GetChar();

@@ -50,6 +50,41 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		40BAC1D216F9C54E004E9051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F086E612E9BA0700656E84;
+			remoteInfo = nuiPhone_arm7;
+		};
+		40BAC1D416F9C54E004E9051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD341012E09CA800F1EF4E;
+			remoteInfo = thirdparty;
+		};
+		40BAC1D616F9C54E004E9051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DD3FF412E0B08300F1EF4E;
+			remoteInfo = thirdparty_ios;
+		};
+		40BAC1D816F9C54E004E9051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73F09AC312E9D09E00656E84;
+			remoteInfo = thirdparty_ios_arm7;
+		};
+		40BAC1DA16F9C54E004E9051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5FB9CF3147D5CEE001A1829;
+			remoteInfo = minui3D;
+		};
 		BC39712712883D4D00061EFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BCD448A211D2120F00BEF227 /* nui3.xcodeproj */;
@@ -310,8 +345,13 @@
 				BCD448B111D2120F00BEF227 /* libnui3.a */,
 				BCD448B511D2120F00BEF227 /* libnuiPhoneD.a */,
 				BCD448B711D2120F00BEF227 /* libnuiPhone.a */,
+				40BAC1D316F9C54E004E9051 /* libnuiPhone_arm7.a */,
 				BC39712812883D4D00061EFE /* libnui3CocoaD.a */,
 				BC39712A12883D4D00061EFE /* libnui3Cocoa.a */,
+				40BAC1D516F9C54E004E9051 /* libthirdparty.a */,
+				40BAC1D716F9C54E004E9051 /* libthirdparty_ios.a */,
+				40BAC1D916F9C54E004E9051 /* libthirdparty_ios_arm7.a */,
+				40BAC1DB16F9C54E004E9051 /* libminui3D.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -427,6 +467,41 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		40BAC1D316F9C54E004E9051 /* libnuiPhone_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnuiPhone_arm7.a;
+			remoteRef = 40BAC1D216F9C54E004E9051 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		40BAC1D516F9C54E004E9051 /* libthirdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty.a;
+			remoteRef = 40BAC1D416F9C54E004E9051 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		40BAC1D716F9C54E004E9051 /* libthirdparty_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios.a;
+			remoteRef = 40BAC1D616F9C54E004E9051 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		40BAC1D916F9C54E004E9051 /* libthirdparty_ios_arm7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libthirdparty_ios_arm7.a;
+			remoteRef = 40BAC1D816F9C54E004E9051 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		40BAC1DB16F9C54E004E9051 /* libminui3D.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libminui3D.a;
+			remoteRef = 40BAC1DA16F9C54E004E9051 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		BC39712812883D4D00061EFE /* libnui3CocoaD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -625,6 +700,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = _COCOA_;
 				INFOPLIST_FILE = AudioEngine.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -654,7 +730,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_DEBUG,
+					_COCOA_,
+				);
 				INFOPLIST_FILE = AudioEngine.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (

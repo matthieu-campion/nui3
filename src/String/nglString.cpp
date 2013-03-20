@@ -293,6 +293,11 @@ bool nglIsDigit (nglUChar a)
   return (nat_isdigit(a) != 0);
 }
 
+bool nglIsHexDigit (nglUChar a)
+{
+  return nglIsDigit(a) || (a >= 'a' && a <= 'f') || (a >= 'A' && a <= 'F');
+}
+
 bool nglIsAlpha (nglUChar a)
 {
   return (nat_isalpha(a) != 0);
