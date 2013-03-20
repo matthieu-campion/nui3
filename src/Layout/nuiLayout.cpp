@@ -125,7 +125,7 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
       c = rDescription.GetNextUChar(index);
     }
 
-    nglString anchor1 = rDescription.Extract(pos, index - pos);
+    nglString anchor1 = rDescription.Extract(pos, index - pos - 1);
 
     if (c == ',')
     {
@@ -139,7 +139,7 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
         c = rDescription.GetNextUChar(index);
       }
 
-      nglString anchor2 = rDescription.Extract(pos, index - pos);
+      nglString anchor2 = rDescription.Extract(pos, index - pos - 1);
       if (c == ']')
       {
         // Start and Stop:
@@ -326,6 +326,17 @@ nuiAnchorType nuiLayout::GetVerticalAnchorType(const nglString& rName) const
   return it->second.second;
 }
 
+bool nuiLayout::AddChild(nuiWidgetPtr pChild)
+{
+  if (nuiSimpleContainer::AddChild(pChild))
+  {
+    SetConstraint(pChild, pChild->GetProperty("Layout"));
+    return true;
+  }
+
+  return false;
+}
+
 
 void nuiLayout::SetConstraint(nuiWidget* pWidget, const nglString& rDescription)
 {
@@ -380,16 +391,17 @@ class LayoutAnchorValue : public nuiAttribute<float>
 {
 public:
   LayoutAnchorValue(const nglString& rName, nuiLayout* pLayout)
-  : nuiAttribute<float>(rName, nuiUnitNone, nuiMakeDelegate(this, &LayoutAnchorValue::_Get), nuiMakeDelegate(this, &LayoutAnchorValue::_Set), NUI_INVALID_RANGE)
+  : nuiAttribute<float>(rName, nuiUnitNone, nuiMakeDelegate(this, &LayoutAnchorValue::_Get), nuiMakeDelegate(this, &LayoutAnchorValue::_Set), NUI_INVALID_RANGE),
+    mAnchor(rName.Extract(9))
   {
     nuiAttributeBase::SetAsInstanceAttribute(true);
 
-    if (rName.CompareLeft("HAnchors.", true) == true)
+    if (rName.CompareLeft("HAnchors_", true) == 0)
     {
       mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetHorizontalAnchorPosition);
       mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetHorizontalAnchorPosition);
     }
-    else if (rName.CompareLeft("VAnchors.", true) == true)
+    else if (rName.CompareLeft("VAnchors_", true) == 0)
     {
       mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetVerticalAnchorPosition);
       mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetVerticalAnchorPosition);
@@ -416,16 +428,17 @@ class LayoutAnchorType : public nuiAttribute<int32>
 {
 public:
   LayoutAnchorType(const nglString& rName, nuiLayout* pLayout)
-  : nuiAttribute<int32>(rName, nuiUnitNone, nuiMakeDelegate(this, &LayoutAnchorType::_Get), nuiMakeDelegate(this, &LayoutAnchorType::_Set), NUI_INVALID_RANGE)
+  : nuiAttribute<int32>(rName, nuiUnitNone, nuiMakeDelegate(this, &LayoutAnchorType::_Get), nuiMakeDelegate(this, &LayoutAnchorType::_Set), NUI_INVALID_RANGE),
+    mAnchor(rName.Extract(13))
   {
     nuiAttributeBase::SetAsInstanceAttribute(true);
 
-    if (rName.CompareLeft("HAnchorsType.", true) == true)
+    if (rName.CompareLeft("HAnchorsType_", true) == 0)
     {
       mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetHorizontalAnchorType);
       mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetHorizontalAnchorType);
     }
-    else if (rName.CompareLeft("VAnchorsType.", true) == true)
+    else if (rName.CompareLeft("VAnchorsType_", true) == 0)
     {
       mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetVerticalAnchorType);
       mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetVerticalAnchorType);
@@ -489,28 +502,37 @@ void nuiLayout::SetProperty(const nglString& rName, const nglString& rValue)
     return;
   }
 
-  if (rName.CompareLeft("VAnchors.", true) == true || rName.CompareLeft("HAnchors.", true) == true)
+  if (rName.CompareLeft("VAnchors_", true) == 0 || rName.CompareLeft("HAnchors_", true) == 0)
   {
     // Create an attribute for this anchor, unless it exists already
     AddAttribute(new LayoutAnchorValue(rName, this));
+    {
+      nuiAttribBase attr(GetAttribute(rName));
+      NGL_ASSERT(attr.IsValid());
+      attr.FromString(rValue);
+    }
   }
-  else if (rName.CompareLeft("VAnchorsType.", true) == true || rName.CompareLeft("HAnchorsType.", true) == true)
+  else if (rName.CompareLeft("VAnchorsType_", true) == 0 || rName.CompareLeft("HAnchorsType_", true) == 0)
   {
     // Create an attribute for this anchor, unless it exists already
     AddAttribute(new LayoutAnchorType(rName, this));
+    {
+      nuiAttribBase attr(GetAttribute(rName));
+      NGL_ASSERT(attr.IsValid());
+      attr.FromString(rValue);
+    }
+  }
+  else
+  {
+    nuiObject::SetProperty(rName, rValue);
   }
 
-  {
-    nuiAttribBase attr(GetAttribute(rName));
-    NGL_ASSERT(attr.IsValid());
-    attr.FromString(rValue);
-  }
 }
 
 float nuiLayout::ComputeAnchorPosition(const nglString& rName, int32 AnchorIndex, float Start, float Stop) const
 {
   float Size = Stop - Start;
-  float pos = AnchorIndex == 0 ? GetHorizontalAnchorPosition(rName) : GetHorizontalAnchorType(rName);
+  float pos = AnchorIndex == 0 ? GetHorizontalAnchorPosition(rName) : GetVerticalAnchorPosition(rName);
   nuiAnchorType type = AnchorIndex == 0 ? GetHorizontalAnchorType(rName) : GetVerticalAnchorType(rName);
   switch (type)
   {
@@ -620,6 +642,8 @@ void nuiLayout::DoLayout(const nuiRect& rRect)
     ComputeConstraint(rV, t, b, top, bottom, ideal.GetHeight(), 1);
 
     pWidget->SetLayout(nuiRect(l, t, r, b, false));
+
+    ++it;
   }
 }
 

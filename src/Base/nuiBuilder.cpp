@@ -108,7 +108,8 @@ void nuiBuilder::Init()
   NUI_ADD_WIDGET_CREATOR(nuiNavigationButton, "Widget");
   NUI_ADD_WIDGET_CREATOR(nuiViewController, "Widget");
 
-  
+  NUI_ADD_WIDGET_CREATOR(nuiLayout, "Container");
+
 #ifndef _OPENGL_ES_
   NUI_ADD_WIDGET_CREATOR(nuiUserArea,"Widget");
 #endif

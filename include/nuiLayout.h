@@ -110,6 +110,7 @@ public:
   bool SetRect(const nuiRect& rRect);
 
   virtual void SetProperty(const nglString& rName, const nglString& rValue); ///< Add or change a property of the object.
+  virtual bool AddChild(nuiWidgetPtr pChild);
 
 private:
   void ComputeConstraint(const nuiLayoutConstraint& rC, float& ActualStart, float& ActualStop, float Start, float Stop, float IdealSize, int32 AnchorIndex);
