@@ -87,20 +87,20 @@ public:
   nuiLayout();
   virtual ~nuiLayout();
 
-  void SetVerticalAnchor(const nglString& rName, float position, nuiAnchorType mode);
-  void SetHorizontalAnchor(const nglString& rName, float position, nuiAnchorType mode);
+  void SetVerticalAnchor(const nglString& rName, float position, nuiAnchorType Type);
+  void SetHorizontalAnchor(const nglString& rName, float position, nuiAnchorType Type);
 
   void SetVerticalAnchorPosition(const nglString& rName, float position);
   void SetHorizontalAnchorPosition(const nglString& rName, float position);
 
-  void SetVerticalAnchorMode(const nglString& rName, nuiAnchorType mode);
-  void SetHorizontalAnchorMode(const nglString& rName, nuiAnchorType mode);
+  void SetVerticalAnchorType(const nglString& rName, nuiAnchorType Type);
+  void SetHorizontalAnchorType(const nglString& rName, nuiAnchorType Type);
 
   float GetVerticalAnchorPosition(const nglString& rName) const;
   float GetHorizontalAnchorPosition(const nglString& rName) const;
 
-  nuiAnchorType GetVerticalAnchorMode(const nglString& rName) const;
-  nuiAnchorType GetHorizontalAnchorMode(const nglString& rName) const;
+  nuiAnchorType GetVerticalAnchorType(const nglString& rName) const;
+  nuiAnchorType GetHorizontalAnchorType(const nglString& rName) const;
 
   void SetConstraint(nuiWidget* pWidget, const nglString& rDescription);
   void SetConstraint(nuiWidget* pWidget, const nuiLayoutConstraint& rHorizontal, const nuiLayoutConstraint& rVertical);
@@ -112,6 +112,8 @@ public:
   virtual void SetProperty(const nglString& rName, const nglString& rValue); ///< Add or change a property of the object.
 
 private:
+  void ComputeConstraint(const nuiLayoutConstraint& rC, float& ActualStart, float& ActualStop, float Start, float Stop, float IdealSize, int32 AnchorIndex);
+  float ComputeAnchorPosition(const nglString& rName, int32 AnchorIndex, float Start, float Stop) const;
   std::map<nuiWidget*, std::pair<nuiLayoutConstraint, nuiLayoutConstraint> > mConstraints;
   std::map<nglString, std::pair<float, nuiAnchorType> > mAnchors[2];
 

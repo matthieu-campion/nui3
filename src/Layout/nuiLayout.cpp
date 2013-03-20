@@ -241,15 +241,15 @@ nuiLayout::~nuiLayout()
 {
 }
 
-void nuiLayout::SetHorizontalAnchor(const nglString& rName, float position, nuiAnchorType mode)
+void nuiLayout::SetHorizontalAnchor(const nglString& rName, float position, nuiAnchorType Type)
 {
-  mAnchors[0][rName] = std::make_pair(position, mode);
+  mAnchors[0][rName] = std::make_pair(position, Type);
 }
 
 
-void nuiLayout::SetVerticalAnchor(const nglString& rName, float position, nuiAnchorType mode)
+void nuiLayout::SetVerticalAnchor(const nglString& rName, float position, nuiAnchorType Type)
 {
-  mAnchors[1][rName] = std::make_pair(position, mode);
+  mAnchors[1][rName] = std::make_pair(position, Type);
 }
 
 void nuiLayout::SetVerticalAnchorPosition(const nglString& rName, float position)
@@ -270,22 +270,22 @@ void nuiLayout::SetHorizontalAnchorPosition(const nglString& rName, float positi
     mAnchors[0][rName] = std::make_pair(position, eAnchorAbsolute);
 }
 
-void nuiLayout::SetVerticalAnchorMode(const nglString& rName, nuiAnchorType mode)
+void nuiLayout::SetVerticalAnchorType(const nglString& rName, nuiAnchorType Type)
 {
   auto it = mAnchors[1].find(rName);
   if (it != mAnchors[1].end())
-    it->second.second = mode;
+    it->second.second = Type;
   else
-    mAnchors[1][rName] = std::make_pair(0, mode);
+    mAnchors[1][rName] = std::make_pair(0, Type);
 }
 
-void nuiLayout::SetHorizontalAnchorMode(const nglString& rName, nuiAnchorType mode)
+void nuiLayout::SetHorizontalAnchorType(const nglString& rName, nuiAnchorType Type)
 {
   auto it = mAnchors[0].find(rName);
   if (it != mAnchors[0].end())
-    it->second.second = mode;
+    it->second.second = Type;
   else
-    mAnchors[0][rName] = std::make_pair(0, mode);
+    mAnchors[0][rName] = std::make_pair(0, Type);
 }
 
 
@@ -308,7 +308,7 @@ float nuiLayout::GetVerticalAnchorPosition(const nglString& rName) const
   return it->second.first;
 }
 
-nuiAnchorType nuiLayout::GetHorizontalAnchorMode(const nglString& rName) const
+nuiAnchorType nuiLayout::GetHorizontalAnchorType(const nglString& rName) const
 {
   auto it = mAnchors[0].find(rName);
   if (it == mAnchors[0].end())
@@ -317,7 +317,7 @@ nuiAnchorType nuiLayout::GetHorizontalAnchorMode(const nglString& rName) const
   return it->second.second;
 }
 
-nuiAnchorType nuiLayout::GetVerticalAnchorMode(const nglString& rName) const
+nuiAnchorType nuiLayout::GetVerticalAnchorType(const nglString& rName) const
 {
   auto it = mAnchors[1].find(rName);
   if (it == mAnchors[1].end())
@@ -412,6 +412,73 @@ protected:
   nglString mAnchor;
 };
 
+class LayoutAnchorType : public nuiAttribute<int32>
+{
+public:
+  LayoutAnchorType(const nglString& rName, nuiLayout* pLayout)
+  : nuiAttribute<int32>(rName, nuiUnitNone, nuiMakeDelegate(this, &LayoutAnchorType::_Get), nuiMakeDelegate(this, &LayoutAnchorType::_Set), NUI_INVALID_RANGE)
+  {
+    nuiAttributeBase::SetAsInstanceAttribute(true);
+
+    if (rName.CompareLeft("HAnchorsType.", true) == true)
+    {
+      mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetHorizontalAnchorType);
+      mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetHorizontalAnchorType);
+    }
+    else if (rName.CompareLeft("VAnchorsType.", true) == true)
+    {
+      mGetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::GetVerticalAnchorType);
+      mSetAnchorDelegate = nuiMakeDelegate(pLayout, &nuiLayout::SetVerticalAnchorType);
+    }
+  }
+
+protected:
+  int32 _Get() const
+  {
+    return (int32)mGetAnchorDelegate(mAnchor);
+  }
+
+  void _Set(int32 value)
+  {
+    mSetAnchorDelegate(mAnchor, (nuiAnchorType)value);
+  }
+
+  bool ToString(int32 Value, nglString& rString) const
+  {
+    if (Value == eAnchorAbsolute)
+    {
+      rString = "Absolute";
+      return true;
+    }
+    else if (Value == eAnchorRelative)
+    {
+      rString = "Relative";
+      return true;
+    }
+    return false;
+  }
+
+  bool FromString(int32& Value, const nglString& rString) const
+  {
+    if (rString == "Relative")
+    {
+      Value = eAnchorRelative;
+      return true;
+    }
+    else if (rString == "Absolute")
+    {
+      Value = eAnchorAbsolute;
+      return true;
+    }
+    return false;
+  }
+  
+
+  nuiFastDelegate1<const nglString&, nuiAnchorType> mGetAnchorDelegate;
+  nuiFastDelegate2<const nglString&, nuiAnchorType> mSetAnchorDelegate;
+  nglString mAnchor;
+};
+
 
 void nuiLayout::SetProperty(const nglString& rName, const nglString& rValue)
 {
@@ -427,12 +494,133 @@ void nuiLayout::SetProperty(const nglString& rName, const nglString& rValue)
     // Create an attribute for this anchor, unless it exists already
     AddAttribute(new LayoutAnchorValue(rName, this));
   }
+  else if (rName.CompareLeft("VAnchorsType.", true) == true || rName.CompareLeft("HAnchorsType.", true) == true)
+  {
+    // Create an attribute for this anchor, unless it exists already
+    AddAttribute(new LayoutAnchorType(rName, this));
+  }
+
+  {
+    nuiAttribBase attr(GetAttribute(rName));
+    NGL_ASSERT(attr.IsValid());
+    attr.FromString(rValue);
+  }
+}
+
+float nuiLayout::ComputeAnchorPosition(const nglString& rName, int32 AnchorIndex, float Start, float Stop) const
+{
+  float Size = Stop - Start;
+  float pos = AnchorIndex == 0 ? GetHorizontalAnchorPosition(rName) : GetHorizontalAnchorType(rName);
+  nuiAnchorType type = AnchorIndex == 0 ? GetHorizontalAnchorType(rName) : GetVerticalAnchorType(rName);
+  switch (type)
+  {
+    case eAnchorAbsolute:
+      if (pos < 0)
+      {
+        return Stop + pos;
+      }
+      else
+      {
+        return pos;
+      }
+      break;
+    case eAnchorRelative:
+      if (pos < 0)
+      {
+        return Stop + (pos * Size);
+      }
+      else
+      {
+        return pos * Size;
+      }
+      break;
+  }
+
+  return 0;
 }
 
 
+void nuiLayout::ComputeConstraint(const nuiLayoutConstraint& rC, float& ActualStart, float& ActualStop, float Start, float Stop, float IdealSize, int32 AnchorIndex)
+{
+  switch (rC.GetType())
+  {
+    case eFreeLayout:
+      break;
+    case eSetStartAndStop:
+      {
+        ActualStart = ComputeAnchorPosition(rC.GetAnchor(0), AnchorIndex, Start, Stop);
+        ActualStop = ComputeAnchorPosition(rC.GetAnchor(1), AnchorIndex, Start, Stop);
+      }
+      break;
+
+    case eSetStart:
+      ActualStart = ComputeAnchorPosition(rC.GetAnchor(0), AnchorIndex, Start, Stop);
+      ActualStop = ActualStart + IdealSize;
+      break;
+    case eSetStartAndSize:
+      ActualStart = ComputeAnchorPosition(rC.GetAnchor(0), AnchorIndex, Start, Stop);
+      ActualStop = ActualStart + rC.GetSize();
+      break;
+
+    case eSetStop:
+      ActualStop = ComputeAnchorPosition(rC.GetAnchor(0), AnchorIndex, Start, Stop);
+      ActualStart = ActualStop - IdealSize;
+      break;
+    case eSetStopAndSize:
+      ActualStop = ComputeAnchorPosition(rC.GetAnchor(0), AnchorIndex, Start, Stop);
+      ActualStart = ActualStop - rC.GetSize();
+      break;
+
+    case eSetMiddle:
+      {
+        float middle = Start + (Stop - Start) * 0.5;
+        ActualStart = middle - IdealSize * 0.5;
+        ActualStop = ActualStart + IdealSize;
+      }
+      break;
+    case eSetMiddleAndSize:
+      {
+        float middle = Start + (Stop - Start) * 0.5;
+        ActualStart = middle - rC.GetSize() * 0.5;
+        ActualStop = ActualStart + rC.GetSize();
+      }
+      break;
+
+    case eSetSize:
+      ActualStart = Start;
+      ActualStop = Start + rC.GetSize();
+      break;
+
+    default:
+      NGL_ASSERT(0);
+      break;
+  }
+}
+
 void nuiLayout::DoLayout(const nuiRect& rRect)
 {
-  
+  nuiRect r(GetRect());
+  float width = r.GetWidth();
+  float height = r.GetHeight();
+
+  auto it = mConstraints.begin();
+  while (it != mConstraints.end())
+  {
+    nuiWidget* pWidget = it->first;
+    float left = 0, right = width, top = 0, bottom = height;
+    nuiRect ideal(pWidget->GetIdealRect());
+    float l = ideal.Left(), r = ideal.Right(), t = ideal.Top(), b = ideal.Bottom();
+    const nuiLayoutConstraint& rH(it->second.first);
+    const nuiLayoutConstraint& rV(it->second.second);
+
+    // Horizontal Layout:
+    ComputeConstraint(rH, l, r, left, right, ideal.GetWidth(), 0);
+
+    // Vertical Layout:
+    ComputeConstraint(rV, t, b, top, bottom, ideal.GetHeight(), 1);
+
+    pWidget->SetLayout(nuiRect(l, t, r, b, false));
+  }
 }
 
 bool nuiLayout::SetRect(const nuiRect& rRect)
