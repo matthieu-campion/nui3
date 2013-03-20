@@ -1078,6 +1078,13 @@ bool nglString::Insert(const nglString& rSource, int32 Index)
 nglString& nglString::Append(nglUChar Ch)
 {
   mIsNull = false;
+
+  if (Ch < 128)
+  {
+    Insert((nglChar)Ch, GetLength());
+    return *this;
+  }
+
   UTF8 stra[8];
   memset(stra, 0, 8);
   UTF8* str = stra;
