@@ -121,7 +121,8 @@ nuiSimpleContainer::~nuiSimpleContainer()
     {
       if (!pItem->IsTrashed(false))
         pItem->SetParent(NULL);
-      pItem->Release();
+      if (pItem->Release())
+        pItem->SetParent(NULL);
     }
   }
   delete pIt;
