@@ -142,6 +142,7 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
     }
 
     nglString anchor1 = rDescription.Extract(pos, index - pos - 1);
+    anchor1.Trim();
 
     if (c == ',')
     {
@@ -156,6 +157,8 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
       }
 
       nglString anchor2 = rDescription.Extract(pos, index - pos - 1);
+      anchor2.Trim();
+
       if (c == ']')
       {
         // Start and Stop:
@@ -191,6 +194,7 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
     }
 
     nglString anchor1 = rDescription.Extract(pos, index - pos - 1);
+    anchor1.Trim();
 
     if (c == ',')
     {
@@ -206,6 +210,8 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
       }
 
       nglString anchor2 = rDescription.Extract(pos, index - pos - 1);
+      anchor2.Trim();
+
       if (c == ']')
       {
         // size and Stop:
@@ -224,6 +230,7 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
       else if (c == ',')
       {
         nglString anchor2 = rDescription.Extract(pos, index - pos - 1);
+        anchor2.Trim();
 
         // Fix stop or fix size
         int pos = index;
@@ -237,6 +244,8 @@ bool nuiLayoutConstraint::Set(const nglString& rDescription)
         }
 
         nglString anchor3 = rDescription.Extract(pos, index - pos - 1);
+        anchor3.Trim();
+
         SetMiddleAndSize(anchor1, anchor2, anchor3.GetCFloat());
         return true;
       }
@@ -385,17 +394,22 @@ void nuiLayout::SetConstraint(nuiWidget* pWidget, const nglString& rDescription)
   int pos = rDescription.Find('/');
   if (pos < 0)
   {
-    constraintH.Set(rDescription);
+    nglString desc(rDescription);
+    desc.Trim();
+    constraintH.Set(desc);
   }
   else if (pos == 0)
   {
     nglString desc2 = rDescription.Extract(pos+1, rDescription.GetLength() - (pos + 1));
+    desc2.Trim();
     constraintV.Set(desc2);
   }
   else
   {
     nglString desc1 = rDescription.Extract(0, pos);
     nglString desc2 = rDescription.Extract(pos+1, rDescription.GetLength() - (pos + 1));
+    desc1.Trim();
+    desc2.Trim();
     constraintH.Set(desc1);
     constraintV.Set(desc2);
   }

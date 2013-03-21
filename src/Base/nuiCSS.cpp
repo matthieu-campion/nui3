@@ -368,7 +368,7 @@ public:
     return !rResult.IsEmpty();
   }
   
-  bool GetValue(nglString& rResult, bool AllowBlank = false)
+  bool GetValue(nglString& rResult, bool AllowBlank = false, nglUChar separator = 0)
   {
     mAccumulator.clear();
     if (!SkipBlank())
@@ -377,7 +377,7 @@ public:
       return false;
     }
     
-    while ((AllowBlank && IsBlank(mChar)) || IsValidInValue(mChar))
+    while (((AllowBlank && IsBlank(mChar)) || IsValidInValue(mChar)) && (mChar != separator))
     {
       mAccumulator.push_back(mChar);
       if (!GetChar())
@@ -501,6 +501,8 @@ public:
       case _T(')'):
       case _T('.'):
       case _T(','):
+      case _T('/'):
+      case _T(' '):
         return true;
         break;
       default:  
@@ -669,7 +671,7 @@ public:
       }
       else
       {
-        if (!GetValue(value, true/*AllowBlank*/))
+        if (!GetValue(value, true/*AllowBlank*/, ';'))
           return false;
       }
       
@@ -953,7 +955,7 @@ public:
     }
     else
     {
-      res = GetValue(rvalue, true);
+      res = GetValue(rvalue, true, ';');
     }
     
     if (!res)
@@ -1945,7 +1947,7 @@ public:
     }
     else
     {
-      res = GetValue(rvalue, true);
+      res = GetValue(rvalue, true, ';');
     }
     
     if (!res)
