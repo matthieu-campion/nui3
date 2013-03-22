@@ -684,7 +684,7 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
   if (mVA_Position != -1)
   {
     glEnableVertexAttribArray(mVA_Position);
-    glVertexAttribPointer(mVA_Position, 2, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
+    glVertexAttribPointer(mVA_Position, 3, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
   }
 
   if (mVA_TexCoord != -1)

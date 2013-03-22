@@ -561,6 +561,13 @@ nuiAttribBase nuiObject::GetAttribute(const nglString& rName) const
 void nuiObject::AddAttribute(const nglString& rName, nuiAttributeBase* pAttribute)
 {
   CheckValid();
+
+  if (pAttribute->IsInstanceAttribute())
+  {
+    AddInstanceAttribute(rName, pAttribute);
+    return;
+  }
+
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
 
@@ -571,6 +578,14 @@ void nuiObject::AddAttribute(const nglString& rName, nuiAttributeBase* pAttribut
 void nuiObject::AddAttribute(nuiAttributeBase* pAttribute)
 {
   CheckValid();
+
+  if (pAttribute->IsInstanceAttribute())
+  {
+    AddInstanceAttribute(pAttribute);
+    return;
+  }
+
+
   mUniqueAttributeOrder++;
   pAttribute->SetOrder(mUniqueAttributeOrder);
 

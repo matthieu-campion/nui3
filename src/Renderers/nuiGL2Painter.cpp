@@ -831,9 +831,10 @@ void nuiGL2Painter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           nuiDrawContext Ctx(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()));
           Ctx.SetPainter(this);
           //pSurface->Realize(&Ctx);
-          glClearColor(1, 0, 0, 1);
-          mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), true);
-          mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), true);
+          glDisable(GL_SCISSOR_TEST);
+//          glClearColor(1, 0, 1, 1);
+          //mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), true);
+          //mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), true);
 //          glClear(GL_COLOR_BUFFER_BIT);
 //          glColor3f(0, 0, 1);
 //          glBegin(GL_TRIANGLE_FAN);
@@ -1677,6 +1678,10 @@ void nuiGL2Painter::UploadTexture(nuiTexture* pTexture)
     mTextureTranslate = nglVector2f(0.0f, ry);
     ry = -ry;    
   }
+  else
+  {
+    mTextureTranslate = nglVector2f(0.0f, 0.0f);
+  }
   
   mTextureScale = nglVector2f(rx, ry);
 
@@ -1719,11 +1724,11 @@ void nuiGL2Painter::InvalidateTexture(nuiTexture* pTexture, bool ForceReload)
 nuiGL2Painter::FramebufferInfo::FramebufferInfo()
 {
   mReload = true;
-  mFramebuffer = 0;
-  mRenderbuffer = 0;
-  mTexture = 0;
-  mDepthbuffer = 0;
-  mStencilbuffer = 0;
+  mFramebuffer = -1;
+  mRenderbuffer = -1;
+  mTexture = -1;
+  mDepthbuffer = -1;
+  mStencilbuffer = -1;
 }
 
 void nuiGL2Painter::CreateSurface(nuiSurface* pSurface)
@@ -1739,13 +1744,13 @@ void nuiGL2Painter::DestroySurface(nuiSurface* pSurface)
   }
   FramebufferInfo info = it->second;
   
-  NGL_ASSERT(info.mFramebuffer > 0);
+  NGL_ASSERT(info.mFramebuffer >= 0);
   glDeleteFramebuffersNUI(1, (GLuint*)&info.mFramebuffer);
-  if (info.mRenderbuffer > 0)
+  if (info.mRenderbuffer >= 0)
     glDeleteRenderbuffersNUI(1, (GLuint*)&info.mRenderbuffer);
-  if (info.mDepthbuffer > 0)
+  if (info.mDepthbuffer >= 0)
     glDeleteRenderbuffersNUI(1, (GLuint*)&info.mDepthbuffer);
-  if (info.mStencilbuffer > 0)
+  if (info.mStencilbuffer >= 0)
     glDeleteRenderbuffersNUI(1, (GLuint*)&info.mStencilbuffer);
   
   mFramebuffers.erase(it);  
@@ -1921,7 +1926,8 @@ void nuiGL2Painter::SetSurface(nuiSurface* pSurface)
       /// !create
       info = it->second;
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
-      glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
+      if (info.mRenderbuffer >= 0)
+        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
       //printf("glBindFramebufferNUI -> %d\n", info.mFramebuffer);
       //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
       

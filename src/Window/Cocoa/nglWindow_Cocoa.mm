@@ -186,7 +186,8 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
 
 -(void)windowWillClose:(NSNotification *)note
 {
-  [[NSApplication sharedApplication] terminate:self];
+  //[[NSApplication sharedApplication] terminate:self];
+  [super close];//mpNGLWindow->CallOnDestruction();
 }
 
 static float gScaleFactor = 1.0f;
@@ -659,6 +660,17 @@ float nuiGetInvScaleFactor()
   return res;
 }
 
+- (void)close
+{
+  if (mpNGLWindow)
+    mpNGLWindow->CallOnClose();
+}
+
+- (void)Unregister
+{
+  mpNGLWindow = NULL;
+}
+
 //////////
 - (void)resize: (NSSize) size
 {
@@ -837,6 +849,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 
 nglWindow::~nglWindow()
 {
+  [mpNSWindow Unregister];
   Unregister();
 }
 
