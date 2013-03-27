@@ -39,10 +39,10 @@ class nuiShaderProgram;
 
 enum nuiRenderer
 {
-  eSoftware,
-  eOpenGL,
-  eOpenGL2,
-  eDirect3D,
+  eSoftware = eTargetAPI_None,
+  eOpenGL = eTargetAPI_OpenGL,
+  eOpenGL2 = eTargetAPI_OpenGL2,
+  eDirect3D = eTargetAPI_Direct3D,
   eMeta
 };
 
@@ -84,6 +84,9 @@ public:
 
   void SetPainter(nuiPainter* pPainter);
   nuiPainter* GetPainter() const;
+
+  void SetMainPainter(nuiPainter* pPainter);
+  nuiPainter* GetMainPainter() const;
 
   /** @name Render state manipulation */
   //@{
@@ -181,7 +184,6 @@ public:
   void DrawObject(const nuiRenderObject& rObject);
   //@}
 
-  void SetSize(uint w, uint h); ///< Set the size of the drawing surface (for clipping calculus).
   int GetWidth() const;
   int GetHeight() const;
 
@@ -227,7 +229,7 @@ protected:
   bool mPermitAntialising;
 
   nuiPainter* mpPainter;
-  nuiPainter* mpOldPainter;
+  nuiPainter* mpMainPainter;
   nuiTexture* mpAATexture;
   GLint mClipShapeValue;
   

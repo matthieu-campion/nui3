@@ -29,6 +29,7 @@ This class is not available if the _NOGFX_ symbol is defined.
 #include <GL/glx.h>
 #endif // _X11_
 
+class nuiPainter;
 
 //! OpenGL context description
 /*!
@@ -212,16 +213,19 @@ if (HasExtension(_T("GL_ARB_texture_compression")))
 
   nglTargetAPI mTargetAPI;
 
+  nuiPainter* GetPainter() const;
 protected:
   /** @name Life cycle */
   //@{
   nglContext();  ///< Build an unitialized context
   virtual ~nglContext();
+  void InitPainter();
   //@}
 
   virtual const nglChar* OnError (uint& rError) const;
 
   bool mValidBackBufferRequestedNotGranted;
+  nuiPainter* mpPainter;
 private:
   typedef void (*GLExtFunc)(void);
 
@@ -251,8 +255,9 @@ private:
   HWND   mCtxWnd;
 #endif // _WIN32_
 
-#ifdef _X11_
 protected:
+
+#ifdef _X11_
   Display*     mpDisplay;
   XVisualInfo* mpXVisualInfo;
   Visual*      mpXVisual;
@@ -266,7 +271,6 @@ protected:
 #endif // _X11_
 
 #ifdef _CARBON_
-protected:
   AGLContext     mCtx;
   bool mFullscreen; ///< AGL is a Mac API so as any Apple done API it's full of shit.
   bool Build(WindowRef Win, const nglContextInfo& rInfo, const nglContext* pShared, bool Fullscreen);
@@ -282,7 +286,8 @@ protected:
 #endif
 
 #ifdef _UIKIT_
-protected:
+  void Build(const nglContextInfo& rInfo);
+
   nglContextInfo mContextInfo;
 
   bool mFullscreen;
@@ -292,6 +297,7 @@ protected:
 
 #ifdef _COCOA_
   nglContextInfo mContextInfo;
+  void Build(const nglContextInfo& rInfo);
 #endif
 };
 

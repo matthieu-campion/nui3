@@ -196,6 +196,7 @@ nglContext::nglContext()
   mpXVisualInfo = NULL;
   mpXVisual     = NULL;
   mGlxCtx       = NULL;
+  mpPainter     = NULL;
   mDepth        = 0;
 
   if (!mpDisplay)
@@ -270,12 +271,16 @@ bool nglContext::Build(int Screen, const nglContextInfo& rInfo, const nglContext
     return false;
   }
 
+  InitPainter();
+
   return true;
 }
 
 bool nglContext::BuildOpenGLFromExisting(GLXContext ctx)
 {
   mGlxCtx = ctx;
+  InitPainter();
+
   return true;
 }
 

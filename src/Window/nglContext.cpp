@@ -234,3 +234,36 @@ void nglContext::Dump(uint Level) const
   }
   
 }
+
+void nglContext::InitPainter()
+{
+  mpPainter = NULL;
+  switch (mTargetAPI)
+  {
+#ifndef __NUI_NO_GL__
+    case eOpenGL:
+      mpPainter = new nuiGLPainter(this);
+      break;
+    case eOpenGL2:
+      mpPainter = new nuiGL2Painter(this);
+      break;
+#endif
+#ifndef __NUI_NO_D3D__
+    case eDirect3D:
+      mpPainter = new nuiD3DPainter(this);
+      break;
+#endif
+#ifndef __NUI_NO_SOFTWARE__
+    case eNone:
+      mpPainter = new nuiSoftwarePainter(this);
+      break;
+#endif
+  }
+}
+
+nuiPainter* nglContext::GetPainter() const
+{
+  return mpPainter;
+}
+
+

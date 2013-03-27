@@ -206,8 +206,8 @@ static void ConvertMatrix(D3DMATRIX& rResult, const nuiMatrix& rSource)
       rResult.m[i][j] = rSource(i,j);
 }
 
-nuiD3DPainter::nuiD3DPainter(nglContext* pContext, const nuiRect& rRect)
-: nuiPainter(rRect, pContext),
+nuiD3DPainter::nuiD3DPainter(nglContext* pContext)
+: nuiPainter(pContext),
 mpBackBuffer(NULL)
 {
   mpVB = NULL;

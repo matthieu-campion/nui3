@@ -9,7 +9,7 @@
 
 nuiSVGView::nuiSVGView(nuiSVGShape* pShape)
   : nuiWidget(),
-    mCache(nuiRect())
+    mCache()
 {
   nuiSVGView::Init();
   mpShape = pShape;
@@ -18,7 +18,7 @@ nuiSVGView::nuiSVGView(nuiSVGShape* pShape)
 
 nuiSVGView::nuiSVGView(const nglPath& rSource)
   : nuiWidget(),
-    mCache(nuiRect())
+    mCache()
 {
   nuiSVGView::Init();
   nglIStream* pFile = rSource.OpenRead();

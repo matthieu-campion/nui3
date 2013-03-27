@@ -45,8 +45,6 @@ nuiImageDecoration::nuiImageDecoration(const nglString& rName, const nglPath& rT
     InitAttributes();
 	
   mpTexture = nuiTexture::GetTexture(rTexturePath);
-  if (mpTexture)
-    SetProperty(_T("Texture"), rTexturePath.GetPathName());
 }
 
 
@@ -153,15 +151,11 @@ void nuiImageDecoration::SetPosition(nuiPosition pos)
 
 nglPath nuiImageDecoration::GetTexturePath() const
 {
-  if (GetAttribute(_T("Texture")).IsValid())
-    return GetProperty(_T("Texture"));
-  
   return mpTexture->GetSource();
 }
 
 void nuiImageDecoration::SetTexturePath(nglPath path)
 {
-  SetProperty(_T("Texture"), path.GetPathName());
   nuiTexture* pOld = mpTexture;
   mpTexture = nuiTexture::GetTexture(path);
   if (!mpTexture || !mpTexture->IsValid())

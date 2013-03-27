@@ -1034,7 +1034,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	NSLog(@"currentFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	r = [UIScreen mainScreen].applicationFrame;
 	NSLog(@"applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
-	
+
+	Build(rContext);
 	SetSize(w, h);
 	
 /* Ultra basic UIKit view integration on top of nuiWidgets

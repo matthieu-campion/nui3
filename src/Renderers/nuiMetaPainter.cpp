@@ -8,8 +8,8 @@
 #include "nui.h"
 
 // nuiMetaPainter:
-nuiMetaPainter::nuiMetaPainter(const nuiRect& rRect, nglContext* pContext) 
-: nuiPainter(rRect, pContext)
+nuiMetaPainter::nuiMetaPainter(nglContext* pContext)
+: nuiPainter(pContext)
 {
   mLastStateValid = false;
   mpCache = &mOperations;

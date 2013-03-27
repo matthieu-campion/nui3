@@ -328,8 +328,6 @@ void nuiMainWindow::OnResize(uint Width, uint Height)
   Rect.mBottom=(nuiSize)Height;
   //SetLayout(Rect);
 
-  GetDrawContext()->SetSize(Width,Height);
-
   //NGL_OUT(_T("(OnResize)nglWindow::Invalidate()\n"));;
   InvalidateLayout();
 

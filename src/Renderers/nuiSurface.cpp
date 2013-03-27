@@ -42,7 +42,7 @@ nuiSurface* nuiSurface::CreateSurface (const nglString& rName, int32 Width, int3
 }
 
 nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat)
-  : nuiObject(), nuiDrawContext(nuiRect(Width, Height))
+  : nuiObject()
 {
   SetObjectClass(_T("nuiSurface"));
   SetObjectName(rName);
@@ -60,14 +60,7 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
   mStencil = false;
   mRenderToTexture = true;
   mpTexture = NULL;
-  mpSurfacePainter = new nuiMetaPainter(nuiRect(Width, Height), NULL);
-#ifdef DEBUG
-  mpSurfacePainter->DBGSetReferenceObject(this);
-#endif
-  mpSurfacePainter->SetDrawChildrenImmediat(true);
   mDirty = true;
-  
-  SetPainter(mpSurfacePainter);
   
   nuiSurfaceCacheSet::iterator it = mpSurfaceCaches.begin();
   nuiSurfaceCacheSet::iterator end = mpSurfaceCaches.end();
@@ -95,10 +88,6 @@ nuiSurface::~nuiSurface()
     ++it;
   }
   mpSurfaces.erase(GetObjectName());
-
-  if (mpPainter == mpSurfacePainter)
-    SetPainter(NULL);
-  delete mpSurfacePainter;
 
   if (mpTexture)
     mpTexture->Release();
@@ -182,34 +171,5 @@ void nuiSurface::SetPermanent(bool Permanent)
 bool nuiSurface::IsPermanent()
 {
   return mPermanent;
-}
-
-nuiMetaPainter* nuiSurface::GetSurfacePainter() const
-{
-  return mpSurfacePainter;
-}
-
-void nuiSurface::Wipe()
-{
-  mpSurfacePainter->Reset(NULL);
-  mDirty = true;
-}
-
-void nuiSurface::Realize(nuiDrawContext* pDestinationPainter)
-{
-  //NGL_OUT(_T("nuiSurface::Realize() [%x]\n"), this);
-  mpSurfacePainter->ReDraw(pDestinationPainter);
-  mDirty = false;
-  mpSurfacePainter->Reset(NULL);
-}
-
-bool nuiSurface::IsDirty() const
-{
-  return mDirty;
-}
-
-void nuiSurface::SetDirty(bool set)
-{
-  mDirty = set;
 }
 

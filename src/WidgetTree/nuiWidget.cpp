@@ -1343,27 +1343,26 @@ bool nuiWidget::DrawWidget(nuiDrawContext* pContext)
         for (int i = 0; i < count; i++)
         {
           //printf("\t%d: %s\n", i, mDirtyRects[i].GetValue().GetChars());
-          mpSurface->ResetState();
-          mpSurface->ResetClipRect();
-          mpSurface->SetStrokeColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
-          mpSurface->SetFillColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
-          mpSurface->LoadMatrix(nglMatrixf());
-          mpSurface->Translate(_self_and_decorations.Left(), _self_and_decorations.Top());
-          mpSurface->Set2DProjectionMatrix(nuiRect(mpSurface->GetWidth(), mpSurface->GetHeight()));
-          mpSurface->Clip(mDirtyRects[i]);
-          mpSurface->EnableClipping(true);
-          
-          // clear the surface with transparent black:
-          mpSurface->PushState();
-          mpSurface->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
-          mpSurface->Clear();  
-          mpSurface->PopState();
-          
-          InternalDrawWidget(mpSurface, _self, _self_and_decorations, true);
-        
+//          mpSurface->ResetState();
+//          mpSurface->ResetClipRect();
+//          mpSurface->SetStrokeColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+//          mpSurface->SetFillColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+//          mpSurface->LoadMatrix(nglMatrixf());
+//          mpSurface->Translate(_self_and_decorations.Left(), _self_and_decorations.Top());
+//          mpSurface->Set2DProjectionMatrix(nuiRect(mpSurface->GetWidth(), mpSurface->GetHeight()));
+//          mpSurface->Clip(mDirtyRects[i]);
+//          mpSurface->EnableClipping(true);
+//          
+//          // clear the surface with transparent black:
+//          mpSurface->PushState();
+//          mpSurface->SetClearColor(nuiColor(0.0f, 0.0f, 0.0f, 0.0f));
+//          mpSurface->Clear();  
+//          mpSurface->PopState();
+//          
+//          InternalDrawWidget(mpSurface, _self, _self_and_decorations, true);
+
         }
 
-        mpSurface->SetDirty(true);
         mDirtyRects.clear();
         mNeedSelfRedraw = false;
       }
@@ -3899,7 +3898,7 @@ void nuiWidget::EnableRenderCache(bool set)
     {
       if (!mpRenderCache)
       {
-        mpRenderCache = new nuiMetaPainter(nuiRect());
+        mpRenderCache = new nuiMetaPainter();
 #ifdef _DEBUG_
         mpRenderCache->DBGSetReferenceObject(this);
 #endif
@@ -3926,8 +3925,8 @@ bool nuiWidget::IsRenderCacheEnabled()
 const nuiMetaPainter* nuiWidget::GetRenderCache() const
 {
   CheckValid();
-  if (mSurfaceEnabled && mpSurface)
-    return mpSurface->GetSurfacePainter();
+//  if (mSurfaceEnabled && mpSurface)
+//    return mpSurface->GetSurfacePainter();
   return mpRenderCache;
 }
 

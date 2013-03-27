@@ -9,11 +9,11 @@
 
 ///////////////////////////////////
 // nuiPainter implementation:
-nuiPainter::nuiPainter(const nuiRect& rRect, nglContext* pContext) 
+nuiPainter::nuiPainter(nglContext* pContext)
 {
   ResetStats();
-  mWidth = ToNearest(rRect.GetWidth());
-  mHeight = ToNearest(rRect.GetHeight());
+  mWidth = 0;
+  mHeight = 0;
   mMatrixStack.push(nuiMatrix());
   mProjectionMatrixStack.push(nuiMatrix());
   mProjectionViewportStack.push(nuiRect());
@@ -30,11 +30,6 @@ nuiPainter::~nuiPainter()
 {
   // Empty the clip stack:
   mpClippingStack = std::stack<nuiClipper>();
-
-  while (!mpSurfaceStack.empty())
-  {
-    PopSurface();
-  }
 }
 
 void nuiPainter::StartRendering()
@@ -270,23 +265,6 @@ void nuiPainter::SetSurface(nuiSurface* pSurface)
   
   mpSurface = pSurface;
 }
-
-void nuiPainter::PushSurface()
-{
-  if (mpSurface)
-    mpSurface->Acquire();
-  mpSurfaceStack.push(mpSurface);
-}
-
-void nuiPainter::PopSurface()
-{
-  nuiSurface* pSurface = mpSurfaceStack.top();
-  mpSurfaceStack.pop();
-  SetSurface(pSurface);
-  if (pSurface)
-    pSurface->Release();
-}
-
 
 void nuiPainter::GetSize(uint32& rX, uint32& rY) const
 {

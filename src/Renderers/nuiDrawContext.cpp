@@ -23,7 +23,7 @@ nuiDrawContext::nuiDrawContext(const nuiRect& rRect)
   mPermitAntialising = true;
 
   mpPainter = NULL;
-  mpOldPainter = NULL;
+  mpMainPainter = NULL;
   mpAATexture = nuiTexture::GetAATexture();
   
   mStateChanges = 1;
@@ -39,7 +39,7 @@ nuiDrawContext::~nuiDrawContext()
 
   delete mpPainter;
   mpPainter = NULL;
-  mpOldPainter = NULL;
+  mpMainPainter = NULL;
   while (!mpRenderStateStack.empty())
   {
     PopState();
@@ -76,6 +76,16 @@ void nuiDrawContext::SetPainter(nuiPainter* pPainter)
 nuiPainter* nuiDrawContext::GetPainter() const
 {
   return mpPainter;
+}
+
+void nuiDrawContext::SetMainPainter(nuiPainter* pPainter)
+{
+  mpMainPainter = pPainter;
+}
+
+nuiPainter* nuiDrawContext::GetMainPainter() const
+{
+  return mpMainPainter;
 }
 
 void nuiDrawContext::SetState(const nuiRenderState& rState)
@@ -1554,31 +1564,9 @@ void nuiDrawContext::DrawShade(const nuiRect& rSourceRect, const nuiRect& rShade
 nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRenderer Renderer, nglContext* pContext)
 {
   nuiDrawContext* pC = new nuiDrawContext(rRect);
-  nuiPainter* pPainter = NULL;
-  switch (Renderer)
-  {
-#ifndef __NUI_NO_GL__
-  case eOpenGL:
-    pPainter = new nuiGLPainter(pContext, rRect);
-    break;
-  case eOpenGL2:
-    pPainter = new nuiGL2Painter(pContext, rRect);
-    break;
-#endif
-#ifndef __NUI_NO_D3D__
-  case eDirect3D:
-    pPainter = new nuiD3DPainter(pContext, rRect);
-    break;
-#endif
-#ifndef __NUI_NO_SOFTWARE__
-  case eSoftware:
-    pPainter = new nuiSoftwarePainter(rRect, pContext);
-    break;
-#endif
-  case eMeta:
-    pPainter = new nuiMetaPainter(rRect, pContext);
-    break;
-  }
+  nuiPainter* pPainter = pContext->GetPainter();
+  pPainter->SetSize(rRect.GetWidth(), rRect.GetHeight());
+  pC->SetMainPainter(pPainter);
   pC->SetPainter(pPainter);
 //  if (pContext)
 //    pContext->BeginSession();
@@ -1588,11 +1576,6 @@ nuiDrawContext *nuiDrawContext::CreateDrawContext(const nuiRect& rRect, nuiRende
   return pC;
 }
 
-
-void nuiDrawContext::SetSize(uint w, uint h)
-{
-  mpPainter->SetSize(w, h);
-}
 
 int nuiDrawContext::GetWidth() const
 {

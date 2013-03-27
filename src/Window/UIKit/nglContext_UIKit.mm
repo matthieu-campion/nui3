@@ -137,6 +137,7 @@ const nglChar* gpEAGLErrorTable[] =
 
 nglContext::nglContext()
 {
+  mpPainter = NULL;
 }
 
 nglContext::~nglContext()
@@ -161,4 +162,10 @@ const nglChar* nglContext::OnError (uint& rError) const
 nglContext::GLExtFunc nglContext::LookupExtFunc (const char* pFuncName)
 {
   return NULL;//(GLExtFunc)eaglGetProcAddress(pFuncName);
+}
+
+void nglContext::Build(const nglContextInfo& rInfo)
+{
+  mTargetAPI = rInfo.TargetAPI;
+  InitPainter();
 }

@@ -567,6 +567,7 @@ nglContext::nglContext()
   mDC = NULL;
   mRC = NULL;
   mCtxWnd = NULL;
+  mpPainter = NULL;
   mValidBackBufferRequestedNotGranted = false;
 }
 
@@ -617,7 +618,7 @@ bool nglContext::Build(HWND hwnd, const nglContextInfo& rInfo, const nglContext*
     break;
   }
 
-
+  InitPainter();
   return false;
 }
 

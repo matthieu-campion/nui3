@@ -21,7 +21,7 @@
 class nuiD3DPainter : public nuiPainter, public nuiCacheManager
 {
 public:
-  nuiD3DPainter(nglContext* pContext, const nuiRect& rRect);
+  nuiD3DPainter(nglContext* pContext);
   virtual ~nuiD3DPainter();
   
   virtual void SetSize(uint32 sizex, uint32 sizey);

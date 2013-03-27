@@ -91,7 +91,7 @@ public:
 class NUI_API nuiPainter : public nuiTextureCache, public nuiSurfaceCache
 {
 public:
-  nuiPainter(const nuiRect& rRect, nglContext* pContext = NULL);
+  nuiPainter(nglContext* pContext = NULL);
   virtual ~nuiPainter();
 
   virtual void SetSize(uint32 sizex, uint32 sizey) = 0;
@@ -152,11 +152,8 @@ public:
   
 protected:
   virtual void SetSurface(nuiSurface* pSurface);
-  virtual void PushSurface();
-  virtual void PopSurface();
   nuiSurface* mpSurface;
-  std::stack<nuiSurface*> mpSurfaceStack;
-  
+
   nuiRenderState mState;
   std::stack<nuiClipper> mpClippingStack;
   uint32 mWidth;

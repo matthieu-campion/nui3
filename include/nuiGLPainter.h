@@ -21,7 +21,7 @@
 class NUI_API nuiGLPainter : public nuiPainter, public nuiCacheManager
 {
 public:
-  nuiGLPainter(nglContext* pContext, const nuiRect& rRect);
+  nuiGLPainter(nglContext* pContext);
   virtual ~nuiGLPainter();
   
   virtual void SetSize(uint32 sizex, uint32 sizey);
@@ -94,7 +94,7 @@ protected:
   GLint mDefaultFramebuffer, mDefaultRenderbuffer;
 
   bool CheckFramebufferStatus();
-  void SetViewport();
+  virtual void SetViewport();
   
   int32 mScissorX;
   int32 mScissorY;
@@ -121,6 +121,12 @@ protected:
   GLenum mTexEnvMode;
   
   uint32 mViewPort[4];
+
+  bool mUseShaders;
+
+  // Only used for shaders:
+  nglVector2f mTextureTranslate;
+  nglVector2f mTextureScale;
 };
 
 bool nuiCheckForGLErrorsReal();

@@ -16,7 +16,7 @@ class nuiRasterizer;
 class NUI_API nuiSoftwarePainter : public nuiPainter, public nuiCacheManager
 {
 public:
-  nuiSoftwarePainter(const nuiRect& rRect, nglContext* pContext = NULL);
+  nuiSoftwarePainter(nglContext* pContext = NULL);
   virtual ~nuiSoftwarePainter();
 
   virtual void SetSize(uint32 sizex, uint32 sizey);

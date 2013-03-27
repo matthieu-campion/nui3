@@ -34,7 +34,7 @@ varying vec2 TexCoordVar;\n\
 varying vec4 ColorVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
+TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
 ColorVar = Color;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
@@ -64,7 +64,7 @@ varying vec2 TexCoordVar;\n\
 varying vec4 ColorVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
+TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
 ColorVar = Color;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
@@ -95,7 +95,7 @@ uniform vec2 TextureScale;\n\
 varying vec2 TexCoordVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
+TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
@@ -123,7 +123,7 @@ uniform vec2 TextureScale;\n\
 varying vec2 TexCoordVar;\n\
 void main()\n\
 {\n\
-TexCoordVar = (TexCoord + TextureTranslate) * TextureScale;\n\
+TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
 gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
@@ -274,151 +274,15 @@ gl_FragColor = DifuseColor;\n\
 //#error "bleh"
 #endif
 
-void nuiGL2Painter::BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha, GLenum dstalpha)
-{
-  mSrcColor = src;
-  mDstColor = dst;
-  mSrcAlpha = srcalpha;
-  mDstAlpha = dstalpha;
-#ifndef _OPENGL_ES_
-  if (mpContext->glBlendFuncSeparate)
-  {
-    mpContext->glBlendFuncSeparate(src, dst, srcalpha, dstalpha);
-    mTwoPassBlend = false;
-  }
-  else 
-  {
-    glBlendFunc(src, dst);
-    mTwoPassBlend = true;
-  }
-#else
-#if GL_OES_blend_equation_separate
-  //    if (glBlendFuncSeparateOES)
-  //    {
-  //      glBlendFuncSeparateOES(src, dst, srcalpha, dstalpha);
-  //      mTwoPassBlend = false;
-  //    }
-  //    else
-  {
-    glBlendFunc(src, dst);
-    mTwoPassBlend = true;
-  }
-#else
-  glBlendFunc(src, dst);
-#endif
-#endif
-}
-
-
-bool nuiGL2Painter::CheckFramebufferStatus()
-{
-  //  return true;
-#if 1
-  GLint status = glCheckFramebufferStatusNUI(GL_FRAMEBUFFER_NUI);
-#if defined(NGL_DEBUG)
-  switch (status)
-  {
-    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_NUI:
-    {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_NUI:
-    {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_NUI:
-    {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS\n"));
-    } break;
-    case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_NUI:
-    {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_FORMATS\n"));
-    } break;
-    case GL_FRAMEBUFFER_UNSUPPORTED_NUI:
-    {
-      NGL_OUT(_T("GL_FRAMEBUFFER_UNSUPPORTED\n"));
-    } break;
-  }
-#endif  
-  return (status == GL_FRAMEBUFFER_COMPLETE_NUI);
-#endif
-}
-
-uint32 nuiGL2Painter::mActiveContexts = 0;
-
 static uint32 mins = 30000;
 static uint32 maxs = 0;
 static uint32 totalinframe = 0;
 static uint32 total = 0;
 
-nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
-: nuiPainter(rRect, pContext)
+nuiGL2Painter::nuiGL2Painter(nglContext* pContext)
+: nuiGLPainter(pContext)
 {
-  mCanRectangleTexture = 0;
-  mTextureTarget = GL_TEXTURE_2D;
-  mTwoPassBlend = false;
-  mDefaultFramebuffer = 0;
-  mDefaultRenderbuffer = 0;
-  mForceApply = false;
-  mMatrixChanged = true;
-  mR = -1;
-  mG = -1;
-  mB = -1;
-  mA = -1;
-  mTexEnvMode = 0;
-  mViewPort[0] = 0;
-  mViewPort[1] = 0;
-  mViewPort[2] = 0;
-  mViewPort[3] = 0;
-  
-  
-  mpContext = pContext;
-  if (mpContext)
-  {
-    mpContext->BeginSession();
-    const char* ext0 = (const char*)glGetString(GL_EXTENSIONS);
-    nglString exts(ext0);
-    //NGL_OUT(_T("Extensions: %s\n"), exts.GetChars());
-    
-    
-    mpContext->CheckExtension(_T("GL_VERSION_1_2"));
-    nuiCheckForGLErrors();
-    mpContext->CheckExtension(_T("GL_VERSION_1_3"));
-    nuiCheckForGLErrors();
-    mpContext->CheckExtension(_T("GL_VERSION_1_4"));
-    nuiCheckForGLErrors();
-    mpContext->CheckExtension(_T("GL_VERSION_1_5"));
-    nuiCheckForGLErrors();
-    mpContext->CheckExtension(_T("GL_VERSION_2_0"));
-    nuiCheckForGLErrors();
-    mpContext->CheckExtension(_T("GL_ARB_vertex_buffer_object"));
-    nuiCheckForGLErrors();
-    mpContext->CheckExtension(_T("GL_EXT_framebuffer_object"));
-    nuiCheckForGLErrors();
-    
-    mpContext->CheckExtension(_T("GL_ARB_framebuffer_object"));
-    nuiCheckForGLErrors();
-    
-    if (mpContext->CheckExtension(_T("GL_ARB_texture_non_power_of_two")))
-    {
-      mCanRectangleTexture = 1;
-    }
-    else if (mpContext->CheckExtension(_T("GL_EXT_texture_rectangle")) || mpContext->CheckExtension(_T("GL_ARB_texture_rectangle")) || mpContext->CheckExtension(_T("GL_NV_texture_rectangle")))
-    {
-      mCanRectangleTexture = 2;
-    }
-    //mCanRectangleTexture = 0;
-    
-    
-    if (!mActiveContexts)
-    {
-      glAAInit();
-      nuiCheckForGLErrors();
-    }
-    
-    
-    nuiCheckForGLErrors();
-  }
+  mUseShaders = true;
 
 #ifdef _OPENGL_ES_
   nglString pre = "precision mediump float;\n";
@@ -470,28 +334,16 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext, const nuiRect& rRect)
   mpShader_DifuseColor->Link();
   mpShader_DifuseColor->GetDefaultState().Set("DifuseColor", nuiColor(255, 255, 255, 255));
   mpShader_DifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
-
-#ifdef _OPENGL_ES_
-  //  mDefaultFramebuffer = 0;
-  //  mDefaultRenderbuffer = 0;
-  glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
-  glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
-#endif
-  
-  mActiveContexts++;
 }
 
 nuiGL2Painter::~nuiGL2Painter()
 {
-  mActiveContexts--;
   mpShader_TextureVertexColor->Release();
   mpShader_TextureDifuseColor->Release();
   mpShader_TextureAlphaVertexColor->Release();
   mpShader_TextureAlphaDifuseColor->Release();
   mpShader_DifuseColor->Release();
   mpShader_VertexColor->Release();
-  if (mActiveContexts == 0)
-    glAAExit();
 }
 
 void nuiGL2Painter::SetViewport()
@@ -630,11 +482,25 @@ void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
     glDepthMask(mFinalState.mDepthWrite);
   }
 
+  ApplyTexture(rState, ForceApply);
+
+
+  if (ForceApply || mFinalState.mpShader != rState.mpShader)
+  {
+    if (rState.mpShader)
+      rState.mpShader->Acquire();
+    if (mFinalState.mpShader)
+      mFinalState.mpShader->Release();
+
+    mFinalState.mpShader = rState.mpShader;
+    glUseProgram(rState.mpShader->GetProgram());
+  }
+
+  mFinalState.mShaderState = rState.mShaderState;
+
   // We don't care about the font in the lower layer of rendering
   //nuiFont* mpFont;
   // 
-  
-  ApplyTexture(rState, ForceApply);  
   
   // Rendering buffers:
   if (ForceApply || mFinalState.mColorBuffer != rState.mColorBuffer)
@@ -751,189 +617,6 @@ void nuiGL2Painter::SetSize(uint32 w, uint32 h)
   mHeight = h;
 }
 
-void nuiGL2Painter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
-{
-  //  if ((rState.mTexturing && !rState.mpTexture) || (!rState.mTexturing && rState.mpTexture))
-  //  {
-  //    printf("bleh!\n");
-  //    char* bleh = NULL;
-  //    bleh[0] = 0;
-  //  }
-  
-  // 2D Textures: 
-  auto it = mTextures.find(rState.mpTexture);
-  bool uptodate = (it == mTextures.end()) ? false : ( !it->second.mReload && it->second.mTexture >= 0 );
-  if (ForceApply || (mFinalState.mpTexture != rState.mpTexture) || (mFinalState.mpTexture && !uptodate))
-  { 
-    GLenum intarget = 0;
-    GLenum outtarget = 0;
-    
-    if (mFinalState.mpTexture)
-    {      
-      outtarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
-      if (mFinalState.mpTexture->GetTextureID())
-        outtarget = mFinalState.mpTexture->GetTarget();
-      
-      //mFinalState.mpTexture->UnapplyGL(this); #TODO Un apply the texture
-      nuiCheckForGLErrors();
-      mFinalState.mpTexture->Release();
-      nuiCheckForGLErrors();
-    }
-    
-    //NGL_OUT(_T("Change texture to 0x%x (%s)\n"), rState.mpTexture, rState.mpTexture?rState.mpTexture->GetSource().GetChars() : nglString::Empty.GetChars());
-    mFinalState.mpTexture = rState.mpTexture ;
-    
-    if (mFinalState.mpTexture)
-    {
-      if (mFinalState.mpTexture->GetTextureID())
-        intarget = mFinalState.mpTexture->GetTarget();
-      else
-        intarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
-      
-      mFinalState.mpTexture->Acquire();
-      
-      nuiSurface* pSurface = mFinalState.mpTexture->GetSurface();
-      if (pSurface)
-      {
-        std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(pSurface);
-        bool create = (it == mFramebuffers.end()) ? true : false;  
-        if (create || pSurface->IsDirty())
-        {
-          PushClipping();
-          nuiRenderState s(mState);// PushState();
-          PushProjectionMatrix();
-          PushMatrix();
-          
-#ifdef _OPENGL_ES_
-          if (mpSurfaceStack.empty())
-          {
-            glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
-            glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
-          }
-#endif
-          
-          PushSurface();
-          
-          SetState(nuiRenderState());
-          ResetClipRect();
-          mClip.Set(0, 0, pSurface->GetWidth(), pSurface->GetHeight());
-          
-          LoadMatrix(nglMatrixf());
-          
-          NGL_ASSERT(pSurface);
-          SetSurface(pSurface);
-          nuiMatrix m;
-          m.Translate(-1.0f, 1.0f, 0.0f);
-          m.Scale(2.0f / pSurface->GetWidth(), -2.0f / pSurface->GetHeight(), 1.0f);
-          LoadProjectionMatrix(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()), m);
-
-          //////////////////////////////          
-          nuiDrawContext Ctx(nuiRect(pSurface->GetWidth(), pSurface->GetHeight()));
-          Ctx.SetPainter(this);
-          //pSurface->Realize(&Ctx);
-          glDisable(GL_SCISSOR_TEST);
-//          glClearColor(1, 0, 1, 1);
-          //mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), true);
-          //mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), true);
-//          glClear(GL_COLOR_BUFFER_BIT);
-//          glColor3f(0, 0, 1);
-//          glBegin(GL_TRIANGLE_FAN);
-//          glVertex2f(0, 0);
-//          glVertex2f(10, 0);
-//          glVertex2f(10, 10);
-//          glVertex2f(0, 10);
-//          glEnd();
-
-          Ctx.SetPainter(NULL);
-          //////////////////////////////
-          
-          PopSurface();
-          PopMatrix();
-          PopProjectionMatrix();
-          SetState(s);
-          PopClipping();
-        }
-      }
-      
-      UploadTexture(mFinalState.mpTexture);
-      nuiCheckForGLErrors();
-    }
-    
-    //NGL_OUT(_T("Change texture type from 0x%x to 0x%x\n"), outtarget, intarget);
-    
-    mTextureTarget = intarget;
-    if (intarget != outtarget)
-    {
-      // Texture Target has changed
-      if (outtarget)
-      {
-//        glDisable(outtarget);
-        nuiCheckForGLErrors();
-      }
-      //NGL_OUT(_T("disable outtarget\n"));
-      if (intarget && mFinalState.mTexturing && mFinalState.mpTexture)
-      {
-        mFinalState.mTexturing = rState.mTexturing;
-        //NGL_OUT(_T("enable intarget\n"));
-//        glEnable(intarget);
-        nuiCheckForGLErrors();
-      }
-    }
-    else
-    {
-      // Texture Target have not changed     
-      if (mFinalState.mTexturing != rState.mTexturing) // Have texture on/off changed?
-      {
-        // Should enable or disable texturing
-        mFinalState.mTexturing = rState.mTexturing;
-        if (mFinalState.mTexturing)
-        {
-//          glEnable(mTextureTarget);
-          nuiCheckForGLErrors();
-        }
-        else
-        {
-//          glDisable(mTextureTarget);
-          nuiCheckForGLErrors();
-        }
-      }
-    }
-  }
-  
-  if (ForceApply || (mFinalState.mTexturing != rState.mTexturing))
-  {
-    // Texture have not changed, but texturing may have been enabled / disabled
-    mFinalState.mTexturing = rState.mTexturing;
-    
-    if (mFinalState.mpTexture)
-    {
-      if (mTextureTarget && mFinalState.mTexturing)
-      {
-        //NGL_OUT(_T("Enable 0x%x\n"), mTextureTarget);
-//        glEnable(mTextureTarget);
-        nuiCheckForGLErrors();
-      }
-      else
-      {
-        //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
-//        glDisable(mTextureTarget);
-        nuiCheckForGLErrors();
-      }
-    }
-    else
-    {
-      if (mTextureTarget)
-      {
-        //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
-//        glDisable(mTextureTarget);
-      }
-      nuiCheckForGLErrors();
-    }
-  }
-  
-}
-
-
 void nuiGL2Painter::ClearColor()
 {
   mRenderOperations++;
@@ -1014,61 +697,50 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   }
 
   // Shader selection:
-  if (mForceApply || mFinalState.mpShader != mState.mpShader || !mFinalState.mpShader)
+  if (mState.mpShader == NULL)
   {
-    if (mState.mpShader)
-      mState.mpShader->Acquire();
-    if (mFinalState.mpShader)
-      mFinalState.mpShader->Release();
-
-    mFinalState.mpShader = mState.mpShader;
-
-    if (mFinalState.mpShader == NULL)
+    nuiShaderProgram* pShader = NULL;
+    if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
     {
-      nuiShaderProgram* pShader = NULL;
-      if (pArray->IsArrayEnabled(nuiRenderArray::eColor))
+      // Vertex Colors is on
+      if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
       {
-        // Vertex Colors is on
-        if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
-        {
-          // texture on
-          if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
-            pShader = mpShader_TextureAlphaVertexColor;
-          else
-            pShader = mpShader_TextureVertexColor;
-        }
+        // texture on
+        if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
+          pShader = mpShader_TextureAlphaVertexColor;
         else
-        {
-          pShader = mpShader_VertexColor;
-        }
+          pShader = mpShader_TextureVertexColor;
       }
       else
       {
-        // Vertex color off -> Difuse Color
-        if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
-        {
-          // texture on
-          if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
-            pShader = mpShader_TextureAlphaDifuseColor;
-          else
-            pShader = mpShader_TextureDifuseColor;
-        }
-        else
-        {
-          pShader = mpShader_DifuseColor;
-        }
+        pShader = mpShader_VertexColor;
       }
-
-      pShader->Acquire();
-      mFinalState.mpShader = pShader;
-      mFinalState.mShaderState = pShader->GetDefaultState();
+    }
+    else
+    {
+      // Vertex color off -> Difuse Color
+      if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
+      {
+        // texture on
+        if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
+          pShader = mpShader_TextureAlphaDifuseColor;
+        else
+          pShader = mpShader_TextureDifuseColor;
+      }
+      else
+      {
+        pShader = mpShader_DifuseColor;
+      }
     }
 
-    NGL_ASSERT(mFinalState.mpShader != NULL);
-
-    glUseProgram(mFinalState.mpShader->GetProgram());
-
+    pShader->Acquire();
+    mState.mpShader = pShader;
+    mState.mShaderState = pShader->GetDefaultState();
   }
+
+  NGL_ASSERT(mState.mpShader != NULL);
+
+  ApplyState(mState, mForceApply);
 
   if (mFinalState.mpTexture && pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
@@ -1079,9 +751,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), false);
   mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), false);
   mFinalState.mShaderState.Apply();
-
-  ApplyState(mState, mForceApply);
-
 
   uint32 s = pArray->GetSize();
   
@@ -1351,606 +1020,6 @@ void nuiGL2Painter::PopProjectionMatrix()
 #undef glDeleteBuffersARB
 #endif
 
-void nuiGL2Painter::ReleaseCacheObject(void* pHandle)
-{
-  /* Not 64 bit-safe and 'dead code' as Meeloo said
-   GLint array = (GLint)pHandle;
-   mpContext->glDeleteBuffersARB(1, &array);
-   nuiCheckForGLErrors();
-   */
-}
-
-uint32 nuiGL2Painter::GetRectangleTextureSupport() const
-{
-  return mCanRectangleTexture;
-}
-
-GLenum nuiGL2Painter::GetTextureTarget(bool POT) const
-{
-  GLenum target = GL_TEXTURE_2D;
-  
-  if (!POT)
-  {
-    switch (GetRectangleTextureSupport())
-    {
-      case 0:
-        break;
-      case 1:
-        break;
-      case 2:
-#ifndef _OPENGL_ES_
-        target = GL_TEXTURE_RECTANGLE_ARB;
-#endif
-        break;
-    }
-  }
-  
-  return target;
-}
-
-nuiGL2Painter::TextureInfo::TextureInfo()
-{
-  mReload = false;
-  mTexture = -1;
-}
-
-void nuiGL2Painter::CreateTexture(nuiTexture* pTexture)
-{
-}
-
-void nuiGL2Painter::UploadTexture(nuiTexture* pTexture)
-{
-  glActiveTexture(GL_TEXTURE0);
-  
-  nuiTexture* pProxy = pTexture->GetProxyTexture();
-  if (pProxy)
-    pTexture = pProxy;
-  nuiSurface* pSurface = pTexture->GetSurface();
-  
-  float Width = pTexture->GetUnscaledWidth();
-  float Height = pTexture->GetUnscaledHeight();
-  GLenum target = GetTextureTarget(pTexture->IsPowerOfTwo());
-  
-  bool changedctx = false;
-  
-  std::map<nuiTexture*, TextureInfo>::iterator it = mTextures.find(pTexture);
-  if (it == mTextures.end())
-    it = mTextures.insert(mTextures.begin(), std::pair<nuiTexture*, TextureInfo>(pTexture, TextureInfo()));
-  NGL_ASSERT(it != mTextures.end());
-  
-  TextureInfo& info(it->second);
-  
-  GLint id = pTexture->GetTextureID();
-  if (id)
-  {
-    info.mReload = false;
-    info.mTexture = id;
-    target = pTexture->GetTarget();
-  }
-  
-  nuiCheckForGLErrors();
-  
-  if (!pTexture->IsPowerOfTwo())
-  {
-    switch (GetRectangleTextureSupport())
-    {
-      case 0:
-        Width = pTexture->GetWidthPOT();
-        Height = pTexture->GetHeightPOT();
-        break;
-      case 1:
-      case 2:
-        break;
-    }
-  }
-  
-  //NGL_OUT(_T("Apply Target: 0x%x\n"), target);
-  nglImage* pImage = pTexture->GetImage();
-  
-  {
-    bool firstload = false;
-    bool reload = info.mReload;
-    if (!pSurface && !(pImage && pImage->GetPixelSize()) && !id)
-      return;
-    
-    uint i;
-    if (info.mTexture == (GLint)-1)
-    { // Generate a texture
-      //      if (mpSharedContext)
-      //      {
-      //        mpSharedContext->MakeCurrent();
-      //        nuiCheckForGLErrors();
-      //        changedctx = true;
-      //      }
-      
-      glGenTextures(1, (GLuint*)&info.mTexture);
-      //NGL_OUT(_T("nuiGL2Painter::UploadTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
-      nuiCheckForGLErrors();
-      firstload = true;
-      reload = true;
-    }
-    
-    glBindTexture(target, info.mTexture);
-    nuiCheckForGLErrors();
-    
-    if (reload)
-    {
-      glTexParameteri(target, GL_TEXTURE_MIN_FILTER, pTexture->GetMinFilter());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_MAG_FILTER, pTexture->GetMagFilter());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_WRAP_S, pTexture->GetWrapS());
-      nuiCheckForGLErrors();
-      glTexParameteri(target, GL_TEXTURE_WRAP_T, pTexture->GetWrapT());
-      nuiCheckForGLErrors();
-
-      int type = 8;
-      GLint pixelformat = 0;
-      GLint internalPixelformat = 0;
-      GLbyte* pBuffer = NULL;
-      bool allocated = false;
-      
-      if (pImage)
-      {
-        type = pImage->GetBitDepth();
-        pixelformat = pImage->GetPixelFormat();
-        internalPixelformat = pImage->GetPixelFormat();
-        pBuffer = (GLbyte*)pImage->GetBuffer();
-        
-//#ifndef NUI_IOS
-#if (!defined NUI_IOS) && (!defined _ANDROID_)
-        if (pixelformat == GL_BGR)
-          internalPixelformat = GL_RGB;
-#endif
-        
-        if (!GetRectangleTextureSupport())
-        {
-          nuiCheckForGLErrors();
-          if (!pTexture->IsPowerOfTwo())
-          {        
-            pBuffer = (GLbyte*)malloc( (uint)(Width * Height * pImage->GetPixelSize()));
-            if (!pBuffer) 
-              return;
-            allocated = true;
-            memset(pBuffer,0, (uint)(Width*Height * pImage->GetPixelSize()));
-            
-            for (i=0; i < pImage->GetHeight(); i++)
-            {
-              
-              memcpy
-              (
-               pBuffer + (uint)(Width * i * pImage->GetPixelSize()), 
-               pImage->GetBuffer() + pImage->GetBytesPerLine()*i, 
-               pImage->GetBytesPerLine()
-               );
-            }
-          }
-        }
-        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
-        nuiCheckForGLErrors();
-        
-        switch (type)
-        {
-          case 16:
-          case 15:
-            type = GL_UNSIGNED_SHORT_5_5_5_1;
-            break;
-          case 8:
-          case 24:
-          case 32:
-            type = GL_UNSIGNED_BYTE;
-            break;
-        }
-        
-#if !defined(_OPENGL_ES_) && defined(_MACOSX_)
-        glTexParameteri(target, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
-        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
-#endif
-      }
-      else
-      {
-        NGL_ASSERT(pSurface);
-#if !defined(_OPENGL_ES_) && defined(_MACOSX_)
-        internalPixelformat = pSurface->GetPixelFormat();
-        if (internalPixelformat == GL_RGBA)
-        {
-          internalPixelformat = GL_RGBA;
-          pixelformat = GL_BGRA;
-          type = GL_UNSIGNED_INT_8_8_8_8_REV;
-        }
-        else if (internalPixelformat == GL_RGB)
-        {
-          internalPixelformat = GL_RGB;
-          pixelformat = GL_BGR;
-          type = GL_UNSIGNED_BYTE;
-        }
-        else
-        {
-          pixelformat = pSurface->GetPixelFormat();
-          type = GL_UNSIGNED_BYTE;
-        }
-        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
-#else
-        internalPixelformat = pSurface->GetPixelFormat();
-        pixelformat = pSurface->GetPixelFormat();
-        type = GL_UNSIGNED_BYTE;
-#endif
-      }
-      
-      
-#if (!defined _MACOSX_)
-      if (!firstload)
-      {
-        glTexSubImage2D
-        (  
-         target,
-         0,
-         0,0,
-         (int)Width,
-         (int)Height,
-         pixelformat,
-         type,
-         pBuffer
-         );
-        nuiCheckForGLErrors();
-        pTexture->ResetForceReload();
-      }
-      else
-#endif
-      {
-#ifndef _OPENGL_ES_
-        if (pTexture->GetAutoMipMap())
-        {
-#ifdef _MACOSX_
-          glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
-          nuiCheckForGLErrors();
-#endif
-          glTexParameteri(target, GL_TEXTURE_MAX_LEVEL, (int)log2(Width));
-          nuiCheckForGLErrors();
-          gluBuild2DMipmaps(target, internalPixelformat, (int)Width, (int)Height, pixelformat, type, pBuffer);          
-          nuiCheckForGLErrors();
-        }
-        else
-#endif
-        {
-          glTexImage2D(target, 0, internalPixelformat, (int)Width, (int)Height, 0, pixelformat, type, pBuffer);
-        }
-        nuiCheckForGLErrors();
-      }
-      
-      info.mReload = false;
-      
-      if (allocated)
-        free(pBuffer);
-
-#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
-      if (!pTexture->IsBufferRetained())
-      { 
-        pTexture->ReleaseBuffer();
-      }
-#endif
-
-    }
-  }
-  
-  if (mTexEnvMode != pTexture->GetEnvMode())
-  {
-    mTexEnvMode = pTexture->GetEnvMode();
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mTexEnvMode);
-  }
-
-  nuiCheckForGLErrors();
-  
-  if (changedctx)
-  {
-    mpContext->BeginSession();
-    nuiCheckForGLErrors();
-    glBindTexture(target, info.mTexture);
-    nuiCheckForGLErrors();
-    if (mTexEnvMode != pTexture->GetEnvMode())
-    {
-      mTexEnvMode = pTexture->GetEnvMode();
-      glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mTexEnvMode);
-    }
-    nuiCheckForGLErrors();
-  }
-  
-  uint32 rectangle = GetRectangleTextureSupport();
-  nuiCheckForGLErrors();
-  
-  double rx = 1;
-  double ry = 1;
-  if (rectangle != 1 || pTexture->GetTextureID())
-  {
-    rx = pTexture->GetUnscaledWidth() / Width;
-    ry = pTexture->GetUnscaledHeight() / Height;
-#ifndef _OPENGL_ES_
-    if (target == GL_TEXTURE_RECTANGLE_ARB)
-    {
-      rx *= pTexture->GetUnscaledWidth();
-      ry *= pTexture->GetUnscaledHeight();
-    }
-#endif
-  }
-  
-  if (pSurface)
-  {
-    mTextureTranslate = nglVector2f(0.0f, ry);
-    ry = -ry;    
-  }
-  else
-  {
-    mTextureTranslate = nglVector2f(0.0f, 0.0f);
-  }
-  
-  mTextureScale = nglVector2f(rx, ry);
-
-  nuiCheckForGLErrors();
-}
-
-void nuiGL2Painter::DestroyTexture(nuiTexture* pTexture)
-{
-  std::map<nuiTexture*, TextureInfo>::iterator it = mTextures.find(pTexture);
-  if (it == mTextures.end())
-    return;
-  NGL_ASSERT(it != mTextures.end());
-  
-  TextureInfo& info(it->second);
-  if (info.mTexture <= 0)
-    return;
-  //NGL_OUT(_T("nuiGL2Painter::DestroyTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
-  
-  mpContext->BeginSession();
-  glDeleteTextures(1, (GLuint*)&info.mTexture);
-  mTextures.erase(it);
-}
-
-void nuiGL2Painter::InvalidateTexture(nuiTexture* pTexture, bool ForceReload)
-{
-  std::map<nuiTexture*, TextureInfo>::iterator it = mTextures.find(pTexture);
-  if (it == mTextures.end())
-    return;
-  NGL_ASSERT(it != mTextures.end());
-  
-  TextureInfo& info(it->second);
-  info.mReload = true;
-  if (!ForceReload && info.mTexture != -1)
-  {
-    glDeleteTextures(1, (GLuint*)&info.mTexture);
-    info.mTexture = -1;
-  }
-}
-
-nuiGL2Painter::FramebufferInfo::FramebufferInfo()
-{
-  mReload = true;
-  mFramebuffer = -1;
-  mRenderbuffer = -1;
-  mTexture = -1;
-  mDepthbuffer = -1;
-  mStencilbuffer = -1;
-}
-
-void nuiGL2Painter::CreateSurface(nuiSurface* pSurface)
-{
-}
-
-void nuiGL2Painter::DestroySurface(nuiSurface* pSurface)
-{
-  std::map<nuiSurface*, FramebufferInfo>::iterator it = mFramebuffers.find(pSurface);
-  if (it == mFramebuffers.end())
-  {
-    return;
-  }
-  FramebufferInfo info = it->second;
-  
-  NGL_ASSERT(info.mFramebuffer >= 0);
-  glDeleteFramebuffersNUI(1, (GLuint*)&info.mFramebuffer);
-  if (info.mRenderbuffer >= 0)
-    glDeleteRenderbuffersNUI(1, (GLuint*)&info.mRenderbuffer);
-  if (info.mDepthbuffer >= 0)
-    glDeleteRenderbuffersNUI(1, (GLuint*)&info.mDepthbuffer);
-  if (info.mStencilbuffer >= 0)
-    glDeleteRenderbuffersNUI(1, (GLuint*)&info.mStencilbuffer);
-  
-  mFramebuffers.erase(it);  
-}
-
-void nuiGL2Painter::InvalidateSurface(nuiSurface* pSurface, bool ForceReload)
-{
-}
-
-void nuiGL2Painter::SetSurface(nuiSurface* pSurface)
-{
-  if (mpSurface == pSurface)
-    return;
-  
-  if (pSurface)
-    pSurface->Acquire();
-  if (mpSurface)
-    mpSurface->Release();
-  mpSurface = pSurface;
-  
-  if (pSurface)
-  {
-    std::map<nuiSurface*, FramebufferInfo>::const_iterator it = mFramebuffers.find(pSurface);
-    bool create = (it == mFramebuffers.end()) ? true : false;  
-    
-    GLint width = (GLint)pSurface->GetWidth();
-    GLint height = (GLint)pSurface->GetHeight();
-    
-    nuiTexture* pTexture = pSurface->GetTexture();
-    if (pTexture && !pTexture->IsPowerOfTwo())
-    {
-      switch (GetRectangleTextureSupport())
-      {
-        case 0:
-          width = (GLint)pTexture->GetWidthPOT();
-          height= (GLint)pTexture->GetHeightPOT();
-          break;
-        case 1:
-        case 2:
-          break;
-      }
-    }
-    
-    
-    FramebufferInfo info;
-    
-    if (create)
-    {      
-      glGenFramebuffersNUI(1, (GLuint*)&info.mFramebuffer);
-      //printf("glGenFramebuffersNUI -> %d\n", info.mFramebuffer);
-      
-      nuiCheckForGLErrors();
-      glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
-      nuiCheckForGLErrors();
-      glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, 0);
-      nuiCheckForGLErrors();
-      
-      ///< Do we need a depth buffer
-      if (pSurface->GetDepth())
-      {
-        glGenRenderbuffersNUI(1, (GLuint*)&info.mDepthbuffer);
-        nuiCheckForGLErrors();
-        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mDepthbuffer);
-        nuiCheckForGLErrors();
-        
-        glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI,
-                                 GL_DEPTH_COMPONENT16,
-                                 width, height);
-        nuiCheckForGLErrors();
-        
-        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, 0);
-        nuiCheckForGLErrors();
-        
-        glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
-                                     GL_DEPTH_ATTACHMENT_NUI,
-                                     GL_RENDERBUFFER_NUI,
-                                     info.mDepthbuffer);
-        nuiCheckForGLErrors();
-      }
-      
-      ///< Do we need a stencil buffer
-      if (pSurface->GetStencil())
-      {
-        NGL_ASSERT(!"Stencil attachement not supported");
-#ifndef _OPENGL_ES_
-        glGenRenderbuffersNUI(1, (GLuint*)&info.mStencilbuffer);
-        nuiCheckForGLErrors();
-        
-        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mStencilbuffer);
-        nuiCheckForGLErrors();
-        
-        glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI,
-                                 GL_STENCIL_INDEX,
-                                 width, height);
-        nuiCheckForGLErrors();
-        
-        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, 0);
-        nuiCheckForGLErrors();
-        
-        glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
-                                     GL_STENCIL_ATTACHMENT_NUI,
-                                     GL_RENDERBUFFER_NUI,
-                                     info.mStencilbuffer);
-        nuiCheckForGLErrors();
-#endif
-      }
-      
-      ///< We definetly need a color attachement, either a texture, or a renderbuffer
-      if (pTexture && pSurface->GetRenderToTexture())
-      {
-        GLint oldTexture;
-        glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint *) &oldTexture);
-        
-        UploadTexture(pTexture);
-        
-        std::map<nuiTexture*, TextureInfo>::iterator tex_it = mTextures.find(pTexture);
-        NGL_ASSERT(tex_it != mTextures.end());
-        TextureInfo& tex_info(tex_it->second);
-        
-        glBindTexture(GL_TEXTURE_2D, 0);
-        
-        nuiCheckForGLErrors();
-        
-        glFramebufferTexture2DNUI(GL_FRAMEBUFFER_NUI,
-                                  GL_COLOR_ATTACHMENT0_NUI,
-                                  GetTextureTarget(pTexture->IsPowerOfTwo()),
-                                  tex_info.mTexture,
-                                  0);
-        //printf("surface texture -> %d\n", tex_info.mTexture);
-        nuiCheckForGLErrors();
-      }
-      else
-      {
-        glGenRenderbuffersNUI(1, (GLuint*)&info.mRenderbuffer);
-        nuiCheckForGLErrors();
-        
-        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
-        nuiCheckForGLErrors();
-        
-        GLint pixelformat = pSurface->GetPixelFormat();
-        GLint internalPixelformat = pSurface->GetPixelFormat();
-        internalPixelformat = GL_RGBA;
-#if !defined(_OPENGL_ES_) && defined(_MACOSX_)
-        if (internalPixelformat == GL_RGBA)
-        {
-          pixelformat = GL_BGRA;
-        }
-        else if (internalPixelformat == GL_RGB)
-        {
-          pixelformat = GL_BGR;
-        }
-#endif
-        
-        glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, pixelformat, width, height);
-        nuiCheckForGLErrors();
-        
-        glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
-                                     GL_COLOR_ATTACHMENT0_NUI,
-                                     GL_RENDERBUFFER_NUI,
-                                     info.mRenderbuffer);
-        //printf("surface render buffer -> %d\n", info.mRenderbuffer);
-        nuiCheckForGLErrors();
-      }
-
-#ifdef DEBUG
-      CheckFramebufferStatus();
-#endif
-      nuiCheckForGLErrors();
-      mFramebuffers[pSurface] = info;
-    }
-    else
-    {
-      /// !create
-      info = it->second;
-      glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
-      if (info.mRenderbuffer >= 0)
-        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
-      //printf("glBindFramebufferNUI -> %d\n", info.mFramebuffer);
-      //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
-      
-      nuiCheckForGLErrors();
-#ifdef DEBUG
-      CheckFramebufferStatus();
-#endif
-    }
-  }
-  else
-  {
-    /// !pSurface
-    glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, mDefaultFramebuffer);
-    //printf("UNBIND glBindFramebufferNUI -> %d\n", mDefaultFramebuffer);
-    glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, mDefaultRenderbuffer);
-    //printf("UNBIND glBindRenderbufferNUI -> %d\n", mDefaultRenderbuffer);
-    
-    nuiCheckForGLErrors();
-#ifdef DEBUG
-    CheckFramebufferStatus();
-#endif
-  }
-}
 
 
 #endif //   #ifndef __NUI_NO_GL__

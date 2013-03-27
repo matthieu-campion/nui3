@@ -13,7 +13,7 @@ class nuiTexture;
 typedef std::map<nglString, nuiSurface*, nglString::LessFunctor> nuiSurfaceMap;
 typedef std::set<nuiSurfaceCache*> nuiSurfaceCacheSet;
 
-class NUI_API nuiSurface : public nuiObject, public nuiDrawContext
+class NUI_API nuiSurface : public nuiObject
 {
 public:
   static nuiSurface* GetSurface (const nglString& rName, bool Acquired); ///< Get a surface from its ID
@@ -40,14 +40,6 @@ public:
   void SetPermanent(bool Permanent = true);
   bool IsPermanent();
 
-  void Wipe(); ///< Completely reset the surface and all associated operations
-  
-  bool IsDirty() const;
-  void SetDirty(bool set = true);
-  
-  nuiMetaPainter* GetSurfacePainter() const;
-  void Realize(nuiDrawContext* pDestinationPainter);
-
 protected:
   nuiSurface(const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA);
   virtual ~nuiSurface();
@@ -65,8 +57,7 @@ private:
   nglImagePixelFormat mPixelFormat;
   
   nuiTexture* mpTexture;
-  nuiMetaPainter* mpSurfacePainter;
-
+  
   static nuiSurfaceMap mpSurfaces;
   static nuiSurfaceCacheSet mpSurfaceCaches;
   

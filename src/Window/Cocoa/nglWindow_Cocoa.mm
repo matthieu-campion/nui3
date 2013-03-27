@@ -833,6 +833,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	r = [NSScreen mainScreen].visibleFrame;
 	//printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
+  Build(rContext);
 	SetSize(rect.size.width, rect.size.height);
   
 //  [pNSWindow UpdateOrientation];
@@ -845,6 +846,8 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   NSURLRequest* pReq = [[NSURLRequest alloc] initWithURL: pURL];
   [pWebView loadRequest: pReq];
  */
+
+
 }
 
 nglWindow::~nglWindow()

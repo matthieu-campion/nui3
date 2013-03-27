@@ -21,7 +21,7 @@ typedef std::vector<uint8> nuiRenderCache;
 class NUI_API nuiMetaPainter : public nuiPainter
 {
 public:
-  nuiMetaPainter(const nuiRect& rRect, nglContext* pContext = NULL);
+  nuiMetaPainter(nglContext* pContext = NULL);
   virtual ~nuiMetaPainter();
 
   virtual void SetSize(uint32 sizex, uint32 sizey);
