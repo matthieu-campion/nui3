@@ -8,7 +8,7 @@
 #include "nui.h"
 #include <iterator>
 
-#define PARTIAL_REDRAW_DEFAULT true
+#define PARTIAL_REDRAW_DEFAULT false
 
 #if 0//defined(_MULTI_TOUCHES_) && defined(_DEBUG_)
 # define NGL_TOUCHES_DEBUG(X) (X)

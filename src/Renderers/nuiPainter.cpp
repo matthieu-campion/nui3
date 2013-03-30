@@ -266,6 +266,12 @@ void nuiPainter::SetSurface(nuiSurface* pSurface)
   mpSurface = pSurface;
 }
 
+nuiSurface* nuiPainter::GetSurface() const
+{
+  return mpSurface;
+}
+
+
 void nuiPainter::GetSize(uint32& rX, uint32& rY) const
 {
   rX = mWidth; rY = mHeight;

@@ -1,3 +1,4 @@
+
 /*
   NUI3 - C++ cross-platform GUI framework for OpenGL based applications
   Copyright (C) 2002-2003 Sebastien Metrot
@@ -24,6 +25,7 @@ nuiDrawContext::nuiDrawContext(const nuiRect& rRect)
 
   mpPainter = NULL;
   mpMainPainter = NULL;
+  mpSavedPainter = NULL;
   mpAATexture = nuiTexture::GetAATexture();
   
   mStateChanges = 1;
@@ -40,6 +42,7 @@ nuiDrawContext::~nuiDrawContext()
   delete mpPainter;
   mpPainter = NULL;
   mpMainPainter = NULL;
+  mpSavedPainter = NULL;
   while (!mpRenderStateStack.empty())
   {
     PopState();
@@ -1586,3 +1589,34 @@ int nuiDrawContext::GetHeight() const
 {
   return (int)mHeight;
 }
+
+void nuiDrawContext::SetSurface(nuiSurface* pSurface)
+{
+  if (pSurface)
+  {
+    if (mpPainter != mpMainPainter)
+    {
+      NGL_ASSERT(mpSavedPainter == NULL);
+      mpSavedPainter = mpPainter;
+      mpPainter = mpMainPainter;
+    }
+    mpPainter->SetSurface(pSurface);
+  }
+  else
+  {
+    mpPainter->SetSurface(NULL);
+    if (mpSavedPainter != NULL)
+    {
+      mpPainter = mpSavedPainter;
+      mpSavedPainter = NULL;
+    }
+  }
+
+  mStateChanges++;
+}
+
+nuiSurface* nuiDrawContext::GetSurface() const
+{
+  return mpPainter->GetSurface();
+}
+

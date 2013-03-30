@@ -150,8 +150,10 @@ public:
   void DEBUG_EnableDrawArray(bool set) const;
   bool DEBUG_GetEnableDrawArray() const;
   
-protected:
   virtual void SetSurface(nuiSurface* pSurface);
+  virtual nuiSurface* GetSurface() const;
+
+protected:
   nuiSurface* mpSurface;
 
   nuiRenderState mState;

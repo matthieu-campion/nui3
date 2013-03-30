@@ -504,7 +504,7 @@ bool nuiTextLayout::PrintGlyphs(nuiDrawContext *pContext, float X, float Y, cons
     pOldTexture->Acquire();
   
   pContext->EnableTexturing(true);
-  
+
   const float f = nuiGetScaleFactor();
   const float i_f = nuiGetInvScaleFactor();
   

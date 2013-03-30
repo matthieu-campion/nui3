@@ -399,7 +399,7 @@ void nuiGL2Painter::SetViewport()
   nuiCheckForGLErrors();
 }
 
-void nuiGL2Painter::StartRendering()
+void nuiGL2Painter::ResetOpenGLState()
 {
   BeginSession();
   //NUI_RETURN_IF_RENDERING_DISABLED;
@@ -411,8 +411,7 @@ void nuiGL2Painter::StartRendering()
   mScissorH = -1;
   mScissorOn = false;
   
-  nuiPainter::StartRendering();
-  
+
   SetViewport();
 //  glLoadIdentity();
   

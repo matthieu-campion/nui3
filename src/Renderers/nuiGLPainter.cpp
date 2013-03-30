@@ -362,6 +362,12 @@ void nuiGLPainter::SetViewport()
 
 void nuiGLPainter::StartRendering()
 {
+  nuiPainter::StartRendering();
+  ResetOpenGLState();
+}
+
+void nuiGLPainter::ResetOpenGLState()
+{
   BeginSession();
   //NUI_RETURN_IF_RENDERING_DISABLED;
   nuiCheckForGLErrors();
@@ -371,8 +377,6 @@ void nuiGLPainter::StartRendering()
   mScissorW = -1;
   mScissorH = -1;
   mScissorOn = false;
-
-  nuiPainter::StartRendering();
 
   SetViewport();
   glLoadIdentity();
@@ -389,7 +393,7 @@ void nuiGLPainter::StartRendering()
 #endif
 
   glDisable(GL_STENCIL_TEST);
-  glDisable(GL_BLEND);
+  glEnable(GL_BLEND);
   glDisable(GL_ALPHA_TEST);
   glDisable(GL_CULL_FACE);
 
@@ -426,6 +430,7 @@ void nuiGLPainter::StartRendering()
   mA = -1;
   mTexEnvMode = 0;
 
+  //mState = nuiRenderState();
   nuiCheckForGLErrors();
 }
 
@@ -491,14 +496,8 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
 
   if (mClip.mEnabled || ForceApply)
   {
-    uint32 width = mWidth;
-    uint32 height = mHeight;
-
-    if (mpSurface)
-    {
-      width = mpSurface->GetWidth();
-      height = mpSurface->GetHeight();
-    }
+    uint32 width = GetCurrentWidth();
+    uint32 height = GetCurrentHeight();
 
     nuiRect clip(mClip);
 
@@ -584,7 +583,7 @@ void nuiGLPainter::SetState(const nuiRenderState& rState, bool ForceApply)
 
   mState = rState;
   mForceApply |= ForceApply;
-  ApplyState(rState, ForceApply);
+  //ApplyState(rState, ForceApply);
 }
 
 void nuiGLPainter::SetSize(uint32 w, uint32 h)
@@ -905,7 +904,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     return;
   }
 
-  //ApplyState(mState, mForceApply);
+  ApplyState(mState, mForceApply);
 
   mVertices += s;
   GLenum mode = pArray->GetMode();
@@ -1561,8 +1560,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       }
     }
   }
-
-  if (mTexEnvMode != pTexture->GetEnvMode())
+  else if (mTexEnvMode != pTexture->GetEnvMode())
   {
     mTexEnvMode = pTexture->GetEnvMode();
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mTexEnvMode);
@@ -1664,7 +1662,7 @@ void nuiGLPainter::DestroyTexture(nuiTexture* pTexture)
   //NGL_OUT(_T("nuiGLPainter::DestroyTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
 
   mpContext->BeginSession();
-  glDeleteTextures(1, &info.mTexture);
+  glDeleteTextures(1, (GLuint*)&info.mTexture);
   mTextures.erase(it);
 }
 
@@ -1679,7 +1677,7 @@ void nuiGLPainter::InvalidateTexture(nuiTexture* pTexture, bool ForceReload)
   info.mReload = true;
   if (!ForceReload && info.mTexture != -1)
   {
-    glDeleteTextures(1, &info.mTexture);
+    glDeleteTextures(1, (GLuint*)&info.mTexture);
     info.mTexture = -1;
   }
 }
@@ -1708,13 +1706,13 @@ void nuiGLPainter::DestroySurface(nuiSurface* pSurface)
   FramebufferInfo info = it->second;
 
   NGL_ASSERT(info.mFramebuffer > 0);
-  glDeleteFramebuffersNUI(1, &info.mFramebuffer);
+  glDeleteFramebuffersNUI(1, (GLuint*)&info.mFramebuffer);
   if (info.mRenderbuffer > 0)
-    glDeleteRenderbuffersNUI(1, &info.mRenderbuffer);
+    glDeleteRenderbuffersNUI(1, (GLuint*)&info.mRenderbuffer);
   if (info.mDepthbuffer > 0)
-    glDeleteRenderbuffersNUI(1, &info.mDepthbuffer);
+    glDeleteRenderbuffersNUI(1, (GLuint*)&info.mDepthbuffer);
   if (info.mStencilbuffer > 0)
-    glDeleteRenderbuffersNUI(1, &info.mStencilbuffer);
+    glDeleteRenderbuffersNUI(1, (GLuint*)&info.mStencilbuffer);
 
   mFramebuffers.erase(it);
 }
@@ -1732,6 +1730,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
   if (pSurface)
     pSurface->Acquire();
+
   if (mpSurface)
     mpSurface->Release();
   mpSurface = pSurface;
@@ -1923,6 +1922,8 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     }
 #endif
   }
+
+  ResetOpenGLState();
 }
 
 bool nuiCheckForGLErrorsReal()
@@ -1968,6 +1969,5 @@ bool nuiCheckForGLErrorsReal()
 
   return err == GL_NO_ERROR;
 }
-
 
 #endif //   #ifndef __NUI_NO_GL__

@@ -25,7 +25,6 @@ public:
   virtual ~nuiGL2Painter();
   
   virtual void SetSize(uint32 sizex, uint32 sizey);
-  virtual void StartRendering();
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
   virtual void DrawArray(nuiRenderArray* pArray);
   virtual void ClearColor();
@@ -43,6 +42,7 @@ public:
   
 protected:
   void ApplyState(const nuiRenderState& rState, bool ForceApply);
+  virtual void ResetOpenGLState();
 
   void SetViewport();
   

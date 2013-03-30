@@ -205,7 +205,9 @@ public:
   //@}
 
   void AddBreakPoint();
-  
+
+  void SetSurface(nuiSurface* pSurface);
+  nuiSurface* GetSurface() const;
 protected:
   // Render state stack:
   std::stack<nuiRenderState*> mpRenderStateStack;
@@ -230,6 +232,7 @@ protected:
 
   nuiPainter* mpPainter;
   nuiPainter* mpMainPainter;
+  nuiPainter* mpSavedPainter;
   nuiTexture* mpAATexture;
   GLint mClipShapeValue;
   
