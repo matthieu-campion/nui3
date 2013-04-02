@@ -2894,7 +2894,7 @@ nglString::nglString(CFStringRef string)
   char* str = (char*)malloc(length * 3);
   Boolean res = CFStringGetCString (
                               string,
-                              &mString[0],
+                              str,
                               length * 3,
                               kCFStringEncodingUTF8
                               );

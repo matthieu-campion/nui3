@@ -205,7 +205,7 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext)
 : nuiPainter(pContext)
 {
   mCanRectangleTexture = 0;
-  mTextureTarget = GL_TEXTURE_2D;
+  mTextureTarget = 0;
   mTwoPassBlend = false;
   mDefaultFramebuffer = 0;
   mDefaultRenderbuffer = 0;
@@ -385,6 +385,7 @@ void nuiGLPainter::ResetOpenGLState()
   glDisable(GL_SCISSOR_TEST);
   glDisable(GL_TEXTURE_2D);
 
+  mTextureTarget = 0;
 #ifndef _OPENGL_ES_
   if (mCanRectangleTexture == 2)
   {
@@ -430,7 +431,7 @@ void nuiGLPainter::ResetOpenGLState()
   mA = -1;
   mTexEnvMode = 0;
 
-  //mState = nuiRenderState();
+  mFinalState = nuiRenderState();
   nuiCheckForGLErrors();
 }
 
@@ -484,6 +485,19 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   //
 
   ApplyTexture(rState, ForceApply);
+
+  if (ForceApply || mFinalState.mpShader != rState.mpShader)
+  {
+    if (rState.mpShader)
+      rState.mpShader->Acquire();
+    if (mFinalState.mpShader)
+      mFinalState.mpShader->Release();
+
+    mFinalState.mpShader = rState.mpShader;
+    glUseProgram(rState.mpShader->GetProgram());
+  }
+
+  mFinalState.mShaderState = rState.mShaderState;
 
   // Rendering buffers:
   if (ForceApply || mFinalState.mColorBuffer != rState.mColorBuffer)
@@ -596,13 +610,6 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
 
 void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 {
-  //  if ((rState.mTexturing && !rState.mpTexture) || (!rState.mTexturing && rState.mpTexture))
-  //  {
-  //    printf("bleh!\n");
-  //    char* bleh = NULL;
-  //    bleh[0] = 0;
-  //  }
-
   // 2D Textures:
   auto it = mTextures.find(rState.mpTexture);
   bool uptodate = (it == mTextures.end()) ? false : ( !it->second.mReload && it->second.mTexture >= 0 );
@@ -613,11 +620,11 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 
     if (mFinalState.mpTexture)
     {
-      outtarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
       if (mFinalState.mpTexture->GetTextureID())
         outtarget = mFinalState.mpTexture->GetTarget();
+      else
+        outtarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
 
-      //mFinalState.mpTexture->UnapplyGL(this); #TODO Un apply the texture
       nuiCheckForGLErrors();
       mFinalState.mpTexture->Release();
       nuiCheckForGLErrors();
@@ -634,6 +641,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
         intarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
 
       mFinalState.mpTexture->Acquire();
+      mTextureTarget = intarget;
 
       UploadTexture(mFinalState.mpTexture);
       nuiCheckForGLErrors();
@@ -641,7 +649,6 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 
     //NGL_OUT(_T("Change texture type from 0x%x to 0x%x\n"), outtarget, intarget);
 
-    mTextureTarget = intarget;
     if (!mUseShaders)
     {
       if (intarget != outtarget)
@@ -649,14 +656,14 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
         // Texture Target has changed
         if (outtarget)
         {
+//          NGL_OUT("disable outtarget 0x%x\n", outtarget);
           glDisable(outtarget);
           nuiCheckForGLErrors();
         }
-        //NGL_OUT(_T("disable outtarget\n"));
+        mFinalState.mTexturing = rState.mTexturing;
         if (intarget && mFinalState.mTexturing && mFinalState.mpTexture)
         {
-          mFinalState.mTexturing = rState.mTexturing;
-          //NGL_OUT(_T("enable intarget\n"));
+//          NGL_OUT("enable intarget 0x%x\n", intarget);
           glEnable(intarget);
           nuiCheckForGLErrors();
         }
@@ -670,46 +677,17 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           mFinalState.mTexturing = rState.mTexturing;
           if (mFinalState.mTexturing)
           {
+//            NGL_OUT("enable mTextureTarget 0x%x\n", mTextureTarget);
             glEnable(mTextureTarget);
             nuiCheckForGLErrors();
           }
           else
           {
+//            NGL_OUT("disable mTextureTarget 0x%x\n", mTextureTarget);
             glDisable(mTextureTarget);
             nuiCheckForGLErrors();
           }
         }
-      }
-    }
-
-    if (ForceApply || (mFinalState.mTexturing != rState.mTexturing))
-    {
-      // Texture have not changed, but texturing may have been enabled / disabled
-      mFinalState.mTexturing = rState.mTexturing;
-
-      if (mFinalState.mpTexture)
-      {
-        if (mTextureTarget && mFinalState.mTexturing)
-        {
-          //NGL_OUT(_T("Enable 0x%x\n"), mTextureTarget);
-          glEnable(mTextureTarget);
-          nuiCheckForGLErrors();
-        }
-        else
-        {
-          //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
-          glDisable(mTextureTarget);
-          nuiCheckForGLErrors();
-        }
-      }
-      else
-      {
-        if (mTextureTarget)
-        {
-          //NGL_OUT(_T("Disable 0x%x\n"), mTextureTarget);
-          glDisable(mTextureTarget);
-        }
-        nuiCheckForGLErrors();
       }
     }
   }
@@ -1602,20 +1580,12 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 
   if (mUseShaders)
   {
-    if (pSurface)
-    {
-      if (1)
-      {
-        mTextureTranslate = nglVector2f(0.0f, ry);
-        mTextureScale = nglVector2f(rx, -ry);
-      }
-      else
-      {
-        mTextureTranslate = nglVector2f(0.0f, 0.0f);
-        mTextureScale = nglVector2f(rx, ry);
-      }
-    }
-    else
+//    if (pSurface)
+//    {
+//      mTextureTranslate = nglVector2f(0.0f, ry);
+//      mTextureScale = nglVector2f(rx, -ry);
+//    }
+//    else
     {
       mTextureTranslate = nglVector2f(0.0f, 0.0f);
       mTextureScale = nglVector2f(rx, ry);
@@ -1915,7 +1885,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 #endif
 
 #ifdef _OPENGL_ES_
-    if (mpSurfaceStack.empty())
+    //if (mpSurfaceStack.empty())
     {
       glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
       glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);

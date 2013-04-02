@@ -25,6 +25,7 @@ static const char* TextureVertexColor_VTX =
 "attribute vec4 Position;\n\
 attribute vec2 TexCoord;\n\
 attribute vec4 Color;\n\
+uniform mat4 SurfaceMatrix;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
@@ -36,7 +37,7 @@ void main()\n\
 {\n\
 TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
 ColorVar = Color;\n\
-gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+gl_Position = (SurfaceMatrix * ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
 
@@ -55,6 +56,7 @@ static const char* TextureAlphaVertexColor_VTX =
 "attribute vec4 Position;\n\
 attribute vec2 TexCoord;\n\
 attribute vec4 Color;\n\
+uniform mat4 SurfaceMatrix;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
@@ -66,14 +68,12 @@ void main()\n\
 {\n\
 TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
 ColorVar = Color;\n\
-gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+gl_Position = (SurfaceMatrix * ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
 
 static const char* TextureAlphaVertexColor_FGT =
 "uniform sampler2D texture;\n\
-uniform vec2 TextureTranslate;\n\
-uniform vec2 TextureScale;\n\
 varying vec4 ColorVar;\n\
 varying vec2 TexCoordVar;\n\
 void main()\n\
@@ -87,6 +87,7 @@ gl_FragColor = ColorVar * v;\n\
 static const char* TextureDifuseColor_VTX =
 "attribute vec4 Position;\n\
 attribute vec2 TexCoord;\n\
+uniform mat4 SurfaceMatrix;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
@@ -96,7 +97,7 @@ varying vec2 TexCoordVar;\n\
 void main()\n\
 {\n\
 TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
-gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+gl_Position = (SurfaceMatrix * ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
 
@@ -115,6 +116,7 @@ gl_FragColor = DifuseColor * texture2D(texture, TexCoordVar);\n\
 static const char* TextureAlphaDifuseColor_VTX =
 "attribute vec4 Position;\n\
 attribute vec2 TexCoord;\n\
+uniform mat4 SurfaceMatrix;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
@@ -124,7 +126,7 @@ varying vec2 TexCoordVar;\n\
 void main()\n\
 {\n\
 TexCoordVar = TexCoord * TextureScale + TextureTranslate;\n\
-gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+gl_Position = (SurfaceMatrix * ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
 
@@ -145,6 +147,7 @@ gl_FragColor = DifuseColor * vec4(v, v, v, v);\n\
 static const char* VertexColor_VTX =
 "attribute vec4 Position;\n\
 attribute vec4 Color;\n\
+uniform mat4 SurfaceMatrix;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
@@ -152,7 +155,7 @@ varying vec4 ColorVar;\n\
 void main()\n\
 {\n\
 ColorVar = Color;\n\
-gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+gl_Position = (SurfaceMatrix * ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
 
@@ -169,12 +172,13 @@ gl_FragColor = ColorVar;\n\
 //////////////////////////////////////////////////////////////////////////////////
 static const char* DifuseColor_VTX =
 "attribute vec4 Position;\n\
+uniform mat4 SurfaceMatrix;\n\
 uniform mat4 ModelViewMatrix;\n\
 uniform mat4 ProjectionMatrix;\n\
 uniform vec4 Offset;\n\
 void main()\n\
 {\n\
-gl_Position = (ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
+gl_Position = (SurfaceMatrix * ProjectionMatrix * ModelViewMatrix * (Position  + Offset));\n\
 }"
 ;
 
@@ -432,169 +436,10 @@ void nuiGL2Painter::ResetOpenGLState()
   mB = -1;
   mA = -1;
   mTexEnvMode = 0;
-  
-  nuiCheckForGLErrors();
-}
 
-void nuiGL2Painter::ApplyState(const nuiRenderState& rState, bool ForceApply)
-{
-  //TEST_FBO_CREATION();
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  //ForceApply = true;
-  nuiCheckForGLErrors();
+//  mTextureTranslate = nglVector2f(0.0f, 0.0f);
+//  mTextureScale = nglVector2f(1, 1);
 
-  // blending
-  if (ForceApply || mFinalState.mBlending != rState.mBlending)
-  {
-    mFinalState.mBlending = rState.mBlending;
-    if (mFinalState.mBlending)
-    {
-      glEnable(GL_BLEND);
-    }
-    else
-    {
-      glDisable(GL_BLEND);
-    }
-  }
-  
-  if (ForceApply || mFinalState.mBlendFunc != rState.mBlendFunc)
-  {
-    mFinalState.mBlendFunc = rState.mBlendFunc;
-    GLenum src, dst;
-    nuiGetBlendFuncFactors(rState.mBlendFunc, src, dst);
-    BlendFuncSeparate(src, dst);
-    nuiCheckForGLErrors();
-  }
-  
-  if (ForceApply || mFinalState.mDepthTest != rState.mDepthTest)
-  {
-    mFinalState.mDepthTest = rState.mDepthTest;
-    if (mFinalState.mDepthTest)
-      glEnable(GL_DEPTH_TEST);
-    else
-      glDisable(GL_DEPTH_TEST);
-  }
-  
-  if (ForceApply || mFinalState.mDepthWrite != rState.mDepthWrite)
-  {
-    mFinalState.mDepthWrite = rState.mDepthWrite;
-    glDepthMask(mFinalState.mDepthWrite);
-  }
-
-  ApplyTexture(rState, ForceApply);
-
-
-  if (ForceApply || mFinalState.mpShader != rState.mpShader)
-  {
-    if (rState.mpShader)
-      rState.mpShader->Acquire();
-    if (mFinalState.mpShader)
-      mFinalState.mpShader->Release();
-
-    mFinalState.mpShader = rState.mpShader;
-    glUseProgram(rState.mpShader->GetProgram());
-  }
-
-  mFinalState.mShaderState = rState.mShaderState;
-
-  // We don't care about the font in the lower layer of rendering
-  //nuiFont* mpFont;
-  // 
-  
-  // Rendering buffers:
-  if (ForceApply || mFinalState.mColorBuffer != rState.mColorBuffer)
-  {
-    mFinalState.mColorBuffer = rState.mColorBuffer;
-    GLboolean m = mFinalState.mColorBuffer ? GL_TRUE : GL_FALSE;
-    glColorMask(m, m, m, m);
-    nuiCheckForGLErrors();
-  }
-  
-  if (mClip.mEnabled || ForceApply)    
-  {
-    uint32 width = mWidth;
-    uint32 height = mHeight;
-    
-    if (mpSurface)
-    {
-      width = mpSurface->GetWidth();
-      height = mpSurface->GetHeight();
-    }
-    
-    nuiRect clip(mClip);
-    
-    int x,y,w,h;
-    uint angle = (mpSurface && mpSurface->GetRenderToTexture()) ? 0 : mAngle;
-    if (angle == 90)
-    {
-      x = ToBelow(clip.Top());
-      y = ToBelow(clip.Left());
-      w = ToBelow(clip.GetHeight());
-      h = ToBelow(clip.GetWidth());
-    }
-    else if (angle == 180)
-    {
-      w = ToBelow(clip.GetWidth());
-      h = ToBelow(clip.GetHeight());
-      x = ToBelow(width - w - clip.Left());
-      y = ToBelow(clip.Top());
-    }
-    else if (angle == 270)
-    {
-      w = ToBelow(clip.GetHeight());
-      h = ToBelow(clip.GetWidth());
-      x = ToBelow(height - clip.Top() - w);
-      y = ToBelow(width - clip.Left() - h);
-    }
-    else
-    {
-      NGL_ASSERT(!angle);
-      x = ToBelow(clip.Left());
-      y = ToBelow(height - clip.Bottom());
-      w = ToBelow(clip.GetWidth());
-      h = ToBelow(clip.GetHeight());
-    }
-    //NGL_OUT(_T("To Screen Clip {%d, %d, %d, %d}\n"), x,y,w,h);
-    
-    if (!mScissorOn || ForceApply)
-    {
-      glEnable(GL_SCISSOR_TEST);
-      mScissorOn = true;
-    }
-    
-    if (mScissorX != x || mScissorY != y || mScissorW != w || mScissorH != h || ForceApply)
-    {
-      mScissorX = x;
-      mScissorY = y;
-      mScissorW = w;
-      mScissorH = h;
-      
-      if (!mpSurface)
-      {
-        x *= nuiGetScaleFactor();
-        y *= nuiGetScaleFactor();
-        w *= nuiGetScaleFactor();
-        h *= nuiGetScaleFactor();
-      }
-      glScissor(x, y, w, h);
-    }
-    nuiCheckForGLErrors();
-  }
-  else
-  {
-    if (mScissorOn || ForceApply)
-    {
-      glDisable(GL_SCISSOR_TEST);
-      mScissorOn = false;
-    }
-  }
-  
-  mFinalState.mClearColor = rState.mClearColor;
-  mFinalState.mStrokeColor = rState.mStrokeColor;
-  mFinalState.mFillColor = rState.mFillColor;
-  
-  mForceApply = false;
-  
   nuiCheckForGLErrors();
 }
 
@@ -743,10 +588,26 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
 
   if (mFinalState.mpTexture && pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
   {
-    mFinalState.mpShader->GetDefaultState().Set("TextureTranslate", mTextureTranslate, true);
-    mFinalState.mpShader->GetDefaultState().Set("TextureScale", mTextureScale, true);
+    if (mTextureScale[1] < 0)
+    {
+      NGL_ASSERT(mFinalState.mpTexture->GetSurface() != NULL);
+//      printf("REVERSED SURFACE TEXTURE");
+    }
+    mFinalState.mpShader->GetDefaultState().Set("TextureTranslate", mTextureTranslate, false);
+    mFinalState.mpShader->GetDefaultState().Set("TextureScale", mTextureScale, false);
   }
 
+  nglMatrixf m;
+  if (mpSurface)
+  {
+    m.SetScaling(1.0f, -1.0f, 1.0f);
+  }
+  else
+  {
+    m.SetIdentity();
+  }
+  
+  mFinalState.mShaderState.Set("SurfaceMatrix", m, false);
   mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), false);
   mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), false);
   mFinalState.mShaderState.Apply();

@@ -41,7 +41,6 @@ public:
 
   
 protected:
-  void ApplyState(const nuiRenderState& rState, bool ForceApply);
   virtual void ResetOpenGLState();
 
   void SetViewport();
