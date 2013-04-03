@@ -43,7 +43,7 @@ void Application::OnInit()
   bool ShowFPS = false;
 
   
-  nuiRenderer Renderer = eOpenGL;
+  nuiRenderer Renderer = eOpenGL2;
 //  nuiRenderer Renderer = eSoftware;
 //  nuiRenderer Renderer = eDirect3D;
 

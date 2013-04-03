@@ -1860,9 +1860,12 @@ bool nuiFontBase::CopyBitmapToTexture(const GlyphBitmap &rBitmap, nuiTexture *pT
 
 bool nuiFontBase::FindNextGlyphLocation(int Width, int Height, int &rOffsetX, int &rOffsetY)
 {
-  if ((rOffsetX + Width) < TEXTURE_SIZE)
+  int32 w = mTextures[mCurrentTexture]->GetWidth();
+  int32 h = mTextures[mCurrentTexture]->GetHeight();
+
+  if ((rOffsetX + Width) < w)
   {
-    if ((rOffsetY + Height) < TEXTURE_SIZE)
+    if ((rOffsetY + Height) < h)
     {
       // there is enough space available
       mRowMaxWidth = max(mRowMaxWidth, Width);
@@ -1873,9 +1876,9 @@ bool nuiFontBase::FindNextGlyphLocation(int Width, int Height, int &rOffsetX, in
     rOffsetX += mRowMaxWidth + 2;
     rOffsetY = 0;     
 
-    if ((rOffsetX + Width) < TEXTURE_SIZE)
+    if ((rOffsetX + Width) < w)
     {
-      if ((rOffsetY + Height) < TEXTURE_SIZE)
+      if ((rOffsetY + Height) < h)
       {
         mRowMaxWidth = Width;
         return true;
