@@ -804,8 +804,11 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
     glGenFramebuffersOES(1, &defaultFramebuffer);
     glGenRenderbuffersOES(1, &colorRenderbuffer);
+
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
+    printf("glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer); (fb = %d)\n", defaultFramebuffer);
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+    printf("glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer); (fb = %d)\n", colorRenderbuffer);
     glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
 
     if (![self resizeFromLayer:eaglLayer])

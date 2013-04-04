@@ -293,7 +293,6 @@ nuiGLPainter::~nuiGLPainter()
 
 void nuiGLPainter::SetViewport()
 {
-  //GetAngle(), GetCurrentWidth(), GetCurrentHeight(), mProjectionViewportStack.top(), mProjectionMatrixStack.top());
   GLuint Angle = GetAngle();
   GLuint Width = GetCurrentWidth();
   GLuint Height = GetCurrentHeight();
@@ -318,16 +317,13 @@ void nuiGLPainter::SetViewport()
   h = ToBelow(r.GetHeight());
 
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
-  if (!mpSurface)
+  //if (!mpSurface)
   {
-    //glViewport(x * nuiGetScaleFactor(), y * nuiGetScaleFactor(), w * nuiGetScaleFactor(), h * nuiGetScaleFactor());
     x *= nuiGetScaleFactor();
     y *= nuiGetScaleFactor();
     w *= nuiGetScaleFactor();
     h *= nuiGetScaleFactor();
   }
-//  else
-//    glViewport(x, y, w, h);
 
 //  if (mViewPort[0] != x || mViewPort[1] != y || mViewPort[2] != w || mViewPort[3] != h)
   nuiCheckForGLErrors();
@@ -395,7 +391,9 @@ void nuiGLPainter::ResetOpenGLState()
 
   glDisable(GL_STENCIL_TEST);
   glEnable(GL_BLEND);
+#ifndef _OPENGL_ES_
   glDisable(GL_ALPHA_TEST);
+#endif
   glDisable(GL_CULL_FACE);
 
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -561,7 +559,7 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
       mScissorW = w;
       mScissorH = h;
 
-      if (!mpSurface)
+      //if (!mpSurface)
       {
         x *= nuiGetScaleFactor();
         y *= nuiGetScaleFactor();
@@ -1538,7 +1536,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       }
     }
   }
-  else if (mTexEnvMode != pTexture->GetEnvMode())
+  else if (!mUseShaders && (mTexEnvMode != pTexture->GetEnvMode()))
   {
     mTexEnvMode = pTexture->GetEnvMode();
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mTexEnvMode);
@@ -1698,6 +1696,16 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
   if (mpSurface == pSurface)
     return;
 
+  if (!mpSurface && pSurface)
+  {
+#ifdef _OPENGL_ES_
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
+    glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
+#endif
+
+  }
+  
+
   if (pSurface)
     pSurface->Acquire();
 
@@ -1728,6 +1736,8 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       }
     }
 
+    width *= nuiGetScaleFactor();
+    height *= nuiGetScaleFactor();
 
     FramebufferInfo info;
 
@@ -1860,10 +1870,12 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       /// !create
       info = it->second;
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
-      if (info.mRenderbuffer >= 0)
-        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
       //printf("glBindFramebufferNUI -> %d\n", info.mFramebuffer);
-      //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
+      if (info.mRenderbuffer >= 0)
+      {
+        glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
+        //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
+      }
 
       nuiCheckForGLErrors();
 #ifdef DEBUG
@@ -1883,14 +1895,6 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 #ifdef DEBUG
     CheckFramebufferStatus();
 #endif
-
-#ifdef _OPENGL_ES_
-    //if (mpSurfaceStack.empty())
-    {
-      glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
-      glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
-    }
-#endif
   }
 
   ResetOpenGLState();
@@ -1899,7 +1903,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 bool nuiCheckForGLErrorsReal()
 {
   GLenum err = GL_NO_ERROR;
-#if 1 // Globally enable/disable OpenGL error checking
+#if 0 // Globally enable/disable OpenGL error checking
       //#ifdef _DEBUG_
   bool error = false;
   err = glGetError();

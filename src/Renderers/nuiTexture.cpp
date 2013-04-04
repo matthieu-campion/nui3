@@ -690,7 +690,10 @@ void nuiTexture::Init()
   {
     mRealWidth = (nuiSize)mpSurface->GetWidth();
     mRealHeight = (nuiSize)mpSurface->GetHeight();
-    
+
+    mScale = nuiGetScaleFactor();
+    mRealWidth *= mScale;
+    mRealHeight *= mScale;
     mPixelFormat = eImagePixelRGBA;
   }
   else if (mTextureID)

@@ -24,20 +24,11 @@ public:
   nuiGL2Painter(nglContext* pContext);
   virtual ~nuiGL2Painter();
   
-  virtual void SetSize(uint32 sizex, uint32 sizey);
-  virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
   virtual void DrawArray(nuiRenderArray* pArray);
-  virtual void ClearColor();
-  virtual void BeginSession();
-  virtual void EndSession();
   virtual void LoadMatrix(const nuiMatrix& rMatrix);
   virtual void MultMatrix(const nuiMatrix& rMatrix);
   virtual void PushMatrix();
   virtual void PopMatrix();
-  virtual void LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& rMatrix);
-  virtual void MultProjectionMatrix(const nuiMatrix& rMatrix);
-  virtual void PushProjectionMatrix();
-  virtual void PopProjectionMatrix();
 
   
 protected:

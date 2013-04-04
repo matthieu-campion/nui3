@@ -377,9 +377,8 @@ void nuiGL2Painter::SetViewport()
   h = ToBelow(r.GetHeight());
   
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
-  if (!mpSurface)
+  //if (!mpSurface)
   {
-    //glViewport(x * nuiGetScaleFactor(), y * nuiGetScaleFactor(), w * nuiGetScaleFactor(), h * nuiGetScaleFactor());
     x *= nuiGetScaleFactor();
     y *= nuiGetScaleFactor();
     w *= nuiGetScaleFactor();
@@ -397,9 +396,7 @@ void nuiGL2Painter::SetViewport()
     mViewPort[3] = h;
     glViewport(mViewPort[0], mViewPort[1], mViewPort[2], mViewPort[3]);
   }
-  
-  nuiCheckForGLErrors();
-  
+
   nuiCheckForGLErrors();
 }
 
@@ -417,14 +414,15 @@ void nuiGL2Painter::ResetOpenGLState()
   
 
   SetViewport();
-//  glLoadIdentity();
-  
+
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_SCISSOR_TEST);
   glDisable(GL_STENCIL_TEST);
   //glDisable(GL_BLEND);
   glEnable(GL_BLEND);
+#ifndef _OPENGL_ES_
   glDisable(GL_ALPHA_TEST);
+#endif
   glDisable(GL_CULL_FACE);
 
   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -440,34 +438,6 @@ void nuiGL2Painter::ResetOpenGLState()
 //  mTextureTranslate = nglVector2f(0.0f, 0.0f);
 //  mTextureScale = nglVector2f(1, 1);
 
-  nuiCheckForGLErrors();
-}
-
-void nuiGL2Painter::SetState(const nuiRenderState& rState, bool ForceApply)
-{
-  //TEST_FBO_CREATION();
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  
-  mState = rState;
-  mForceApply |= ForceApply;
-  //ApplyState(rState, ForceApply);
-}
-
-void nuiGL2Painter::SetSize(uint32 w, uint32 h)
-{
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  
-  mWidth = w;
-  mHeight = h;
-}
-
-void nuiGL2Painter::ClearColor()
-{
-  mRenderOperations++;
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  
-  glClearColor(mState.mClearColor.Red(),mState.mClearColor.Green(),mState.mClearColor.Blue(),mState.mClearColor.Alpha());
-  glClear(GL_COLOR_BUFFER_BIT);
   nuiCheckForGLErrors();
 }
 
@@ -638,7 +608,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   
   if (mMatrixChanged)
   {
-    //glLoadMatrixf(mMatrixStack.top().Array);
     mMatrixChanged = false;
   }
   
@@ -787,22 +756,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   nuiCheckForGLErrors();
 }
 
-void nuiGL2Painter::BeginSession()
-{
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  mpContext->MakeCurrent();
-  nuiCheckForGLErrors();
-  
-  totalinframe = 0;
-}
-
-void nuiGL2Painter::EndSession()
-{
-  // Bleh!
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  //printf("min = %d max = %d total in frame = %d total = %d\n", mins, maxs, totalinframe, total);
-}
-
 void nuiGL2Painter::LoadMatrix(const nuiMatrix& rMatrix)
 {
   NUI_RETURN_IF_RENDERING_DISABLED;
@@ -838,47 +791,6 @@ void nuiGL2Painter::PopMatrix()
   mMatrixChanged = true;
   nuiCheckForGLErrors();
 }
-
-
-
-
-
-
-
-void nuiGL2Painter::LoadProjectionMatrix(const nuiRect& rViewport, const nuiMatrix& rMatrix)
-{
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  
-  nuiPainter::LoadProjectionMatrix(rViewport, rMatrix);
-  
-  SetViewport();
-}
-
-void nuiGL2Painter::MultProjectionMatrix(const nuiMatrix& rMatrix)
-{
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  
-  nuiPainter::MultProjectionMatrix(rMatrix);
-  
-  SetViewport();
-}
-
-void nuiGL2Painter::PushProjectionMatrix()
-{
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  
-  nuiPainter::PushProjectionMatrix();
-}
-
-void nuiGL2Painter::PopProjectionMatrix()
-{
-  NUI_RETURN_IF_RENDERING_DISABLED;
-  
-  nuiPainter::PopProjectionMatrix();
-  SetViewport();
-}
-
-
 
 #ifdef glDeleteBuffersARB
 #undef glDeleteBuffersARB
