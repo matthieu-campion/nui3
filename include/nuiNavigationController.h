@@ -66,7 +66,8 @@ public:
   void ShowNavigationBar(bool show);
   
   
-  
+  void PopPendingOperation();
+
 protected:
   
   void OnViewPushStop(const nuiEvent& rEvent);
@@ -122,7 +123,6 @@ private:
     bool mOverlay;
   };
   std::list<PendingOperation> mPendingOperations;
-  void PopPendingOperation();
   
   
   

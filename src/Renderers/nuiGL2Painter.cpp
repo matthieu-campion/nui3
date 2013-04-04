@@ -676,7 +676,11 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
 #endif
   }
 
-  mFinalState.mpShader->GetDefaultState().Set("Offset", hackX, hackY, true);
+  if (mpSurface)
+    mFinalState.mpShader->GetDefaultState().Set("Offset", -hackX, -hackY, true);
+  else
+    mFinalState.mpShader->GetDefaultState().Set("Offset", hackX, hackY, true);
+
 
   mFinalState.mpShader->SetVertexPointers(*pArray);
 

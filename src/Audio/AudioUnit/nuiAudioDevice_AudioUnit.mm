@@ -66,7 +66,7 @@ nuiAudioDevice_AudioUnit::nuiAudioDevice_AudioUnit()
   
   EnumSampleRates();
   EnumBufferSizes();
-  if (!HasAudioInput())
+  if (HasAudioInput())
     mInputChannels.push_back(_T("Input"));
   mOutputChannels.push_back(_T("Output"));
 }
