@@ -53,7 +53,7 @@
 #define GL_FRAMEBUFFER_UNSUPPORTED_NUI                    GL_FRAMEBUFFER_UNSUPPORTED_OES
 #define GL_FRAMEBUFFER_COMPLETE_NUI                       GL_FRAMEBUFFER_COMPLETE_OES
 
-#ifndef _ANDROID_
+#ifndef _GL_DEPTH_COMPONENT16
 #define GL_DEPTH_COMPONENT16                              GL_DEPTH_COMPONENT16_OES
 #endif
 
@@ -1350,6 +1350,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
       //      }
 
       glGenTextures(1, (GLuint*)&info.mTexture);
+
       //NGL_OUT(_T("nuiGLPainter::UploadTexture 0x%x : '%s' / %d\n"), pTexture, pTexture->GetSource().GetChars(), info.mTexture);
       nuiCheckForGLErrors();
       firstload = true;
@@ -1502,6 +1503,10 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
           glTexImage2D(target, 0, internalPixelformat, (int)Width, (int)Height, 0, pixelformat, type, pBuffer);
         }
         nuiCheckForGLErrors();
+
+#ifdef NGL_DEBUG
+        glLabelObjectEXT(GL_TEXTURE, info.mTexture, 0, pTexture->GetSource().GetChars());
+#endif
       }
 
       info.mReload = false;
@@ -1760,6 +1765,12 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     if (create)
     {
       glGenFramebuffersNUI(1, (GLuint*)&info.mFramebuffer);
+#ifdef NGL_DEBUG
+      if (pTexture)
+        glLabelObjectEXT(GL_FRAMEBUFFER, info.mFramebuffer, 0, pTexture->GetSource().GetChars());
+      else
+        glLabelObjectEXT(GL_FRAMEBUFFER, info.mFramebuffer, 0, pSurface->GetObjectName().GetChars());
+#endif
       //printf("glGenFramebuffersNUI -> %d\n", info.mFramebuffer);
 
       nuiCheckForGLErrors();
@@ -1875,7 +1886,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         nuiCheckForGLErrors();
       }
 
-#ifdef DEBUG
+#ifdef NGL_DEBUG
       CheckFramebufferStatus();
 #endif
       nuiCheckForGLErrors();
@@ -1894,7 +1905,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       }
 
       nuiCheckForGLErrors();
-#ifdef DEBUG
+#ifdef NGL_DEBUG
       CheckFramebufferStatus();
 #endif
     }
@@ -1908,7 +1919,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     //printf("UNBIND glBindRenderbufferNUI -> %d\n", mDefaultRenderbuffer);
 
     nuiCheckForGLErrors();
-#ifdef DEBUG
+#ifdef NGL_DEBUG
     CheckFramebufferStatus();
 #endif
   }
@@ -1920,7 +1931,7 @@ bool nuiCheckForGLErrorsReal()
 {
   GLenum err = GL_NO_ERROR;
 #if 0 // Globally enable/disable OpenGL error checking
-      //#ifdef _DEBUG_
+  //#ifdef NGL_DEBUG
   bool error = false;
   err = glGetError();
   App->GetLog().SetLevel("nuiGLPainter", 1000);
