@@ -232,7 +232,7 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext)
     mpContext->BeginSession();
     const char* ext0 = (const char*)glGetString(GL_EXTENSIONS);
     nglString exts(ext0);
-    //NGL_OUT(_T("Extensions: %s\n"), exts.GetChars());
+    NGL_OUT(_T("Extensions: %s\n"), exts.GetChars());
 
 
     mpContext->CheckExtension(_T("GL_VERSION_1_2"));
@@ -253,7 +253,7 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext)
     mpContext->CheckExtension(_T("GL_ARB_framebuffer_object"));
     nuiCheckForGLErrors();
 
-    if (mpContext->CheckExtension(_T("GL_ARB_texture_non_power_of_two")))
+    if (mpContext->CheckExtension("GL_ARB_texture_non_power_of_two")  || mpContext->CheckExtension("GL_APPLE_texture_2D_limited_npot"))
     {
       mCanRectangleTexture = 1;
     }
@@ -261,7 +261,9 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext)
     {
       mCanRectangleTexture = 2;
     }
-    //mCanRectangleTexture = 0;
+#ifdef _UIKIT_
+    mCanRectangleTexture = 1;
+#endif
 
 
     if (!mActiveContexts)
@@ -1689,7 +1691,21 @@ void nuiGLPainter::InvalidateSurface(nuiSurface* pSurface, bool ForceReload)
 {
 }
 
-
+static int64 MakePOT(int64 v)
+{
+  uint i;
+  nuiSize val = 1;
+  for (i = 0; i < 32; i++)
+  {
+    if (v <= val)
+    {
+      v = val;
+      break;
+    }
+    val *= 2;
+  }
+  return v;
+}
 
 void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 {
@@ -1720,6 +1736,8 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
     GLint width = (GLint)pSurface->GetWidth();
     GLint height = (GLint)pSurface->GetHeight();
+    width *= nuiGetScaleFactor();
+    height *= nuiGetScaleFactor();
 
     nuiTexture* pTexture = pSurface->GetTexture();
     if (pTexture && !pTexture->IsPowerOfTwo())
@@ -1727,8 +1745,8 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       switch (GetRectangleTextureSupport())
       {
         case 0:
-          width = (GLint)pTexture->GetWidthPOT();
-          height= (GLint)pTexture->GetHeightPOT();
+          width  = MakePOT(width);
+          height = MakePOT(height);
           break;
         case 1:
         case 2:
@@ -1736,8 +1754,6 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       }
     }
 
-    width *= nuiGetScaleFactor();
-    height *= nuiGetScaleFactor();
 
     FramebufferInfo info;
 
