@@ -145,7 +145,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   {
     mInvalidationTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / NGL_WINDOW_FPS) target:self selector:@selector(Paint) userInfo:nil repeats:YES];
   }
-  
+
+  mpNGLWindow->CallOnRescale(nuiGetScaleFactor());
   mpTimer = nuiAnimation::AcquireTimer();
   mpTimer->Stop();
 

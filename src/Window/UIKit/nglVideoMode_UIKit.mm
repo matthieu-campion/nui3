@@ -30,9 +30,6 @@ nglVideoMode::nglVideoMode()
 
   mBPP = 32;
 
-  mScaleFactor = [UIScreen mainScreen].scale;
-  mInvScaleFactor = 1.0f / mScaleFactor;
-  
   Init();
 }
 
