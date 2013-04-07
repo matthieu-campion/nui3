@@ -779,6 +779,7 @@ public:
   bool CallOnMouseUnclick(nglMouseInfo& rInfo);
   bool CallOnMouseMove  (nglMouseInfo& rInfo);
   bool CallOnRotation(uint Angle);
+  void CallOnRescale(float NewScale);
 
 #ifdef _X11_
 public:
@@ -896,7 +897,6 @@ private:
 public:
   void SetDraggedObject(nglDragAndDrop* pDragged) { mpDragged = pDragged; }
   nglDragAndDrop* GetDraggedObject() { return mpDragged; }
-  
 #endif
   
 #ifdef _WIN32_

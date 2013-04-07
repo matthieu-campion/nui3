@@ -128,6 +128,8 @@ const nglChar* gpEAGLErrorTable[] =
 nglContext::nglContext()
 {
   mpPainter = NULL;
+  mScale = 1.0f;
+  mScaleInv = 1.0f;
 }
 
 nglContext::~nglContext()

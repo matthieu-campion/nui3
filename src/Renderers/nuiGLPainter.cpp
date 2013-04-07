@@ -318,13 +318,15 @@ void nuiGLPainter::SetViewport()
   y = Height - ToBelow(r.Bottom());
   h = ToBelow(r.GetHeight());
 
+  const float scale = mpContext->GetScale();
+
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
   //if (!mpSurface)
   {
-    x *= nuiGetScaleFactor();
-    y *= nuiGetScaleFactor();
-    w *= nuiGetScaleFactor();
-    h *= nuiGetScaleFactor();
+    x *= scale;
+    y *= scale;
+    w *= scale;
+    h *= scale;
   }
 
 //  if (mViewPort[0] != x || mViewPort[1] != y || mViewPort[2] != w || mViewPort[3] != h)
@@ -341,7 +343,7 @@ void nuiGLPainter::SetViewport()
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  //glScalef(nuiGetScaleFactor(), nuiGetScaleFactor(), 1.0f);
+  //glScalef(scale, scale, 1.0f);
   if (Angle != 0.0f)
   {
     glRotatef(Angle, 0.f,0.f,1.f);
@@ -367,6 +369,10 @@ void nuiGLPainter::StartRendering()
 void nuiGLPainter::ResetOpenGLState()
 {
   BeginSession();
+#ifdef DEBUG
+  nuiGLDebugGuard g("nuiGLPainter::ResetOpenGLState()");
+#endif
+
   //NUI_RETURN_IF_RENDERING_DISABLED;
   nuiCheckForGLErrors();
 
@@ -437,6 +443,10 @@ void nuiGLPainter::ResetOpenGLState()
 
 void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
 {
+#ifdef DEBUG
+  nuiGLDebugGuard g("nuiGLPainter::ApplyState()");
+#endif
+
   //TEST_FBO_CREATION();
   NUI_RETURN_IF_RENDERING_DISABLED;
   //ForceApply = true;
@@ -563,10 +573,11 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
 
       //if (!mpSurface)
       {
-        x *= nuiGetScaleFactor();
-        y *= nuiGetScaleFactor();
-        w *= nuiGetScaleFactor();
-        h *= nuiGetScaleFactor();
+        float scale = mpContext->GetScale();
+        x *= scale;
+        y *= scale;
+        w *= scale;
+        h *= scale;
       }
       glScissor(x, y, w, h);
     }
@@ -610,6 +621,10 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
 
 void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
 {
+#ifdef DEBUG
+  nuiGLDebugGuard g("nuiGLPainter::ApplTexture()");
+#endif
+
   // 2D Textures:
   auto it = mTextures.find(rState.mpTexture);
   bool uptodate = (it == mTextures.end()) ? false : ( !it->second.mReload && it->second.mTexture >= 0 );
@@ -790,6 +805,10 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
     return;
   }
 
+#ifdef DEBUG
+  nuiGLDebugGuard guard("nuiGLPainter::DrawArray");
+#endif
+
   static uint32 ops = 0;
   static uint32 skipped_ops = 0;
 
@@ -920,7 +939,7 @@ void nuiGLPainter::DrawArray(nuiRenderArray* pArray)
   if (NeedTranslateHack)
   {
     //    const float ratio=0.5f;
-    const float ratio = nuiGetInvScaleFactor() / 2.f;
+    const float ratio = mpContext->GetScaleInv() / 2.f;
 #ifdef _UIKIT_
     hackX = ratio;
     hackY = ratio;
@@ -1286,6 +1305,10 @@ void nuiGLPainter::CreateTexture(nuiTexture* pTexture)
 
 void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
 {
+#ifdef DEBUG
+  nuiGLDebugGuard g("nuiGLPainter::UploadTexture()");
+#endif
+
   glActiveTexture(GL_TEXTURE0);
 
   nuiTexture* pProxy = pTexture->GetProxyTexture();
@@ -1504,8 +1527,10 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
         }
         nuiCheckForGLErrors();
 
+#ifdef _UIKIT_
 #ifdef NGL_DEBUG
         glLabelObjectEXT(GL_TEXTURE, info.mTexture, 0, pTexture->GetSource().GetChars());
+#endif
 #endif
       }
 
@@ -1731,7 +1756,12 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     pSurface->Acquire();
 
   if (mpSurface)
+  {
     mpSurface->Release();
+#ifdef DEBUG
+    glPopGroupMarkerEXT();
+#endif
+  }
   mpSurface = pSurface;
 
   if (pSurface)
@@ -1741,10 +1771,20 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
     GLint width = (GLint)pSurface->GetWidth();
     GLint height = (GLint)pSurface->GetHeight();
-    width *= nuiGetScaleFactor();
-    height *= nuiGetScaleFactor();
+
+    float scale = mpContext->GetScale();
+    width *= scale;
+    height *= scale;
 
     nuiTexture* pTexture = pSurface->GetTexture();
+
+#ifdef DEBUG
+    if (pTexture)
+      glPushGroupMarkerEXT(0, pTexture->GetSource().GetChars());
+    else
+      glPushGroupMarkerEXT(0, pSurface->GetObjectName().GetChars());
+#endif
+
     if (pTexture && !pTexture->IsPowerOfTwo())
     {
       switch (GetRectangleTextureSupport())
@@ -1765,11 +1805,13 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
     if (create)
     {
       glGenFramebuffersNUI(1, (GLuint*)&info.mFramebuffer);
+#ifdef _UIKIT_
 #ifdef NGL_DEBUG
       if (pTexture)
         glLabelObjectEXT(GL_FRAMEBUFFER, info.mFramebuffer, 0, pTexture->GetSource().GetChars());
       else
         glLabelObjectEXT(GL_FRAMEBUFFER, info.mFramebuffer, 0, pSurface->GetObjectName().GetChars());
+#endif
 #endif
       //printf("glGenFramebuffersNUI -> %d\n", info.mFramebuffer);
 

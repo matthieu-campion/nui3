@@ -196,6 +196,7 @@ if (HasExtension(_T("GL_ARB_texture_compression")))
   */
   //@}
 
+
 #ifndef _OPENGL_ES_
   // Include extension methods as members here
   #include "ngl_glext.h"
@@ -214,7 +215,16 @@ if (HasExtension(_T("GL_ARB_texture_compression")))
   nglTargetAPI mTargetAPI;
 
   nuiPainter* GetPainter() const;
+
+  virtual void OnRescale(float NewScale);
+  float GetScale() const;
+  float GetScaleInv() const;
+
 protected:
+  void CallOnRescale(float NewScale);
+  float mScale;
+  float mScaleInv;
+
   /** @name Life cycle */
   //@{
   nglContext();  ///< Build an unitialized context

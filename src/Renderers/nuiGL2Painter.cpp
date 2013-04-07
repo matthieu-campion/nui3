@@ -379,10 +379,11 @@ void nuiGL2Painter::SetViewport()
   //printf("set projection matrix (%d %d - %d %d)\n", x, y, w, h);
   //if (!mpSurface)
   {
-    x *= nuiGetScaleFactor();
-    y *= nuiGetScaleFactor();
-    w *= nuiGetScaleFactor();
-    h *= nuiGetScaleFactor();
+    const float scale = mpContext->GetScale();
+    x *= scale;
+    y *= scale;
+    w *= scale;
+    h *= scale;
   }
 //  else
 //    glViewport(x, y, w, h);
@@ -403,7 +404,11 @@ void nuiGL2Painter::SetViewport()
 void nuiGL2Painter::ResetOpenGLState()
 {
   BeginSession();
-  //NUI_RETURN_IF_RENDERING_DISABLED;
+#ifdef DEBUG
+  nuiGLDebugGuard g("nuiGL2Painter::ResetOpenGLState");
+#endif
+
+                //NUI_RETURN_IF_RENDERING_DISABLED;
   nuiCheckForGLErrors();
   
   mScissorX = -1;
@@ -454,7 +459,10 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     return;
   }
 
-  
+#ifdef DEBUG
+  nuiGLDebugGuard g("nuiGL2Painter::DrawArray");
+#endif
+
   static uint32 ops = 0;
   static uint32 skipped_ops = 0;
   
@@ -618,7 +626,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   float hackY = 0;
   if (NeedTranslateHack)
   {
-    const float ratio = nuiGetInvScaleFactor() / 2.f;
+    const float ratio = mpContext->GetScaleInv() / 2.f;
 #ifdef _UIKIT_
     hackX = ratio;
     hackY = ratio;

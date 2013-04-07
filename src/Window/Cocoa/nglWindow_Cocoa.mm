@@ -190,16 +190,26 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   [super close];//mpNGLWindow->CallOnDestruction();
 }
 
-static float gScaleFactor = 1.0f;
-static float gInvScaleFactor = 1.0f;
+static float gScaleFactor = 0.0f;
+static float gInvScaleFactor = 0.0f;
 
 float nuiGetScaleFactor()
 {
+  if (gScaleFactor == 0)
+  {
+    gScaleFactor = [[NSScreen mainScreen] backingScaleFactor];
+  }
+
   return gScaleFactor;
 }
 
 float nuiGetInvScaleFactor()
 {
+  if (gInvScaleFactor == 0)
+  {
+    gInvScaleFactor = 1.0f / nuiGetScaleFactor();
+  }
+
   return gInvScaleFactor;
 }
 
@@ -234,10 +244,6 @@ float nuiGetInvScaleFactor()
   [oglContext setValues:&v forParameter:NSOpenGLCPSwapInterval];
   [oglContext setView:self];
   [oglContext makeCurrentContext];
-  NSRect r = [self convertRectToBacking:[self bounds]];
-  gScaleFactor = r.size.width / self.bounds.size.width;
-  gInvScaleFactor = 1.0f / gScaleFactor;
-
   
   return self;
 }
@@ -348,7 +354,8 @@ float nuiGetInvScaleFactor()
   [self setContentView: pView];
   [self setDelegate: pView];
   
-  
+  mpNGLWindow->CallOnRescale([self backingScaleFactor]);
+
   //[self makeKeyAndOrderFront:nil];
   
 //NGL_OUT(_T("[nglNSWindow initWithFrame]\n"));
@@ -371,6 +378,11 @@ float nuiGetInvScaleFactor()
   mpTimer->Stop();
 
   return self;
+}
+
+- (void)viewDidChangeBackingProperties
+{
+  mpNGLWindow->CallOnRescale([self backingScaleFactor]);
 }
 
 - (void) dealloc

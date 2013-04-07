@@ -18,6 +18,23 @@
 
 #ifndef __NUI_NO_GL__
 
+class nuiGLDebugGuard
+{
+public:
+  nuiGLDebugGuard(const nglString& rString)
+  {
+#ifdef DEBUG
+    glPushGroupMarkerEXT(0, rString.GetChars());
+#endif
+  }
+  ~nuiGLDebugGuard()
+  {
+#ifdef DEBUG
+    glPopGroupMarkerEXT();
+#endif
+  }
+};
+
 class NUI_API nuiGLPainter : public nuiPainter, public nuiCacheManager
 {
 public:

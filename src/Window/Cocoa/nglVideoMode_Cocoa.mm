@@ -30,9 +30,6 @@ nglVideoMode::nglVideoMode()
 
   mBPP = 32;
   
-  mScaleFactor = 1.0f;
-  mInvScaleFactor = 1.0f / mScaleFactor;
-
   Init();
 }
 

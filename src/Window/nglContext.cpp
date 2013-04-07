@@ -122,6 +122,29 @@ void nglContextInfo::Dump(uint Level) const
 /*
  * nglContext
  */
+void nglContext::OnRescale(float NewScale)
+{
+  // Do Nothing by default
+}
+
+
+void nglContext::CallOnRescale(float NewScale)
+{
+  OnRescale(mScale);
+  mScale = NewScale;
+  mScaleInv = 1.0 / NewScale;
+}
+
+float nglContext::GetScale() const
+{
+  return mScale;
+}
+
+float nglContext::GetScaleInv() const
+{
+  return mScaleInv;
+}
+
 
 bool nglContext::CheckExtension (const nglChar* pExtName)
 {

@@ -49,6 +49,8 @@ nglContext::nglContext()
   mFullscreen = false;
   mValidBackBufferRequestedNotGranted = false;
   mCtx = NULL;
+  mScale = 1.0f;
+  mScaleInv = 1.0f;
 }
 
 nglContext::~nglContext()

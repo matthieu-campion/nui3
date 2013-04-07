@@ -497,3 +497,8 @@ void nglWindow::DestroyAllWindows()
   }
 }
 
+void nglWindow::CallOnRescale(float NewScale)
+{
+  nglContext::CallOnRescale(NewScale);
+}
+
