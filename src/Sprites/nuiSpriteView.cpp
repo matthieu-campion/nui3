@@ -312,7 +312,7 @@ uint32 nuiSprite::mSpriteCounter = 0;
 
 
 nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
-: mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp)
+: mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp), mBlending(true)
 {
   mpSpriteDef = nuiSpriteDef::GetSprite(rSpriteDefPath.GetNodeName());
   if (!mpSpriteDef || forceReplace)
@@ -326,14 +326,14 @@ nuiSprite::nuiSprite(const nglPath& rSpriteDefPath, bool forceReplace)
 }
 
 nuiSprite::nuiSprite(const nglString& rSpriteDefName)
-: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName)), mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp)
+: mpSpriteDef(nuiSpriteDef::GetSprite(rSpriteDefName)), mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp), mBlending(true)
 {
   NGL_ASSERT(mpSpriteDef);
   Init();
 }
 
 nuiSprite::nuiSprite(nuiSpriteDef* pSpriteDef)
-: mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp)
+: mpSpriteDef(pSpriteDef), mColor(255, 255, 255), mAlpha(1.0f), mBlendFunc(nuiBlendTransp), mBlending(true)
 {
   NGL_ASSERT(mpSpriteDef);
   mpSpriteDef->Acquire();
@@ -435,6 +435,10 @@ void nuiSprite::InitAttributes()
                (nglString(_T("Alpha")), nuiUnitCustom,
                 nuiMakeDelegate(this, &nuiSprite::GetAlpha),
                 nuiMakeDelegate(this, &nuiSprite::SetAlpha)));
+  AddAttribute(new nuiAttribute<bool>
+               (nglString(_T("Blending")), nuiUnitCustom,
+                nuiMakeDelegate(this, &nuiSprite::GetBlending),
+                nuiMakeDelegate(this, &nuiSprite::SetBlending)));
 
 }
 
@@ -577,7 +581,7 @@ void nuiSprite::Draw(nuiDrawContext* pContext)
   
   nuiTexture* pTex = pFrame->GetTexture();
 
-  pContext->EnableBlending(true);
+  pContext->EnableBlending(mBlending);
   pContext->SetBlendFunc(mBlendFunc);
   nuiColor c = mColor;
   c.Multiply(mAlpha);
@@ -805,6 +809,18 @@ nuiBlendFunc nuiSprite::GetBlendFunc() const
 {
   CheckValid();
   return mBlendFunc;
+}
+
+void nuiSprite::SetBlending(bool value)
+{
+  CheckValid();
+  mBlending = value;
+}
+
+bool nuiSprite::GetBlending() const
+{
+  CheckValid();
+  return mBlending;
 }
 
 void nuiSprite::GetSpritesAtPoint(float x, float y, std::vector<nuiSprite*>& rSprites)

@@ -153,7 +153,9 @@ public:
   
   void SetBlendFunc(nuiBlendFunc f);
   nuiBlendFunc GetBlendFunc() const;
-  
+  void SetBlending(bool value);
+  bool GetBlending() const;
+
   nuiSignal2<nuiSprite*, const nglMouseInfo&, bool> MouseClicked;
   nuiSignal2<nuiSprite*, const nglMouseInfo&, bool> MouseUnclicked;
   nuiSignal2<nuiSprite*, const nglMouseInfo&, bool> MouseMoved;
@@ -187,6 +189,7 @@ protected:
   nuiColor mColor;
   float mAlpha;
   nuiBlendFunc mBlendFunc;
+  bool mBlending;
 private:
   
   void _SetAnimation(const nglString& rAnimationName);
