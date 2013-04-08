@@ -304,6 +304,14 @@ float nuiGetInvScaleFactor()
     [super flagsChanged: theEvent];
 }
 
+- (void)viewDidChangeBackingProperties
+{
+  [super viewDidChangeBackingProperties];
+  nglNSWindow* wnd = (nglNSWindow*)[self window];
+  [wnd getNGLWindow]->CallOnRescale([wnd backingScaleFactor]);
+}
+
+
 @end
 
 
@@ -378,11 +386,6 @@ float nuiGetInvScaleFactor()
   mpTimer->Stop();
 
   return self;
-}
-
-- (void)viewDidChangeBackingProperties
-{
-  mpNGLWindow->CallOnRescale([self backingScaleFactor]);
 }
 
 - (void) dealloc
