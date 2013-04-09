@@ -698,6 +698,13 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
     glEnableVertexAttribArray(mVA_Color);
     glVertexAttribPointer(mVA_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
   }
+
+  int stream_count = rArray.GetStreamCount();
+  for (int i = 0; i < stream_count; i++)
+  {
+    const nuiRenderArray::StreamDesc& rDesc(rArray.GetStream(i));
+    glVertexAttribPointer(rDesc.mStreamID, rDesc.mCount, rDesc.mType, GL_TRUE, rDesc.mType == nuiRenderArray::eByte?rDesc.mCount : rDesc.mCount * sizeof(float), rDesc.mData.mpFloats);
+  }
 }
 
 void nuiShaderProgram::ResetVertexPointers(const nuiRenderArray& rArray)

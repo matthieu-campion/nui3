@@ -42,9 +42,9 @@ public:
 
   enum StreamType
   {
-    eFloat,
-    eInt,
-    eByte,
+    eFloat = GL_FLOAT,
+    eInt = GL_INT,
+    eByte = GL_UNSIGNED_BYTE,
   };
 
   class StreamDesc
