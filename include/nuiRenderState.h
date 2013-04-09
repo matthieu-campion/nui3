@@ -42,6 +42,8 @@ enum nuiBlendFunc
 
 void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst);
 
+#define NUI_MAX_TEXTURE_UNITS 8
+
 class NUI_API nuiRenderState
 {
 public:
@@ -61,7 +63,7 @@ public:
   bool mDepthWrite;
   
   bool mTexturing;
-  nuiTexture* mpTexture;
+  nuiTexture* mpTexture[NUI_MAX_TEXTURE_UNITS];
   nuiShaderProgram* mpShader;
   nuiShaderState mShaderState;
 

@@ -22,7 +22,8 @@ nuiRenderState::nuiRenderState()
 
   mBlendFunc = nuiBlendTransp;
 
-  mpTexture = NULL;
+  for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
+    mpTexture[i] = NULL;
   mpShader = NULL;
 
   mAntialiasing = false;
@@ -36,7 +37,8 @@ nuiRenderState::nuiRenderState()
 nuiRenderState::nuiRenderState(const nuiRenderState& rState)
 : mShaderState(NULL)
 {
-  mpTexture = NULL;
+  for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
+    mpTexture[i] = NULL;
   mpShader = NULL;
   mpFont = NULL;
 
@@ -68,12 +70,15 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   mLineJoin       = rState.mLineJoin;
 
 
-  nuiTexture* pOldTexture = mpTexture;
-  mpTexture = rState.mpTexture;
-  if (mpTexture)
-    mpTexture->Acquire();
-  if (pOldTexture)
-    pOldTexture->Release();
+  for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
+  {
+    nuiTexture* pOldTexture = mpTexture[i];
+    mpTexture[i] = rState.mpTexture[i];
+    if (mpTexture[i])
+      mpTexture[i]->Acquire();
+    if (pOldTexture)
+      pOldTexture->Release();
+  }
 
   nuiShaderProgram* pOldShader = mpShader;
   mpShader = rState.mpShader;
@@ -95,8 +100,11 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
 
 nuiRenderState::~nuiRenderState()
 {
-  if (mpTexture)
-    mpTexture->Release();
+  for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
+  {
+    if (mpTexture[i])
+      mpTexture[i]->Release();
+  }
 
   if (mpShader)
     mpShader->Release();
@@ -123,10 +131,11 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mFillColor      == rState.mFillColor)        &&
     (mLineCap        == rState.mLineCap)          &&
     (mLineJoin       == rState.mLineJoin)         &&
-    (mpTexture       == rState.mpTexture)         &&
     (mpShader        == rState.mpShader)          &&
     (mShaderState   == rState.mShaderState)          &&
     (mpFont          == rState.mpFont);
-  
+  for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
+    state = state && (mpTexture[i] == rState.mpTexture[i]);
+
   return state;
 }

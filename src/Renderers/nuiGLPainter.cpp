@@ -494,7 +494,8 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   //nuiFont* mpFont;
   //
 
-  ApplyTexture(rState, ForceApply);
+  for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
+    ApplyTexture(rState, ForceApply, i);
 
   if (ForceApply || mFinalState.mpShader != rState.mpShader)
   {
@@ -619,46 +620,46 @@ void nuiGLPainter::SetSize(uint32 w, uint32 h)
   mHeight = h;
 }
 
-void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
+void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply, int slot)
 {
 #ifdef DEBUG
   nuiGLDebugGuard g("nuiGLPainter::ApplTexture()");
 #endif
 
   // 2D Textures:
-  auto it = mTextures.find(rState.mpTexture);
+  auto it = mTextures.find(rState.mpTexture[slot]);
   bool uptodate = (it == mTextures.end()) ? false : ( !it->second.mReload && it->second.mTexture >= 0 );
-  if (ForceApply || (mFinalState.mpTexture != rState.mpTexture) || (mFinalState.mpTexture && !uptodate))
+  if (ForceApply || (mFinalState.mpTexture[slot] != rState.mpTexture[slot]) || (mFinalState.mpTexture[slot] && !uptodate))
   {
     GLenum intarget = 0;
     GLenum outtarget = 0;
 
-    if (mFinalState.mpTexture)
+    if (mFinalState.mpTexture[slot])
     {
-      if (mFinalState.mpTexture->GetTextureID())
-        outtarget = mFinalState.mpTexture->GetTarget();
+      if (mFinalState.mpTexture[slot]->GetTextureID())
+        outtarget = mFinalState.mpTexture[slot]->GetTarget();
       else
-        outtarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
+        outtarget = GetTextureTarget(mFinalState.mpTexture[slot]->IsPowerOfTwo());
 
       nuiCheckForGLErrors();
-      mFinalState.mpTexture->Release();
+      mFinalState.mpTexture[slot]->Release();
       nuiCheckForGLErrors();
     }
 
-    //NGL_OUT(_T("Change texture to 0x%x (%s)\n"), rState.mpTexture, rState.mpTexture?rState.mpTexture->GetSource().GetChars() : nglString::Empty.GetChars());
-    mFinalState.mpTexture = rState.mpTexture ;
+    //NGL_OUT(_T("Change texture to 0x%x (%s)\n"), rState.mpTexture[slot], rState.mpTexture[slot]?rState.mpTexture[slot]->GetSource().GetChars() : nglString::Empty.GetChars());
+    mFinalState.mpTexture[slot] = rState.mpTexture[slot] ;
 
-    if (mFinalState.mpTexture)
+    if (mFinalState.mpTexture[slot])
     {
-      if (mFinalState.mpTexture->GetTextureID())
-        intarget = mFinalState.mpTexture->GetTarget();
+      if (mFinalState.mpTexture[slot]->GetTextureID())
+        intarget = mFinalState.mpTexture[slot]->GetTarget();
       else
-        intarget = GetTextureTarget(mFinalState.mpTexture->IsPowerOfTwo());
+        intarget = GetTextureTarget(mFinalState.mpTexture[slot]->IsPowerOfTwo());
 
-      mFinalState.mpTexture->Acquire();
+      mFinalState.mpTexture[slot]->Acquire();
       mTextureTarget = intarget;
 
-      UploadTexture(mFinalState.mpTexture);
+      UploadTexture(mFinalState.mpTexture[slot]);
       nuiCheckForGLErrors();
     }
 
@@ -676,7 +677,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply)
           nuiCheckForGLErrors();
         }
         mFinalState.mTexturing = rState.mTexturing;
-        if (intarget && mFinalState.mTexturing && mFinalState.mpTexture)
+        if (intarget && mFinalState.mTexturing && mFinalState.mpTexture[slot])
         {
 //          NGL_OUT("enable intarget 0x%x\n", intarget);
           glEnable(intarget);

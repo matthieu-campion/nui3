@@ -528,7 +528,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
       {
         // texture on
-        if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
+        if (mState.mpTexture[0]->GetPixelFormat() == eImagePixelAlpha)
           pShader = mpShader_TextureAlphaVertexColor;
         else
           pShader = mpShader_TextureVertexColor;
@@ -544,7 +544,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
       if (pArray->IsArrayEnabled(nuiRenderArray::eTexCoord))
       {
         // texture on
-        if (mState.mpTexture->GetPixelFormat() == eImagePixelAlpha)
+        if (mState.mpTexture[0]->GetPixelFormat() == eImagePixelAlpha)
           pShader = mpShader_TextureAlphaDifuseColor;
         else
           pShader = mpShader_TextureDifuseColor;

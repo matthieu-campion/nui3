@@ -81,7 +81,7 @@ protected:
   uint32 mCanRectangleTexture;
   GLenum mTextureTarget;
 
-  void ApplyTexture(const nuiRenderState& rState, bool ForceApply);
+  void ApplyTexture(const nuiRenderState& rState, bool ForceApply, int slot);
   
   class TextureInfo
   {

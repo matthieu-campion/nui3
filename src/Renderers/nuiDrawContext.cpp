@@ -292,13 +292,13 @@ void nuiDrawContext::SetBlendFunc(nuiBlendFunc Func)
  *
  ****************************************************************************/
 
-void nuiDrawContext::SetTexture(nuiTexture* pTex) 
+void nuiDrawContext::SetTexture(nuiTexture* pTex, int slot)
 {
-  nuiTexture* pOld = mCurrentState.mpTexture;
+  nuiTexture* pOld = mCurrentState.mpTexture[slot];
   if (pTex == pOld)
     return;
   
-  mCurrentState.mpTexture = pTex ;
+  mCurrentState.mpTexture[slot] = pTex ;
   if (pTex)
   {
     pTex->CheckValid();
@@ -309,14 +309,14 @@ void nuiDrawContext::SetTexture(nuiTexture* pTex)
   mStateChanges++;
 }
 
-bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex) const
+bool nuiDrawContext::IsTextureCurrent(nuiTexture* pTex, int slot) const
 {
-  return mCurrentState.mpTexture == pTex;
+  return mCurrentState.mpTexture[slot] == pTex;
 }
 
-nuiTexture* nuiDrawContext::GetTexture() const
+nuiTexture* nuiDrawContext::GetTexture(int slot) const
 { 
-  return mCurrentState.mpTexture; 
+  return mCurrentState.mpTexture[slot];
 }
 
 /****************************************************************************
@@ -597,10 +597,10 @@ void nuiDrawContext::DrawImageQuad(float x0, float y0, float x1, float y1, float
   tx3 = rSource.mLeft;
   ty3 = rSource.mBottom;
   
-  mCurrentState.mpTexture->ImageToTextureCoord(tx0, ty0);
-  mCurrentState.mpTexture->ImageToTextureCoord(tx1, ty1);
-  mCurrentState.mpTexture->ImageToTextureCoord(tx2, ty2);
-  mCurrentState.mpTexture->ImageToTextureCoord(tx3, ty3);
+  mCurrentState.mpTexture[0]->ImageToTextureCoord(tx0, ty0);
+  mCurrentState.mpTexture[0]->ImageToTextureCoord(tx1, ty1);
+  mCurrentState.mpTexture[0]->ImageToTextureCoord(tx2, ty2);
+  mCurrentState.mpTexture[0]->ImageToTextureCoord(tx3, ty3);
 
   nuiRenderArray* pArray = new nuiRenderArray(GL_TRIANGLE_STRIP);
   pArray->Reserve(4);

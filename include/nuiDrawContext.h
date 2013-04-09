@@ -106,9 +106,9 @@ public:
 
   /** @name Texture manipulation */
   //@{
-  bool IsTextureCurrent(nuiTexture* pTex) const;
-  nuiTexture* GetTexture() const;
-  void SetTexture(nuiTexture* pTex);
+  bool IsTextureCurrent(nuiTexture* pTex, int slot = 0) const;
+  nuiTexture* GetTexture(int slot = 0) const;
+  void SetTexture(nuiTexture* pTex, int slot = 0);
   //@}
 
   /** @name Shader manipulation */
