@@ -40,6 +40,35 @@ public:
     GLfloat mTY;
   };
 
+  enum StreamType
+  {
+    eFloat,
+    eInt,
+    eByte,
+  };
+
+  class StreamDesc
+  {
+  public:
+    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const float* pData, bool CopyData);
+    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const int32* pData, bool CopyData);
+    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const uint8* pData, bool CopyData);
+    ~StreamDesc();
+
+    int32 mStreamID;
+    StreamType mType;
+    int32 mCount;
+    bool mOwnData;
+
+    union
+    {
+      const float* mpFloats;
+      const int32* mpInts;
+      const uint8* mpBytes;
+    } mData;
+
+  };
+
   enum DataType
   {
     eVertex = 0,
@@ -89,6 +118,8 @@ public:
   { 
     return mVertices[index];
   }
+
+  int32 AddStream(const StreamDesc& rDesc);
     
   void SetMode(GLenum mode); ///< GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
   GLenum GetMode() const; ///< GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
@@ -145,7 +176,14 @@ public:
   void SetIndex(uint32 ArrayIndex, uint32 IndexInArray, uint32 VertexIndex);
 
   void GetBounds(float* bounds) const; ///< bounds must contain at least 6 floats to store the minums and maximums coordinates of this array
-  
+
+  int32 AddStream(int32 StreamID, int32 count_per_vertex, const float* pData, bool CopyData);
+  int32 AddStream(int32 StreamID, int32 count_per_vertex, const int32* pData, bool CopyData);
+  int32 AddStream(int32 StreamID, int32 count_per_vertex, const uint8* pData, bool CopyData);
+
+  const StreamDesc& GetStream(int32 StreamID) const;
+  int32 GetStreamCount() const;
+
   nglString Dump() const;
 private:
   uint mVertexElements;
@@ -162,6 +200,7 @@ private:
 
   Vertex mCurrentVertex;
   std::vector<Vertex> mVertices;
+  std::vector<StreamDesc*> mStreams;
   
   nuiRect mBounds;
 
