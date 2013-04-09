@@ -94,7 +94,7 @@ protected:
   std::map<nuiTexture*, TextureInfo> mTextures;
 
   GLenum GetTextureTarget(bool POT) const;
-  void UploadTexture(nuiTexture* pTexture);
+  void UploadTexture(nuiTexture* pTexture, int slot);
 
   class FramebufferInfo
   {

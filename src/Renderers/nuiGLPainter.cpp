@@ -659,7 +659,7 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply, i
       mFinalState.mpTexture[slot]->Acquire();
       mTextureTarget = intarget;
 
-      UploadTexture(mFinalState.mpTexture[slot]);
+      UploadTexture(mFinalState.mpTexture[slot], slot);
       nuiCheckForGLErrors();
     }
 
@@ -1304,13 +1304,13 @@ void nuiGLPainter::CreateTexture(nuiTexture* pTexture)
 {
 }
 
-void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
+void nuiGLPainter::UploadTexture(nuiTexture* pTexture, int slot)
 {
 #ifdef DEBUG
   nuiGLDebugGuard g("nuiGLPainter::UploadTexture()");
 #endif
 
-  glActiveTexture(GL_TEXTURE0);
+  glActiveTexture(GL_TEXTURE0 + slot);
 
   nuiTexture* pProxy = pTexture->GetProxyTexture();
   if (pProxy)
@@ -1581,6 +1581,7 @@ void nuiGLPainter::UploadTexture(nuiTexture* pTexture)
   {
     mpContext->BeginSession();
     nuiCheckForGLErrors();
+    glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(target, info.mTexture);
     nuiCheckForGLErrors();
     if (mTexEnvMode != pTexture->GetEnvMode())
@@ -1876,9 +1877,10 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       if (pTexture && pSurface->GetRenderToTexture())
       {
         GLint oldTexture;
+        glActiveTexture(GL_TEXTURE0);
         glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint *) &oldTexture);
 
-        UploadTexture(pTexture);
+        UploadTexture(pTexture, 0);
 
         std::map<nuiTexture*, TextureInfo>::iterator tex_it = mTextures.find(pTexture);
         NGL_ASSERT(tex_it != mTextures.end());
