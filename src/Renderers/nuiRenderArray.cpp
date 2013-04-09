@@ -530,10 +530,10 @@ int32 nuiRenderArray::AddStream(int32 StreamID, int32 count_per_vertex, const ui
   mStreams.push_back(new StreamDesc(StreamID, count_per_vertex, GetSize(), pData, CopyData));
 }
 
-const nuiRenderArray::StreamDesc& nuiRenderArray::GetStream(int32 StreamID) const
+const nuiRenderArray::StreamDesc& nuiRenderArray::GetStream(int32 index) const
 {
-  NGL_ASSERT(mStreams.size() > StreamID);
-  return *mStreams[StreamID];
+  NGL_ASSERT(mStreams.size() > index);
+  return *mStreams[index];
 }
 
 int32 nuiRenderArray::GetStreamCount() const

@@ -590,6 +590,16 @@ GLint nuiShaderProgram::GetUniformLocation(const nglString& name)
 	return glGetUniformLocation(mProgram, name.GetChars());
 }
 
+GLint nuiShaderProgram::GetVertexAttribLocation(const char *name)
+{
+  return glGetAttribLocation(mProgram, name);
+}
+
+GLint nuiShaderProgram::GetVertexAttribLocation(const nglString& name)
+{
+  return glGetAttribLocation(mProgram, name.GetChars());
+}
+
 bool nuiShaderProgram::Link()
 {
   mProgram = glCreateProgram();

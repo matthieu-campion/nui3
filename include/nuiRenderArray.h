@@ -181,7 +181,7 @@ public:
   int32 AddStream(int32 StreamID, int32 count_per_vertex, const int32* pData, bool CopyData);
   int32 AddStream(int32 StreamID, int32 count_per_vertex, const uint8* pData, bool CopyData);
 
-  const StreamDesc& GetStream(int32 StreamID) const;
+  const StreamDesc& GetStream(int32 index) const;
   int32 GetStreamCount() const;
 
   nglString Dump() const;

@@ -120,7 +120,9 @@ public:
 
   GLint       GetUniformLocation(const char *name);  //!< Retrieve Location (index) of a Uniform Variable
   GLint       GetUniformLocation(const nglString& name);  //!< Retrieve Location (index) of a Uniform Variable
-  const std::map<nglString, nuiUniformDesc>& GetUniforms() const;
+  GLint       GetVertexAttribLocation(const char *name);  //!< Retrieve Location (index) of a Vertex Attribute stream
+  GLint       GetVertexAttribLocation(const nglString& name);  //!< Retrieve Location (index) of a Vertex Attribute stream
+
 
   GLint GetProgram() const;
 
