@@ -50,15 +50,16 @@ public:
   class StreamDesc
   {
   public:
-    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const float* pData, bool CopyData);
-    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const int32* pData, bool CopyData);
-    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const uint8* pData, bool CopyData);
+    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const float* pData, bool CopyData, bool Normalize);
+    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const int32* pData, bool CopyData, bool Normalize);
+    StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const uint8* pData, bool CopyData, bool Normalize);
     ~StreamDesc();
 
     int32 mStreamID;
     StreamType mType;
     int32 mCount;
     bool mOwnData;
+    bool mNormalize;
 
     union
     {
@@ -177,9 +178,9 @@ public:
 
   void GetBounds(float* bounds) const; ///< bounds must contain at least 6 floats to store the minums and maximums coordinates of this array
 
-  int32 AddStream(int32 StreamID, int32 count_per_vertex, const float* pData, bool CopyData);
-  int32 AddStream(int32 StreamID, int32 count_per_vertex, const int32* pData, bool CopyData);
-  int32 AddStream(int32 StreamID, int32 count_per_vertex, const uint8* pData, bool CopyData);
+  int32 AddStream(int32 StreamID, int32 count_per_vertex, const float* pData, bool CopyData, bool Normalize = false);
+  int32 AddStream(int32 StreamID, int32 count_per_vertex, const int32* pData, bool CopyData, bool Normalize = false);
+  int32 AddStream(int32 StreamID, int32 count_per_vertex, const uint8* pData, bool CopyData, bool Normalize = false);
 
   const StreamDesc& GetStream(int32 index) const;
   int32 GetStreamCount() const;

@@ -713,7 +713,8 @@ void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
   for (int i = 0; i < stream_count; i++)
   {
     const nuiRenderArray::StreamDesc& rDesc(rArray.GetStream(i));
-    glVertexAttribPointer(rDesc.mStreamID, rDesc.mCount, rDesc.mType, GL_TRUE, rDesc.mType == nuiRenderArray::eByte?rDesc.mCount : rDesc.mCount * sizeof(float), rDesc.mData.mpFloats);
+    glEnableVertexAttribArray(rDesc.mStreamID);
+    glVertexAttribPointer(rDesc.mStreamID, rDesc.mCount, rDesc.mType, rDesc.mNormalize ? GL_TRUE : GL_FALSE, 0, rDesc.mData.mpFloats);
   }
 }
 
@@ -732,6 +733,13 @@ void nuiShaderProgram::ResetVertexPointers(const nuiRenderArray& rArray)
   if (mVA_Color != -1)
   {
     glDisableVertexAttribArray(mVA_Color);
+  }
+
+  int stream_count = rArray.GetStreamCount();
+  for (int i = 0; i < stream_count; i++)
+  {
+    const nuiRenderArray::StreamDesc& rDesc(rArray.GetStream(i));
+    glDisableVertexAttribArray(rDesc.mStreamID);
   }
 }
 

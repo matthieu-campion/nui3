@@ -437,12 +437,13 @@ nglString nuiRenderArray::Dump() const
 
 ////////////
 //class StreamDesc
-nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const float* pData, bool CopyData)
+nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const float* pData, bool CopyData, bool Normalize)
 {
   mStreamID = StreamID;
   mType = eFloat;
   mCount = count_per_vertex;
   mOwnData = CopyData;
+  mNormalize = Normalize;
 
   if (CopyData)
   {
@@ -456,12 +457,13 @@ nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, i
   }
 }
 
-nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const int32* pData, bool CopyData)
+nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const int32* pData, bool CopyData, bool Normalize)
 {
   mStreamID = StreamID;
   mType = eInt;
   mCount = count_per_vertex;
   mOwnData = CopyData;
+  mNormalize = Normalize;
 
   if (CopyData)
   {
@@ -475,12 +477,13 @@ nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, i
   }
 }
 
-nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const uint8* pData, bool CopyData)
+nuiRenderArray::StreamDesc::StreamDesc(int32 StreamID, int32 count_per_vertex, int32 vertex_count, const uint8* pData, bool CopyData, bool Normalize)
 {
   mStreamID = StreamID;
   mType = eByte;
   mCount = count_per_vertex;
   mOwnData = CopyData;
+  mNormalize = Normalize;
 
   if (CopyData)
   {
@@ -515,19 +518,19 @@ nuiRenderArray::StreamDesc::~StreamDesc()
 }
 
 
-int32 nuiRenderArray::AddStream(int32 StreamID, int32 count_per_vertex, const float* pData, bool CopyData)
+int32 nuiRenderArray::AddStream(int32 StreamID, int32 count_per_vertex, const float* pData, bool CopyData, bool Normalize)
 {
-  mStreams.push_back(new StreamDesc(StreamID, count_per_vertex, GetSize(), pData, CopyData));
+  mStreams.push_back(new StreamDesc(StreamID, count_per_vertex, GetSize(), pData, CopyData, Normalize));
 }
 
-int32 nuiRenderArray::AddStream(int32 StreamID, int32 count_per_vertex, const int32* pData, bool CopyData)
+int32 nuiRenderArray::AddStream(int32 StreamID, int32 count_per_vertex, const int32* pData, bool CopyData, bool Normalize)
 {
-  mStreams.push_back(new StreamDesc(StreamID, count_per_vertex, GetSize(), pData, CopyData));
+  mStreams.push_back(new StreamDesc(StreamID, count_per_vertex, GetSize(), pData, CopyData, Normalize));
 }
 
-int32 nuiRenderArray::AddStream(int32 StreamID, int32 count_per_vertex, const uint8* pData, bool CopyData)
+int32 nuiRenderArray::AddStream(int32 StreamID, int32 count_per_vertex, const uint8* pData, bool CopyData, bool Normalize)
 {
-  mStreams.push_back(new StreamDesc(StreamID, count_per_vertex, GetSize(), pData, CopyData));
+  mStreams.push_back(new StreamDesc(StreamID, count_per_vertex, GetSize(), pData, CopyData, Normalize));
 }
 
 const nuiRenderArray::StreamDesc& nuiRenderArray::GetStream(int32 index) const
