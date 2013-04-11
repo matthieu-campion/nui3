@@ -490,6 +490,26 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
     glDepthMask(mFinalState.mDepthWrite);
   }
 
+  if (ForceApply || mFinalState.mCulling != rState.mCulling)
+  {
+    mFinalState.mCulling = rState.mCulling;
+    if (mFinalState.mCulling)
+    {
+      glEnable(GL_CULL_FACE);
+    }
+    else
+    {
+      glDisable(GL_CULL_FACE);
+    }
+  }
+
+  if (ForceApply || mFinalState.mCullingMode != rState.mCullingMode)
+  {
+    mFinalState.mCullingMode = rState.mCullingMode;
+    glCullFace(mFinalState.mCullingMode);
+  }
+
+
   // We don't care about the font in the lower layer of rendering
   //nuiFont* mpFont;
   //

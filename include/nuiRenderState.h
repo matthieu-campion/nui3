@@ -40,6 +40,14 @@ enum nuiBlendFunc
   
 };
 
+enum nuiCulling
+{
+  eCullingBack = GL_BACK,
+  eCullingFront = GL_FRONT,
+  eCullingBoth = GL_FRONT_AND_BACK
+};
+
+
 void nuiGetBlendFuncFactors(nuiBlendFunc Func, GLenum& src, GLenum& dst);
 
 #define NUI_MAX_TEXTURE_UNITS 8
@@ -61,6 +69,9 @@ public:
 
   bool mDepthTest;
   bool mDepthWrite;
+
+  bool mCulling;
+  nuiCulling mCullingMode;
   
   bool mTexturing;
   nuiTexture* mpTexture[NUI_MAX_TEXTURE_UNITS];
