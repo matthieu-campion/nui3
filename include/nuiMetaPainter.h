@@ -28,7 +28,7 @@ public:
   virtual void StartRendering();
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false);
   virtual void DrawArray(nuiRenderArray* pArray);
-  virtual void ClearColor();
+  virtual void Clear(bool color, bool depth, bool stencil);
   virtual void BeginSession();
   virtual void EndSession();
   virtual void LoadMatrix(const nuiMatrix& rMatrix);
@@ -86,7 +86,7 @@ protected:
     eStartRendering,
     eSetState,
     eDrawArray,
-    eClearColor,
+    eClear,
     eBeginSession,
     eEndSession,
     eLoadMatrix,

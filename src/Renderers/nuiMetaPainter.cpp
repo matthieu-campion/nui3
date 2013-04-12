@@ -195,9 +195,17 @@ void nuiMetaPainter::SetState(const nuiRenderState& rState, bool ForceApply)
   StoreInt(ForceApply?1:0);
 }
 
-void nuiMetaPainter::ClearColor()
+void nuiMetaPainter::Clear(bool color, bool depth, bool stencil)
 {
-  StoreOpCode(eClearColor);
+  StoreOpCode(eClear);
+  int32 v = 0;
+  if (color)
+    v |= 1;
+  if (depth)
+    v |= 3;
+  if (stencil)
+    v |= 4;
+  StoreInt(v);
   mNbClearColor++;
 }
 
@@ -487,9 +495,15 @@ void nuiMetaPainter::PartialReDraw(nuiDrawContext* pContext, int32 first, int32 
           pPainter->DrawArray(pRenderArray);
         }
         break;
-      case eClearColor:
-        if (draw)
-          pPainter->ClearColor();
+      case eClear:
+        {
+          int32 v = FetchInt();
+          bool color = v & 1;
+          bool depth = v & 2;
+          bool stencil = v & 4;
+          if (draw)
+            pPainter->Clear(color, depth, stencil);
+        }
         break;
       case eBeginSession:
         if (draw)
@@ -679,8 +693,14 @@ nglString nuiMetaPainter::GetOperationDescription(int32 OperationIndex) const
         str.CFormat(_T("DrawArray 0x%x (size %d mode:%s) (%f , %f)->(%f, %f)"), pArray, pArray->GetVertices().size(), pMode, bounds[0], bounds[1], bounds[3], bounds[4]);
       }
       break;
-    case eClearColor:
-      str = _T("ClearColor");
+    case eClear:
+      {
+        int32 v = FetchInt();
+        bool color = v & 1;
+        bool depth = v & 2;
+        bool stencil = v & 4;
+        str.CFormat("Clear(color = %s, depth = %s, stencil = %s)", TRUEFALSE(color), TRUEFALSE(depth), TRUEFALSE(stencil));
+      }
       break;
     case eBeginSession:
       str = _T("BeginSession");
@@ -836,7 +856,8 @@ void nuiMetaPainter::UpdateIndices() const
         //FetchPointer();
         FetchInt();
         break;
-      case eClearColor:
+      case eClear:
+        FetchInt();
         break;
       case eBeginSession:
         break;

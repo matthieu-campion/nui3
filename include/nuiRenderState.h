@@ -88,6 +88,7 @@ public:
   nuiShape::Winding mWinding;
 
   nuiColor mClearColor;
+  float mClearDepth;
   nuiColor mTextColor;
   nuiFont* mpFont;
 

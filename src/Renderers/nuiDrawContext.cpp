@@ -447,12 +447,12 @@ void nuiDrawContext::SetClearColor(const nuiColor& ClearColor)
   }
 }
 
-void nuiDrawContext::Clear() 
+void nuiDrawContext::Clear(bool color, bool depth, bool stencil)
 { 
   if (mStateChanges)
     mpPainter->SetState(mCurrentState);
   mStateChanges = 0;
-  mpPainter->ClearColor(); 
+  mpPainter->Clear(color, depth, stencil);
 }
 
 void nuiDrawContext::DrawShape(nuiShape* pShape, nuiShapeMode Mode, float Quality)

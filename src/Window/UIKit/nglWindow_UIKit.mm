@@ -93,8 +93,9 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 }
 
 
-- (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow
+- (id) initWithFrame: (CGRect) rect andNGLWindow: (nglWindow*) pNGLWindow andContextInfo: (nglContextInfo*)pContextInfo
 {
+  mpContextInfo = pContextInfo;
 	mInited = false;
 	mInvalidated = true;
 	
@@ -107,11 +108,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 	
 	
 	mAngle = -1;
-	
-	
-	
-
-	
  
 	//oldorientation = UIDeviceOrientationUnknown;
   UIDevice* pUIDev = [UIDevice currentDevice];	
@@ -126,7 +122,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   {
     NGL_ASSERT(!"initWithFrame: Could not initialize UIWindow");
   }
-  glView = [[EAGLView alloc] initWithFrame:rect replacing: nil];
+  glView = [[EAGLView alloc] initWithFrame:rect replacing: nil contextInfo: pContextInfo];
   [self addSubview:glView];
 	[self sendSubviewToBack:glView];
   
@@ -166,6 +162,8 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     glView = nil;
   }
   //[self disconnect];
+
+  delete mpContextInfo;
   [super dealloc];
 }
 
@@ -313,7 +311,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     glViewOld = glView;
     self.frame = rect;
 		
-    glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
+    glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld contextInfo:mpContextInfo];
     [self addSubview:glView];
 		[self sendSubviewToBack:glView];
 
@@ -337,7 +335,7 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   glViewOld = glView;
   self.frame = rect;
   
-  glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld];
+  glView = [[EAGLView alloc] initWithFrame:rect replacing: glViewOld contextInfo:mpContextInfo];
   [self addSubview:glView];
 	[self sendSubviewToBack:glView];
   //[glView startAnimation];
@@ -740,15 +738,17 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 }
 
 //The EAGL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
-- (id)initWithFrame:(CGRect)rect replacing:(EAGLView*) original
+- (id)initWithFrame:(CGRect)rect replacing:(EAGLView*) original  contextInfo: (nglContextInfo*)pContextInfo
 {
+  mpContextInfo = pContextInfo;
   NSLog(@"new EAGLView (%f,%f %fx%f)\n", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
   context = nil;
   backingWidth = 0;
   backingHeight = 0;
-  defaultFramebuffer = 0;
-  colorRenderbuffer = 0;
-  
+  defaultFrameBuffer = 0;
+  colorRenderBuffer = 0;
+  depthRenderBuffer = 0;
+
   rect.origin.x = 0;
   rect.origin.y = 0;
   if ((self = [super initWithFrame:rect]))
@@ -802,16 +802,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
       return nil;
     }
         
-    // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
-    glGenFramebuffersOES(1, &defaultFramebuffer);
-    glGenRenderbuffersOES(1, &colorRenderbuffer);
-
-    glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
-    printf("glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer); (fb = %d)\n", defaultFramebuffer);
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
-    printf("glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer); (fb = %d)\n", colorRenderbuffer);
-    glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
-
     if (![self resizeFromLayer:eaglLayer])
     {
       NSLog(@"Unable to resizeFromLayer\n");
@@ -839,18 +829,24 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void)dealloc
 {
   // Tear down GL
-  if (defaultFramebuffer)
+  if (defaultFrameBuffer)
   {
-    glDeleteFramebuffersOES(1, &defaultFramebuffer);
-    defaultFramebuffer = 0;
+    glDeleteFramebuffersOES(1, &defaultFrameBuffer);
+    defaultFrameBuffer = 0;
   }
   
-  if (colorRenderbuffer)
+  if (colorRenderBuffer)
   {
-    glDeleteRenderbuffersOES(1, &colorRenderbuffer);
-    colorRenderbuffer = 0;
+    glDeleteRenderbuffersOES(1, &colorRenderBuffer);
+    colorRenderBuffer = 0;
   }
-  
+
+  if (depthRenderBuffer)
+  {
+    glDeleteRenderbuffersOES(1, &depthRenderBuffer);
+    depthRenderBuffer = 0;
+  }
+
   // Tear down context
   if ([EAGLContext currentContext] == context)
     [EAGLContext setCurrentContext:nil];
@@ -868,21 +864,59 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 }
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
-{	
-  // Allocate color buffer backing based on the current layer size
-  glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
-  glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
-  if ([context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer] == NO)
+{
+  if (!defaultFrameBuffer)
   {
-	  NSLog(@"Failed to call context:renderbuferStorage:");
-	  return NO;
+    // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
+    glGenFramebuffersOES(1, &defaultFrameBuffer);
+    glGenRenderbuffersOES(1, &colorRenderBuffer);
+
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFrameBuffer);
+    printf("glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFrameBuffer); (fb = %d)\n", defaultFrameBuffer);
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderBuffer);
+    printf("glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderBuffer); (fb = %d)\n", colorRenderBuffer);
+
+    if ([context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer] == NO)
+    {
+      NSLog(@"Failed to call context:renderbuferStorage:");
+      return NO;
+    }
+    glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderBuffer);
+
+    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
+    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+
+    if (mpContextInfo->DepthBits)
+    {
+      glGenRenderbuffersOES(1, &depthRenderBuffer);
+      glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderBuffer);
+      glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, backingWidth, backingHeight);
+      glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderBuffer);
+      
+    }
   }
-  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
-  glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
-  
-	// this line seemed to fix some render buffer creation errors, but I'm not sure if it's necessary.
-  //glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
-	
+  else
+  {
+
+    // Allocate color buffer backing based on the current layer size
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFrameBuffer);
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderBuffer);
+    if (depthRenderBuffer)
+      glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderBuffer);
+
+    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
+    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+
+    if ([context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer] == NO)
+    {
+      NSLog(@"Failed to call context:renderbuferStorage:");
+      return NO;
+    }
+
+    // this line seemed to fix some render buffer creation errors, but I'm not sure if it's necessary.
+    //glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderBuffer);
+  }
+
   if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
   {
     NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
@@ -929,12 +963,13 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
 - (void) BeginSession
 {
   [EAGLContext setCurrentContext:context];
-  glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFrameBuffer);
 }
 
 - (void) EndSession
 {
-  glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+  glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderBuffer);
+  //glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
   [context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
 
@@ -1011,7 +1046,7 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
   
 
   // Create the actual window
-  nglUIWindow* pUIWindow = [[nglUIWindow alloc] initWithFrame: rect andNGLWindow: this];
+  nglUIWindow* pUIWindow = [[nglUIWindow alloc] initWithFrame: rect andNGLWindow: this andContextInfo: new nglContextInfo(rContext)];
 
   mOSInfo.mpUIWindow = pUIWindow;
   mpUIWindow = pUIWindow;

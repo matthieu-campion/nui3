@@ -572,7 +572,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   {
     if (mTextureScale[1] < 0)
     {
-      NGL_ASSERT(mFinalState.mpTexture->GetSurface() != NULL);
+      NGL_ASSERT(mFinalState.mpTexture[0]->GetSurface() != NULL);
 //      printf("REVERSED SURFACE TEXTURE");
     }
     mFinalState.mpShader->GetDefaultState().Set("TextureTranslate", mTextureTranslate, false);

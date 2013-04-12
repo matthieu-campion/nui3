@@ -101,7 +101,7 @@ public:
 
   virtual void SetState(const nuiRenderState& rState, bool ForceApply = false) = 0;
   virtual void DrawArray(nuiRenderArray* pArray) = 0;
-  virtual void ClearColor() = 0;
+  virtual void Clear(bool color, bool depth, bool stencil) = 0;
 
   virtual void LoadMatrix(const nuiMatrix& rMatrix);
   virtual void MultMatrix(const nuiMatrix& rMatrix);

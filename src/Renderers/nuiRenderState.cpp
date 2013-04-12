@@ -15,9 +15,10 @@ nuiRenderState::nuiRenderState()
   mTexturing = false;
   mColorBuffer = true;
   mDepthTest = false;
-  mDepthWrite = false;
+  mDepthWrite = true;
   mCulling = false;
   mCullingMode = eCullingBack;
+  mClearDepth = 1.0f;
 
   mLineCap = nuiLineCapBut;
   mLineJoin = nuiLineJoinBevel;
@@ -72,6 +73,7 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   mLineJoin       = rState.mLineJoin;
   mCulling        = rState.mCulling;
   mCullingMode    = rState.mCullingMode;
+  mClearDepth     = rState.mClearDepth;
 
 
   for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
@@ -139,6 +141,7 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mShaderState    == rState.mShaderState)      &&
     (mCulling        == rState.mCulling)          &&
     (mCullingMode    == rState.mCullingMode)      &&
+    (mClearDepth     == rState.mClearDepth)      &&
     (mpFont          == rState.mpFont);
   for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
     state = state && (mpTexture[i] == rState.mpTexture[i]);

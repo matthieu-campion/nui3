@@ -487,7 +487,7 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   if (ForceApply || mFinalState.mDepthWrite != rState.mDepthWrite)
   {
     mFinalState.mDepthWrite = rState.mDepthWrite;
-    glDepthMask(mFinalState.mDepthWrite);
+    glDepthMask(mFinalState.mDepthWrite ? GL_TRUE : GL_FALSE);
   }
 
   if (ForceApply || mFinalState.mCulling != rState.mCulling)
@@ -735,13 +735,27 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply, i
 
 
 
-void nuiGLPainter::ClearColor()
+void nuiGLPainter::Clear(bool color, bool depth, bool stencil)
 {
   mRenderOperations++;
   NUI_RETURN_IF_RENDERING_DISABLED;
 
   glClearColor(mState.mClearColor.Red(),mState.mClearColor.Green(),mState.mClearColor.Blue(),mState.mClearColor.Alpha());
-  glClear(GL_COLOR_BUFFER_BIT);
+#ifdef _OPENGL_ES_
+    glClearDepthf(mFinalState.mClearDepth);
+#else
+    glClearDepth(mFinalState.mClearDepth);
+#endif
+
+  GLint v = 0;
+  if (color)
+    v |= GL_COLOR_BUFFER_BIT;
+  if (depth)
+    v |= GL_DEPTH_BUFFER_BIT;
+  if (stencil)
+    v |= GL_STENCIL_BUFFER_BIT;
+
+  glClear(v);
   nuiCheckForGLErrors();
 }
 

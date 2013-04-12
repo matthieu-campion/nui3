@@ -26,7 +26,8 @@ public:
 @private
   
   EAGLContext *context;
-  
+  nglContextInfo* mpContextInfo;
+
   // The pixel dimensions of the CAEAGLLayer
   GLint backingWidth;
   GLint backingHeight;
@@ -34,7 +35,7 @@ public:
   int angle;
   
   // The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
-  GLuint defaultFramebuffer, colorRenderbuffer;
+  GLuint defaultFrameBuffer, colorRenderBuffer, depthRenderBuffer;
   
 }
 @end
@@ -48,6 +49,7 @@ typedef std::map<UITouch*,nglTouchInfo> TouchesInfo;
 @interface nglUIWindow : UIWindow<UITextFieldDelegate>
 {
   nglWindow*    mpNGLWindow;
+  nglContextInfo* mpContextInfo;
   TouchesInfo   mTouches;
   TouchesInfo   mpTouches[_NUI_MAX_TOUCHES_];
   uint8         mTouchCount;

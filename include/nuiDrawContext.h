@@ -173,7 +173,7 @@ public:
   void DrawLine(float x1, float y1, float x2, float y2);
   void DrawPoint(const nuiVector2& rPoint);
   void DrawPoint(float x, float y);
-  void Clear(); ///< Initializes the current drawing buffer with the default values.
+  void Clear(bool color = true, bool depth = true, bool stencil = true); ///< Initializes the current drawing buffer with the default values.
   void DrawImage(const nuiRect& rDest, const nuiRect& rSource);
   void DrawImageQuad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, const nuiRect& rSource);
   void DrawShade (const nuiRect& rSourceRect, const nuiRect& rShadeRect, const nuiColor& rTint); ///< Draw a shade extending from SourceRect to ShadeRect. The shade may look quite diferent depending on the actual renderer.
