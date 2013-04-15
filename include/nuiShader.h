@@ -104,7 +104,9 @@ private:
 class nuiShaderProgram : public nuiRefCount
 {
 public:
-  nuiShaderProgram();
+  static nuiShaderProgram* GetProgram(const nglString& rName);
+
+  nuiShaderProgram(const nglString& rName);
   virtual ~nuiShaderProgram();
 
   void AddShader(nuiShaderKind shaderType, nglIStream& rStream);
@@ -175,6 +177,8 @@ protected:
   void ResetVertexPointers(const nuiRenderArray& rArray);
 
 private:
+  nglString mName;
+  static std::map<nglString, nuiShaderProgram*> gpPrograms;
   void Init();
   GLuint mProgram;
 
