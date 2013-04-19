@@ -191,6 +191,7 @@ bool nuiUninit()
 #ifndef _MINUI3_
       nuiDecoration::ExitDecorationEngine();
       nuiFont::ClearAll();
+      nuiShaderProgram::ClearAll();
       nuiBuilder::Get().Uninit();
 #endif
       delete (pApp);

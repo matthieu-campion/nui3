@@ -38,6 +38,9 @@ public:
     GLubyte mA;
     GLfloat mTX;
     GLfloat mTY;
+    GLfloat mNX;
+    GLfloat mNY;
+    GLfloat mNZ;
   };
 
   enum StreamType
@@ -155,6 +158,9 @@ public:
   void SetColor(const nuiColor& rColor);
   void SetColor(uint32 Color);
   void SetTexCoords(float tx, float ty);
+  void SetNormal(float x, float y, float z);
+  void SetNormal(const nuiVector& rVf);
+  void SetNormal(const nuiVector3& rV3f);
 
   void SetVertex(uint32 index, float x, float y, float z = 0.0f);
   void SetVertex(uint32 index, const nuiVector& rVf);
@@ -165,7 +171,10 @@ public:
   void SetColor(uint32 index, const nuiColor& rColor);
   void SetColor(uint32 index, uint32 Color);
   void SetTexCoords(uint32 index, float tx, float ty);
-  
+  void SetNormal(uint32 index, float x, float y, float z);
+  void SetNormal(uint32 index, const nuiVector& rVf);
+  void SetNormal(uint32 index, const nuiVector3& rV3f);
+
   void PushVertex();
   
   IndexArray& GetIndexArray(uint32 ArrayIndex);
@@ -187,10 +196,6 @@ public:
 
   nglString Dump() const;
 private:
-  uint mVertexElements;
-  uint mColorElements;
-  uint mTexCoordElements;
-
   GLenum mMode;
   bool mEnabled[4];
   bool mStatic : 1;

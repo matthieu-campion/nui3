@@ -25,10 +25,6 @@ nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh, bool _sha
   m3DMesh = _3dmesh;
   mShape = _shape;
 
-  mVertexElements = 2;
-  mColorElements = 4;
-  mTexCoordElements = 2;
-
   mpCacheHandle = NULL;
   mpCacheManager = NULL;
 
@@ -41,7 +37,10 @@ nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh, bool _sha
   mCurrentVertex.mG = 0;
   mCurrentVertex.mB = 0;
   mCurrentVertex.mA = 255;
-  
+  mCurrentVertex.mNX = 0;
+  mCurrentVertex.mNY = 0;
+  mCurrentVertex.mNZ = 1;
+
 }
 
 nuiRenderArray::nuiRenderArray(const nuiRenderArray& rArray)
@@ -55,10 +54,6 @@ nuiRenderArray::nuiRenderArray(const nuiRenderArray& rArray)
   mMode = rArray.mMode;
   m3DMesh = rArray.m3DMesh;
   mShape = rArray.mShape;
-
-  mVertexElements = rArray.mVertexElements;
-  mColorElements = rArray.mColorElements;
-  mTexCoordElements = rArray.mTexCoordElements;
 
   mpCacheHandle = NULL;
   mpCacheManager = NULL;
@@ -109,6 +104,13 @@ void nuiRenderArray::PushVertex()
   NGL_ASSERT(!isnan(mCurrentVertex.mTX));
   NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::infinity());
   NGL_ASSERT(!isnan(mCurrentVertex.mTY));
+
+  NGL_ASSERT(mCurrentVertex.mNX != std::numeric_limits<float>::infinity());
+  NGL_ASSERT(!isnan(mCurrentVertex.mNX));
+  NGL_ASSERT(mCurrentVertex.mNY != std::numeric_limits<float>::infinity());
+  NGL_ASSERT(!isnan(mCurrentVertex.mNY));
+  NGL_ASSERT(mCurrentVertex.mNZ != std::numeric_limits<float>::infinity());
+  NGL_ASSERT(!isnan(mCurrentVertex.mNZ));
 
   // Grow the bounding rect:
   UpdateBounds(mCurrentVertex.mX, mCurrentVertex.mY, mCurrentVertex.mZ);
@@ -236,6 +238,27 @@ void nuiRenderArray::SetTexCoords(float tx, float ty)
   mCurrentVertex.mTY = ty;
 }
 
+void nuiRenderArray::SetNormal(float x, float y, float z)
+{
+  mCurrentVertex.mNX = x;
+  mCurrentVertex.mNY = y;
+  mCurrentVertex.mNZ = z;
+}
+
+void nuiRenderArray::SetNormal(const nuiVector& rVf)
+{
+  mCurrentVertex.mNX = rVf[0];
+  mCurrentVertex.mNY = rVf[1];
+  mCurrentVertex.mNZ = rVf[2];
+}
+
+void nuiRenderArray::SetNormal(const nuiVector3& rV3f)
+{
+  mCurrentVertex.mNX = rV3f[0];
+  mCurrentVertex.mNY = rV3f[1];
+  mCurrentVertex.mNZ = rV3f[2];
+}
+
 bool nuiRenderArray::Is3DMesh() const
 {
   return m3DMesh;
@@ -337,6 +360,28 @@ void nuiRenderArray::SetTexCoords(uint32 index, float tx, float ty)
   mVertices[index].mTX = tx;
   mVertices[index].mTY = ty;
 }
+
+void nuiRenderArray::SetNormal(uint32 index, float x, float y, float z)
+{
+  mVertices[index].mNX = x;
+  mVertices[index].mNY = y;
+  mVertices[index].mNZ = z;
+}
+
+void nuiRenderArray::SetNormal(uint32 index, const nuiVector& rVf)
+{
+  mVertices[index].mNX = rVf[0];
+  mVertices[index].mNY = rVf[1];
+  mVertices[index].mNZ = rVf[2];
+}
+
+void nuiRenderArray::SetNormal(uint32 index, const nuiVector3& rV3f)
+{
+  mVertices[index].mNX = rV3f[0];
+  mVertices[index].mNY = rV3f[1];
+  mVertices[index].mNZ = rV3f[2];
+}
+
 
 //////////////////////////
 // Indexed rendering

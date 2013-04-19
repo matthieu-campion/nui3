@@ -42,6 +42,8 @@ protected:
   nuiShaderProgram* mpShader_TextureAlphaDifuseColor;
   nuiShaderProgram* mpShader_DifuseColor;
   nuiShaderProgram* mpShader_VertexColor;
+
+  nuiMatrix mSurfaceMatrix;
 };
 
 #define nuiCheckForGLErrors() { NGL_ASSERT(nuiCheckForGLErrorsReal()); }

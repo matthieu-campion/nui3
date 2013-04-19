@@ -18,6 +18,7 @@ enum nuiShaderKind
 
 #define NUI_PROJECTION_MATRIX_NAME "ProjectionMatrix"
 #define NUI_MODELVIEW_MATRIX_NAME "ModelViewMatrix"
+#define NUI_SURFACE_MATRIX_NAME "SurfaceMatrix"
 
 class nuiShader;
 class nuiShaderProgram;
@@ -77,6 +78,7 @@ public:
 
   void SetProjectionMatrix(const nglMatrixf& rMat, bool Apply);
   void SetModelViewMatrix(const nglMatrixf& rMat, bool Apply);
+  void SetSurfaceMatrix(const nglMatrixf& rMat, bool Apply);
 
   const GLfloat* GetFloat(const nglString& rName, int32& size) const;
   const GLint* GetInt(const nglString& rName, int32& size) const;
@@ -96,6 +98,7 @@ private:
 
   GLint mProjectionMatrix;
   GLint mModelViewMatrix;
+  GLint mSurfaceMatrix;
 };
 
 
@@ -109,6 +112,9 @@ public:
   nuiShaderProgram(const nglString& rName);
   virtual ~nuiShaderProgram();
 
+  void SetPrefix(const nglString& rPrefix);
+  static void SetDefaultPrefix(const nglString& rDefaultPrefix);
+  void AddShaderFromPath(nuiShaderKind shaderType, const nglPath& rPath);
   void AddShader(nuiShaderKind shaderType, nglIStream& rStream);
   void AddShader(nuiShaderKind shaderType, const nglString& rSrc);
 
@@ -128,6 +134,7 @@ public:
 
   GLint GetProgram() const;
 
+  static void ClearAll();
 protected:
   // Receive Uniform variables:
   void       GetUniformfv(const char* varname, GLfloat* values); //!< Receive value of uniform variable. \param varname The name of the uniform variable.
@@ -189,7 +196,10 @@ private:
   GLint mVA_Position;
   GLint mVA_TexCoord;
   GLint mVA_Color;
+  GLint mVA_Normal;
 
+  nglString mPrefix;
+  static nglString mDefaultPrefix;
   static std::map<GLenum, std::pair<GLenum, GLint> > gParamTypeMap;
 };
 

@@ -288,32 +288,26 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext)
 {
   mUseShaders = true;
 
-#ifdef _OPENGL_ES_
-  nglString pre = "precision mediump float;\n";
-#else
-  nglString pre;
-#endif
-
   mpShader_TextureVertexColor = new nuiShaderProgram("TextureVertexColor");
   mpShader_TextureVertexColor->Acquire();
-  mpShader_TextureVertexColor->AddShader(eVertexShader, pre + TextureVertexColor_VTX);
-  mpShader_TextureVertexColor->AddShader(eFragmentShader, pre + TextureVertexColor_FGT);
+  mpShader_TextureVertexColor->AddShader(eVertexShader, TextureVertexColor_VTX);
+  mpShader_TextureVertexColor->AddShader(eFragmentShader, TextureVertexColor_FGT);
   mpShader_TextureVertexColor->Link();
   mpShader_TextureVertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
   mpShader_TextureVertexColor->GetDefaultState().Set("texture", 0);
 
   mpShader_TextureAlphaVertexColor = new nuiShaderProgram("TextureAlphaVertexColor");
   mpShader_TextureAlphaVertexColor->Acquire();
-  mpShader_TextureAlphaVertexColor->AddShader(eVertexShader, pre + TextureAlphaVertexColor_VTX);
-  mpShader_TextureAlphaVertexColor->AddShader(eFragmentShader, pre + TextureAlphaVertexColor_FGT);
+  mpShader_TextureAlphaVertexColor->AddShader(eVertexShader, TextureAlphaVertexColor_VTX);
+  mpShader_TextureAlphaVertexColor->AddShader(eFragmentShader, TextureAlphaVertexColor_FGT);
   mpShader_TextureAlphaVertexColor->Link();
   mpShader_TextureAlphaVertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
   mpShader_TextureAlphaVertexColor->GetDefaultState().Set("texture", 0);
 
   mpShader_TextureDifuseColor = new nuiShaderProgram("TextureDiffuseColor");
   mpShader_TextureDifuseColor->Acquire();
-  mpShader_TextureDifuseColor->AddShader(eVertexShader, pre + TextureDifuseColor_VTX);
-  mpShader_TextureDifuseColor->AddShader(eFragmentShader, pre + TextureDifuseColor_FGT);
+  mpShader_TextureDifuseColor->AddShader(eVertexShader, TextureDifuseColor_VTX);
+  mpShader_TextureDifuseColor->AddShader(eFragmentShader, TextureDifuseColor_FGT);
   mpShader_TextureDifuseColor->Link();
   mpShader_TextureDifuseColor->GetDefaultState().Set("DifuseColor", nuiColor(255, 255, 255, 255));
   mpShader_TextureDifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
@@ -321,8 +315,8 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext)
 
   mpShader_TextureAlphaDifuseColor = new nuiShaderProgram("TextureAlphaDifuseColor");
   mpShader_TextureAlphaDifuseColor->Acquire();
-  mpShader_TextureAlphaDifuseColor->AddShader(eVertexShader, pre + TextureAlphaDifuseColor_VTX);
-  mpShader_TextureAlphaDifuseColor->AddShader(eFragmentShader, pre + TextureAlphaDifuseColor_FGT);
+  mpShader_TextureAlphaDifuseColor->AddShader(eVertexShader, TextureAlphaDifuseColor_VTX);
+  mpShader_TextureAlphaDifuseColor->AddShader(eFragmentShader, TextureAlphaDifuseColor_FGT);
   mpShader_TextureAlphaDifuseColor->Link();
   mpShader_TextureAlphaDifuseColor->GetDefaultState().Set("DifuseColor", nuiColor(255, 255, 255, 255));
   mpShader_TextureAlphaDifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
@@ -330,15 +324,15 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext)
 
   mpShader_VertexColor = new nuiShaderProgram("VertexColor");
   mpShader_VertexColor->Acquire();
-  mpShader_VertexColor->AddShader(eVertexShader, pre + VertexColor_VTX);
-  mpShader_VertexColor->AddShader(eFragmentShader, pre + VertexColor_FGT);
+  mpShader_VertexColor->AddShader(eVertexShader, VertexColor_VTX);
+  mpShader_VertexColor->AddShader(eFragmentShader, VertexColor_FGT);
   mpShader_VertexColor->Link();
   mpShader_VertexColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
 
   mpShader_DifuseColor = new nuiShaderProgram("DifuseColor");
   mpShader_DifuseColor->Acquire();
-  mpShader_DifuseColor->AddShader(eVertexShader, pre + DifuseColor_VTX);
-  mpShader_DifuseColor->AddShader(eFragmentShader, pre + DifuseColor_FGT);
+  mpShader_DifuseColor->AddShader(eVertexShader, DifuseColor_VTX);
+  mpShader_DifuseColor->AddShader(eFragmentShader, DifuseColor_FGT);
   mpShader_DifuseColor->Link();
   mpShader_DifuseColor->GetDefaultState().Set("DifuseColor", nuiColor(255, 255, 255, 255));
   mpShader_DifuseColor->GetDefaultState().Set("Offset", 0.0f, 0.0f);
@@ -400,6 +394,21 @@ void nuiGL2Painter::SetViewport()
     mViewPort[2] = w;
     mViewPort[3] = h;
     glViewport(mViewPort[0], mViewPort[1], mViewPort[2], mViewPort[3]);
+  }
+
+  if (mpSurface)
+  {
+    mSurfaceMatrix.SetScaling(1.0f, -1.0f, 1.0f);
+  }
+  else
+  {
+    mSurfaceMatrix.SetIdentity();
+  }
+
+  float angle = GetAngle();
+  if (angle != 0.0f)
+  {
+    mSurfaceMatrix.Rotate(angle, 0 ,0, 1);
   }
 
   nuiCheckForGLErrors();
@@ -580,17 +589,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     mFinalState.mpShader->GetDefaultState().Set("TextureScale", mTextureScale, false);
   }
 
-  nglMatrixf m;
-  if (mpSurface)
-  {
-    m.SetScaling(1.0f, -1.0f, 1.0f);
-  }
-  else
-  {
-    m.SetIdentity();
-  }
-  
-  mFinalState.mShaderState.Set("SurfaceMatrix", m, false);
+  mFinalState.mShaderState.SetSurfaceMatrix(mSurfaceMatrix, false);
   mFinalState.mShaderState.SetProjectionMatrix(mProjectionMatrixStack.top(), false);
   mFinalState.mShaderState.SetModelViewMatrix(mMatrixStack.top(), false);
   mFinalState.mShaderState.Apply();
