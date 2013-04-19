@@ -139,7 +139,10 @@ void nuiGLPainter::BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha, GL
   else
   {
     glBlendFunc(src, dst);
-    mTwoPassBlend = true;
+    if (src != srcalpha || dst != dstalpha)
+      mTwoPassBlend = true;
+    else
+      mTwoPassBlend = false;
   }
 #else
 #if GL_OES_blend_equation_separate
@@ -151,7 +154,10 @@ void nuiGLPainter::BlendFuncSeparate(GLenum src, GLenum dst, GLenum srcalpha, GL
   //    else
   {
     glBlendFunc(src, dst);
-    mTwoPassBlend = true;
+    if (src != srcalpha || dst != dstalpha)
+      mTwoPassBlend = true;
+    else
+      mTwoPassBlend = false;
   }
 #else
   glBlendFunc(src, dst);
@@ -398,7 +404,7 @@ void nuiGLPainter::ResetOpenGLState()
 #endif
 
   glDisable(GL_STENCIL_TEST);
-  glEnable(GL_BLEND);
+  glDisable(GL_BLEND);
 #ifndef _OPENGL_ES_
   glDisable(GL_ALPHA_TEST);
 #endif
@@ -438,6 +444,7 @@ void nuiGLPainter::ResetOpenGLState()
   mTexEnvMode = 0;
 
   mFinalState = nuiRenderState();
+  mState = nuiRenderState();
   nuiCheckForGLErrors();
 }
 

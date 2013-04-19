@@ -436,8 +436,7 @@ void nuiGL2Painter::ResetOpenGLState()
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_SCISSOR_TEST);
   glDisable(GL_STENCIL_TEST);
-  //glDisable(GL_BLEND);
-  glEnable(GL_BLEND);
+  glDisable(GL_BLEND);
 #ifndef _OPENGL_ES_
   glDisable(GL_ALPHA_TEST);
 #endif
@@ -455,6 +454,9 @@ void nuiGL2Painter::ResetOpenGLState()
 
 //  mTextureTranslate = nglVector2f(0.0f, 0.0f);
 //  mTextureScale = nglVector2f(1, 1);
+
+  mFinalState = nuiRenderState();
+  mState = nuiRenderState();
 
   nuiCheckForGLErrors();
 }
@@ -694,7 +696,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
 
   nuiCheckForGLErrors();
   
-  if (mpSurface && mTwoPassBlend)
+  if (mpSurface && mTwoPassBlend && mFinalState.mBlending)
   {
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_FALSE);
     uint32 arraycount = pArray->GetIndexArrayCount();
