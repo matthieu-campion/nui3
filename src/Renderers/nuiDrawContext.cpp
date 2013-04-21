@@ -34,7 +34,7 @@ nuiDrawContext::nuiDrawContext(const nuiRect& rRect)
 nuiDrawContext::~nuiDrawContext()
 {
   SetTexture(NULL);
-  SetShader(NULL);
+  SetShader(NULL, NULL);
   SetFont(NULL);
   if (mpAATexture)
     mpAATexture->Release();
@@ -67,7 +67,7 @@ void nuiDrawContext::EndSession()
 void nuiDrawContext::StopRendering()
 {
   SetTexture(NULL);
-  SetShader(NULL);
+  SetShader(NULL, NULL);
 }
 
 
@@ -325,7 +325,7 @@ nuiTexture* nuiDrawContext::GetTexture(int slot) const
  *
  ****************************************************************************/
 
-void nuiDrawContext::SetShader(nuiShaderProgram* pShader)
+void nuiDrawContext::SetShader(nuiShaderProgram* pShader, nuiShaderState* pShaderState)
 {
   nuiShaderProgram* pOld = mCurrentState.mpShader;
   if (pShader == pOld)
@@ -336,7 +336,11 @@ void nuiDrawContext::SetShader(nuiShaderProgram* pShader)
   {
     //pShader->CheckValid();
     pShader->Acquire();
-    mCurrentState.mShaderState = pShader->GetDefaultState();
+
+    if (!pShaderState)
+      pShaderState = pShader->GetDefaultState();
+
+    SetShaderState(pShaderState);
   }
   if (pOld)
     pOld->Release();
@@ -353,15 +357,19 @@ nuiShaderProgram* nuiDrawContext::GetShader() const
   return mCurrentState.mpShader;
 }
 
-void nuiDrawContext::SetShaderState(const nuiShaderState& rState)
+void nuiDrawContext::SetShaderState(nuiShaderState* pState)
 {
-  mCurrentState.mShaderState = rState;
+  if (pState)
+    pState->Acquire();
+  if (mCurrentState.mpShaderState)
+    mCurrentState.mpShaderState->Release();
+  mCurrentState.mpShaderState = pState;
   mStateChanges++;
 }
 
-const nuiShaderState& nuiDrawContext::GetShaderState() const
+nuiShaderState* nuiDrawContext::GetShaderState() const
 {
-  return mCurrentState.mShaderState;
+  return mCurrentState.mpShaderState;
 }
 
 /****************************************************************************

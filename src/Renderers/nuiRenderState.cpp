@@ -9,7 +9,7 @@
 
 
 nuiRenderState::nuiRenderState()
-: mShaderState(NULL)
+: mpShaderState(NULL)
 {
   mBlending = false;
   mTexturing = false;
@@ -38,7 +38,7 @@ nuiRenderState::nuiRenderState()
 }
 
 nuiRenderState::nuiRenderState(const nuiRenderState& rState)
-: mShaderState(NULL)
+: mpShaderState(NULL)
 {
   for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
     mpTexture[i] = NULL;
@@ -93,7 +93,7 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   if (pOldShader)
     pOldShader->Release();
 
-  mShaderState = rState.mShaderState;
+  mpShaderState = rState.mpShaderState;
 
   nuiFont* pOldFont = mpFont;
   mpFont = rState.mpFont;
@@ -114,6 +114,9 @@ nuiRenderState::~nuiRenderState()
 
   if (mpShader)
     mpShader->Release();
+
+  if (mpShaderState)
+    mpShaderState->Release();
 
   if (mpFont)
     mpFont->Release();
@@ -138,10 +141,10 @@ bool nuiRenderState::operator==(const nuiRenderState& rState) const
     (mLineCap        == rState.mLineCap)          &&
     (mLineJoin       == rState.mLineJoin)         &&
     (mpShader        == rState.mpShader)          &&
-    (mShaderState    == rState.mShaderState)      &&
+    (mpShaderState   == rState.mpShaderState)     &&
     (mCulling        == rState.mCulling)          &&
     (mCullingMode    == rState.mCullingMode)      &&
-    (mClearDepth     == rState.mClearDepth)      &&
+    (mClearDepth     == rState.mClearDepth)       &&
     (mpFont          == rState.mpFont);
   for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
     state = state && (mpTexture[i] == rState.mpTexture[i]);

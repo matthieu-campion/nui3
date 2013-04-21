@@ -19,6 +19,10 @@ enum nuiShaderKind
 #define NUI_PROJECTION_MATRIX_NAME "ProjectionMatrix"
 #define NUI_MODELVIEW_MATRIX_NAME "ModelViewMatrix"
 #define NUI_SURFACE_MATRIX_NAME "SurfaceMatrix"
+#define NUI_OFFSET_NAME "Offset"
+#define NUI_TEXTURE_TRANSLATE_NAME "TextureTranslate"
+#define NUI_TEXTURE_SCALE_NAME "TextureScale"
+#define NUI_DIFUSE_COLOR_NAME "DifuseColor"
 
 class nuiShader;
 class nuiShaderProgram;
@@ -27,11 +31,11 @@ class nuiShaderProgram;
 class nuiShaderState : public nuiRefCount
 {
 public:
-  nuiShaderState(nuiShaderProgram* pProgram);
+  nuiShaderState(nuiShaderProgram* pProgram, std::map<GLuint, int32>& rIndexMap);
   nuiShaderState(const nuiShaderState& rOriginal);
   virtual ~nuiShaderState();
 
-  void InitWithProgram(nuiShaderProgram* pProgram);
+  void InitWithProgram(nuiShaderProgram* pProgram, std::map<GLuint, int32>& rIndexMap);
 
   void Clear();
 
@@ -79,6 +83,10 @@ public:
   void SetProjectionMatrix(const nglMatrixf& rMat, bool Apply);
   void SetModelViewMatrix(const nglMatrixf& rMat, bool Apply);
   void SetSurfaceMatrix(const nglMatrixf& rMat, bool Apply);
+  void SetOffset(float OffsetX, float OffsetY, bool Apply);
+  void SetTextureTranslate(const nglVector2f& rTranslate, bool Apply);
+  void SetTextureScale(const nglVector2f& rScale, bool Apply);
+  void SetDifuseColor(const nuiColor& rDifuseColor, bool Apply);
 
   const GLfloat* GetFloat(const nglString& rName, int32& size) const;
   const GLint* GetInt(const nglString& rName, int32& size) const;
@@ -93,12 +101,16 @@ public:
   void Apply() const;
 
 private:
-  std::map<GLuint, nuiUniformDesc> mUniforms;
+  std::vector<nuiUniformDesc> mUniforms;
   nuiShaderProgram* mpProgram;
 
   GLint mProjectionMatrix;
   GLint mModelViewMatrix;
   GLint mSurfaceMatrix;
+  GLint mOffset;
+  GLint mTextureScale;
+  GLint mTextureTranslate;
+  GLint mDifuseColor;
 };
 
 
@@ -122,10 +134,11 @@ public:
 
   bool Link();
 
-  const nuiShaderState& GetDefaultState() const;
-  nuiShaderState& GetDefaultState();
-  void GetState(nuiShaderState& rState) const;
+  nuiShaderState* GetDefaultState() const;
+  nuiShaderState* CopyDefaultState() const;
 
+  int32       GetUniformIndex(const char *name); ///< Get index in nuiShaderState 
+  int32       GetUniformIndex(const nglString& name);
   GLint       GetUniformLocation(const char *name);  //!< Retrieve Location (index) of a Uniform Variable
   GLint       GetUniformLocation(const nglString& name);  //!< Retrieve Location (index) of a Uniform Variable
   GLint       GetVertexAttribLocation(const char *name);  //!< Retrieve Location (index) of a Vertex Attribute stream
@@ -190,8 +203,10 @@ private:
   GLuint mProgram;
 
   std::map<nglString, nuiVertexAttribDesc> mAttribMap;
+  std::map<GLuint, int32> mUniformMap;
+
   std::map<GLenum, nuiShader*> mShaders;
-  nuiShaderState mDefaultState;
+  nuiShaderState* mpDefaultState;
 
   GLint mVA_Position;
   GLint mVA_TexCoord;

@@ -535,7 +535,11 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
     glUseProgram(rState.mpShader->GetProgram());
   }
 
-  mFinalState.mShaderState = rState.mShaderState;
+  if (rState.mpShaderState)
+    rState.mpShaderState->Acquire();
+  if (mFinalState.mpShaderState)
+    mFinalState.mpShaderState->Release();
+  mFinalState.mpShaderState = rState.mpShaderState;
 
   // Rendering buffers:
   if (ForceApply || mFinalState.mColorBuffer != rState.mColorBuffer)

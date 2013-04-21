@@ -782,8 +782,8 @@ void nuiTexture::Init()
   {
     mMinFilter = GL_LINEAR;
     mMagFilter = GL_LINEAR;
-    //   mMinFilter = GL_NEAREST;
-    //   mMagFilter = GL_NEAREST;
+//    mMinFilter = GL_NEAREST;
+//    mMagFilter = GL_NEAREST;
 #ifdef _OPENGL_ES_
     mWrapS = GL_CLAMP_TO_EDGE;
     mWrapT = GL_CLAMP_TO_EDGE;

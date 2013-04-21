@@ -76,7 +76,7 @@ public:
   bool mTexturing;
   nuiTexture* mpTexture[NUI_MAX_TEXTURE_UNITS];
   nuiShaderProgram* mpShader;
-  nuiShaderState mShaderState;
+  nuiShaderState* mpShaderState;
 
   // Rendering buffers:
   bool mColorBuffer;

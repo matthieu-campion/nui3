@@ -78,18 +78,22 @@ struct TypeDesc
 };
 
 /////////////////////////////////////////////////////
-nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram)
+nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram, std::map<GLuint, int32>& rIndexMap)
 : mpProgram(NULL),
   mProjectionMatrix(-1),
   mModelViewMatrix(-1),
-  mSurfaceMatrix(-1)
+  mSurfaceMatrix(-1),
+  mOffset(-1),
+  mTextureScale(-1),
+  mTextureTranslate(-1),
+  mDifuseColor(-1)
 {
   if (pProgram)
-    InitWithProgram(pProgram);
+    InitWithProgram(pProgram, rIndexMap);
 }
 
 nuiShaderState::nuiShaderState(const nuiShaderState& rOriginal)
-: mpProgram(rOriginal.mpProgram), mUniforms(rOriginal.mUniforms), mProjectionMatrix(rOriginal.mProjectionMatrix), mModelViewMatrix(rOriginal.mModelViewMatrix), mSurfaceMatrix(rOriginal.mSurfaceMatrix)
+: mpProgram(rOriginal.mpProgram), mUniforms(rOriginal.mUniforms), mProjectionMatrix(rOriginal.mProjectionMatrix), mModelViewMatrix(rOriginal.mModelViewMatrix), mSurfaceMatrix(rOriginal.mSurfaceMatrix),  mOffset(rOriginal.mOffset), mTextureScale(rOriginal.mTextureScale), mTextureTranslate(rOriginal.mTextureTranslate), mDifuseColor(rOriginal.mDifuseColor)
 {
 }
 
@@ -104,28 +108,28 @@ void nuiShaderState::Clear()
 
 void nuiShaderState::Set(const nglString& rName, const float* pV, int32 count, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, pV, count, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const std::vector<float>& rV, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, &rV[0], rV.size(), Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const int32* pV, int32 count, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, pV, count, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const std::vector<int32>& rV, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, rV, Apply);
 }
@@ -133,91 +137,91 @@ void nuiShaderState::Set(const nglString& rName, const std::vector<int32>& rV, b
 ////
 void nuiShaderState::Set(const nglString& rName, float v1, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, float v1, float v2, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, v2, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, float v1, float v2, float v3, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, v2, v3, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, float v1, float v2, float v3, float v4, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, v2, v3, v4, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const nglVector2f& rVec, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, rVec, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const nglVector3f& rVec, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, rVec, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const nglVectorf& rVec, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, rVec, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const nuiColor& rColor, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, rColor, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, int32 v1, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, int32 v1, int32 v2, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, v2, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, int32 v1, int32 v2, int32 v3, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, v2, v3, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, int32 v1, int32 v2, int32 v3, int32 v4, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, v1, v2, v3, v4, Apply);
 }
 
 void nuiShaderState::Set(const nglString& rName, const nglMatrixf& rMat, bool Apply)
 {
-  GLint loc = mpProgram->GetUniformLocation(rName);
+  GLint loc = mpProgram->GetUniformIndex(rName);
   if (loc >= 0)
     Set(loc, rMat, Apply);
 }
@@ -250,13 +254,10 @@ static const char* Type2String(GLenum type)
   return "???";
 }
 
-void nuiShaderState::InitWithProgram(nuiShaderProgram* pProgram)
+void nuiShaderState::InitWithProgram(nuiShaderProgram* pProgram, std::map<GLuint, int32>& rIndexMap)
 {
   Clear();
   mpProgram = pProgram;
-  mProjectionMatrix = mpProgram->GetUniformLocation(NUI_PROJECTION_MATRIX_NAME);
-  mModelViewMatrix = mpProgram->GetUniformLocation(NUI_MODELVIEW_MATRIX_NAME);
-  mSurfaceMatrix = mpProgram->GetUniformLocation(NUI_SURFACE_MATRIX_NAME);
 
   GLuint pgm = mpProgram->GetProgram();
   {
@@ -270,115 +271,125 @@ void nuiShaderState::InitWithProgram(nuiShaderProgram* pProgram)
       char name[100];
       glGetActiveUniform(pgm, GLuint(i), sizeof(name)-1, &name_len, &num, &type, name);
       name[name_len] = 0;
+      //glBindAttribLocation(pgm, i, name);
       GLuint location = glGetUniformLocation(pgm, name);
 
-      NGL_OUT("ShaderProgram %p Uniform:  %s %s[%d]\n", pProgram, Type2String(type), name , num);
-      mUniforms.insert(std::make_pair(location, nuiUniformDesc(name, type, num, location, pProgram)));
+      rIndexMap[location] = i;
+      NGL_OUT("ShaderProgram %p Uniform: %d %s %s[%d]\n", pProgram, location, Type2String(type), name , num);
+      mUniforms.push_back(nuiUniformDesc(name, type, num, location, pProgram));
     }
   }
+
+  mProjectionMatrix = mpProgram->GetUniformIndex(NUI_PROJECTION_MATRIX_NAME);
+  mModelViewMatrix = mpProgram->GetUniformIndex(NUI_MODELVIEW_MATRIX_NAME);
+  mSurfaceMatrix = mpProgram->GetUniformIndex(NUI_SURFACE_MATRIX_NAME);
+  mOffset = mpProgram->GetUniformIndex(NUI_OFFSET_NAME);
+  mTextureScale = mpProgram->GetUniformIndex(NUI_TEXTURE_SCALE_NAME);
+  mTextureTranslate = mpProgram->GetUniformIndex(NUI_TEXTURE_TRANSLATE_NAME);
+  mDifuseColor = mpProgram->GetUniformIndex(NUI_DIFUSE_COLOR_NAME);
 }
 
 ///
 void nuiShaderState::Set(GLint loc, const float* pV, int32 count, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(pV, count, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const std::vector<float>& rV, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(rV, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const int32* pV, int32 count, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(pV, count, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const std::vector<int32>& rV, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(rV, Apply);
 }
 
 
 void nuiShaderState::Set(GLint loc, float v1, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, float v1, float v2, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, v2, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, float v1, float v2, float v3, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, v2, v3, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, float v1, float v2, float v3, float v4, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, v2, v3, v4, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const nglVector2f& rVec, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(rVec, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const nglVector3f& rVec, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(rVec, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const nglVectorf& rVec, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(rVec, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const nuiColor& rColor, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(rColor, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, int32 v1, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, int32 v1, int32 v2, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, v2, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, int32 v1, int32 v2, int32 v3, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, v2, v3, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, int32 v1, int32 v2, int32 v3, int32 v4, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(v1, v2, v3, v4, Apply);
 }
 
 void nuiShaderState::Set(GLint loc, const nglMatrixf& rMat, bool Apply)
 {
-  NGL_ASSERT(mUniforms.find(loc) != mUniforms.end());
+  NGL_ASSERT(loc < mUniforms.size());
   mUniforms[loc].Set(rMat, Apply);
 }
 
@@ -388,7 +399,7 @@ void nuiShaderState::SetProjectionMatrix(const nglMatrixf& rMat, bool Apply)
   {
     Set(mProjectionMatrix, rMat);
     if (Apply)
-      mUniforms.find(mProjectionMatrix)->second.Apply();
+      mUniforms[mProjectionMatrix].Apply();
   }
 }
 
@@ -398,7 +409,7 @@ void nuiShaderState::SetModelViewMatrix(const nglMatrixf& rMat, bool Apply)
   {
     Set(mModelViewMatrix, rMat);
     if (Apply)
-      mUniforms.find(mModelViewMatrix)->second.Apply();
+      mUniforms[mModelViewMatrix].Apply();
   }
 }
 
@@ -408,21 +419,55 @@ void nuiShaderState::SetSurfaceMatrix(const nglMatrixf& rMat, bool Apply)
   {
     Set(mSurfaceMatrix, rMat);
     if (Apply)
-      mUniforms.find(mSurfaceMatrix)->second.Apply();
+      mUniforms[mSurfaceMatrix].Apply();
+  }
+}
+
+void nuiShaderState::SetOffset(float OffsetX, float OffsetY, bool Apply)
+{
+  if (mOffset >= 0)
+  {
+    Set(mOffset, OffsetX, OffsetY);
+    if (Apply)
+      mUniforms[mOffset].Apply();
+  }
+}
+
+void nuiShaderState::SetTextureTranslate(const nglVector2f& rTranslate, bool Apply)
+{
+  if (mTextureTranslate >= 0)
+  {
+    Set(mTextureTranslate, rTranslate);
+    if (Apply)
+      mUniforms[mTextureTranslate].Apply();
+  }
+}
+
+void nuiShaderState::SetTextureScale(const nglVector2f& rScale, bool Apply)
+{
+  if (mTextureScale >= 0)
+  {
+    Set(mTextureScale, rScale);
+    if (Apply)
+      mUniforms[mTextureScale].Apply();
+  }
+}
+
+void nuiShaderState::SetDifuseColor(const nuiColor& rDifuseColor, bool Apply)
+{
+  if (mDifuseColor >= 0)
+  {
+    Set(mDifuseColor, rDifuseColor);
+    if (Apply)
+      mUniforms[mDifuseColor].Apply();
   }
 }
 
 
 void nuiShaderState::Apply() const
 {
-  std::map<GLuint, nuiUniformDesc>::const_iterator it = mUniforms.begin();
-  std::map<GLuint, nuiUniformDesc>::const_iterator end = mUniforms.end();
-
-  while (it != end)
-  {
-    it->second.Apply();
-    ++it;
-  }
+  for (int32 i = 0; i < mUniforms.size(); i++)
+    mUniforms[i].Apply();
 }
 
 
@@ -449,6 +494,10 @@ nuiShaderState& nuiShaderState::operator= (const nuiShaderState& rState)
   mProjectionMatrix = rState.mProjectionMatrix;
   mModelViewMatrix = rState.mModelViewMatrix;
   mSurfaceMatrix = rState.mSurfaceMatrix;
+  mOffset = rState.mOffset;
+  mTextureScale = rState.mTextureScale;
+  mTextureTranslate = rState.mTextureTranslate;
+  mDifuseColor = rState.mDifuseColor;
   mUniforms = rState.mUniforms;
 }
 
@@ -567,7 +616,7 @@ nglString nuiShaderProgram::mDefaultPrefix;
 #endif
 
 nuiShaderProgram::nuiShaderProgram(const nglString& rName)
-: mName(rName), mProgram(0), mDefaultState(this), mPrefix(mDefaultPrefix)
+: mName(rName), mProgram(0), mpDefaultState(NULL), mPrefix(mDefaultPrefix)
 {
   NGL_ASSERT(gpPrograms.find(rName) == gpPrograms.end());
   gpPrograms[rName] = this;
@@ -621,6 +670,9 @@ nuiShaderProgram::~nuiShaderProgram()
     ++it;
   }
 
+  if (mpDefaultState)
+    mpDefaultState->Release();
+
   if (mProgram)
     glDeleteProgram(mProgram);
 }
@@ -669,16 +721,17 @@ void nuiShaderProgram::LoadDefaultShaders()
 }
 
 
-const nuiShaderState& nuiShaderProgram::GetDefaultState() const
+nuiShaderState* nuiShaderProgram::GetDefaultState() const
 {
-  return mDefaultState;
+  return mpDefaultState;
 }
 
-nuiShaderState& nuiShaderProgram::GetDefaultState()
+nuiShaderState* nuiShaderProgram::CopyDefaultState() const
 {
-  return mDefaultState;
+  nuiShaderState* pState = new nuiShaderState(*mpDefaultState);
+  pState->Acquire();
+  return pState;
 }
-
 
 GLint nuiShaderProgram::GetUniformLocation(const char *name)
 {
@@ -688,6 +741,22 @@ GLint nuiShaderProgram::GetUniformLocation(const char *name)
 GLint nuiShaderProgram::GetUniformLocation(const nglString& name)
 {
 	return glGetUniformLocation(mProgram, name.GetChars());
+}
+
+int32 nuiShaderProgram::GetUniformIndex(const char *name)
+{
+  GLint loc = GetUniformLocation(name);
+  if (loc >= 0)
+    return mUniformMap[loc];
+  return -1;
+}
+
+int32 nuiShaderProgram::GetUniformIndex(const nglString& name)
+{
+  GLint loc = GetUniformLocation(name);
+  if (loc >= 0)
+    return mUniformMap[loc];
+  return -1;
 }
 
 GLint nuiShaderProgram::GetVertexAttribLocation(const char *name)
@@ -750,7 +819,8 @@ bool nuiShaderProgram::Link()
 
 
   // Enumerate Uniforms:
-  mDefaultState.InitWithProgram(this);
+  mpDefaultState = new nuiShaderState(this, mUniformMap);
+  mpDefaultState->Acquire();
 
   // Enumerate Vertex Attributes:
   {
@@ -783,12 +853,6 @@ GLint nuiShaderProgram::GetProgram() const
 {
   return mProgram;
 }
-
-void nuiShaderProgram::GetState(nuiShaderState& rState) const
-{
-  rState = mDefaultState;
-}
-
 
 void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
 {
