@@ -87,13 +87,13 @@ public:
   }
 
   /// Multiplication by a scalar (scaling)
-  void operator*=(const T & F)
+  void operator*=(T F)
   {
     Elt[0] *= F;
     Elt[1] *= F;
   }
 
-  nglVector2<T> operator*(const T & F)
+  nglVector2<T> operator*(T F) const
   {
     return nglVector2<T>(Elt[0] * F, Elt[1] * F);
   }
@@ -219,18 +219,24 @@ public:
   }
   
   /// Multiplication by a scalar (scaling)
-  void operator*=(const T & F)
+  void operator*=(T F)
   {
     Elt[0] *= F;
     Elt[1] *= F;
     Elt[2] *= F;
   }
   
-  nglVector3<T> operator*(const T & F)
+  nglVector3<T> operator*(T F) const
   {
     return nglVector3<T>(Elt[0] * F, Elt[1] * F, Elt[2] * F);
-  }  
-  
+  }
+
+  nglVector3<T> operator/(T F) const
+  {
+    F = 1.0f / F;
+    return (*this) * F;
+  }
+
   /// Scalar product
   T operator*(const nglVector3<T>& rVector) const
   {

@@ -216,6 +216,43 @@ public:
     *this = result;
   }
 
+  nglVector3<T> GetCol(int col) const
+  {
+    return nglVector3<T>((*this)(0, col), (*this)(1, col), (*this)(2, col));
+  }
+
+  void SetCol(int col, const nglVector3<T>& rCol)
+  {
+    (*this)(0, col) = rCol[0];
+    (*this)(1, col) = rCol[1];
+    (*this)(2, col) = rCol[2];
+  }
+
+  nglVector3<T> GetRow(int row) const
+  {
+    return nglVector3<T>((*this)(row, 0), (*this)(row, 1), (*this)(row, 2));
+  }
+
+  void SetRow(int row, const nglVector3<T>& rRow)
+  {
+    (*this)(row, 0) = rRow[0];
+    (*this)(row, 1) = rRow[1];
+    (*this)(row, 2) = rRow[2];
+  }
+
+  /// Setup a translation matrix
+  void SetDirectTranslation (const nglVector<T>& rDelta)
+  {
+    SetDirectTranslation(rDelta[0], rDelta[1], rDelta[2]);
+  }
+
+  /// Setup a translation matrix
+  void SetDirectTranslation (T X, T Y, T Z)
+  {
+    Elt.M14 = X;
+    Elt.M24 = Y;
+    Elt.M34 = Z;
+  }
 
   /// Setup a translation matrix
   void SetTranslation (const nglVector<T>& rDelta)
@@ -227,9 +264,12 @@ public:
   void SetTranslation (T X, T Y, T Z)
   {
     SetIdentity();
-    Elt.M14 = X;
-    Elt.M24 = Y;
-    Elt.M34 = Z;
+    SetDirectTranslation(X, Y, Z);
+  }
+
+  nglVector3<T> GetTranslation() const
+  {
+    return nglVector3<T>(Elt.M14, Elt.M24, Elt.M34);
   }
 
   /// Compose with a translation
@@ -243,7 +283,7 @@ public:
   {
     nglMatrix<T> m;
     m.SetTranslation(X, Y, Z);
-    *this *= m;
+    (*this) *= m;
   }
 
   /// Setup a scaling transformation (homothetia)
@@ -271,7 +311,7 @@ public:
   {
     nglMatrix<T> m;
     m.SetScaling(X, Y, Z);
-    *this *= m;
+    (*this) *= m;
   }
 
   /// Apply a scaling transformation
@@ -329,7 +369,7 @@ public:
   {
     nglMatrix<T> trans;
     trans.SetRotation(Angle, rAxis);
-    *this *= trans;
+    (*this) *= trans;
   }
 
   /// Compose with a rotation of \a Angle degrees around the axis which coordinates are \a X, \a Y and \a Z
@@ -337,7 +377,7 @@ public:
   {
     nglMatrix<T> trans;
     trans.SetRotation(Angle, X, Y, Z);
-    *this *= trans;
+    (*this) *= trans;
   }
 
   /// Setup a camera matrix, given eye and target position and up direction
@@ -509,7 +549,7 @@ public:
   nglMatrix<T> operator = (const nglMatrix<T>& rMatrix)
   {
     memcpy(Array, rMatrix.Array, 16*sizeof(T));
-    return *this;
+    return (*this);
   }
 
   /*!< Right matrix multiplication. These two lines perform the same operation :
@@ -542,7 +582,7 @@ mat1 = mat1 * mat2;
     result.Elt.M43 =(Elt.M41 * rMatrix.Elt.M13 + Elt.M42 * rMatrix.Elt.M23 + Elt.M43 * rMatrix.Elt.M33 + Elt.M44 * rMatrix.Elt.M43);
     result.Elt.M44 =(Elt.M41 * rMatrix.Elt.M14 + Elt.M42 * rMatrix.Elt.M24 + Elt.M43 * rMatrix.Elt.M34 + Elt.M44 * rMatrix.Elt.M44);
 
-    *this = result;
+    (*this) = result;
   }
 
   bool operator == (const nglMatrix<T>& rMatrix) const

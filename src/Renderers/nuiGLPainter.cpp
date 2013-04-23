@@ -522,7 +522,9 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
   //
 
   for (int i = 0; i < NUI_MAX_TEXTURE_UNITS; i++)
+  {
     ApplyTexture(rState, ForceApply, i);
+  }
 
   if (ForceApply || mFinalState.mpShader != rState.mpShader)
   {
@@ -658,7 +660,10 @@ void nuiGLPainter::ApplyTexture(const nuiRenderState& rState, bool ForceApply, i
 #endif
 
   // 2D Textures:
-  auto it = mTextures.find(rState.mpTexture[slot]);
+  auto it = mTextures.end();
+  if (rState.mpTexture[slot])
+    it = mTextures.find(rState.mpTexture[slot]);
+
   bool uptodate = (it == mTextures.end()) ? false : ( !it->second.mReload && it->second.mTexture >= 0 );
   if (ForceApply || (mFinalState.mpTexture[slot] != rState.mpTexture[slot]) || (mFinalState.mpTexture[slot] && !uptodate))
   {

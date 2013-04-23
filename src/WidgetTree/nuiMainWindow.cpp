@@ -32,13 +32,13 @@ nuiContextInfo::nuiContextInfo(Type type)
   switch (type)
   {
   case StandardContext2D:
+      CopyOnSwap = true;
   case StandardContext3D:
     Offscreen = false;
     RenderToTexture = false;
     AASampleCnt = NUI_MULTISAMPLES;
     if (AASampleCnt)
       AABufferCnt = 1;
-    CopyOnSwap = true;
     break;
   case OffscreenContext2D:
   case OffscreenContext3D:

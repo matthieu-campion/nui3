@@ -149,7 +149,7 @@ public:
   }
 
   /// Multiplication
-  nglQuaternion<T> operator * (const nglQuaternion<T>& rQuat)
+  nglQuaternion<T> operator * (const nglQuaternion<T>& rQuat) const
   {
     nglQuaternion<T> result;
     T t[8];
@@ -210,7 +210,7 @@ public:
   }
 
   /// Conversion to matrix
-  operator nglMatrix<T> ()
+  operator nglMatrix<T> () const
   {
     nglMatrix<T> result;
 
@@ -251,7 +251,7 @@ public:
   }
 
   /// Conversion to vector (x, y and z quaternion components are pasted, w is zero)
-  operator nglVector<T> ()
+  operator nglVector<T> () const
   {
     return ::nglVector<T>(Elt.x, Elt.y, Elt.z, 0.f);
   }
@@ -270,7 +270,7 @@ public:
   }
 
   // SLERP interpolation from this instance to \a rTarget at position \a Pos
-  nglQuaternion<T> SlerpTo( const nglQuaternion& rTarget, T Pos)
+  nglQuaternion<T> SlerpTo( const nglQuaternion& rTarget, T Pos) const
   {
     T sign, co, scale0, scale1;
     nglQuaternion<T> quat;

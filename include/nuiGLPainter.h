@@ -27,6 +27,14 @@ public:
     glPushGroupMarkerEXT(0, rString.GetChars());
 #endif
   }
+
+  nuiGLDebugGuard(const char* pString)
+  {
+#ifdef DEBUG
+    glPushGroupMarkerEXT(0, pString);
+#endif
+  }
+
   ~nuiGLDebugGuard()
   {
 #ifdef DEBUG

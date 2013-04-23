@@ -769,11 +769,17 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
     CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
     
     eaglLayer.opaque = TRUE;
-    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithBool:TRUE], kEAGLDrawablePropertyRetainedBacking,
-                                    kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
-                                    nil];
-    
+    if (pContextInfo->CopyOnSwap)
+      eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [NSNumber numberWithBool:TRUE], kEAGLDrawablePropertyRetainedBacking,
+                                      kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
+                                      nil];
+    else
+      eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
+                                      nil];
+
+
     EAGLSharegroup* group = nil;
     if (original != nil) 
 		{

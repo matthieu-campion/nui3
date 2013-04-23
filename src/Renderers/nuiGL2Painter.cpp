@@ -572,7 +572,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
 
     pShader->Acquire();
     mState.mpShader = pShader;
-    mState.mpShaderState = pShader->CopyDefaultState();
+    mState.mpShaderState = pShader->GetDefaultState();
   }
 
   NGL_ASSERT(mState.mpShader != NULL);
@@ -594,7 +594,6 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   mFinalState.mpShaderState->SetSurfaceMatrix(mSurfaceMatrix, false);
   mFinalState.mpShaderState->SetProjectionMatrix(mProjectionMatrixStack.top(), false);
   mFinalState.mpShaderState->SetModelViewMatrix(mMatrixStack.top(), false);
-  mFinalState.mpShaderState->Apply();
 
   uint32 s = pArray->GetSize();
   
@@ -660,12 +659,10 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   }
 
   if (mpSurface)
-    mFinalState.mpShader->GetDefaultState()->SetOffset(-hackX, -hackY, true);
+    mFinalState.mpShader->GetDefaultState()->SetOffset(-hackX, -hackY, false);
   else
-    mFinalState.mpShader->GetDefaultState()->SetOffset(hackX, hackY, true);
+    mFinalState.mpShader->GetDefaultState()->SetOffset(hackX, hackY, false);
 
-
-  mFinalState.mpShader->SetVertexPointers(*pArray);
 
   if (!pArray->IsArrayEnabled(nuiRenderArray::eColor))
   {
@@ -691,8 +688,11 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     mB = c.Blue();
     mA = c.Alpha();
 
-    mFinalState.mpShader->GetDefaultState()->SetDifuseColor(nuiColor(mR, mG, mB, mA), true);
+    mFinalState.mpShader->GetDefaultState()->SetDifuseColor(nuiColor(mR, mG, mB, mA), false);
   }
+
+  mFinalState.mpShaderState->Apply();
+  mFinalState.mpShader->SetVertexPointers(*pArray);
 
   nuiCheckForGLErrors();
   
