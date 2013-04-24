@@ -317,7 +317,7 @@ public:
   /// Apply a scaling transformation
   void Scale (const nglVector<T>& rVector)
   {
-    SetScaling(rVector[0], rVector[1], rVector[2]);
+    Scale(rVector[0], rVector[1], rVector[2]);
   }
 
   /// Setup a rotation matrix of \a Angle degrees around \a rAxis (using right hand convention)

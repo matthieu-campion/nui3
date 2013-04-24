@@ -149,6 +149,7 @@ public:
     Elt[1] = Y;
     Elt[2] = Z;
   }
+
   /// Destructor
   virtual ~nglVector3() {}
 
