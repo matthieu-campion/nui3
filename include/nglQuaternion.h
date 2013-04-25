@@ -70,6 +70,14 @@ public:
     Elt.z = cr * cp * sh - sr * sp * ch;
   }
 
+  nglQuaternion (const nglQuaternion<T>& rQuat)
+  {
+    Elt.x = rQuat.Elt.x;
+    Elt.y = rQuat.Elt.y;
+    Elt.z = rQuat.Elt.z;
+    Elt.w = rQuat.Elt.w;
+  }
+
   virtual ~nglQuaternion()
   {
   }
@@ -305,7 +313,35 @@ public:
     quat.Elt.w = scale0 * Elt.w + scale1 * ((sign >= (T) 0.) ? rTarget.Elt.w : -rTarget.Elt.w);
 
     return quat;
-  } 
+  }
+
+
+  bool GetValue(nglString& rDump) const
+  {
+    rDump.CFormat(_T("{ %f %f %f %f }"), (T)Array[0], (T)Array[1], (T)Array[2], (T)Array[3]);
+    return true;
+  }
+
+  bool SetValue(const nglString& rValue)
+  {
+    nglString val = rValue;
+
+    val.Trim();
+    val.TrimLeft(_T('{'));
+    val.TrimRight(_T('}'));
+
+    std::vector<nglString> tokens;
+    val.Tokenize(tokens, _T(' '));
+
+    for (uint i = 0; i < 4; i++)
+    {
+      Array[i] = (T)tokens[i].GetCDouble();
+    }
+
+    return tokens.size() == 4;
+  }
+  
+
 };
 
 

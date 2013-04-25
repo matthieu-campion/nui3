@@ -2118,6 +2118,36 @@ template <>
 void nuiAttribute<nglVectorf>::FormatDefault(nglVectorf value, nglString& string) const;
 
 
+//********************************
+//
+// const nglVector3f&
+//
+
+template <>
+bool nuiAttribute<const nglVector3f&>::ToString(const nglVector3f& rValue, nglString& rString) const;
+
+template <>
+bool nuiAttribute<const nglVector3f&>::FromString(nglVector3f& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<const nglVector3f&>::FormatDefault(const nglVector3f& rValue, nglString& string) const;
+
+//********************************
+//
+// nglVector3f
+//
+
+template <>
+bool nuiAttribute<nglVector3f>::ToString(nglVector3f Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nglVector3f>::FromString(nglVector3f& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<nglVector3f>::FormatDefault(nglVector3f value, nglString& string) const;
+
+
+
 
 //********************************
 //
@@ -2148,6 +2178,38 @@ bool nuiAttribute<nglMatrixf>::FromString(nglMatrixf& rValue, const nglString& r
 
 template <>
 void nuiAttribute<nglMatrixf>::FormatDefault(nglMatrixf value, nglString& string) const;
+
+
+//********************************
+//
+// const nglQuaternionf&
+//
+
+template <>
+bool nuiAttribute<const nglQuaternionf&>::ToString(const nglQuaternionf& rValue, nglString& rString) const;
+
+template <>
+bool nuiAttribute<const nglQuaternionf&>::FromString(nglQuaternionf& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<const nglQuaternionf&>::FormatDefault(const nglQuaternionf& rValue, nglString& string) const;
+
+//********************************
+//
+// nglQuaternionf
+//
+
+template <>
+bool nuiAttribute<nglQuaternionf>::ToString(nglQuaternionf Value, nglString& rString) const;
+
+template <>
+bool nuiAttribute<nglQuaternionf>::FromString(nglQuaternionf& rValue, const nglString& rString) const;
+
+template <>
+void nuiAttribute<nglQuaternionf>::FormatDefault(nglQuaternionf value, nglString& string) const;
+
+
+
 
 
 //********************************

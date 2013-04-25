@@ -259,8 +259,10 @@ NUI_DECLARE_ATTRIBUTE_TYPE(nuiRange);
 //NUI_DECLARE_ATTRIBUTE_TYPE(const nuiRange&);
 NUI_DECLARE_ATTRIBUTE_TYPE(nglVectorf);
 //NUI_DECLARE_ATTRIBUTE_TYPE(const nglVectorf&);
+NUI_DECLARE_ATTRIBUTE_TYPE(nglVector3f);
 NUI_DECLARE_ATTRIBUTE_TYPE(nglMatrixf);
 //NUI_DECLARE_ATTRIBUTE_TYPE(const nglMatrixf&);
+NUI_DECLARE_ATTRIBUTE_TYPE(nglQuaternionf);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiBlendFunc);
 NUI_DECLARE_ATTRIBUTE_TYPE(nuiExpandMode);
 #endif
@@ -1984,6 +1986,61 @@ bool nuiAttribute<const nglVectorf&>::FromString(nglVectorf& rValue, const nglSt
 }
 
 
+//********************************
+//
+// nglVector3f
+//
+
+template class nuiAttribute<nglVector3f>;
+
+template <>
+bool nuiAttribute<nglVector3f>::ToString(nglVector3f Value, nglString& rString) const
+{
+  return Value.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<nglVector3f>::FromString(nglVector3f& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+template <>
+void nuiAttribute<nglVector3f>::FormatDefault(nglVector3f value, nglString & string) const
+{
+  value.GetValue(string);
+}
+
+
+
+
+//********************************
+//
+// const nglVector3f&
+//
+
+template class nuiAttribute<const nglVector3f&>;
+
+template <>
+void nuiAttribute<const nglVector3f&>::FormatDefault(const nglVector3f& rValue, nglString & string) const
+{
+  rValue.GetValue(string);
+}
+
+template <>
+bool nuiAttribute<const nglVector3f&>::ToString(const nglVector3f& rValue, nglString& rString) const
+{
+  return rValue.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<const nglVector3f&>::FromString(nglVector3f& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+
+
 
 //********************************
 //
@@ -2037,6 +2094,61 @@ bool nuiAttribute<const nglMatrixf&>::FromString(nglMatrixf& rValue, const nglSt
 {
   return rValue.SetValue(rString);
 }
+
+//********************************
+//
+// nglQuaternionf
+//
+
+template class nuiAttribute<nglQuaternionf>;
+
+template <>
+bool nuiAttribute<nglQuaternionf>::ToString(nglQuaternionf Value, nglString& rString) const
+{
+  return Value.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<nglQuaternionf>::FromString(nglQuaternionf& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+template <>
+void nuiAttribute<nglQuaternionf>::FormatDefault(nglQuaternionf value, nglString & string) const
+{
+  value.GetValue(string);
+}
+
+
+
+
+//********************************
+//
+// const nglQuaternionf&
+//
+
+template class nuiAttribute<const nglQuaternionf&>;
+
+template <>
+void nuiAttribute<const nglQuaternionf&>::FormatDefault(const nglQuaternionf& rValue, nglString & string) const
+{
+  rValue.GetValue(string);
+}
+
+template <>
+bool nuiAttribute<const nglQuaternionf&>::ToString(const nglQuaternionf& rValue, nglString& rString) const
+{
+  return rValue.GetValue(rString);
+}
+
+template <>
+bool nuiAttribute<const nglQuaternionf&>::FromString(nglQuaternionf& rValue, const nglString& rString) const
+{
+  return rValue.SetValue(rString);
+}
+
+
 
 #endif
 

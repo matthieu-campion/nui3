@@ -395,15 +395,15 @@ public:
     forward.Normalize();
 
     /* Side = forward x up */
-    nglVector<T> side = forward ^ rUp;
-    side.Normalize();
+    nglVector<T> right = forward ^ rUp;
+    right.Normalize();
 
-    /* Recompute up as : up = side x forward */
-    nglVector<T> up = side ^ forward;
+    /* Recompute up as : up = right x forward */
+    nglVector<T> up = right ^ forward;
 
-    Elt.M11 = side[0];
-    Elt.M12 = side[1];
-    Elt.M13 = side[2];
+    Elt.M11 = right[0];
+    Elt.M12 = right[1];
+    Elt.M13 = right[2];
     Elt.M14 = -rEye[0];
 
     Elt.M21 = up[0];

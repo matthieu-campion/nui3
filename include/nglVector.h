@@ -150,6 +150,13 @@ public:
     Elt[2] = Z;
   }
 
+  nglVector3(const nglVector3<T>& rVector)
+  {
+    Elt[0] = rVector.Elt[0];
+    Elt[1] = rVector.Elt[1];
+    Elt[2] = rVector.Elt[2];
+  }
+
   /// Destructor
   virtual ~nglVector3() {}
 
@@ -287,6 +294,46 @@ public:
     }
     return false;
   }
+
+  bool GetValue(nglString& rDump, int32 NbElements = 3) const
+  {
+    switch (NbElements)
+    {
+      case 1:
+        rDump.CFormat(_T("{ %f }"), (T)Elt[0]);
+        break;
+      case 2:
+        rDump.CFormat(_T("{ %f %f }"), (T)Elt[0], (T)Elt[1]);
+        break;
+      default:
+        rDump.CFormat(_T("{ %f %f %f }"), (T)Elt[0], (T)Elt[1], (T)Elt[2]);
+        break;
+    }
+    return true;
+  }
+
+  bool SetValue(const nglString& rValue)
+  {
+    //rDump.CFormat(_T("{ %8.3f %8.3f %8.3f }"), (T)Elt[0], (T)Elt[1], (T)Elt[2]);
+
+    nglString val = rValue;
+
+    val.Trim();
+    val.TrimLeft(_T('{'));
+    val.TrimRight(_T('}'));
+
+    std::vector<nglString> tokens;
+    val.Tokenize(tokens, _T(' '));
+
+    for (uint i = 0; i < MIN(3, tokens.size()); i++)
+    {
+      Elt[i] = (T)tokens[i].GetCDouble();
+    }
+
+    return true;
+  }
+  
+
 };
 
 
@@ -304,6 +351,16 @@ public:
     Elt[2] = 0.f;
     Elt[3] = 0.f;
   }
+
+  nglVector(const nglVector<T>& rVector)
+  {
+    Elt[0] = rVector.Elt[0];
+    Elt[1] = rVector.Elt[1];
+    Elt[2] = rVector.Elt[2];
+    Elt[3] = rVector.Elt[3];
+  }
+
+
   /// Initialize with values
   nglVector(T X, T Y, T Z, T W = 1.f)
   {
