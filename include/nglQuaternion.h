@@ -40,37 +40,15 @@ public:
   };
 
   /// Create a null quaternion (all elements set to zero)
-  nglQuaternion ()
+  nglQuaternion()
   {
-    Nullify();
+    Elt.x = 0.f;
+    Elt.y = 0.f;
+    Elt.z = 0.f;
+    Elt.w = 1.f;
   }
 
-  /// Create a quaternion from Euler angles in degrees (vector input)
-  nglQuaternion (const nglVector<T>& rVector)
-  {
-    T x, y, z;
-
-    x = (T) ( DEG2RAD(rVector[0]) / 2.f );
-    y = (T) ( DEG2RAD(rVector[1]) / 2.f );
-    z = (T) ( DEG2RAD(rVector[2]) / 2.f );
-
-    T sh = (T) -sin ( x ); 
-    T ch = (T)  cos ( x );
-    T sp = (T) -sin ( y ); 
-    T cp = (T)  cos ( y );
-    T sr = (T) -sin ( z ); 
-    T cr = (T)  cos ( z );
-
-    T cpch = cp * ch;
-    T spsh = sp * sh;
-
-    Elt.w = cr * cpch + sr * spsh;
-    Elt.x = sr * cpch - cr * spsh;
-    Elt.y = cr * sp * ch + sr * cp * sh;
-    Elt.z = cr * cp * sh - sr * sp * ch;
-  }
-
-  nglQuaternion (const nglQuaternion<T>& rQuat)
+  nglQuaternion(const nglQuaternion<T>& rQuat)
   {
     Elt.x = rQuat.Elt.x;
     Elt.y = rQuat.Elt.y;
@@ -85,6 +63,7 @@ public:
   /// Set to zero (all elements to zero)
   void Nullify()
   {
+    //printf("quat::Nullify\n");
     Elt.x = 0.f;
     Elt.y = 0.f;
     Elt.z = 0.f;
@@ -94,10 +73,43 @@ public:
   /// Set to (multiplication) identity
   void SetIdentity()
   {
+    //printf("quat::SetId\n");
     Elt.x = 0.f;
     Elt.y = 0.f;
     Elt.z = 0.f;
     Elt.w = 1.f;
+  }
+
+  /// Invert the quaternion (= get the conjugate). This method only works if this quaternion is normalized (otherwise use InvertAny())
+  void Invert()
+  {
+    Elt.x = - Elt.x;
+    Elt.y = - Elt.y;
+    Elt.z = - Elt.z;
+    //Elt.w =   Elt.w;
+  }
+
+  T SquaredLength() const
+  {
+    return (Elt.w * Elt.w) + (Elt.x * Elt.x) + (Elt.y * Elt.y) + (Elt.z * Elt.z);
+  }
+
+  T Length() const
+  {
+    return std::sqrt(SquaredLength());
+  }
+
+  T Normalize()
+  {
+    T length = Length();
+    if (length < 1e-4f)
+      return 0.f;
+    T rcpLength = 1.f / length;
+    Elt.x *= rcpLength;
+    Elt.y *= rcpLength;
+    Elt.z *= rcpLength;
+    Elt.w *= rcpLength;
+    return length;
   }
 
   /*! Set to a rotation representation
@@ -108,7 +120,8 @@ public:
   */
   void SetRotation (const T Angle, const T X, const T Y, const T Z)
   {
-    T angle_rad = (T) (DEG2RAD(Angle) / 2.f);
+    //printf("quat::SetRot %f {%f, %f %f}\n", Angle, X, Y, Z);
+    T angle_rad = (T) (DEG2RAD(Angle) * .5f);
 
     T s = (T) sin ( angle_rad );
 
@@ -148,33 +161,56 @@ public:
     else
     {
       T m = 1.f / s;
-      rAxis[0] = -Elt.z * m;
-      rAxis[1] = -Elt.y * m;
-      rAxis[2] = -Elt.x * m;
+      rAxis[0] = Elt.x * m;
+      rAxis[1] = Elt.y * m;
+      rAxis[2] = Elt.z * m;
     }
 
     return angle;
   }
 
+  /// Create a quaternion from Euler angles in degrees
+  void SetEulerAngles(T x, T y, T z)
+  {
+    x = DEG2RAD(x);
+    y = DEG2RAD(y);
+    z = DEG2RAD(z);
+
+    T sh = (T) -sin ( x );
+    T ch = (T)  cos ( x );
+    T sp = (T) -sin ( y );
+    T cp = (T)  cos ( y );
+    T sr = (T) -sin ( z );
+    T cr = (T)  cos ( z );
+
+    T cpch = cp * ch;
+    T spsh = sp * sh;
+
+    Elt.w = cr * cpch + sr * spsh;
+    Elt.x = sr * cpch - cr * spsh;
+    Elt.y = cr * sp * ch + sr * cp * sh;
+    Elt.z = cr * cp * sh - sr * sp * ch;
+  }
+  
+
+
   /// Multiplication
-  nglQuaternion<T> operator * (const nglQuaternion<T>& rQuat) const
+  nglQuaternion<T> operator* (const nglQuaternion<T> &rq) const
   {
     nglQuaternion<T> result;
-    T t[8];
+    const float x = Elt.x;
+    const float y = Elt.y;
+    const float z = Elt.z;
+    const float w = Elt.w;
+    const float nx = rq.Elt.x;
+    const float ny = rq.Elt.y;
+    const float nz = rq.Elt.z;
+    const float nw = rq.Elt.w;
 
-    t[0] = (Elt.w + Elt.x) * (rQuat.Elt.w + rQuat.Elt.x);
-    t[1] = (Elt.z - Elt.y) * (rQuat.Elt.y - rQuat.Elt.z);
-    t[2] = (Elt.x - Elt.w) * (rQuat.Elt.y - rQuat.Elt.z);
-    t[3] = (Elt.y + Elt.z) * (rQuat.Elt.x - rQuat.Elt.w);
-    t[4] = (Elt.x + Elt.z) * (rQuat.Elt.x + rQuat.Elt.y);
-    t[5] = (Elt.x - Elt.z) * (rQuat.Elt.x - rQuat.Elt.y);
-    t[6] = (Elt.w + Elt.y) * (rQuat.Elt.w - rQuat.Elt.z);
-    t[7] = (Elt.w - Elt.y) * (rQuat.Elt.w + rQuat.Elt.z);
-
-    result.Elt.w =  t[1] + ((-t[4] - t[5] + t[6] + t[7]) * (T)0.5);
-    result.Elt.x =  t[0] - (( t[4] + t[5] + t[6] + t[7]) * (T)0.5);
-    result.Elt.y = -t[2] + (( t[4] - t[5] + t[6] - t[7]) * (T)0.5);
-    result.Elt.z = -t[3] + (( t[4] - t[5] - t[6] + t[7]) * (T)0.5);
+    result.Elt.x = w * nx + x * nw + y * nz - z * ny;
+    result.Elt.y = w * ny + y * nw + z * nx - x * nz;
+    result.Elt.z = w * nz + z * nw + x * ny - y * nx;
+    result.Elt.w = w * nw - x * nx - y * ny - z * nz;
 
     return result;
   }
@@ -182,6 +218,7 @@ public:
   /// Conversion from an homogeneous matrix
   nglQuaternion<T>& operator = (const nglMatrix<T>& rMatrix)
   {
+    //printf("quat::=\n");
     T trace = rMatrix(0,0) + rMatrix(1,1) + rMatrix(2,2);
 
     if (trace > 0.f)
@@ -218,44 +255,89 @@ public:
   }
 
   /// Conversion to matrix
+//  operator nglMatrix<T> () const
+//  {
+//    nglMatrix<T> result;
+//
+//    T two_xx = Elt.x * (Elt.x + Elt.x);
+//    T two_xy = Elt.x * (Elt.y + Elt.y);
+//    T two_xz = Elt.x * (Elt.z + Elt.z);
+//
+//    T two_wx = Elt.w * (Elt.x + Elt.x);
+//    T two_wy = Elt.w * (Elt.y + Elt.y);
+//    T two_wz = Elt.w * (Elt.z + Elt.z);
+//
+//    T two_yy = Elt.y * (Elt.y + Elt.y);
+//    T two_yz = Elt.y * (Elt.z + Elt.z);
+//
+//    T two_zz = Elt.z * (Elt.z + Elt.z);
+//
+//    result.Array[0]= 1.f - (two_yy+two_zz);
+//    result.Array[1]= two_xy - two_wz;
+//    result.Array[2]= two_xz + two_wy;
+//    result.Array[3]= 0.f;
+//
+//    result.Array[4]= two_xy + two_wz;
+//    result.Array[5]= 1.f - (two_xx + two_zz);
+//    result.Array[6]= two_yz - two_wx;
+//    result.Array[7]= 0.f;
+//
+//    result.Array[8]= two_xz - two_wy;
+//    result.Array[9]= two_yz + two_wx;
+//    result.Array[10]= 1.f - (two_xx + two_yy);
+//    result.Array[11]= 0.f;
+//
+//    result.Array[12]= 0.f;
+//    result.Array[13]= 0.f;
+//    result.Array[14]= 0.f;
+//    result.Array[15]= 1.f;
+//
+//    return result;
+//  }
+
   operator nglMatrix<T> () const
   {
-    nglMatrix<T> result;
+    const T x = Elt.x;
+    const T y = Elt.y;
+    const T z = Elt.z;
+    const T w = Elt.w;
 
-    T two_xx = Elt.x * (Elt.x + Elt.x);
-    T two_xy = Elt.x * (Elt.y + Elt.y);
-    T two_xz = Elt.x * (Elt.z + Elt.z);
+    const T x2 = x * x;
+    const T y2 = y * y;
+    const T z2 = z * z;
+    const T xy = x * y;
+    const T xz = x * z;
+    const T yz = y * z;
+    const T wx = w * x;
+    const T wy = w * y;
+    const T wz = w * z;
 
-    T two_wx = Elt.w * (Elt.x + Elt.x);
-    T two_wy = Elt.w * (Elt.y + Elt.y);
-    T two_wz = Elt.w * (Elt.z + Elt.z);
+    // This calculation would be a lot more complicated for non-unit length quaternions
+    // Note: The constructor of Matrix4 expects the Matrix in column-major format like expected by
+    //   OpenGL
+    T a[] = {
+      1.0f - 2.0f * (y2 + z2),
+      2.0f * (xy - wz),
+      2.0f * (xz + wy),
+      0.0f,
 
-    T two_yy = Elt.y * (Elt.y + Elt.y);
-    T two_yz = Elt.y * (Elt.z + Elt.z);
+      2.0f * (xy + wz),
+      1.0f - 2.0f * (x2 + z2),
+      2.0f * (yz - wx),
+      0.0f,
 
-    T two_zz = Elt.z * (Elt.z + Elt.z);
+      2.0f * (xz - wy),
+      2.0f * (yz + wx),
+      1.0f - 2.0f * (x2 + y2),
+      0.0f,
 
-    result.Array[0]= 1.f - (two_yy+two_zz);
-    result.Array[1]= two_xy - two_wz;
-    result.Array[2]= two_xz + two_wy;
-    result.Array[3]= 0.f;
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f
+    };
 
-    result.Array[4]= two_xy + two_wz;
-    result.Array[5]= 1.f - (two_xx + two_zz);
-    result.Array[6]= two_yz - two_wx;
-    result.Array[7]= 0.f;
-
-    result.Array[8]= two_xz - two_wy;
-    result.Array[9]= two_yz + two_wx;
-    result.Array[10]= 1.f - (two_xx + two_yy);
-    result.Array[11]= 0.f;
-
-    result.Array[12]= 0.f;
-    result.Array[13]= 0.f;
-    result.Array[14]= 0.f;
-    result.Array[15]= 1.f;
-
-    return result;
+    return nglMatrix<T>(a);
   }
 
   /// Conversion to vector (x, y and z quaternion components are pasted, w is zero)
@@ -265,8 +347,9 @@ public:
   }
 
   /// Inversion
-  void Invert()
+  void InvertAny()
   {
+    //printf("quat::Invert\n");
     T n;
 
     n = Elt.x * Elt.x + Elt.y * Elt.y + Elt.z * Elt.z + Elt.w * Elt.w;
@@ -280,6 +363,7 @@ public:
   // SLERP interpolation from this instance to \a rTarget at position \a Pos
   nglQuaternion<T> SlerpTo( const nglQuaternion& rTarget, T Pos) const
   {
+    //printf("quat::SlerpTo\n");
     T sign, co, scale0, scale1;
     nglQuaternion<T> quat;
 
@@ -324,6 +408,7 @@ public:
 
   bool SetValue(const nglString& rValue)
   {
+    //printf("quat::SetValue(%s)\n", rValue.GetChars());
     nglString val = rValue;
 
     val.Trim();
@@ -340,7 +425,40 @@ public:
 
     return tokens.size() == 4;
   }
-  
+
+  // Next 3 method stolen from http://nic-gamedev.blogspot.fr/2011/11/quaternion-math-getting-local-axis.html
+  nglVector3<T> GetForwardVector() const
+  {
+    const float w = Elt.w;
+    const float x = Elt.x;
+    const float y = Elt.y;
+    const float z = Elt.z;
+    return nglVector3<T>(  2 * (x * z + w * y),
+                           2 * (y * x - w * x),
+                           1 - 2 * (x * x + y * y));
+  }
+
+  nglVector3<T> GetUpVector() const
+  {
+    const float w = Elt.w;
+    const float x = Elt.x;
+    const float y = Elt.y;
+    const float z = Elt.z;
+    return nglVector3<T>(  2 * (x * y - w * z),
+                           1 - 2 * (x * x + z * z),
+                           2 * (y * z + w * x));
+  }
+
+  nglVector3<T> GetRightVector() const
+  {
+    const float w = Elt.w;
+    const float x = Elt.x;
+    const float y = Elt.y;
+    const float z = Elt.z;
+    return nglVector3<T>(  1 - 2 * (y * y + z * z),
+                           2 * (x * y + w * z),
+                           2 * (x * z - w * y));
+  }
 
 };
 

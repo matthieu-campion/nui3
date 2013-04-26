@@ -13,7 +13,7 @@
 #ifndef __nglMath_h__
 #define __nglMath_h__
 
-//#include "nui.h"
+#include <cmath>
 #include "nglEndian.h"
 
 

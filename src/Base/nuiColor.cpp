@@ -325,13 +325,13 @@ void nuiColor::Crop()
     movups [eax], xmm0; //< Store the values back
   }
 #else
-  if (isnan(mRed))
+  if (std::isnan(mRed))
     mRed = 0;
-  if (isnan(mGreen))
+  if (std::isnan(mGreen))
     mGreen = 0;
-  if (isnan(mBlue))
+  if (std::isnan(mBlue))
     mBlue = 0;
-  if (isnan(mAlpha))
+  if (std::isnan(mAlpha))
     mAlpha = 0;
   mRed   = MIN(1.0f, mRed  );
   mRed  =  MAX(0.0f, mRed  );
@@ -419,11 +419,11 @@ void RGBtoHSV( float r, float g, float b, float& h, float& s, float& v )
 		h -= 360;
   h /= 360;
   
-  if (isnan(h))
+  if (std::isnan(h))
     h = 0;
-  if (isnan(s))
+  if (std::isnan(s))
     s = 0;
-  if (isnan(v))
+  if (std::isnan(v))
     v = 0;
 }
 
@@ -483,11 +483,11 @@ void HSVtoRGB( float& r, float& g, float& b, float h, float s, float v )
 			break;
 	}
   
-  if (isnan(r))
+  if (std::isnan(r))
     r = 0;
-  if (isnan(g))
+  if (std::isnan(g))
     g = 0;
-  if (isnan(b))
+  if (std::isnan(b))
     b = 0;
   
 }
@@ -568,13 +568,13 @@ void nuiColor::SetHSL(float h, float s, float l, float a)
     }
   }
   
-  if (isnan(r))
+  if (std::isnan(r))
     r = 0;
-  if (isnan(g))
+  if (std::isnan(g))
     g = 0;
-  if (isnan(b))
+  if (std::isnan(b))
     b = 0;
-  if (isnan(a))
+  if (std::isnan(a))
     a = 0;
   
   mRed = r;
@@ -638,11 +638,11 @@ void nuiColor::GetHSL(float& h, float& s, float& l) const
   }
   h /= 6.0;
 
-  if (isnan(h))
+  if (std::isnan(h))
     h = 0;
-  if (isnan(s))
+  if (std::isnan(s))
     s = 0;
-  if (isnan(l))
+  if (std::isnan(l))
     l = 0;
 }
 

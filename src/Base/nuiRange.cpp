@@ -7,7 +7,7 @@
 
 #include "nui.h"
 
-#if (defined _WIN32_) || 1
+#if (defined _WIN32_)
   #define ISNAN_DOUBLE isnan
 #else
   #define ISNAN_DOUBLE std::isnan<double>
@@ -86,14 +86,14 @@ nuiRange::~nuiRange()
 bool nuiRange::IsValid() const
 {
   
-  if (isnan(mMinimum)
-  |   isnan(mMaximum)
-  |   isnan(mPageSize)
-  |   isnan(mValue)
-  |   isnan(mIncrement)
-  |   isnan(mPageIncrement)
-  |   isnan(mOrigin)
-  |   isnan(mUnitCurve)
+  if (std::isnan(mMinimum)
+  |   std::isnan(mMaximum)
+  |   std::isnan(mPageSize)
+  |   std::isnan(mValue)
+  |   std::isnan(mIncrement)
+  |   std::isnan(mPageIncrement)
+  |   std::isnan(mOrigin)
+  |   std::isnan(mUnitCurve)
       )
   {
     return false;

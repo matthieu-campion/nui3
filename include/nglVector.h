@@ -112,7 +112,7 @@ public:
   /// Length
   T Length() const
   {
-    return (T)sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1]);
+    return std::sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1]);
   }
   /// Normalize. Returns false if the length is zero
   bool Normalize()
@@ -279,7 +279,7 @@ public:
   /// Length
   T Length() const
   {
-    return (T)sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2]);
+    return std::sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2]);
   }
   /// Normalize. Returns false if the length is zero
   bool Normalize()
@@ -523,7 +523,7 @@ public:
   /// Length
   T Length() const
   {
-    return (T)sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2]); 
+    return std::sqrt(Elt[0]*Elt[0] + Elt[1]*Elt[1] + Elt[2]*Elt[2]);
   }
   /// Normalize. Returns false if the length is zero
   bool Normalize()
@@ -596,7 +596,17 @@ public:
     
     return true;
   }
-  
+
+  operator nglVector3<T> () const
+  {
+    return nglVector3<T>(Elt[0], Elt[1], Elt[2]);
+  }
+
+  operator nglVector2<T> () const
+  {
+    return nglVector2<T>(Elt[0], Elt[1]);
+  }
+
 };
 
 
@@ -622,7 +632,7 @@ void nuiDistanceFromLineAndSegment(T px, T py, T x0, T y0 , T x1, T y1, T &rDist
   //    
   T s =  ((y0 - py) * (x1 - x0) - (x0 - px) * (y1 - y0) ) / r_denominator;
   
-  rDistanceFromLine = fabs(s) * sqrt(r_denominator);
+  rDistanceFromLine = fabs(s) * std::sqrt(r_denominator);
   
   //
   // (xx,yy) is the point on the lineSegment closest to (px,py)
@@ -638,9 +648,9 @@ void nuiDistanceFromLineAndSegment(T px, T py, T x0, T y0 , T x1, T y1, T &rDist
     T dist1 = (px - x0) * (px - x0) + (py - y0) * (py - y0);
     T dist2 = (px - x1) * (px - x1) + (py - y1) * (py - y1);
     if (dist1 < dist2)
-      rDistanceFromSegment = sqrt(dist1);
+      rDistanceFromSegment = std::sqrt(dist1);
     else
-      rDistanceFromSegment = sqrt(dist2);
+      rDistanceFromSegment = std::sqrt(dist2);
   }
 
   return;
@@ -654,7 +664,7 @@ T nuiDistanceFromLine(T px, T py, T x0, T y0 , T x1, T y1)
 
   T s =  ((y0 - py) * (x1 - x0) - (x0 - px) * (y1 - y0) ) / r_denominator;
   
-  return fabs(s) * sqrt(r_denominator);
+  return fabs(s) * std::sqrt(r_denominator);
 }
 
 template <class T>
