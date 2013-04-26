@@ -140,6 +140,48 @@ public:
     SetRotation (Angle, rAxis[0], rAxis[1], rAxis[2]);
   }
 
+  void SetRotation(const nglVector<T>& from, const nglVector<T>& to)
+  {
+    nglVector<T> H = from + to;
+    H.Normalize();
+
+    Elt.w = from * H;
+    Elt.x = from.Elt.y * H.Elt.z - from.Elt.z * H.Elt.y;
+    Elt.y = from.Elt.z * H.Elt.x - from.Elt.x * H.Elt.z;
+    Elt.z = from.Elt.x * H.Elt.y - from.Elt.y * H.Elt.x;
+  }
+
+	void AimZAxis( const nglVector<T>& from, const nglVector<T>& to )
+	{
+		nglVector<T> vAim = to - from;
+		vAim.Normalize();
+
+		Elt.x = vAim.Elt.y;
+		Elt.y = -vAim.Elt.x;
+		Elt.z = 0.0f;
+		Elt.w = 1.0f + vAim.Elt.z;
+
+		if ( Elt.x == 0.0f && Elt.y == 0.0f && Elt.z == 0.0f && Elt.w == 0.0f )
+    {
+      // If we can't normalize it, just set it
+			Elt.x = 0;
+      Elt.y = 1;
+      Elt.z = 0;
+      Elt.w = 0;
+		}
+    else
+    {
+			Normalize();
+		}
+	}
+
+  void LookAt(nglVector<T>& lookAt, nglVector<T>& upDirection)
+  {
+    nglMatrix<T> m;
+    m.LookAt(nglVector<T>(0, 0, 0, 1), lookAt, upDirection);
+    *this = m;
+  }
+  
   /*! Get rotation representation
     \param rAxis returns the rotation axis
     \return rotation angle
@@ -216,85 +258,47 @@ public:
   }
 
   /// Conversion from an homogeneous matrix
-  nglQuaternion<T>& operator = (const nglMatrix<T>& rMatrix)
+  nglQuaternion<T>& operator =(const nglMatrix<T>& a)
   {
-    //printf("quat::=\n");
-    T trace = rMatrix(0,0) + rMatrix(1,1) + rMatrix(2,2);
-
-    if (trace > 0.f)
+    float trace = a(0,0) + a(1,1) + a(2,2); // I removed + 1.0f; see discussion with Ethan
+    if( trace > 0 )
     {
-      T s = (T) sqrt (trace + 1.f);
-
-      Elt.w = (T) (s / 2.f);
-      s = (T) (0.5f / s);
-      Elt.x = (rMatrix(1,2) - rMatrix(2,1)) * s;
-      Elt.y = (rMatrix(2,0) - rMatrix(0,2)) * s;
-      Elt.z = (rMatrix(0,1) - rMatrix(1,0)) * s;
+      T s = 0.5 / sqrt(trace + 1.0);
+      Elt.w = 0.25f / s;
+      Elt.x = ( a(2,1) - a(1,2) ) * s;
+      Elt.y = ( a(0,2) - a(2,0) ) * s;
+      Elt.z = ( a(1,0) - a(0,1) ) * s;
     }
-    else 
+    else
     {
-      uint i, j, k;
-      uint next[3] = {1, 2, 0};
-
-      i = 0;
-      if (rMatrix(1,1) > rMatrix(0,0)) i = 1;
-      if (rMatrix(2,2) > rMatrix(i,i)) i = 2;
-      j = next[i];
-      k = next[j];
-
-      T s = (T) (sqrt ((rMatrix(i,i) - (rMatrix(j,j) + rMatrix(k,k))) + 1.f));
-
-      Array[i] = (T) (s * 0.5f);
-      if (s != 0.f) s = (T) (0.5f / s);
-      Array[j] = (rMatrix(i,j) + rMatrix(j,i)) * s;
-      Array[k] = (rMatrix(i,k) + rMatrix(k,i)) * s;
-      Array[3] = (rMatrix(j,k) - rMatrix(k,j)) * s;
+      if ( a(0,0) > a(1,1) && a(0,0) > a(2,2) )
+      {
+        T s = 2.0f * sqrt( 1.0f + a(0,0) - a(1,1) - a(2,2));
+        Elt.w = (a(2,1) - a(1,2) ) / s;
+        Elt.x = 0.25f * s;
+        Elt.y = (a(0,1) + a(1,0) ) / s;
+        Elt.z = (a(0,2) + a(2,0) ) / s;
+      }
+      else if (a(1,1) > a(2,2))
+      {
+        T s = 2.0f * sqrt( 1.0f + a(1,1) - a(0,0) - a(2,2));
+        Elt.w = (a(0,2) - a(2,0) ) / s;
+        Elt.x = (a(0,1) + a(1,0) ) / s;
+        Elt.y = 0.25f * s;
+        Elt.z = (a(1,2) + a(2,1) ) / s;
+      }
+      else
+      {
+        T s = 2.0f * sqrt( 1.0f + a(2,2) - a(0,0) - a(1,1) );
+        Elt.w = (a(1,0) - a(0,1) ) / s;
+        Elt.x = (a(0,2) + a(2,0) ) / s;
+        Elt.y = (a(1,2) + a(2,1) ) / s;
+        Elt.z = 0.25f * s;
+      }
     }
-
-    return *this;
   }
 
   /// Conversion to matrix
-//  operator nglMatrix<T> () const
-//  {
-//    nglMatrix<T> result;
-//
-//    T two_xx = Elt.x * (Elt.x + Elt.x);
-//    T two_xy = Elt.x * (Elt.y + Elt.y);
-//    T two_xz = Elt.x * (Elt.z + Elt.z);
-//
-//    T two_wx = Elt.w * (Elt.x + Elt.x);
-//    T two_wy = Elt.w * (Elt.y + Elt.y);
-//    T two_wz = Elt.w * (Elt.z + Elt.z);
-//
-//    T two_yy = Elt.y * (Elt.y + Elt.y);
-//    T two_yz = Elt.y * (Elt.z + Elt.z);
-//
-//    T two_zz = Elt.z * (Elt.z + Elt.z);
-//
-//    result.Array[0]= 1.f - (two_yy+two_zz);
-//    result.Array[1]= two_xy - two_wz;
-//    result.Array[2]= two_xz + two_wy;
-//    result.Array[3]= 0.f;
-//
-//    result.Array[4]= two_xy + two_wz;
-//    result.Array[5]= 1.f - (two_xx + two_zz);
-//    result.Array[6]= two_yz - two_wx;
-//    result.Array[7]= 0.f;
-//
-//    result.Array[8]= two_xz - two_wy;
-//    result.Array[9]= two_yz + two_wx;
-//    result.Array[10]= 1.f - (two_xx + two_yy);
-//    result.Array[11]= 0.f;
-//
-//    result.Array[12]= 0.f;
-//    result.Array[13]= 0.f;
-//    result.Array[14]= 0.f;
-//    result.Array[15]= 1.f;
-//
-//    return result;
-//  }
-
   operator nglMatrix<T> () const
   {
     const T x = Elt.x;
@@ -312,9 +316,6 @@ public:
     const T wy = w * y;
     const T wz = w * z;
 
-    // This calculation would be a lot more complicated for non-unit length quaternions
-    // Note: The constructor of Matrix4 expects the Matrix in column-major format like expected by
-    //   OpenGL
     T a[] = {
       1.0f - 2.0f * (y2 + z2),
       2.0f * (xy - wz),
@@ -397,6 +398,38 @@ public:
     quat.Elt.w = scale0 * Elt.w + scale1 * ((sign >= (T) 0.) ? rTarget.Elt.w : -rTarget.Elt.w);
 
     return quat;
+  }
+
+  nglQuaternion<T> NlerpTo(const nglQuaternion<T>& f, T blend)
+  {
+    const nglQuaternion& i(*this);
+    nglQuaternion<T> result;
+    T dot = i.Elt.w * f.Elt.w + i.Elt.x * f.Elt.x + i.Elt.y * f.Elt.y + i.Elt.z * f.Elt.z;
+    T blendI = 1.0f - blend;
+
+    if (dot < 0.0f)
+    {
+      nglQuaternion<T> tmpF;
+      tmpF.Elt.w = -f.Elt.w;
+      tmpF.Elt.x = -f.Elt.x;
+      tmpF.Elt.y = -f.Elt.y;
+      tmpF.Elt.z = -f.Elt.z;
+
+      result.Elt.w = blendI * i.Elt.w + blend * tmpF.Elt.w;
+      result.Elt.x = blendI * i.Elt.x + blend * tmpF.Elt.x;
+      result.Elt.y = blendI * i.Elt.y + blend * tmpF.Elt.y;
+      result.Elt.z = blendI * i.Elt.z + blend * tmpF.Elt.z;
+    }
+    else
+    {
+      result.Elt.w = blendI * i.Elt.w + blend * f.Elt.w;
+      result.Elt.x = blendI * i.Elt.x + blend * f.Elt.x;
+      result.Elt.y = blendI * i.Elt.y + blend * f.Elt.y;
+      result.Elt.z = blendI * i.Elt.z + blend * f.Elt.z;
+    }
+
+    result.Normalize();
+    return result;
   }
 
 
