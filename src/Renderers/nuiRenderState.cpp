@@ -93,6 +93,10 @@ void nuiRenderState::Copy(const nuiRenderState& rState)
   if (pOldShader)
     pOldShader->Release();
 
+  if (rState.mpShaderState)
+    rState.mpShaderState->Acquire();
+  if (mpShaderState)
+    mpShaderState->Release();
   mpShaderState = rState.mpShaderState;
 
   nuiFont* pOldFont = mpFont;

@@ -23,7 +23,7 @@ public:
   { 
     if (mTrace)
     {
-      NGL_OUT(_T("Acquire object 0x%x (%d)\n"), this, mCount + 1);
+      NGL_OUT(_T("Acquire object %p (%d)\n"), this, mCount + 1);
     }
     
     
@@ -34,7 +34,7 @@ public:
   { 
     if (mTrace)
     {
-      NGL_OUT(_T("Release object 0x%x (%d)\n"), this, mCount - 1);
+      NGL_OUT(_T("Release object %p (%d)\n"), this, mCount - 1);
     }
 
     
@@ -44,7 +44,7 @@ public:
     {
       if (mTrace)
       {
-        NGL_OUT(_T("Delete object 0x%x\n"), this);
+        NGL_OUT(_T("Delete object %p\n"), this);
       }
       
       

@@ -74,7 +74,9 @@ public:
   
   void SetDrawChildrenImmediat(bool set);
   bool GetDrawChildrenImmediat() const;
-  
+
+  virtual void DestroySurface(nuiSurface* pSurface);
+
 #ifdef _DEBUG_
   void DBGSetReferenceObject(const nuiObject* pRef);
 #endif

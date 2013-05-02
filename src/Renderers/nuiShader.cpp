@@ -88,6 +88,9 @@ nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram, std::map<GLuint, int3
   mTextureTranslate(-1),
   mDifuseColor(-1)
 {
+  //NGL_OUT("nuiShaderState Ctor %p\n", this);
+  //SetTrace(true);
+  
   if (pProgram)
     InitWithProgram(pProgram, rIndexMap);
 }
@@ -95,10 +98,12 @@ nuiShaderState::nuiShaderState(nuiShaderProgram* pProgram, std::map<GLuint, int3
 nuiShaderState::nuiShaderState(const nuiShaderState& rOriginal)
 : mpProgram(rOriginal.mpProgram), mUniforms(rOriginal.mUniforms), mProjectionMatrix(rOriginal.mProjectionMatrix), mModelViewMatrix(rOriginal.mModelViewMatrix), mSurfaceMatrix(rOriginal.mSurfaceMatrix),  mOffset(rOriginal.mOffset), mTextureScale(rOriginal.mTextureScale), mTextureTranslate(rOriginal.mTextureTranslate), mDifuseColor(rOriginal.mDifuseColor)
 {
+  //NGL_OUT("nuiShaderState Ctor %p (from %p)\n", this, &rOriginal);
 }
 
 nuiShaderState::~nuiShaderState()
 {
+  //NGL_OUT("nuiShaderState Dtor %p\n", this);
 }
 
 void nuiShaderState::Clear()

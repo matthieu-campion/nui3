@@ -234,6 +234,52 @@ public:
     Elt.z = cr * cp * sh - sr * sp * ch;
   }
   
+  void SetSphericalRotation(T latitude, T longitude, T angle = 0)
+  {
+    latitude = DEG2RAD(latitude);
+    longitude = DEG2RAD(longitude);
+
+    T sin_a    = sin( angle / 2 );
+    T cos_a    = cos( angle / 2 );
+
+    T sin_lat  = sin( latitude );
+    T cos_lat  = cos( latitude );
+
+    T sin_long = sin( longitude );
+    T cos_long = cos( longitude );
+
+    Elt.x       = sin_a * cos_lat * sin_long;
+    Elt.y       = sin_a * sin_lat;
+    Elt.z       = sin_a * sin_lat * cos_long;
+    Elt.w       = cos_a;
+  }
+
+  void GetShericalRotation(T& latitude, T& longitude)
+  {
+    T cos_angle  = Elt.w;
+    T sin_angle  = sqrt( 1.0 - cos_angle * cos_angle );
+    T angle      = RAD2DEG(acos( cos_angle ) * 2);
+
+    if ( fabs( sin_angle ) < 0.0005 )
+      sin_angle = 1;
+
+    T tx = Elt.x / sin_angle;
+    T ty = Elt.y / sin_angle;
+    T tz = Elt.z / sin_angle;
+
+    latitude = -asin( ty );
+
+    if ( tx * tx + tz * tz < 0.0005 )
+      longitude   = 0;
+    else
+      longitude  = atan2( tx, tz );
+
+    latitude = RAD2DEG(latitude);
+    longitude = RAD2DEG(longitude);
+
+    while (longitude < 0)
+      longitude += 360.0;
+  }
 
 
   /// Multiplication
@@ -492,6 +538,49 @@ public:
                            2 * (x * y + w * z),
                            2 * (x * z - w * y));
   }
+
+  void Transform(nglVector<T> &v) const
+  {
+    nglQuaternion<T> qv;
+    qv.Elt.w = 0;
+    qv.Elt.x = v[0];
+    qv.Elt.y = v[1];
+    qv.Elt.z = v[2];
+
+    nglQuaternion<T> conj = *this;
+    conj.Invert();
+    nglQuaternion<T> result = *this * qv * conj;
+
+    v[0] = result.Elt.x;
+    v[1] = result.Elt.y;
+    v[2] = result.Elt.z;
+  }
+  
+  void RotateAroundX(float angle)
+  {
+    RotateAround(angle, nglVector3f(1, 0, 0));
+  }
+
+  void RotateAroundY(float angle)
+  {
+    RotateAround(angle, nglVector3f(0, 1, 0));
+  }
+
+  void RotateAroundZ(float angle)
+  {
+    RotateAround(angle, nglVector3f(0, 0, 1));
+  }
+
+  void RotateAround(float angle, const nglVector3f& rAxis)
+  {
+    nglQuaternion<T> rotation;
+    nglVector3f v(rAxis);
+    v.Normalize();
+    rotation.SetRotation(angle, v);
+
+    *this = *this * rotation;
+  }
+  
 
 };
 

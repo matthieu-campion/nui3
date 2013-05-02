@@ -174,14 +174,14 @@ nglKeyCode CocoaToNGLKeyCode(unichar c, uint16 scanCode)
   return oglContext;
 }
 
-- (NSSize) windowWillResize: (NSWindow*) win toSize: (NSSize) size
+- (void) windowDidResize: (NSNotification *)notification
 {
   //printf("windowWillResize %f x %f\n", size.width, size.height);
   // inform the context that the view has been resized
+  NSWindow* win = [notification object];
   NSRect rect = {0};
-  rect.size = size;
+  rect = [win frame];
   [win resize: [win contentRectForFrameRect: rect].size];
-  return size;
 }
 
 -(void)windowWillClose:(NSNotification *)note

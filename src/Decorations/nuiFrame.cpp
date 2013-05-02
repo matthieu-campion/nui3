@@ -389,8 +389,8 @@ void nuiFrame::UpdateTextureCoordinates()
   for (int32 i = 0; i < 24; i++)
   {
     mpTexture->ImageToTextureCoord(mTx[i], mTy[i]);
-    NGL_ASSERT(!isnan(mTx[i]));
-    NGL_ASSERT(!isnan(mTy[i]));
+    NGL_ASSERT(!std::isnan(mTx[i]));
+    NGL_ASSERT(!std::isnan(mTy[i]));
   }
   
   mNeedUpdate = false;

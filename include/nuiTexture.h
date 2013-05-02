@@ -162,7 +162,6 @@ protected:
   
   static nglContext* mpSharedContext;
   static nuiTextureMap mpTextures;
-  static nuiTextureCacheSet mTextureCaches;
   static bool mRetainBuffers;
 };
 

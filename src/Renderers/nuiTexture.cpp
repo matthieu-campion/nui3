@@ -112,7 +112,7 @@ nuiTexture* nuiTexture::GetTexture(nuiSurface* pSurface)
   if (!pTexture)
   {
     nglString name;
-    name.Format(_T("Surface 0x%x"), pSurface);
+    name.Format(_T("Surface %s (%p)"), pSurface->GetObjectName().GetChars(), pSurface);
     nuiTextureMap::iterator it = mpTextures.find(name);
     if (it == mpTextures.end())
       pTexture = new nuiTexture(pSurface);    
@@ -443,7 +443,6 @@ void nuiTexture::ClearAll()
   
   mpTextures.clear();
   mpSharedContext = NULL;
-  mTextureCaches.clear();
   TexturesChanged();
 
 }
@@ -795,15 +794,6 @@ void nuiTexture::Init()
     mAutoMipMap = false;
   }
   
-  nuiTextureCacheSet::iterator it = mTextureCaches.begin();
-  nuiTextureCacheSet::iterator end = mTextureCaches.end();
-  while (it != end)
-  {
-    nuiTextureCache* pCache = *it;
-    pCache->CreateTexture(this);
-    ++it;
-  }
-
   TexturesChanged();
 }
 
@@ -817,16 +807,6 @@ bool nuiTexture::IsValid() const
 
 nuiTexture::~nuiTexture()
 {
-  nuiTextureCacheSet::iterator it = mTextureCaches.begin();
-  nuiTextureCacheSet::iterator end = mTextureCaches.end();
-  while (it != end)
-  {
-    nuiTextureCache* pCache = *it;
-    pCache->DestroyTexture(this);
-    ++it;
-  }
-  
-  
 //  NGL_OUT(_T("nuiTexture::~nuiTexture(0x%x - [%f %f] source='%s')\n"), this, mRealWidth, mRealHeight, GetProperty(_T("Source")).GetChars());
 
   if (mOwnImage)
@@ -853,15 +833,6 @@ void nuiTexture::ForceReload(bool Rebind)
   else
   {
     mForceReload = false;
-  }
-
-  nuiTextureCacheSet::iterator it = mTextureCaches.begin();
-  nuiTextureCacheSet::iterator end = mTextureCaches.end();
-  while (it != end)
-  {
-    nuiTextureCache* pCache = *it;
-    pCache->InvalidateTexture(this, mForceReload);
-    ++it;
   }
 }
 
@@ -1233,16 +1204,6 @@ void nuiTexture::SetSharedContext(nglContext* pContext)
   mpSharedContext = pContext;
   if (!mpSharedContext)
     ForceReloadAll(true);
-}
-
-void nuiTexture::AddCache(nuiTextureCache* pCache)
-{
-  mTextureCaches.insert(pCache);
-}
-
-void nuiTexture::DelCache(nuiTextureCache* pCache)
-{
-  mTextureCaches.erase(pCache);
 }
 
 #if 0//def NUI_PHONE

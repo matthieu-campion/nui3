@@ -94,23 +94,23 @@ bool nuiRenderArray::IsArrayEnabled(DataType tpe) const
 void nuiRenderArray::PushVertex()
 {
   NGL_ASSERT(mCurrentVertex.mX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mX));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mX));
   NGL_ASSERT(mCurrentVertex.mY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mY));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mY));
   NGL_ASSERT(mCurrentVertex.mZ != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mZ));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mZ));
 
   NGL_ASSERT(mCurrentVertex.mTX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mTX));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mTX));
   NGL_ASSERT(mCurrentVertex.mTY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mTY));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mTY));
 
   NGL_ASSERT(mCurrentVertex.mNX != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mNX));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mNX));
   NGL_ASSERT(mCurrentVertex.mNY != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mNY));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mNY));
   NGL_ASSERT(mCurrentVertex.mNZ != std::numeric_limits<float>::infinity());
-  NGL_ASSERT(!isnan(mCurrentVertex.mNZ));
+  NGL_ASSERT(!std::isnan(mCurrentVertex.mNZ));
 
   // Grow the bounding rect:
   UpdateBounds(mCurrentVertex.mX, mCurrentVertex.mY, mCurrentVertex.mZ);
@@ -201,10 +201,10 @@ void nuiRenderArray::SetColor(float r, float g, float b, float a)
   NGL_ASSERT(b >= 0.0);
   NGL_ASSERT(a <= 1.0);
   NGL_ASSERT(a >= 0.0);
-  NGL_ASSERT(!isnan(r));
-  NGL_ASSERT(!isnan(g));
-  NGL_ASSERT(!isnan(b));
-  NGL_ASSERT(!isnan(a));
+  NGL_ASSERT(!std::isnan(r));
+  NGL_ASSERT(!std::isnan(g));
+  NGL_ASSERT(!std::isnan(b));
+  NGL_ASSERT(!std::isnan(a));
 
   mCurrentVertex.mR = (uint8)ToBelow(r * 255.0f);
   mCurrentVertex.mG = (uint8)ToBelow(g * 255.0f);
@@ -324,10 +324,10 @@ void nuiRenderArray::SetColor(uint32 index, float r, float g, float b, float a)
   NGL_ASSERT(b >= 0.0);
   NGL_ASSERT(a <= 1.0);
   NGL_ASSERT(a >= 0.0);
-  NGL_ASSERT(!isnan(r));
-  NGL_ASSERT(!isnan(g));
-  NGL_ASSERT(!isnan(b));
-  NGL_ASSERT(!isnan(a));
+  NGL_ASSERT(!std::isnan(r));
+  NGL_ASSERT(!std::isnan(g));
+  NGL_ASSERT(!std::isnan(b));
+  NGL_ASSERT(!std::isnan(a));
   
   mVertices[index].mR = (uint8)ToBelow(r * 255.0f);
   mVertices[index].mG = (uint8)ToBelow(g * 255.0f);

@@ -40,6 +40,8 @@ public:
   void SetPermanent(bool Permanent = true);
   bool IsPermanent();
 
+  void AddPainter(nuiPainter* pPainter);
+  void DelPainter(nuiPainter* pPainter);
 protected:
   nuiSurface(const nglString& rName, int32 Width, int32 Height, nglImagePixelFormat PixelFormat = eImagePixelRGBA);
   virtual ~nuiSurface();
@@ -62,6 +64,8 @@ private:
   static nuiSurfaceCacheSet mpSurfaceCaches;
   
   bool mDirty;
+
+  std::set<nuiPainter*> mPainters;
 };
 
 #endif//__nuiSurface_h__

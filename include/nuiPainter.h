@@ -31,30 +31,6 @@
 
 class nuiSurface;
 
-class nuiSurfaceCache
-{
-public:
-  nuiSurfaceCache();
-  virtual ~nuiSurfaceCache();
-  
-  virtual void CreateSurface(nuiSurface* pSurface);
-  virtual void DestroySurface(nuiSurface* pSurface);
-  virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
-};
-
-
-class nuiTextureCache
-{
-public:
-  nuiTextureCache();
-  virtual ~nuiTextureCache();
-  
-  virtual void CreateTexture(nuiTexture* pTexture);
-  virtual void DestroyTexture(nuiTexture* pTexture);
-  virtual void InvalidateTexture(nuiTexture* pTexture, bool ForceReload);
-};
-
-
 class NUI_API nuiClipper : public nuiRect
 {
 public:
@@ -88,7 +64,7 @@ public:
   bool mEnabled;
 };
 
-class NUI_API nuiPainter : public nuiTextureCache, public nuiSurfaceCache
+class NUI_API nuiPainter
 {
 public:
   nuiPainter(nglContext* pContext = NULL);
@@ -153,6 +129,7 @@ public:
   virtual void SetSurface(nuiSurface* pSurface);
   virtual nuiSurface* GetSurface() const;
 
+  virtual void DestroySurface(nuiSurface* pSurface) = 0;
 protected:
   nuiSurface* mpSurface;
 

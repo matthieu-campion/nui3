@@ -236,6 +236,15 @@ mpBackBuffer(NULL)
 
 nuiD3DPainter::~nuiD3DPainter()
 {
+  auto it = mFramebuffers.begin();
+  auto end = mFramebuffers.end();
+  while (it != end)
+  {
+    nuiSurface* pSurface = it->first;
+    pSurface->DelPainter(this);
+    ++it;
+  }
+
   mActiveContexts--;
   if (mActiveContexts == 0)
     glAAExit(); //FIXME
@@ -1771,6 +1780,7 @@ void nuiD3DPainter::SetSurface(nuiSurface* pSurface)
     FramebufferInfo info;
     if (it == mFramebuffers.end())
     {
+      pSurface->AddPainter(this);
       // Create the rendertarget
       pDev->CreateTexture(width, height, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &info.mpRenderTexture, NULL);
       info.mpRenderTexture->GetSurfaceLevel(0, &info.mpRenderSurface);

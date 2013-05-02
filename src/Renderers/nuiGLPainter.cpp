@@ -171,28 +171,34 @@ bool nuiGLPainter::CheckFramebufferStatus()
   //  return true;
 #if 1
   GLint status = glCheckFramebufferStatusNUI(GL_FRAMEBUFFER_NUI);
+  if (status == GL_FRAMEBUFFER_COMPLETE_NUI)
+    return true;
 #if defined(NGL_DEBUG)
   switch (status)
   {
     case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_NUI:
     {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\n"));
+      NGL_OUT("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\n");
     } break;
     case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_NUI:
     {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\n"));
+      NGL_OUT("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\n");
     } break;
     case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_NUI:
     {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS\n"));
+      NGL_OUT("GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS\n");
     } break;
     case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_NUI:
     {
-      NGL_OUT(_T("GL_FRAMEBUFFER_INCOMPLETE_FORMATS\n"));
+      NGL_OUT("GL_FRAMEBUFFER_INCOMPLETE_FORMATS\n");
     } break;
     case GL_FRAMEBUFFER_UNSUPPORTED_NUI:
     {
-      NGL_OUT(_T("GL_FRAMEBUFFER_UNSUPPORTED\n"));
+      NGL_OUT("GL_FRAMEBUFFER_UNSUPPORTED\n");
+    } break;
+    default:
+    {
+      NGL_OUT("GL Framebuffer incomplete, unknown error %d (0x%x)\n", status, status);
     } break;
   }
 #endif
@@ -294,6 +300,15 @@ nuiGLPainter::nuiGLPainter(nglContext* pContext)
 
 nuiGLPainter::~nuiGLPainter()
 {
+  auto it = mFramebuffers.begin();
+  auto end = mFramebuffers.end();
+  while (it != end)
+  {
+    nuiSurface* pSurface = it->first;
+    pSurface->DelPainter(this);
+    ++it;
+  }
+
   mActiveContexts--;
   if (mActiveContexts == 0)
     glAAExit();
@@ -1856,6 +1871,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
     if (create)
     {
+      pSurface->AddPainter(this);
       glGenFramebuffersNUI(1, (GLuint*)&info.mFramebuffer);
 #ifdef _UIKIT_
 #ifdef NGL_DEBUG

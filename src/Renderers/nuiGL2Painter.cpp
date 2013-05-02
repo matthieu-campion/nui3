@@ -573,6 +573,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     pShader->Acquire();
     mState.mpShader = pShader;
     mState.mpShaderState = pShader->GetDefaultState();
+    mState.mpShaderState->Acquire();
   }
 
   NGL_ASSERT(mState.mpShader != NULL);

@@ -62,15 +62,6 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
   mpTexture = NULL;
   mDirty = true;
   
-  nuiSurfaceCacheSet::iterator it = mpSurfaceCaches.begin();
-  nuiSurfaceCacheSet::iterator end = mpSurfaceCaches.end();
-  while (it != end)
-  {
-    nuiSurfaceCache* pCache = *it;
-    pCache->CreateSurface(this);
-    ++it;
-  }
-
   mpTexture = nuiTexture::GetTexture(this);
   mpTexture->Acquire();
   
@@ -79,19 +70,21 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
 
 nuiSurface::~nuiSurface()
 {
-  nuiSurfaceCacheSet::iterator it = mpSurfaceCaches.begin();
-  nuiSurfaceCacheSet::iterator end = mpSurfaceCaches.end();
-  while (it != end)
-  {
-    nuiSurfaceCache* pCache = *it;
-    pCache->DestroySurface(this);
-    ++it;
-  }
   mpSurfaces.erase(GetObjectName());
 
   if (mpTexture)
     mpTexture->Release();
 //  NGL_OUT(_T("nuiSurface DTOR [0x%x] NAME: [%s] COUNT [%d]\n"), this, GetObjectName().GetChars(), mpSurfaces.size());
+
+  auto it = mPainters.begin();
+  auto end = mPainters.end();
+
+  while (it != end)
+  {
+    nuiPainter* pPainter = *it;
+    pPainter->DestroySurface(this);
+    ++it;
+  }
 }
 
 int32 nuiSurface::GetWidth() const
@@ -173,3 +166,12 @@ bool nuiSurface::IsPermanent()
   return mPermanent;
 }
 
+void nuiSurface::AddPainter(nuiPainter* pPainter)
+{
+  mPainters.insert(pPainter);
+}
+
+void nuiSurface::DelPainter(nuiPainter* pPainter)
+{
+  mPainters.erase(pPainter);
+}

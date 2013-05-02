@@ -30,6 +30,11 @@ nuiMetaPainter::~nuiMetaPainter()
   Reset(NULL);
 }
 
+void nuiMetaPainter::DestroySurface(nuiSurface* pSurface)
+{
+  // Bleh
+}
+
 void nuiMetaPainter::StoreOpCode(OpCode code)
 {
   StoreInt((int32)code);
