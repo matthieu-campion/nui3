@@ -40,6 +40,8 @@ public:
   void SetPermanent(bool Permanent = true);
   bool IsPermanent();
 
+  void Resize(int32 width, int32 height);
+  
   void AddPainter(nuiPainter* pPainter);
   void DelPainter(nuiPainter* pPainter);
 protected:

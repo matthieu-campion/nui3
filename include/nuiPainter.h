@@ -130,6 +130,8 @@ public:
   virtual nuiSurface* GetSurface() const;
 
   virtual void DestroySurface(nuiSurface* pSurface) = 0;
+  virtual void ResizeSurface(nuiSurface* pSurface, int32 width, int32 height) = 0;
+
 protected:
   nuiSurface* mpSurface;
 

@@ -132,6 +132,7 @@ protected:
   bool mOwnImage;
 
   nuiSurface* mpSurface;
+  void ResizeSurface(int32 w, int32 h);
 
   nuiSize mRealWidth;
   nuiSize mRealHeight;

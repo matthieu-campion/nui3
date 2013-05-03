@@ -166,6 +166,24 @@ bool nuiSurface::IsPermanent()
   return mPermanent;
 }
 
+void nuiSurface::Resize(int32 width, int32 height)
+{
+  auto it = mPainters.begin();
+  auto end = mPainters.end();
+
+  while (it != end)
+  {
+    nuiPainter* pPainter = *it;
+    pPainter->ResizeSurface(this, width, height);
+    ++it;
+  }
+
+  mWidth = width;
+  mHeight = height;
+
+  mpTexture->ResizeSurface(width, height);
+}
+
 void nuiSurface::AddPainter(nuiPainter* pPainter)
 {
   mPainters.insert(pPainter);

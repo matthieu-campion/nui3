@@ -33,6 +33,13 @@ nuiMetaPainter::~nuiMetaPainter()
 void nuiMetaPainter::DestroySurface(nuiSurface* pSurface)
 {
   // Bleh
+  NGL_ASSERT(0);
+}
+
+void nuiMetaPainter::ResizeSurface(nuiSurface* pSurface, int32 width, int32 height)
+{
+  // Bleh
+  NGL_ASSERT(0);
 }
 
 void nuiMetaPainter::StoreOpCode(OpCode code)

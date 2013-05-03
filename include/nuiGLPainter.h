@@ -72,7 +72,8 @@ public:
 
   virtual void CreateSurface(nuiSurface* pSurface);
   virtual void DestroySurface(nuiSurface* pSurface);
-  virtual void InvalidateSurface(nuiSurface* pSurface, bool ForceReload);
+  virtual void ResizeSurface(nuiSurface* pSurface, int32 width, int32 height);
+
   
 protected:
   virtual void ResetOpenGLState();
