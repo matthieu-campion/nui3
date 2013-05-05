@@ -56,8 +56,8 @@ nuiSurface::nuiSurface(const nglString& rName, int32 Width, int32 Height, nglIma
   mWidth = Width;
   mHeight= Height;
   mPixelFormat = PixelFormat;
-  mDepth = false;
-  mStencil = false;
+  mDepth = 0;
+  mStencil = 0;
   mRenderToTexture = true;
   mpTexture = NULL;
   mDirty = true;
@@ -103,23 +103,23 @@ nglImagePixelFormat nuiSurface::GetPixelFormat() const
 }
 
 
-void nuiSurface::SetDepth(bool Enable)
+void nuiSurface::SetDepth(int32 bits)
 {
-  mDepth = Enable;
+  mDepth = bits;
 }
 
-bool nuiSurface::GetDepth() const
+int32 nuiSurface::GetDepth() const
 {
   return mDepth;
 }
 
-bool nuiSurface::GetStencil() const
+int32 nuiSurface::GetStencil() const
 {
   return mStencil;
 }
-void nuiSurface::SetStencil(bool Enable)
+void nuiSurface::SetStencil(int32 bits)
 {
-  mStencil = Enable;
+  mStencil = bits;
 }
 
 bool nuiSurface::GetRenderToTexture() const

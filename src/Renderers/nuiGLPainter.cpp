@@ -1799,7 +1799,7 @@ void nuiGLPainter::ResizeSurface(nuiSurface* pSurface, int32 newWidth, int32 new
   newWidth *= scale;
   newHeight *= scale;
 
-  NGL_OUT("Resize surface %s to %d x %d\n", pSurface->GetObjectName().GetChars(), newWidth, newHeight);
+  //NGL_OUT("Resize surface %s to %d x %d\n", pSurface->GetObjectName().GetChars(), newWidth, newHeight);
   nuiTexture* pTexture = pSurface->GetTexture();
 
 #ifdef DEBUG
@@ -2077,9 +2077,27 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
         glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mDepthbuffer);
         nuiCheckForGLErrors();
 
-        glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI,
-                                 GL_DEPTH_COMPONENT16,
-                                 width, height);
+#ifdef _OPENGL_ES_
+        if (pSurface->GetStencil())
+        {
+          glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI,
+                                   GL_DEPTH24_STENCIL8_OES,
+                                   width, height);
+        }
+        else
+#else
+        {
+          int32 depth = pSurface->GetDepth();
+          if (depth <= 16)
+            glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT16, width, height);
+          else if (depth <= 24)
+            glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT24, width, height);
+          else
+            glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT32, width, height);
+
+        }
+#endif
+
         nuiCheckForGLErrors();
 
         glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, 0);
@@ -2089,14 +2107,24 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
                                      GL_DEPTH_ATTACHMENT_NUI,
                                      GL_RENDERBUFFER_NUI,
                                      info.mDepthbuffer);
-        nuiCheckForGLErrors();
+
+#ifdef _OPENGL_ES_
+        if (pSurface->GetStencil())
+        {
+          glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
+                                       GL_STENCIL_ATTACHMENT_NUI,
+                                       GL_RENDERBUFFER_NUI,
+                                       info.mDepthbuffer);
+        }
+#endif
+nuiCheckForGLErrors();
       }
 
       ///< Do we need a stencil buffer
+#ifndef _OPENGL_ES_
       if (pSurface->GetStencil())
       {
         NGL_ASSERT(!"Stencil attachement not supported");
-#ifndef _OPENGL_ES_
         glGenRenderbuffersNUI(1, (GLuint*)&info.mStencilbuffer);
         nuiCheckForGLErrors();
 
@@ -2116,8 +2144,8 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
                                      GL_RENDERBUFFER_NUI,
                                      info.mStencilbuffer);
         nuiCheckForGLErrors();
-#endif
       }
+#endif
 
       ///< We definetly need a color attachement, either a texture, or a renderbuffer
       if (pTexture && pSurface->GetRenderToTexture())

@@ -27,11 +27,11 @@ public:
 
   nglImagePixelFormat GetPixelFormat() const;
   
-  void SetDepth(bool Enable);
-  bool GetDepth() const;
+  void SetDepth(int32 bits);
+  int32 GetDepth() const;
 
-  void SetStencil(bool Enable);  
-  bool GetStencil() const;
+  void SetStencil(int32 bits);
+  int32 GetStencil() const;
 
   bool GetRenderToTexture() const;
 
@@ -54,8 +54,8 @@ private:
   int32 mWidth;
   int32 mHeight;
   
-  bool mDepth;
-  bool mStencil;
+  int32 mDepth;
+  int32 mStencil;
   bool mRenderToTexture;
 
   nglImagePixelFormat mPixelFormat;
