@@ -35,7 +35,18 @@ protected:
   virtual void ResetOpenGLState();
 
   void SetViewport();
+
+  // Immediate mode setup:
+  void SetVertexPointers(const nuiRenderArray& rArray);
+
+  //  VBO Setup:
+  void SetVertexBuffersPointers(const nuiRenderArray& rArray);
+  void SetStreamBuffersPointers(const nuiRenderArray& rArray, int index);
+
+  // Reset vertices modes
+  void ResetVertexPointers(const nuiRenderArray& rArray);
   
+
   nuiShaderProgram* mpShader_TextureVertexColor;
   nuiShaderProgram* mpShader_TextureAlphaVertexColor;
   nuiShaderProgram* mpShader_TextureDifuseColor;

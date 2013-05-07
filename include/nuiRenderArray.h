@@ -32,15 +32,20 @@ public:
     GLfloat mX;
     GLfloat mY;
     GLfloat mZ;
+    GLfloat mW;
+
+    GLfloat mTX;
+    GLfloat mTY;
+
+    GLfloat mNX;
+    GLfloat mNY;
+    GLfloat mNZ;
+    GLfloat mNW;
+
     GLubyte mR;
     GLubyte mG;
     GLubyte mB;
     GLubyte mA;
-    GLfloat mTX;
-    GLfloat mTY;
-    GLfloat mNX;
-    GLfloat mNY;
-    GLfloat mNZ;
   };
 
   enum StreamType
@@ -128,9 +133,6 @@ public:
   void SetMode(GLenum mode); ///< GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
   GLenum GetMode() const; ///< GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
 
-  void SetIndexedMode(bool set);
-  bool GetIndexedMode() const;
-  
   void EnableArray(DataType tpe, bool Set = true);
   bool IsArrayEnabled(DataType tpe) const;
   

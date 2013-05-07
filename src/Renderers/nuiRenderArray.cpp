@@ -31,6 +31,7 @@ nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh, bool _sha
   mCurrentVertex.mX = 0.0f;
   mCurrentVertex.mY = 0.0f;
   mCurrentVertex.mZ = 0.0f;
+  mCurrentVertex.mW = 1.0f;
   mCurrentVertex.mTX = 0.0f;
   mCurrentVertex.mTY = 0.0f;
   mCurrentVertex.mR = 0;
@@ -40,6 +41,7 @@ nuiRenderArray::nuiRenderArray(uint32 mode, bool Static, bool _3dmesh, bool _sha
   mCurrentVertex.mNX = 0;
   mCurrentVertex.mNY = 0;
   mCurrentVertex.mNZ = 1;
+  mCurrentVertex.mNW = 0;
 
 }
 
@@ -288,6 +290,7 @@ void nuiRenderArray::SetVertex(uint32 index, float x, float y, float z)
   mVertices[index].mX = x;
   mVertices[index].mY = y;
   mVertices[index].mZ = z;
+  mVertices[index].mW = 1;
 }
 
 void nuiRenderArray::SetVertex(uint32 index, const nuiVector& rVf)
@@ -296,6 +299,7 @@ void nuiRenderArray::SetVertex(uint32 index, const nuiVector& rVf)
   mVertices[index].mX = rVf[0];
   mVertices[index].mY = rVf[1];
   mVertices[index].mZ = rVf[2];
+  mVertices[index].mW = rVf[3];
 }
 
 void nuiRenderArray::SetVertex(uint32 index, const nuiVector3& rV3f)
@@ -304,6 +308,7 @@ void nuiRenderArray::SetVertex(uint32 index, const nuiVector3& rV3f)
   mVertices[index].mX = rV3f[0];
   mVertices[index].mY = rV3f[1];
   mVertices[index].mZ = rV3f[2];
+  mVertices[index].mW = 1;
 }
 
 void nuiRenderArray::SetVertex(uint32 index, const nuiVector2& rV2f)
@@ -312,6 +317,7 @@ void nuiRenderArray::SetVertex(uint32 index, const nuiVector2& rV2f)
   mVertices[index].mX = rV2f[0];
   mVertices[index].mY = rV2f[1];
   mVertices[index].mZ = 0;
+  mVertices[index].mW = 1;
 }
 
 void nuiRenderArray::SetColor(uint32 index, float r, float g, float b, float a)
@@ -366,6 +372,7 @@ void nuiRenderArray::SetNormal(uint32 index, float x, float y, float z)
   mVertices[index].mNX = x;
   mVertices[index].mNY = y;
   mVertices[index].mNZ = z;
+  mVertices[index].mNW = 0;
 }
 
 void nuiRenderArray::SetNormal(uint32 index, const nuiVector& rVf)
@@ -373,6 +380,7 @@ void nuiRenderArray::SetNormal(uint32 index, const nuiVector& rVf)
   mVertices[index].mNX = rVf[0];
   mVertices[index].mNY = rVf[1];
   mVertices[index].mNZ = rVf[2];
+  mVertices[index].mNW = 0;
 }
 
 void nuiRenderArray::SetNormal(uint32 index, const nuiVector3& rV3f)
@@ -380,6 +388,7 @@ void nuiRenderArray::SetNormal(uint32 index, const nuiVector3& rV3f)
   mVertices[index].mNX = rV3f[0];
   mVertices[index].mNY = rV3f[1];
   mVertices[index].mNZ = rV3f[2];
+  mVertices[index].mNW = 0;
 }
 
 

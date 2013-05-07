@@ -2246,6 +2246,112 @@ nuiCheckForGLErrors();
   ResetOpenGLState();
 }
 
+nuiGLPainter::VertexBbufferInfo::VertexBbufferInfo(nuiRenderArray* pRenderArray)
+{
+  mpRenderArray = NULL;
+  mVertexBuffer = -1;
+
+  Create(pRenderArray);
+}
+
+
+void nuiGLPainter::VertexBbufferInfo::Create(nuiRenderArray* pRenderArray)
+{
+  mpRenderArray = pRenderArray;
+
+  int32 count = pRenderArray->GetSize();
+  glGenBuffers(1, &mVertexBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(nuiRenderArray::Vertex) * count, &pRenderArray->GetVertices()[0], GL_STATIC_DRAW);
+
+  if (pRenderArray->GetIndexArrayCount() > 0)
+  {
+    uint32 indexcount = pRenderArray->GetIndexArrayCount();
+    mIndexBuffers.resize(indexcount);
+
+    for (uint32 i = 0; i < indexcount; i++)
+    {
+      glGenBuffers(1, &mIndexBuffers[i]);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffers[i]);
+      const nuiRenderArray::IndexArray& indices(pRenderArray->GetIndexArray(i));
+  #ifdef _UIKIT_
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.mIndices.size() * sizeof(GLushort), &indices.mIndices[0], GL_STATIC_DRAW);
+  #else
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.mIndices.size() * sizeof(GLuint), &indices.mIndices[0], GL_STATIC_DRAW);
+  #endif
+    }
+  }
+
+  int streamcount = pRenderArray->GetStreamCount();
+  mStreamBuffers.resize(streamcount);
+  for (int i = 0; i < streamcount; i++)
+  {
+    const nuiRenderArray::StreamDesc& stream(pRenderArray->GetStream(i));
+
+    glGenBuffers(1, &mStreamBuffers[i]);
+    glBindBuffer(GL_ARRAY_BUFFER, mStreamBuffers[i]);
+    int32 s = 1;
+    switch (stream.mType)
+    {
+      case nuiRenderArray::eFloat: s = 4; break;
+      case nuiRenderArray::eInt: s = 4; break;
+      case nuiRenderArray::eByte: s = 1; break;
+    }
+    glBufferData(GL_ARRAY_BUFFER, count * stream.mCount * s, stream.mData.mpFloats, GL_STATIC_DRAW);
+  }
+
+}
+
+void nuiGLPainter::VertexBbufferInfo::Destroy()
+{
+  if (mVertexBuffer == -1)
+    return;
+
+  glDeleteBuffers(1, &mVertexBuffer);
+  for (uint32 i = 0; i < mIndexBuffers.size(); i++)
+    glDeleteBuffers(1, &mIndexBuffers[i]);
+
+  for (uint32 i = 0; i < mStreamBuffers.size(); i++)
+    glDeleteBuffers(1, &mStreamBuffers[i]);
+}
+
+void nuiGLPainter::VertexBbufferInfo::BindVertices() const
+{
+  glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
+  for (uint32 i = 0; i < mStreamBuffers.size(); i++)
+    glBindBuffer(GL_ARRAY_BUFFER, mStreamBuffers[i]);
+}
+
+void nuiGLPainter::VertexBbufferInfo::BindIndices(int index) const
+{
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffers[index]);
+}
+
+void nuiGLPainter::VertexBbufferInfo::Draw() const
+{
+  BindVertices();
+
+  if (mpRenderArray->GetIndexArrayCount() > 0)
+  {
+    for (uint32 i = 0; i < mIndexBuffers.size(); i++)
+    {
+      const nuiRenderArray::IndexArray& array(mpRenderArray->GetIndexArray(i));
+      BindIndices(i);
+      
+#ifdef _UIKIT_
+      glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_SHORT, (void*)0);
+#else
+      glDrawElements(array.mMode, array.mIndices.size(), GL_UNSIGNED_INT, (void*)0);
+#endif
+    }
+  }
+  else
+  {
+
+  }
+}
+
+
 bool nuiCheckForGLErrorsReal()
 {
   GLenum err = GL_NO_ERROR;

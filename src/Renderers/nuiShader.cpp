@@ -854,74 +854,30 @@ bool nuiShaderProgram::Link()
   return true;
 }
 
+GLint nuiShaderProgram::GetVAPositionLocation() const
+{
+  return mVA_Position;
+}
+
+GLint nuiShaderProgram::GetVATexCoordLocation() const
+{
+  return mVA_TexCoord;
+}
+
+GLint nuiShaderProgram::GetVAColorLocation() const
+{
+  return mVA_Color;
+}
+
+GLint nuiShaderProgram::GetVANormalLocation() const
+{
+  return mVA_Normal;
+}
+
+
 GLint nuiShaderProgram::GetProgram() const
 {
   return mProgram;
-}
-
-void nuiShaderProgram::SetVertexPointers(const nuiRenderArray& rArray)
-{
-  if (mVA_Position != -1)
-  {
-    glEnableVertexAttribArray(mVA_Position);
-    glVertexAttribPointer(mVA_Position, 3, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mX);
-  }
-
-  if (mVA_TexCoord != -1)
-  {
-    glEnableVertexAttribArray(mVA_TexCoord);
-    glVertexAttribPointer(mVA_TexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mTX);
-  }
-
-  if (mVA_Color != -1)
-  {
-    glEnableVertexAttribArray(mVA_Color);
-    glVertexAttribPointer(mVA_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mR);
-  }
-
-  if (mVA_Normal != -1)
-  {
-    glEnableVertexAttribArray(mVA_Normal);
-    glVertexAttribPointer(mVA_Normal, 3, GL_FLOAT, GL_FALSE, sizeof(nuiRenderArray::Vertex), &rArray.GetVertices()[0].mNX);
-  }
-
-  int stream_count = rArray.GetStreamCount();
-  for (int i = 0; i < stream_count; i++)
-  {
-    const nuiRenderArray::StreamDesc& rDesc(rArray.GetStream(i));
-    glEnableVertexAttribArray(rDesc.mStreamID);
-    glVertexAttribPointer(rDesc.mStreamID, rDesc.mCount, rDesc.mType, rDesc.mNormalize ? GL_TRUE : GL_FALSE, 0, rDesc.mData.mpFloats);
-  }
-}
-
-void nuiShaderProgram::ResetVertexPointers(const nuiRenderArray& rArray)
-{
-  if (mVA_Position != -1)
-  {
-    glDisableVertexAttribArray(mVA_Position);
-  }
-
-  if (mVA_TexCoord != -1)
-  {
-    glDisableVertexAttribArray(mVA_TexCoord);
-  }
-
-  if (mVA_Color != -1)
-  {
-    glDisableVertexAttribArray(mVA_Color);
-  }
-
-  if (mVA_Normal != -1)
-  {
-    glDisableVertexAttribArray(mVA_Normal);
-  }
-
-  int stream_count = rArray.GetStreamCount();
-  for (int i = 0; i < stream_count; i++)
-  {
-    const nuiRenderArray::StreamDesc& rDesc(rArray.GetStream(i));
-    glDisableVertexAttribArray(rDesc.mStreamID);
-  }
 }
 
 

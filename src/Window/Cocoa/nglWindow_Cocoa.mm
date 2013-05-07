@@ -849,8 +849,10 @@ void nglWindow::InternalInit (const nglContextInfo& rContext, const nglWindowInf
 	//printf("applicationFrame: %f, %f - %f, %f\n", r.origin.x, r.origin.y, r.size.width, r.size.height);
 	
   Build(rContext);
-	SetSize(rect.size.width, rect.size.height);
-  
+
+  mWidth = rect.size.width;
+  mHeight = rect.size.height;
+
 //  [pNSWindow UpdateOrientation];
   
 /* Ultra basic UIKit view integration on top of nuiWidgets

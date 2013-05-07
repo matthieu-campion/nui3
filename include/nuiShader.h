@@ -193,8 +193,11 @@ protected:
   void        BindAttribLocation(GLint index, GLchar* name);
 
   friend class nuiGL2Painter;
-  void SetVertexPointers(const nuiRenderArray& rArray);
-  void ResetVertexPointers(const nuiRenderArray& rArray);
+
+  GLint GetVAPositionLocation() const;
+  GLint GetVATexCoordLocation() const;
+  GLint GetVAColorLocation() const;
+  GLint GetVANormalLocation() const;
 
 private:
   nglString mName;
