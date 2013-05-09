@@ -138,10 +138,12 @@ public:
   
   bool Is3DMesh() const;
   void Set3DMesh(bool set);
-  
-  bool IsShape() const;
+    bool IsShape() const;
   void SetShape(bool set);
-  
+  bool IsStatic() const;
+  void SetStatic(bool set);
+
+
   uint32 GetSize() const;
   void Reserve(uint Count);
   void Resize(uint Count);

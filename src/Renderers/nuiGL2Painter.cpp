@@ -336,6 +336,8 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext)
   mpShader_DifuseColor->Link();
   mpShader_DifuseColor->GetDefaultState()->Set("DifuseColor", nuiColor(255, 255, 255, 255));
   mpShader_DifuseColor->GetDefaultState()->Set("Offset", 0.0f, 0.0f);
+
+  mpCurrentVertexBufferInfo = NULL;
 }
 
 nuiGL2Painter::~nuiGL2Painter()
@@ -693,7 +695,30 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   }
 
   mFinalState.mpShaderState->Apply();
-  SetVertexPointers(*pArray);
+  if (pArray->IsStatic())
+  {
+    auto it = mVertexBuffers.find(pArray);
+    if (it == mVertexBuffers.end())
+    {
+      mVertexBuffers[pArray] = VertexBufferInfo(pArray);
+      it = mVertexBuffers.find(pArray);
+    }
+    NGL_ASSERT(it != mVertexBuffers.end());
+    mpCurrentVertexBufferInfo = &it->second;
+    const VertexBufferInfo& rInfo(it->second);
+
+    SetVertexBuffersPointers(*pArray, rInfo);
+  }
+  else
+  {
+    if (mpCurrentVertexBufferInfo)
+    {
+      glBindBuffer(GL_ARRAY_BUFFER, 0);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+      mpCurrentVertexBufferInfo = NULL;
+    }
+    SetVertexPointers(*pArray);
+  }
 
   nuiCheckForGLErrors();
   
@@ -766,7 +791,7 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
   }
   
   
-  ResetVertexPointers(*pArray);
+  //ResetVertexPointers(*pArray);
   pArray->Release();
   nuiCheckForGLErrors();
 }
@@ -822,7 +847,7 @@ void nuiGL2Painter::SetVertexPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(Position);
+    //glDisableVertexAttribArray(Position);
   }
 
   if (TexCoord != -1)
@@ -832,7 +857,7 @@ void nuiGL2Painter::SetVertexPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(TexCoord);
+    //glDisableVertexAttribArray(TexCoord);
   }
 
   if (Color != -1)
@@ -842,7 +867,7 @@ void nuiGL2Painter::SetVertexPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(Color);
+    //glDisableVertexAttribArray(Color);
   }
 
   if (Normal != -1)
@@ -852,7 +877,7 @@ void nuiGL2Painter::SetVertexPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(Normal);
+    //glDisableVertexAttribArray(Normal);
   }
 
   int stream_count = rArray.GetStreamCount();
@@ -864,7 +889,7 @@ void nuiGL2Painter::SetVertexPointers(const nuiRenderArray& rArray)
   }
 }
 
-void nuiGL2Painter::SetVertexBuffersPointers(const nuiRenderArray& rArray)
+void nuiGL2Painter::SetVertexBuffersPointers(const nuiRenderArray& rArray, const VertexBufferInfo& rInfo)
 {
   nuiShaderProgram* pPgm = mFinalState.mpShader;
   GLint Position = pPgm->GetVAPositionLocation();
@@ -872,6 +897,7 @@ void nuiGL2Painter::SetVertexBuffersPointers(const nuiRenderArray& rArray)
   GLint Color = pPgm->GetVAColorLocation();
   GLint Normal = pPgm->GetVANormalLocation();
 
+  rInfo.BindVertices();
   if (Position != -1)
   {
     glEnableVertexAttribArray(Position);
@@ -879,7 +905,7 @@ void nuiGL2Painter::SetVertexBuffersPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(Position);
+    //glDisableVertexAttribArray(Position);
   }
 
   if (TexCoord != -1)
@@ -889,7 +915,7 @@ void nuiGL2Painter::SetVertexBuffersPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(TexCoord);
+    //glDisableVertexAttribArray(TexCoord);
   }
 
   if (Color != -1)
@@ -899,7 +925,7 @@ void nuiGL2Painter::SetVertexBuffersPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(Color);
+    //glDisableVertexAttribArray(Color);
   }
 
   if (Normal != -1)
@@ -909,13 +935,13 @@ void nuiGL2Painter::SetVertexBuffersPointers(const nuiRenderArray& rArray)
   }
   else
   {
-    glDisableVertexAttribArray(Normal);
+    //glDisableVertexAttribArray(Normal);
   }
-
 }
 
-void nuiGL2Painter::SetStreamBuffersPointers(const nuiRenderArray& rArray, int index)
+void nuiGL2Painter::SetStreamBuffersPointers(const nuiRenderArray& rArray, const VertexBufferInfo& rInfo, int index)
 {
+  rInfo.BindStream(index);
   const nuiRenderArray::StreamDesc& rDesc(rArray.GetStream(index));
   glEnableVertexAttribArray(rDesc.mStreamID);
   glVertexAttribPointer(rDesc.mStreamID, rDesc.mCount, rDesc.mType, rDesc.mNormalize ? GL_TRUE : GL_FALSE, 0, NULL);
@@ -930,25 +956,25 @@ void nuiGL2Painter::ResetVertexPointers(const nuiRenderArray& rArray)
   GLint Color = pPgm->GetVAColorLocation();
   GLint Normal = pPgm->GetVANormalLocation();
 
-  //  if (Position != -1)
-  //  {
-  //    glDisableVertexAttribArray(Position);
-  //  }
-  //
-  //  if (TexCoord != -1)
-  //  {
-  //    glDisableVertexAttribArray(TexCoord);
-  //  }
-  //
-  //  if (Color != -1)
-  //  {
-  //    glDisableVertexAttribArray(Color);
-  //  }
-  //
-  //  if (Normal != -1)
-  //  {
-  //    glDisableVertexAttribArray(Normal);
-  //  }
+  if (Position != -1)
+  {
+    glDisableVertexAttribArray(Position);
+  }
+
+  if (TexCoord != -1)
+  {
+    glDisableVertexAttribArray(TexCoord);
+  }
+
+  if (Color != -1)
+  {
+    glDisableVertexAttribArray(Color);
+  }
+
+  if (Normal != -1)
+  {
+    glDisableVertexAttribArray(Normal);
+  }
 
   int stream_count = rArray.GetStreamCount();
   for (int i = 0; i < stream_count; i++)

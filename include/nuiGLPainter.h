@@ -120,9 +120,11 @@ protected:
   std::map<nuiSurface*, FramebufferInfo> mFramebuffers;
   GLint mDefaultFramebuffer, mDefaultRenderbuffer;
 
-  class VertexBbufferInfo
+  class VertexBufferInfo
   {
-    VertexBbufferInfo(nuiRenderArray* pRenderArray);
+  public:
+    VertexBufferInfo(nuiRenderArray* pRenderArray = NULL);
+    VertexBufferInfo(const VertexBufferInfo& rInfo);
 
     nuiRenderArray* mpRenderArray;
     GLuint mVertexBuffer;
@@ -131,12 +133,13 @@ protected:
 
     void Create(nuiRenderArray* pRenderArray);
     void BindVertices() const;
+    void BindStream(int index) const;
     void BindIndices(int index) const;
     void Draw() const;
     void Destroy();
   };
   
-  std::map<nuiRenderArray*, VertexBbufferInfo> mVertexBuffers;
+  std::map<nuiRenderArray*, VertexBufferInfo> mVertexBuffers;
 
   bool CheckFramebufferStatus();
   virtual void SetViewport();

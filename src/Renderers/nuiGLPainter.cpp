@@ -2246,16 +2246,25 @@ nuiCheckForGLErrors();
   ResetOpenGLState();
 }
 
-nuiGLPainter::VertexBbufferInfo::VertexBbufferInfo(nuiRenderArray* pRenderArray)
+nuiGLPainter::VertexBufferInfo::VertexBufferInfo(nuiRenderArray* pRenderArray)
 {
   mpRenderArray = NULL;
   mVertexBuffer = -1;
 
-  Create(pRenderArray);
+  if (pRenderArray)
+    Create(pRenderArray);
 }
 
+nuiGLPainter::VertexBufferInfo::VertexBufferInfo(const VertexBufferInfo& rInfo)
+: mpRenderArray(rInfo.mpRenderArray),
+  mVertexBuffer(rInfo.mVertexBuffer),
+  mIndexBuffers(rInfo.mIndexBuffers),
+  mStreamBuffers(rInfo.mStreamBuffers)
+{
 
-void nuiGLPainter::VertexBbufferInfo::Create(nuiRenderArray* pRenderArray)
+}
+
+void nuiGLPainter::VertexBufferInfo::Create(nuiRenderArray* pRenderArray)
 {
   mpRenderArray = pRenderArray;
 
@@ -2302,7 +2311,7 @@ void nuiGLPainter::VertexBbufferInfo::Create(nuiRenderArray* pRenderArray)
 
 }
 
-void nuiGLPainter::VertexBbufferInfo::Destroy()
+void nuiGLPainter::VertexBufferInfo::Destroy()
 {
   if (mVertexBuffer == -1)
     return;
@@ -2315,19 +2324,22 @@ void nuiGLPainter::VertexBbufferInfo::Destroy()
     glDeleteBuffers(1, &mStreamBuffers[i]);
 }
 
-void nuiGLPainter::VertexBbufferInfo::BindVertices() const
+void nuiGLPainter::VertexBufferInfo::BindVertices() const
 {
   glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
-  for (uint32 i = 0; i < mStreamBuffers.size(); i++)
-    glBindBuffer(GL_ARRAY_BUFFER, mStreamBuffers[i]);
 }
 
-void nuiGLPainter::VertexBbufferInfo::BindIndices(int index) const
+void nuiGLPainter::VertexBufferInfo::BindStream(int index) const
+{
+  glBindBuffer(GL_ARRAY_BUFFER, mStreamBuffers[index]);
+}
+
+void nuiGLPainter::VertexBufferInfo::BindIndices(int index) const
 {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffers[index]);
 }
 
-void nuiGLPainter::VertexBbufferInfo::Draw() const
+void nuiGLPainter::VertexBufferInfo::Draw() const
 {
   BindVertices();
 

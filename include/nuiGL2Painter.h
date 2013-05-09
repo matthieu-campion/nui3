@@ -40,8 +40,8 @@ protected:
   void SetVertexPointers(const nuiRenderArray& rArray);
 
   //  VBO Setup:
-  void SetVertexBuffersPointers(const nuiRenderArray& rArray);
-  void SetStreamBuffersPointers(const nuiRenderArray& rArray, int index);
+  void SetVertexBuffersPointers(const nuiRenderArray& rArray, const VertexBufferInfo& rInfo);
+  void SetStreamBuffersPointers(const nuiRenderArray& rArray, const VertexBufferInfo& rInfo, int index);
 
   // Reset vertices modes
   void ResetVertexPointers(const nuiRenderArray& rArray);
@@ -55,6 +55,8 @@ protected:
   nuiShaderProgram* mpShader_VertexColor;
 
   nuiMatrix mSurfaceMatrix;
+
+  VertexBufferInfo* mpCurrentVertexBufferInfo;
 };
 
 #define nuiCheckForGLErrors() { NGL_ASSERT(nuiCheckForGLErrorsReal()); }

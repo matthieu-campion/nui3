@@ -281,6 +281,17 @@ void nuiRenderArray::SetShape(bool set)
   mShape = set;
 }
 
+bool nuiRenderArray::IsStatic() const
+{
+  return mStatic;
+}
+
+void nuiRenderArray::SetStatic(bool set)
+{
+  mStatic = set;
+}
+
+
 //////////////
 // Indexed accessors:
 void nuiRenderArray::SetVertex(uint32 index, float x, float y, float z)
