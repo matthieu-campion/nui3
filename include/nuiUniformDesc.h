@@ -41,12 +41,16 @@ public:
   void Set(int32 v1, int32 v2, int32 v3, int32 v4, bool apply = false);
   void Set(const nglMatrixf& rMat, bool apply = false);
 
+  void Set(const nuiUniformDesc& rDesc, bool apply = false);
   void Apply() const;
+
+  void Dump() const;
 
   nglString mName;
   GLenum mType;
   GLenum mCount;
   GLuint mLocation;
+  mutable bool mChanged;
 
   union
   {

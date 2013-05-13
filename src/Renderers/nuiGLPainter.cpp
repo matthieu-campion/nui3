@@ -50,6 +50,7 @@ static int64 MakePOT(int64 v)
 #define glDeleteRenderbuffersNUI      glDeleteRenderbuffersOES
 #define glBindRenderbufferNUI         glBindRenderbufferOES
 #define glFramebufferTexture2DNUI     glFramebufferTexture2DOES
+#define glGetRenderbufferParameterivNUI glGetRenderbufferParameterivOES
 
 #define GL_FRAMEBUFFER_NUI                                GL_FRAMEBUFFER_OES
 #define GL_RENDERBUFFER_NUI                               GL_RENDERBUFFER_OES
@@ -75,6 +76,9 @@ static int64 MakePOT(int64 v)
 
 #define GL_DEPTH_COMPONENT24                              GL_DEPTH_COMPONENT24_OES
 
+#define GL_RENDERBUFFER_WIDTH_NUI                         GL_RENDERBUFFER_WIDTH_OES
+#define GL_RENDERBUFFER_HEIGHT_NUI                        GL_RENDERBUFFER_HEIGHT_OES
+
 //#elif defined(_OPENGL_)
 #else
 
@@ -89,6 +93,7 @@ static int64 MakePOT(int64 v)
 #define glDeleteRenderbuffersNUI      glDeleteRenderbuffers
 #define glBindRenderbufferNUI         glBindRenderbuffer
 #define glFramebufferTexture2DNUI     glFramebufferTexture2D
+#define glGetRenderbufferParameterivNUI glGetRenderbufferParameteriv
 #else
 #define glCheckFramebufferStatusNUI   mpContext->glCheckFramebufferStatus
 #define glFramebufferRenderbufferNUI  mpContext->glFramebufferRenderbuffer
@@ -100,6 +105,7 @@ static int64 MakePOT(int64 v)
 #define glDeleteRenderbuffersNUI      mpContext->glDeleteRenderbuffers
 #define glBindRenderbufferNUI         mpContext->glBindRenderbuffer
 #define glFramebufferTexture2DNUI     mpContext->glFramebufferTexture2D
+#define glGetRenderbufferParameterivNUI glGetRenderbufferParameteriv
 #endif
 
 #define GL_FRAMEBUFFER_NUI                                GL_FRAMEBUFFER
@@ -119,6 +125,9 @@ static int64 MakePOT(int64 v)
 //#define GL_FRAMEBUFFER_INCOMPLETE_FORMATS_NUI             GL_FRAMEBUFFER_INCOMPLETE_FORMATS
 #define GL_FRAMEBUFFER_UNSUPPORTED_NUI                    GL_FRAMEBUFFER_UNSUPPORTED
 #define GL_FRAMEBUFFER_COMPLETE_NUI                       GL_FRAMEBUFFER_COMPLETE
+
+#define GL_RENDERBUFFER_WIDTH_NUI                         GL_RENDERBUFFER_WIDTH
+#define GL_RENDERBUFFER_HEIGHT_NUI                        GL_RENDERBUFFER_HEIGHT
 
 //#else
 //#error "bleh"
@@ -565,6 +574,9 @@ void nuiGLPainter::ApplyState(const nuiRenderState& rState, bool ForceApply)
       mFinalState.mpShader->Release();
 
     mFinalState.mpShader = rState.mpShader;
+#if DEBUG
+    rState.mpShader->Validate();
+#endif
     glUseProgram(rState.mpShader->GetProgram());
   }
 
@@ -1836,6 +1848,16 @@ void nuiGLPainter::ResizeSurface(nuiSurface* pSurface, int32 newWidth, int32 new
                              GL_DEPTH_COMPONENT16,
                              newWidth, newHeight);
     nuiCheckForGLErrors();
+
+    GLint w, h;
+    glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_WIDTH_NUI, &w);
+    glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_HEIGHT_NUI, &h);
+
+    NGL_ASSERT(w == newWidth);
+    NGL_ASSERT(h == newHeight);
+
+    NGL_OUT("New depth surface %d x %d (asked %d x %d)\n", w, h, newWidth, newHeight);
+
     glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
                                  GL_DEPTH_ATTACHMENT_NUI,
                                  GL_RENDERBUFFER_NUI,
@@ -1855,6 +1877,17 @@ void nuiGLPainter::ResizeSurface(nuiSurface* pSurface, int32 newWidth, int32 new
                              GL_STENCIL_INDEX,
                              newWidth, newHeight);
     nuiCheckForGLErrors();
+
+    GLint w, h;
+    glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_WIDTH_NUI, &w);
+    glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_HEIGHT_NUI, &h);
+
+    NGL_ASSERT(w == newWidth);
+    NGL_ASSERT(h == newHeight);
+
+    NGL_OUT("New stencil surface %d x %d (asked %d x %d)\n", w, h, newWidth, newHeight);
+    
+
     glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
                                  GL_STENCIL_ATTACHMENT_NUI,
                                  GL_RENDERBUFFER_NUI,
@@ -1938,6 +1971,16 @@ void nuiGLPainter::ResizeSurface(nuiSurface* pSurface, int32 newWidth, int32 new
 
     glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, pixelformat, newWidth, newHeight);
     nuiCheckForGLErrors();
+    GLint w, h;
+
+    glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_WIDTH_NUI, &w);
+    glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_HEIGHT_NUI, &h);
+
+    NGL_ASSERT(w == newWidth);
+    NGL_ASSERT(h == newHeight);
+
+    NGL_OUT("New color surface %d x %d (asked %d x %d)\n", w, h, newWidth, newHeight);
+    
   }
 
 #ifdef NGL_DEBUG
@@ -1991,7 +2034,9 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
   {
 #ifdef _OPENGL_ES_
     glGetIntegerv(GL_FRAMEBUFFER_BINDING_NUI, &mDefaultFramebuffer);
+    nuiCheckForGLErrors();
     glGetIntegerv(GL_RENDERBUFFER_BINDING_NUI, (GLint *) &mDefaultRenderbuffer);
+    nuiCheckForGLErrors();
 #endif
 
   }
@@ -2028,6 +2073,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
       glPushGroupMarkerEXT(0, pTexture->GetSource().GetChars());
     else
       glPushGroupMarkerEXT(0, pSurface->GetObjectName().GetChars());
+    nuiCheckForGLErrors();
 #endif
 
     if (pTexture && !pTexture->IsPowerOfTwo())
@@ -2057,10 +2103,11 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
 
 #ifdef _UIKIT_
 #ifdef NGL_DEBUG
-      if (pTexture)
-        glLabelObjectEXT(GL_FRAMEBUFFER_NUI, info.mFramebuffer, 0, pTexture->GetSource().GetChars());
-      else
-        glLabelObjectEXT(GL_FRAMEBUFFER_NUI, info.mFramebuffer, 0, pSurface->GetObjectName().GetChars());
+//      if (pTexture)
+//        glLabelObjectEXT(GL_BUFFER_OBJECT_EXT, info.mFramebuffer, 0, pTexture->GetSource().GetChars());
+//      else
+//        glLabelObjectEXT(GL_BUFFER_OBJECT_EXT, info.mFramebuffer, 0, pSurface->GetObjectName().GetChars());
+//      nuiCheckForGLErrors();
 #endif
 #endif
 
@@ -2083,20 +2130,46 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
           glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI,
                                    GL_DEPTH24_STENCIL8_OES,
                                    width, height);
+          nuiCheckForGLErrors();
+
+          GLint w, h;
+          glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_WIDTH_NUI, &w);
+          glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_HEIGHT_NUI, &h);
+
+          NGL_ASSERT(w == width);
+          NGL_ASSERT(h == height);
+
+          NGL_OUT("init depth surface %d x %d (asked %d x %d)\n", w, h, width, height);
         }
         else
-#else
+#endif
         {
           int32 depth = pSurface->GetDepth();
+#ifndef _OPENGL_ES_
           if (depth <= 16)
             glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT16, width, height);
           else if (depth <= 24)
             glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT24, width, height);
           else
             glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT32, width, height);
-
-        }
+#else
+          if (depth <= 16)
+            glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT16, width, height);
+          else
+            glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, GL_DEPTH_COMPONENT24, width, height);
 #endif
+          nuiCheckForGLErrors();
+
+          GLint w, h;
+          glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_WIDTH_NUI, &w);
+          glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_HEIGHT_NUI, &h);
+
+          NGL_ASSERT(w == width);
+          NGL_ASSERT(h == height);
+
+          NGL_OUT("init depth surface %d x %d (asked %d x %d)\n", w, h, width, height);
+          
+        }
 
         nuiCheckForGLErrors();
 
@@ -2107,6 +2180,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
                                      GL_DEPTH_ATTACHMENT_NUI,
                                      GL_RENDERBUFFER_NUI,
                                      info.mDepthbuffer);
+        nuiCheckForGLErrors();
 
 #ifdef _OPENGL_ES_
         if (pSurface->GetStencil())
@@ -2117,7 +2191,7 @@ void nuiGLPainter::SetSurface(nuiSurface* pSurface)
                                        info.mDepthbuffer);
         }
 #endif
-nuiCheckForGLErrors();
+        nuiCheckForGLErrors();
       }
 
       ///< Do we need a stencil buffer
@@ -2135,6 +2209,14 @@ nuiCheckForGLErrors();
                                  GL_STENCIL_INDEX,
                                  width, height);
         nuiCheckForGLErrors();
+        GLint w, h;
+        glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_WIDTH_NUI, &w);
+        glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_HEIGHT_NUI, &h);
+
+        NGL_ASSERT(w == width);
+        NGL_ASSERT(h == height);
+
+        NGL_OUT("init stencil surface %d x %d (asked %d x %d)\n", w, h, width, height);
 
         glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, 0);
         nuiCheckForGLErrors();
@@ -2155,6 +2237,7 @@ nuiCheckForGLErrors();
         glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint *) &oldTexture);
 
         UploadTexture(pTexture, 0);
+        nuiCheckForGLErrors();
 
         std::map<nuiTexture*, TextureInfo>::iterator tex_it = mTextures.find(pTexture);
         NGL_ASSERT(tex_it != mTextures.end());
@@ -2197,6 +2280,16 @@ nuiCheckForGLErrors();
         glRenderbufferStorageNUI(GL_RENDERBUFFER_NUI, pixelformat, width, height);
         nuiCheckForGLErrors();
 
+        GLint w, h;
+        glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_WIDTH_NUI, &w);
+        glGetRenderbufferParameterivNUI(GL_RENDERBUFFER_NUI, GL_RENDERBUFFER_HEIGHT_NUI, &h);
+
+        NGL_ASSERT(w == width);
+        NGL_ASSERT(h == height);
+
+        NGL_OUT("init color surface %d x %d (asked %d x %d)\n", w, h, width, height);
+
+
         glFramebufferRenderbufferNUI(GL_FRAMEBUFFER_NUI,
                                      GL_COLOR_ATTACHMENT0_NUI,
                                      GL_RENDERBUFFER_NUI,
@@ -2216,10 +2309,12 @@ nuiCheckForGLErrors();
       /// !create
       info = it->second;
       glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, info.mFramebuffer);
+      nuiCheckForGLErrors();
       //printf("glBindFramebufferNUI -> %d\n", info.mFramebuffer);
       if (info.mRenderbuffer >= 0)
       {
         glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, info.mRenderbuffer);
+        nuiCheckForGLErrors();
         //printf("glBindRenderbufferNUI -> %d\n", info.mRenderbuffer);
       }
 
@@ -2233,6 +2328,7 @@ nuiCheckForGLErrors();
   {
     /// !pSurface
     glBindFramebufferNUI(GL_FRAMEBUFFER_NUI, mDefaultFramebuffer);
+    nuiCheckForGLErrors();
     //printf("UNBIND glBindFramebufferNUI -> %d\n", mDefaultFramebuffer);
     glBindRenderbufferNUI(GL_RENDERBUFFER_NUI, mDefaultRenderbuffer);
     //printf("UNBIND glBindRenderbufferNUI -> %d\n", mDefaultRenderbuffer);
@@ -2369,17 +2465,13 @@ bool nuiCheckForGLErrorsReal()
   GLenum err = GL_NO_ERROR;
 #if 1 // Globally enable/disable OpenGL error checking
   //#ifdef NGL_DEBUG
-  bool error = false;
   err = glGetError();
+  if (err == GL_NO_ERROR)
+    return true;
+
   App->GetLog().SetLevel("nuiGLPainter", 1000);
   switch (err)
   {
-    case GL_NO_ERROR:
-      /*
-       case GL_NO_ERROR:
-       NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, "error has been recorded. The value of this symbolic constant is guaranteed to be zero.");
-       */
-      break;
     case GL_INVALID_ENUM:
       NGL_LOG(_T("nuiGLPainter"), NGL_LOG_ERROR, _T("An unacceptable value is specified for an enumerated argument. The offending function is ignored, having no side effect other than to set the error flag."));
       break;
@@ -2405,7 +2497,7 @@ bool nuiCheckForGLErrorsReal()
   //#endif
 #endif
 
-  return err == GL_NO_ERROR;
+  return true;
 }
 
 #endif //   #ifndef __NUI_NO_GL__

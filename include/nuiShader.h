@@ -98,9 +98,14 @@ public:
   bool operator == (const nuiShaderState& rState) const;
   nuiShaderState& operator= (const nuiShaderState& rState);
 
-  void Apply() const;
+  void Set(const nuiShaderState& rState);
+
+  void Dump() const;
 
 private:
+  friend class nuiShaderProgram;
+  void Apply() const;
+
   std::vector<nuiUniformDesc> mUniforms;
   nuiShaderProgram* mpProgram;
 
@@ -133,9 +138,12 @@ public:
   void LoadDefaultShaders();
 
   bool Link();
+  bool Validate() const;
 
-  nuiShaderState* GetDefaultState() const;
-  nuiShaderState* CopyDefaultState() const;
+  nuiShaderState* GetCurrentState() const;
+  nuiShaderState* CopyCurrentState() const;
+  void SetState(const nuiShaderState& rState, bool apply = false);
+  void ApplyState();
 
   int32       GetUniformIndex(const char *name); ///< Get index in nuiShaderState 
   int32       GetUniformIndex(const nglString& name);
@@ -209,7 +217,7 @@ private:
   std::map<GLuint, int32> mUniformMap;
 
   std::map<GLenum, nuiShader*> mShaders;
-  nuiShaderState* mpDefaultState;
+  nuiShaderState* mpCurrentState;
 
   GLint mVA_Position;
   GLint mVA_TexCoord;

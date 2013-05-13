@@ -11,13 +11,13 @@
 //class nuiUniformDesc
 
 nuiUniformDesc::nuiUniformDesc()
-: mType(-1), mCount(-1), mLocation(-1)
+: mType(-1), mCount(-1), mLocation(-1), mChanged(false)
 {
   mValues.mpFloats = NULL;
 }
 
 nuiUniformDesc::nuiUniformDesc(const nuiUniformDesc& rDesc)
-: mName(rDesc.mName), mType(rDesc.mType), mCount(rDesc.mCount), mLocation(rDesc.mLocation)
+: mName(rDesc.mName), mType(rDesc.mType), mCount(rDesc.mCount), mLocation(rDesc.mLocation), mChanged(rDesc.mChanged)
 {
   switch (mType)
   {
@@ -51,6 +51,8 @@ nuiUniformDesc& nuiUniformDesc::operator=(const nuiUniformDesc& rDesc)
   mType = rDesc.mType;
   mCount = rDesc.mCount;
   mLocation = rDesc.mLocation;
+  mChanged = true;
+
   switch (mType)
   {
     case GL_FLOAT:
@@ -107,7 +109,7 @@ nuiUniformDesc& nuiUniformDesc::operator=(const nuiUniformDesc& rDesc)
 }
 
 nuiUniformDesc::nuiUniformDesc(const nglString& rName, GLenum Type, int count, GLuint Location, nuiShaderProgram* pProgram)
-: mName(rName), mType(Type), mCount(count), mLocation(Location)
+: mName(rName), mType(Type), mCount(count), mLocation(Location), mChanged(false)
 {
   switch (mType)
   {
@@ -215,6 +217,8 @@ void nuiUniformDesc::Set(const float* pV, int32 count, bool apply)
   for (int32 i = 0; i < count; i++)
     mValues.mpFloats[i] = pV[i];
 
+  mChanged = true;
+
   if (apply)
     Apply();
 }
@@ -244,6 +248,8 @@ void nuiUniformDesc::Set(const int32* pV, int32 count, bool apply)
 
   for (int32 i = 0; i < count; i++)
     mValues.mpInts[i] = pV[i];
+
+  mChanged = true;
 
   if (apply)
     Apply();
@@ -358,9 +364,74 @@ void nuiUniformDesc::Set(const nglMatrixf& rMat, bool apply)
   }
 }
 
+static bool copycmp(float *p1, const float* p2, int count)
+{
+  bool res = true;
+  for (int i = 0; i < count; i++)
+  {
+    res = res && (p1[i] == p2[i]);
+    p1[i] = p2[i];
+  }
+  return res;
+}
+
+static bool copycmp(int32 *p1, const int32* p2, int count)
+{
+  bool res = true;
+  for (int i = 0; i < count; i++)
+  {
+    res = res && (p1[i] == p2[i]);
+    p1[i] = p2[i];
+  }
+  return res;
+}
+
+
+void nuiUniformDesc::Set(const nuiUniformDesc& rDesc, bool apply)
+{
+  NGL_ASSERT(mType == rDesc.mType);
+  NGL_ASSERT(mCount == rDesc.mCount);
+  NGL_ASSERT(mLocation == rDesc.mLocation);
+
+  bool c = false;
+  const float* pSFloats = rDesc.mValues.mpFloats;
+  const int* pSInts = rDesc.mValues.mpInts;
+  switch (mType)
+  {
+    case GL_FLOAT:              c = !copycmp(mValues.mpFloats, pSFloats, 1 * mCount); break;
+    case GL_FLOAT_VEC2:         c = !copycmp(mValues.mpFloats, pSFloats, 2 * mCount); break;
+    case GL_FLOAT_VEC3:         c = !copycmp(mValues.mpFloats, pSFloats, 3 * mCount); break;
+    case GL_FLOAT_VEC4:         c = !copycmp(mValues.mpFloats, pSFloats, 4 * mCount); break;
+
+    case GL_INT:                c = !copycmp(mValues.mpInts, pSInts, 1 * mCount); break;
+    case GL_INT_VEC2:           c = !copycmp(mValues.mpInts, pSInts, 2 * mCount); break;
+    case GL_INT_VEC3:           c = !copycmp(mValues.mpInts, pSInts, 3 * mCount); break;
+    case GL_INT_VEC4:           c = !copycmp(mValues.mpInts, pSInts, 4 * mCount); break;
+    case GL_UNSIGNED_INT:       c = !copycmp(mValues.mpInts, pSInts, 1 * mCount); break;
+
+    case GL_FLOAT_MAT2:         c = !copycmp(mValues.mpFloats, pSFloats, 2 * 2 * mCount); break;
+    case GL_FLOAT_MAT3:         c = !copycmp(mValues.mpFloats, pSFloats, 3 * 3 * mCount); break;
+    case GL_FLOAT_MAT4:         c = !copycmp(mValues.mpFloats, pSFloats, 4 * 4 * mCount); break;
+
+    case GL_SAMPLER_2D:         c = !copycmp(mValues.mpInts, pSInts, 1 * mCount); break;
+    case GL_SAMPLER_CUBE:       c = !copycmp(mValues.mpInts, pSInts, 1 * mCount); break;
+
+    default:
+      NGL_ASSERT(0);
+  }
+
+  mChanged = mChanged || c;
+  if (apply)
+    Apply();
+}
 
 void nuiUniformDesc::Apply() const
 {
+//  if (!mChanged)
+//    return;
+
+  mChanged = false;
+
   switch (mType)
   {
     case GL_FLOAT:              glUniform1fv(mLocation, mCount, mValues.mpFloats);  break;
@@ -434,4 +505,35 @@ bool nuiUniformDesc::operator == (const nuiUniformDesc& rDesc) const
 }
 
 
+void nuiUniformDesc::Dump() const
+{
+  nglString v;
+  int32 count = 0;
+  switch (mType)
+  {
+    case GL_FLOAT:        count = 1; break;
+    case GL_FLOAT_VEC2:   count = 2; break;
+    case GL_FLOAT_VEC3:   count = 3; break;
+    case GL_FLOAT_VEC4:   count = 4; break;
 
+    case GL_FLOAT_MAT2:   count = 2 * 2; break;
+    case GL_FLOAT_MAT3:   count = 3 * 3; break;
+    case GL_FLOAT_MAT4:   count = 4 * 4; break;
+
+    case GL_INT:          count = 1; break;
+    case GL_INT_VEC2:     count = 2; break;
+    case GL_INT_VEC3:     count = 3; break;
+    case GL_INT_VEC4:     count = 4; break;
+
+    case GL_UNSIGNED_INT: count = 1; break;
+    case GL_SAMPLER_2D:   count = 1; break;
+    case GL_SAMPLER_CUBE: count = 1; break;
+
+    default:
+      NGL_ASSERT(0);
+  }
+
+  for (int32 i = 0; i < count * mCount; i++)
+    v.Add(mValues.mpFloats[i]).Add(" ");
+  NGL_OUT("%s: %s\n", mName.GetChars(), v.GetChars());
+}

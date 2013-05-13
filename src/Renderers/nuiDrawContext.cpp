@@ -339,7 +339,7 @@ void nuiDrawContext::SetShader(nuiShaderProgram* pShader, nuiShaderState* pShade
 
     if (!pShaderState)
     {
-      pShaderState = pShader->GetDefaultState();
+      pShaderState = pShader->GetCurrentState();
     }
 
     SetShaderState(pShaderState);

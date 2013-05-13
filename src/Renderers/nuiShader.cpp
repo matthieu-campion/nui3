@@ -245,7 +245,7 @@ static const char* Type2String(GLenum type)
     case GL_INT_VEC3:     return "ivec3"; break;
     case GL_INT_VEC4:     return "ivec4"; break;
     case GL_UNSIGNED_INT: return "uint"; break;
-    case GL_SAMPLER_2D:   return "sampler2d"; break;
+    case GL_SAMPLER_2D:   return "sampler2D"; break;
     case GL_SAMPLER_CUBE: return "samplerCube"; break;
 
     case GL_FLOAT_MAT2:   return "mat2"; break;
@@ -506,6 +506,20 @@ nuiShaderState& nuiShaderState::operator= (const nuiShaderState& rState)
   mUniforms = rState.mUniforms;
 }
 
+void nuiShaderState::Set(const nuiShaderState& rState)
+{
+  for (int32 i = 0; i < mUniforms.size(); i++)
+    mUniforms[i].Set(rState.mUniforms[i]);
+}
+
+void nuiShaderState::Dump() const
+{
+  NGL_OUT("Dumping state for program %p\n", mpProgram);
+  for (int32 i = 0; i < mUniforms.size(); i++)
+    mUniforms[i].Dump();
+}
+
+
 /////////////////////////////////////////////////////
 class nuiShader : public nuiRefCount
 {
@@ -621,7 +635,7 @@ nglString nuiShaderProgram::mDefaultPrefix;
 #endif
 
 nuiShaderProgram::nuiShaderProgram(const nglString& rName)
-: mName(rName), mProgram(0), mpDefaultState(NULL), mPrefix(mDefaultPrefix)
+: mName(rName), mProgram(0), mpCurrentState(NULL), mPrefix(mDefaultPrefix)
 {
   NGL_ASSERT(gpPrograms.find(rName) == gpPrograms.end());
   gpPrograms[rName] = this;
@@ -675,8 +689,8 @@ nuiShaderProgram::~nuiShaderProgram()
     ++it;
   }
 
-  if (mpDefaultState)
-    mpDefaultState->Release();
+  if (mpCurrentState)
+    mpCurrentState->Release();
 
   if (mProgram)
     glDeleteProgram(mProgram);
@@ -726,17 +740,31 @@ void nuiShaderProgram::LoadDefaultShaders()
 }
 
 
-nuiShaderState* nuiShaderProgram::GetDefaultState() const
+nuiShaderState* nuiShaderProgram::GetCurrentState() const
 {
-  return mpDefaultState;
+  return mpCurrentState;
 }
 
-nuiShaderState* nuiShaderProgram::CopyDefaultState() const
+nuiShaderState* nuiShaderProgram::CopyCurrentState() const
 {
-  nuiShaderState* pState = new nuiShaderState(*mpDefaultState);
+  nuiShaderState* pState = new nuiShaderState(*mpCurrentState);
   pState->Acquire();
   return pState;
 }
+
+void nuiShaderProgram::SetState(const nuiShaderState& rState, bool apply)
+{
+  mpCurrentState->Set(rState);
+
+  if (apply)
+    ApplyState();
+}
+
+void nuiShaderProgram::ApplyState()
+{
+  mpCurrentState->Apply();
+}
+
 
 GLint nuiShaderProgram::GetUniformLocation(const char *name)
 {
@@ -819,13 +847,17 @@ bool nuiShaderProgram::Link()
     return false;
   }
 
+  glValidateProgram(mProgram);
+  CHECK_GL_ERRORS;
+
+
   glUseProgram(mProgram);
   CHECK_GL_ERRORS;
 
 
   // Enumerate Uniforms:
-  mpDefaultState = new nuiShaderState(this, mUniformMap);
-  mpDefaultState->Acquire();
+  mpCurrentState = new nuiShaderState(this, mUniformMap);
+  mpCurrentState->Acquire();
 
   // Enumerate Vertex Attributes:
   {
@@ -850,9 +882,25 @@ bool nuiShaderProgram::Link()
   mVA_Color = glGetAttribLocation(mProgram, "Color");
   mVA_Normal = glGetAttribLocation(mProgram, "Normal");
 
+  return true;
+}
+
+bool nuiShaderProgram::Validate() const
+{
+  GLint validation = GL_FALSE;
+  glGetProgramiv(mProgram, GL_VALIDATE_STATUS, &validation);
+  if (validation == GL_FALSE)
+  {
+    GLchar messages[256];
+    glGetProgramInfoLog(mProgram, sizeof(messages), 0, &messages[0]);
+    CHECK_GL_ERRORS;
+    NGL_LOG("painter", NGL_LOG_ERROR, "nuiShaderProgram::Validate() failed: %s", messages);
+    return false;
+  }
 
   return true;
 }
+
 
 GLint nuiShaderProgram::GetVAPositionLocation() const
 {
