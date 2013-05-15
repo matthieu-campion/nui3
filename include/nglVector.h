@@ -430,6 +430,16 @@ public:
     return Elt[i]; 
   }
 
+  T& x() { return Elt[0]; }
+  const T& x() const { return Elt[0]; }
+  T& y() { return Elt[1]; }
+  const T& y() const { return Elt[1]; }
+  T& z() { return Elt[2]; }
+  const T& z() const { return Elt[2]; }
+  T& w() { return Elt[3]; }
+  const T& w() const { return Elt[3]; }
+
+
   /// Unary minus
   nglVector<T> operator-() const
   {
@@ -482,6 +492,18 @@ public:
     result *= F;
     return result;
   }
+
+  friend nglVector<T> operator* (T F, const nglVector<T>& rVector)
+  {
+    return rVector * F;
+  }
+
+  // Division by scalar:
+  friend nglVector<T> operator/ (const nglVector<T>& rVector, T F)
+  {
+    return rVector * ((T)1.0 / F);
+  }
+
   /// Scalar product
   T operator*(const nglVector<T>& rVector) const
   {

@@ -364,26 +364,30 @@ void nuiUniformDesc::Set(const nglMatrixf& rMat, bool apply)
   }
 }
 
-static bool copycmp(float *p1, const float* p2, int count)
-{
-  bool res = true;
-  for (int i = 0; i < count; i++)
-  {
-    res = res && (p1[i] == p2[i]);
-    p1[i] = p2[i];
-  }
-  return res;
-}
-
 static bool copycmp(int32 *p1, const int32* p2, int count)
 {
-  bool res = true;
+  uint32 v1 = 0;
+  uint32 v2 = 0;
+  uint32 pa = 0;
+  uint32 pb = 0;
+
   for (int i = 0; i < count; i++)
   {
-    res = res && (p1[i] == p2[i]);
-    p1[i] = p2[i];
+    v1 = *p1;
+    v2 = *p2++;
+    *p1++ = v2;
+
+    // Accumulate the test:
+    pa ^= v1;
+    pb ^= v2;
   }
-  return res;
+
+  return pa == pb;
+}
+
+static bool copycmp(float *p1, const float* p2, int count)
+{
+  return copycmp((int32*)p1, (const int32*)p2, count);
 }
 
 
@@ -425,10 +429,23 @@ void nuiUniformDesc::Set(const nuiUniformDesc& rDesc, bool apply)
     Apply();
 }
 
+static int total = 0;
+static int skipped = 0;
+static int applied = 0;
+
 void nuiUniformDesc::Apply() const
 {
-//  if (!mChanged)
-//    return;
+  total++;
+
+//  if (!(total % 10000))
+//    NGL_OUT("Uniform stats: %d on %d applied (%d skipped) %f cache hit\n", applied, total, skipped, (float)skipped/(float)total);
+
+  if (!mChanged)
+  {
+    skipped++;
+    return;
+  }
+  applied++;
 
   mChanged = false;
 

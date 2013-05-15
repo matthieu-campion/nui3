@@ -228,9 +228,14 @@ public:
     (*this)(2, col) = rCol[2];
   }
 
-  nglVector3<T> GetRow(int row) const
+  nglVector3<T> GetRow3(int row) const
   {
     return nglVector3<T>((*this)(row, 0), (*this)(row, 1), (*this)(row, 2));
+  }
+
+  nglVector<T> GetRow(int row) const
+  {
+    return nglVector<T>((*this)(row, 0), (*this)(row, 1), (*this)(row, 2), (*this)(row, 3));
   }
 
   void SetRow(int row, const nglVector3<T>& rRow)
@@ -238,6 +243,14 @@ public:
     (*this)(row, 0) = rRow[0];
     (*this)(row, 1) = rRow[1];
     (*this)(row, 2) = rRow[2];
+  }
+
+  void SetRow(int row, const nglVector<T>& rRow)
+  {
+    (*this)(row, 0) = rRow[0];
+    (*this)(row, 1) = rRow[1];
+    (*this)(row, 2) = rRow[2];
+    (*this)(row, 3) = rRow[3];
   }
 
   /// Setup a translation matrix
