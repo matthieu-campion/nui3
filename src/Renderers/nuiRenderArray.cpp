@@ -240,6 +240,11 @@ void nuiRenderArray::SetTexCoords(float tx, float ty)
   mCurrentVertex.mTY = ty;
 }
 
+void nuiRenderArray::SetTexCoords(const nglVector2f& rV)
+{
+  SetTexCoords(rV[0], rV[1]);
+}
+
 void nuiRenderArray::SetNormal(float x, float y, float z)
 {
   mCurrentVertex.mNX = x;

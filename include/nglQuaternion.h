@@ -48,6 +48,14 @@ public:
     Elt.w = 1.f;
   }
 
+  nglQuaternion(T x, T y, T z, T w)
+  {
+    Elt.x = x;
+    Elt.y = y;
+    Elt.z = z;
+    Elt.w = w;
+  }
+
   nglQuaternion(const nglQuaternion<T>& rQuat)
   {
     Elt.x = rQuat.Elt.x;
@@ -233,6 +241,34 @@ public:
     Elt.y = cr * sp * ch + sr * cp * sh;
     Elt.z = cr * cp * sh - sr * sp * ch;
   }
+
+  void GetEulerAngles(T& x, T& y, T& z) const
+  {
+    T test = Elt.x * Elt.y + Elt.z * Elt.w;
+
+    if (test > 0.499)
+    { // singularity at north pole
+      x = RAD2DEG(2.0 * atan2(Elt.x, Elt.w));
+      y = RAD2DEG(M_PI / 2.0);
+      z = 0;
+      return;
+    }
+
+    if (test < -0.499)
+    { // singularity at south pole
+      x = RAD2DEG(-2 * atan2(Elt.x,Elt.w));
+      y = RAD2DEG(- M_PI/2);
+      z = 0;
+      return;
+    }
+    T sqx = Elt.x * Elt.x;
+    T sqy = Elt.y * Elt.y;
+    T sqz = Elt.z * Elt.z;
+    x = RAD2DEG(atan2(2 * Elt.y * Elt.w - 2 * Elt.x * Elt.z , 1 - 2 * sqy - 2 * sqz));
+    y = RAD2DEG(asin(2 * test));
+    z = RAD2DEG(atan2(2 * Elt.x * Elt.w - 2 * Elt.y * Elt.z , 1 - 2 * sqx - 2 * sqz));
+  }
+
   
   void SetSphericalRotation(T latitude, T longitude, T angle = 0)
   {

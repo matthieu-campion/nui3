@@ -162,6 +162,7 @@ public:
   void SetColor(const nuiColor& rColor);
   void SetColor(uint32 Color);
   void SetTexCoords(float tx, float ty);
+  void SetTexCoords(const nglVector2f& rV);
   void SetNormal(float x, float y, float z);
   void SetNormal(const nuiVector& rVf);
   void SetNormal(const nuiVector3& rV3f);
