@@ -57,6 +57,7 @@ protected:
   nuiMatrix mSurfaceMatrix;
 
   VertexBufferInfo* mpCurrentVertexBufferInfo;
+  nuiRenderArray* mpLastArray;
 };
 
 #define nuiCheckForGLErrors() { NGL_ASSERT(nuiCheckForGLErrorsReal()); }

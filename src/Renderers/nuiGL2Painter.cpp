@@ -338,6 +338,7 @@ nuiGL2Painter::nuiGL2Painter(nglContext* pContext)
   mpShader_DifuseColor->GetCurrentState()->Set("Offset", 0.0f, 0.0f);
 
   mpCurrentVertexBufferInfo = NULL;
+  mpLastArray = NULL;
 }
 
 nuiGL2Painter::~nuiGL2Painter()
@@ -459,6 +460,7 @@ void nuiGL2Painter::ResetOpenGLState()
 
   mFinalState = nuiRenderState();
   mState = nuiRenderState();
+  mpLastArray = NULL;
 
   nuiCheckForGLErrors();
 }
@@ -707,17 +709,25 @@ void nuiGL2Painter::DrawArray(nuiRenderArray* pArray)
     mpCurrentVertexBufferInfo = &it->second;
     const VertexBufferInfo& rInfo(it->second);
 
-    SetVertexBuffersPointers(*pArray, rInfo);
+    if (mpLastArray != pArray)
+    {
+      SetVertexBuffersPointers(*pArray, rInfo);
+      mpLastArray = pArray;
+    }
   }
   else
   {
-    if (mpCurrentVertexBufferInfo)
+    if (mpLastArray != pArray)
     {
-      glBindBuffer(GL_ARRAY_BUFFER, 0);
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-      mpCurrentVertexBufferInfo = NULL;
+      if (mpCurrentVertexBufferInfo)
+      {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        mpCurrentVertexBufferInfo = NULL;
+      }
+      SetVertexPointers(*pArray);
+      mpLastArray = pArray;
     }
-    SetVertexPointers(*pArray);
   }
 
   nuiCheckForGLErrors();
