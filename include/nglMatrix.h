@@ -573,29 +573,35 @@ mat1 = mat1 * mat2;
   */
   void operator *= (const nglMatrix<T>& rMatrix)
   {
-    nglMatrix<T> result;
+    struct
+    {
+      T M11,M21,M31,M41;
+      T M12,M22,M32,M42;
+      T M13,M23,M33,M43;
+      T M14,M24,M34,M44;
+    } elt;
 
-    result.Elt.M11 =(Elt.M11 * rMatrix.Elt.M11 + Elt.M12 * rMatrix.Elt.M21 + Elt.M13 * rMatrix.Elt.M31 + Elt.M14 * rMatrix.Elt.M41);
-    result.Elt.M12 =(Elt.M11 * rMatrix.Elt.M12 + Elt.M12 * rMatrix.Elt.M22 + Elt.M13 * rMatrix.Elt.M32 + Elt.M14 * rMatrix.Elt.M42);
-    result.Elt.M13 =(Elt.M11 * rMatrix.Elt.M13 + Elt.M12 * rMatrix.Elt.M23 + Elt.M13 * rMatrix.Elt.M33 + Elt.M14 * rMatrix.Elt.M43);
-    result.Elt.M14 =(Elt.M11 * rMatrix.Elt.M14 + Elt.M12 * rMatrix.Elt.M24 + Elt.M13 * rMatrix.Elt.M34 + Elt.M14 * rMatrix.Elt.M44);
+    elt.M11 =(Elt.M11 * rMatrix.Elt.M11 + Elt.M12 * rMatrix.Elt.M21 + Elt.M13 * rMatrix.Elt.M31 + Elt.M14 * rMatrix.Elt.M41);
+    elt.M12 =(Elt.M11 * rMatrix.Elt.M12 + Elt.M12 * rMatrix.Elt.M22 + Elt.M13 * rMatrix.Elt.M32 + Elt.M14 * rMatrix.Elt.M42);
+    elt.M13 =(Elt.M11 * rMatrix.Elt.M13 + Elt.M12 * rMatrix.Elt.M23 + Elt.M13 * rMatrix.Elt.M33 + Elt.M14 * rMatrix.Elt.M43);
+    elt.M14 =(Elt.M11 * rMatrix.Elt.M14 + Elt.M12 * rMatrix.Elt.M24 + Elt.M13 * rMatrix.Elt.M34 + Elt.M14 * rMatrix.Elt.M44);
 
-    result.Elt.M21 =(Elt.M21 * rMatrix.Elt.M11 + Elt.M22 * rMatrix.Elt.M21 + Elt.M23 * rMatrix.Elt.M31 + Elt.M24 * rMatrix.Elt.M41);
-    result.Elt.M22 =(Elt.M21 * rMatrix.Elt.M12 + Elt.M22 * rMatrix.Elt.M22 + Elt.M23 * rMatrix.Elt.M32 + Elt.M24 * rMatrix.Elt.M42);
-    result.Elt.M23 =(Elt.M21 * rMatrix.Elt.M13 + Elt.M22 * rMatrix.Elt.M23 + Elt.M23 * rMatrix.Elt.M33 + Elt.M24 * rMatrix.Elt.M43);
-    result.Elt.M24 =(Elt.M21 * rMatrix.Elt.M14 + Elt.M22 * rMatrix.Elt.M24 + Elt.M23 * rMatrix.Elt.M34 + Elt.M24 * rMatrix.Elt.M44);
+    elt.M21 =(Elt.M21 * rMatrix.Elt.M11 + Elt.M22 * rMatrix.Elt.M21 + Elt.M23 * rMatrix.Elt.M31 + Elt.M24 * rMatrix.Elt.M41);
+    elt.M22 =(Elt.M21 * rMatrix.Elt.M12 + Elt.M22 * rMatrix.Elt.M22 + Elt.M23 * rMatrix.Elt.M32 + Elt.M24 * rMatrix.Elt.M42);
+    elt.M23 =(Elt.M21 * rMatrix.Elt.M13 + Elt.M22 * rMatrix.Elt.M23 + Elt.M23 * rMatrix.Elt.M33 + Elt.M24 * rMatrix.Elt.M43);
+    elt.M24 =(Elt.M21 * rMatrix.Elt.M14 + Elt.M22 * rMatrix.Elt.M24 + Elt.M23 * rMatrix.Elt.M34 + Elt.M24 * rMatrix.Elt.M44);
 
-    result.Elt.M31 =(Elt.M31 * rMatrix.Elt.M11 + Elt.M32 * rMatrix.Elt.M21 + Elt.M33 * rMatrix.Elt.M31 + Elt.M34 * rMatrix.Elt.M41);
-    result.Elt.M32 =(Elt.M31 * rMatrix.Elt.M12 + Elt.M32 * rMatrix.Elt.M22 + Elt.M33 * rMatrix.Elt.M32 + Elt.M34 * rMatrix.Elt.M42);
-    result.Elt.M33 =(Elt.M31 * rMatrix.Elt.M13 + Elt.M32 * rMatrix.Elt.M23 + Elt.M33 * rMatrix.Elt.M33 + Elt.M34 * rMatrix.Elt.M43);
-    result.Elt.M34 =(Elt.M31 * rMatrix.Elt.M14 + Elt.M32 * rMatrix.Elt.M24 + Elt.M33 * rMatrix.Elt.M34 + Elt.M34 * rMatrix.Elt.M44);
+    elt.M31 =(Elt.M31 * rMatrix.Elt.M11 + Elt.M32 * rMatrix.Elt.M21 + Elt.M33 * rMatrix.Elt.M31 + Elt.M34 * rMatrix.Elt.M41);
+    elt.M32 =(Elt.M31 * rMatrix.Elt.M12 + Elt.M32 * rMatrix.Elt.M22 + Elt.M33 * rMatrix.Elt.M32 + Elt.M34 * rMatrix.Elt.M42);
+    elt.M33 =(Elt.M31 * rMatrix.Elt.M13 + Elt.M32 * rMatrix.Elt.M23 + Elt.M33 * rMatrix.Elt.M33 + Elt.M34 * rMatrix.Elt.M43);
+    elt.M34 =(Elt.M31 * rMatrix.Elt.M14 + Elt.M32 * rMatrix.Elt.M24 + Elt.M33 * rMatrix.Elt.M34 + Elt.M34 * rMatrix.Elt.M44);
                                                                                                 
-    result.Elt.M41 =(Elt.M41 * rMatrix.Elt.M11 + Elt.M42 * rMatrix.Elt.M21 + Elt.M43 * rMatrix.Elt.M31 + Elt.M44 * rMatrix.Elt.M41);
-    result.Elt.M42 =(Elt.M41 * rMatrix.Elt.M12 + Elt.M42 * rMatrix.Elt.M22 + Elt.M43 * rMatrix.Elt.M32 + Elt.M44 * rMatrix.Elt.M42);
-    result.Elt.M43 =(Elt.M41 * rMatrix.Elt.M13 + Elt.M42 * rMatrix.Elt.M23 + Elt.M43 * rMatrix.Elt.M33 + Elt.M44 * rMatrix.Elt.M43);
-    result.Elt.M44 =(Elt.M41 * rMatrix.Elt.M14 + Elt.M42 * rMatrix.Elt.M24 + Elt.M43 * rMatrix.Elt.M34 + Elt.M44 * rMatrix.Elt.M44);
+    elt.M41 =(Elt.M41 * rMatrix.Elt.M11 + Elt.M42 * rMatrix.Elt.M21 + Elt.M43 * rMatrix.Elt.M31 + Elt.M44 * rMatrix.Elt.M41);
+    elt.M42 =(Elt.M41 * rMatrix.Elt.M12 + Elt.M42 * rMatrix.Elt.M22 + Elt.M43 * rMatrix.Elt.M32 + Elt.M44 * rMatrix.Elt.M42);
+    elt.M43 =(Elt.M41 * rMatrix.Elt.M13 + Elt.M42 * rMatrix.Elt.M23 + Elt.M43 * rMatrix.Elt.M33 + Elt.M44 * rMatrix.Elt.M43);
+    elt.M44 =(Elt.M41 * rMatrix.Elt.M14 + Elt.M42 * rMatrix.Elt.M24 + Elt.M43 * rMatrix.Elt.M34 + Elt.M44 * rMatrix.Elt.M44);
 
-    (*this) = result;
+    memcpy(&(this->Elt), &elt, sizeof(Elt));
   }
 
   bool operator == (const nglMatrix<T>& rMatrix) const

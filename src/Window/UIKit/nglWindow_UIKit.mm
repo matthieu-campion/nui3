@@ -158,7 +158,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   if (glView)
   {
     [glView removeFromSuperview];
-    [glView release];
     glView = nil;
   }
   //[self disconnect];
@@ -443,7 +442,6 @@ void AdjustFromAngle(uint Angle, const nuiRect& rRect, nglMouseInfo& rInfo)
   if (glViewOld)
   {
     [glViewOld removeFromSuperview];
-    [glViewOld dealloc];
     glViewOld = nil;
   }
   //if (mInvalidated)
